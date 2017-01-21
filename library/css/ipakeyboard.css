@@ -1,0 +1,81 @@
+.kb-wrapper{
+  display:table-row;
+  position:fixed;
+  max-width:600px;
+  min-width: 70px;
+  bottom:1px;
+  background:#ccc;
+  padding:2px;
+  box-shadow: -5px -5px 5px #888;
+  -webkit-box-shadow: -5px -5px 5px #888;
+  -moz-box-shadow: -5px -5px 5px #888;
+  border-radius:12px;
+  -webkit-border-radius:12px;
+  -moz-border-radius:12px;
+}
+.kb-topbar{
+  margin-bottom:1px;
+  margin-right: 4px;
+  padding: 1px 4px 2px;
+  font-size: 10.998px;
+  font-weight: bold;
+  line-height: 14px;
+  color: white;
+  text-shadow: 0 -1px 0 rgba(0, 0, 0, 0.25);
+  white-space: nowrap;
+  vertical-align: baseline;
+  display:block;
+}
+#kb-left{
+  position:relative;
+  display:table-cell;
+  padding-right:2px; 
+  width:65%;
+}
+#kb-right{
+  display:table-cell;
+  position:relative;
+  width:35%;
+}
+#kb-center{
+  display:table-row;
+  display:block;
+}
+.kb-section{
+  position:relative;
+  text-align: center;
+}
+.kb-area-title{
+  position:relative;
+  background-color:#7D92B9;
+}
+.kb-letter-set{
+  position:relative;
+  display:inline-block;
+  background-color:#eee;
+  margin-bottom:1px;
+  margin-left:1px;
+}
+.kb-letter-set-title{
+  position:relative;
+  padding:1px 4px;
+  background-color:#7D92B9;
+  border-radius:12px;
+  -webkit-border-radius:12px;
+  -moz-border-radius:12px;
+}
+.kb-btn-group{
+  position:relative;
+  display:inline-block;
+}
+.kb-btn-group > .kb-letter{
+  float:none;
+  padding:0px 4px;
+}
+.kb-letter{
+  position:relative;
+  margin:0;
+}
+.kbclose{cursor:pointer;}
+.kbhelp{margin-right: 5px; font-size:120%;}
+.kb-toolbar-right{float:right;}
