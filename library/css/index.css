@@ -489,9 +489,11 @@ a.remember:hover, a.fetch:hover, a.throw:hover{
 {
 	color: white;
 	font-family: Open sans;
-	font-weight: 500px;
+	font-weight: bolder;
 	font-size: 20px;
 }
+
+
 
 .icon-box i.fa
 {

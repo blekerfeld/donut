@@ -3,7 +3,6 @@
   <head>
     <link href="library/css/index.css" rel="stylesheet">
     <link rel="shortcut icon" href="library/static/bookmark_icon.png">
-    <link rel="stylesheet" href="library/css/Aristo.css">
     <link rel="stylesheet" href="library/css/font-awesome.css">
     <link rel="stylesheet" href="library/css/tooltipster.css">
     <link rel="stylesheet" href="library/css/tooltipster-noir.css">

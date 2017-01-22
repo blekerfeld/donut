@@ -31,7 +31,7 @@
 	function pPasswordCheck($userid, $password)
 	{
 		global $donut;
-		$password = polHash($password);
+		$password = pHash($password);
 		$result = $donut['db']->query("SELECT * FROM users WHERE id = '$userid' and password = '$password' LIMIT 1;");
 		if($result->rowCount() == 1)
 			return true;
@@ -80,7 +80,7 @@
 			return false;
 	}
 
-	function polRegDate($id)
+	function pRegDate($id)
 	{
 		return NULL;
 	}

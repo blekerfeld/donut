@@ -1,56 +1,29 @@
 <?php
-/* 
-	Donut
-	Dictionary Toolkit
-	Version a.1
-	Written by Thomas de Roo
-	Licensed under GNUv3
-	File: pol_config.php
-*/
 
-//	Database Driver (Which type of database we're using?)
-	$db_driver = 'mysql'; // mysql, pgsql or sqlite
+	// ❉ Donut
+	//	Dictionary Toolkit
+	// 		Version a.1
+	//		Written by Thomas de Roo
+	//		Licensed under GNUv3
+
+	//	++	File: config.php
 
 
-//  Setting up Database connection
-	$db_host = 'localhost'; // database server
-	$db_user = 'root'; // database username
-	$db_password = ''; // database password
-	$db_database = 'donut'; 	// name or path of/to database
-	if($db_driver == 'mysql')
-		try
-		{
-			$db = new PDO('mysql:host='.$db_host.';dbname='.$db_database, $db_user, $db_password);
-		}
-		catch(PDOException $e)
-		{
-			echo $e->getMessage();
-			exit;
-		}
-	if($db_driver == 'pgsql')
-		try
-		{
-			$db = new PDO('pgsql:host='.$db_host.';dbname='.$db_database, $db_user, $db_password);
-		}
-		catch(PDOException $e)
-		{
-			echo $e->getMessage();
-			exit;
-		}
-	if($db_driver == 'sqlite')
-		try
-		{
-			$db = new PDO('sqlite:'.$db_database);
-		}
-		catch(PDOException $e)
-		{
-			echo $e->getMessage();
-			exit;
-		}
-		$db->exec("set names utf8");
-		$db->query("set character_set_results='utf8'");
+	//  Database information
+		$dbHost = 'localhost'; 
+		$dbUser = 'root'; 
+		$dbPassword = ''; 
+		$dbDatabase = 'donut'; 	
 
-##	Making array for functions and global objects
+	// Setting up the connection, die if it fails
+		if(!($db = new PDO('mysql:host='.$dbHost.';dbname='.$dbDatabase, $dbUser, $dbPassword)))
+			die("COULD NOT CONNECT TO THE DATABASE!");
+	
+	//	We want the connection to be able to take everything in UTF8!
+		$db->exec("SET NAMES UTF8");
+		$db->query("SET CHARACTER_SET_RESULTS='UTF8'");
+
+	//	Global array
 	$donut = array();
 	$donut['file'] = 'index.php';
 	$donut['settings'] =array();
@@ -75,7 +48,7 @@
 
 ##  This function is used to encrypt passwords
 
-	function polHash($password, $userdata = '')
+	function pHash($password, $userdata = '')
 	{
 		global $donut;
 
@@ -119,9 +92,6 @@ function polEndsWith($haystack, $needle)
 		// Needed. :)
 		global $donut;
 
-		// Checking if we are in AJAX mode, headers are handled by javascript then!
-		$ajax_mode = (isset($_GET['ajax']) OR isset($_GET['ajax_pOut']));
-
 		// Just an adition on the index.php?
 		if(polStartsWith($url, '?'))
 			$url = $donut['absolute_path'].$donut['file'].$url;
@@ -140,7 +110,7 @@ function polEndsWith($haystack, $needle)
 			return $url;
 
 		else
-			if($ajax_mode)
+			if(isset($_GET['ajax']) OR isset($_GET['ajax_pOut']))
 				return "<script>window.location = '".$url."';</script>";
 				
 			return header("Location:".$url);

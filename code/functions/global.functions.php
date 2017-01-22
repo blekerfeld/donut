@@ -181,8 +181,13 @@
 			$(window).on('popstate', function () {
 
 			    var hrefje = String(location.href);
+			    
 
-			   	loadfunction(hrefje, true);
+			    if(localStorage.href != hrefje){
+			    	loadfunction(hrefje, true);
+			   		localStorage.href = hrefje;
+			    }
+
 			  
 			});
 
@@ -232,6 +237,8 @@
 
 	function pAjaxStructure(){
 
+		global $donut;
+
 		// The complex javascript link system is needed for the new links loaded via AJAX
 		if(isset($_REQUEST['ajax']))
 			echo pAjaxLinks($donut['page']['title']);
@@ -252,7 +259,8 @@
 
 		// Time to die, bye bye
 
-		return die();
+		if(isset($_REQUEST['ajax']) OR isset($_REQUEST['ajax_pOut']))
+			die();
 
 	}
 
