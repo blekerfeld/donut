@@ -10,8 +10,8 @@
 
 	function polLangText($id)
 	{
-		global $pol;
-		$result = $pol['db']->query("SELECT * FROM languages WHERE id = '$id' LIMIT 1;");
+		global $donut;
+		$result = $donut['db']->query("SELECT * FROM languages WHERE id = '$id' LIMIT 1;");
 		if($result->rowCount() == 1)
 		{
 			$lg = $result->fetchObject();
@@ -22,7 +22,7 @@
 	}
 
 	function pShowCourseListItem($id){
-		global $pol;
+		global $donut;
 		$course = pSiRo('courses', $id);
 		return ' <div class="course">
 			<a class="button throw floatright" style="margin-top: 5px" href="#""><i class="fa fa-leaf"></i> Throw</a> <!--VERVANG!-->

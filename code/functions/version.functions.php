@@ -11,7 +11,7 @@
 #	Information about this version, and the team
 
 	// This will make intern version 1.0.1.0.0 codename: Mammal (1.0 alpha 1)
-	$pol['version'] = array(
+	$donut['version'] = array(
 		'major' => 1,
 		'minor' => 0,
 		'alpha' => true,
@@ -22,28 +22,28 @@
 		'rcnumber' => 0,
 		'codename' => 'Mammal'
 	);
-	$pol['team'] = array(
+	$donut['team'] = array(
 		'managers' => array('Thomas de Roo'),
 		'developers' => array('Thomas de Roo'),
 	);
 
 	function pshowVersion()
  	{
- 		global $pol;
- 		$version = $pol['version']['major'].'.'.$pol['version']['minor'];
- 		if($pol['version']['alpha'])
- 			$version .= ' alpha '.$pol['version']['alphanumber'];
- 		if($pol['version']['beta'])
- 			$version .= ' beta '.$pol['version']['betanumber'];
- 		if($pol['version']['rc'])
- 			$version .= ' R.C. '.$pol['version']['rcnumber'];
- 		$version .= ' <i>('.$pol['version']['codename'].')</i>';
+ 		global $donut;
+ 		$version = $donut['version']['major'].'.'.$donut['version']['minor'];
+ 		if($donut['version']['alpha'])
+ 			$version .= ' alpha '.$donut['version']['alphanumber'];
+ 		if($donut['version']['beta'])
+ 			$version .= ' beta '.$donut['version']['betanumber'];
+ 		if($donut['version']['rc'])
+ 			$version .= ' R.C. '.$donut['version']['rcnumber'];
+ 		$version .= ' <i>('.$donut['version']['codename'].')</i>';
  		return $version;
  	}	
  	function pMySQL_version()
  	{
- 		global $pol;
- 		$r = $pol['db']->query("SELECT version() as ver;");
+ 		global $donut;
+ 		$r = $donut['db']->query("SELECT version() as ver;");
  		$v = $r->fetchObject();
  		return $v->ver;
  	}

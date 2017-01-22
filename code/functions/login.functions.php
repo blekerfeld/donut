@@ -8,53 +8,31 @@
 	File: login.functions.php
 */
 
-	function logged()
+	function pLogged()
 	{
-		return isset($_SESSION['pol_user']);
+		return isset($_SESSION['pUser']);
 	}
 
-	// @ AlIAS
-	function pLogged(){
-		return logged();
+
+	function pCheckAdmin($id = 0){
+		return pLogged();
 	}
 
-	function checkAdmin($id = 0){
-	/*
-		if(file_exists('../pbb-config.php'))
-			require_once('../pbb-config.php');
-		elseif(file_exists('pbb-config.php'))
-			require_once('pbb-config.php');
-		elseif(file_exists('forum/pbb-config.php'))
-			require_once('forum/pbb-config.php');
-		global $db;
-		$q = "SELECT * FROM par_users WHERE id = $id";
-		$row = mysql_fetch_row(mysql_query($q));
-		$am = $row[9];
-		if($am == "admin"){
-			return true;
-		}
-		else
-		{
-			return false;
-		}*/
-		return logged();
-	}
-
-	function polMemberExists($id)
+	function pMemberExists($id)
 	{
-		global $pol;
-		$result = $pol['db']->query("SELECT * FROM users WHERE id = '$id' LIMIT 1;");
+		global $donut;
+		$result = $donut['db']->query("SELECT * FROM users WHERE id = '$id' LIMIT 1;");
 		if($result->rowCount() == 1)
 			return true;
 		else
 			return false;
 	}
 
-	function polPasswordCheck($userid, $password)
+	function pPasswordCheck($userid, $password)
 	{
-		global $pol;
+		global $donut;
 		$password = polHash($password);
-		$result = $pol['db']->query("SELECT * FROM users WHERE id = '$userid' and password = '$password' LIMIT 1;");
+		$result = $donut['db']->query("SELECT * FROM users WHERE id = '$userid' and password = '$password' LIMIT 1;");
 		if($result->rowCount() == 1)
 			return true;
 		else
@@ -63,10 +41,10 @@
 	
 
 
-	function polUsernameToID($username)
+	function pUsernameToID($username)
 	{
-		global $pol;
-		$result = $pol['db']->query("SELECT id FROM users WHERE username = '$username' LIMIT 1;");
+		global $donut;
+		$result = $donut['db']->query("SELECT id FROM users WHERE username = '$username' LIMIT 1;");
 		if($result->rowCount() == 1)
 		{
 			$user = $result->fetchObject();
@@ -78,8 +56,8 @@
 
 	function pUserName($id)
 	{
-		global $pol;
-		$result = $pol['db']->query("SELECT username FROM users WHERE id = '$id' LIMIT 1;");
+		global $donut;
+		$result = $donut['db']->query("SELECT username FROM users WHERE id = '$id' LIMIT 1;");
 		if($result->rowCount() == 1)
 		{
 			$user = $result->fetchObject();
@@ -91,8 +69,8 @@
 
 	function pEditorLanguage($id)
 	{
-		global $pol;
-		$result = $pol['db']->query("SELECT editor_lang FROM users WHERE id = '$id' LIMIT 1;");
+		global $donut;
+		$result = $donut['db']->query("SELECT editor_lang FROM users WHERE id = '$id' LIMIT 1;");
 		if($result->rowCount() == 1)
 		{
 			$user = $result->fetchObject();
@@ -102,38 +80,29 @@
 			return false;
 	}
 
-
-
 	function polRegDate($id)
 	{
-		/*global $pol;
-		$result = $pol['db']->query("SELECT registerdate FROM users WHERE id = '$id' LIMIT 1;");
-		if($result->rowCount() == 1)
-		{
-			$user = $result->fetchObject();
-			return $user->registerdate;
-		}
-		else
-			return false;*/
+		return NULL;
 	}
 
-	function polLogonRestore()
+
+	function pLogonRestore()
 	{
-		global $pol;
-		if(isset($_COOKIE['lgnkeep']))
+		global $donut;
+		if(isset($_COOKIE['pKeepLogged']))
 		{
 			try
 			{
-				$arr = unserialize($_COOKIE['lgnkeep']);
-				$result = $pol['db']->query("SELECT * FROM users WHERE username = '{$arr[2]}' and password = '{$arr[1]}' and id = {$arr[0]} LIMIT 1;");
+				$arr = unserialize($_COOKIE['pKeepLogged']);
+				$result = $donut['db']->query("SELECT * FROM users WHERE username = '{$arr[2]}' and password = '{$arr[1]}' and id = {$arr[0]} LIMIT 1;");
 				if($result->rowCount() == 1)
 				{
-					$_SESSION['pol_user'] = $arr[0];
+					$_SESSION['pUser'] = $arr[0];
 				}
 				else
 				{
-					unset($_SESSION['pol_user']);
-					setcookie('lgnkeep', '', time() - 3600);
+					unset($_SESSION['pUser']);
+					setcookie('pKeepLogged', '', time() - 3600);
 				}
 			}
 			catch(Exception $e)

@@ -11,14 +11,14 @@
 
 
 	// WE ABSOLUTLY NEED TO BE LOGGED IN!!!
-	if(!logged())
+	if(!pLogged())
 	{
 		pUrl('', true);
 	}
 	
 
 	// Manage name
-	$pol['page']['title'] = "Classifications - ".$pol['page']['title']; 	
+	$donut['page']['title'] = "Classifications - ".$donut['page']['title']; 	
 
 	$die_actions = array('add_classification', 'edit_classification', 'classification_apply');
 

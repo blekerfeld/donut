@@ -11,9 +11,9 @@
 
 */
 
-global $pol;
+global $donut;
 
-$pol['lang_sub_files'] = array('date');
+$donut['lang_sub_files'] = array('date');
 	
 // 404 text
 define('ERROR_404_TITLE', 'Oops. Page not found. ');

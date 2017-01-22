@@ -11,13 +11,13 @@
 
 
 	// WE ABSOLUTLY NEED TO BE LOGGED IN!!!
-	if(!logged())
+	if(!pLogged())
 	{
 		pUrl('', true);
 	}
 	
 	// Manage name
-	$pol['page']['title'] = "Manage modes - ".$pol['page']['title']; 
+	$donut['page']['title'] = "Manage modes - ".$donut['page']['title']; 
 
 	$die_actions = array('add_mode', 'edit_mode', 'mode_apply', 'mode_types');
 

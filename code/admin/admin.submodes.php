@@ -11,13 +11,13 @@
 
 
 	// WE ABSOLUTLY NEED TO BE LOGGED IN!!!
-	if(!logged())
+	if(!pLogged())
 	{
 		pUrl('', true);
 	}
 
 	// Manage name
-	$pol['page']['title'] = "Submodes - ".$pol['page']['title']; 
+	$donut['page']['title'] = "Submodes - ".$donut['page']['title']; 
 	
 
 	$die_actions = array('add_submode', 'edit_submode', 'submode_apply');

@@ -28,8 +28,8 @@
         $(".elastic").elastic();
     });
     </script> 
-  <?php echo pAjaxLinks($pol['page']['title']); ?>
-  <title><?php global $pol; echo $pol['page']['title']; ?></title>
+  <?php echo pAjaxLinks($donut['page']['title']); ?>
+  <title><?php global $donut; echo $donut['page']['title']; ?></title>
   </head>
   <body class='dashboard'>
     <div class='topstripe'></div>
@@ -37,9 +37,9 @@
 
       <img class='logo-center' src='<?php echo pUrl('pol://library/static/logo.png') ; ?>' /> <img class='logo-admin' src='<?php echo pUrl('pol://library/static/admin_logo.png') ; ?>' /><i style="display: none;" id="pageload" class='fa fa-spinner fa-spin'></i>
       <div class='absolute_header'>
-       <?php if(logged()){ 
-          echo "<span style='float:right'>".MMENU_EDITORLANG."<span class='editorlangname'>".pLanguageName(pEditorLanguage($_SESSION['pol_user']))."</span> (<a href='".pUrl('?editorlanguage')."'>".MMENU_EDITORLANGCHANGE."</a>)</span>";
-          echo MMENU_LOGGEDIN.pUsername($_SESSION['pol_user'])." (<a href='".pUrl('?logout')."'>".MMENU_LOGOUT."</a>)";
+       <?php if(pLogged()){ 
+          echo "<span style='float:right'>".MMENU_EDITORLANG."<span class='editorlangname'>".pLanguageName(pEditorLanguage($_SESSION['pUser']))."</span> (<a href='".pUrl('?editorlanguage')."'>".MMENU_EDITORLANGCHANGE."</a>)</span>";
+          echo MMENU_LOGGEDIN.pUsername($_SESSION['pUser'])." (<a href='".pUrl('?logout')."'>".MMENU_LOGOUT."</a>)";
         }
         else {
           echo"<br />";
@@ -53,15 +53,15 @@
 
         <div class='ajaxOutLoad'>
           <div class='nav'>
-                <?php echo $pol['page']['menu']; ?>
+                <?php echo $donut['page']['menu']; ?>
           </div>
             <?php
-                if(!empty($pol['page']['header']))
-                  echo "<div class='header'>\n".$pol['page']['header_final']."\n </div>" ;
+                if(!empty($donut['page']['header']))
+                  echo "<div class='header'>\n".$donut['page']['header_final']."\n </div>" ;
             ?>
             <div class='page'>
                 <div class='ajaxHide'>
-                <?php global $pol; echo $pol['page']['content_final']; ?>
+                <?php global $donut; echo $donut['page']['content_final']; ?>
                 </div>
             </div>
             <?php if(!isset($_REQUEST['wap']))
@@ -69,7 +69,7 @@
           </div>
         <div class='footer'>
           <div class='inner_footer'>
-            <img src='library/static/logobw.png' /> <?php if(!logged()){ echo '<a href="'.pUrl('?login').'">'.MMENU_LOGIN.'</a> | '; } ?> <a href='#'>About us</a> | <a href='#'>Terms of use</a> | <a href='#'>Contact</a>  
+            <img src='library/static/logobw.png' /> <?php if(!pLogged()){ echo '<a href="'.pUrl('?login').'">'.MMENU_LOGIN.'</a> | '; } ?> <a href='#'>About us</a> | <a href='#'>Terms of use</a> | <a href='#'>Contact</a>  
           </div>  
         </div>
       <?php

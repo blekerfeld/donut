@@ -11,13 +11,13 @@
 
 
 	// WE ABSOLUTLY NEED TO BE LOGGED IN!!!
-	if(!logged())
+	if(!pLogged())
 	{
 		pUrl('', true);
 	}
 	
 	// Manage name
-	$pol['page']['title'] = "Numbers - ".$pol['page']['title']; 
+	$donut['page']['title'] = "Numbers - ".$donut['page']['title']; 
 
 	$die_actions = array('add_number', 'edit_number', 'number_apply');
 

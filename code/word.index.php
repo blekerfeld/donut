@@ -19,8 +19,8 @@ pOut('<td style="padding-left: 20px;"><div class="notice hide" style="display: n
       <div class="drop">');
 
 // Get noun
-global $pol;
-$rs = $pol['db']->query("SELECT * FROM words WHERE id = ".$_REQUEST['word']."");
+global $donut;
+$rs = $donut['db']->query("SELECT * FROM words WHERE id = ".$_REQUEST['word']."");
 if(!$word = $rs->fetchObject()){
 	pOut('<div class="notice danger-notice" id="empty"><i class="fa fa-warning"></i> The requested word is not a noun or doesn\'t exist.</div>');
 }
@@ -100,7 +100,6 @@ else{
 
 	// The inflection!
 	pOut('<div class="pSectionWrapper"><span style="cursor: pointer;" onClick="$(\'.inflections_instructions\').toggle();$(\'.inflections\').slideToggle(\'fast\');$(\'.hideIconInflect\').toggle();$(\'.showIconInflect\').toggle(function(){
-		$.get(\''.pUrl('index.php?ajax_set_session=show_inflections&ajax_set_session_auth='.$pol['session_auth'].'&ajax_set_session_value=').'\' + $(this).is(\':visible\'));
 	});"><span class="title extra">Inflections <span class="showIconInflect"><i class="fa fa-12 fa-chevron-down "></i></span><span class="hideIconInflect hide"><i class="fa fa-12 fa-chevron-up "></i> </span></span> <span class="inflections_instructions actionbutton" style="display:inline-block;margin-top: 10px;">Click to show</span><div class="inflections hide"><br />');
 
 	// Mode scopus

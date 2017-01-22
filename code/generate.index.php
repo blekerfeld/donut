@@ -8,7 +8,7 @@
 	File: index.generate.php
 */
 
-if(!logged())
+if(!pLogged())
 	pUrl('', true);
 
 if(isset($_REQUEST['ajax']) and isset($_REQUEST['language']) and isset($_REQUEST['subtitle']) and isset($_REQUEST['author'])){

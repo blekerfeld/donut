@@ -1,53 +1,51 @@
 <?php
 
-function pMarkDownParse($text, $line = false){
+function pMarkDownParse($text){
+	
 	// We need to require the parsedown files, but only once.
 	require_once pFromRoot('library/parsedown.require.php');
 	require_once pFromRoot('library/parsedown_extra.require.php');
 
 	$parse = new ParsedownExtra;
 
-	if($line)
-		return $parse->line($text);
-	else
-		return $parse->text($text);
+	return $parse->text($text);
 }
 
 
 function pLanguageDelete($id){
 
-	global $pol;
+	global $donut;
 	// First we need to loop through all the translation
 	$q = "DELETE translation_words FROM translation_words JOIN translations ON translations.id = translation_words.translation_id WHERE translations.language_id = $id;
 	DELETE FROM idiom_translations WHERE language_id = $id;
 	DELETE FROM translations WHERE language_id = $id;
 	UPDATE users SET editor_lang = 1 WHERE editor_lang = $id;
 	DELETE FROM languages WHERE id = $id";
-	return $pol['db']->query($q);
+	return $donut['db']->query($q);
 }
 
 function pLanguageUpdate($id, $name, $hidden_entry, $flag, $activated){
 
-	global $pol;
+	global $donut;
 	$q = "UPDATE languages SET name = '$name', hidden_native_entry  = '$hidden_entry',  flag = '$flag', activated = '$activated' WHERE id = '$id';";
-	return $pol['db']->query($q);
+	return $donut['db']->query($q);
 }
 
 function pLanguageAdd($name, $hidden_entry, $flag,  $activated){
 
-	global $pol;
+	global $donut;
 	$q = "INSERT INTO languages (`name`, `hidden_native_entry`, `flag`, `activated`) VALUES ('$name', '$hidden_entry', '$flag', '$activated');";
-	return $pol['db']->query($q);
+	return $donut['db']->query($q);
 }
 
 
 function pGetLanguages($activated = true, $offset = ''){
 
-	global $pol;
+	global $donut;
 	$q = "SELECT * FROM languages WHERE id <> 0 $offset";
 	if($activated)
 		$q .= ' AND activated = "1"';
-	return $pol['db']->query($q);
+	return $donut['db']->query($q);
 }
 
 function pDisabledLanguage($id){
@@ -62,9 +60,9 @@ function pDisabledLanguage($id){
 }
 
 function pGetLanguageZero(){
-	global $pol;
+	global $donut;
 	$q = "SELECT * FROM languages WHERE id = 0";
-	$rs = $pol['db']->query($q);
+	$rs = $donut['db']->query($q);
 	if($rs->rowCount() == 0)
 		return false;
 	else
@@ -72,9 +70,9 @@ function pGetLanguageZero(){
 }
 
 function pGetLanguage($id){
-	global $pol;
+	global $donut;
 	$q = "SELECT * FROM languages WHERE id = $id";
-	$rs = $pol['db']->query($q);
+	$rs = $donut['db']->query($q);
 	if($rs->rowCount() == 0)
 		return false;
 	else
@@ -84,9 +82,9 @@ function pGetLanguage($id){
 
 function pLanguageName($id)
 {
-	global $pol;
+	global $donut;
 	$q = "SELECT * FROM languages WHERE id = '".$id."' LIMIT 1;";
-	$rs = $pol['db']->query($q);
+	$rs = $donut['db']->query($q);
 	if($rs->rowCount() != 0)
 	{
 		$rt = $rs->fetchObject();
@@ -103,24 +101,24 @@ function pLanguageName($id)
 
 
 function pGetClassificationsApply($id, $offset = ''){
-	global $pol;
+	global $donut;
 	$q = "SELECT * FROM classification_apply WHERE classification_id = ".$id." $offset";
-	$rs = $pol['db']->query($q);
+	$rs = $donut['db']->query($q);
 	return $rs;
 }
 
 function pCountClassificationsApply($id){
-	global $pol;
+	global $donut;
 	$q = "SELECT * FROM classification_apply WHERE classification_id = ".$id;
-	$rs = $pol['db']->query($q);
+	$rs = $donut['db']->query($q);
 	return $rs->rowCount();
 }
 
 
 function pExistClassificationApply($classification_id, $type_id){
-	global $pol;
+	global $donut;
 	$q = "SELECT * FROM classification_apply WHERE type_id = '$type_id' AND classification_id = '$classification_id'";
-	$rs = $pol['db']->query($q);
+	$rs = $donut['db']->query($q);
 	if($rs->rowCount() == 0)
 		return false;
 	else
@@ -130,15 +128,15 @@ function pExistClassificationApply($classification_id, $type_id){
 
 function pGetClassifications($type = 0, $force = false, $force_get = 0, $offset = ''){
 
-	global $pol;
+	global $donut;
 	if($type == 0){
 		$q = "SELECT * FROM classifications $offset";
-		$rs = $pol['db']->query($q);
+		$rs = $donut['db']->query($q);
 		return $rs;
 	}
 	elseif(!$force){
 		$q = "SELECT * FROM classification_apply WHERE type_id = ".$type." $offset";
-		$rs = $pol['db']->query($q);
+		$rs = $donut['db']->query($q);
 		$results = array();
 		if($rs->rowCount() == 0)
 			return false;
@@ -151,7 +149,7 @@ function pGetClassifications($type = 0, $force = false, $force_get = 0, $offset 
 	}
 	else{
 		$q = "SELECT * FROM classifications WHERE id = ".$force_get." $offset";
-		$rs = $pol['db']->query($q);
+		$rs = $donut['db']->query($q);
 		$results = array();
 		if($rs->rowCount() == 0)
 			return false;
@@ -167,9 +165,9 @@ function pGetClassifications($type = 0, $force = false, $force_get = 0, $offset 
 
 function pGetClassification($id)
 {
-	global $pol;
+	global $donut;
 	$q = "SELECT * FROM classifications WHERE id = '".$id."' LIMIT 1;";
-	$rs = $pol['db']->query($q);
+	$rs = $donut['db']->query($q);
 	if($rs->rowCount() != 0)
 	{
 		$rt = $rs->fetchObject();
@@ -185,47 +183,47 @@ function pGetClassification($id)
 
 function pClassificationUpdate($id, $name, $shortname, $entry, $entry_short){
 
-	global $pol;
+	global $donut;
 	$q = "UPDATE classifications SET name = '$name', short_name = '$shortname', native_hidden_entry  = '$entry', native_hidden_entry_short  = '$entry_short' WHERE id = '$id';";
-	return $pol['db']->query($q);
+	return $donut['db']->query($q);
 }
 
 
 function pClassificationAdd($name, $shortname, $entry, $entry_short){
 
-	global $pol;
+	global $donut;
 	$q = "INSERT INTO classifications VALUES (NULL, '$name', '$shortname', '$entry', '$entry_short');";
-	return $pol['db']->query($q);
+	return $donut['db']->query($q);
 }
 
 function pClassificationApplyAdd($classification_id, $type_id){
 
-	global $pol;
+	global $donut;
 	$q = "INSERT INTO classification_apply VALUES (NULL, '$classification_id', '$type_id');";
-	return $pol['db']->query($q);
+	return $donut['db']->query($q);
 }
 
 
 function pClassificationDelete($id){
 
-	global $pol;
+	global $donut;
 	$q = "DELETE FROM classifications WHERE id = $id";
-	return $pol['db']->query($q);
+	return $donut['db']->query($q);
 }
 
 function pClassificationApplyDelete($type_id, $classification_id){
 
-	global $pol;
+	global $donut;
 	$q = "DELETE FROM classification_apply WHERE type_id = '$type_id' AND classification_id = '$classification_id';";
-	return $pol['db']->query($q);
+	return $donut['db']->query($q);
 }
 
 
 function pClassificationName($id)
 {
-	global $pol;
+	global $donut;
 	$q = "SELECT * FROM classifications WHERE id = '".$id."' LIMIT 1;";
-	$rs = $pol['db']->query($q);
+	$rs = $donut['db']->query($q);
 	if($rs->rowCount() != 0)
 	{
 		$rt = $rs->fetchObject();
@@ -241,24 +239,24 @@ function pClassificationName($id)
 
 
 function pGetSubclassificationsApply($id, $offset = ''){
-	global $pol;
+	global $donut;
 	$q = "SELECT * FROM subclassification_apply WHERE subclassification_id = ".$id." $offset";
-	$rs = $pol['db']->query($q);
+	$rs = $donut['db']->query($q);
 	return $rs;
 }
 
 function pCountSubclassificationsApply($id){
-	global $pol;
+	global $donut;
 	$q = "SELECT * FROM subclassification_apply WHERE subclassification_id = ".$id;
-	$rs = $pol['db']->query($q);
+	$rs = $donut['db']->query($q);
 	return $rs->rowCount();
 }
 
 
 function pExistSubclassificationApply($subclassification_id, $type_id){
-	global $pol;
+	global $donut;
 	$q = "SELECT * FROM subclassification_apply WHERE classification_id = '$type_id' AND subclassification_id = '$subclassification_id'";
-	$rs = $pol['db']->query($q);
+	$rs = $donut['db']->query($q);
 	if($rs->rowCount() == 0)
 		return false;
 	else
@@ -268,15 +266,15 @@ function pExistSubclassificationApply($subclassification_id, $type_id){
 
 function pGetSubclassifications($type = 0, $force = false, $force_get = 0, $offset = ''){
 
-	global $pol;
+	global $donut;
 	if($type == 0){
 		$q = "SELECT * FROM subclassifications $offset";
-		$rs = $pol['db']->query($q);
+		$rs = $donut['db']->query($q);
 		return $rs;
 	}
 	elseif(!$force){
 		$q = "SELECT * FROM subclassification_apply WHERE type_id = ".$type." $offset";
-		$rs = $pol['db']->query($q);
+		$rs = $donut['db']->query($q);
 		$results = array();
 		if($rs->rowCount() == 0)
 			return false;
@@ -289,7 +287,7 @@ function pGetSubclassifications($type = 0, $force = false, $force_get = 0, $offs
 	}
 	else{
 		$q = "SELECT * FROM subclassifications WHERE id = ".$force_get." $offset";
-		$rs = $pol['db']->query($q);
+		$rs = $donut['db']->query($q);
 		$results = array();
 		if($rs->rowCount() == 0)
 			return false;
@@ -305,9 +303,9 @@ function pGetSubclassifications($type = 0, $force = false, $force_get = 0, $offs
 
 function pGetSubclassification($id)
 {
-	global $pol;
+	global $donut;
 	$q = "SELECT * FROM subclassifications WHERE id = '".$id."' LIMIT 1;";
-	$rs = $pol['db']->query($q);
+	$rs = $donut['db']->query($q);
 	if($rs->rowCount() != 0)
 	{
 		$rt = $rs->fetchObject();
@@ -323,47 +321,47 @@ function pGetSubclassification($id)
 
 function pSubclassificationUpdate($id, $name, $shortname, $entry, $entry_short){
 
-	global $pol;
+	global $donut;
 	$q = "UPDATE subclassifications SET name = '$name', short_name = '$shortname', native_hidden_entry  = '$entry', native_hidden_entry_short  = '$entry_short' WHERE id = '$id';";
-	return $pol['db']->query($q);
+	return $donut['db']->query($q);
 }
 
 
 function pSubclassificationAdd($name, $shortname, $entry, $entry_short){
 
-	global $pol;
+	global $donut;
 	$q = "INSERT INTO subclassifications VALUES (NULL, '$name', '$shortname', '$entry', '$entry_short');";
-	return $pol['db']->query($q);
+	return $donut['db']->query($q);
 }
 
 function pSubclassificationApplyAdd($subclassification_id, $type_id){
 
-	global $pol;
+	global $donut;
 	$q = "INSERT INTO subclassification_apply VALUES (NULL, '$subclassification_id', '$type_id');";
-	return $pol['db']->query($q);
+	return $donut['db']->query($q);
 }
 
 
 function pSubclassificationDelete($id){
 
-	global $pol;
+	global $donut;
 	$q = "DELETE FROM subclassifications WHERE id = $id";
-	return $pol['db']->query($q);
+	return $donut['db']->query($q);
 }
 
 function pSubclassificationApplyDelete($type_id, $subclassification_id){
 
-	global $pol;
+	global $donut;
 	$q = "DELETE FROM subclassification_apply WHERE classification_id = '$type_id' AND subclassification_id = '$subclassification_id';";
-	return $pol['db']->query($q);
+	return $donut['db']->query($q);
 }
 
 
 function pSubclassificationName($id)
 {
-	global $pol;
+	global $donut;
 	$q = "SELECT * FROM subclassifications WHERE id = '".$id."' LIMIT 1;";
-	$rs = $pol['db']->query($q);
+	$rs = $donut['db']->query($q);
 	if($rs->rowCount() != 0)
 	{
 		$rt = $rs->fetchObject();
@@ -379,15 +377,15 @@ function pSubclassificationName($id)
 
 function pGetNumbers($type = 0, $force = false, $force_get = 0, $offset = ''){
 
-	global $pol;
+	global $donut;
 	if($type == 0){
 		$q = "SELECT * FROM numbers $offset";
-		$rs = $pol['db']->query($q);
+		$rs = $donut['db']->query($q);
 		return $rs;
 	}
 	elseif(!$force){
 		$q = "SELECT * FROM number_apply WHERE type_id = ".$type. " $offset";
-		$rs = $pol['db']->query($q);
+		$rs = $donut['db']->query($q);
 		$results = array();
 		if($rs->rowCount() == 0)
 			return false;
@@ -400,7 +398,7 @@ function pGetNumbers($type = 0, $force = false, $force_get = 0, $offset = ''){
 	}
 	else{
 		$q = "SELECT * FROM numbers WHERE id = ".$force_get." $offset";
-		$rs = $pol['db']->query($q);
+		$rs = $donut['db']->query($q);
 		$results = array();
 		if($rs->rowCount() == 0)
 			return false;
@@ -416,17 +414,17 @@ function pGetNumbers($type = 0, $force = false, $force_get = 0, $offset = ''){
 
 
 function pCountNumbersApply($id){
-	global $pol;
+	global $donut;
 	$q = "SELECT * FROM number_apply WHERE number_id = ".$id;
-	$rs = $pol['db']->query($q);
+	$rs = $donut['db']->query($q);
 	return $rs->rowCount();
 }
 
 
 function pExistNumberApply($number_id, $type_id){
-	global $pol;
+	global $donut;
 	$q = "SELECT * FROM number_apply WHERE type_id = '$type_id' AND number_id = '$number_id'";
-	$rs = $pol['db']->query($q);
+	$rs = $donut['db']->query($q);
 	if($rs->rowCount() == 0)
 		return false;
 	else
@@ -434,56 +432,56 @@ function pExistNumberApply($number_id, $type_id){
 }
 
 function pGetNumbersApply($id, $offset = ''){
-	global $pol;
+	global $donut;
 	$q = "SELECT * FROM number_apply WHERE number_id = ".$id." $offset";
-	$rs = $pol['db']->query($q);
+	$rs = $donut['db']->query($q);
 	return $rs;
 }
 
 function pNumberApplyDelete($type_id, $number_id){
 
-	global $pol;
+	global $donut;
 	$q = "DELETE FROM number_apply WHERE type_id = '$type_id' AND number_id = '$number_id';";
-	return $pol['db']->query($q);
+	return $donut['db']->query($q);
 }
 
 function pNumberApplyAdd($number_id, $type_id){
 
-	global $pol;
+	global $donut;
 	$q = "INSERT INTO number_apply VALUES (NULL, '$number_id', '$type_id');";
-	return $pol['db']->query($q);
+	return $donut['db']->query($q);
 }
 
 
 function pNumberUpdate($id, $name, $shortname, $entry, $entry_short){
 
-	global $pol;
+	global $donut;
 	$q = "UPDATE numbers SET name = '$name', short_name = '$shortname', native_hidden_entry  = '$entry', native_hidden_entry_short  = '$entry_short' WHERE id = '$id';";
-	return $pol['db']->query($q);
+	return $donut['db']->query($q);
 }
 
 
 function pNumberAdd($name, $shortname, $entry, $entry_short){
 
-	global $pol;
+	global $donut;
 	$q = "INSERT INTO numbers VALUES (NULL, '$name', '$shortname', '$entry', '$entry_short');";
-	return $pol['db']->query($q);
+	return $donut['db']->query($q);
 }
 
 
 function pNumberDelete($id){
 
-	global $pol;
+	global $donut;
 	$q = "DELETE FROM numbers WHERE id = $id";
-	return $pol['db']->query($q);
+	return $donut['db']->query($q);
 }
 
 
 function pNumberName($id)
 {
-	global $pol;
+	global $donut;
 	$q = "SELECT * FROM numbers WHERE id = '".$id."' LIMIT 1;";
-	$rs = $pol['db']->query($q);
+	$rs = $donut['db']->query($q);
 	if($rs->rowCount() != 0)
 	{
 		$rt = $rs->fetchObject();
@@ -503,14 +501,14 @@ function pNumberName($id)
 
 function pGetModes($type = 0, $offset = ''){
 
-	global $pol;
+	global $donut;
 
 	if($type == 0)
 		$q = "SELECT * FROM modes $offset";
 	else
 		$q = "SELECT * FROM mode_apply WHERE type_id = ".$type." $offset";
 	
-	$rs = $pol['db']->query($q);
+	$rs = $donut['db']->query($q);
 	$results = array();
 
 	if($type == 0)
@@ -529,22 +527,22 @@ function pGetModes($type = 0, $offset = ''){
 
 function pGetModeTypes($type = 0, $offset = ''){
 
-	global $pol;
+	global $donut;
 
 	$q = "SELECT * FROM mode_types $offset";
 	
-	return $pol['db']->query($q);
+	return $donut['db']->query($q);
 
 }
 
 
 function pModeTypeName($id){
 
-	global $pol;
+	global $donut;
 
 	$q = "SELECT name FROM mode_types WHERE id = $id LIMIT 1;";
 
-	$rs = $pol['db']->query($q);
+	$rs = $donut['db']->query($q);
 
 	if(!($rr = $rs->fetchObject()))
 		return '';
@@ -556,11 +554,11 @@ function pModeTypeName($id){
 
 function pGetModeType($id){
 
-	global $pol;
+	global $donut;
 
 	$q = "SELECT * FROM mode_types WHERE id = $id LIMIT 1;";
 
-	$rs = $pol['db']->query($q);
+	$rs = $donut['db']->query($q);
 
 	if(!($rr = $rs->fetchObject()))
 		return '';
@@ -571,32 +569,32 @@ function pGetModeType($id){
 
 function pModeTypeDelete($id){
 
-	global $pol;
+	global $donut;
 	$q = "DELETE FROM mode_types WHERE id = '$id';";
-	return $pol['db']->query($q);
+	return $donut['db']->query($q);
 }
 
 function pModeTypeAdd($name){
 
-	global $pol;
+	global $donut;
 	$q = "INSERT INTO mode_types VALUES (NULL, '$name');";
-	return $pol['db']->query($q);
+	return $donut['db']->query($q);
 }
 
 function pModeTypeUpdate($id, $name){
 
-	global $pol;
+	global $donut;
 	$q = "UPDATE mode_types SET name = '$name' WHERE id = $id;";
-	return $pol['db']->query($q);
+	return $donut['db']->query($q);
 }
 
 
 
 function pGetMode($id)
 {
-	global $pol;
+	global $donut;
 	$q = "SELECT * FROM modes WHERE id = '".$id."' LIMIT 1;";
-	$rs = $pol['db']->query($q);
+	$rs = $donut['db']->query($q);
 	if($rs->rowCount() != 0)
 	{
 		$rt = $rs->fetchObject();
@@ -610,17 +608,17 @@ function pGetMode($id)
 
 
 function pCountModesApply($id){
-	global $pol;
+	global $donut;
 	$q = "SELECT * FROM mode_apply WHERE mode_id = ".$id;
-	$rs = $pol['db']->query($q);
+	$rs = $donut['db']->query($q);
 	return $rs->rowCount();
 }
 
 
 function pExistModeApply($mode_id, $type_id){
-	global $pol;
+	global $donut;
 	$q = "SELECT * FROM mode_apply WHERE type_id = '$type_id' AND mode_id = '$mode_id'";
-	$rs = $pol['db']->query($q);
+	$rs = $donut['db']->query($q);
 	if($rs->rowCount() == 0)
 		return false;
 	else
@@ -628,41 +626,41 @@ function pExistModeApply($mode_id, $type_id){
 }
 
 function pGetModesApply($id, $offset = ''){
-	global $pol;
+	global $donut;
 	$q = "SELECT * FROM mode_apply WHERE mode_id = ".$id."$offset";
-	$rs = $pol['db']->query($q);
+	$rs = $donut['db']->query($q);
 	return $rs;
 }
 
 function pModeApplyDelete($type_id, $mode_id){
 
-	global $pol;
+	global $donut;
 	$q = "DELETE FROM mode_apply WHERE type_id = '$type_id' AND mode_id = '$mode_id';";
-	return $pol['db']->query($q);
+	return $donut['db']->query($q);
 }
 
 function pModeApplyAdd($mode_id, $type_id){
 
-	global $pol;
+	global $donut;
 	$q = "INSERT INTO mode_apply VALUES (NULL, '$mode_id', '$type_id', '');";
-	return $pol['db']->query($q);
+	return $donut['db']->query($q);
 }
 
 
 function pModeUpdate($id, $name, $shortname, $entry, $mode_type_id){
 
-	global $pol;
+	global $donut;
 	$q = "UPDATE modes SET name = '$name', short_name = '$shortname', hidden_native_entry  = '$entry', mode_type_id = '$mode_type_id'
 	 WHERE id = '$id';";
-	return $pol['db']->query($q);
+	return $donut['db']->query($q);
 }
 
 
 function pModeAdd($name, $shortname, $entry, $mode_type_id){
 
-	global $pol;
+	global $donut;
 	$q = "INSERT INTO modes VALUES (NULL, '$name', '$shortname', '$entry', '$mode_type_id');";
-	if($rs = $pol['db']->query($q))
+	if($rs = $donut['db']->query($q))
 	{
 		return true;
 	}
@@ -673,17 +671,17 @@ function pModeAdd($name, $shortname, $entry, $mode_type_id){
 
 function pModeDelete($id){
 
-	global $pol;
+	global $donut;
 	$q = "DELETE FROM modes WHERE id = $id";
-	return $pol['db']->query($q);
+	return $donut['db']->query($q);
 }
 
 
 function pModeName($id)
 {
-	global $pol;
+	global $donut;
 	$q = "SELECT name FROM modes WHERE id = '".$id."' LIMIT 1;";
-	$rs = $pol['db']->query($q);
+	$rs = $donut['db']->query($q);
 	if($rs->rowCount() != 0)
 	{
 		$rt = $rs->fetchObject();
@@ -698,9 +696,9 @@ function pModeName($id)
 
 function pModeShortName($id)
 {
-	global $pol;
+	global $donut;
 	$q = "SELECT short_name FROM modes WHERE id = '".$id."' LIMIT 1;";
-	$rs = $pol['db']->query($q);
+	$rs = $donut['db']->query($q);
 	if($rs->rowCount() != 0)
 	{
 		$rt = $rs->fetchObject();
@@ -717,9 +715,9 @@ function pModeShortName($id)
 
 function pGetType($id)
 {
-	global $pol;
+	global $donut;
 	$q = "SELECT * FROM types WHERE id = '".$id."' LIMIT 1;";
-	$rs = $pol['db']->query($q);
+	$rs = $donut['db']->query($q);
 	if($rs->rowCount() != 0)
 	{
 		$rt = $rs->fetchObject();
@@ -733,41 +731,41 @@ function pGetType($id)
 
 function pGetTypes($offset = ''){
 
-	global $pol;
+	global $donut;
 	$q = "SELECT * FROM types $offset";
-	return $pol['db']->query($q);
+	return $donut['db']->query($q);
 }
 
 
 function pTypeUpdate($id, $name, $shortname, $entry, $entry_short, $inflect_classifications){
 
-	global $pol;
+	global $donut;
 	$q = "UPDATE types SET name = '$name', short_name = '$shortname', native_hidden_entry  = '$entry', native_hidden_entry_short  = '$entry_short', inflect_classifications = '$inflect_classifications' WHERE id = '$id';";
-	return $pol['db']->query($q);
+	return $donut['db']->query($q);
 }
 
 
 function pTypeAdd($name, $shortname, $entry, $entry_short, $inflect_classifications){
 
-	global $pol;
+	global $donut;
 	$q = "INSERT INTO types  VALUES (NULL, '$name', '$shortname', '$entry', '$entry_short', '$inflect_classifications');";
-	return $pol['db']->query($q);
+	return $donut['db']->query($q);
 }
 
 
 function pTypeDelete($id){
 
-	global $pol;
+	global $donut;
 	$q = "DELETE FROM types WHERE id = $id";
-	return $pol['db']->query($q);
+	return $donut['db']->query($q);
 }
 
 
 function pTypeName($id)
 {
-	global $pol;
+	global $donut;
 	$q = "SELECT * FROM types WHERE id = '".$id."' LIMIT 1;";
-	$rs = $pol['db']->query($q);
+	$rs = $donut['db']->query($q);
 	if($rs->rowCount() != 0)
 	{
 		$rt = $rs->fetchObject();
@@ -780,9 +778,9 @@ function pTypeName($id)
 }
 
 function pTypeInflectClassifications($id)
-{		global $pol;
+{		global $donut;
 	$q = "SELECT * FROM types WHERE id = '".$id."' LIMIT 1;";
-	$rs = $pol['db']->query($q);
+	$rs = $donut['db']->query($q);
 	if($rs->rowCount() != 0)
 	{
 		$rt = $rs->fetchObject();
@@ -795,7 +793,7 @@ function pTypeInflectClassifications($id)
 
 function pGetSubModes($type = 0, $offset = ''){
 
-	global $pol;
+	global $donut;
 
 
 	if($type == 0)
@@ -805,7 +803,7 @@ function pGetSubModes($type = 0, $offset = ''){
 	
 
 
-	$rs = $pol['db']->query($q);
+	$rs = $donut['db']->query($q);
 	$results = array();
 
 	if($type == 0)
@@ -826,9 +824,9 @@ function pGetSubModes($type = 0, $offset = ''){
 
 function pGetSubMode($id)
 {
-	global $pol;
+	global $donut;
 	$q = "SELECT * FROM submodes WHERE id = '".$id."' LIMIT 1;";
-	$rs = $pol['db']->query($q);
+	$rs = $donut['db']->query($q);
 	if($rs->rowCount() != 0)
 	{
 		$rt = $rs->fetchObject();
@@ -842,17 +840,17 @@ function pGetSubMode($id)
 
 
 function pCountSubmodesApply($id, $offset = ''){
-	global $pol;
+	global $donut;
 	$q = "SELECT * FROM submode_apply WHERE submode_id = ".$id." $offset";
-	$rs = $pol['db']->query($q);
+	$rs = $donut['db']->query($q);
 	return $rs->rowCount();
 }
 
 
 function pExistSubmodeApply($submode_id, $type_id){
-	global $pol;
+	global $donut;
 	$q = "SELECT * FROM submode_apply WHERE type_id = '$type_id' AND submode_id = '$submode_id'";
-	$rs = $pol['db']->query($q);
+	$rs = $donut['db']->query($q);
 	if($rs->rowCount() == 0)
 		return false;
 	else
@@ -860,48 +858,48 @@ function pExistSubmodeApply($submode_id, $type_id){
 }
 
 function pGetSubmodesApply($id){
-	global $pol;
+	global $donut;
 	$q = "SELECT * FROM submode_apply WHERE submode_id = ".$id;
-	$rs = $pol['db']->query($q);
+	$rs = $donut['db']->query($q);
 	return $rs;
 }
 
 function pSubModeApplyDelete($type_id, $submode_id){
 
-	global $pol;
+	global $donut;
 	$q = "DELETE FROM submode_apply WHERE type_id = '$type_id' AND submode_id = '$submode_id';";
-	return $pol['db']->query($q);
+	return $donut['db']->query($q);
 }
 
 function pSubModeApplyAdd($submode_id, $type_id){
 
-	global $pol;
+	global $donut;
 	$q = "INSERT INTO submode_apply VALUES (NULL, '$submode_id', '$type_id');";
-	return $pol['db']->query($q);
+	return $donut['db']->query($q);
 }
 
 
 function pSubModeUpdate($id, $name, $shortname, $entry, $mode_type_id){
 
-	global $pol;
+	global $donut;
 	$q = "UPDATE submodes SET name = '$name', short_name = '$shortname', hidden_native_entry  = '$entry', 
 		mode_type_id = '$mode_type_id'
 	 WHERE id = '$id';";
-	return $pol['db']->query($q);
+	return $donut['db']->query($q);
 }
 
 
 function pSubModeAdd($name, $shortname, $entry, $mode_type_id){
 
-	global $pol;
+	global $donut;
 	$q = "INSERT INTO submodes VALUES (NULL, '$name', '$shortname', '$entry', '$mode_type_id');";
-	if($rs = $pol['db']->query($q))
+	if($rs = $donut['db']->query($q))
 	{
 		if($aux_mode_id == '0')
 		{
-			$id = $pol['db']->lastInsertId();
+			$id = $donut['db']->lastInsertId();
 			$q = "UPDATE modes SET aux_mode_id = '$id' WHERE id = '$id';";
-			return $pol['db']->query($q);
+			return $donut['db']->query($q);
 		}
 	}
 	else
@@ -911,17 +909,17 @@ function pSubModeAdd($name, $shortname, $entry, $mode_type_id){
 
 function pSubModeDelete($id){
 
-	global $pol;
+	global $donut;
 	$q = "DELETE FROM modes WHERE id = $id";
-	return $pol['db']->query($q);
+	return $donut['db']->query($q);
 }
 
 
 function pSubModeName($id)
 {
-	global $pol;
+	global $donut;
 	$q = "SELECT name FROM submodes WHERE id = '".$id."' LIMIT 1;";
-	$rs = $pol['db']->query($q);
+	$rs = $donut['db']->query($q);
 	if($rs->rowCount() != 0)
 	{
 		$rt = $rs->fetchObject();
@@ -936,9 +934,9 @@ function pSubModeName($id)
 
 function pSubModeShortName($id)
 {
-	global $pol;
+	global $donut;
 	$q = "SELECT short_name FROM submodes WHERE id = '".$id."' LIMIT 1;";
-	$rs = $pol['db']->query($q);
+	$rs = $donut['db']->query($q);
 	if($rs->rowCount() != 0)
 	{
 		$rt = $rs->fetchObject();
@@ -955,19 +953,19 @@ function pSubModeShortName($id)
 
 function pGetRulegroups($offset = ''){
 
-	global $pol;
-	return $pol['db']->query("SELECT * FROM submode_groups $offset;");
+	global $donut;
+	return $donut['db']->query("SELECT * FROM submode_groups $offset;");
 
 }
 
 
 function pGetRulegroupMembers($id, $offset = ''){
 
-	global $pol;
+	global $donut;
 
 	$q = "SELECT * FROM submode_group_members WHERE submode_group_id = $id $offset";
 	
-	$rs = $pol['db']->query($q);
+	$rs = $donut['db']->query($q);
 	$results = array();
 
 	if($type == 0)
@@ -979,9 +977,9 @@ function pGetRulegroupMembers($id, $offset = ''){
 
 function pGetRulegroup($id)
 {
-	global $pol;
+	global $donut;
 	$q = "SELECT * FROM submode_groups WHERE id = '".$id."' LIMIT 1;";
-	$rs = $pol['db']->query($q);
+	$rs = $donut['db']->query($q);
 	if($rs->rowCount() != 0)
 	{
 		$rt = $rs->fetchObject();
@@ -997,18 +995,18 @@ function pGetRulegroup($id)
 
 function pRulegroupUpdate($id, $name, $type){
 
-	global $pol;
+	global $donut;
 	$q = "UPDATE submode_groups SET name = '$name', type_id = '$type'
 	 WHERE id = '$id';";
-	return $pol['db']->query($q);
+	return $donut['db']->query($q);
 }
 
 
 function pRulegroupAdd($name, $type){
 
-	global $pol;
+	global $donut;
 	$q = "INSERT INTO submode_groups VALUES (NULL, '$name', '$type');";
-	if($rs = $pol['db']->query($q))
+	if($rs = $donut['db']->query($q))
 	{
 		return true;
 	}
@@ -1019,17 +1017,17 @@ function pRulegroupAdd($name, $type){
 
 function pRulegroupDelete($id){
 
-	global $pol;
+	global $donut;
 	$q = "DELETE FROM submode_groups WHERE id = $id";
-	return $pol['db']->query($q);
+	return $donut['db']->query($q);
 }
 
 
 function pRulegroupName($id)
 {
-	global $pol;
+	global $donut;
 	$q = "SELECT name FROM submode_groups  WHERE id = '".$id."' LIMIT 1;";
-	$rs = $pol['db']->query($q);
+	$rs = $donut['db']->query($q);
 	if($rs->rowCount() != 0)
 	{
 		$rt = $rs->fetchObject();
@@ -1045,9 +1043,9 @@ function pRulegroupName($id)
 
 function pGetNumber($id)
 {
-	global $pol;
+	global $donut;
 	$q = "SELECT * FROM numbers WHERE id = '".$id."' LIMIT 1;";
-	$rs = $pol['db']->query($q);
+	$rs = $donut['db']->query($q);
 	if($rs->rowCount() != 0)
 	{
 		$rt = $rs->fetchObject();

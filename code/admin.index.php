@@ -12,7 +12,7 @@
 
 
 	// WE ABSOLUTLY NEED TO BE LOGGED IN!!!
-	if(!logged() OR !checkAdmin())
+	if(!pLogged() OR !pCheckAdmin())
 	{
 		pUrl('', true);
 	}
@@ -157,9 +157,9 @@
 	if(isset($_GET['section'])){
 
 		if (in_array($_GET['section'], $allowed_sections)) {
-			if(file_exists($pol['root_path'] . '\code\admin\admin.' . $_GET['section'] . '.php')){
+			if(file_exists($donut['root_path'] . '\code\admin\admin.' . $_GET['section'] . '.php')){
 				pOut("<div class='adminsection'>");
-				require $pol['root_path'] . '\code\admin\admin.' . $_GET['section'] . '.php';
+				require $donut['root_path'] . '\code\admin\admin.' . $_GET['section'] . '.php';
 				pOut("</div>");
 			} else {
 				pOut('<div class="notice danger-notice" id="empty"><i class="fa fa-warning"></i> The requested section does not exist.</div><br />');
