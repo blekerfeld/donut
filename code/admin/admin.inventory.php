@@ -10,13 +10,13 @@
 
 
 	// WE ABSOLUTLY NEED TO BE LOGGED IN!!!
-	if(!logged())
+	if(!pLogged())
 	{
 		pUrl('', true);
 	}
 	
 	// Manage name
-	$pol['page']['title'] = "Phonological inventory - ".$pol['page']['title']; 
+	$donut['page']['title'] = "Phonological inventory - ".$donut['page']['title']; 
 
 	$die_actions = array('add_copy', 'edit_mode', 'mode_apply', 'mode_types');
 
@@ -29,14 +29,14 @@
 		if($_REQUEST['action'] == 'toggle' AND isset($_REQUEST['c']))
 		{
 
-			$pol['db']->query("UPDATE ipa_c SET active = IF(ipa_c.active=1, 0, 1) WHERE id = ".$_REQUEST['c']." LIMIT 1;");
+			$donut['db']->query("UPDATE ipa_c SET active = IF(ipa_c.active=1, 0, 1) WHERE id = ".$_REQUEST['c']." LIMIT 1;");
 			pOut("<script>$('.c-".$_REQUEST['c']."').toggleClass('selected');</script>");
 
 		}
 		elseif($_REQUEST['action'] == 'toggle' AND isset($_REQUEST['v']))
 		{
 
-			$pol['db']->query("UPDATE ipa_v SET active = IF(ipa_v.active=1, 0, 1) WHERE id = ".$_REQUEST['v']." LIMIT 1;");
+			$donut['db']->query("UPDATE ipa_v SET active = IF(ipa_v.active=1, 0, 1) WHERE id = ".$_REQUEST['v']." LIMIT 1;");
 
 		}
 
@@ -57,7 +57,7 @@
 
 			// We will look if this already exists
 
-			$exists = $pol['db']->query("SELECT id FROM ipa_polyphthongs WHERE combination = '$poly_string';");
+			$exists = $donut['db']->query("SELECT id FROM ipa_polyphthongs WHERE combination = '$poly_string';");
 
 
 			if($exists->rowCount() == 1){
@@ -70,7 +70,7 @@
 
 			else{
 
-				$pol['db']->query("INSERT INTO ipa_polyphthongs(combination) VALUES ('".$poly_string."');");
+				$donut['db']->query("INSERT INTO ipa_polyphthongs(combination) VALUES ('".$poly_string."');");
 				echo '<div class="notice hide succes-notice" id="empty" style="margin-bottom: 20px;"><i class="fa fa-check"></i> The polyphthong '.pParsePolyphthong($poly_string).' was succesfully added to the inventory!</div>';
         		echo "<script>$('#empty').fadeIn().effect('bounce', {duration: 800}).delay(500).fadeOut('slow');setTimeout(function() { loadfunction('".pUrl('?admin&section=inventory')."'); }, 1300);</script>";
 
@@ -80,7 +80,7 @@
 
 		if($_REQUEST['action'] == 'delete_poly' and isset($_REQUEST['poly'])){
 
-			$pol['db']->query("DELETE FROM ipa_polyphthongs WHERE id = ".$_REQUEST['poly']);
+			$donut['db']->query("DELETE FROM ipa_polyphthongs WHERE id = ".$_REQUEST['poly']);
 
 		}
 
@@ -174,8 +174,8 @@
 
 				// making the table
 				$ipa = pLoadIPA_C();
-				$ipa_c_places = $pol['db']->query("SELECT * FROM ipa_c_place;");
-				$ipa_c_modes = $pol['db']->query("SELECT * FROM ipa_c_mode;");
+				$ipa_c_places = $donut['db']->query("SELECT * FROM ipa_c_place;");
+				$ipa_c_modes = $donut['db']->query("SELECT * FROM ipa_c_mode;");
 				pOut("<table class='verbs ipa consonants'>");
 				pOut("<tr class='temps'><td class='filler'><strong>Consonants</strong></td>");
 				$places = array();
@@ -187,8 +187,8 @@
 				pOut("</tr>");
 				// Rows
 
-				$ipa_c_articulation = $pol['db']->query("SELECT * FROM ipa_c_articulation;");
-				$ipa_c_places = $pol['db']->query("SELECT * FROM ipa_c_place;");
+				$ipa_c_articulation = $donut['db']->query("SELECT * FROM ipa_c_articulation;");
+				$ipa_c_places = $donut['db']->query("SELECT * FROM ipa_c_place;");
 				foreach ($ipa_c_places as $ipa_c_place) {
 					foreach ($ipa_c_articulation as $articulation) {
 
@@ -256,8 +256,8 @@
 		// Vowels table
 
 				$ipa_v = pLoadIPA_V();
-				$ipa_v_places = $pol['db']->query("SELECT * FROM ipa_v_place;");
-				$ipa_v_modes = $pol['db']->query("SELECT * FROM ipa_v_mode;");
+				$ipa_v_places = $donut['db']->query("SELECT * FROM ipa_v_place;");
+				$ipa_v_modes = $donut['db']->query("SELECT * FROM ipa_v_mode;");
 				pOut("<table class='verbs ipa_v vowels hide'>");
 				pOut("<tr class='temps'><td class='filler'><strong>Vowels</strong></td>");
 				$places = array();
@@ -269,8 +269,8 @@
 				pOut("</tr>");
 				// Rows
 
-				$ipa_v_articulation = $pol['db']->query("SELECT * FROM ipa_v_articulation;");
-				$ipa_v_places = $pol['db']->query("SELECT * FROM ipa_v_place;");
+				$ipa_v_articulation = $donut['db']->query("SELECT * FROM ipa_v_articulation;");
+				$ipa_v_places = $donut['db']->query("SELECT * FROM ipa_v_place;");
 				foreach ($ipa_v_places as $ipa_v_place) {
 					foreach ($ipa_v_articulation as $articulation) {
 

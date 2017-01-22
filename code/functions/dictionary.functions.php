@@ -13,7 +13,7 @@
 	function pSearchDict($searchlang, $returnlang, $search, $wholeword)
 	{
 
-		global $pol;
+		global $donut;
 		$r = array();
 		$type = "";
 		// if(polStartsWith($search, "t="))
@@ -54,7 +54,7 @@
 
 
 
-        @$rs = $pol['db']->query($q);
+        @$rs = $donut['db']->query($q);
 		if($rs->rowCount() != 0)
 		{
 			while($fc = $rs->fetchObject()) {
@@ -72,7 +72,7 @@
 	// NOTE RETURN ARRAY, NOT OBJECT!
 	function pGetWordsByStart($start, $start_not = array()){
 
-		global $pol;
+		global $donut;
 
 		$start_not_string = '';
 
@@ -80,7 +80,7 @@
 			$start_not_string .= " AND native NOT LIKE '".$start_not_instance."%'";
 		}
 
-		$words = $pol['db']->query("SELECT * FROM words WHERE hidden = 0 AND native LIKE '".$start."%' ".$start_not_string .";"); 
+		$words = $donut['db']->query("SELECT * FROM words WHERE hidden = 0 AND native LIKE '".$start."%' ".$start_not_string .";"); 
 
 		return $words->fetchAll();
 
@@ -88,9 +88,9 @@
 
 	function pGetWord($id)
 	{
-		global $pol;
+		global $donut;
 		$q = "SELECT * FROM words WHERE id = ".$id." LIMIT 1;";
-		$rs = $pol['db']->query($q);
+		$rs = $donut['db']->query($q);
 		if($rs->rowCount() != 0)
 		{
 			return $rs->fetchObject();
@@ -105,8 +105,8 @@
 	
 	function pWordDelete($id)
 	{
-		global $pol;
-		$pol['db']->query("DELETE FROM words WHERE id = $id;");
+		global $donut;
+		$donut['db']->query("DELETE FROM words WHERE id = $id;");
 	}
 	
 
@@ -145,12 +145,12 @@
 
 	function pGetTranslations($word_id, $search = '', $language_id, $clone = false, $clone_id = 0){
 
-		global $pol;
+		global $donut;
 
 		if(!$clone)
-			return $pol['db']->query("SELECT * FROM translations INNER JOIN translation_words ON translations.id = translation_words.translation_id WHERE translation_words.word_id = $word_id AND translations.language_id = $language_id;");
+			return $donut['db']->query("SELECT * FROM translations INNER JOIN translation_words ON translations.id = translation_words.translation_id WHERE translation_words.word_id = $word_id AND translations.language_id = $language_id;");
 		else{
-			return $pol['db']->query("SELECT * FROM translations INNER JOIN translation_words ON translations.id = translation_words.translation_id WHERE (translation_words.word_id = $word_id OR translation_words.word_id = $clone_id) AND translations.language_id = $language_id;");
+			return $donut['db']->query("SELECT * FROM translations INNER JOIN translation_words ON translations.id = translation_words.translation_id WHERE (translation_words.word_id = $word_id OR translation_words.word_id = $clone_id) AND translations.language_id = $language_id;");
 		}
 
 	}
@@ -158,9 +158,9 @@
 	// Returns 0 or id, in case of existing translation, very useful for the add sequence
 	function pTranslationExist($translation, $lang){
 
-		global $pol;
+		global $donut;
 
-		$get = $pol['db']->query("SELECT id FROM translations WHERE language_id = $lang AND translation = '$lang' LIMIT 1;");
+		$get = $donut['db']->query("SELECT id FROM translations WHERE language_id = $lang AND translation = '$lang' LIMIT 1;");
 
 		if($get->rowCount() == 1){
 			$row = $get->fetchObject();
@@ -174,7 +174,7 @@
 
 	function pGetTranslationsByStart($start, $lang, $start_not = array()){
 
-		global $pol;
+		global $donut;
 
 		$start_not_string = '';
 
@@ -182,7 +182,7 @@
 			$start_not_string .= " AND translations.translation NOT LIKE '".$start_not_instance."%'";
 		}
 
-		$translations = $pol['db']->query("SELECT *, translation_words.specification AS specification, translations.id AS id FROM translations INNER JOIN translation_words ON translation_words.translation_id = translations.id WHERE translations.translation LIKE '".$start."%' AND translations.language_id = $lang $start_not_string;"); 
+		$translations = $donut['db']->query("SELECT *, translation_words.specification AS specification, translations.id AS id FROM translations INNER JOIN translation_words ON translation_words.translation_id = translations.id WHERE translations.translation LIKE '".$start."%' AND translations.language_id = $lang $start_not_string;"); 
 
 		return $translations->fetchAll();
 
@@ -190,9 +190,9 @@
 
 	function pGetWordsByTranslation($translation){
 
-		global $pol;
+		global $donut;
 
-		$words = $pol['db']->query("SELECT *, words.id AS word_id, translation_words.specification AS specification FROM translation_words INNER JOIN words ON words.id = translation_words.word_id WHERE translation_words.translation_id = $translation
+		$words = $donut['db']->query("SELECT *, words.id AS word_id, translation_words.specification AS specification FROM translation_words INNER JOIN words ON words.id = translation_words.word_id WHERE translation_words.translation_id = $translation
 			ORDER BY case 
 			when translation_words.specification = '' then 1
 			else 2 end;");
@@ -206,9 +206,9 @@
 
 	function pGetSynonyms($word_id){
 
-		global $pol;
+		global $donut;
 
-		return $pol['db']->query("SELECT *, word_id_1 AS selected_word, word_id_2 AS selected_word FROM synonyms WHERE ((word_id_1 = $word_id) OR (word_id_2 = $word_id)) 
+		return $donut['db']->query("SELECT *, word_id_1 AS selected_word, word_id_2 AS selected_word FROM synonyms WHERE ((word_id_1 = $word_id) OR (word_id_2 = $word_id)) 
 		Order By score DESC");
 
 
@@ -216,25 +216,25 @@
 
 	function pGetIdiomsOfWords($word_id){
 
-		global $pol;
+		global $donut;
 
-		return $pol['db']->query("SELECT words.id, idioms.id AS idiom_id, idioms.idiom, idiom_words.keyword FROM words JOIN idiom_words ON idiom_words.word_id = words.id JOIN idioms ON  idioms.id = idiom_words.idiom_id  WHERE words.id = $word_id;");
+		return $donut['db']->query("SELECT words.id, idioms.id AS idiom_id, idioms.idiom, idiom_words.keyword FROM words JOIN idiom_words ON idiom_words.word_id = words.id JOIN idioms ON  idioms.id = idiom_words.idiom_id  WHERE words.id = $word_id;");
 
 
 	}
 
 	function pGetTranslationOfIdiomByLang($idiom_id){
-		global $pol;
-		return $pol['db']->query("SELECT * FROM idiom_translations WHERE idiom_id = $idiom_id ORDER BY language_id;");
+		global $donut;
+		return $donut['db']->query("SELECT * FROM idiom_translations WHERE idiom_id = $idiom_id ORDER BY language_id;");
 	}
 
 
 	// For use on word page
 	function pGetDerivations($word_id){
 
-		global $pol;
+		global $donut;
 
-		$words =  $pol['db']->query("SELECT * FROM words WHERE derivation_of = $word_id");
+		$words =  $donut['db']->query("SELECT * FROM words WHERE derivation_of = $word_id");
 
 		if($words->rowCount() === 0)
 			return false;
@@ -265,9 +265,9 @@
 	}
 
 	function pDerivationName($id){
-		global $pol;
+		global $donut;
 		$q = "SELECT * FROM derivations WHERE id = '".$id."' LIMIT 1;";
-		$rs = $pol['db']->query($q);
+		$rs = $donut['db']->query($q);
 		if($rs->rowCount() != 0)
 		{
 			$rt = $rs->fetchObject();
@@ -282,9 +282,9 @@
 	
 	function pGetEtymology($word_id){
 
-		global $pol;
+		global $donut;
 
-		return $pol['db']->query("SELECT * FROM etymology WHERE word_id = $word_id;");
+		return $donut['db']->query("SELECT * FROM etymology WHERE word_id = $word_id;");
 
 
 	}
@@ -292,9 +292,9 @@
 
 	function pGetAntonyms($word_id){
 
-		global $pol;
+		global $donut;
 
-		return $pol['db']->query("SELECT * FROM antonyms WHERE ((word_id_1 = $word_id) OR (word_id_2 = $word_id)) 
+		return $donut['db']->query("SELECT * FROM antonyms WHERE ((word_id_1 = $word_id) OR (word_id_2 = $word_id)) 
 		Order By score DESC");
 
 
@@ -303,20 +303,20 @@
 
 	function pGetTranslationsByLang($word_id, $clone = false, $clone_id = 0){
 
-		global $pol;
+		global $donut;
 
 		if(!$clone)
-			return $pol['db']->query("SELECT * FROM translations INNER JOIN translation_words ON translations.id = translation_words.translation_id WHERE translation_words.word_id = $word_id  Order By language_id DESC;");
+			return $donut['db']->query("SELECT * FROM translations INNER JOIN translation_words ON translations.id = translation_words.translation_id WHERE translation_words.word_id = $word_id  Order By language_id DESC;");
 		else
-			return $pol['db']->query("SELECT * FROM translations INNER JOIN translation_words ON translations.id = translation_words.translation_id WHERE translation_words.word_id = $clone_id OR translation_words.clone_id  Order By language_id DESC;");
+			return $donut['db']->query("SELECT * FROM translations INNER JOIN translation_words ON translations.id = translation_words.translation_id WHERE translation_words.word_id = $clone_id OR translation_words.clone_id  Order By language_id DESC;");
 
 
 	}
 
 
 	function pGetDescription($translation_id, $tooltip = false){
-		global $pol;
-		$rr = $pol['db']->query("SELECT content FROM descriptions WHERE translation_id = '$translation_id' LIMIT 1;");
+		global $donut;
+		$rr = $donut['db']->query("SELECT content FROM descriptions WHERE translation_id = '$translation_id' LIMIT 1;");
 		if(($rr->rowCount() != 0) AND ($rs = $rr->fetchObject()))
 		{
 			if($tooltip)
@@ -330,9 +330,9 @@
 	
 	function pWordShowNative($translation, $lang, $onlywords = false, $show_no_buttons = false, $class_prefix = 'd', $url_extra = 'searchresult')
 	{
-		global $pol;
+		global $donut;
 
-		$pol['hidden_words'] = 0;
+		$donut['hidden_words'] = 0;
 
 		if(!is_numeric($translation))
 			$word = pGetWord($translation->word_id);
@@ -340,18 +340,18 @@
 			$word = pGetWord($translation);
 
 		if($word->hidden == 1){
-			$pol['hidden_words']++;
+			$donut['hidden_words']++;
 			return false;
 		}
 		$type = pGetType($word->type_id);
 		$classification = pGetClassification($word->classification_id);
 
 		if(!is_numeric($translation))
-			if(in_array($translation->word_id, $pol['taken_care_of_words']))
+			if(in_array($translation->word_id, $donut['taken_care_of_words']))
 				return false;
 
 		$text = '';
-		// if(logged())
+		// if(pLogged())
 		// 	$editbutton = "<a class='actionbutton floatright' href='javascript:void(0);' onClick='$(\"#fadeOut_".$word->id."\").fadeOut();$(\".loadDelete\").load(\"".pUrl('?deleteword='.$word->id.'&ajax')."\")'><i class='fa fa-times' style='font-size: 12px!important;'></i> Delete word</i></a> 
 		// <a class='actionbutton floatright' onClick='$(\".dialogaddnew\").slideUp();$(\".dialogedit\").slideUp();$(\".dialog".$word->id."\").hide().load(\"".pUrl('?editword='.$word->id.'&ajaxOUT')."\", function(){
 		// 	$(\".dialog".$word->id."\").slideDown();
@@ -411,12 +411,12 @@
 
 			$text .= "</span></li>";
 
-			$pol['taken_care_of'][] = $show_translation->word_id;
+			$donut['taken_care_of'][] = $show_translation->word_id;
 
 		}
 
 
-		$pol['taken_care_of_words'][] = $word->id;
+		$donut['taken_care_of_words'][] = $word->id;
 
 		// The end
 		if($all_translations->rowCount() != 0)
@@ -427,7 +427,7 @@
 			$text .= "<a class='actionbutton' href='".pUrl('?searchresult&word='.$word->id)."'><i class='fa fa-12 fa-info-circle'></i> Read more</a>";
 
 		// The logged in buttons
-		if(logged() and !isset($_GET['wordsonly']) and !($show_no_buttons))
+		if(pLogged() and !isset($_GET['wordsonly']) and !($show_no_buttons))
 			$text .= "<a class='actionbutton' href='javascript:void(0);'>...</a>";
 
 		$text .= "</div></div>";
@@ -440,14 +440,46 @@
 	}
 
 
-	function pAddWord($dov, $eng, $nld, $type, $gender, $desc, $audiofile = '', $flag='')
-	{
-		global $pol;
-		if(pCanAdd($dov, $eng, $nld, $type, $gender, $desc, $audiofile, $flag))
-			return $pol['db']->query("INSERT INTO dictionary VALUES('', ".$pol['db']->quote(htmlentities($type)).", ".$pol['db']->quote(htmlentities($dov)).", ".$pol['db']->quote(htmlentities($eng)).", ".$pol['db']->quote(htmlentities($nld)).", ".$pol['db']->quote(htmlentities($gender)).", ".$pol['db']->quote(htmlentities($audiofile)).", ".$pol['db']->quote(htmlentities($desc)).", ".$pol['db']->quote(htmlentities($flag)).");");
-		else
-			return true; // Word isn't added
+	function pAddTranslations($translation_string, $word_id){
+
+		// Needed
+		global $donut;
+
+		// Exploding the translation input
+		$translations_all = explode(",", $_REQUEST['translations']);
+
+		// Boolean for checking the status
+		$status = false;
+				
+		foreach ($translations_all as $string_trans) {
+			// Splitting specifications from actual translations
+			$translations = explode('|', $string_trans);
+			
+
+			//	If there is a specification, let's specify it
+				$specification = '';
+				if(count($translations) == 2 AND  $translations[1] != '')
+				$specification = $translations[1];
+			
+			// We need to check if the translation already exists
+			$previous_id = pTranslationExist($translations[0], pEditorLanguage($_SESSION['pUser']));
+
+			// If it does not exists, we need to add it of couuuurse! ;)
+			if($previous_id == 0)
+				$status =  $donut['db']->query("INSERT INTO translations(language_id, translation) VALUES(".$donut['db']->quote(pEditorLanguage($_SESSION['pUser'])).", ".$donut['db']->quote($translations[0]).");SET @TRANSLATIONID=LAST_INSERT_ID();INSERT INTO translation_words(word_id, translation_id, specification) VALUES (".$_REQUEST['word_id'].", @TRANSLATIONID, ".$donut['db']->quote($specification).");");
+			
+			// The translation existed already, hooray, half the job it is then.
+			$status = $donut['db']->query("INSERT INTO translation_words(word_id, translation_id, specification) VALUES (".$_REQUEST['word_id'].", ".$previous_id.", ".$donut['db']->quote($specification).");");
+			
+			
+		}
+
+		// Returning something!
+		return (($status !== false) ? true : false);
+
 	}
+
+
 
 
 	

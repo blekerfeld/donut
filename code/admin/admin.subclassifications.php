@@ -11,14 +11,14 @@
 
 
 	// WE ABSOLUTLY NEED TO BE LOGGED IN!!!
-	if(!logged())
+	if(!pLogged())
 	{
 		pUrl('', true);
 	}
 	
 
 	// Manage name
-	$pol['page']['title'] = "Subclassifications - ".$pol['page']['title']; 	
+	$donut['page']['title'] = "Subclassifications - ".$donut['page']['title']; 	
 
 	$die_actions = array('add_subclassification', 'edit_subclassification', 'subclassification_apply');
 

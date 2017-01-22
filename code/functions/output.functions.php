@@ -10,13 +10,13 @@
 
 	function pOut($content, $header = false)
 	{
-		global $pol;
+		global $donut;
 		if(!isset($_REQUEST["ajaxOUT"]))
 		{
 			if(!$header)
-				return $pol['page']['content'][] = $content;
+				return $donut['page']['content'][] = $content;
 			else
-				return $pol['page']['header'][] = $content;
+				return $donut['page']['header'][] = $content;
 		}	
 		else{
 			echo $content;

@@ -12,8 +12,8 @@ pOut('
 
 // making the table
 $ipa = pLoadIPA_C(true);
-$ipa_c_places = $pol['db']->query("SELECT * FROM ipa_c_place;");
-$ipa_c_modes = $pol['db']->query("SELECT * FROM ipa_c_mode;");
+$ipa_c_places = $donut['db']->query("SELECT * FROM ipa_c_place;");
+$ipa_c_modes = $donut['db']->query("SELECT * FROM ipa_c_mode;");
 pOut("<table class='verbs ipa' style='width: 50%!important;'>");
 pOut("<tr class='temps'><td class='filler' style='width: 20px;'><strong>Consonants</strong></td>");
 $places = array();
@@ -25,8 +25,8 @@ foreach ($ipa_c_places as $ipa_c_place) {
 pOut("</tr>");
 // Rows
 
-$ipa_c_articulation = $pol['db']->query("SELECT * FROM ipa_c_articulation;");
-$ipa_c_places = $pol['db']->query("SELECT * FROM ipa_c_place;");
+$ipa_c_articulation = $donut['db']->query("SELECT * FROM ipa_c_articulation;");
+$ipa_c_places = $donut['db']->query("SELECT * FROM ipa_c_place;");
 foreach ($ipa_c_places as $ipa_c_place) {
 	foreach ($ipa_c_articulation as $articulation) {
 
@@ -91,8 +91,8 @@ pOut("</table>");
 
 // making the table fo the vowels
 $ipa = pLoadIPA_V(true);
-$ipa_v_places = $pol['db']->query("SELECT * FROM ipa_v_place;");
-$ipa_v_modes = $pol['db']->query("SELECT * FROM ipa_v_mode;");
+$ipa_v_places = $donut['db']->query("SELECT * FROM ipa_v_place;");
+$ipa_v_modes = $donut['db']->query("SELECT * FROM ipa_v_mode;");
 pOut("<table class='verbs ipa_v' style='width: 30%!important;'>");
 pOut("<tr class='temps'><td class='filler' style='width: 20px;'><strong>Vowels</strong></td>");
 $places = array();
@@ -104,8 +104,8 @@ foreach ($ipa_v_places as $ipa_v_place) {
 pOut("</tr>");
 // Rows
 
-$ipa_v_articulation = $pol['db']->query("SELECT * FROM ipa_v_articulation;");
-$ipa_v_places = $pol['db']->query("SELECT * FROM ipa_v_place;");
+$ipa_v_articulation = $donut['db']->query("SELECT * FROM ipa_v_articulation;");
+$ipa_v_places = $donut['db']->query("SELECT * FROM ipa_v_place;");
 foreach ($ipa_v_places as $ipa_v_place) {
 	foreach ($ipa_v_articulation as $articulation) {
 

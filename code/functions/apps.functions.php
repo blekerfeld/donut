@@ -8,20 +8,20 @@
 	File: apps.functions.php
 */
 
-	function polAppsArray()
+	function pAppsArray()
 	{
-		global $pol;
-		$getapps = $pol['db']->query("SELECT * FROM apps");
+		global $donut;
+		$getapps = $donut['db']->query("SELECT * FROM apps");
 		$apps = array();
 		foreach($getapps as $app)
 			$apps[] = array($app['getter'], $app['app']);
 		return $apps;
 	}
 
-	function polGetApp($appname)
+	function pGetApp($appname)
 	{
-		global $pol;
-		$getapps = $pol['db']->query("SELECT * FROM apps WHERE getter = '$appname' LIMIT 1;");
+		global $donut;
+		$getapps = $donut['db']->query("SELECT * FROM apps WHERE getter = '$appname' LIMIT 1;");
 		foreach($getapps as $app)
 			$app = array($app['getter'], $app['app']);
 		return $app;

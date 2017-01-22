@@ -11,7 +11,7 @@
 // Languages! Let's load one. Just one. Or perhaps two, if we're feeling up to it, bilingualism is a good thing.
 function pLoadLanguage($language = '') {
 	
-	global $pol;
+	global $donut;
 
 	// So did we actually provide ourselves with a language? If the language is empty... it doesn't work, like at all
 	if(empty($language))
@@ -28,11 +28,11 @@ function pLoadLanguage($language = '') {
 	include_once $language_main_path;
 
 	// Now all other files
-	foreach($pol['lang_sub_files'] as $filename)
+	foreach($donut['lang_sub_files'] as $filename)
 		include pFromRoot('library/languages/' . $language . '.' . $filename . '.php');
 		
 	// We might need this
-	$pol['lang_current'] = $language;
+	$donut['lang_current'] = $language;
 
 	return true;
 

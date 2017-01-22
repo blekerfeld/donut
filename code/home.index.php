@@ -14,7 +14,7 @@ pOut('<table class="noshow" style="width:100%;"><tr>');
 
 pSearchArea();
 	
-$id = $pol['db']->query("SELECT count(id) AS cnt_id FROM words WHERE hidden = 0;");
+$id = $donut['db']->query("SELECT count(id) AS cnt_id FROM words WHERE hidden = 0;");
 
 $id_c  = $id->fetchObject();
 
@@ -32,7 +32,7 @@ pOut('<td style="padding-left: 20px;">
 
 // Recently added
 
-$get_recent = $pol['db']->query("SELECT * FROM words WHERE hidden = 0 ORDER BY id  DESC LIMIT 5;");
+$get_recent = $donut['db']->query("SELECT * FROM words WHERE hidden = 0 ORDER BY id  DESC LIMIT 5;");
 
 
 foreach ($get_recent as $r_word) {

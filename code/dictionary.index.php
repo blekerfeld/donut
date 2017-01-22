@@ -2,9 +2,9 @@
 <?php
 
 	// We need this
-	global $pol;
-	$pol['taken_care_of'] = array();
-	$pol['taken_care_of_words'] = array();
+	global $donut;
+	$donut['taken_care_of'] = array();
+	$donut['taken_care_of_words'] = array();
 	
 	// We have to be in AJAX mode
 	if(!isset($_REQUEST['ajax']))
@@ -88,7 +88,7 @@
 			{
 
 	
-				if(!in_array($translation->word_id, $pol['taken_care_of']))
+				if(!in_array($translation->word_id, $donut['taken_care_of']))
 					echo "<div class='loadDelete'></div>".pWordShowNative($translation, $slang, isset($_GET['wordsonly']));
 
 			}

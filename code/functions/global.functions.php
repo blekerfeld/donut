@@ -10,8 +10,8 @@
 
 	function pSiRo($table, $id) #Single Row
 	{
-		global $pol;
-		$result = $pol['db']->query("SELECT * FROM ".$table." WHERE id = '$id' LIMIT 1;");
+		global $donut;
+		$result = $donut['db']->query("SELECT * FROM ".$table." WHERE id = '$id' LIMIT 1;");
 		if($result->rowCount() == 1)
 		{
 			return $result->fetchObject();
@@ -22,9 +22,9 @@
 
 	function pCountTable($table, $where = 1){
 
-		global $pol;
+		global $donut;
 
-		$rs = $pol['db']->query("SELECT count(id) AS count FROM $table WHERE 1;");
+		$rs = $donut['db']->query("SELECT count(id) AS count FROM $table WHERE 1;");
 
 		$rr  = $rs->fetchObject();
 
@@ -130,7 +130,7 @@
 
 	function pAjaxLinks($title = ''){
 
-		global $pol;
+		global $donut;
 
 		if(isset($_REQUEST['admin']))
 			$extra = "$('html').addClass('pAdmin');";
@@ -140,7 +140,7 @@
 		return "
 			<script>
 
-			document.title = '".$pol['page']['title']."';
+			document.title = '".$donut['page']['title']."';
 
 			var isExternal = function(url) {
 			    var domain = function(url) {
@@ -227,6 +227,32 @@
 
       	</script>";
 
+
+	}
+
+	function pAjaxStructure(){
+
+		// The complex javascript link system is needed for the new links loaded via AJAX
+		if(isset($_REQUEST['ajax']))
+			echo pAjaxLinks($donut['page']['title']);
+
+		//	For the complex javascript link system, maybe we'll call it CoJaLiSy, we need to mimic the original page structure
+		if(isset($_REQUEST['ajax_pOut'])){
+
+			//	And... we need the link system itself!
+			echo pAjaxLinks($donut['page']['title'])."<div class='nav'>".$donut['page']['menu']."</div>";
+
+			//	Mimicing the header structure
+			if(!empty($donut['page']['header']))
+	            echo "<div class='header'>\n".$donut['page']['header_final']."\n </div>" ;
+
+	        //	Mimicing the page structure
+			echo "<div class='page'>".$donut['page']['content_final']."</div>";
+		}
+
+		// Time to die, bye bye
+
+		return die();
 
 	}
 

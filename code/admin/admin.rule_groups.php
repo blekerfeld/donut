@@ -11,13 +11,13 @@
 
 
 	// WE ABSOLUTLY NEED TO BE LOGGED IN!!!
-	if(!logged())
+	if(!pLogged())
 	{
 		pUrl('', true);
 	}
 	
 	// Manage name
-	$pol['page']['title'] = "Manage rule groups- ".$pol['page']['title']; 
+	$donut['page']['title'] = "Manage rule groups- ".$donut['page']['title']; 
 
 	$die_actions = array('add_rule_group', 'edit_rule_group');
 

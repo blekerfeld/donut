@@ -8,8 +8,8 @@
 	File: index.home.php
 */
 
-	$pol['page']['menu'] = "";
-	$pol['page']['head']['content'] = '<meta name="viewport" content="width=device-width, user-scalable=no">';
+	$donut['page']['menu'] = "";
+	$donut['page']['head']['content'] = '<meta name="viewport" content="width=device-width, user-scalable=no">';
         pOut('<style>.topnav{margin: 0px;padding: 0px;z-index: 2000; position: fixed;width: 100%;
 right: 0px;
 top: 0px;} .page{margin-top: 75px;width: 100%; padding: 2px;padding-top: 10px;}</style>');

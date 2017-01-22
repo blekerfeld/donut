@@ -9,24 +9,20 @@
 */
 
 
-	function polMenu()
+	function pMenu()
 	{
-  			return '<a href="'.pUrl('?home').'" '.polActiveMenu('home').' '.polActiveMenu('search').' '.polActiveMenu('word').' '.polActiveMenu('alphabet').' '.polActiveMenu('generate').'><i class="fa fa-book"></i> '.MMENU_DICTIONARY.'</a> 
-  			'.((logged()) ? '<a href="'.pUrl('?admin').'" '.polActiveMenu('admin').' ><i class="fa fa-tasks"></i> '.MMENU_MANAGE.'</a>' : '');
+  			return '<a href="'.pUrl('?home').'" '.pActiveMenu('home').' '.pActiveMenu('search').' '.pActiveMenu('word').' '.pActiveMenu('alphabet').' '.pActiveMenu('generate').'><i class="fa fa-book"></i> '.MMENU_DICTIONARY.'</a> 
+  			'.((pLogged()) ? '<a href="'.pUrl('?admin').'" '.pActiveMenu('admin').' ><i class="fa fa-tasks"></i> '.MMENU_MANAGE.'</a>' : '');
 	}
 
-	function polActiveMenu($request)
+	function pActiveMenu($request)
 	{
-		global $pol; 
+		global $donut; 
+
 		if(isset($_REQUEST[$request]))
-		{
 			return 'class="active bga1"';
-			break;
-		}
-		elseif(((int)$pol['usingdapp'] == 1) and ($request == "home"))
-			return 'class="active bga1"';
-		else
-			return '';
+
+		return '';
 	}
 
 

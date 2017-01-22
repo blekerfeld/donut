@@ -1,6 +1,6 @@
 <?php
 
-if(!logged())
+if(!pLogged())
 	pUrl('', true);
 
 
@@ -83,35 +83,15 @@ function pTranslateCard($show_skip = true){
 if(isset($_REQUEST['ajax'], $_REQUEST['word_id'], $_REQUEST['translate'], $_REQUEST['translations'])){
 
 
-// Going through the translations
-		$translations_all = explode(",", $_REQUEST['translations']);
-		
-		foreach ($translations_all as $string_trans) {
-			$translations = explode('|', $string_trans);
-			
-			$specification = '';
-			if(count($translations) == 2 AND  $translations[1] != '')
-				$specification = $translations[1];
-			
-			// We need to check if the translation already exists
-			$previous_id = pTranslationExist($translations[0], pEditorLanguage($_SESSION['pol_user']));
+	// Calling the appropiate function
 
-			if($previous_id == 0){
-				$pol['db']->query("INSERT INTO translations(language_id, translation) VALUES(".$pol['db']->quote(pEditorLanguage($_SESSION['pol_user'])).", ".$pol['db']->quote($translations[0]).");SET @TRANSLATIONID=LAST_INSERT_ID();INSERT INTO translation_words(word_id, translation_id, specification) VALUES (".$_REQUEST['word_id'].", @TRANSLATIONID, ".$pol['db']->quote($specification).");");
-			}
-			else{
-				$pol['db']->query("INSERT INTO translation_words(word_id, translation_id, specification) VALUES (".$_REQUEST['word_id'].", ".$previous_id.", ".$pol['db']->quote($specification).");");
-			}
-			
-		}
-
-		die();
+	pAddTranslations($_REQUEST['translations'], $_REQUEST['word_id']);
 
 }
 
 elseif(isset($_REQUEST['ajax'], $_REQUEST['untranslatable'], $_REQUEST['word_id'])){
 
-	$pol['db']->query("INSERT INTO translation_exceptions VALUES (NULL, '".$_REQUEST['word_id']."', '".pEditorLanguage($_SESSION['pol_user'])."', '".$_SESSION['pol_user']."');");
+	$donut['db']->query("INSERT INTO translation_exceptions VALUES (NULL, '".$_REQUEST['word_id']."', '".pEditorLanguage($_SESSION['pUser'])."', '".$_SESSION['pUser']."');");
 
 	die();
 
@@ -129,7 +109,7 @@ if(!isset($_REQUEST['next']) and !isset($_REQUEST['ajax']))
 
 
 $lang_zero = pGetLanguageZero();
-$editor_lang = pGetLanguage(pEditorLanguage($_SESSION['pol_user']));
+$editor_lang = pGetLanguage(pEditorLanguage($_SESSION['pUser']));
 
 
 if(isset($_REQUEST['translate']) and !isset($_REQUEST['ajax']) and is_numeric($_REQUEST['translate'])){
@@ -173,13 +153,13 @@ pOut('<span class="title_header">'.BTRANS_TITLE.$editor_lang->name.'</span><br /
 
 // Let's get our words, limit of 10
 
-$count_all = $words = $pol['db']->query("SELECT COUNT(DISTINCT words.id) AS cnt
+$count_all = $words = $donut['db']->query("SELECT COUNT(DISTINCT words.id) AS cnt
 FROM words
 JOIN translation_words 
 JOIN translations ON translations.id = translation_words.translation_id
 WHERE (translation_words.id IS NULL 
 OR (translation_words.id IS NOT NULL AND NOT EXISTS (SELECT * FROM translation_words JOIN translations ON translations.id = translation_words.translation_id WHERE translation_words.word_id = words.id AND translations.language_id = ".$editor_lang->id.")  
-) AND NOT EXISTS (SELECT * FROM translation_exceptions WHERE word_id = words.id AND language_id = ".$editor_lang->id." AND user_id = ".$_SESSION['pol_user'].")) AND words.id NOT IN ( '" . implode($_SESSION['skip_bt'], "', '") . "' );");
+) AND NOT EXISTS (SELECT * FROM translation_exceptions WHERE word_id = words.id AND language_id = ".$editor_lang->id." AND user_id = ".$_SESSION['pUser'].")) AND words.id NOT IN ( '" . implode($_SESSION['skip_bt'], "', '") . "' );");
 
 
 $cnt_all = $count_all->fetchObject();
@@ -187,13 +167,13 @@ $cnt_all = $count_all->fetchObject();
 
 pOut("<center><span class='btLanguage'>There are ".$cnt_all->cnt." words left to translate.</span></center>");
 
-$words = $pol['db']->query("SELECT DISTINCT words.id, words.native, words.classification_id, words.type_id, words.subclassification_id 
+$words = $donut['db']->query("SELECT DISTINCT words.id, words.native, words.classification_id, words.type_id, words.subclassification_id 
 FROM words
 JOIN translation_words 
 JOIN translations ON translations.id = translation_words.translation_id
 WHERE (translation_words.id IS NULL 
 OR (translation_words.id IS NOT NULL AND NOT EXISTS (SELECT * FROM translation_words JOIN translations ON translations.id = translation_words.translation_id WHERE translation_words.word_id = words.id AND translations.language_id = ".$editor_lang->id.")  
-) AND NOT EXISTS (SELECT * FROM translation_exceptions WHERE word_id = words.id AND language_id = ".$editor_lang->id." AND user_id = ".$_SESSION['pol_user'].")) AND  words.id NOT IN ( '" . implode($_SESSION['skip_bt'], "', '") . "' ) LIMIT 5");
+) AND NOT EXISTS (SELECT * FROM translation_exceptions WHERE word_id = words.id AND language_id = ".$editor_lang->id." AND user_id = ".$_SESSION['pUser'].")) AND  words.id NOT IN ( '" . implode($_SESSION['skip_bt'], "', '") . "' ) LIMIT 5");
 
 
 $num = 1;

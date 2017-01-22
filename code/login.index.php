@@ -17,8 +17,8 @@
 		}
 		else
 		{
-			$id = polUsernameToID($_REQUEST['username']);
-			if(polMemberExists($id) and polPasswordCheck($id, $_REQUEST['password']))
+			$id = pUsernameToID($_REQUEST['username']);
+			if(pMemberExists($id) and pPasswordCheck($id, $_REQUEST['password']))
 			{
 				echo '<div class="notice hide succes-notice" id="empty"><i class="fa fa-check"></i> '.LOGIN_SUCCESS.'</div>';
 				echo "<script>$('#busy').fadeOut();$('#empty').delay(401).effect('slide');</script>
@@ -27,9 +27,9 @@
 									window.location = '".pUrl('')."';
 								}, 3000);
 				</script>";
-				$arr = array($id, polHash($_REQUEST['password'], polRegDate($id)), $_REQUEST['username']);
-				setcookie('lgnkeep', serialize($arr), time()+5*52*7*24*3600);
-				$_SESSION['pol_user'] = $id;
+				$arr = array($id, pHash($_REQUEST['password'], pRegDate($id)), $_REQUEST['username']);
+				setcookie('pKeepLogged', serialize($arr), time()+5*52*7*24*3600);
+				$_SESSION['pUser'] = $id;
 
 			}
 			else
@@ -41,19 +41,19 @@
 	}
 
 
-	if(logged() and !isset($_REQUEST['logout']) and !(isset($_GET['ajax']) and !(isset($_GET['ajax_pOut']))))
+	if(pLogged() and !isset($_REQUEST['logout']) and !(isset($_GET['ajax']) and !(isset($_GET['ajax_pOut']))))
 	{
 		pUrl('', true);
 	}
-	elseif(logged() and isset($_REQUEST['logout']))
+	elseif(pLogged() and isset($_REQUEST['logout']))
 	{
-		if(isset($_SESSION['pol_user']))
+		if(isset($_SESSION['pUser']))
 		{
 			# Now logout
-			unset($_SESSION['pol_user']);
-			if(isset($_COOKIE['lgnkeep']))
+			unset($_SESSION['pUser']);
+			if(isset($_COOKIE['pKeepLogged']))
 			{
-				setcookie('lgnkeep', '', time() - 60000);
+				setcookie('pKeepLogged', '', time() - 60000);
 			}
 			if(isset($_GET['ajax']) OR isset($_GET['ajax_pOut']))
 				echo "<script>window.location = '".pUrl('?login')."';

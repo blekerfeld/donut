@@ -24,9 +24,9 @@ function pSearchAndInflect($word, $type, $classification, $mode, $submode, $numb
 
 	function pGetInflection($id)
 	{
-		global $pol;
+		global $donut;
 		$q = "SELECT * FROM inflections WHERE id = ".$id." LIMIT 1;";
-		$rs = $pol['db']->query($q);
+		$rs = $donut['db']->query($q);
 		if($rs->rowCount() != 0)
 		{
 			return $rs->fetchObject();
@@ -40,16 +40,16 @@ function pSearchAndInflect($word, $type, $classification, $mode, $submode, $numb
 
 	function pGetPreviewInflections($type = 0){
 
-		global $pol;
+		global $donut;
 			$q = "SELECT * FROM preview_inflections WHERE type_id = ".$type;
-			$rs = $pol['db']->query($q);
+			$rs = $donut['db']->query($q);
 			return $rs;
 	}
 
 
 	function pGetInflections($word_id, $type, $classification, $mode, $submode, $number, $subclassification = 0)
 	{
-		global $pol;
+		global $donut;
 
 
 		// Is the current mode setting in combination with a number part of a group?
@@ -59,7 +59,7 @@ function pSearchAndInflect($word, $type, $classification, $mode, $submode, $numb
 		// 	$q .= " AND subclassification_id = '$subclassification'";
 
 
-		$check_for_submode_group = $pol['db']->query($q);
+		$check_for_submode_group = $donut['db']->query($q);
 		$submodetext = '';
 		if($check_for_submode_group->rowCount() != 0)
 		{
@@ -71,18 +71,18 @@ function pSearchAndInflect($word, $type, $classification, $mode, $submode, $numb
 			$submodetext .= "(classification_id = '".$classification."' AND number_id = '".$number."' AND mode_id = '".$mode."' AND submode_id = '".$submode.'\')';
 		// Is there maybe an irregular inflection?
 		$q = "SELECT * FROM inflections WHERE irregular = '1' AND irregular_word_id =  '".$word_id."' AND type_id = '".$type."' AND ".$submodetext.";";
-		$check_for_irregular = $pol['db']->query($q);
+		$check_for_irregular = $donut['db']->query($q);
 		if($check_for_irregular->rowCount() != 0)
 			return $check_for_irregular;
 		else{
-			return $pol['db']->query("SELECT * FROM inflections WHERE irregular = '0' AND type_id = '".$type."' AND ".$submodetext."");
+			return $donut['db']->query("SELECT * FROM inflections WHERE irregular = '0' AND type_id = '".$type."' AND ".$submodetext."");
 		}
 
 	}
 
 	function pGetInflections_aux($type, $classification, $number, $aux_id, $mode, $submode, $aux_level, $subclassification = 0)
 	{
-		global $pol;
+		global $donut;
 
 
 		$aux_word = pGetWord($aux_id);
@@ -110,12 +110,12 @@ function pSearchAndInflect($word, $type, $classification, $mode, $submode, $numb
 
 	function pReplaceStem($word_id, $original, $type, $classification, $subclassification, $number, $mode, $submode){
 
-		GLOBAL $pol;
+		global $donut;
 
 		// Is the current mode setting in combination with a number part of a group?
 		$q = "SELECT submode_group_id FROM submode_group_members WHERE mode_id = '$mode' AND submode_id = '$submode' AND number_id = '$number' AND classification_id = '$classification'";
 
-		$check_for_submode_group = $pol['db']->query($q);
+		$check_for_submode_group = $donut['db']->query($q);
 		
 		if($check_for_submode_group->rowCount() != 0)
 		{
@@ -126,7 +126,7 @@ function pSearchAndInflect($word, $type, $classification, $mode, $submode, $numb
 
 			$q = "SELECT * FROM stems WHERE word_id = $word_id AND applies_submode_group = 1 AND submode_group_id = $submode_id LIMIT 1;";
 
-			$get_stems = $pol['db']->query($q);
+			$get_stems = $donut['db']->query($q);
 
 			if($get_stems->rowCount() != 0){
 
@@ -152,12 +152,12 @@ function pSearchAndInflect($word, $type, $classification, $mode, $submode, $numb
 
 	function pFindScript($place, $type, $classification, $subclassification, $number, $mode, $submode){
 
-		GLOBAL $pol;
+		global $donut;
 
 		// Is the current mode setting in combination with a number part of a group?
 		$q = "SELECT submode_group_id FROM submode_group_members WHERE mode_id = '$mode' AND submode_id = '$submode' AND number_id = '$number' AND classification_id = '$classification'";
 
-		$check_for_submode_group = $pol['db']->query($q);
+		$check_for_submode_group = $donut['db']->query($q);
 		
 		if($check_for_submode_group->rowCount() != 0)
 		{
@@ -168,7 +168,7 @@ function pSearchAndInflect($word, $type, $classification, $mode, $submode, $numb
 
 			$q = "SELECT script_id FROM inflection_script_submode_groups WHERE submode_group_id = $submode_id LIMIT 1;";
 
-			$get_script = $pol['db']->query($q);
+			$get_script = $donut['db']->query($q);
 
 			if($get_script->rowCount() != 0){
 
@@ -177,7 +177,7 @@ function pSearchAndInflect($word, $type, $classification, $mode, $submode, $numb
 				$q = "SELECT name FROM inflection_scripts WHERE id = $script_link->script_id  AND execute_prior_to_inflection = $place ORDER BY inflection_scripts.weight DESC";
 
 
-				$get_script_name = $pol['db']->query($q);
+				$get_script_name = $donut['db']->query($q);
 				$return = array();
 
 				if($get_script->rowCount() != 0){
@@ -211,7 +211,7 @@ function pSearchAndInflect($word, $type, $classification, $mode, $submode, $numb
 	function pInflect($word_id, $inflection, $number, $mode, $submode, $classification, $aux_level = 0, $override_word = '', $force_no_aux = 0, $subclassification = 0){
 
 			
-			global $pol;
+			global $donut;
 
 			$word = pGetWord($word_id);
 			
@@ -242,7 +242,7 @@ function pSearchAndInflect($word, $type, $classification, $mode, $submode, $numb
 
 				foreach ($script_names_prior as $script_name_prior) {
 					$function_name = "pExecuteScript_".$script_name_prior;
-					require_once $pol['root_path'].'/library/inflection_scripts/'.$script_name_prior.'.script.php';
+					require_once $donut['root_path'].'/library/inflection_scripts/'.$script_name_prior.'.script.php';
 					$inflect_this = $function_name($inflect_this, $word, $mode, $submode, $number);
 				}
 
@@ -259,10 +259,10 @@ function pSearchAndInflect($word, $type, $classification, $mode, $submode, $numb
 					// we need to inflect
 
 					// trim start
-					@$inflect_this = s($inflect_this)->replacePrefix($inflection->trim_begin, '');
+					@$inflect_this = pStr($inflect_this)->replacePrefix($inflection->trim_begin, '');
 
 					// trim end
-					@$inflect_this = s($inflect_this)->replaceSuffix($inflection->trim_end, '');
+					@$inflect_this = pStr($inflect_this)->replaceSuffix($inflection->trim_end, '');
 
 					// prefix
 					if($inflection->prefix != '')
@@ -284,7 +284,7 @@ function pSearchAndInflect($word, $type, $classification, $mode, $submode, $numb
 
 
 				$q = "SELECT submode_group_id, aux_mode_id FROM submode_group_members WHERE mode_id = '$mode' AND submode_id = '$submode' AND number_id = '$number' AND classification_id = '$classification' LIMIT 1;";
-				$submode_group_get = $pol['db']->query($q);
+				$submode_group_get = $donut['db']->query($q);
 
 				if($submode_group_get->rowCount() != 0)
 				{
@@ -300,7 +300,7 @@ function pSearchAndInflect($word, $type, $classification, $mode, $submode, $numb
 
 						$q = "SELECT * FROM aux_conditions WHERE submode_group_id = '$submode_group_id';";
 
-						$check_for_aux = $pol['db']->query($q);
+						$check_for_aux = $donut['db']->query($q);
 
 						$aux = "";
 
@@ -338,7 +338,7 @@ function pSearchAndInflect($word, $type, $classification, $mode, $submode, $numb
 
 				foreach ($script_names_after as $script_name_after) {
 					$function_name = "pExecuteScript_".$script_name_after;
-					require_once $pol['root_path'].'/library/inflection_scripts/'.$script_name_after.'.script.php';
+					require_once $donut['root_path'].'/library/inflection_scripts/'.$script_name_after.'.script.php';
 					$inflect_this = $function_name($inflect_this, $word, $mode, $submode, $number);
 				}
 

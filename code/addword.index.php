@@ -8,7 +8,7 @@
 	File: index.generate.php
 */
 
-if(!logged())
+if(!pLogged())
 	pUrl('', true);
 
 if(isset($_REQUEST['ajax'])){
@@ -19,33 +19,13 @@ if(isset($_REQUEST['ajax'])){
 		if(false)
 		die();		// TODO!!	
 		// At first we are going to insert the word to the database
-		$insert_query = "INSERT INTO words(native, ipa, type_id, classification_id, subclassification_id) VALUES(".$pol['db']->quote($_REQUEST['new_word']).", ".$pol['db']->quote($_REQUEST['ipa']).", ".$pol['db']->quote($_REQUEST['type']).", ".$pol['db']->quote($_REQUEST['classification']).", ".$pol['db']->quote($_REQUEST['subclassification']).");";
-		$pol['db']->query($insert_query);
+		$insert_query = "INSERT INTO words(native, ipa, type_id, classification_id, subclassification_id) VALUES(".$donut['db']->quote($_REQUEST['new_word']).", ".$donut['db']->quote($_REQUEST['ipa']).", ".$donut['db']->quote($_REQUEST['type']).", ".$donut['db']->quote($_REQUEST['classification']).", ".$donut['db']->quote($_REQUEST['subclassification']).");";
+		$donut['db']->query($insert_query);
 		
 		// We need to get a hold of the last inserted id
-		$new_word_id = $pol['db']->lastInsertId(); 
+		$new_word_id = $donut['db']->lastInsertId(); 
 
-		// Going through the translations
-		$translations_all = explode(',', $_REQUEST['translations']);
-		
-		foreach ($translations_all as $string_trans) {
-			$translations = explode('|', $string_trans);
-			
-			$specification = '';
-			if(count($translations) == 2 AND  $translations[1] != '')
-				$specification = $translations[1];
-			
-			// We need to check if the translation already exists
-			$previous_id = pTranslationExist($translations[0], pEditorLanguage($_SESSION['pol_user']));
-
-			if($previous_id == 0){
-				$pol['db']->query("INSERT INTO translations(language_id, translation) VALUES(".$pol['db']->quote(pEditorLanguage($_SESSION['pol_user'])).", ".$pol['db']->quote($translations[0]).");SET @TRANSLATIONID=LAST_INSERT_ID();INSERT INTO translation_words(word_id, translation_id, specification) VALUES (".$new_word_id.", @TRANSLATIONID, ".$pol['db']->quote($specification).");");
-			}
-			else{
-				$pol['db']->query("INSERT INTO translation_words(word_id, translation_id, specification) VALUES (".$new_word_id.", ".$previous_id.", ".$pol['db']->quote($specification).");");
-			}
-			
-		}
+		pAddTranslations($_REQUEST['translations'], $new_word_id);
 
 		echo '<div class="notice succes-notice hide" id="empty" style="margin-bottom: 20px;"><i class="fa fa-check"></i> Entry succesfully added!</div>'."<script>$('#busyadd').fadeOut().delay(1000);$('#empty').show().delay(400).effect('bounce', {duration: 1000});</script>";
 
@@ -63,7 +43,7 @@ else{
 	pOut("<a class='actionbutton' href='".pUrl('?admin')."'><i class='fa fa-arrow-left' style='font-size: 12px!important;'></i> Back to editor panel</a><br /><br />", true);
 
 	$lang_zero = pGetLanguageZero();
-	$editor_lang = pGetLanguage(pEditorLanguage($_SESSION['pol_user']));
+	$editor_lang = pGetLanguage(pEditorLanguage($_SESSION['pUser']));
 
 	// Prepare select boxes
 

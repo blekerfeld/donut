@@ -8,11 +8,11 @@
 	File: pol_config.php
 */
 
-##	Database Driver (Which type of database we're using?)
+//	Database Driver (Which type of database we're using?)
 	$db_driver = 'mysql'; // mysql, pgsql or sqlite
-##	Database prefix (Default: fiz_)
-	$db_prefix = "pol_";
-##  Setting up Database connection
+
+
+//  Setting up Database connection
 	$db_host = 'localhost'; // database server
 	$db_user = 'root'; // database username
 	$db_password = ''; // database password
@@ -49,36 +49,35 @@
 		}
 		$db->exec("set names utf8");
 		$db->query("set character_set_results='utf8'");
+
 ##	Making array for functions and global objects
-	global $pol;
-	$pol = array();
-	$pol['file'] = 'index.php';
-	$pol['settings'] =array();
-	$pol['page'] = array();
-	$pol['title'] = "Donut";
-	$pol['page']['title'] = "Donut";
-	$pol['page']['outofinner'] = null;
-	$pol['page']['menu'] = null;
-	$pol['page']['head'] = array();
-	$pol['page']['head']['final'] = null;
-	$pol['page']['header'] = array();
-	$pol['page']['menu'] = '';
-	$pol['page']['content'] = array();
-	$pol['db'] = $db;
-	$pol['db_prefix'] = $db_prefix;
-	$pol['session_auth'] = md5("kjj8f99e9iwj32ikm8391pok389iokn");
+	$donut = array();
+	$donut['file'] = 'index.php';
+	$donut['settings'] =array();
+	$donut['page'] = array();
+	$donut['title'] = "Donut";
+	$donut['page']['title'] = "Donut";
+	$donut['page']['outofinner'] = null;
+	$donut['page']['menu'] = null;
+	$donut['page']['head'] = array();
+	$donut['page']['head']['final'] = null;
+	$donut['page']['header'] = array();
+	$donut['page']['menu'] = '';
+	$donut['page']['content'] = array();
+	$donut['db'] = $db;
+	$donut['session_auth'] = md5("kjj8f99e9iwj32ikm8391pok389iokn");
 
 ## 	Vowels for the vowel check
-	$pol['vowels'] = array("a","e","i","o","u","ø");
+	$donut['vowels'] = array("a","e","i","o","u","ø");
 ##	These variables are the paths to the site root.
-	$pol['root_path'] = dirname(__FILE__);
-	$pol['absolute_path'] = "http://localhost/donut/";
+	$donut['root_path'] = dirname(__FILE__);
+	$donut['absolute_path'] = "http://localhost/donut/";
 
 ##  This function is used to encrypt passwords
 
 	function polHash($password, $userdata = '')
 	{
-		global $pol;
+		global $donut;
 
 		# Set Salt
 		$salt = md5("kjj8f99e9iwj32ikm8391pok389iokn").sha1("pol0.1");
@@ -105,8 +104,8 @@ function polEndsWith($haystack, $needle)
 ##	This function is used to load all the other functions
 	function polLoadFunctions()
 	{
-		global $pol;
-		foreach (glob($pol['root_path']."/code/functions/*.functions.php") as $filename)
+		global $donut;
+		foreach (glob($donut['root_path']."/code/functions/*.functions.php") as $filename)
 		{
 			require $filename;
 		}
@@ -117,59 +116,49 @@ function polEndsWith($haystack, $needle)
 
 	function pUrl($url = '', $header = false)
 	{
-		global $pol;
+		// Needed. :)
+		global $donut;
+
+		// Checking if we are in AJAX mode, headers are handled by javascript then!
+		$ajax_mode = (isset($_GET['ajax']) OR isset($_GET['ajax_pOut']));
+
+		// Just an adition on the index.php?
 		if(polStartsWith($url, '?'))
-		{
-			$url = $pol['absolute_path'].$pol['file'].$url;
-		}
-		elseif(polStartsWith($url, 'pol://'))
-		{
-			$exploded = explode('pol://', $url);
+			$url = $donut['absolute_path'].$donut['file'].$url;
+
+
+		elseif(polStartsWith($url, 'pol://') && $exploded = explode('pol://', $url))
 			$url = pUrl($exploded[1]);
-		}
+
 		elseif(polStartsWith($url, 'http://') or polStartsWith($url, 'ftp://') or polStartsWith($url, 'https://'))
-		{
 			$url = $url;
-		}
+
 		else
-		{
-			$url = $pol['absolute_path'].$url;
-		}
+			$url = $donut['absolute_path'].$url;
+
 		if(!$header)
-		{
 			return $url;
-		}
+
 		else
-		{
-			if(isset($_GET['ajax']) OR isset($_GET['ajax_pOut']))
-			{
-				echo "<script>window.location = '".$url."';</script>";
-				return true;
-			}
-			else{
-				header("Location:".$url);
-				return true;
-			}
-		}
+			if($ajax_mode)
+				return "<script>window.location = '".$url."';</script>";
+				
+			return header("Location:".$url);
 	}
 
-require $pol['root_path'].'/library/str.php';
+require $donut['root_path'].'/library/str.php';
 	
-function s($str, $charset = null) {
-    return new \Delight\Str\Str($str, $charset);
-}
+	function pStr($str, $charset = null) {
+	    return new \Delight\Str\Str($str, $charset);
+	}
 	
-function checkMobile()  {
-  if (preg_match("/Mobile|Android|BlackBerry|iPhone|Windows Phone/", $_SERVER['HTTP_USER_AGENT']) and !isset($_REQUEST['wap']) and !isset($_REQUEST['ajax'])) {
-    pUrl('?wap', true);
-}
-}
 	function pFromRoot($url)
 	{
-		global $pol;
-		return $pol['root_path'].'/'.$url;
+		global $donut;
+		return $donut['root_path'].'/'.$url;
 	}
-##	Unsetting used variables
+
+// Unsetting used variables
 	unset($db);
 	unset($db_prefix);
 	unset($db_host);

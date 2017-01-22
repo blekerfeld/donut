@@ -11,7 +11,7 @@
 
 
 	// WE ABSOLUTLY NEED TO BE LOGGED IN!!!
-	if(!logged())
+	if(!pLogged())
 	{
 		pUrl('', true);
 	}
