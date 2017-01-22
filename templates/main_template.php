@@ -34,7 +34,7 @@
     <div class='topstripe'></div>
     <div class='logotop'>
 
-      <img class='logo-center' src='<?php echo pUrl('pol://library/static/logo.png') ; ?>' /> <img class='logo-admin' src='<?php echo pUrl('pol://library/static/admin_logo.png') ; ?>' /><i style="display: none;" id="pageload" class='fa fa-spinner fa-spin'></i>
+      <img class='logo-center' src='<?php echo pUrl('pol://library/static/logo.png') ; ?>' /> <i style="display: none;" id="pageload" class='fa fa-spinner fa-spin'></i>
       <div class='absolute_header'>
        <?php if(pLogged()){ 
           echo "<span style='float:right'>".MMENU_EDITORLANG."<span class='editorlangname'>".pLanguageName(pEditorLanguage($_SESSION['pUser']))."</span> (<a href='".pUrl('?editorlanguage')."'>".MMENU_EDITORLANGCHANGE."</a>)</span>";

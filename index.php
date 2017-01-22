@@ -1,6 +1,6 @@
 <?php
 
-	// ❉ Donut
+	// 	Donut 				🍩 
 	//	Dictionary Toolkit
 	// 		Version a.1
 	//		Written by Thomas de Roo

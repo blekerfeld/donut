@@ -3,8 +3,8 @@
 @import url('https://fonts.googleapis.com/css?family=Merriweather');
 @import url('https://fonts.googleapis.com/css?family=Lora');
 @font-face {
-    font-family: "Kraftstoff";
-    src: url("../fonts/kraftstoff.otf");
+    font-family: "Kollektif";
+    src: url("../fonts/kollektif_bold.ttf");
 }
 @font-face {
     font-family: "Gentium";
@@ -19,10 +19,6 @@
     font-family: "Gentium";
     src: url("../fonts/GenBasI.ttf");
     font-style: italic;
-}
-@font-face {
-    font-family: "Bookman";
-    src: url("../fonts/BOOKOSB.ttf");
 }
 *,
 *:before,
@@ -48,9 +44,6 @@ body:after {
     bottom: 0;
 } 
 
-html.pAdmin, html.pAdmin body{
-	background: #3A4555;
-}
 
 
 a{
@@ -61,6 +54,7 @@ a{
 .small{
 	font-size: 11px;
 }
+
 
 div.logotop
 {
@@ -77,24 +71,16 @@ div.logotop img.logo-center{
 	opacity: 1;
 }
 
-
-div.logotop img.logo-admin{
+img.logo-admin{
 	height: 32px;
 	width: auto;
-	opacity: 0;
-	display: none;
+
 	padding-bottom: 5px;
 }
 
 html.pAdmin div.logotop img.logo-admin{
 	display: inline-block;
 	opacity: 0.9;
-}
-
-div.logotop .logo
-{
-	font-family: Bookman;
-	font-size: 40px;
 }
 
 
@@ -105,9 +91,7 @@ div.logotop .logo
 	opacity: 1;
 }
 
-html.pAdmin .topstripe{
-	background: #111;
-}
+
 
 .bottomstripe{
 	position: absolute;
@@ -124,35 +108,23 @@ html.pAdmin .topstripe{
 
 div.outerwrap{
 	background: #f9f9f9;
+	border-top: 1px solid #e9e9e9;
+	border-bottom: 1px solid #e9e9e9;
 }
 
-html.pAdmin .outerwrap{
-	background: #373F51;
-}
 
 .ulWrap{
 
 	margin-left: 5%;
 	margin-right: 5%;
 	padding-top: 0px;
-	box-shadow: 0px 0px 5px 2px rgba(0,0,0,0.1);
+	border-left: 1px solid #e9e9e9;
+	border-right: 1px solid #e9e9e9;
+	box-shadow: 0px 0px 5px 2px rgba(0,0,0,0.05);
 }
 
-html.pAdmin .ulWrap{
 
-	border-color: #111;
-	
-}
 
-html.pAdmin .nav{
-background: linear-gradient(to right, #192d39 , #363e50);
-} 
-
-html.pAdmin .header{
-	background: linear-gradient(to left, #192d39 , #42535d);
-	color: #fff;
-
-}
 
 
 
@@ -162,19 +134,15 @@ html.pAdmin .header{
 
 .footer
 {
-	background: #E5E3E3;
+	background: #f9f9f9;
 	color: #333;
-	padding: 15px;
-	padding-left: 20px;
-	padding-right: 20px;
+	padding: 10px;
 	font-size: 12px;
 
 
 }
 
-html.pAdmin .footer{
-	border-color: #000;
-}
+
 
 .absolute_footer{
 	margin-bottom: 50px;
@@ -196,9 +164,6 @@ html.pAdmin .footer{
 	color: #818c93;
 }
 
-html.pAdmin .absolute_header a{
-	color: #fff;
-}
 .absolute_header a:hover, html.pAdmin .absolute_header 	a:hover{
 	color: orange;
 }
@@ -249,7 +214,7 @@ a:hover{
 
 .bga1
 {
-	background-color: #031926!important;
+	background-color: #e9e9e9!important;
 }
 
 .page
@@ -257,16 +222,19 @@ a:hover{
 	padding: 20px;
 	padding-top: 25px;
 	padding-bottom: 2px;
-	background: #F2F2F2;
+	background: rgba(254,254,254,1);
 	height: auto;
-}.header
+}
+
+.header
 {
 	padding: 20px;
 	padding-bottom: 0px;
 	font-size: 16px!important;
-	background: #42535d;
-	color: #818c93;
-	
+	background: #e0e0e0;
+	color: #444;
+	border-bottom: 1px solid #d0d0d0;
+
 }
 
 .logo img
@@ -280,9 +248,11 @@ a:hover{
 
 div.nav{
 	color: #fff;
-	background: #192d39;
+	background: #f5f5f5;
+	background-image: linear-gradient(#f5f5f5, #f9f9f9);
 	padding-top: 7px;
 	padding-bottom: 7px;
+	border-bottom: #ccc 1px solid;
 	clear: both;
 	color: #000;
 	width: 100%;
@@ -297,10 +267,12 @@ div.nav a
 	font-weight: bold;
 	font-size: 15px;
 	font-family: Raleway;
-	color: white;
+	color: #000;
 	text-decoration: none;
 
 }
+
+
 
 div.nav a:hover
 {
@@ -310,17 +282,13 @@ div.nav a:hover
 
 
 div.adminmenu{
-	position: relative;
-	margin-top: 10px;
-	background: #000;
-	padding: 4px;
-	padding-bottom: 6px;
-	padding-right: 27px;
-	padding-left: 13px;
-	clear: both;
-	color: snow;
-	width: 100%;
 	margin-left: -20px;
+	margin-top: 5px;
+	margin-right: -20px;
+	padding-left: 20px;
+	padding-right: 20px;
+	height: 24px;	
+	float: right;
 }
 
 
@@ -336,15 +304,16 @@ div.adminmenu a.active{
 
 div.adminmenu a
 {
-	padding: 5px;
-	padding-top: 5px;
-	padding-bottom: 6.5px;
+	display: inline-block;
+	padding: 4px 8px;
+	border-radius: 3px;
+	line-height: 20px;
 	font-family:  Open Sans;
 	padding-left: 8px;
 	padding-right: 8px;
 	font-size: 13px;
-	color: #fff;
-
+	color: #333;
+	border-radius: 10px;
 	text-decoration: none;
 
 }
@@ -358,29 +327,91 @@ div.adminmenu a:hover
 
 
 div.adminsubmenu{
-	position: relative;
-	background: #333;
-	padding: 10px;
-	margin-top: 0px;
-	padding-right: 27px;
-	padding-left: 13px;
-	padding-top: 3px;
-	padding-bottom: 3px;
-	clear: both;
-	color: #000;
-	width: 100%;
 	margin-left: -20px;
+	margin-top: 10px;
+	margin-right: -20px;
+	padding-left: 20px;
+	padding-right: 20px;
+	background: #eee;
+	min-width: 50%;
+	padding: 0;
+	height: 20px;
+	margin-top: 2px;
+	overflow: hidden;
+	margin-bottom: -15px;
+}
+
+
+div.adminsubmenu a
+{
+	padding: 4px 8px;
+	border-radius: 3px;
+	line-height: 20px;
+	font-family:  Open Sans;
+	padding-left: 8px;
+	padding-right: 8px;
+	font-size: 13px;
+	color: #333;
+	border-radius: 10px;
+	text-decoration: none;
+	display: none;
+
 }
 
 
 
+div.adminsubmenu span.dots{
+	display: inline-block;
+		display: none;
+	color:black;
+	line-height: 1px;
+	font-weight: bolder;
+	font-size: 15px;
+	text-align: center;
+}
+
+div.adminsubmenu:hover span.dots{
+	display: none;
+}
+
+div.adminsubmenu:hover{
+	height: auto;
+	background: #ccc;
+	padding: 10px;
+}
+
+div.adminsubmenu:hover a{
+		display: inline-block;
+}
+
+
 
 div.adminsubmenu a.active{
+	background: transparent;
+	display: inline-block!important;
+	margin-top: -20px;
+	margin-left: 20px;
+}
 
-	background: #666;
+div.adminsubmenu a.active:after{
+	content: " ... ";
+	font-size: 20px;
+}
+
+div.adminsubmenu:hover a.active:after{
+	content: "";
+	font-size: 12px;
+}
+
+div.adminsubmenu:hover a.active{
+	background: #bb0a21;;
+		margin-left: 0px;
 	color: white;
+	display: inline-block!important;
+}
 
-
+div.adminsubmenu a.active i.fa{
+	font-size: 8px;
 }
 
 div.adminsubmenu a i.fa
@@ -389,21 +420,6 @@ div.adminsubmenu a i.fa
 }
 
 
-div.adminsubmenu a
-{
-	padding: 4px;
-	padding-top: 5px;
-	font-family: 'Raleway', sans-serif;
-	margin-top: 0px;
-	margin-bottom: -3px;
-	padding-left: 6px;
-	padding-bottom: 4px;
-	padding-right: 6px;
-	font-size: 14px;
-	color: #f2f2f2;
-	text-decoration: none;
-
-}
 
 div.adminsubmenu a:hover
 {
@@ -445,9 +461,22 @@ span.admin{
 
 
 
-.remember, .fetch, .throw
+.remember, .fetch
 {
 	background-color: #373f51;
+}
+
+.throw{
+	background-color: #bb0a21;
+}
+
+.white-icon{
+	background-color: #fff;
+	color: #373f51!important;
+}
+
+.white-icon i.fa{
+	color: #373f51!important;
 }
 
 
@@ -488,9 +517,15 @@ a.remember:hover, a.fetch:hover, a.throw:hover{
 .icon-box
 {
 	color: white;
-	font-family: Open sans;
-	font-weight: bolder;
+	font-family: Kollektif;
+	font-weight: normal;
 	font-size: 20px;
+	padding: 20px;
+	border-radius: 40px;
+	line-height: 150%;
+	-webkit-user-select: none; /* Chrome/Safari */        
+	-moz-user-select: none; /* Firefox */
+	-ms-user-select: none; /* IE10+ */
 }
 
 
@@ -498,6 +533,7 @@ a.remember:hover, a.fetch:hover, a.throw:hover{
 .icon-box i.fa
 {
 	margin: 0px;
+	font-size: 19px!important;
 }
 
 .bar{
@@ -536,7 +572,7 @@ background-color:#1f6536;
 }
 .alphabetbar{
 	margin-left: -20px;
-	margin-top: 10px;
+	margin-top: 5px;
 	margin-right: -20px;
 	padding-left: 20px;
 	padding-right: 20px;
@@ -546,10 +582,11 @@ background-color:#1f6536;
 .alphabetbar a{
 	display: inline-block;
 	text-align:  center;
-	background-color: #373f51;
+	background-color: #697e86;
+	border-color: 1px solid #c9e6f2;
 	color: snow;
 	min-width: 16px;
-	opacity: 0.7;
+	opacity: 1;
 	font-family: Raleway;
 	font-weight: bold;
 	font-size: 10px;
@@ -664,9 +701,10 @@ div.userbox
 
 .actionbutton
 {
-	border-radius: 10px;
-	padding: 4px;
-	background: #d4d4d4;
+	border-radius: 6px;
+	padding: 5px;
+	background-image: linear-gradient(#fcfcfc, #eee);
+	border: 1px solid #d5d5d5;
 	text-decoration: none;
 	color: #333;
 	font-size: 12px;
@@ -676,12 +714,15 @@ div.userbox
 }
 
 .actionbutton:hover{
-	background: #c1c1c1;
+	background: #ccc;
 }
 
 .actionbutton .fa
 {
 	font-size: 12px;
+}
+
+.actionbutton i.fa{
 }
 
 div.title
@@ -848,23 +889,16 @@ table.leaderboard tr td.avatar img {
 {
 	font-size: 24px;
 	font-family: 'Raleway';
-	font-weight: bolder;
-
+	font-weight: bold;
 }
 
 select.pEditorlanguage{
 
-	margin: 10px;
+	
 	font-size: 20px;
 	font-family: 'Raleway';
-	padding: 10px;
+	margin-left: 20px;
 
-}
-
-.title_header img
-{
-	width: 26px;
-	height: 26px;
 }
 
 table.login
@@ -959,7 +993,7 @@ input#wordsearch, input#filter, input#searchfilter{
 
 input#filter{
 
-		width: 20%;
+		width: 80%;
 }
 
 
@@ -999,7 +1033,7 @@ strong.dWord:hover{
 
 strong.dWord a{
 
-		color: #565656;
+		color: #68777d;
 }
 
 strong.dWord a:hover{
@@ -1036,8 +1070,7 @@ strong.dWord a:hover{
 
 .dWordWrapper a.tooltip{
 	color: #333;
-	font-family: Open Sans;
-	font-size: 12px;
+	font-size: 16px;
 }
 
 .dWordWrapper:hover {
@@ -1085,9 +1118,10 @@ vertical-align: baseline;
 }
 .moveResults .dWordWrapper {
 	margin-bottom: 5px;
-	background: #e8e8e8;
+	background: #fafafa;
 	padding: 10px;
-
+	border: 1px solid rgba(240,240,240,0.4);
+	border-radius: 10px;
 }
 
 .moveResults .dWordWrapper .tooltip{
@@ -1477,7 +1511,7 @@ color: #aaa;
 input.nWord, textarea.nWord
 {
 	font-size: 20px;
-	color: #565656;
+	color: #68777d;
 	cursor: pointer;
 	font-family: Merriweather;
 	font-weight: bolder;
@@ -1509,7 +1543,7 @@ span.pDerivationTitle{
 
 span.pDerivationTitle span.native a{
 	font-weight: bold;
-	color: #fff!important;
+	color: #68777d!important;
 	font-family: Merriweather;
 	font-size: 11px;
 }
@@ -1528,7 +1562,7 @@ strong.pDerivationName{
 strong.pDerivation a{
 	font-family: Merriweather;
 	font-size: 12px;
-	color: #565656;
+	color: #68777d;
 	font-weight: normal;
 }
 
@@ -1550,7 +1584,7 @@ img.pImage:hover{
 
 strong.pWord a{
 
-		color: #565656;
+		color: #68777d;
 }
 
 strong.pWord a:hover{
@@ -1565,11 +1599,13 @@ strong.pWord a:hover{
 
 .pSectionWrapper {
 	margin-bottom: 20px;
-	background: #f5f5f5;
-		padding: 10px;
+	background-color: #fff;
+	border: 1px solid #ddd;
+	border-top: none;
+	border-bottom-right-radius: 3px;
+	border-bottom-left-radius: 3px;
+	padding: 10px;
 	width: 95%;
-		box-shadow: 0 4px 10px -2px rgba(0,0,0,0.1)
-
 }
 
 .pSectionWrapper .tooltip{
@@ -1590,42 +1626,53 @@ strong.pWord a:hover{
 	font-size: 20px;
 }
 
-.pSectionWrapper span.title{
+span.pSectionTitle{
 	font-size: 29px;
-	border-bottom: #7a9e9f 0.5px solid;
-	display: block;
-	background: #fff;
-	color: #e1e1e1;
-	margin-top: -10px;
-	margin-left: -10px;
-	margin-right: -10px;
-	padding: 10px;
-	padding-bottom: 0px;	
-	padding-top: 0px;
 
+	background-color: #f2f9fc;
+	border: 1px solid #c9e6f2;
+	display: block;
+	color: #68777d;
+	border-top-right-radius: 3px;
+	border-top-left-radius: 3px;
+	padding: 10px;
+	padding-top: 0px;
+	padding-bottom: 0px;
+	width: 95%;
 }
 
-.pSectionWrapper span.title.extra{
+span.pSectionTitle.extra{
 	font-weight: 700;
 	background: #fff;
+	background-color: #f5f5f5;
+	border-top: 1px solid #d8d8d8;
+	border-bottom: 1px solid #d8d8d8;
+	border-color: #d8d8d8;
 	text-transform: uppercase;
 	letter-spacing: .1em;
 	white-space: normal;
 	font-size: 13px;
 	color: #333;
 	line-height: 1.2;
-	width: 100%;
+	
+	padding-left: 10px;
+	padding-right: 10px;
 	padding-bottom: 13px;
 	padding-top: 13px;
 }
 
-.pSectionWrapper span.title.extra.sub{
+.pSectionTitle.extra.sub{
 	margin-top: 0px;
-	background: #f1f1f1;
+	box-shadow: none;
+	background: #f9f9f9;
 	border: none;
 	padding: 5px;
 	padding-left: 10px;
 	padding-right: 10px;
+	margin: -10px;
+	width: 100%;
+	margin-bottom: 5px;
+	margin-top: 5px;
 	font-size: 12px;
 }
 
@@ -1704,52 +1751,42 @@ img.dFlag:hover{
 	opacity: 1;
 }
 
-.pSectionWrapper a.synonym{
+.pSectionWrapper a.synonym, .pSectionWrapper a.antonym{
 
 	display: inline-block;
-	padding: 5px;
-	color: snow;
-	background: yellow;
-	margin-top: 8px;
-	padding-top: 1px;
-	padding-right: 8px;
-	padding-left: 8px;
-	font-weight: 400;
+	padding: 4px 8px;
+	border-radius: 3px;
+	font-weight: bold;
+	line-height: 20px;
+	color: #fff;
+	text-align: center;
+	background-color: #999;
+	
+	font-family: Trebuchet MS;
+	font-size: 11px;
 }
 
 .pSectionWrapper a.synonym.score-25{
-	background: #c3cbce;
+	background: rgba(35,180,210,0.5);
 }.pSectionWrapper a.synonym.score-50{
-	background: #6e8894;
+	background: rgba(35,180,210,0.75);
 }
 .pSectionWrapper a.synonym.score-100{
-	background: #3a484e;
+	background: rgba(35,180,210,1);
 }
 
 .pSectionWrapper a.synonym:hover{
 	text-decoration: underline;;
 }
 
-.pSectionWrapper a.antonym{
-
-	display: inline-block;
-	padding: 5px;
-	color: snow;
-	background: yellow;
-	margin-top: 8px;
-	padding-top: 1px;
-	padding-right: 8px;
-	padding-left: 8px;
-	font-weight: 400;
-}
 
 .pSectionWrapper a.antonym.score-25{
-	background: #cbaaa1;
+	background: rgba(110,85,150,0.5);
 }.pSectionWrapper a.antonym.score-50{
-	background: #a38981;
+	background: rgba(110,85,150,0.75);
 }
 .pSectionWrapper a.antonym.score-100{
-	background: #7a6661;
+	background: rgba(110,85,150,1);
 }
 
 .pSectionWrapper a.antonym:hover{
@@ -1791,7 +1828,7 @@ strong.aWord:hover{
 
 strong.aWord a{
 
-		color: #565656;
+		color: #68777d;
 }
 
 strong.aWord a:hover{
@@ -2135,7 +2172,7 @@ div.btSource{
 }
 
 div.btSource span.btNative strong{
-	color: #565656;
+	color: #68777d;
 	font-size: 30px;
 }
 
@@ -2155,7 +2192,8 @@ div.btButtonBar{
 	padding: 10px;
 	padding-top: 5px;
 	padding-bottom: 5px;
-	background: #e1e1e1;
+	background-image: linear-gradient(#eee, #fcfcfc);
+	border-top: 1px solid #eee;
 }
 
 div.btButtonBar a.btAction{

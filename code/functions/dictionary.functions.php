@@ -16,14 +16,14 @@
 		global $donut;
 		$r = array();
 		$type = "";
-		// if(polStartsWith($search, "t="))
+		// if(pStartsWith($search, "t="))
 		// {
 		// 	$search1 = explode(";", $search);
 		// 	$type= "type = '".substr($search1[0], 2)."' AND ";
 		// 	@$search = $search1[1];
 		// 	$wholeword = false;
 		// }
-		// if(polStartsWith($search, "flag="))
+		// if(pStartsWith($search, "flag="))
 		// {
 		// 	$search1 = explode(";", $search);
 		// 	$type= "flag = '".substr($search1[0], 5)."' AND ";
@@ -301,14 +301,19 @@
 	}
 
 
-	function pGetTranslationsByLang($word_id, $clone = false, $clone_id = 0){
+	function pGetTranslationsByLang($word_id, $lang_id = 0, $clone = false, $clone_id = 0){
 
 		global $donut;
 
-		if(!$clone)
-			return $donut['db']->query("SELECT * FROM translations INNER JOIN translation_words ON translations.id = translation_words.translation_id WHERE translation_words.word_id = $word_id  Order By language_id DESC;");
+		if($lang_id == 0)
+			$lang_text = "";
 		else
-			return $donut['db']->query("SELECT * FROM translations INNER JOIN translation_words ON translations.id = translation_words.translation_id WHERE translation_words.word_id = $clone_id OR translation_words.clone_id  Order By language_id DESC;");
+			$lang_text = " AND language_id = $lang_id";
+
+		if(!$clone)
+			return $donut['db']->query("SELECT * FROM translations INNER JOIN translation_words ON translations.id = translation_words.translation_id WHERE translation_words.word_id = $word_id $lang_text  Order By language_id DESC;");
+		else
+			return $donut['db']->query("SELECT * FROM translations INNER JOIN translation_words ON translations.id = translation_words.translation_id WHERE (translation_words.word_id = $clone_id OR translation_words.clone_id) $lang_text Order By language_id DESC;");
 
 
 	}
@@ -466,10 +471,10 @@
 
 			// If it does not exists, we need to add it of couuuurse! ;)
 			if($previous_id == 0)
-				$status =  $donut['db']->query("INSERT INTO translations(language_id, translation) VALUES(".$donut['db']->quote(pEditorLanguage($_SESSION['pUser'])).", ".$donut['db']->quote($translations[0]).");SET @TRANSLATIONID=LAST_INSERT_ID();INSERT INTO translation_words(word_id, translation_id, specification) VALUES (".$_REQUEST['word_id'].", @TRANSLATIONID, ".$donut['db']->quote($specification).");");
+				$status =  $donut['db']->query("INSERT INTO translations(language_id, translation) VALUES(".$donut['db']->quote(pEditorLanguage($_SESSION['pUser'])).", ".$donut['db']->quote($translations[0]).");SET @TRANSLATIONID=LAST_INSERT_ID();INSERT INTO translation_words(word_id, translation_id, specification) VALUES (".$word_id.", @TRANSLATIONID, ".$donut['db']->quote($specification).");");
 			
 			// The translation existed already, hooray, half the job it is then.
-			$status = $donut['db']->query("INSERT INTO translation_words(word_id, translation_id, specification) VALUES (".$_REQUEST['word_id'].", ".$previous_id.", ".$donut['db']->quote($specification).");");
+			$status = $donut['db']->query("INSERT INTO translation_words(word_id, translation_id, specification) VALUES (".$word_id.", ".$previous_id.", ".$donut['db']->quote($specification).");");
 			
 			
 		}

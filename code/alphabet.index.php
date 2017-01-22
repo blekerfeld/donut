@@ -25,7 +25,7 @@ $grapheme = pGetGrapheme($_GET['alphabet']);
 if($grapheme != false){
 
 	// Let's do a title
-	pOut('<div class="title"><div class="icon-box fetch">'.$grapheme->grapheme.'</div>&#8203;&#8203;&#8203;</div><br /><input id="filter" placeholder="Filter" /><br />');
+	pOut('<div class="title"><div class="icon-box fetch">'.$grapheme->grapheme.'</div><input id="filter" style="margin-top: -7px;" placeholder="Filter" /></div><br />');
 
 	// Our no results placeholder
 
