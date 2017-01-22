@@ -115,7 +115,7 @@ $editor_lang = pGetLanguage(pEditorLanguage($_SESSION['pUser']));
 if(isset($_REQUEST['translate']) and !isset($_REQUEST['ajax']) and is_numeric($_REQUEST['translate'])){
 
 
-	pOut('<span class="title_header">'.BTRANS_TITLE_SINGLE.$editor_lang->name.'</span><br /><br />', true);
+	pOut('<span class="title_header"><div class="icon-box white-icon"><i class="fa fa-language"></i></div> '.BTRANS_TITLE_SINGLE.$editor_lang->name.'</span><br /><br />', true);
 
 	$percentage = 0;
 	$num = 1;
@@ -148,7 +148,7 @@ if(isset($_REQUEST['translate']) and !isset($_REQUEST['ajax']) and is_numeric($_
 
 
 
-pOut('<span class="title_header">'.BTRANS_TITLE.$editor_lang->name.'</span><br /><br />', true);
+pOut('<span class="title_header"><div class="icon-box white-icon"><i class="fa fa-language"></i></div> '.BTRANS_TITLE.$editor_lang->name.'</span><br /><br />', true);
 
 
 // Let's get our words, limit of 10

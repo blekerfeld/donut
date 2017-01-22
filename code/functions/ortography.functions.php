@@ -131,7 +131,7 @@
 
 		$char_out = '';
 
-		if(polStartsWith($char, 'v_'))
+		if(pStartsWith($char, 'v_'))
 			{
 				$id = ltrim($char, 'v_');
 
@@ -150,7 +150,7 @@
 
 			}
 
-			elseif(polStartsWith($char, 'c_'))
+			elseif(pStartsWith($char, 'c_'))
 			{
 				$id = ltrim($char, 'c_');
 
@@ -167,7 +167,7 @@
 
 			}
 
-			elseif(polStartsWith($char, 'p_'))
+			elseif(pStartsWith($char, 'p_'))
 			{
 
 				$id = ltrim($char, 'p_');
@@ -363,7 +363,7 @@
 
 	function pAlphabetBar(){
 		$alphabet = pGetAlphabet();
-		$text = '<div class="alphabetbar">';
+		$text = '<div class="10-minus alphabetbar floatright">';
 		foreach($alphabet as $grapheme)
 			$text .= "<a href='".pUrl('index.php?alphabet='.$grapheme['id'])."' class='".((isset($_GET['alphabet']) AND ($_GET['alphabet'] == $grapheme['id'])) ? 'selected' : '')." ".((isset($_GET['alphabetresult']) AND ($_GET['alphabetresult'] == $grapheme['id'])) ? 'selected' : '')."'>".$grapheme['grapheme']."</a>";
 		$text .= '</div>';

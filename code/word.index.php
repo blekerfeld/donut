@@ -58,7 +58,7 @@ else{
 
 	
 	// We need to start
-		pOut("<div id='fadeOut_".$word->id."'><div class='pSectionWrapper'>");
+		pOut("<div id='fadeOut_".$word->id."'>");
 
 		// Is this a derivation?
 		$derivation_term = "";
@@ -72,7 +72,7 @@ else{
 		}
 		
 
-		pOut("<span class='title'><strong class='pWord' id='ajax_dov_".$word->id."'><a href='".pUrl('?word='.$word->id)."'><span class='native'>".html_entity_decode($word->native)."</span></a></strong>$derivation_term</span>");
+		pOut("<span class='pSectionTitle'><strong class='pWord' id='ajax_dov_".$word->id."'><a href='".pUrl('?word='.$word->id)."'><span class='native'>".html_entity_decode($word->native)."</span></a></strong>$derivation_term</span><div class='pSectionWrapper'>");
 
 
 		// Show the type and classification
@@ -88,19 +88,19 @@ else{
 		// IMAGE
 
 		if($word->image != '')
-			pOut('<div class="pSectionWrapper"><span class="title extra">Image</span><span class="pPron"><img class="pImage" src="'.pUrl('pol://library/entry_images/'.html_entity_decode(($word->image))).'"/></span></div>');
+			pOut('<span class="pSectionTitle extra">Image</span><div class="pSectionWrapper"><span class="pPron"><img class="pImage" src="'.pUrl('pol://library/entry_images/'.html_entity_decode(($word->image))).'"/></span></div>');
 
 
 		// IPA
 
 		if($word->ipa != '')
-			pOut('<div class="pSectionWrapper"><span class="title extra">Pronounciation</span><span class="pPron">/'.html_entity_decode(($word->ipa)).'/</span></div>');
+			pOut('<span class="pSectionTitle extra">Pronounciation</span><div class="pSectionWrapper"><span class="pPron">/'.html_entity_decode(($word->ipa)).'/</span></div>');
 
 
 
 	// The inflection!
-	pOut('<div class="pSectionWrapper"><span style="cursor: pointer;" onClick="$(\'.inflections_instructions\').toggle();$(\'.inflections\').slideToggle(\'fast\');$(\'.hideIconInflect\').toggle();$(\'.showIconInflect\').toggle(function(){
-	});"><span class="title extra">Inflections <span class="showIconInflect"><i class="fa fa-12 fa-chevron-down "></i></span><span class="hideIconInflect hide"><i class="fa fa-12 fa-chevron-up "></i> </span></span> <span class="inflections_instructions actionbutton" style="display:inline-block;margin-top: 10px;">Click to show</span><div class="inflections hide"><br />');
+	pOut('<span style="cursor: pointer;" onClick="$(\'.inflections\').slideToggle(\'fast\');$(\'.hideIconInflect\').toggle();$(\'.showIconInflect\').toggle(function(){
+	});"><span class="pSectionTitle extra">Inflections <span class="showIconInflect"><i class="fa fa-12 fa-chevron-down "></i></span><span class="hideIconInflect hide"><i class="fa fa-12 fa-chevron-up "></i> </span></span></span><div class="pSectionWrapper hide inflections"><div>');
 
 	// Mode scopus
 
@@ -205,14 +205,19 @@ else{
 
 	}
 
-		pOut("<br id='cl' /></div></div>");
+		pOut("<br id='cl' /></div></div><br />");
+
+
+		//  Getting search and return language
+		$dict = explode('_', $_SESSION['search_language']);
+		$slang = $dict[0];
 
 
 		// Getting the translations of the original term, if needed
 		if($word->derivation_clonetranslations == 1)
-			$all_translations = pGetTranslationsByLang($word->id, true, $word->derivation_of);
+			$all_translations = pGetTranslationsByLang($word->id, $slang, true, $word->derivation_of);
 		else
-			$all_translations = pGetTranslationsByLang($word->id);
+			$all_translations = pGetTranslationsByLang($word->id, $slang);
 		
 
 
@@ -220,7 +225,7 @@ else{
 		if($all_translations->rowCount() != 0)
 		{
 		
-			pOut('<div class="pSectionWrapper"><span class="title extra">Meaning and translations</span>');
+			pOut('<span class="pSectionTitle extra">Meaning and translations</span><div class="pSectionWrapper">');
 			while($show_translation = $all_translations->fetchObject())
 			{
 
@@ -235,9 +240,9 @@ else{
 			if(!@empty($trans_array[$lang->id]) and !pDisabledLanguage($lang->id))
 			{
 				if($lang->id == 0)
-					pOut("<span class='title extra sub'>other meanings/alternate forms in <img class='pFlag' src='".pUrl('pol://library/flags/'.$lang->flag.'.png')."' /> 	".$lang->name."</span><ol>");
+					pOut("<span class='pSectionTitle extra sub'>other meanings/alternate forms in <img class='pFlag' src='".pUrl('pol://library/flags/'.$lang->flag.'.png')."' /> 	".$lang->name."</span><ol>");
 				else
-					pOut("<span class='title extra sub'>Translations into <img class='pFlag' src='".pUrl('pol://library/flags/'.$lang->flag.'.png')."' /> 	".$lang->name."</span><ol>");
+					pOut("<span class='pSectionTitle extra sub'>Translations into <img class='pFlag' src='".pUrl('pol://library/flags/'.$lang->flag.'.png')."' /> 	".$lang->name."</span><ol>");
 				foreach($trans_array[$lang->id] as $trans){
 					pOut('<li><span>'.(($trans->specification != '') ? (' <em>('.$trans->specification.')</em>') : ('')).' <span href="javascript:void(0);" class="translation trans_'.$trans->id.' tooltip">'.$trans->translation.'</span>');
 					if($description = html_entity_decode(pGetDescription($trans->translation_id)))
@@ -255,7 +260,7 @@ else{
 
 		$idioms = pGetIdiomsOfWords($word->id);
 		if($idioms->rowCount() != 0){
-			pOut('<div class="pSectionWrapper"><span class="title extra">Idiom and examples</span><ol>');
+			pOut('<span class="pSectionTitle extra">Idiom and examples</span><div class="pSectionWrapper"><ol>');
 			while($idiom = $idioms->fetchObject()){
 				pOut('<li><span class="pIdiom">'.pHighlight($idiom->keyword, $idiom->idiom, '<span class="pIdiomHighlight">', '</span>'));
 				$translations_idiom = pGetTranslationOfIdiomByLang($idiom->idiom_id);
@@ -283,7 +288,7 @@ else{
 		{
 
 	
-			pOut('<div class="pSectionWrapper"><span class="title extra">Derived terms</span>');
+			pOut('<span class="pSectionTitle extra">Derived terms</span><div class="pSectionWrapper">');
 
 			$i = 0;
 			$max_i = count($derivations);
@@ -315,7 +320,7 @@ else{
 	if($etymologies->rowCount() != 0)
 	{
 
-		pOut('<div class="pSectionWrapper"><span class="title extra">Etymology</span>');
+		pOut('<span class="pSectionTitle extra">Etymology</span><div class="pSectionWrapper">');
 
 			// For each synonym show the block
 			$count = 1;
@@ -338,7 +343,7 @@ else{
 	if($synonyms->rowCount() != 0)
 	{
 
-		pOut('<div class="pSectionWrapper"><span class="title extra">Synonyms</span>');
+		pOut('<span class="pSectionTitle extra">Synonyms</span><div class="pSectionWrapper">');
 
 			// For each synonym show the block
 
@@ -365,7 +370,7 @@ else{
 	if($antonyms->rowCount() != 0)
 	{
 
-		pOut('<div class="pSectionWrapper"><span class="title extra">Antonyms</span>');
+		pOut('<span class="pSectionTitle extra">Antonyms</span><div class="pSectionWrapper">');
 
 			// For each antonym show the block
 

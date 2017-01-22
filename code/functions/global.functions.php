@@ -311,8 +311,8 @@
 
 	function pDictionaryHeader(){
 
-		pOut('    
-      <span class="title_header">Dictionary</span>'. pAlphabetBar().'<br />
+		pOut(pAlphabetBar().' 
+      <span class="title_header"><div class="icon-box white-icon"><i class="fa fa-book"></i></div> Dictionary</span><br /><br />
       ', true);
 
 	}

@@ -51,11 +51,17 @@
 	}
 
 
+
+	// Title
+
+
+
+	pOut('<span class="floatleft title_header"><div class="icon-box throw"><i class="fa fa-tasks"></i></div> <img class="logo-admin" src="'.pUrl('pol://library/static/admin_logo.png').'" /></span>', true);
+
+
 	pOut('
-		<span class="title_header">Manage Donut</span>
 
 		<div class="adminmenu">
-
 			<a href="'.pUrl('?admin').'" '.pAMenuLink('home').'><i class="fa fa-tachometer"></i> Dashboard</a>
 			<a href="'.pUrl('?admin&section=words').'" '.pAMenuLink($subsection_dictionary).'><i class="fa fa-book"></i> Dictionary</a>
 			<a href="'.pUrl('?admin&section=types').'" '.pAMenuLink($subsection_grammar).'><i class="fa fa-database"></i> Grammar</a>
@@ -63,11 +69,7 @@
 			<a href="'.pUrl('?admin&section=inventory').'" '.pAMenuLink($subsection_phonology).'><i class="fa fa-bullhorn"></i> Phonology and Ortography</a>
 			<a href="'.pUrl('?admin&section=settings').'" '.pAMenuLink($subsection_settings).'><i class="fa fa-cogs"></i> Settings</a>
 
-		</div>	
-
-
 		', true);
-
 
 	// The sub menu
 
@@ -76,7 +78,7 @@
 	if(isset($_REQUEST['section']) AND in_array($_REQUEST['section'], $subsection_grammar))
 		pOut('
 			<div class="adminsubmenu">
-
+				<span class="dots">. . .</span>
 				<a href="'.pUrl('?admin&section=types').'" '.pAMenuLink('types').'><i class="fa fa-database"></i> Parts of speech</a>
 				<a href="'.pUrl('?admin&section=classifications').'" '.pAMenuLink('classifications').'><i class="fa fa-venus-mars "></i> Classifications</a>
 				<a href="'.pUrl('?admin&section=subclassifications').'" '.pAMenuLink('subclassifications').'><i class="fa fa-code-fork "></i> Subclassifications</a>
@@ -93,6 +95,7 @@
 	if(isset($_REQUEST['section']) AND in_array($_REQUEST['section'], $subsection_inflections))
 		pOut('
 			<div class="adminsubmenu">
+				<span class="dots">. . .</span>
 				<a href="'.pUrl('?admin&section=rule_groups').'" '.pAMenuLink('rule_groups').'><i class="fa fa-object-group "></i> Inflection groups</a>
 				<a href="'.pUrl('?admin&section=regular_inflections').'" '.pAMenuLink('regular_inflections').'><i class="fa fa-industry"></i> Regular inflections</a>
 				<a href="'.pUrl('?admin&section=irregular_inflections').'" '.pAMenuLink('irregular_inflections').'><i class="fa fa-eyedropper"></i> Irregular Inflections</a>
@@ -108,6 +111,7 @@
 	if(isset($_REQUEST['section']) AND in_array($_REQUEST['section'], $subsection_dictionary))
 		pOut('
 			<div class="adminsubmenu">
+				<span class="dots">. . .</span>
 
 				<a href="'.pUrl('?admin&section=words').'" '.pAMenuLink('words').'><i class="fa fa-font"></i> Word entries</a>
 				<a href="'.pUrl('?admin&section=translations').'" '.pAMenuLink('translations').'><i class="fa fa-globe"></i> Translations</a>
@@ -125,6 +129,7 @@
 	if(isset($_REQUEST['section']) AND in_array($_REQUEST['section'], $subsection_phonology))
 		pOut('
 			<div class="adminsubmenu">
+				<span class="dots">. . .</span>
 
 				<a href="'.pUrl('?admin&section=inventory').'" '.pAMenuLink('inventory').'><i class="fa fa-archive"></i> Phonological inventory</a>
 				<a href="'.pUrl('?admin&section=examples').'" '.pAMenuLink('examples').'><i class="fa fa-quote-right"></i> Examples</a>
@@ -140,6 +145,7 @@
 	if(isset($_REQUEST['section']) AND in_array($_REQUEST['section'], $subsection_settings))
 		pOut('
 			<div class="adminsubmenu">
+				<span class="dots">. . .</span>
 
 				<a href="'.pUrl('?admin&section=settings').'" '.pAMenuLink('settings').'><i class="fa fa-wrench"></i> Settings</a>
 				<a href="'.pUrl('?admin&section=languages').'" '.pAMenuLink('languages').'><i class="fa fa-language"></i> Languages</a>
@@ -149,7 +155,7 @@
 
 			', true);
 
-
+	pOut('</div><br id="cl"/><br />', true);
 
 	
 	// Do we need to load a section?

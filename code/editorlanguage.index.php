@@ -17,12 +17,12 @@ if(isset($_GET['ajax']) and is_numeric($_GET['new']))
 
 $select = pPrepareSelect('pGetLanguages', 'pEditorlanguage', 'id', 'name');
 
-pOut('<div class="load"></div><span class="title_header">Editor language:</span>'.$select.'<br /><br />', true);
+pOut('<span class="load"></span><span class="title_header"><div class="icon-box white-icon"><i class="fa fa-language"></i></div> Editor language:</span>'.$select.'<br /><div class="notice small"><i class="fa fa-info-circle" style="font-size: 10px!important;"></i> Your editor language is the active secondary language. It is the language you will be editing and translating into.</div><br />', true);
 
 pOut("<script>
 	$('.pEditorlanguage').val(".pEditorLanguage($_SESSION['pUser']).");
 	$('.pEditorlanguage').on('change keyup paste', function(e) {
-		$('div.load').load('".pUrl('?editorlanguage&ajax&new=')."' + $(this).val());
+		$('span.load').load('".pUrl('?editorlanguage&ajax&new=')."' + $(this).val());
 	});
 	$('.page').hide();</script>");
 

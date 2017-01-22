@@ -39,14 +39,14 @@
 
     //CSS for ddSlick
     ddslickCSS = '<style id="css-ddslick" type="text/css">' +
-                '.dd-select{ border:solid 1px #1a1e27; position:relative; cursor:pointer; font-family: Roboto; background: #373f51;}' +
+                '.dd-select{ border:solid 1px #1a1e27; position:relative; cursor:pointer; font-family: Roboto; background: #252627;}' +
                 '.dd-desc { color:#aaa; display:block; overflow: hidden; font-weight:normal; line-height: 1.4em; }' +
-                '.dd-selected{ overflow:hidden; display:block; padding:10px; font-weight:bold; background: #373f51; color: #fff;}' +
+                '.dd-selected{ overflow:hidden; display:block; padding:10px; font-weight:bold; background: #252627; color: #fff;}' +
                 '.dd-selected:hover{ overflow:hidden; display:block; padding:10px; font-weight:bold; background: #5b6170; color: #fff;}' +
                 '.dd-pointer{ width:0; height:0; position:absolute; right:10px; top:50%; margin-top:-3px;}' +
                 '.dd-pointer-down{ border:solid 5px transparent; border-top:solid 5px white; }' +
                 '.dd-pointer-up{border:solid 5px transparent !important; border-bottom:solid 5px  !important; margin-top:-8px;}' +
-                '.dd-options{ border:solid 1px #373f51; border-top:none; list-style:none;display:none; position:absolute; z-index:2000; margin:0; padding:0;background:#fff; overflow:auto;}' +
+                '.dd-options{ border:solid 1px #252627; border-top:none; list-style:none;display:none; position:absolute; z-index:2000; margin:0; padding:0;background:#fff; overflow:auto;}' +
                 '.dd-option{ padding:10px; display:block; border-bottom:solid 1px #ddd; overflow:hidden; text-decoration:none; color:#333; cursor:pointer;}' +
                 '.dd-options > li:last-child > .dd-option{ border-bottom:none;}' +
                 '.dd-option:hover{ background: #5b6170; color:#fff; }' +

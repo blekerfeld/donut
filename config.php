@@ -63,13 +63,13 @@
 	}
 ##	Function to check if a string starts with a certain piece of string
 
-function polStartsWith($haystack, $needle)
+function pStartsWith($haystack, $needle)
 {
     $length = strlen($needle);
     return (substr($haystack, 0, $length) === $needle);
 }
 
-function polEndsWith($haystack, $needle)
+function pEndsWith($haystack, $needle)
 {
     return $needle === "" || substr($haystack, -strlen($needle)) === $needle;
 }
@@ -93,14 +93,14 @@ function polEndsWith($haystack, $needle)
 		global $donut;
 
 		// Just an adition on the index.php?
-		if(polStartsWith($url, '?'))
+		if(pStartsWith($url, '?'))
 			$url = $donut['absolute_path'].$donut['file'].$url;
 
 
-		elseif(polStartsWith($url, 'pol://') && $exploded = explode('pol://', $url))
+		elseif(pStartsWith($url, 'pol://') && $exploded = explode('pol://', $url))
 			$url = pUrl($exploded[1]);
 
-		elseif(polStartsWith($url, 'http://') or polStartsWith($url, 'ftp://') or polStartsWith($url, 'https://'))
+		elseif(pStartsWith($url, 'http://') or pStartsWith($url, 'ftp://') or pStartsWith($url, 'https://'))
 			$url = $url;
 
 		else
