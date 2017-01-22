@@ -39,10 +39,10 @@
 
 	// Going through the apps, looking for answers...
 	foreach($apps as $app){
-		if(isset($_REQUEST[$app[0]]) and !$setapp)
+		if(isset($_REQUEST[$app[0]]) and !$app_set)
 		{
 
-			if($app_file = $donut['root_path'] . '/code/' . $app[1] . '.index.php' && file_exists($app_file))
+			if(($app_file = $donut['root_path'] . '/code/' . $app[1] . '.index.php') && file_exists($app_file))
 				require_once $app_file;
 			else
 				die("<div class='header'>Fatal error: Donut failed loading the ".$app[1]."-section</div>");
@@ -75,7 +75,6 @@
 	//	We need some extra structure if we are dealing with AJAX loaded pages
 	if(isset($_REQUEST['ajax']) OR isset($_REQUEST['ajax_pOut']))
 		pAjaxStructure();
-
 
 	//	The template is loaded, that's the begining of the end.
 	require pFromRoot("templates/main_template.php");

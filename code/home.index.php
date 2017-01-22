@@ -44,11 +44,13 @@ pOut('
 	</td></tr></table>
       <script>
       	$("#searchb").click(function(){
-      		$("#pageload i").show();
+      		$("#pageload").show();
+      		$("#loading").slideDown();
       		$(".ajaxload").slideUp();
-      		$(".drop").hide();
+      		$(".drop").slideUp();
 	      		$(".ajaxload").load("'.pUrl('?getword&ajax').'", {"word": $("#wordsearch").val(), "dict": $("#dictionary").val(), "wholeword":  $("#wholeword").is(":checked")}, function(){$(".ajaxload").slideDown(function(){
-	      								 $("#pageload i").delay(100).hide(400);
+	      								 $("#pageload").delay(100).hide(400);
+	      								 $("#loading").slideUp();
 	      		})}, function(){
       		});
       		if($("#wordsearch").val() != ""){
@@ -81,7 +83,10 @@ pOut('
 
 	if(isset($_GET['search'])){
 
-		pOut("<script>$('#wordsearch').val('".urldecode($_GET['search'])."');$('#searchb').click();</script>");
+		pOut("<script>$(document).ready(function(){
+			$('#wordsearch').val('".urldecode($_GET['search'])."');
+			$('#searchb').click();
+		});</script>");
 
 	}
 

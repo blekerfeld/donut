@@ -27,7 +27,7 @@ if(!$word = $rs->fetchObject()){
 else{
 	if(!isset($_REQUEST['ajaxOUT']))
 		if(isset($_GET['searchresult']))
-			pOut('<div class="title"><div class="icon-box fetch"><i class="fa fa-bookmark"></i></div> Dictionary entry</div><br />'."<a class='actionbutton' href='".pUrl('?search='.urlencode($_SESSION['search']))."');'><i class='fa fa-arrow-left' style='font-size: 12px!important;'></i> Back</i></a><br /><br />");
+			pOut('<div class="title"><div class="icon-box fetch"><i class="fa fa-bookmark"></i></div> Dictionary entry</div><br />'."<a class='actionbutton' href='".pUrl('?home&search='.urlencode($_SESSION['search']))."');'><i class='fa fa-arrow-left' style='font-size: 12px!important;'></i> Back</i></a><br /><br />");
 		elseif(isset($_GET['alphabetresult']))
 			pOut('<div class="title"><div class="icon-box fetch"><i class="fa fa-bookmark"></i></div> Dictionary entry</div><br />'."<a class='actionbutton' href='".pUrl('?alphabet='.$_GET['alphabetresult'])."'><i class='fa fa-arrow-left' style='font-size: 12px!important;'></i> Back</i></a><br /><br />");
 		else
