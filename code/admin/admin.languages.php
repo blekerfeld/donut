@@ -1,4 +1,4 @@
-<?php
+z<?php
 /* 
 	Donut
 	Dictionary Toolkit
