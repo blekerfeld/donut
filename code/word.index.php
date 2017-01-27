@@ -223,10 +223,12 @@ else{
 
 		pOut("<br id='cl' /></div></div><br />");
 
-
+		$slang = 0; 
 		//  Getting search and return language
-		$dict = explode('_', $_SESSION['search_language']);
-		$slang = $dict[0];
+		if(isset($_SESSION['search_language'])){
+			$dict = explode('_', $_SESSION['search_language']);
+			$slang = $dict[0];
+		}
 
 
 		// Getting the translations of the original term, if needed
@@ -256,9 +258,9 @@ else{
 			if(!@empty($trans_array[$lang->id]) and !pDisabledLanguage($lang->id))
 			{
 				if($lang->id == 0)
-					pOut("<span class='pSectionTitle extra sub'>other meanings/alternate forms in <img class='pFlag' src='".pUrl('pol://library/flags/'.$lang->flag.'.png')."' /> 	".$lang->name."</span><ol>");
+					pOut("<span class='pSectionTitle extra sub'>other meanings/alternate forms in <img class='pFlag' src='".pUrl('pol://library/images/flags/'.$lang->flag.'.png')."' /> 	".$lang->name."</span><ol>");
 				else
-					pOut("<span class='pSectionTitle extra sub'>Translations into <img class='pFlag' src='".pUrl('pol://library/flags/'.$lang->flag.'.png')."' /> 	".$lang->name."</span><ol>");
+					pOut("<span class='pSectionTitle extra sub'>Translations into <img class='pFlag' src='".pUrl('pol://library/images/flags/'.$lang->flag.'.png')."' /> 	".$lang->name."</span><ol>");
 				foreach($trans_array[$lang->id] as $trans){
 					pOut('<li><span>'.(($trans->specification != '') ? (' <em>('.$trans->specification.')</em>') : ('')).' <span href="javascript:void(0);" class="translation trans_'.$trans->id.' tooltip">'.$trans->translation.'</span>');
 					if($description = html_entity_decode(pGetDescription($trans->translation_id)))

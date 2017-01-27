@@ -27,7 +27,7 @@ if(!($word = pGetWord($_REQUEST['word_discussion'])));
 
 // Template stuff
 pOut(pAlphabetBar().' 
-      <span class="title_header"><div class="icon-box white-icon"><i class="fa fa-comments"></i></div> '.WD_TITLE.'</span><BR /><span class="small">'.sprintf(WD_TITLE_MORE, "<em><a href='".pUrl('?word='.$word->id)."'><span class='native'>".$word->native."</span></a></em>").'</span><br /><br />
+      <span class="title_header"><div class="icon-box white-icon"><i class="fa fa-comments"></i></div> '.WD_TITLE.'</span><br id="cl" /><br />
       ', true);
 
 pOut('<table class="noshow" style="width:100%;"><tr>');
