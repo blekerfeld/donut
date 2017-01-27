@@ -81,10 +81,10 @@ pOut('
 	}
 
 
-	if(isset($_GET['search'])){
+	if(isset($donut['get']['search'])){
 
 		pOut("<script>$(document).ready(function(){
-			$('#wordsearch').val('".urldecode($_GET['search'])."');
+			$('#wordsearch').val('".urldecode($donut['get']['search'])."');
 			$('#searchb').click();
 		});</script>");
 

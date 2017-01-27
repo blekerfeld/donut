@@ -63,7 +63,7 @@
                 <?php global $donut; echo $donut['page']['content_final']; ?>
                 </div>
             </div>
-            <?php if(!isset($_REQUEST['wap']))
+            <?php if(!isset($donut['request']['wap']))
             { ?>
           </div>
         <div class='footer'>

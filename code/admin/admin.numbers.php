@@ -24,14 +24,14 @@
 
 	// Actions and ajax
 
-	if(isset($_REQUEST['ajax']) and isset($_REQUEST['action']))
+	if(isset($donut['request']['ajax']) and isset($donut['request']['action']))
 	{
 
-		if($_REQUEST['action'] == 'add_number'){
+		if($donut['request']['action'] == 'add_number'){
 			
 			// Do we have all fields?
 
-			    if($_REQUEST['number_name'] == "" or $_REQUEST['number_name_short'] == "" or $_REQUEST['number_entry'] == "" or $_REQUEST['number_entry_short'] == "")
+			    if($donut['request']['number_name'] == "" or $donut['request']['number_name_short'] == "" or $donut['request']['number_entry'] == "" or $donut['request']['number_entry_short'] == "")
         		{
         			echo '<div class="notice hide danger-notice" id="empty" style="margin-bottom: 20px;"><i class="fa fa-warning"></i> Please submit all fields.</div>';
         			echo "<script>$('#busyadd').fadeOut().delay(1000);$('#empty').show().delay(400).effect('bounce', {duration: 1000});</script>";
@@ -39,7 +39,7 @@
 
      			else
      			{
-     				if(pNumberAdd($_REQUEST['number_name'], $_REQUEST['number_name_short'], $_REQUEST['number_entry'], $_REQUEST['number_entry_short']))
+     				if(pNumberAdd($donut['request']['number_name'], $donut['request']['number_name_short'], $donut['request']['number_entry'], $donut['request']['number_entry_short']))
      				{
      					echo '<div class="notice succes-notice hide" id="empty" style="margin-bottom: 20px;"><i class="fa fa-check"></i> Number succesfully added. <a href="'.pUrl('?admin&section=numbers').'">Return to overview.</a></div>';
      					echo "<script>
@@ -61,11 +61,11 @@
 
 		}
 
-		elseif($_REQUEST['action'] == 'edit_number'){
+		elseif($donut['request']['action'] == 'edit_number'){
 			
 			// Do we have all fields?
 			
-				if($_REQUEST['number_id'] == "" or $_REQUEST['number_name'] == "" or $_REQUEST['number_name_short'] == "" or $_REQUEST['number_entry'] == "" or $_REQUEST['number_entry_short'] == "")
+				if($donut['request']['number_id'] == "" or $donut['request']['number_name'] == "" or $donut['request']['number_name_short'] == "" or $donut['request']['number_entry'] == "" or $donut['request']['number_entry_short'] == "")
         		{
         			echo '<div class="notice hide danger-notice" id="empty" style="margin-bottom: 20px;"><i class="fa fa-warning"></i> Please submit all fields.</div>';
         			echo "<script>$('#busyadd').fadeOut().delay(1000);$('#empty').show().delay(400).effect('bounce', {duration: 1000});</script>";
@@ -74,7 +74,7 @@
 
      			else
      			{
-     				if(pNumberUpdate($_REQUEST['number_id'], $_REQUEST['number_name'], $_REQUEST['number_name_short'], $_REQUEST['number_entry'], $_REQUEST['number_entry_short']))
+     				if(pNumberUpdate($donut['request']['number_id'], $donut['request']['number_name'], $donut['request']['number_name_short'], $donut['request']['number_entry'], $donut['request']['number_entry_short']))
      				{
      					echo '<div class="notice succes-notice hide" id="empty" style="margin-bottom: 20px;"><i class="fa fa-check"></i> Number succesfully edited. <a href="'.pUrl('?admin&section=numbers').'">Return to overview.</a></div>';
      					echo "<script>
@@ -96,21 +96,21 @@
 
 	// Actions
 
-	elseif(isset($_REQUEST['action']))
+	elseif(isset($donut['request']['action']))
 	{
 
 		// The delete action -> are you sure?
-		if($_REQUEST['action'] == 'delete_number_sure' and isset($_REQUEST['number_id'])){
+		if($donut['request']['action'] == 'delete_number_sure' and isset($donut['request']['number_id'])){
 			
-			pOut('<div class="notice" id="empty"><i class="fa fa-question-circle"></i> <strong>Are you sure you want to delete the number <em>'.pNumberName($_REQUEST['number_id']).'</em>?</strong>
+			pOut('<div class="notice" id="empty"><i class="fa fa-question-circle"></i> <strong>Are you sure you want to delete the number <em>'.pNumberName($donut['request']['number_id']).'</em>?</strong>
 				<a class="actionbutton" href="'.pUrl('?admin&section=numbers').'">No</a> 
-				 <a class="actionbutton" href="'.pUrl('?admin&section=numbers&action=delete_number&number_id='.$_REQUEST['number_id']).'">Yes</a> <br />
-			All words of the number '.pNumberName($_REQUEST['number_id']).' will be deleted.</div>');
+				 <a class="actionbutton" href="'.pUrl('?admin&section=numbers&action=delete_number&number_id='.$donut['request']['number_id']).'">Yes</a> <br />
+			All words of the number '.pNumberName($donut['request']['number_id']).' will be deleted.</div>');
 		}
 
 		// The delete action
-		if($_REQUEST['action'] == 'delete_number' and isset($_REQUEST['number_id'])){
-			pNumberDelete($_REQUEST['number_id']);
+		if($donut['request']['action'] == 'delete_number' and isset($donut['request']['number_id'])){
+			pNumberDelete($donut['request']['number_id']);
 			pUrl('?admin&section=numbers', true);
 		}
 
@@ -118,7 +118,7 @@
 		// The action forms are going to be shown here!
 
 
-		if($_REQUEST['action'] == 'add_number'){
+		if($donut['request']['action'] == 'add_number'){
 
 
 			pOut('<div style="width: 74%;" class="notice hide" id="busyadd" ><i class="fa fa-spinner fa-spin"></i> Number is being added...</div>
@@ -165,10 +165,10 @@
 
 		}
 
-		elseif($_REQUEST['action'] == 'edit_number' and isset($_REQUEST['number_id'])){
+		elseif($donut['request']['action'] == 'edit_number' and isset($donut['request']['number_id'])){
 
 
-			if(!($number = pGetNumber($_REQUEST['number_id'])))
+			if(!($number = pGetNumber($donut['request']['number_id'])))
 				pUrl('?admin&section=numbers', true);
 
 
@@ -214,42 +214,42 @@
 
 		}
 
-		elseif($_REQUEST['action'] == 'number_apply' and isset($_REQUEST['number_id'])){
+		elseif($donut['request']['action'] == 'number_apply' and isset($donut['request']['number_id'])){
 
 			// The delete action -> are you sure?
 
-			if(isset($_REQUEST['delete_link_id_sure'])){
+			if(isset($donut['request']['delete_link_id_sure'])){
 				
-				pOut('<div class="notice" id="empty"><i class="fa fa-question-circle"></i> <strong>Are you sure you want to delete the link between <em>'.pNumberName($_REQUEST['number_id']).'</em> and <em>'.pTypeName($_REQUEST['delete_link_id_sure']).'</em>?</strong>
-					<a class="actionbutton" href="'.pUrl('?admin&section=numbers&action=number_apply&number_id='.$_REQUEST['number_id']).'">No</a> 
-					 <a class="actionbutton" href="'.pUrl('?admin&section=numbers&action=number_apply&number_id='.$_REQUEST['number_id']."&delete_link_id=".$_REQUEST['delete_link_id_sure']).'">Yes</a> <br />
-				All words of the type \''.pTypeName($_REQUEST['delete_link_id_sure']).'\' will not be able to be inflected by this number anymore.</div>');
+				pOut('<div class="notice" id="empty"><i class="fa fa-question-circle"></i> <strong>Are you sure you want to delete the link between <em>'.pNumberName($donut['request']['number_id']).'</em> and <em>'.pTypeName($donut['request']['delete_link_id_sure']).'</em>?</strong>
+					<a class="actionbutton" href="'.pUrl('?admin&section=numbers&action=number_apply&number_id='.$donut['request']['number_id']).'">No</a> 
+					 <a class="actionbutton" href="'.pUrl('?admin&section=numbers&action=number_apply&number_id='.$donut['request']['number_id']."&delete_link_id=".$donut['request']['delete_link_id_sure']).'">Yes</a> <br />
+				All words of the type \''.pTypeName($donut['request']['delete_link_id_sure']).'\' will not be able to be inflected by this number anymore.</div>');
 			}
 
-			if(isset($_REQUEST['delete_link_id']))
+			if(isset($donut['request']['delete_link_id']))
 			{
-				pNumberApplyDelete($_REQUEST['delete_link_id'], $_REQUEST['number_id']);
-				pUrl('?admin&section=numbers&action=number_apply&number_id='.$_REQUEST['number_id'], true);
+				pNumberApplyDelete($donut['request']['delete_link_id'], $donut['request']['number_id']);
+				pUrl('?admin&section=numbers&action=number_apply&number_id='.$donut['request']['number_id'], true);
 			}
 
-			if(isset($_REQUEST['new_link']))
+			if(isset($donut['request']['new_link']))
 			{
 
-				if(!(pExistNumberApply($_REQUEST['number_id'], $_REQUEST['new_link'])) AND $_REQUEST['new_link'] != '0')
-					pNumberApplyAdd($_REQUEST['number_id'], $_REQUEST['new_link']);
+				if(!(pExistNumberApply($donut['request']['number_id'], $donut['request']['new_link'])) AND $donut['request']['new_link'] != '0')
+					pNumberApplyAdd($donut['request']['number_id'], $donut['request']['new_link']);
 
 
 			}
 		
-			$applies = pGetNumbersApply($_REQUEST['number_id']);
+			$applies = pGetNumbersApply($donut['request']['number_id']);
 			$types = pGetTypes();
 
 
 			pOut("<a class='actionbutton' href='".pUrl('?admin&section=numbers')."'><i class='fa fa-arrow-left' style='font-size: 12px!important;'></i> Back</a> 
-				<br /><br /><strong>The number '".pNumberName($_REQUEST['number_id'])."' applies to the following types:</strong><br /><br />");
+				<br /><br /><strong>The number '".pNumberName($donut['request']['number_id'])."' applies to the following types:</strong><br /><br />");
 
 
-			pOut("<form METHOD='POST' class='form_new_link' ACTION='".pUrl('?admin&section=numbers&action=number_apply&number_id='.$_REQUEST['number_id'])."'>
+			pOut("<form METHOD='POST' class='form_new_link' ACTION='".pUrl('?admin&section=numbers&action=number_apply&number_id='.$donut['request']['number_id'])."'>
 				<select name='new_link'>
 				<option value='0'>Choose a type...</option>");
 
@@ -293,7 +293,7 @@
 
 
 	// We have not died yet!
-	if(!(isset($_REQUEST['action'])) OR !(in_array($_REQUEST['action'], $die_actions))){
+	if(!(isset($donut['request']['action'])) OR !(in_array($donut['request']['action'], $die_actions))){
 
 		// table head
 
