@@ -25,6 +25,7 @@
 
 	//	Global array
 	$donut = array();
+	$donut['is_beta'] = false;
 	$donut['file'] = 'index.php';
 	$donut['settings'] =array();
 	$donut['page'] = array();
@@ -116,7 +117,7 @@ function pEndsWith($haystack, $needle)
 			return header("Location:".$url);
 	}
 
-require $donut['root_path'].'/library/str.php';
+	require $donut['root_path'].'/library/assets/php/vendors/str.php';
 	
 	function pStr($str, $charset = null) {
 	    return new \Delight\Str\Str($str, $charset);

@@ -30,6 +30,9 @@
 	//	We need to get the language loaded
 	pLoadLanguage('English');
 
+	// We are in beta!
+	$donut['is_beta'] = true;
+
 	// Gettin' ALL the apps
 	$apps = pAppsArray();
 	$app_set = false;
@@ -77,7 +80,7 @@
 		pAjaxStructure();
 
 	//	The template is loaded, that's the begining of the end.
-	require pFromRoot("templates/main_template.php");
+	require pFromRoot("library/templates/main_template.php");
 
 	//	† Rest in peace and blahblahblah.
 		die();
