@@ -174,7 +174,9 @@ function pSearchAndInflect($word, $type, $classification, $mode, $submode, $numb
 
 				$script_link = $get_script->fetchObject();
 
-				$q = "SELECT name FROM inflection_scripts WHERE id = $script_link->script_id  AND execute_prior_to_inflection = $place ORDER BY inflection_scripts.weight DESC";
+				// Getting the script then.
+
+				$q = "SELECT name FROM inflection_scripts WHERE (id = $script_link->script_id  AND execute_prior_to_inflection = $place) OR (execute_always = 1) ORDER BY inflection_scripts.weight DESC";
 
 
 				$get_script_name = $donut['db']->query($q);
@@ -242,7 +244,7 @@ function pSearchAndInflect($word, $type, $classification, $mode, $submode, $numb
 
 				foreach ($script_names_prior as $script_name_prior) {
 					$function_name = "pExecuteScript_".$script_name_prior;
-					require_once $donut['root_path'].'/library/inflection_scripts/'.$script_name_prior.'.script.php';
+					require_once $donut['root_path'].'/library/scripts/'.$script_name_prior.'.script.php';
 					$inflect_this = $function_name($inflect_this, $word, $mode, $submode, $number);
 				}
 
@@ -338,7 +340,7 @@ function pSearchAndInflect($word, $type, $classification, $mode, $submode, $numb
 
 				foreach ($script_names_after as $script_name_after) {
 					$function_name = "pExecuteScript_".$script_name_after;
-					require_once $donut['root_path'].'/library/inflection_scripts/'.$script_name_after.'.script.php';
+					require_once $donut['root_path'].'/library/scripts/'.$script_name_after.'.script.php';
 					$inflect_this = $function_name($inflect_this, $word, $mode, $submode, $number);
 				}
 

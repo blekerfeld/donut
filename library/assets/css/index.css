@@ -4,20 +4,20 @@
 @import url('https://fonts.googleapis.com/css?family=Lora');
 @font-face {
     font-family: "Kollektif";
-    src: url("../fonts/kollektif_bold.ttf");
+    src: url("fonts/vendors/kollektif_bold.ttf");
 }
 @font-face {
     font-family: "Gentium";
-    src: url("../fonts/GenBasR.ttf");
+    src: url("fonts/vendors/GenBasR.ttf");
 }
 @font-face {
     font-family: "Gentium";
-    src: url("../fonts/GenBasB.ttf");
+    src: url("fonts/vendors/GenBasB.ttf");
     font-weight: bold;
 }
 @font-face {
     font-family: "Gentium";
-    src: url("../fonts/GenBasI.ttf");
+    src: url("fonts/vendors/GenBasI.ttf");
     font-style: italic;
 }
 *,
@@ -732,19 +732,36 @@ div.title
 	font-family: Open Sans;
 }
 
+div.title.small{
+	font-size: 15px;
+	margin-bottom: 5px;
+}
+
 div.icon-box
 {
 	padding: 3px;
-	
 	float: left;
 	width: 28px;
 	height: 28px;
 	text-align: center;
 	margin-right: 5px;
 }
+
+div.icon-box.small{
+	width: 14px;
+	height: 14px;
+	line-height: 14px;
+}
+
+
+
 div.icon-box i.fa{
 	font-size: 24px;
 	color: #fff;
+}
+
+div.icon-box.small i.fa{
+	font-size: 14px!important;
 }
 
 div.coursecontainer
@@ -1371,7 +1388,7 @@ table.admin
 
 
 table.admin tr td{
-	background: #e3e3e3;
+	background: #f3f3f3;
 	padding: 6px;
 }
 
@@ -1521,6 +1538,14 @@ input.nWord, textarea.nWord
 	padding: 18px!important;
 	border: rgba(150,150,150,0.1) 1px solid;
 }
+
+ textarea.nWord.small{
+ 	font-size: 14px;
+ 	font-family: Trebuchet MS;
+ 	color: #333;
+ 	padding: 10px!important;
+ 	font-weight: normal;
+ }
 
 input.nWord:invalid{
 	
@@ -2218,4 +2243,110 @@ div.btButtonBar a.btAction:hover, div.btButtonBar a.btAction.green:hover{
 div.btButtonBar a.btAction.green{
 	background-color: #337357;
 	color: snow;
+}
+
+
+.wdComments-list, 
+.wdComment { 
+    width: 100%;
+   	margin-top: 10px;
+}
+
+.wdComment a.actionbutton{
+	font-size: 12px;
+	padding: 4px;
+	margin-top: 5px!important;
+	margin-left: -2px!important;
+	display: inline-block;
+}
+
+.wdContent{
+	background: #fafafa;
+	padding: 5px;
+	border: 1px solid rgba(240,240,240,0.4);
+	border-radius: 0px;
+	font-family: Open Sans;
+	font-size: 13px;
+}
+
+.wdUserBar strong.wdUserName{
+	font-family: raleway;
+	font-size: 11px;
+	text-transform: lowercase;
+}
+
+.wdUserBar span.wdDate{
+	color: #666;
+	font-size: 10px;
+	text-transform: lowercase;
+}
+
+.wdUserBar span.wdDate::before{
+	content: "«";
+	font-size: 8px;
+}
+
+.wdUserBar span.wdDate::after{
+	content: "»";
+	font-size: 8px;
+}
+
+.wdUserBar span.wdPoints{
+	font-size: 10px;
+	color: #999;
+}
+
+.wdUserBar span.wdPoints::before{
+	content: "[";
+}
+
+.wdUserBar span.wdPoints::after{
+	content: "]";
+}
+
+
+.wdContent p{
+	display: inline-block;
+	margin: 0;
+}
+
+a.wdTopLink, a.wdTopLink i.fa{
+	font-size: 11px;
+	color: #222;
+}
+
+.wdLinksBar{
+	font-size: 11px;
+}
+
+.wdLinksBar a{
+	color: #777;
+}
+
+.wdLinksBar a:hover, a.wdTopLink:hover{
+	text-decoration: underline;
+}
+
+.wdLinksBar a.reply{
+	color: #68777d;
+	font-weight: bold;
+}
+
+
+.wdComments .children {
+    margin-left: 2%;
+    padding-left: 20px;
+    width: calc(100% - 3% - 20px);
+    border-left: dashed 1px #c9c9c9;
+}
+
+
+.wdComments .children.bottom{
+	
+}
+
+.beta{
+	color: #677461;
+	font-family: Raleway;
+	font-weight: bold;
 }

@@ -55,3 +55,24 @@ define('LOGIN_CHECKING', "Checking...");
 define('BTRANS_TITLE', "Batch translating into ");
 define('BTRANS_TITLE_SINGLE', "Translating into ");
 define('BTRANS_SKIP', "Skip translation ");
+
+// Word dicussion
+define('WD_TITLE', "Discussion");
+define('WD_TITLE_MORE', "Discussing the word '%s'");
+define('WD_POINT', "point");
+define('WD_POINTS', "points");
+define('WD_NEW_THREAD', "New thread");
+define('WD_NEW_THREAD_TITLE', "Submit a new thread");
+define('WD_REPLY', "reply");
+define('WD_REPLY_TITLE', "Replying to a message");
+define('WD_REPLY_PLACEHOLDER', "Write your message.");
+define('WD_REPLY_SEND', "Send");
+define('WD_REPLY_EMPTY', "You cannot post an empty reply.");
+define('WD_REPLY_ERROR', "Something went wrong, your reaction is not posted.");
+define('WD_UPVOTE', "upvote");
+define('WD_DOWNVOTE', "downvote");
+define('WD_DELETE', "delete");
+define('WD_DELETE_CONFIRM', "Are you sure you want to delete this message and all of its underlying comments?");
+define('WD_BACK_TO_THREAD', "Back to thread");
+define('WD_BACK_TO_WORD', "Back to entry");
+define('WD_NO_THREADS', "There are no threads yet");

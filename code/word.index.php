@@ -1,6 +1,13 @@
 
 <?php 
 
+// Do we need to load a different page?
+
+if(isset($_REQUEST['word_discussion']) and pLogged()){
+	require_once pFromRoot('code/word.discussion.php');
+	return;
+}
+
 // Template stuff
 pDictionaryHeader();
 
@@ -25,15 +32,24 @@ if(!$word = $rs->fetchObject()){
 	pOut('<div class="notice danger-notice" id="empty"><i class="fa fa-warning"></i> The requested word is not a noun or doesn\'t exist.</div>');
 }
 else{
+
+	// Title
+
+	pOut('<div class="title"><div class="icon-box fetch"><i class="fa fa-bookmark"></i></div> Dictionary entry</div><br />');
+
+
+
 	if(!isset($_REQUEST['ajaxOUT']))
 		if(isset($_GET['searchresult']))
-			pOut('<div class="title"><div class="icon-box fetch"><i class="fa fa-bookmark"></i></div> Dictionary entry</div><br />'."<a class='actionbutton' href='".pUrl('?home&search='.urlencode($_SESSION['search']))."');'><i class='fa fa-arrow-left' style='font-size: 12px!important;'></i> Back</i></a><br /><br />");
+			pOut("<a class='actionbutton' href='".pUrl('?home&search='.urlencode($_SESSION['search']))."');'><i class='fa fa-arrow-left' style='font-size: 12px!important;'></i> Back</i></a> ");
 		elseif(isset($_GET['alphabetresult']))
-			pOut('<div class="title"><div class="icon-box fetch"><i class="fa fa-bookmark"></i></div> Dictionary entry</div><br />'."<a class='actionbutton' href='".pUrl('?alphabet='.$_GET['alphabetresult'])."'><i class='fa fa-arrow-left' style='font-size: 12px!important;'></i> Back</i></a><br /><br />");
+			pOut("<a class='actionbutton' href='".pUrl('?alphabet='.$_GET['alphabetresult'])."'><i class='fa fa-arrow-left' style='font-size: 12px!important;'></i> Back</i></a> ");
 		else
-			pOut('<div class="title"><div class="icon-box fetch"><i class="fa fa-bookmark"></i></div> Dictionary entry</div><br />'."<a class='actionbutton' ".((isset($_SERVER['HTTP_REFERER'])) ? ("href='".$_SERVER['HTTP_REFERER']."'") : 'onClick="window.history.back();"')."><i class='fa fa-arrow-left' style='font-size: 12px!important;'></i> Back</i></a><br /><br />");
+			pOut("<a class='actionbutton' ".((isset($_SERVER['HTTP_REFERER'])) ? ("href='".$_SERVER['HTTP_REFERER']."'") : 'onClick="window.history.back();"')."><i class='fa fa-arrow-left' style='font-size: 12px!important;'></i> Back</i></a> ");
 
-
+	// Discussion button
+	if(pLogged())
+		pOut('<a class="actionbutton" href="'.pUrl('?word_discussion='.$_REQUEST['word']).'"><i class="fa fa-comments"></i> '.WD_TITLE.'</a><br /><br />');
 
 
 	// Getting languages

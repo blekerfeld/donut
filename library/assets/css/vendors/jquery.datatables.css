@@ -1,0 +1,14 @@
+table.dataTable thead .sorting,table.dataTable thead .sorting_asc,table.dataTable thead .sorting_desc
+{cursor:pointer;*cursor:hand}
+table.dataTable thead .sorting:hover,table.dataTable thead.sorting_asc:hover,table.dataTable thead .sorting_desc:hover{
+
+	text-decoration: underline;
+
+}
+
+table.dataTable thead .sorting:hover:after, table.dataTable thead .sorting_desc:hover:after, table.dataTable thead .sorting_asc:hover:after{
+
+	content: " ⮃"!important;
+	font-size: 13px;
+}
+

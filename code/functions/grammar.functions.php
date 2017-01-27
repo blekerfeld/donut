@@ -3,12 +3,12 @@
 function pMarkDownParse($text){
 	
 	// We need to require the parsedown files, but only once.
-	require_once pFromRoot('library/parsedown.require.php');
-	require_once pFromRoot('library/parsedown_extra.require.php');
+	require_once pFromRoot('library/assets/php/vendors/parsedown.require.php');
+	require_once pFromRoot('library/assets/php/vendors/parsedown_extra.require.php');
 
 	$parse = new ParsedownExtra;
 
-	return $parse->text($text);
+	return nl2br($parse->text($text));
 }
 
 
