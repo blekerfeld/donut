@@ -25,14 +25,14 @@
 
 	// Actions and ajax
 
-	if(isset($_REQUEST['ajax']) and isset($_REQUEST['action']))
+	if(isset($donut['request']['ajax']) and isset($donut['request']['action']))
 	{
 
-		if($_REQUEST['action'] == 'add_submode'){
+		if($donut['request']['action'] == 'add_submode'){
 			
 			// Do we have all fields?
 
-			    if($_REQUEST['submode_name'] == "" or $_REQUEST['submode_name_short'] == "" or $_REQUEST['submode_entry'] == "" or $_REQUEST['submode_submode_type_id'] == "")
+			    if($donut['request']['submode_name'] == "" or $donut['request']['submode_name_short'] == "" or $donut['request']['submode_entry'] == "" or $donut['request']['submode_submode_type_id'] == "")
         		{
         			echo '<div class="notice hide danger-notice" id="empty" style="margin-bottom: 20px;"><i class="fa fa-warning"></i> Please submit all fields.</div>';
         			echo "<script>$('#busyadd').fadeOut().delay(1000);$('#empty').show().delay(400).effect('bounce', {duration: 1000});</script>";
@@ -40,7 +40,7 @@
 
      			else
      			{
-     				if(pSubmodeAdd($_REQUEST['submode_name'], $_REQUEST['submode_name_short'], $_REQUEST['submode_entry'], $_REQUEST['submode_submode_type_id']))
+     				if(pSubmodeAdd($donut['request']['submode_name'], $donut['request']['submode_name_short'], $donut['request']['submode_entry'], $donut['request']['submode_submode_type_id']))
      				{
      					echo '<div class="notice succes-notice hide" id="empty" style="margin-bottom: 20px;"><i class="fa fa-check"></i> Submode succesfully added. <a href="'.pUrl('?admin&section=submodes').'">Return to overview.</a></div>';
      					echo "<script>
@@ -62,11 +62,11 @@
 
 		}
 
-		elseif($_REQUEST['action'] == 'edit_submode'){
+		elseif($donut['request']['action'] == 'edit_submode'){
 			
 			// Do we have all fields?
 			
-			    if($_REQUEST['submode_name'] == "" or $_REQUEST['submode_name_short'] == "" or $_REQUEST['submode_entry'] == "" or $_REQUEST['submode_submode_type_id'] == "")
+			    if($donut['request']['submode_name'] == "" or $donut['request']['submode_name_short'] == "" or $donut['request']['submode_entry'] == "" or $donut['request']['submode_submode_type_id'] == "")
         		{
         			echo '<div class="notice hide danger-notice" id="empty" style="margin-bottom: 20px;"><i class="fa fa-warning"></i> Please submit all fields.</div>';
         			echo "<script>$('#busyadd').fadeOut().delay(1000);$('#empty').show().delay(400).effect('bounce', {duration: 1000});</script>";
@@ -74,7 +74,7 @@
 
      			else
      			{
-     				if(pSubmodeUpdate($_REQUEST['submode_id'], $_REQUEST['submode_name'], $_REQUEST['submode_name_short'], $_REQUEST['submode_entry'], $_REQUEST['submode_submode_type_id']))
+     				if(pSubmodeUpdate($donut['request']['submode_id'], $donut['request']['submode_name'], $donut['request']['submode_name_short'], $donut['request']['submode_entry'], $donut['request']['submode_submode_type_id']))
      				{
      					echo '<div class="notice succes-notice hide" id="empty" style="margin-bottom: 20px;"><i class="fa fa-check"></i> Submode succesfully edited. <a href="'.pUrl('?admin&section=submodes').'">Return to overview.</a></div>';
      					echo "<script>
@@ -96,29 +96,29 @@
 
 	// Actions
 
-	elseif(isset($_REQUEST['action']))
+	elseif(isset($donut['request']['action']))
 	{
 
 
 		// The delete action -> are you sure?
-		if($_REQUEST['action'] == 'delete_submode_sure' and isset($_REQUEST['submode_id'])){
+		if($donut['request']['action'] == 'delete_submode_sure' and isset($donut['request']['submode_id'])){
 			
-			pOut('<div class="notice" id="empty"><i class="fa fa-question-circle"></i> <strong>Are you sure you want to delete the submode <em>'.pSubmodeName($_REQUEST['submode_id']).'</em>?</strong>
+			pOut('<div class="notice" id="empty"><i class="fa fa-question-circle"></i> <strong>Are you sure you want to delete the submode <em>'.pSubmodeName($donut['request']['submode_id']).'</em>?</strong>
 				<a class="actionbutton" href="'.pUrl('?admin&section=submodes').'">No</a> 
-				 <a class="actionbutton" href="'.pUrl('?admin&section=submodes&action=delete_submode&submode_id='.$_REQUEST['submode_id']).'">Yes</a> <br />
-			All words of the submode '.pSubmodeName($_REQUEST['submode_id']).' will be deleted.</div>');
+				 <a class="actionbutton" href="'.pUrl('?admin&section=submodes&action=delete_submode&submode_id='.$donut['request']['submode_id']).'">Yes</a> <br />
+			All words of the submode '.pSubmodeName($donut['request']['submode_id']).' will be deleted.</div>');
 		}
 
 		// The delete action
-		elseif($_REQUEST['action'] == 'delete_submode' and isset($_REQUEST['submode_id'])){
-			pSubmodeDelete($_REQUEST['submode_id']);
+		elseif($donut['request']['action'] == 'delete_submode' and isset($donut['request']['submode_id'])){
+			pSubmodeDelete($donut['request']['submode_id']);
 			pUrl('?admin&section=submodes', true);
 		}
 
 		// The action forms are going to be shown here!
 
 
-		if($_REQUEST['action'] == 'add_submode'){
+		if($donut['request']['action'] == 'add_submode'){
 
 
 			// Preparing the submode type select
@@ -180,11 +180,11 @@
 
 		}
 
-		elseif($_REQUEST['action'] == 'edit_submode' and isset($_REQUEST['submode_id'])){
+		elseif($donut['request']['action'] == 'edit_submode' and isset($donut['request']['submode_id'])){
 
 
 
-			if(!($submode = pGetSubmode($_REQUEST['submode_id'])))
+			if(!($submode = pGetSubmode($donut['request']['submode_id'])))
 				pUrl('?admin&section=submodes', true);
 
 			// Preparing the submode type select
@@ -204,7 +204,7 @@
        		<div style="width: 75%" class="ajaxloadadd"></div>');
 
 
-			if(!($submode = pGetSubmode($_REQUEST['submode_id'])))
+			if(!($submode = pGetSubmode($donut['request']['submode_id'])))
 				pUrl('?admin&section=submodes', true);
 
 
@@ -248,42 +248,42 @@
 			</script>");
 		}
 
-		elseif($_REQUEST['action'] == 'submode_apply' and isset($_REQUEST['submode_id'])){
+		elseif($donut['request']['action'] == 'submode_apply' and isset($donut['request']['submode_id'])){
 
 			// The delete action -> are you sure?
 
-			if(isset($_REQUEST['delete_link_id_sure'])){
+			if(isset($donut['request']['delete_link_id_sure'])){
 				
-				pOut('<div class="notice" id="empty"><i class="fa fa-question-circle"></i> <strong>Are you sure you want to delete the link between <em>'.pSubmodeName($_REQUEST['submode_id']).'</em> and <em>'.pTypeName($_REQUEST['delete_link_id_sure']).'</em>?</strong>
-					<a class="actionbutton" href="'.pUrl('?admin&section=submodes&action=submode_apply&submode_id='.$_REQUEST['submode_id']).'">No</a> 
-					 <a class="actionbutton" href="'.pUrl('?admin&section=submodes&action=submode_apply&submode_id='.$_REQUEST['submode_id']."&delete_link_id=".$_REQUEST['delete_link_id_sure']).'">Yes</a> <br />
-				All words of the type \''.pTypeName($_REQUEST['delete_link_id_sure']).'\' will not be able to be inflected by this submode anymore.</div>');
+				pOut('<div class="notice" id="empty"><i class="fa fa-question-circle"></i> <strong>Are you sure you want to delete the link between <em>'.pSubmodeName($donut['request']['submode_id']).'</em> and <em>'.pTypeName($donut['request']['delete_link_id_sure']).'</em>?</strong>
+					<a class="actionbutton" href="'.pUrl('?admin&section=submodes&action=submode_apply&submode_id='.$donut['request']['submode_id']).'">No</a> 
+					 <a class="actionbutton" href="'.pUrl('?admin&section=submodes&action=submode_apply&submode_id='.$donut['request']['submode_id']."&delete_link_id=".$donut['request']['delete_link_id_sure']).'">Yes</a> <br />
+				All words of the type \''.pTypeName($donut['request']['delete_link_id_sure']).'\' will not be able to be inflected by this submode anymore.</div>');
 			}
 
-			if(isset($_REQUEST['delete_link_id']))
+			if(isset($donut['request']['delete_link_id']))
 			{
-				pSubmodeApplyDelete($_REQUEST['delete_link_id'], $_REQUEST['submode_id']);
-				pUrl('?admin&section=submodes&action=submode_apply&submode_id='.$_REQUEST['submode_id'], true);
+				pSubmodeApplyDelete($donut['request']['delete_link_id'], $donut['request']['submode_id']);
+				pUrl('?admin&section=submodes&action=submode_apply&submode_id='.$donut['request']['submode_id'], true);
 			}
 
-			if(isset($_REQUEST['new_link']))
+			if(isset($donut['request']['new_link']))
 			{
 
-				if(!(pExistSubmodeApply($_REQUEST['submode_id'], $_REQUEST['new_link'])) AND $_REQUEST['new_link'] != '0')
-					pSubmodeApplyAdd($_REQUEST['submode_id'], $_REQUEST['new_link']);
+				if(!(pExistSubmodeApply($donut['request']['submode_id'], $donut['request']['new_link'])) AND $donut['request']['new_link'] != '0')
+					pSubmodeApplyAdd($donut['request']['submode_id'], $donut['request']['new_link']);
 
 
 			}
 		
-			$applies = pGetSubmodesApply($_REQUEST['submode_id']);
+			$applies = pGetSubmodesApply($donut['request']['submode_id']);
 			$types = pGetTypes();
 
 
 			pOut("<a class='actionbutton' href='".pUrl('?admin&section=submodes')."'><i class='fa fa-arrow-left' style='font-size: 12px!important;'></i> Back</a> 
-				<br /><br /><strong>The submode '".pSubmodeName($_REQUEST['submode_id'])."' applies to the following types:</strong><br /><br />");
+				<br /><br /><strong>The submode '".pSubmodeName($donut['request']['submode_id'])."' applies to the following types:</strong><br /><br />");
 
 
-			pOut("<form METHOD='POST' class='form_new_link' ACTION='".pUrl('?admin&section=submodes&action=submode_apply&submode_id='.$_REQUEST['submode_id'])."'>
+			pOut("<form METHOD='POST' class='form_new_link' ACTION='".pUrl('?admin&section=submodes&action=submode_apply&submode_id='.$donut['request']['submode_id'])."'>
 				<select name='new_link'>
 				<option value='0'>Choose a type...</option>");
 
@@ -327,7 +327,7 @@
 
 
 	// We have not died yet!
-	if(!(isset($_REQUEST['action'])) OR !(in_array($_REQUEST['action'], $die_actions))){
+	if(!(isset($donut['request']['action'])) OR !(in_array($donut['request']['action'], $die_actions))){
 
 		// table head
 

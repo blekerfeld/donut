@@ -42,7 +42,7 @@
 
 	// Going through the apps, looking for answers...
 	foreach($apps as $app){
-		if(isset($_REQUEST[$app[0]]) and !$app_set)
+		if(isset($donut['request'][$app[0]]) and !$app_set)
 		{
 
 			if(($app_file = $donut['root_path'] . '/code/' . $app[1] . '.index.php') && file_exists($app_file))
@@ -76,7 +76,7 @@
 		$donut['page']['content_final'] .= "$outputsection \n";
 	
 	//	We need some extra structure if we are dealing with AJAX loaded pages
-	if(isset($_REQUEST['ajax']) OR isset($_REQUEST['ajax_pOut']))
+	if(isset($donut['request']['ajax']) OR isset($donut['request']['ajax_pOut']))
 		pAjaxStructure();
 
 	//	The template is loaded, that's the begining of the end.

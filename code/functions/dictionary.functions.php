@@ -428,11 +428,11 @@
 			$text .= "</ol>";
 
 		// More info button
-		if(!isset($_GET['wordsonly']) and !($show_no_buttons))
+		if(!isset($donut['get']['wordsonly']) and !($show_no_buttons))
 			$text .= "<a class='actionbutton' href='".pUrl('?searchresult&word='.$word->id)."'><i class='fa fa-12 fa-info-circle'></i> Read more</a>";
 
 		// The logged in buttons
-		if(pLogged() and !isset($_GET['wordsonly']) and !($show_no_buttons))
+		if(pLogged() and !isset($donut['get']['wordsonly']) and !($show_no_buttons))
 			$text .= "<a class='actionbutton' href='javascript:void(0);'>...</a>";
 
 		$text .= "</div></div>";
@@ -451,7 +451,7 @@
 		global $donut;
 
 		// Exploding the translation input
-		$translations_all = explode(",", $_REQUEST['translations']);
+		$translations_all = explode(",", $donut['request']['translations']);
 
 		// Boolean for checking the status
 		$status = false;

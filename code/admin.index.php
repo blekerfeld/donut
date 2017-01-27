@@ -35,15 +35,15 @@
 	function pAMenuLink($section){
 		
 
-		if($section == 'home' AND !isset($_REQUEST['section']))
+		if($section == 'home' AND !isset($donut['request']['section']))
 				return 'class="active"';
 
 		elseif(is_array($section)){
-			if(isset($_REQUEST['section']) AND in_array($_REQUEST['section'], $section))
+			if(isset($donut['request']['section']) AND in_array($donut['request']['section'], $section))
 				return 'class="active"';
 		}
 		
-		elseif(isset($_REQUEST['section']) AND $_REQUEST['section'] == $section)
+		elseif(isset($donut['request']['section']) AND $donut['request']['section'] == $section)
 			return 'class="active"';
 		else
 			return '';
@@ -75,7 +75,7 @@
 
 
 	// Grammar section
-	if(isset($_REQUEST['section']) AND in_array($_REQUEST['section'], $subsection_grammar))
+	if(isset($donut['request']['section']) AND in_array($donut['request']['section'], $subsection_grammar))
 		pOut('
 			<div class="adminsubmenu">
 				<span class="dots">. . .</span>
@@ -92,7 +92,7 @@
 
 
 	// Inflections section
-	if(isset($_REQUEST['section']) AND in_array($_REQUEST['section'], $subsection_inflections))
+	if(isset($donut['request']['section']) AND in_array($donut['request']['section'], $subsection_inflections))
 		pOut('
 			<div class="adminsubmenu">
 				<span class="dots">. . .</span>
@@ -108,7 +108,7 @@
 			', true);
 
 	// Dictionary section
-	if(isset($_REQUEST['section']) AND in_array($_REQUEST['section'], $subsection_dictionary))
+	if(isset($donut['request']['section']) AND in_array($donut['request']['section'], $subsection_dictionary))
 		pOut('
 			<div class="adminsubmenu">
 				<span class="dots">. . .</span>
@@ -126,7 +126,7 @@
 
 
 	// Phonology section
-	if(isset($_REQUEST['section']) AND in_array($_REQUEST['section'], $subsection_phonology))
+	if(isset($donut['request']['section']) AND in_array($donut['request']['section'], $subsection_phonology))
 		pOut('
 			<div class="adminsubmenu">
 				<span class="dots">. . .</span>
@@ -142,7 +142,7 @@
 			', true);
 
 	// Settings section
-	if(isset($_REQUEST['section']) AND in_array($_REQUEST['section'], $subsection_settings))
+	if(isset($donut['request']['section']) AND in_array($donut['request']['section'], $subsection_settings))
 		pOut('
 			<div class="adminsubmenu">
 				<span class="dots">. . .</span>
@@ -160,12 +160,12 @@
 	
 	// Do we need to load a section?
 
-	if(isset($_GET['section'])){
+	if(isset($donut['get']['section'])){
 
-		if (in_array($_GET['section'], $allowed_sections)) {
-			if(file_exists($donut['root_path'] . '\code\admin\admin.' . $_GET['section'] . '.php')){
+		if (in_array($donut['get']['section'], $allowed_sections)) {
+			if(file_exists($donut['root_path'] . '\code\admin\admin.' . $donut['get']['section'] . '.php')){
 				pOut("<div class='adminsection'>");
-				require $donut['root_path'] . '\code\admin\admin.' . $_GET['section'] . '.php';
+				require $donut['root_path'] . '\code\admin\admin.' . $donut['get']['section'] . '.php';
 				pOut("</div>");
 			} else {
 				pOut('<div class="notice danger-notice" id="empty"><i class="fa fa-warning"></i> The requested section does not exist.</div><br />');

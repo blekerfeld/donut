@@ -23,29 +23,29 @@
 
 	// Actions and ajax
 
-	if(isset($_REQUEST['ajax']) and isset($_REQUEST['action']))
+	if(isset($donut['request']['ajax']) and isset($donut['request']['action']))
 	{
 
-		if($_REQUEST['action'] == 'toggle' AND isset($_REQUEST['c']))
+		if($donut['request']['action'] == 'toggle' AND isset($donut['request']['c']))
 		{
 
-			$donut['db']->query("UPDATE ipa_c SET active = IF(ipa_c.active=1, 0, 1) WHERE id = ".$_REQUEST['c']." LIMIT 1;");
-			pOut("<script>$('.c-".$_REQUEST['c']."').toggleClass('selected');</script>");
+			$donut['db']->query("UPDATE ipa_c SET active = IF(ipa_c.active=1, 0, 1) WHERE id = ".$donut['request']['c']." LIMIT 1;");
+			pOut("<script>$('.c-".$donut['request']['c']."').toggleClass('selected');</script>");
 
 		}
-		elseif($_REQUEST['action'] == 'toggle' AND isset($_REQUEST['v']))
+		elseif($donut['request']['action'] == 'toggle' AND isset($donut['request']['v']))
 		{
 
-			$donut['db']->query("UPDATE ipa_v SET active = IF(ipa_v.active=1, 0, 1) WHERE id = ".$_REQUEST['v']." LIMIT 1;");
+			$donut['db']->query("UPDATE ipa_v SET active = IF(ipa_v.active=1, 0, 1) WHERE id = ".$donut['request']['v']." LIMIT 1;");
 
 		}
 
-		if($_REQUEST['action'] == 'new_poly' and isset($_REQUEST['poly'])){
+		if($donut['request']['action'] == 'new_poly' and isset($donut['request']['poly'])){
 
 			// New poly
 
 
-			if(count($_REQUEST['poly']) == 1 OR count($_REQUEST['poly']) == 0)
+			if(count($donut['request']['poly']) == 1 OR count($donut['request']['poly']) == 0)
 			{
 
 				echo '<div class="notice hide danger-notice" id="empty" style="margin-bottom: 20px;"><i class="fa fa-warning"></i> A polyphthong needs to consist of two or more phonemes.</div>';
@@ -53,7 +53,7 @@
         		die();
 
 			}
-			$poly_string = implode(',', $_REQUEST['poly']);
+			$poly_string = implode(',', $donut['request']['poly']);
 
 			// We will look if this already exists
 
@@ -78,9 +78,9 @@
 
 		}
 
-		if($_REQUEST['action'] == 'delete_poly' and isset($_REQUEST['poly'])){
+		if($donut['request']['action'] == 'delete_poly' and isset($donut['request']['poly'])){
 
-			$donut['db']->query("DELETE FROM ipa_polyphthongs WHERE id = ".$_REQUEST['poly']);
+			$donut['db']->query("DELETE FROM ipa_polyphthongs WHERE id = ".$donut['request']['poly']);
 
 		}
 
@@ -89,19 +89,19 @@
 
 	// Actions
 
-	elseif(isset($_REQUEST['action']))
+	elseif(isset($donut['request']['action']))
 	{
 
 
 	// Actions
 
-		if($_REQUEST['action'] == 'add_copy' AND isset($_REQUEST['of'])){
+		if($donut['request']['action'] == 'add_copy' AND isset($donut['request']['of'])){
 
 			pOut('<div style="width: 74%;" class="notice hide" id="busyadd" ><i class="fa fa-spinner fa-spin"></i> Submode is being added...</div>
        		<div style="width: 75%" class="ajaxloadadd"></div>');
 
 
-			$char = pParseIPA_Char($_REQUEST['of']);
+			$char = pParseIPA_Char($donut['request']['of']);
 
 
 			pOut("<table class='admin' id='empty' style='width:75%'>
@@ -155,7 +155,7 @@
 
 
 	// We have not died yet!
-	if(!(isset($_REQUEST['action'])) OR !(in_array($_REQUEST['action'], $die_actions))){
+	if(!(isset($donut['request']['action'])) OR !(in_array($donut['request']['action'], $die_actions))){
 
 		// Information
 

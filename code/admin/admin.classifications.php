@@ -25,14 +25,14 @@
 
 	// Actions and ajax
 
-	if(isset($_REQUEST['ajax']) and isset($_REQUEST['action']))
+	if(isset($donut['request']['ajax']) and isset($donut['request']['action']))
 	{
 
-		if($_REQUEST['action'] == 'add_classification'){
+		if($donut['request']['action'] == 'add_classification'){
 			
 			// Do we have all fields?
 
-			    if($_REQUEST['classification_name'] == "" or $_REQUEST['classification_name_short'] == "" or $_REQUEST['classification_entry'] == "" or $_REQUEST['classification_entry_short'] == "")
+			    if($donut['request']['classification_name'] == "" or $donut['request']['classification_name_short'] == "" or $donut['request']['classification_entry'] == "" or $donut['request']['classification_entry_short'] == "")
         		{
         			echo '<div class="notice hide danger-notice" id="empty" style="margin-bottom: 20px;"><i class="fa fa-warning"></i> Please submit all fields.</div>';
         			echo "<script>$('#busyadd').fadeOut().delay(1000);$('#empty').show().delay(400).effect('bounce', {duration: 1000});</script>";
@@ -40,7 +40,7 @@
 
      			else
      			{
-     				if(pClassificationAdd($_REQUEST['classification_name'], $_REQUEST['classification_name_short'], $_REQUEST['classification_entry'], $_REQUEST['classification_entry_short']))
+     				if(pClassificationAdd($donut['request']['classification_name'], $donut['request']['classification_name_short'], $donut['request']['classification_entry'], $donut['request']['classification_entry_short']))
      				{
      					echo '<div class="notice succes-notice hide" id="empty" style="margin-bottom: 20px;"><i class="fa fa-check"></i> Classification succesfully added. <a href="'.pUrl('?admin&section=classifications').'">Return to overview.</a></div>';
      					echo "<script>
@@ -62,11 +62,11 @@
 
 		}
 
-		elseif($_REQUEST['action'] == 'edit_classification'){
+		elseif($donut['request']['action'] == 'edit_classification'){
 			
 			// Do we have all fields?
 			
-				if($_REQUEST['classification_id'] == "" or $_REQUEST['classification_name'] == "" or $_REQUEST['classification_name_short'] == "" or $_REQUEST['classification_entry'] == "" or $_REQUEST['classification_entry_short'] == "")
+				if($donut['request']['classification_id'] == "" or $donut['request']['classification_name'] == "" or $donut['request']['classification_name_short'] == "" or $donut['request']['classification_entry'] == "" or $donut['request']['classification_entry_short'] == "")
         		{
         			echo '<div class="notice hide danger-notice" id="empty" style="margin-bottom: 20px;"><i class="fa fa-warning"></i> Please submit all fields.</div>';
         			echo "<script>$('#busyadd').fadeOut().delay(1000);$('#empty').show().delay(400).effect('bounce', {duration: 1000});</script>";
@@ -75,7 +75,7 @@
 
      			else
      			{
-     				if(pClassificationUpdate($_REQUEST['classification_id'], $_REQUEST['classification_name'], $_REQUEST['classification_name_short'], $_REQUEST['classification_entry'], $_REQUEST['classification_entry_short']))
+     				if(pClassificationUpdate($donut['request']['classification_id'], $donut['request']['classification_name'], $donut['request']['classification_name_short'], $donut['request']['classification_entry'], $donut['request']['classification_entry_short']))
      				{
      					echo '<div class="notice succes-notice hide" id="empty" style="margin-bottom: 20px;"><i class="fa fa-check"></i> Classification succesfully edited. <a href="'.pUrl('?admin&section=classifications').'">Return to overview.</a></div>';
      					echo "<script>
@@ -97,21 +97,21 @@
 
 	// Actions
 
-	elseif(isset($_REQUEST['action']))
+	elseif(isset($donut['request']['action']))
 	{
 
 		// The delete action -> are you sure?
-		if($_REQUEST['action'] == 'delete_classification_sure' and isset($_REQUEST['classification_id'])){
+		if($donut['request']['action'] == 'delete_classification_sure' and isset($donut['request']['classification_id'])){
 			
-			pOut('<div class="notice" id="empty"><i class="fa fa-question-circle"></i> <strong>Are you sure you want to delete the classification <em>'.pClassificationName($_REQUEST['classification_id']).'</em>?</strong>
+			pOut('<div class="notice" id="empty"><i class="fa fa-question-circle"></i> <strong>Are you sure you want to delete the classification <em>'.pClassificationName($donut['request']['classification_id']).'</em>?</strong>
 				<a class="actionbutton" href="'.pUrl('?admin&section=classifications').'">No</a> 
-				 <a class="actionbutton" href="'.pUrl('?admin&section=classifications&action=delete_classification&classification_id='.$_REQUEST['classification_id']).'">Yes</a> <br />
-			All words of the classification '.pClassificationName($_REQUEST['classification_id']).' will be deleted.</div>');
+				 <a class="actionbutton" href="'.pUrl('?admin&section=classifications&action=delete_classification&classification_id='.$donut['request']['classification_id']).'">Yes</a> <br />
+			All words of the classification '.pClassificationName($donut['request']['classification_id']).' will be deleted.</div>');
 		}
 
 		// The delete action
-		if($_REQUEST['action'] == 'delete_classification' and isset($_REQUEST['classification_id'])){
-			pClassificationDelete($_REQUEST['classification_id']);
+		if($donut['request']['action'] == 'delete_classification' and isset($donut['request']['classification_id'])){
+			pClassificationDelete($donut['request']['classification_id']);
 			pUrl('?admin&section=classifications', true);
 		}
 
@@ -119,7 +119,7 @@
 		// The action forms are going to be shown here!
 
 
-		if($_REQUEST['action'] == 'add_classification'){
+		if($donut['request']['action'] == 'add_classification'){
 
 
 			pOut('<div style="width: 74%;" class="notice hide" id="busyadd" ><i class="fa fa-spinner fa-spin"></i> Classification is being added...</div>
@@ -166,10 +166,10 @@
 
 		}
 
-		elseif($_REQUEST['action'] == 'edit_classification' and isset($_REQUEST['classification_id'])){
+		elseif($donut['request']['action'] == 'edit_classification' and isset($donut['request']['classification_id'])){
 
 
-			if(!($classification = pGetClassification($_REQUEST['classification_id'])))
+			if(!($classification = pGetClassification($donut['request']['classification_id'])))
 				pUrl('?admin&section=classifications', true);
 
 
@@ -215,42 +215,42 @@
 
 		}
 
-		elseif($_REQUEST['action'] == 'classification_apply' and isset($_REQUEST['classification_id'])){
+		elseif($donut['request']['action'] == 'classification_apply' and isset($donut['request']['classification_id'])){
 
 			// The delete action -> are you sure?
 
-			if(isset($_REQUEST['delete_link_id_sure'])){
+			if(isset($donut['request']['delete_link_id_sure'])){
 				
-				pOut('<div class="notice" id="empty"><i class="fa fa-question-circle"></i> <strong>Are you sure you want to delete the link between <em>'.pClassificationName($_REQUEST['classification_id']).'</em> and <em>'.pTypeName($_REQUEST['delete_link_id_sure']).'</em>?</strong>
-					<a class="actionbutton" href="'.pUrl('?admin&section=classifications&action=classification_apply&classification_id='.$_REQUEST['classification_id']).'">No</a> 
-					 <a class="actionbutton" href="'.pUrl('?admin&section=classifications&action=classification_apply&classification_id='.$_REQUEST['classification_id']."&delete_link_id=".$_REQUEST['delete_link_id_sure']).'">Yes</a> <br />
-				All words of the type \''.pTypeName($_REQUEST['delete_link_id_sure']).'\' will not be able to be inflected by this classification anymore.</div>');
+				pOut('<div class="notice" id="empty"><i class="fa fa-question-circle"></i> <strong>Are you sure you want to delete the link between <em>'.pClassificationName($donut['request']['classification_id']).'</em> and <em>'.pTypeName($donut['request']['delete_link_id_sure']).'</em>?</strong>
+					<a class="actionbutton" href="'.pUrl('?admin&section=classifications&action=classification_apply&classification_id='.$donut['request']['classification_id']).'">No</a> 
+					 <a class="actionbutton" href="'.pUrl('?admin&section=classifications&action=classification_apply&classification_id='.$donut['request']['classification_id']."&delete_link_id=".$donut['request']['delete_link_id_sure']).'">Yes</a> <br />
+				All words of the type \''.pTypeName($donut['request']['delete_link_id_sure']).'\' will not be able to be inflected by this classification anymore.</div>');
 			}
 
-			if(isset($_REQUEST['delete_link_id']))
+			if(isset($donut['request']['delete_link_id']))
 			{
-				pClassificationApplyDelete($_REQUEST['delete_link_id'], $_REQUEST['classification_id']);
-				pUrl('?admin&section=classifications&action=classification_apply&classification_id='.$_REQUEST['classification_id'], true);
+				pClassificationApplyDelete($donut['request']['delete_link_id'], $donut['request']['classification_id']);
+				pUrl('?admin&section=classifications&action=classification_apply&classification_id='.$donut['request']['classification_id'], true);
 			}
 
-			if(isset($_REQUEST['new_link']))
+			if(isset($donut['request']['new_link']))
 			{
 
-				if(!(pExistClassificationApply($_REQUEST['classification_id'], $_REQUEST['new_link'])) AND $_REQUEST['new_link'] != '0')
-					pClassificationApplyAdd($_REQUEST['classification_id'], $_REQUEST['new_link']);
+				if(!(pExistClassificationApply($donut['request']['classification_id'], $donut['request']['new_link'])) AND $donut['request']['new_link'] != '0')
+					pClassificationApplyAdd($donut['request']['classification_id'], $donut['request']['new_link']);
 
 
 			}
 		
-			$applies = pGetClassificationsApply($_REQUEST['classification_id']);
+			$applies = pGetClassificationsApply($donut['request']['classification_id']);
 			$types = pGetTypes();
 
 
 			pOut("<a class='actionbutton' href='".pUrl('?admin&section=classifications')."'><i class='fa fa-arrow-left' style='font-size: 12px!important;'></i> Back</a> 
-				<br /><br /><strong>The classification '".pClassificationName($_REQUEST['classification_id'])."' applies to the following types:</strong><br /><br />");
+				<br /><br /><strong>The classification '".pClassificationName($donut['request']['classification_id'])."' applies to the following types:</strong><br /><br />");
 
 
-			pOut("<form METHOD='POST' class='form_new_link' ACTION='".pUrl('?admin&section=classifications&action=classification_apply&classification_id='.$_REQUEST['classification_id'])."'>
+			pOut("<form METHOD='POST' class='form_new_link' ACTION='".pUrl('?admin&section=classifications&action=classification_apply&classification_id='.$donut['request']['classification_id'])."'>
 				<select name='new_link'>
 				<option value='0'>Choose a type...</option>");
 
@@ -294,7 +294,7 @@
 
 
 	// We have not died yet!
-	if(!(isset($_REQUEST['action'])) OR !(in_array($_REQUEST['action'], $die_actions))){
+	if(!(isset($donut['request']['action'])) OR !(in_array($donut['request']['action'], $die_actions))){
 
 		// table head
 

@@ -365,7 +365,7 @@
 		$alphabet = pGetAlphabet();
 		$text = '<div class="10-minus alphabetbar floatright">';
 		foreach($alphabet as $grapheme)
-			$text .= "<a href='".pUrl('index.php?alphabet='.$grapheme['id'])."' class='".((isset($_GET['alphabet']) AND ($_GET['alphabet'] == $grapheme['id'])) ? 'selected' : '')." ".((isset($_GET['alphabetresult']) AND ($_GET['alphabetresult'] == $grapheme['id'])) ? 'selected' : '')."'>".$grapheme['grapheme']."</a>";
+			$text .= "<a href='".pUrl('index.php?alphabet='.$grapheme['id'])."' class='".((isset($donut['get']['alphabet']) AND ($donut['get']['alphabet'] == $grapheme['id'])) ? 'selected' : '')." ".((isset($donut['get']['alphabetresult']) AND ($donut['get']['alphabetresult'] == $grapheme['id'])) ? 'selected' : '')."'>".$grapheme['grapheme']."</a>";
 		$text .= '</div>';
 		return $text;
 	}

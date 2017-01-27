@@ -35,8 +35,8 @@
 	function pSimpleOffsetSystem($total_number, $items_per_page, $url){
 
 			// Do we already have a offset
-			if(isset($_GET['offset'])){
-				$offset = $_GET['offset'];
+			if(isset($donut['get']['offset'])){
+				$offset = $donut['get']['offset'];
 			}
 			else{
 				$offset = 0;
@@ -132,7 +132,7 @@
 
 		global $donut;
 
-		if(isset($_REQUEST['admin']))
+		if(isset($donut['request']['admin']))
 			$extra = "$('html').addClass('pAdmin');";
 		else
 			$extra = "$('html').removeClass('pAdmin');";
@@ -240,11 +240,11 @@
 		global $donut;
 
 		// The complex javascript link system is needed for the new links loaded via AJAX
-		if(isset($_REQUEST['ajax']))
+		if(isset($donut['request']['ajax']))
 			echo pAjaxLinks($donut['page']['title']);
 
 		//	For the complex javascript link system, maybe we'll call it CoJaLiSy, we need to mimic the original page structure
-		if(isset($_REQUEST['ajax_pOut'])){
+		if(isset($donut['request']['ajax_pOut'])){
 
 			//	And... we need the link system itself!
 			echo pAjaxLinks($donut['page']['title'])."<div class='nav'>".$donut['page']['menu']."</div>";
@@ -259,7 +259,7 @@
 
 		// Time to die, bye bye
 
-		if(isset($_REQUEST['ajax']) OR isset($_REQUEST['ajax_pOut']))
+		if(isset($donut['request']['ajax']) OR isset($donut['request']['ajax_pOut']))
 			die();
 
 	}

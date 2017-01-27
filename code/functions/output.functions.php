@@ -11,7 +11,7 @@
 	function pOut($content, $header = false)
 	{
 		global $donut;
-		if(!isset($_REQUEST["ajaxOUT"]))
+		if(!isset($donut['request']["ajaxOUT"]))
 		{
 			if(!$header)
 				return $donut['page']['content'][] = $content;

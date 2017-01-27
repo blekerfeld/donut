@@ -12,10 +12,10 @@
 	imagecolortransparent($dest, $black);
 
 
-	$image = imagecreatefrompng("library/images/flags/" . $_GET['flag_1'] . ".png");
+	$image = imagecreatefrompng("library/images/flags/" . $donut['get']['flag_1'] . ".png");
     imagecopymerge($dest, $image, (2), 3, 0, 0, imagesx($image), imagesy($image), 100);
 
-    $image = imagecreatefrompng("library/images/flags/" . $_GET['flag_2'] . ".png");
+    $image = imagecreatefrompng("library/images/flags/" . $donut['get']['flag_2'] . ".png");
     imagecopymerge($dest, $image, (21), 3, 0, 0, imagesx($image), imagesy($image), 100);
 
 

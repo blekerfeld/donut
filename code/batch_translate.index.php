@@ -80,30 +80,30 @@ function pTranslateCard($show_skip = true){
 }
 
 
-if(isset($_REQUEST['ajax'], $_REQUEST['word_id'], $_REQUEST['translate'], $_REQUEST['translations'])){
+if(isset($donut['request']['ajax'], $donut['request']['word_id'], $donut['request']['translate'], $donut['request']['translations'])){
 
 
 	// Calling the appropiate function
 
-	pAddTranslations($_REQUEST['translations'], $_REQUEST['word_id']);
+	pAddTranslations($donut['request']['translations'], $donut['request']['word_id']);
 
 }
 
-elseif(isset($_REQUEST['ajax'], $_REQUEST['untranslatable'], $_REQUEST['word_id'])){
+elseif(isset($donut['request']['ajax'], $donut['request']['untranslatable'], $donut['request']['word_id'])){
 
-	$donut['db']->query("INSERT INTO translation_exceptions VALUES (NULL, '".$_REQUEST['word_id']."', '".pEditorLanguage($_SESSION['pUser'])."', '".$_SESSION['pUser']."');");
+	$donut['db']->query("INSERT INTO translation_exceptions VALUES (NULL, '".$donut['request']['word_id']."', '".pEditorLanguage($_SESSION['pUser'])."', '".$_SESSION['pUser']."');");
 
 	die();
 
 }
 
-if (isset($_REQUEST['ajax'], $_REQUEST['skip'])) {
+if (isset($donut['request']['ajax'], $donut['request']['skip'])) {
 	
-	$_SESSION['skip_bt'][] = $_REQUEST['skip'];
+	$_SESSION['skip_bt'][] = $donut['request']['skip'];
 
 }
 
-if(!isset($_REQUEST['next']) and !isset($_REQUEST['ajax']))
+if(!isset($donut['request']['next']) and !isset($donut['request']['ajax']))
 	$_SESSION['skip_bt'] = array();
 
 
@@ -112,7 +112,7 @@ $lang_zero = pGetLanguageZero();
 $editor_lang = pGetLanguage(pEditorLanguage($_SESSION['pUser']));
 
 
-if(isset($_REQUEST['translate']) and !isset($_REQUEST['ajax']) and is_numeric($_REQUEST['translate'])){
+if(isset($donut['request']['translate']) and !isset($donut['request']['ajax']) and is_numeric($donut['request']['translate'])){
 
 
 	pOut('<span class="title_header"><div class="icon-box white-icon"><i class="fa fa-language"></i></div> '.BTRANS_TITLE_SINGLE.$editor_lang->name.'</span><br /><br />', true);
@@ -122,7 +122,7 @@ if(isset($_REQUEST['translate']) and !isset($_REQUEST['ajax']) and is_numeric($_
 	$offset = 0;
 	$hide = ""; 
 
-	$word = pGetWord($_REQUEST['translate']);
+	$word = pGetWord($donut['request']['translate']);
 	$type = pGetType($word->type_id);
 	$classification = pGetClassification($word->classification_id);
 

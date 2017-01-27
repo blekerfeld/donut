@@ -3,7 +3,7 @@
 
 // Do we need to load a different page?
 
-if(isset($_REQUEST['word_discussion']) and pLogged()){
+if(isset($donut['request']['word_discussion']) and pLogged()){
 	require_once pFromRoot('code/word.discussion.php');
 	return;
 }
@@ -14,7 +14,7 @@ pDictionaryHeader();
 pOut('<table class="noshow" style="width:100%;"><tr>');
 
 // Search area
-if(isset($_GET['searchresult']))
+if(isset($donut['get']['searchresult']))
 	pSearchArea($_SESSION['search'], true);
 else
 	pSearchArea('', true);
@@ -27,7 +27,7 @@ pOut('<td style="padding-left: 20px;"><div class="notice hide" style="display: n
 
 // Get noun
 global $donut;
-$rs = $donut['db']->query("SELECT * FROM words WHERE id = ".$_REQUEST['word']."");
+$rs = $donut['db']->query("SELECT * FROM words WHERE id = ".$donut['request']['word']."");
 if(!$word = $rs->fetchObject()){
 	pOut('<div class="notice danger-notice" id="empty"><i class="fa fa-warning"></i> The requested word is not a noun or doesn\'t exist.</div>');
 }
@@ -39,17 +39,17 @@ else{
 
 
 
-	if(!isset($_REQUEST['ajaxOUT']))
-		if(isset($_GET['searchresult']))
+	if(!isset($donut['request']['ajaxOUT']))
+		if(isset($donut['get']['searchresult']))
 			pOut("<a class='actionbutton' href='".pUrl('?home&search='.urlencode($_SESSION['search']))."');'><i class='fa fa-arrow-left' style='font-size: 12px!important;'></i> Back</i></a> ");
-		elseif(isset($_GET['alphabetresult']))
-			pOut("<a class='actionbutton' href='".pUrl('?alphabet='.$_GET['alphabetresult'])."'><i class='fa fa-arrow-left' style='font-size: 12px!important;'></i> Back</i></a> ");
+		elseif(isset($donut['get']['alphabetresult']))
+			pOut("<a class='actionbutton' href='".pUrl('?alphabet='.$donut['get']['alphabetresult'])."'><i class='fa fa-arrow-left' style='font-size: 12px!important;'></i> Back</i></a> ");
 		else
 			pOut("<a class='actionbutton' ".((isset($_SERVER['HTTP_REFERER'])) ? ("href='".$_SERVER['HTTP_REFERER']."'") : 'onClick="window.history.back();"')."><i class='fa fa-arrow-left' style='font-size: 12px!important;'></i> Back</i></a> ");
 
 	// Discussion button
 	if(pLogged())
-		pOut('<a class="actionbutton" href="'.pUrl('?word_discussion='.$_REQUEST['word']).'"><i class="fa fa-comments"></i> '.WD_TITLE.'</a><br /><br />');
+		pOut('<a class="actionbutton" href="'.pUrl('?word_discussion='.$donut['request']['word']).'"><i class="fa fa-comments"></i> '.WD_TITLE.'</a><br /><br />');
 
 
 	// Getting languages
@@ -415,7 +415,7 @@ else{
 		pOut("<script>$('#wholeword').attr('checked', ".$_SESSION['wholeword'].");</script>");
 	}
 
-	if(isset($_GET['searchresult']))
+	if(isset($donut['get']['searchresult']))
 	{
 		pOut("<script>$(document).ready(function(){
 
@@ -433,7 +433,7 @@ else{
       		$("#pageload i").show();
       		$(".ajaxload").slideUp();
       		$(".drop").hide();
-	      		$(".ajaxload").load("'.pUrl('?getword&ajax&wordsearch='.$_GET['word']).'", {"word": $("#wordsearch").val(), "dict": $("#dictionary").val(), "wholeword":  $("#wholeword").is(":checked")}, function(){$(".ajaxload").slideDown(function(){
+	      		$(".ajaxload").load("'.pUrl('?getword&ajax&wordsearch='.$donut['get']['word']).'", {"word": $("#wordsearch").val(), "dict": $("#dictionary").val(), "wholeword":  $("#wholeword").is(":checked")}, function(){$(".ajaxload").slideDown(function(){
 	      								 $("#pageload i").delay(100).hide(400);
 	      		})}, function(){
       		});
@@ -471,7 +471,7 @@ else{
 
 
 
-if(isset($_REQUEST['ajaxOUT']))
+if(isset($donut['request']['ajaxOUT']))
 	die();
 
  ?>
