@@ -50,6 +50,9 @@ define('LOGIN_ERROR_WRONG', "Password or username is wrong.");
 define('LOGIN_SUCCESS', "Succesfully logged in, you will be redirected...");
 define('LOGIN_CHECKING', "Checking...");
 
+// Dictionary
+define('DICT_TITLE', 'Dictionary');
+
 
 // Batch translating
 define('BTRANS_TITLE', "Batch translating into ");

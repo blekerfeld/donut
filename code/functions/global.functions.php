@@ -311,8 +311,7 @@
 
 	function pDictionaryHeader(){
 
-		pOut(pAlphabetBar().' 
-      <span class="title_header"><div class="icon-box white-icon"><i class="fa fa-book"></i></div> Dictionary</span><br /><br />
+		pOut(pAlphabetBar().'<span class="title_header"><div class="icon-box white-icon"><i class="fa fa-book"></i></div> '.DICT_TITLE.'</span><br /><br />
       ', true);
 
 	}
@@ -411,7 +410,7 @@
 }
 
 // for easy plurals
-function pPlural( $amount, $singular = '', $plural = 's' ) {
+function pPlural($amount, $singular = '', $plural = 's' ) {
     if ( $amount === 1 ) {
         return $amount." ".$singular;
     }

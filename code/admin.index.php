@@ -56,7 +56,7 @@
 
 
 
-	pOut('<span class="floatleft title_header"><div class="icon-box throw"><i class="fa fa-tasks"></i></div> <img class="logo-admin" src="'.pUrl('pol://library/static/admin_logo.png').'" /></span>', true);
+	pOut('<span class="floatleft title_header"><div class="icon-box throw"><i class="fa fa-tasks"></i></div> <img class="logo-admin" src="'.pUrl('pol://library/images/static/admin_logo.png').'" /></span>', true);
 
 
 	pOut('

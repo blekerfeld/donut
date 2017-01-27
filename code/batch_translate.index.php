@@ -17,10 +17,10 @@ function pTranslateCard($show_skip = true){
 
 					</div>
 							<div class="btPBAR" style="width: '.$percentage.'%"></div>
-					<div class="btSource"><span class="btLanguage"><img class="btFlag" src="'.pUrl('pol://library/flags/'.$lang_zero->flag.'.png').'" /> '.$lang_zero->name.'</span><br /><span class="btNative"><a target="_blank" href="'.pUrl('?word='.$word->id).'"><strong><span class="native">'.$word->native.'</span></strong></a></span> <span class="btInfo">'.$text.'</span></span></div>
+					<div class="btSource"><span class="btLanguage"><img class="btFlag" src="'.pUrl('pol://library/images/flags/'.$lang_zero->flag.'.png').'" /> '.$lang_zero->name.'</span><br /><span class="btNative"><a target="_blank" href="'.pUrl('?word='.$word->id).'"><strong><span class="native">'.$word->native.'</span></strong></a></span> <span class="btInfo">'.$text.'</span></span></div>
 
 					
-					<div class="btTranslate"><span class="btLanguage"><img class="btFlag" src="'.pUrl('pol://library/flags/'.$editor_lang->flag.'.png').'" /> '.$editor_lang->name.'</span><br /><textarea placeholder="" class="elastic nWord btInput translations-'.$num.'"></textarea><br /></div>
+					<div class="btTranslate"><span class="btLanguage"><img class="btFlag" src="'.pUrl('pol://library/images/flags/'.$editor_lang->flag.'.png').'" /> '.$editor_lang->name.'</span><br /><textarea placeholder="" class="elastic nWord btInput translations-'.$num.'"></textarea><br /></div>
 
 					<div class="notice small"><i class="fa fa-info-circle" style="font-size: 10px!important;"></i> Enter as many translations as needed, the format is: <span class="outertag">Translation</span> or <span class="outertag">Translation|Specification</span>. <br /><em>Specifications are optional and can be added later on as well.</em></div>
 

@@ -40,6 +40,9 @@
 	$donut['page']['content'] = array();
 	$donut['db'] = $db;
 	$donut['session_auth'] = md5("kjj8f99e9iwj32ikm8391pok389iokn");
+	$donut['request'] = $_REQUEST;
+	$donut['get'] = $_GET;
+	$donut['post'] = $_POST;
 
 ## 	Vowels for the vowel check
 	$donut['vowels'] = array("a","e","i","o","u","ø");
@@ -111,7 +114,7 @@ function pEndsWith($haystack, $needle)
 			return $url;
 
 		else
-			if(isset($_GET['ajax']) OR isset($_GET['ajax_pOut']))
+			if(isset($donut['get']['ajax']) OR isset($donut['get']['ajax_pOut']))
 				return "<script>window.location = '".$url."';</script>";
 				
 			return header("Location:".$url);
