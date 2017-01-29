@@ -11,17 +11,14 @@
 	function pAppsArray()
 	{
 		global $donut;
-		$getapps = $donut['db']->query("SELECT * FROM apps");
-		$apps = array();
-		foreach($getapps as $app)
-			$apps[] = array($app['getter'], $app['app']);
-		return $apps;
+		return pQuery("SELECT * FROM apps");
+
 	}
 
 	function pGetApp($appname)
 	{
 		global $donut;
-		$getapps = $donut['db']->query("SELECT * FROM apps WHERE getter = '$appname' LIMIT 1;");
+		$getapps = pQuery("SELECT * FROM apps WHERE getter = '$appname' LIMIT 1;");
 		foreach($getapps as $app)
 			$app = array($app['getter'], $app['app']);
 		return $app;

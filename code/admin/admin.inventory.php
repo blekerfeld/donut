@@ -23,29 +23,29 @@
 
 	// Actions and ajax
 
-	if(isset($donut['request']['ajax']) and isset($donut['request']['action']))
+	if(isset($_REQUEST['ajax']) and isset($_REQUEST['action']))
 	{
 
-		if($donut['request']['action'] == 'toggle' AND isset($donut['request']['c']))
+		if($_REQUEST['action'] == 'toggle' AND isset($_REQUEST['c']))
 		{
 
-			$donut['db']->query("UPDATE ipa_c SET active = IF(ipa_c.active=1, 0, 1) WHERE id = ".$donut['request']['c']." LIMIT 1;");
-			pOut("<script>$('.c-".$donut['request']['c']."').toggleClass('selected');</script>");
+			pQuery("UPDATE ipa_c SET active = IF(ipa_c.active=1, 0, 1) WHERE id = ".$_REQUEST['c']." LIMIT 1;");
+			pOut("<script>$('.c-".$_REQUEST['c']."').toggleClass('selected');</script>");
 
 		}
-		elseif($donut['request']['action'] == 'toggle' AND isset($donut['request']['v']))
+		elseif($_REQUEST['action'] == 'toggle' AND isset($_REQUEST['v']))
 		{
 
-			$donut['db']->query("UPDATE ipa_v SET active = IF(ipa_v.active=1, 0, 1) WHERE id = ".$donut['request']['v']." LIMIT 1;");
+			pQuery("UPDATE ipa_v SET active = IF(ipa_v.active=1, 0, 1) WHERE id = ".$_REQUEST['v']." LIMIT 1;");
 
 		}
 
-		if($donut['request']['action'] == 'new_poly' and isset($donut['request']['poly'])){
+		if($_REQUEST['action'] == 'new_poly' and isset($_REQUEST['poly'])){
 
 			// New poly
 
 
-			if(count($donut['request']['poly']) == 1 OR count($donut['request']['poly']) == 0)
+			if(count($_REQUEST['poly']) == 1 OR count($_REQUEST['poly']) == 0)
 			{
 
 				echo '<div class="notice hide danger-notice" id="empty" style="margin-bottom: 20px;"><i class="fa fa-warning"></i> A polyphthong needs to consist of two or more phonemes.</div>';
@@ -53,11 +53,11 @@
         		die();
 
 			}
-			$poly_string = implode(',', $donut['request']['poly']);
+			$poly_string = implode(',', $_REQUEST['poly']);
 
 			// We will look if this already exists
 
-			$exists = $donut['db']->query("SELECT id FROM ipa_polyphthongs WHERE combination = '$poly_string';");
+			$exists = pQuery("SELECT id FROM ipa_polyphthongs WHERE combination = '$poly_string';");
 
 
 			if($exists->rowCount() == 1){
@@ -70,7 +70,7 @@
 
 			else{
 
-				$donut['db']->query("INSERT INTO ipa_polyphthongs(combination) VALUES ('".$poly_string."');");
+				pQuery("INSERT INTO ipa_polyphthongs(combination) VALUES ('".$poly_string."');");
 				echo '<div class="notice hide succes-notice" id="empty" style="margin-bottom: 20px;"><i class="fa fa-check"></i> The polyphthong '.pParsePolyphthong($poly_string).' was succesfully added to the inventory!</div>';
         		echo "<script>$('#empty').fadeIn().effect('bounce', {duration: 800}).delay(500).fadeOut('slow');setTimeout(function() { loadfunction('".pUrl('?admin&section=inventory')."'); }, 1300);</script>";
 
@@ -78,9 +78,9 @@
 
 		}
 
-		if($donut['request']['action'] == 'delete_poly' and isset($donut['request']['poly'])){
+		if($_REQUEST['action'] == 'delete_poly' and isset($_REQUEST['poly'])){
 
-			$donut['db']->query("DELETE FROM ipa_polyphthongs WHERE id = ".$donut['request']['poly']);
+			pQuery("DELETE FROM ipa_polyphthongs WHERE id = ".$_REQUEST['poly']);
 
 		}
 
@@ -89,19 +89,19 @@
 
 	// Actions
 
-	elseif(isset($donut['request']['action']))
+	elseif(isset($_REQUEST['action']))
 	{
 
 
 	// Actions
 
-		if($donut['request']['action'] == 'add_copy' AND isset($donut['request']['of'])){
+		if($_REQUEST['action'] == 'add_copy' AND isset($_REQUEST['of'])){
 
 			pOut('<div style="width: 74%;" class="notice hide" id="busyadd" ><i class="fa fa-spinner fa-spin"></i> Submode is being added...</div>
        		<div style="width: 75%" class="ajaxloadadd"></div>');
 
 
-			$char = pParseIPA_Char($donut['request']['of']);
+			$char = pParseIPA_Char($_REQUEST['of']);
 
 
 			pOut("<table class='admin' id='empty' style='width:75%'>
@@ -155,7 +155,7 @@
 
 
 	// We have not died yet!
-	if(!(isset($donut['request']['action'])) OR !(in_array($donut['request']['action'], $die_actions))){
+	if(!(isset($_REQUEST['action'])) OR !(in_array($_REQUEST['action'], $die_actions))){
 
 		// Information
 
@@ -174,8 +174,8 @@
 
 				// making the table
 				$ipa = pLoadIPA_C();
-				$ipa_c_places = $donut['db']->query("SELECT * FROM ipa_c_place;");
-				$ipa_c_modes = $donut['db']->query("SELECT * FROM ipa_c_mode;");
+				$ipa_c_places = pQuery("SELECT * FROM ipa_c_place;");
+				$ipa_c_modes = pQuery("SELECT * FROM ipa_c_mode;");
 				pOut("<table class='verbs ipa consonants'>");
 				pOut("<tr class='temps'><td class='filler'><strong>Consonants</strong></td>");
 				$places = array();
@@ -187,8 +187,8 @@
 				pOut("</tr>");
 				// Rows
 
-				$ipa_c_articulation = $donut['db']->query("SELECT * FROM ipa_c_articulation;");
-				$ipa_c_places = $donut['db']->query("SELECT * FROM ipa_c_place;");
+				$ipa_c_articulation = pQuery("SELECT * FROM ipa_c_articulation;");
+				$ipa_c_places = pQuery("SELECT * FROM ipa_c_place;");
 				foreach ($ipa_c_places as $ipa_c_place) {
 					foreach ($ipa_c_articulation as $articulation) {
 
@@ -256,8 +256,8 @@
 		// Vowels table
 
 				$ipa_v = pLoadIPA_V();
-				$ipa_v_places = $donut['db']->query("SELECT * FROM ipa_v_place;");
-				$ipa_v_modes = $donut['db']->query("SELECT * FROM ipa_v_mode;");
+				$ipa_v_places = pQuery("SELECT * FROM ipa_v_place;");
+				$ipa_v_modes = pQuery("SELECT * FROM ipa_v_mode;");
 				pOut("<table class='verbs ipa_v vowels hide'>");
 				pOut("<tr class='temps'><td class='filler'><strong>Vowels</strong></td>");
 				$places = array();
@@ -269,8 +269,8 @@
 				pOut("</tr>");
 				// Rows
 
-				$ipa_v_articulation = $donut['db']->query("SELECT * FROM ipa_v_articulation;");
-				$ipa_v_places = $donut['db']->query("SELECT * FROM ipa_v_place;");
+				$ipa_v_articulation = pQuery("SELECT * FROM ipa_v_articulation;");
+				$ipa_v_places = pQuery("SELECT * FROM ipa_v_place;");
 				foreach ($ipa_v_places as $ipa_v_place) {
 					foreach ($ipa_v_articulation as $articulation) {
 

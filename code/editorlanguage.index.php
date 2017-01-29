@@ -3,11 +3,11 @@
 if(!pLogged())
 	pUrl('', true);
 
-if(isset($donut['get']['ajax']) and is_numeric($donut['get']['new']))
+if(isset($_GET['ajax']) and is_numeric($_GET['new']))
 {
-	$donut['db']->query("UPDATE users SET editor_lang = ".$donut['get']['new']." WHERE id = ".$_SESSION['pUser'].";");
+	pQuery("UPDATE users SET editor_lang = ".$_GET['new']." WHERE id = ".$_SESSION['pUser'].";");
 	echo "<script>
-	$('.editorlangname').html('".pLanguageName($donut['get']['new'])."', function(){
+	$('.editorlangname').html('".pLanguageName($_GET['new'])."', function(){
 		alert();
 	});
 	loadfunction('".pUrl('?home')."');

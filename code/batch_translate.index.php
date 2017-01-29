@@ -80,30 +80,30 @@ function pTranslateCard($show_skip = true){
 }
 
 
-if(isset($donut['request']['ajax'], $donut['request']['word_id'], $donut['request']['translate'], $donut['request']['translations'])){
+if(isset($_REQUEST['ajax'], $_REQUEST['word_id'], $_REQUEST['translate'], $_REQUEST['translations'])){
 
 
 	// Calling the appropiate function
 
-	pAddTranslations($donut['request']['translations'], $donut['request']['word_id']);
+	pAddTranslations($_REQUEST['translations'], $_REQUEST['word_id']);
 
 }
 
-elseif(isset($donut['request']['ajax'], $donut['request']['untranslatable'], $donut['request']['word_id'])){
+elseif(isset($_REQUEST['ajax'], $_REQUEST['untranslatable'], $_REQUEST['word_id'])){
 
-	$donut['db']->query("INSERT INTO translation_exceptions VALUES (NULL, '".$donut['request']['word_id']."', '".pEditorLanguage($_SESSION['pUser'])."', '".$_SESSION['pUser']."');");
+	pQuery("INSERT INTO translation_exceptions VALUES (NULL, '".$_REQUEST['word_id']."', '".pEditorLanguage($_SESSION['pUser'])."', '".$_SESSION['pUser']."');");
 
 	die();
 
 }
 
-if (isset($donut['request']['ajax'], $donut['request']['skip'])) {
+if (isset($_REQUEST['ajax'], $_REQUEST['skip'])) {
 	
-	$_SESSION['skip_bt'][] = $donut['request']['skip'];
+	$_SESSION['skip_bt'][] = $_REQUEST['skip'];
 
 }
 
-if(!isset($donut['request']['next']) and !isset($donut['request']['ajax']))
+if(!isset($_REQUEST['next']) and !isset($_REQUEST['ajax']))
 	$_SESSION['skip_bt'] = array();
 
 
@@ -112,7 +112,7 @@ $lang_zero = pGetLanguageZero();
 $editor_lang = pGetLanguage(pEditorLanguage($_SESSION['pUser']));
 
 
-if(isset($donut['request']['translate']) and !isset($donut['request']['ajax']) and is_numeric($donut['request']['translate'])){
+if(isset($_REQUEST['translate']) and !isset($_REQUEST['ajax']) and is_numeric($_REQUEST['translate'])){
 
 
 	pOut('<span class="title_header"><div class="icon-box white-icon"><i class="fa fa-language"></i></div> '.BTRANS_TITLE_SINGLE.$editor_lang->name.'</span><br /><br />', true);
@@ -122,7 +122,7 @@ if(isset($donut['request']['translate']) and !isset($donut['request']['ajax']) a
 	$offset = 0;
 	$hide = ""; 
 
-	$word = pGetWord($donut['request']['translate']);
+	$word = pGetWord($_REQUEST['translate']);
 	$type = pGetType($word->type_id);
 	$classification = pGetClassification($word->classification_id);
 
@@ -153,7 +153,7 @@ pOut('<span class="title_header"><div class="icon-box white-icon"><i class="fa f
 
 // Let's get our words, limit of 10
 
-$count_all = $words = $donut['db']->query("SELECT COUNT(DISTINCT words.id) AS cnt
+$count_all = $words = pQuery("SELECT COUNT(DISTINCT words.id) AS cnt
 FROM words
 JOIN translation_words 
 JOIN translations ON translations.id = translation_words.translation_id
@@ -167,7 +167,7 @@ $cnt_all = $count_all->fetchObject();
 
 pOut("<center><span class='btLanguage'>There are ".$cnt_all->cnt." words left to translate.</span></center>");
 
-$words = $donut['db']->query("SELECT DISTINCT words.id, words.native, words.classification_id, words.type_id, words.subclassification_id 
+$words = pQuery("SELECT DISTINCT words.id, words.native, words.classification_id, words.type_id, words.subclassification_id 
 FROM words
 JOIN translation_words 
 JOIN translations ON translations.id = translation_words.translation_id

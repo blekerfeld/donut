@@ -11,29 +11,29 @@
 if(!pLogged())
 	pUrl('', true);
 
-if(isset($donut['request']['ajax'])){
+if(isset($_REQUEST['ajax'])){
 
-	if(isset($donut['request']['do']))
+	if(isset($_REQUEST['do']))
 	{
 		// We might just show an error if something is wrong
 		if(false)
 		die();		// TODO!!	
 		// At first we are going to insert the word to the database
-		$insert_query = "INSERT INTO words(native, ipa, type_id, classification_id, subclassification_id) VALUES(".$donut['db']->quote($donut['request']['new_word']).", ".$donut['db']->quote($donut['request']['ipa']).", ".$donut['db']->quote($donut['request']['type']).", ".$donut['db']->quote($donut['request']['classification']).", ".$donut['db']->quote($donut['request']['subclassification']).");";
-		$donut['db']->query($insert_query);
+		$insert_query = "INSERT INTO words(native, ipa, type_id, classification_id, subclassification_id) VALUES(".$donut['db']->quote($_REQUEST['new_word']).", ".$donut['db']->quote($_REQUEST['ipa']).", ".$donut['db']->quote($_REQUEST['type']).", ".$donut['db']->quote($_REQUEST['classification']).", ".$donut['db']->quote($_REQUEST['subclassification']).");";
+		pQuery($insert_query);
 		
 		// We need to get a hold of the last inserted id
 		$new_word_id = $donut['db']->lastInsertId(); 
 
-		pAddTranslations($donut['request']['translations'], $new_word_id);
+		pAddTranslations($_REQUEST['translations'], $new_word_id);
 
 		echo '<div class="notice succes-notice hide" id="empty" style="margin-bottom: 20px;"><i class="fa fa-check"></i> Entry succesfully added!</div>'."<script>$('#busyadd').fadeOut().delay(1000);$('#empty').show().delay(400).effect('bounce', {duration: 1000});</script>";
 
 	}
 	// In case they want to get a fancy generated IPA string!
-	elseif(isset($donut['request']['get_ipa']) AND isset($donut['request']['string']))
+	elseif(isset($_REQUEST['get_ipa']) AND isset($_REQUEST['string']))
 	{
-			$string = strtolower($donut['request']['string']);
+			$string = strtolower($_REQUEST['string']);
 			echo "<script>$('.ipa').val('".pGetIPA($string)."');</script>";
 	}
 

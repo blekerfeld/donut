@@ -62,8 +62,9 @@
                 <div class='ajaxHide'>
                 <?php global $donut; echo $donut['page']['content_final']; ?>
                 </div>
+                <span>Page loaded using <?php  echo $donut['db_query_count']; ?> queries</span> 
             </div>
-            <?php if(!isset($donut['request']['wap']))
+            <?php if(!isset($_REQUEST['wap']))
             { ?>
           </div>
         <div class='footer'>
@@ -76,6 +77,6 @@
       ?>
       </div>
     </div>
-    <div class='absolute_footer'>Powered by Donut – &copy; 2017 Thomas de Roo </div>
+    <div class='absolute_footer'>Powered by Donut – &copy; 2017 Thomas de Roo<br /></div>
   </body>
  </html>

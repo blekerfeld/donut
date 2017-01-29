@@ -20,7 +20,7 @@
 	{
 		global $donut; 
 
-		if(isset($donut['request'][$request]))
+		if(isset($_REQUEST[$request]))
 			return 'class="active bga1"';
 
 		return '';

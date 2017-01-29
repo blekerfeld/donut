@@ -41,14 +41,14 @@
 	$donut['page']['menu'] = pMenu();
 
 	// Going through the apps, looking for answers...
-	foreach($apps as $app){
-		if(isset($donut['request'][$app[0]]) and !$app_set)
+	while($app = $apps->fetchObject()){
+		if(isset($_REQUEST[$app->getter]) and !$app_set)
 		{
 
-			if(($app_file = $donut['root_path'] . '/code/' . $app[1] . '.index.php') && file_exists($app_file))
+			if(($app_file = $donut['root_path'] . '/code/' . $app->app . '.index.php') && file_exists($app_file))
 				require_once $app_file;
 			else
-				die("<div class='header'>Fatal error: Donut failed loading the ".$app[1]."-section</div>");
+				die("<div class='header'>Fatal error: Donut failed loading the ".$app->app."-section</div>");
 
 			$app_set = true;
 
@@ -76,7 +76,7 @@
 		$donut['page']['content_final'] .= "$outputsection \n";
 	
 	//	We need some extra structure if we are dealing with AJAX loaded pages
-	if(isset($donut['request']['ajax']) OR isset($donut['request']['ajax_pOut']))
+	if(isset($_REQUEST['ajax']) OR isset($_REQUEST['ajax_pOut']))
 		pAjaxStructure();
 
 	//	The template is loaded, that's the begining of the end.

@@ -20,7 +20,7 @@ pOut('<td style="padding-left: 20px;">
       <div class="drop">
      ');
 
-$grapheme = pGetGrapheme($donut['get']['alphabet']);
+$grapheme = pGetGrapheme($_GET['alphabet']);
 
 if($grapheme != false){
 
@@ -59,7 +59,7 @@ if($grapheme != false){
 		$sorted_words = pSortByAlphabet($words, $alphabet);
 
 		foreach($sorted_words as $word){
-			pOut(pWordShowNative($word[1]['id'], 0, false, true, 'a', 'alphabetresult='.$donut['get']['alphabet']));
+			pOut(pWordShowNative($word[1]['id'], 0, false, true, 'a', 'alphabetresult='.$_GET['alphabet']));
 		}
 
 	}
@@ -80,7 +80,7 @@ pOut('
       		$("#pageload i").show();
       		$(".ajaxload").slideUp();
       		$(".drop").hide();
-	      		$(".ajaxload").load("'.pUrl('?getword&ajax&alphabetsearch='.$donut['get']['alphabet']).'", {"word": $("#wordsearch").val(), "dict": $("#dictionary").val(), "wholeword":  $("#wholeword").is(":checked")}, function(){$(".ajaxload").slideDown(function(){
+	      		$(".ajaxload").load("'.pUrl('?getword&ajax&alphabetsearch='.$_GET['alphabet']).'", {"word": $("#wordsearch").val(), "dict": $("#dictionary").val(), "wholeword":  $("#wholeword").is(":checked")}, function(){$(".ajaxload").slideDown(function(){
 	      								 $("#pageload i").delay(100).hide(400);
 	      		})}, function(){
       		});
@@ -88,7 +88,7 @@ pOut('
       			window.history.pushState("string", "", "index.php?search=" + $("#wordsearch").val());
       		}
       		else{
-      			window.history.pushState("string", "", "index.php?alphabet='.$donut['get']['alphabet'].'");
+      			window.history.pushState("string", "", "index.php?alphabet='.$_GET['alphabet'].'");
       		}
       		
       	});

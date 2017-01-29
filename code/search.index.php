@@ -2,7 +2,7 @@
 
 // This is just a lazyass redirect
 
-if(isset($donut['request']['ajax_pOut']))
-	echo "<script>loadfunction('".pUrl('index.php?home&search='.$donut['get']['search'])."');</script>";
+if(isset($_REQUEST['ajax_pOut']))
+	echo "<script>loadfunction('".pUrl('index.php?home&search='.$_GET['search'])."');</script>";
 else
-	pUrl('index.php?home&search='.$donut['get']['search'], true);
+	pUrl('index.php?home&search='.$_GET['search'], true);

@@ -11,7 +11,7 @@
 	function pSiRo($table, $id) #Single Row
 	{
 		global $donut;
-		$result = $donut['db']->query("SELECT * FROM ".$table." WHERE id = '$id' LIMIT 1;");
+		$result = pQuery("SELECT * FROM ".$table." WHERE id = '$id' LIMIT 1;");
 		if($result->rowCount() == 1)
 		{
 			return $result->fetchObject();
@@ -24,7 +24,7 @@
 
 		global $donut;
 
-		$rs = $donut['db']->query("SELECT count(id) AS count FROM $table WHERE 1;");
+		$rs = pQuery("SELECT count(id) AS count FROM $table WHERE 1;");
 
 		$rr  = $rs->fetchObject();
 
@@ -35,8 +35,8 @@
 	function pSimpleOffsetSystem($total_number, $items_per_page, $url){
 
 			// Do we already have a offset
-			if(isset($donut['get']['offset'])){
-				$offset = $donut['get']['offset'];
+			if(isset($_GET['offset'])){
+				$offset = $_GET['offset'];
 			}
 			else{
 				$offset = 0;
@@ -132,7 +132,7 @@
 
 		global $donut;
 
-		if(isset($donut['request']['admin']))
+		if(isset($_REQUEST['admin']))
 			$extra = "$('html').addClass('pAdmin');";
 		else
 			$extra = "$('html').removeClass('pAdmin');";
@@ -240,11 +240,11 @@
 		global $donut;
 
 		// The complex javascript link system is needed for the new links loaded via AJAX
-		if(isset($donut['request']['ajax']))
+		if(isset($_REQUEST['ajax']))
 			echo pAjaxLinks($donut['page']['title']);
 
 		//	For the complex javascript link system, maybe we'll call it CoJaLiSy, we need to mimic the original page structure
-		if(isset($donut['request']['ajax_pOut'])){
+		if(isset($_REQUEST['ajax_pOut'])){
 
 			//	And... we need the link system itself!
 			echo pAjaxLinks($donut['page']['title'])."<div class='nav'>".$donut['page']['menu']."</div>";
@@ -259,7 +259,7 @@
 
 		// Time to die, bye bye
 
-		if(isset($donut['request']['ajax']) OR isset($donut['request']['ajax_pOut']))
+		if(isset($_REQUEST['ajax']) OR isset($_REQUEST['ajax_pOut']))
 			die();
 
 	}

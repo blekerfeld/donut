@@ -43,7 +43,7 @@
  	function pMySQL_version()
  	{
  		global $donut;
- 		$r = $donut['db']->query("SELECT version() as ver;");
+ 		$r = pQuery("SELECT version() as ver;");
  		$v = $r->fetchObject();
  		return $v->ver;
  	}

@@ -26,14 +26,14 @@
 
 	// Actions and ajax
 
-	if(isset($donut['request']['ajax']) and isset($donut['request']['action']))
+	if(isset($_REQUEST['ajax']) and isset($_REQUEST['action']))
 	{
 
-		if($donut['request']['action'] == 'add_type'){
+		if($_REQUEST['action'] == 'add_type'){
 			
 			// Do we have all fields?
 
-			    if($donut['request']['type_name'] == "" or $donut['request']['type_name_short'] == "" or $donut['request']['type_entry'] == "" or $donut['request']['type_entry_short'] == "" or $donut['request']['type_inflect_classifications'] == "")
+			    if($_REQUEST['type_name'] == "" or $_REQUEST['type_name_short'] == "" or $_REQUEST['type_entry'] == "" or $_REQUEST['type_entry_short'] == "" or $_REQUEST['type_inflect_classifications'] == "")
         		{
         			echo '<div class="notice hide danger-notice" id="empty" style="margin-bottom: 20px;"><i class="fa fa-warning"></i> Please submit all fields.</div>';
         			echo "<script>$('#busyadd').fadeOut().delay(1000);$('#empty').show().delay(400).effect('bounce', {duration: 1000});</script>";
@@ -41,7 +41,7 @@
 
      			else
      			{
-     				if(pTypeAdd($donut['request']['type_name'], $donut['request']['type_name_short'], $donut['request']['type_entry'], $donut['request']['type_entry_short'], $donut['request']['type_inflect_classifications']))
+     				if(pTypeAdd($_REQUEST['type_name'], $_REQUEST['type_name_short'], $_REQUEST['type_entry'], $_REQUEST['type_entry_short'], $_REQUEST['type_inflect_classifications']))
      				{
      					echo '<div class="notice succes-notice hide" id="empty" style="margin-bottom: 20px;"><i class="fa fa-check"></i> Type succesfully added. <a href="'.pUrl('?admin&section=types').'">Return to overview.</a></div>';
      					echo "<script>
@@ -63,11 +63,11 @@
 
 		}
 
-		elseif($donut['request']['action'] == 'edit_type'){
+		elseif($_REQUEST['action'] == 'edit_type'){
 			
 			// Do we have all fields?
 			
-				if($donut['request']['type_id'] == "" or $donut['request']['type_name'] == "" or $donut['request']['type_name_short'] == "" or $donut['request']['type_entry'] == "" or $donut['request']['type_entry_short'] == "" or $donut['request']['type_inflect_classifications'] == "")
+				if($_REQUEST['type_id'] == "" or $_REQUEST['type_name'] == "" or $_REQUEST['type_name_short'] == "" or $_REQUEST['type_entry'] == "" or $_REQUEST['type_entry_short'] == "" or $_REQUEST['type_inflect_classifications'] == "")
         		{
         			echo '<div class="notice hide danger-notice" id="empty" style="margin-bottom: 20px;"><i class="fa fa-warning"></i> Please submit all fields.</div>';
         			echo "<script>$('#busyadd').fadeOut().delay(1000);$('#empty').show().delay(400).effect('bounce', {duration: 1000});</script>";
@@ -76,7 +76,7 @@
 
      			else
      			{
-     				if(pTypeUpdate($donut['request']['type_id'], $donut['request']['type_name'], $donut['request']['type_name_short'], $donut['request']['type_entry'], $donut['request']['type_entry_short'], $donut['request']['type_inflect_classifications']))
+     				if(pTypeUpdate($_REQUEST['type_id'], $_REQUEST['type_name'], $_REQUEST['type_name_short'], $_REQUEST['type_entry'], $_REQUEST['type_entry_short'], $_REQUEST['type_inflect_classifications']))
      				{
      					echo '<div class="notice succes-notice hide" id="empty" style="margin-bottom: 20px;"><i class="fa fa-check"></i> Type succesfully edited. <a href="'.pUrl('?admin&section=types').'">Return to overview.</a></div>';
      					echo "<script>
@@ -98,21 +98,21 @@
 
 	// Actions
 
-	elseif(isset($donut['request']['action']))
+	elseif(isset($_REQUEST['action']))
 	{
 
 		// The delete action -> are you sure?
-		if($donut['request']['action'] == 'delete_type_sure' and isset($donut['request']['type_id'])){
+		if($_REQUEST['action'] == 'delete_type_sure' and isset($_REQUEST['type_id'])){
 			
-			pOut('<div class="notice" id="empty"><i class="fa fa-question-circle"></i> <strong>Are you sure you want to delete the type <em>'.pTypeName($donut['request']['type_id']).'</em>?</strong>
+			pOut('<div class="notice" id="empty"><i class="fa fa-question-circle"></i> <strong>Are you sure you want to delete the type <em>'.pTypeName($_REQUEST['type_id']).'</em>?</strong>
 				<a class="actionbutton" href="'.pUrl('?admin&section=types').'">No</a> 
-				 <a class="actionbutton" href="'.pUrl('?admin&section=types&action=delete_type&type_id='.$donut['request']['type_id']).'">Yes</a> <br />
-			All words of the type '.pTypeName($donut['request']['type_id']).' will be deleted.</div>');
+				 <a class="actionbutton" href="'.pUrl('?admin&section=types&action=delete_type&type_id='.$_REQUEST['type_id']).'">Yes</a> <br />
+			All words of the type '.pTypeName($_REQUEST['type_id']).' will be deleted.</div>');
 		}
 
 		// The delete action
-		if($donut['request']['action'] == 'delete_type' and isset($donut['request']['type_id'])){
-			pTypeDelete($donut['request']['type_id']);
+		if($_REQUEST['action'] == 'delete_type' and isset($_REQUEST['type_id'])){
+			pTypeDelete($_REQUEST['type_id']);
 			pUrl('?admin&section=types', true);
 		}
 
@@ -120,7 +120,7 @@
 		// The action forms are going to be shown here!
 
 
-		if($donut['request']['action'] == 'add_type'){
+		if($_REQUEST['action'] == 'add_type'){
 
 
 			pOut('<div style="width: 74%;" class="notice hide" id="busyadd" ><i class="fa fa-spinner fa-spin"></i> Type is being added...</div>
@@ -172,10 +172,10 @@
 
 		}
 
-		elseif($donut['request']['action'] == 'edit_type' and isset($donut['request']['type_id'])){
+		elseif($_REQUEST['action'] == 'edit_type' and isset($_REQUEST['type_id'])){
 
 
-			if(!($type = pGetType($donut['request']['type_id'])))
+			if(!($type = pGetType($_REQUEST['type_id'])))
 				pUrl('?admin&section=types', true);
 
 
@@ -237,7 +237,7 @@
 
 
 	// We have not died yet!
-	if(!(isset($donut['request']['action'])) OR !(in_array($donut['request']['action'], $die_actions))){
+	if(!(isset($_REQUEST['action'])) OR !(in_array($_REQUEST['action'], $die_actions))){
 
 		// Offset system loading
 			$total_number = pCountTable('types');

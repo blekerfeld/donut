@@ -11,38 +11,38 @@
 	function pGetAlphabet()
 	{
 		global $donut;
-		$alphabet = $donut['db']->query("SELECT * FROM graphemes WHERE in_alphabet = 1 ORDER by graphemes.order");
+		$alphabet = pQuery("SELECT * FROM graphemes WHERE in_alphabet = 1 ORDER by graphemes.order");
 		return $alphabet;
 	}
 
 	function pGetAlphabetByLength()
 	{
 		global $donut;
-		$alphabet = $donut['db']->query("SELECT * FROM graphemes WHERE in_alphabet = 1 ORDER BY LENGTH(grapheme);");
+		$alphabet = pQuery("SELECT * FROM graphemes WHERE in_alphabet = 1 ORDER BY LENGTH(grapheme);");
 		return $alphabet;
 	}
 
 	function pGetAlphabetByStart($start)
 	{
 		global $donut;
-		$alphabet = $donut['db']->query("SELECT * FROM graphemes WHERE in_alphabet = 1 AND grapheme LIKE '$start%'");
+		$alphabet = pQuery("SELECT * FROM graphemes WHERE in_alphabet = 1 AND grapheme LIKE '$start%'");
 		return $alphabet;
 	}
 
 	function pGetAlphabetGroupString($group)
 	{
 		global $donut;
-		$alphabet = $donut['db']->query("SELECT * FROM graphemes WHERE groupstring = '$group' ORDER by graphemes.order");
+		$alphabet = pQuery("SELECT * FROM graphemes WHERE groupstring = '$group' ORDER by graphemes.order");
 		$string = '';
-		foreach($alphabet as $letter){
-			$string .= $letter['grapheme'];
+		while($letter = $alphabet->fetchObject()){
+			$string .= $letter->grapheme;
 		}
 		return $string;
 	}
 
 	function pGetIPA($string){
 			global $donut;
-			$rs = $donut['db']->query("SELECT * FROM ipa_regex ORDER BY sort;");
+			$rs = pQuery("SELECT * FROM ipa_regex ORDER BY sort;");
 			// Get our groups
 			$group_con = pGetAlphabetGroupString('CON');
 			$group_vow = pGetAlphabetGroupString('CON');
@@ -63,17 +63,17 @@
 
 		if(!$vowel){
 
-			$mode_g = $donut['db']->query("SELECT * FROM ipa_c_mode WHERE id = $mode_id LIMIT 1;");
+			$mode_g = pQuery("SELECT * FROM ipa_c_mode WHERE id = $mode_id LIMIT 1;");
 			$mode = $mode_g->fetchObject();
 
-			$place_g = $donut['db']->query("SELECT * FROM ipa_c_place WHERE id = $place_id LIMIT 1;");
+			$place_g = pQuery("SELECT * FROM ipa_c_place WHERE id = $place_id LIMIT 1;");
 			$place = $place_g->fetchObject();
 
-			$art_g = $donut['db']->query("SELECT * FROM ipa_c_articulation WHERE id = $articulation_id LIMIT 1;");
+			$art_g = pQuery("SELECT * FROM ipa_c_articulation WHERE id = $articulation_id LIMIT 1;");
 			$art = $art_g->fetchObject();
 
 			// Mode name neednt be shown if there is only one
-			$mode_check = $donut['db']->query("SELECT id FROM ipa_c WHERE (c_mode_id = 1 OR c_mode_id = 2) AND c_place_id = $place_id AND c_articulation_id = $articulation_id");
+			$mode_check = pQuery("SELECT id FROM ipa_c WHERE (c_mode_id = 1 OR c_mode_id = 2) AND c_place_id = $place_id AND c_articulation_id = $articulation_id");
 
 			if($mode_check->rowCount() == 1)
 				$mode_name = '';
@@ -94,17 +94,17 @@
 
 		
 
-			$mode_g = $donut['db']->query("SELECT * FROM ipa_v_mode WHERE id = $mode_id LIMIT 1;");
+			$mode_g = pQuery("SELECT * FROM ipa_v_mode WHERE id = $mode_id LIMIT 1;");
 			$mode = $mode_g->fetchObject();
 
-			$place_g = $donut['db']->query("SELECT * FROM ipa_v_place WHERE id = $place_id LIMIT 1;");
+			$place_g = pQuery("SELECT * FROM ipa_v_place WHERE id = $place_id LIMIT 1;");
 			$place = $place_g->fetchObject();
 
-			$art_g = $donut['db']->query("SELECT * FROM ipa_v_articulation WHERE id = $articulation_id LIMIT 1;");
+			$art_g = pQuery("SELECT * FROM ipa_v_articulation WHERE id = $articulation_id LIMIT 1;");
 			$art = $art_g->fetchObject();
 
 			// Mode name neednt be shown if there is only one
-			$mode_check = $donut['db']->query("SELECT id FROM ipa_v WHERE (v_mode_id = 1 OR v_mode_id = 2) AND v_place_id = $place_id AND v_articulation_id = $articulation_id");
+			$mode_check = pQuery("SELECT id FROM ipa_v WHERE (v_mode_id = 1 OR v_mode_id = 2) AND v_place_id = $place_id AND v_articulation_id = $articulation_id");
 
 			
 			$mode_name = $mode->name." ";
@@ -122,7 +122,7 @@
 
 		global $donut;
 
-		return $donut['db']->query("SELECT * FROM ipa_polyphthongs;");
+		return pQuery("SELECT * FROM ipa_polyphthongs;");
 
 	}
 
@@ -196,7 +196,7 @@
 
 		$polyphtong = '';
 
-		foreach($exploded as $char)
+		while($char = $exploded->fetchObject())
 		{
 			$polyphtong .= pParseIPA_Char($char);
 		}
@@ -212,21 +212,21 @@
 		$ipa = array();
 
 		if($active)
-			$ipa_get = $donut['db']->query("SELECT * FROM ipa_v WHERE active = 1;");
+			$ipa_get = pQuery("SELECT * FROM ipa_v WHERE active = 1;");
 		else
-			$ipa_get = $donut['db']->query("SELECT * FROM ipa_v");
+			$ipa_get = pQuery("SELECT * FROM ipa_v");
 
 
 		while($ipa_row = $ipa_get->fetchObject()){
 
 			// checking for graphmes
-			$ipa_graph = $donut['db']->query("SELECT ipa_v.symbol AS symbol, ipa_v.active AS active, graphemes_ipa_v.grapheme_id, graphemes.grapheme AS grapheme FROM ipa_v INNER JOIN graphemes_ipa_v ON graphemes_ipa_v.ipa_v_id = ipa_v.id INNER JOIN graphemes ON graphemes.id = graphemes_ipa_v.grapheme_id WHERE ipa_v.active = 1 AND ipa_v.id = ".$ipa_row->id.";");
+			$ipa_graph = pQuery("SELECT ipa_v.symbol AS symbol, ipa_v.active AS active, graphemes_ipa_v.grapheme_id, graphemes.grapheme AS grapheme FROM ipa_v INNER JOIN graphemes_ipa_v ON graphemes_ipa_v.ipa_v_id = ipa_v.id INNER JOIN graphemes ON graphemes.id = graphemes_ipa_v.grapheme_id WHERE ipa_v.active = 1 AND ipa_v.id = ".$ipa_row->id.";");
 
 			$graphs = array();
 
 			if($ipa_graph->rowCount() != 0){
 
-				foreach ($ipa_graph as $ipa_g) {
+				while($ipa_g = $ipa_graph->fetchObject()) {
 					$graphs[] = $ipa_g['grapheme'];
 				}
 
@@ -265,9 +265,9 @@
 		$ipa = array();
 
 		if($active)
-			$ipa_get = $donut['db']->query("SELECT * FROM ipa_c WHERE active = 1;");
+			$ipa_get = pQuery("SELECT * FROM ipa_c WHERE active = 1;");
 		else
-			$ipa_get = $donut['db']->query("SELECT * FROM ipa_c");
+			$ipa_get = pQuery("SELECT * FROM ipa_c");
 
 
 		while($ipa_row = $ipa_get->fetchObject()){
@@ -275,14 +275,14 @@
 			$ipa[$ipa_row->c_mode_id][$ipa_row->c_place_id][$ipa_row->c_articulation_id][] = array($ipa_row->symbol, $ipa_row->active, $ipa_row->id);
 
 			// checking for graphmes
-			$ipa_graph = $donut['db']->query("SELECT ipa_c.symbol AS symbol, ipa_c.active AS active, graphemes_ipa_c.grapheme_id, graphemes.grapheme AS grapheme FROM ipa_c INNER JOIN graphemes_ipa_c ON graphemes_ipa_c.ipa_c_id = ipa_c.id INNER JOIN graphemes ON graphemes.id = graphemes_ipa_c.grapheme_id WHERE ipa_c.active = 1 AND ipa_c.id = ".$ipa_row->id.";");
+			$ipa_graph = pQuery("SELECT ipa_c.symbol AS symbol, ipa_c.active AS active, graphemes_ipa_c.grapheme_id, graphemes.grapheme AS grapheme FROM ipa_c INNER JOIN graphemes_ipa_c ON graphemes_ipa_c.ipa_c_id = ipa_c.id INNER JOIN graphemes ON graphemes.id = graphemes_ipa_c.grapheme_id WHERE ipa_c.active = 1 AND ipa_c.id = ".$ipa_row->id.";");
 
 			$graphs = array();
 
 			if($ipa_graph->rowCount() != 0){
 
-				foreach ($ipa_graph as $ipa_g) {
-					$graphs[] = $ipa_g['grapheme'];
+				while($ipa_g = $ipa_graph->fetchObject()){
+					$graphs[] = $ipa_g->grapheme;
 				}
 
 			}
@@ -303,7 +303,7 @@
 
 		global $donut;
 
-		$get = $donut['db']->query("SELECT * FROM ipa_c WHERE id = $id LIMIT 1;");
+		$get = pQuery("SELECT * FROM ipa_c WHERE id = $id LIMIT 1;");
 
 		if($get->rowCount() == 1)
 			return $get->fetchObject();
@@ -316,7 +316,7 @@
 
 		global $donut;
 
-		$get = $donut['db']->query("SELECT * FROM ipa_v WHERE id = $id LIMIT 1;");
+		$get = pQuery("SELECT * FROM ipa_v WHERE id = $id LIMIT 1;");
 
 		if($get->rowCount() == 1)
 			return $get->fetchObject();
@@ -330,7 +330,7 @@
 
 		global $donut;
 
-		$get = $donut['db']->query("SELECT * FROM ipa_polyphthongs WHERE id = $id LIMIT 1;");
+		$get = pQuery("SELECT * FROM ipa_polyphthongs WHERE id = $id LIMIT 1;");
 
 		if($get->rowCount() == 1)
 			return $get->fetchObject();
@@ -344,19 +344,19 @@
 		global $donut;
 
 		if($active)
-			return $donut['db']->query("SELECT * FROM ipa_c WHERE c_mode_id = $mode AND c_place_id = $place AND c_articulation_id = $articulation AND active = 1;");
+			return pQuery("SELECT * FROM ipa_c WHERE c_mode_id = $mode AND c_place_id = $place AND c_articulation_id = $articulation AND active = 1;");
 		else
-			return $donut['db']->query("SELECT * FROM ipa_c WHERE c_mode_id = $mode AND c_place_id = $place AND c_articulation_id = $articulation;");
+			return pQuery("SELECT * FROM ipa_c WHERE c_mode_id = $mode AND c_place_id = $place AND c_articulation_id = $articulation;");
 
 
 	}
 
 	function pGetAlphabetArray(){
 		global $donut;
-		$alphabet = $donut['db']->query("SELECT * FROM graphemes WHERE in_alphabet = 1 ORDER by graphemes.order");
+		$alphabet = pQuery("SELECT * FROM graphemes WHERE in_alphabet = 1 ORDER by graphemes.order");
 		$return_array = array();
-		foreach ($alphabet as $letter) {
-			$return_array[] = $letter['grapheme'];
+		while($letter = $alphabet->fetchObject()) {
+			$return_array[] = $letter->grapheme;
 		}
 		return $return_array;
 	}
@@ -364,15 +364,15 @@
 	function pAlphabetBar(){
 		$alphabet = pGetAlphabet();
 		$text = '<div class="10-minus alphabetbar floatright">';
-		foreach($alphabet as $grapheme)
-			$text .= "<a href='".pUrl('index.php?alphabet='.$grapheme['id'])."' class='".((isset($donut['get']['alphabet']) AND ($donut['get']['alphabet'] == $grapheme['id'])) ? 'selected' : '')." ".((isset($donut['get']['alphabetresult']) AND ($donut['get']['alphabetresult'] == $grapheme['id'])) ? 'selected' : '')."'>".$grapheme['grapheme']."</a>";
+		while($grapheme = $alphabet->fetchObject())
+			$text .= "<a href='".pUrl('index.php?alphabet='.$grapheme->id)."' class='".((isset($_GET['alphabet']) AND ($_GET['alphabet'] == $grapheme->id)) ? 'selected' : '')." ".((isset($_GET['alphabetresult']) AND ($_GET['alphabetresult'] == $grapheme->id)) ? 'selected' : '')."'>".$grapheme->grapheme."</a>";
 		$text .= '</div>';
 		return $text;
 	}
 
 	function pGetGrapheme($id){
 		global $donut;
-		$get_grapheme = $donut['db']->query("SELECT * FROM graphemes WHERE id = $id;");
+		$get_grapheme = pQuery("SELECT * FROM graphemes WHERE id = $id;");
 		if($grapheme = $get_grapheme->fetchObject())
 			return $grapheme;
 		else

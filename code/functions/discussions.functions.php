@@ -27,7 +27,7 @@
 			$parent = "AND parent_discussion = $parent_id";
 		}
 
-		$discussions = $donut['db']->query("SELECT * FROM discussions WHERE $word $parent");
+		$discussions = pQuery("SELECT * FROM discussions WHERE $word $parent");
 
 		if($discussions->rowCount() == 0 and $parent_id == 0)
 			pOut("<div class='notice'><br /><i class='fa fa-info-circle'></i> ".WD_NO_THREADS."</div>");
@@ -68,14 +68,14 @@
 
 		global $donut; 
 
-		return $donut['db']->query("INSERT INTO $table($id_name, parent_discussion, user_id, points, content, post_date) VALUES ($word_id, $id, $user, 1, ".$donut['db']->quote($message).", NOW());");
+		return pQuery("INSERT INTO $table($id_name, parent_discussion, user_id, points, content, post_date) VALUES ($word_id, $id, $user, 1, ".$donut['db']->quote($message).", NOW());");
 	}
 
 	function pDeleteThread($id, $table = 'discussions'){
 
 		global $donut;
 
-		return $donut['db']->query("DELETE FROM $table WHERE id = $id OR parent_discussion = $id;");
+		return pQuery("DELETE FROM $table WHERE id = $id OR parent_discussion = $id;");
 
 	}
 
@@ -83,7 +83,7 @@
 
 		global $donut;
 
-		$count = $donut['db']->query("SELECT SUM(value) AS cnt FROM votes WHERE table_name = '$table_name' AND table_id = '$id';");
+		$count = pQuery("SELECT SUM(value) AS cnt FROM votes WHERE table_name = '$table_name' AND table_id = '$id';");
 		$countObj = $count->fetchObject();
 
 		if($countObj->cnt == NULL)

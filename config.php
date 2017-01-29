@@ -39,13 +39,11 @@
 	$donut['page']['menu'] = '';
 	$donut['page']['content'] = array();
 	$donut['db'] = $db;
+	$donut['db_prefix'] = "";
+	$donut['enable_query_caching'] = 1;
+	$donut['query_caching_time'] = 3*60*60;
 	$donut['session_auth'] = md5("kjj8f99e9iwj32ikm8391pok389iokn");
-	$donut['request'] = $_REQUEST;
-	$donut['get'] = $_GET;
-	$donut['post'] = $_POST;
 
-## 	Vowels for the vowel check
-	$donut['vowels'] = array("a","e","i","o","u","ø");
 ##	These variables are the paths to the site root.
 	$donut['root_path'] = dirname(__FILE__);
 	$donut['absolute_path'] = "http://localhost/donut/";
@@ -114,7 +112,7 @@ function pEndsWith($haystack, $needle)
 			return $url;
 
 		else
-			if(isset($donut['get']['ajax']) OR isset($donut['get']['ajax_pOut']))
+			if(isset($_GET['ajax']) OR isset($_GET['ajax_pOut']))
 				return "<script>window.location = '".$url."';</script>";
 				
 			return header("Location:".$url);
@@ -132,11 +130,10 @@ function pEndsWith($haystack, $needle)
 		return $donut['root_path'].'/'.$url;
 	}
 
+
 // Unsetting used variables
 	unset($db);
 	unset($db_prefix);
 	unset($db_host);
 	unset($db_user);
 	unset($db_password);
-
-?>

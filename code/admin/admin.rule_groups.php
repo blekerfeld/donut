@@ -24,14 +24,14 @@
 
 	// Actions and ajax
 
-	if(isset($donut['request']['ajax']) and isset($donut['request']['action']))
+	if(isset($_REQUEST['ajax']) and isset($_REQUEST['action']))
 	{
 
-		if($donut['request']['action'] == 'add_rule_group'){
+		if($_REQUEST['action'] == 'add_rule_group'){
 			
 			// Do we have all fields?
 
-			    if($donut['request']['group_name'] == "" or $donut['request']['type'] == "")
+			    if($_REQUEST['group_name'] == "" or $_REQUEST['type'] == "")
         		{
         			echo '<div class="notice hide danger-notice" id="empty" style="margin-bottom: 20px;"><i class="fa fa-warning"></i> Please submit all fields.</div>';
         			echo "<script>$('#busyadd').fadeOut().delay(1000);$('#empty').show().delay(400).effect('bounce', {duration: 1000});</script>";
@@ -39,7 +39,7 @@
 
      			else
      			{
-     				if(pRulegroupAdd($donut['request']['group_name'], $donut['request']['type']))
+     				if(pRulegroupAdd($_REQUEST['group_name'], $_REQUEST['type']))
      				{
      					echo '<div class="notice succes-notice hide" id="empty" style="margin-bottom: 20px;"><i class="fa fa-check"></i> Condition group succesfully added. <a href="'.pUrl('?admin&section=rule_groups').'">Return to overview.</a></div>';
      					echo "<script>
@@ -58,11 +58,11 @@
 
 		}
 
-		elseif($donut['request']['action'] == 'edit_rule_group'){
+		elseif($_REQUEST['action'] == 'edit_rule_group'){
 			
 			// Do we have all fields?
 			
-			    if($donut['request']['mode_name'] == "" or $donut['request']['mode_name_short'] == "" or $donut['request']['mode_entry'] == "" or $donut['request']['mode_mode_type_id'] == "")
+			    if($_REQUEST['mode_name'] == "" or $_REQUEST['mode_name_short'] == "" or $_REQUEST['mode_entry'] == "" or $_REQUEST['mode_mode_type_id'] == "")
         		{
         			echo '<div class="notice hide danger-notice" id="empty" style="margin-bottom: 20px;"><i class="fa fa-warning"></i> Please submit all fields.</div>';
         			echo "<script>$('#busyadd').fadeOut().delay(1000);$('#empty').show().delay(400).effect('bounce', {duration: 1000});</script>";
@@ -70,7 +70,7 @@
 
      			else
      			{
-     				if(pModeUpdate($donut['request']['mode_id'], $donut['request']['mode_name'], $donut['request']['mode_name_short'], $donut['request']['mode_entry'], $donut['request']['mode_mode_type_id']))
+     				if(pModeUpdate($_REQUEST['mode_id'], $_REQUEST['mode_name'], $_REQUEST['mode_name_short'], $_REQUEST['mode_entry'], $_REQUEST['mode_mode_type_id']))
      				{
      					echo '<div class="notice succes-notice hide" id="empty" style="margin-bottom: 20px;"><i class="fa fa-check"></i> Mode succesfully edited. <a href="'.pUrl('?admin&section=modes').'">Return to overview.</a></div>';
      					echo "<script>
@@ -92,29 +92,29 @@
 
 	// Actions
 
-	elseif(isset($donut['request']['action']))
+	elseif(isset($_REQUEST['action']))
 	{
 
 
 		// The delete action -> are you sure?
-		if($donut['request']['action'] == 'delete_group_sure' and isset($donut['request']['id'])){
+		if($_REQUEST['action'] == 'delete_group_sure' and isset($_REQUEST['id'])){
 			
-			pOut('<div class="notice" id="empty"><i class="fa fa-question-circle"></i> <strong>Are you sure you want to delete the group <em>'.pRulegroupName($donut['request']['id']).'</em>?</strong>
+			pOut('<div class="notice" id="empty"><i class="fa fa-question-circle"></i> <strong>Are you sure you want to delete the group <em>'.pRulegroupName($_REQUEST['id']).'</em>?</strong>
 				<a class="actionbutton" href="'.pUrl('?admin&section=rule_groups').'">No</a> 
-				 <a class="actionbutton" href="'.pUrl('?admin&section=rule_groups&action=delete_group&id='.$donut['request']['id']).'">Yes</a> <br />
-			All inflection rules within this group '.pRulegroupName($donut['request']['id']).' will be deleted.</div>');
+				 <a class="actionbutton" href="'.pUrl('?admin&section=rule_groups&action=delete_group&id='.$_REQUEST['id']).'">Yes</a> <br />
+			All inflection rules within this group '.pRulegroupName($_REQUEST['id']).' will be deleted.</div>');
 		}
 
 		// The delete action
-		elseif($donut['request']['action'] == 'delete_group' and isset($donut['request']['id'])){
-			pRulegroupDelete($donut['request']['id']);
+		elseif($_REQUEST['action'] == 'delete_group' and isset($_REQUEST['id'])){
+			pRulegroupDelete($_REQUEST['id']);
 			pUrl('?admin&section=rule_groups', true);
 		}
 
 		// The action forms are going to be shown here!
 
 
-		if($donut['request']['action'] == 'add_rule_group'){
+		if($_REQUEST['action'] == 'add_rule_group'){
 
 
 			// Preparing the mode type select
@@ -166,11 +166,11 @@
 
 		}
 
-		elseif($donut['request']['action'] == 'edit_rule_group' and isset($donut['request']['mode_id'])){
+		elseif($_REQUEST['action'] == 'edit_rule_group' and isset($_REQUEST['mode_id'])){
 
 
 
-			if(!($rule_groups = pGetMode($donut['request']['mode_id'])))
+			if(!($rule_groups = pGetMode($_REQUEST['mode_id'])))
 				pUrl('?admin&section=modes', true);
 
 			// Preparing the mode type select
@@ -190,7 +190,7 @@
        		<div style="width: 75%" class="ajaxloadadd"></div>');
 
 
-			if(!($rule_groups = pGetMode($donut['request']['mode_id'])))
+			if(!($rule_groups = pGetMode($_REQUEST['mode_id'])))
 				pUrl('?admin&section=modes', true);
 
 
@@ -234,42 +234,42 @@
 			</script>");
 		}
 
-		elseif($donut['request']['action'] == 'mode_apply' and isset($donut['request']['mode_id'])){
+		elseif($_REQUEST['action'] == 'mode_apply' and isset($_REQUEST['mode_id'])){
 
 			// The delete action -> are you sure?
 
-			if(isset($donut['request']['delete_link_id_sure'])){
+			if(isset($_REQUEST['delete_link_id_sure'])){
 				
-				pOut('<div class="notice" id="empty"><i class="fa fa-question-circle"></i> <strong>Are you sure you want to delete the link between <em>'.pModeName($donut['request']['mode_id']).'</em> and <em>'.pTypeName($donut['request']['delete_link_id_sure']).'</em>?</strong>
-					<a class="actionbutton" href="'.pUrl('?admin&section=modes&action=mode_apply&mode_id='.$donut['request']['mode_id']).'">No</a> 
-					 <a class="actionbutton" href="'.pUrl('?admin&section=modes&action=mode_apply&mode_id='.$donut['request']['mode_id']."&delete_link_id=".$donut['request']['delete_link_id_sure']).'">Yes</a> <br />
-				All words of the type \''.pTypeName($donut['request']['delete_link_id_sure']).'\' will not be able to be inflected by this mode anymore.</div>');
+				pOut('<div class="notice" id="empty"><i class="fa fa-question-circle"></i> <strong>Are you sure you want to delete the link between <em>'.pModeName($_REQUEST['mode_id']).'</em> and <em>'.pTypeName($_REQUEST['delete_link_id_sure']).'</em>?</strong>
+					<a class="actionbutton" href="'.pUrl('?admin&section=modes&action=mode_apply&mode_id='.$_REQUEST['mode_id']).'">No</a> 
+					 <a class="actionbutton" href="'.pUrl('?admin&section=modes&action=mode_apply&mode_id='.$_REQUEST['mode_id']."&delete_link_id=".$_REQUEST['delete_link_id_sure']).'">Yes</a> <br />
+				All words of the type \''.pTypeName($_REQUEST['delete_link_id_sure']).'\' will not be able to be inflected by this mode anymore.</div>');
 			}
 
-			if(isset($donut['request']['delete_link_id']))
+			if(isset($_REQUEST['delete_link_id']))
 			{
-				pModeApplyDelete($donut['request']['delete_link_id'], $donut['request']['mode_id']);
-				pUrl('?admin&section=modes&action=mode_apply&mode_id='.$donut['request']['mode_id'], true);
+				pModeApplyDelete($_REQUEST['delete_link_id'], $_REQUEST['mode_id']);
+				pUrl('?admin&section=modes&action=mode_apply&mode_id='.$_REQUEST['mode_id'], true);
 			}
 
-			if(isset($donut['request']['new_link']))
+			if(isset($_REQUEST['new_link']))
 			{
 
-				if(!(pExistModeApply($donut['request']['mode_id'], $donut['request']['new_link'])) AND $donut['request']['new_link'] != '0')
-					pModeApplyAdd($donut['request']['mode_id'], $donut['request']['new_link']);
+				if(!(pExistModeApply($_REQUEST['mode_id'], $_REQUEST['new_link'])) AND $_REQUEST['new_link'] != '0')
+					pModeApplyAdd($_REQUEST['mode_id'], $_REQUEST['new_link']);
 
 
 			}
 		
-			$applies = pGetModesApply($donut['request']['mode_id']);
+			$applies = pGetModesApply($_REQUEST['mode_id']);
 			$types = pGetTypes();
 
 
 			pOut("<a class='actionbutton' href='".pUrl('?admin&section=modes')."'><i class='fa fa-arrow-left' style='font-size: 12px!important;'></i> Back</a> 
-				<br /><br /><strong>The mode '".pModeName($donut['request']['mode_id'])."' applies to the following types:</strong><br /><br />");
+				<br /><br /><strong>The mode '".pModeName($_REQUEST['mode_id'])."' applies to the following types:</strong><br /><br />");
 
 
-			pOut("<form METHOD='POST' class='form_new_link' ACTION='".pUrl('?admin&section=modes&action=mode_apply&mode_id='.$donut['request']['mode_id'])."'>
+			pOut("<form METHOD='POST' class='form_new_link' ACTION='".pUrl('?admin&section=modes&action=mode_apply&mode_id='.$_REQUEST['mode_id'])."'>
 				<select name='new_link'>
 				<option value='0'>Choose a type...</option>");
 
@@ -313,7 +313,7 @@
 
 
 	// We have not died yet!
-	if(!(isset($donut['request']['action'])) OR !(in_array($donut['request']['action'], $die_actions))){
+	if(!(isset($_REQUEST['action'])) OR !(in_array($_REQUEST['action'], $die_actions))){
 
 		// Offset system loading
 			$total_number = pCountTable('submode_groups');

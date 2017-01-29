@@ -9,16 +9,16 @@
 */
 
 
-	if(isset($donut['request']['ajax'])){
-		if($donut['request']['password'] == "" or $donut['request']['username'] == "")
+	if(isset($_REQUEST['ajax'])){
+		if($_REQUEST['password'] == "" or $_REQUEST['username'] == "")
 		{
 			echo '<div class="notice hide danger-notice" id="empty"><i class="fa fa-warning"></i> '.LOGIN_FIELDS.'</div>';
 			echo "<script>$('#busy').fadeOut();$('#empty').show().delay(400).effect('bounce', {duration: 1000});$('.tbllogin').delay(500).effect('slide')</script>";
 		}
 		else
 		{
-			$id = pUsernameToID($donut['request']['username']);
-			if(pMemberExists($id) and pPasswordCheck($id, $donut['request']['password']))
+			$id = pUsernameToID($_REQUEST['username']);
+			if(pMemberExists($id) and pPasswordCheck($id, $_REQUEST['password']))
 			{
 				echo '<div class="notice hide succes-notice" id="empty"><i class="fa fa-check"></i> '.LOGIN_SUCCESS.'</div>';
 				echo "<script>$('#busy').fadeOut();$('#empty').delay(401).effect('slide');</script>
@@ -27,7 +27,7 @@
 									window.location = '".pUrl('')."';
 								}, 3000);
 				</script>";
-				$arr = array($id, pHash($donut['request']['password'], pRegDate($id)), $donut['request']['username']);
+				$arr = array($id, pHash($_REQUEST['password'], pRegDate($id)), $_REQUEST['username']);
 				setcookie('pKeepLogged', serialize($arr), time()+5*52*7*24*3600);
 				$_SESSION['pUser'] = $id;
 
@@ -41,11 +41,11 @@
 	}
 
 
-	if(pLogged() and !isset($donut['request']['logout']) and !(isset($donut['get']['ajax']) and !(isset($donut['get']['ajax_pOut']))))
+	if(pLogged() and !isset($_REQUEST['logout']) and !(isset($_GET['ajax']) and !(isset($_GET['ajax_pOut']))))
 	{
 		pUrl('', true);
 	}
-	elseif(pLogged() and isset($donut['request']['logout']))
+	elseif(pLogged() and isset($_REQUEST['logout']))
 	{
 		if(isset($_SESSION['pUser']))
 		{
@@ -55,7 +55,7 @@
 			{
 				setcookie('pKeepLogged', '', time() - 60000);
 			}
-			if(isset($donut['get']['ajax']) OR isset($donut['get']['ajax_pOut']))
+			if(isset($_GET['ajax']) OR isset($_GET['ajax_pOut']))
 				echo "<script>window.location = '".pUrl('?login')."';
 					window.history.pushState('', '', '".pUrl('?login')."');
 					<script>";

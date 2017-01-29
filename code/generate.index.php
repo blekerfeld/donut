@@ -11,12 +11,12 @@
 if(!pLogged())
 	pUrl('', true);
 
-if(isset($donut['request']['ajax']) and isset($donut['request']['language']) and isset($donut['request']['subtitle']) and isset($donut['request']['author'])){
+if(isset($_REQUEST['ajax']) and isset($_REQUEST['language']) and isset($_REQUEST['subtitle']) and isset($_REQUEST['author'])){
 
 
 //Language
 $zerolang = pGetLanguageZero();
-$lang = pGetLanguage($donut['request']['language']);
+$lang = pGetLanguage($_REQUEST['language']);
 
 
 $txt = '\documentclass[11pt,a5paper,twoside]{article} % 10pt font size, A4 paper and two-sided margins
@@ -51,8 +51,8 @@ $txt = '\documentclass[11pt,a5paper,twoside]{article} % 10pt font size, A4 paper
 
 \newcommand{\entry}[4]{\markboth{\timesfont{#1}}{\timesfont{#1}}\textbf{\timesfont{#1}}\ {\timesfont#2}\ \textit{#3}\ \\ $\bullet$ \ {#4} }  % Defines the command to print each word on the page, \markboth{}{} prints the first word on the page in the top left header and the last word in the top right
 \title{\textbf {'.pLatexEscape($zerolang->name).' - '.pLatexEscape($lang->name).' '.pLatexEscape($lang->name).' - '.pLatexEscape($zerolang->name).' dictionary}}
-\author{'.pLatexEscape($donut['request']['author']).'}
-\date{'.pLatexEscape($donut['request']['subtitle']).'}';
+\author{'.pLatexEscape($_REQUEST['author']).'}
+\date{'.pLatexEscape($_REQUEST['subtitle']).'}';
 
 
 // Starting with native - language
