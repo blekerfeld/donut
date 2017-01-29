@@ -1,29 +1,29 @@
 
 <?php 
 
-if(isset($donut['request']['ajax'], $donut['request']['reply_thread'], $donut['request']['content'])){
+if(isset($_REQUEST['ajax'], $_REQUEST['reply_thread'], $_REQUEST['content'])){
 
 
-	if(pReplyThread($donut['request']['reply_thread'], $donut['request']['word_discussion'], $donut['request']['content'], $_SESSION['pUser']) AND trim($donut['request']['content']) != '')
-		echo "<script>loadfunction('".pUrl('?word_discussion='.$donut['request']['word_discussion'])."');</script>";
-	elseif(trim($donut['request']['content']) == '')
+	if(pReplyThread($_REQUEST['reply_thread'], $_REQUEST['word_discussion'], $_REQUEST['content'], $_SESSION['pUser']) AND trim($_REQUEST['content']) != '')
+		echo "<script>loadfunction('".pUrl('?word_discussion='.$_REQUEST['word_discussion'])."');</script>";
+	elseif(trim($_REQUEST['content']) == '')
 		echo "<div class='notice danger-notice'><i class='fa fa-warning'></i> ".WD_REPLY_EMPTY."</div>";
 	else
 		echo "<div class='notice danger-notice'><i class='fa fa-warning'></i> ".WD_REPLY_ERROR."</div>";
 	
 	die();
 }
-elseif(isset($donut['request']['ajax'], $donut['request']['delete_thread'])){
+elseif(isset($_REQUEST['ajax'], $_REQUEST['delete_thread'])){
 
-	if(pDeleteThread($donut['request']['delete_thread'])){
-		echo "<script>loadfunction('".pUrl('?word_discussion='.$donut['request']['word_discussion'])."');</script>";
+	if(pDeleteThread($_REQUEST['delete_thread'])){
+		echo "<script>loadfunction('".pUrl('?word_discussion='.$_REQUEST['word_discussion'])."');</script>";
 	}
 
 
 }
 
 
-if(!($word = pGetWord($donut['request']['word_discussion'])));
+if(!($word = pGetWord($_REQUEST['word_discussion'])));
 
 // Template stuff
 pOut(pAlphabetBar().' 
@@ -33,7 +33,7 @@ pOut(pAlphabetBar().'
 pOut('<table class="noshow" style="width:100%;"><tr>');
 
 // Search area
-if(isset($donut['get']['searchresult']))
+if(isset($_GET['searchresult']))
 	pSearchArea($_SESSION['search'], true);
 else
 	pSearchArea('', true);
@@ -46,13 +46,13 @@ pOut('<td style="padding-left: 20px;"><div class="notice hide" style="display: n
 
 
 
-	if(isset($donut['request']['reply_thread']) AND !isset($donut['request']['ajax'])){
+	if(isset($_REQUEST['reply_thread']) AND !isset($_REQUEST['ajax'])){
 
 		// Title
 		
-		pOut("<a href='".pUrl('?word_discussion='.$donut['request']['word_discussion'])."' class='actionbutton'><i class='fa fa-12 fa-arrow-left'></i> ".WD_BACK_TO_THREAD."</a>");
+		pOut("<a href='".pUrl('?word_discussion='.$_REQUEST['word_discussion'])."' class='actionbutton'><i class='fa fa-12 fa-arrow-left'></i> ".WD_BACK_TO_THREAD."</a>");
 		pOut("<div class='wdComments'>");
-		pDiscussionThreadGet($donut['request']['reply_thread'], true);
+		pDiscussionThreadGet($_REQUEST['reply_thread'], true);
 		pOut("<div class='children'>
 				<div class='wdComment'>
 				<div class='ajaxLoad'></div>
@@ -60,7 +60,7 @@ pOut('<td style="padding-left: 20px;"><div class="notice hide" style="display: n
 			</div>
 			<script>
 				$('#send-action').click(function(){
-					$('.ajaxLoad').slideUp().load('".pUrl('?word_discussion='.$donut['request']['word_discussion'].'&ajax&reply_thread='.$donut['request']['reply_thread'])."', {'content': $('.message').val()}).slideDown();
+					$('.ajaxLoad').slideUp().load('".pUrl('?word_discussion='.$_REQUEST['word_discussion'].'&ajax&reply_thread='.$_REQUEST['reply_thread'])."', {'content': $('.message').val()}).slideDown();
 				})
 				$(document).ready(function(){
 			        $('.elastic').elastic();
@@ -70,11 +70,11 @@ pOut('<td style="padding-left: 20px;"><div class="notice hide" style="display: n
 		pOut("</div>");
 
 	}
-	elseif(isset($donut['request']['new_thread']) AND !isset($donut['request']['ajax'])){
+	elseif(isset($_REQUEST['new_thread']) AND !isset($_REQUEST['ajax'])){
 
 		// Title
 		
-		pOut("<a href='".pUrl('?word_discussion='.$donut['request']['word_discussion'])."' class='floatright actionbutton'><i class='fa fa-12 fa-arrow-left'></i> ".WD_BACK_TO_THREAD."</a>");
+		pOut("<a href='".pUrl('?word_discussion='.$_REQUEST['word_discussion'])."' class='floatright actionbutton'><i class='fa fa-12 fa-arrow-left'></i> ".WD_BACK_TO_THREAD."</a>");
 		pOut("<div class='wdComments'>");
 		pOut('<span class="title_header"><div class="icon-box throw"><i class="fa fa-comments"></i></div> '.WD_TITLE.'</span><BR /><span class="small">'.sprintf(WD_TITLE_MORE, "<em><a href='".pUrl('?word='.$word->id)."'><span class='native'>".$word->native."</span></a></em>").'</span>');
 		pOut("<div class='children'>
@@ -84,7 +84,7 @@ pOut('<td style="padding-left: 20px;"><div class="notice hide" style="display: n
 			</div>
 			<script>
 				$('#send-action').click(function(){
-					$('.ajaxLoad').slideUp().load('".pUrl('?word_discussion='.$donut['request']['word_discussion'].'&ajax&reply_thread=0')."', {'content': $('.message').val()}).slideDown();
+					$('.ajaxLoad').slideUp().load('".pUrl('?word_discussion='.$_REQUEST['word_discussion'].'&ajax&reply_thread=0')."', {'content': $('.message').val()}).slideDown();
 				})
 				$(document).ready(function(){
 			        $('.elastic').elastic();
@@ -97,7 +97,7 @@ pOut('<td style="padding-left: 20px;"><div class="notice hide" style="display: n
 	else{
 
 		// Getting the dicussions for this word
-		pOut("<a class='actionbutton' href='".pUrl('?word='.$donut['request']['word_discussion']."&new_thread")."'><i class='fa fa-arrow-left'></i> ".WD_BACK_TO_WORD."</a> <a class='actionbutton' href='".pUrl('?word_discussion='.$donut['request']['word_discussion']."&new_thread")."'><i class='fa fa-plus'></i> ".WD_NEW_THREAD."</a><br id='cl' />");
+		pOut("<a class='actionbutton' href='".pUrl('?word='.$_REQUEST['word_discussion']."&new_thread")."'><i class='fa fa-arrow-left'></i> ".WD_BACK_TO_WORD."</a> <a class='actionbutton' href='".pUrl('?word_discussion='.$_REQUEST['word_discussion']."&new_thread")."'><i class='fa fa-plus'></i> ".WD_NEW_THREAD."</a><br id='cl' />");
 		pOut("<div class='wdComments'>");
 		pDiscussionThreadGet($word->id);
 		pOut("</div>");
@@ -118,7 +118,7 @@ pOut('<td style="padding-left: 20px;"><div class="notice hide" style="display: n
 		pOut("<script>$('#wholeword').attr('checked', ".$_SESSION['wholeword'].");</script>");
 	}
 
-	if(isset($donut['get']['searchresult']))
+	if(isset($_GET['searchresult']))
 	{
 		pOut("<script>$(document).ready(function(){
 
@@ -136,7 +136,7 @@ pOut('<td style="padding-left: 20px;"><div class="notice hide" style="display: n
       		$("#pageload i").show();
       		$(".ajaxload").slideUp();
       		$(".drop").hide();
-	      		$(".ajaxload").load("'.pUrl('?getword&ajax&wordsearch='.$donut['get']['word_discussion']).'", {"word": $("#wordsearch").val(), "dict": $("#dictionary").val(), "wholeword":  $("#wholeword").is(":checked")}, function(){$(".ajaxload").slideDown(function(){
+	      		$(".ajaxload").load("'.pUrl('?getword&ajax&wordsearch='.$_GET['word_discussion']).'", {"word": $("#wordsearch").val(), "dict": $("#dictionary").val(), "wholeword":  $("#wholeword").is(":checked")}, function(){$(".ajaxload").slideDown(function(){
 	      								 $("#pageload i").delay(100).hide(400);
 	      		})}, function(){
       		});

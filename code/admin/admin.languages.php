@@ -22,14 +22,14 @@ z<?php
 
 	// Actions and ajax
 
-	if(isset($donut['request']['ajax']) and isset($donut['request']['action']))
+	if(isset($_REQUEST['ajax']) and isset($_REQUEST['action']))
 	{
 
-		if($donut['request']['action'] == 'add_language'){
+		if($_REQUEST['action'] == 'add_language'){
 			
 			// Do we have all fields?
 
-			    if($donut['request']['lang_name'] == "" or $donut['request']['lang_flag'] == "" or $donut['request']['lang_native'] == "")
+			    if($_REQUEST['lang_name'] == "" or $_REQUEST['lang_flag'] == "" or $_REQUEST['lang_native'] == "")
         		{
         			echo '<div class="notice hide danger-notice" id="empty" style="margin-bottom: 20px;"><i class="fa fa-warning"></i> Please submit all fields.</div>';
         			echo "<script>$('#busyadd').fadeOut().delay(1000);$('#empty').show().delay(400).effect('bounce', {duration: 1000});</script>";
@@ -37,7 +37,7 @@ z<?php
 
      			else
      			{
-     				if(pLanguageAdd($donut['request']['lang_name'], $donut['request']['lang_native'], $donut['request']['lang_flag'], $donut['request']['lang_status']))
+     				if(pLanguageAdd($_REQUEST['lang_name'], $_REQUEST['lang_native'], $_REQUEST['lang_flag'], $_REQUEST['lang_status']))
      				{
      					echo '<div class="notice succes-notice hide" id="empty" style="margin-bottom: 20px;"><i class="fa fa-check"></i> Language succesfully added. <a href="'.pUrl('?admin&section=languages').'">Return to overview.</a></div>';
      					echo "<script>
@@ -59,11 +59,11 @@ z<?php
 
 		}
 
-		elseif($donut['request']['action'] == 'edit_language'){
+		elseif($_REQUEST['action'] == 'edit_language'){
 			
 			// Do we have all fields?
 
-			    if($donut['request']['lang_id'] == "" OR $donut['request']['lang_name'] == "" OR $donut['request']['lang_flag'] == "" OR $donut['request']['lang_native'] == "")
+			    if($_REQUEST['lang_id'] == "" OR $_REQUEST['lang_name'] == "" OR $_REQUEST['lang_flag'] == "" OR $_REQUEST['lang_native'] == "")
         		{
         			echo '<div class="notice hide danger-notice" id="empty" style="margin-bottom: 20px;"><i class="fa fa-warning"></i> Please submit all fields.</div>';
         			echo "<script>$('#busyadd').fadeOut().delay(1000);$('#empty').show().delay(400).effect('bounce', {duration: 1000});</script>";
@@ -72,7 +72,7 @@ z<?php
      			else
      			{
 
-     				if(pLanguageUpdate($donut['request']['lang_id'], $donut['request']['lang_name'], $donut['request']['lang_native'], $donut['request']['lang_flag'], $donut['request']['lang_status']))
+     				if(pLanguageUpdate($_REQUEST['lang_id'], $_REQUEST['lang_name'], $_REQUEST['lang_native'], $_REQUEST['lang_flag'], $_REQUEST['lang_status']))
      				{
      					echo '<div class="notice succes-notice hide" id="empty" style="margin-bottom: 20px;"><i class="fa fa-check"></i> Language succesfully edited. <a href="'.pUrl('?admin&section=languages').'">Return to overview.</a></div>';
      					echo "<script>
@@ -94,22 +94,22 @@ z<?php
 
 	// Actions
 
-	elseif(isset($donut['request']['action']))
+	elseif(isset($_REQUEST['action']))
 	{
 
 		// The delete action -> are you sure?
-		if($donut['request']['action'] == 'delete_language_sure' and isset($donut['request']['lang_id'])){
+		if($_REQUEST['action'] == 'delete_language_sure' and isset($_REQUEST['lang_id'])){
 			
-			if(isset($donut['request']['lang_id']) == 1)
+			if(isset($_REQUEST['lang_id']) == 1)
 				pOut('<div class="notice" id="empty">');
 
-			pOut('<div class="notice" id="empty"><i class="fa fa-question-circle"></i> <strong>Are you sure you want to delete the language '.pLanguageName($donut['request']['lang_id']).'?</strong>  <a class="actionbutton" href="'.pUrl('?admin&section=languages').'">No</a>  <a class="actionbutton" href="'.pUrl('?admin&section=languages&action=delete_language&lang_id='.$donut['request']['lang_id']).'">Yes</a> <br />
-			All entry descriptions in this language and all translations into '.pLanguageName($donut['request']['lang_id']).' will be deleted.</div>');
+			pOut('<div class="notice" id="empty"><i class="fa fa-question-circle"></i> <strong>Are you sure you want to delete the language '.pLanguageName($_REQUEST['lang_id']).'?</strong>  <a class="actionbutton" href="'.pUrl('?admin&section=languages').'">No</a>  <a class="actionbutton" href="'.pUrl('?admin&section=languages&action=delete_language&lang_id='.$_REQUEST['lang_id']).'">Yes</a> <br />
+			All entry descriptions in this language and all translations into '.pLanguageName($_REQUEST['lang_id']).' will be deleted.</div>');
 		}
 
 		// The delete action
-		if($donut['request']['action'] == 'delete_language' and isset($donut['request']['lang_id'])){
-			pLanguageDelete($donut['request']['lang_id']);
+		if($_REQUEST['action'] == 'delete_language' and isset($_REQUEST['lang_id'])){
+			pLanguageDelete($_REQUEST['lang_id']);
 			//pUrl('?admin&section=languages', true);
 		}
 
@@ -117,7 +117,7 @@ z<?php
 		// The action forms are going to be shown here!
 
 
-		if($donut['request']['action'] == 'add_language'){
+		if($_REQUEST['action'] == 'add_language'){
 
 
 			pOut('<div style="width: 74%;" class="notice hide" id="busyadd" ><i class="fa fa-spinner fa-spin"></i> Language is being added...</div>
@@ -170,10 +170,10 @@ z<?php
 
 		}
 
-		elseif($donut['request']['action'] == 'edit_language' and isset($donut['request']['lang_id'])){
+		elseif($_REQUEST['action'] == 'edit_language' and isset($_REQUEST['lang_id'])){
 
 
-			if(!($language = pGetLanguage($donut['request']['lang_id'])))
+			if(!($language = pGetLanguage($_REQUEST['lang_id'])))
 				pUrl('?admin&section=languages', true);
 
 
@@ -213,14 +213,14 @@ z<?php
 			pOut("<script>
 			$(document).ready(function(){
 
-				if(".$donut['request']['lang_id']." === 0){
+				if(".$_REQUEST['lang_id']." === 0){
 					$('.statusrow').hide();
 				}
 
 			});
 			$('#savebutton').click(function(){
 		        $('#busyadd').fadeIn();
-		         $('.ajaxloadadd').load('".pUrl('?admin&section=languages&ajax&action=edit_language&lang_id='.$donut['request']['lang_id'])."', {'lang_name': $('.lang_name').val(), 'lang_flag': $('.lang_flag').val(), 'lang_native': $('.lang_native').val(), 'lang_status': $('.lang_status').val()});
+		         $('.ajaxloadadd').load('".pUrl('?admin&section=languages&ajax&action=edit_language&lang_id='.$_REQUEST['lang_id'])."', {'lang_name': $('.lang_name').val(), 'lang_flag': $('.lang_flag').val(), 'lang_native': $('.lang_native').val(), 'lang_status': $('.lang_status').val()});
      		 });
 			$('.lang_flag').change(function() {
 
@@ -240,7 +240,7 @@ z<?php
 
 
 	// We have not died yet!
-	if(!(isset($donut['request']['action'])) OR !(in_array($donut['request']['action'], $die_actions))){
+	if(!(isset($_REQUEST['action'])) OR !(in_array($_REQUEST['action'], $die_actions))){
 
 		// table head
 

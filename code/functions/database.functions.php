@@ -7,48 +7,69 @@
 
 	//	++	File: database.functions.php
 
+	// Some preperations!
+	$donut['db_query_count'] = 0;
+
+	// Getting ALL the tables
+	if($donut['db_prefix'] !== ''){
+		$donut['tables_replace'] = array();
+		$tables = $donut['db']->query("SHOW TABLES");
+		while($table = $tables->fetch()){
+			$donut['db_search'][] = pStr($table[0])->replacePrefix($donut['db_prefix'], '').".";
+			$donut['db_search_from'][] = "FROM ".pStr($table[0])->replacePrefix($donut['db_prefix'], '');
+			$donut['db_search_update'][] = "UPDATE ".pStr($table[0])->replacePrefix($donut['db_prefix'], '');
+			$donut['db_search_into'][] = "INTO ".pStr($table[0])->replacePrefix($donut['db_prefix'], '');
+			$donut['db_search_join'][] = "JOIN ".pStr($table[0])->replacePrefix($donut['db_prefix'], '');
+			$donut['db_replace'][] = $donut['db_prefix'].pStr($table[0])->replacePrefix($donut['db_prefix'], '').".";
+			$donut['db_replace_from'][] = "FROM ".$donut['db_prefix'].pStr($table[0])->replacePrefix($donut['db_prefix'], '');
+			$donut['db_replace_update'][] = "UPDATE ".$donut['db_prefix'].pStr($table[0])->replacePrefix($donut['db_prefix'], '');
+			$donut['db_replace_into'][] = "INTO ".$donut['db_prefix'].pStr($table[0])->replacePrefix($donut['db_prefix'], '');
+			$donut['db_replace_join'][] = "JOIN ".$donut['db_prefix'].pStr($table[0])->replacePrefix($donut['db_prefix'], '');
+		}
+
+	}
 
 
 
-function pQuery($original_sql, $force_no_cache = false, $force_no_count = false){
+$donut['queries'] = array();
 
-	global $aulis, $setting;
+function pQuery($sql, $force_no_cache = false, $force_no_count = false){
+
+	global $donut;
+
+	$dbg = debug_backtrace();
+
+	$donut['queries'][] = $sql." file: ".$dbg[0]['file'].'/'.$dbg[0]['line'];
 
 	// We like counting
 	if(!$force_no_count)
-		$aulis['db_query_count']++;
+		$donut['db_query_count']++;
 
-	// Make sure we have the right database prefix.
-	$search = array("FROM ", "INTO ", "UPDATE ", "JOIN ");
-	$replace = array("FROM ".$aulis['db_prefix'], "INTO ".$aulis["db_prefix"], "UPDATE ".$aulis["db_prefix"],  "JOIN ".$aulis["db_prefix"]);
-	$sql = str_replace($search, $replace, $original_sql);
-
-	// Are we in debug mode? ONLY ALPHA :: NOTE: THIS WILL SEND THE HEADERS AWAY
-	if(DEBUG_SHOW_QUERIES)
-		echo "<div class='notice bg1 cwhite'>".$sql."</div>";
+	// Replacing the table names with the prefixed ones.
+	$sql = pReplaceDbPrefix($sql);
 
 	// If query caching is disabled, we just need to execute the query
-	if($force_no_cache or @$setting['enable_query_caching'] == 0)
-		return $aulis["db"]->query($sql);
+	if($force_no_cache or $donut['enable_query_caching'] == 0)
+		return $donut["db"]->query($sql);
 
 	// If this is not a select query, it will change something, therefore the cache needs to be cleaned
-	if(!au_string_starts_with($sql, "SELECT"))
-		au_force_clean_cache();
-
+	if(!pStartsWith($sql, "SELECT"))
+		pCleanCache();
 
 	// Only select queries can be cached
-	if(!au_string_starts_with($sql, "SELECT"))
-		return $aulis["db"]->query($sql);
+	if(!pStartsWith($sql, "SELECT"))
+		return $donut["db"]->query($sql);
+
 
 	// We need the queries hash
 	$hash = md5($sql);
-	$cache_file = au_get_path_from_root('cache/queries/'.$hash.'.cache');
-	$cache_folder = au_get_path_from_root('cache/queries');
-	$cache_time = $setting['query_caching_time'];
+	$cache_file = pFromRoot('library/cache/queries/'.$hash.'.cache');
+	$cache_folder = pFromRoot('library/cache/queries');
+	$cache_time = $donut['query_caching_time'];
 
 	// If we are not writable, we have to run the query without cache
 	if(!is_writable($cache_folder))
-		return $aulis["db"]->query($sql);
+		return $donut["db"]->query($sql);
 
 	// We need to see if there are any queries like these done within the query_cache_time
 	if(file_exists($cache_file)){
@@ -57,24 +78,27 @@ function pQuery($original_sql, $force_no_cache = false, $force_no_count = false)
 		$cache_file_time = filemtime($cache_file);
 
 		// Is the file still valid?
-		 if (time() - $cache_file_time < $cache_time and $aulis['db_query_count']--)
+		 if (time() - $cache_file_time < $cache_time and $donut['db_query_count']--)
 		 	return unserialize(file_get_contents($cache_file));
 
 		// If not we need to delete it and be a little recursive...
-		else if(unlink($cache_file))
-			return au_query($original_sql, false, true);
+		elseif(unlink($cache_file))
+			return pQuery($sql, true, true);
 
 	}
 
 	// The query isn't cached... or it is unvalid and therefore deleted
 	else{
 
-		// We need to execute the query, cache it and return the cached object
-		$execute = $aulis['db']->query($sql);
+	//We need to execute the query, cache it and return the cached object
+		
+
+		$execute = $donut['db']->query($sql);
+
 
 		// If the rowCount is 0, we can just create an empty cached query
 		if($execute->rowCount() == 0)
-			$cache_query = new au_class_cached_query(array(), 0, $sql);
+			$cache_query = new pClassCachedQuery(array(), 0, $sql);
 
 		// Otherwise we need to do a little more...
 		else{
@@ -86,15 +110,16 @@ function pQuery($original_sql, $force_no_cache = false, $force_no_count = false)
 				$objects[] = $object;
 			}
 
-			// Create the cached query
-			$cache_query = new au_class_cached_query($objects, $execute->rowCount(), $sql);
 
+
+			// Create the cached query
+			$cache_query = new pClassCachedQuery($objects, $execute->rowCount(), $sql);
 
 		}
 
 		// Cache the whole thing, if we cannot do that, we need to fallback
 		if(!file_put_contents($cache_file, serialize($cache_query)))
-			return au_query($original_sql, true);
+			return pQuery($sql, true);
 
 		return $cache_query;
 
@@ -103,18 +128,74 @@ function pQuery($original_sql, $force_no_cache = false, $force_no_count = false)
 }
 
 
-function au_db_escape($value){
+
+
+// This will just delete all cache files in a certain section
+function pCleanCache($section = 'queries'){
+
+	global $donut;
+
+	foreach(glob($donut['root_path'] . '/library/cache/' . $section . '/*.cache') as $filename)
+		unlink($filename);
+
+	return true;
 	
-	global $aulis;
+}
+
+
+
+function pReplaceDbPrefix($sql) 
+{
+
+	global $donut;
+
+	if($donut['db_prefix'] == '')
+		return $sql;
+
+    $array = array();
+    if($number = preg_match_all( '#((?<![\\\])[\'"])((?:.(?!(?<![\\\])\1))*.?)\1#i', $sql, $matches))
+    {
+        for ($i = 0; $i < $number; $i++)
+        {
+            if (!empty($matches[0][$i]))
+            {
+                $array[$i] = trim($matches[0][$i]);
+                $sql = str_replace($matches[0][$i], '<#encode:'.$i.':code#>', $sql);
+            }
+        }
+    }
+
+    
+	$sql = str_replace($donut['db_search'], $donut['db_replace'], $sql);
+	$sql = str_replace($donut['db_search_from'], $donut['db_replace_from'], $sql);
+	$sql = str_replace($donut['db_search_update'], $donut['db_replace_update'], $sql);
+	$sql = str_replace($donut['db_search_into'], $donut['db_replace_into'], $sql);
+	$sql = str_replace($donut['db_search_join'], $donut['db_replace_join'], $sql);
+
+
+    foreach ($array as $key => $js)
+    {
+        $sql = str_replace('<#encode:'.$key.':code#>', $js, $sql);
+    }
+
+    return $sql;
+}
+
+
+
+
+function pEscape($value){
+	
+	global $donut;
 
 	// Return a proper escaped version of our value
-	return trim($aulis['db']->quote($value), "'");
+	return trim($donut['db']->quote($value), "'");
 
 }
 
 
 // For some change, this is not a function, but a simple class that contains information about cached queries
-class au_class_cached_query implements Iterator {
+class pClassCachedQuery implements Iterator{
 
 
 	// The few variables this class needs
@@ -135,6 +216,14 @@ class au_class_cached_query implements Iterator {
    // Returns the fixed row count of the original query
    function rowCount(){
    		return $this->_row_count;
+   }
+
+   function fetchAll(){
+   		$array = array();
+   		foreach ($this->_db_objects as $object) {
+   			$array[] = (array)$object;
+   		}
+   		return $array;
    }
 
    // Return the next object, as the original query would

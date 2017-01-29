@@ -4,20 +4,20 @@
 @import url('https://fonts.googleapis.com/css?family=Lora');
 @font-face {
     font-family: "Kollektif";
-    src: url("fonts/vendors/kollektif_bold.ttf");
+    src: url("vendors/fonts/kollektif_bold.ttf");
 }
 @font-face {
     font-family: "Gentium";
-    src: url("fonts/vendors/GenBasR.ttf");
+    src: url("vendors/fonts/GenBasR.ttf");
 }
 @font-face {
     font-family: "Gentium";
-    src: url("fonts/vendors/GenBasB.ttf");
+    src: url("vendors/fonts/GenBasB.ttf");
     font-weight: bold;
 }
 @font-face {
     font-family: "Gentium";
-    src: url("fonts/vendors/GenBasI.ttf");
+    src: url("vendors/fonts/GenBasI.ttf");
     font-style: italic;
 }
 *,

@@ -21,7 +21,7 @@
 	function pMemberExists($id)
 	{
 		global $donut;
-		$result = $donut['db']->query("SELECT * FROM users WHERE id = '$id' LIMIT 1;");
+		$result = pQuery("SELECT * FROM users WHERE id = '$id' LIMIT 1;");
 		if($result->rowCount() == 1)
 			return true;
 		else
@@ -32,7 +32,7 @@
 	{
 		global $donut;
 		$password = pHash($password);
-		$result = $donut['db']->query("SELECT * FROM users WHERE id = '$userid' and password = '$password' LIMIT 1;");
+		$result = pQuery("SELECT * FROM users WHERE id = '$userid' and password = '$password' LIMIT 1;");
 		if($result->rowCount() == 1)
 			return true;
 		else
@@ -44,7 +44,7 @@
 	function pUsernameToID($username)
 	{
 		global $donut;
-		$result = $donut['db']->query("SELECT id FROM users WHERE username = '$username' LIMIT 1;");
+		$result = pQuery("SELECT id FROM users WHERE username = '$username' LIMIT 1;");
 		if($result->rowCount() == 1)
 		{
 			$user = $result->fetchObject();
@@ -57,7 +57,7 @@
 	function pUserName($id)
 	{
 		global $donut;
-		$result = $donut['db']->query("SELECT username FROM users WHERE id = '$id' LIMIT 1;");
+		$result = pQuery("SELECT username FROM users WHERE id = '$id' LIMIT 1;");
 		if($result->rowCount() == 1)
 		{
 			$user = $result->fetchObject();
@@ -70,7 +70,7 @@
 	function pEditorLanguage($id)
 	{
 		global $donut;
-		$result = $donut['db']->query("SELECT editor_lang FROM users WHERE id = '$id' LIMIT 1;");
+		$result = pQuery("SELECT editor_lang FROM users WHERE id = '$id' LIMIT 1;");
 		if($result->rowCount() == 1)
 		{
 			$user = $result->fetchObject();
@@ -94,7 +94,7 @@
 			try
 			{
 				$arr = unserialize($_COOKIE['pKeepLogged']);
-				$result = $donut['db']->query("SELECT * FROM users WHERE username = '{$arr[2]}' and password = '{$arr[1]}' and id = {$arr[0]} LIMIT 1;");
+				$result = pQuery("SELECT * FROM users WHERE username = '{$arr[2]}' and password = '{$arr[1]}' and id = {$arr[0]} LIMIT 1;");
 				if($result->rowCount() == 1)
 				{
 					$_SESSION['pUser'] = $arr[0];

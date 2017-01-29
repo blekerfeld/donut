@@ -26,7 +26,7 @@ function pSearchAndInflect($word, $type, $classification, $mode, $submode, $numb
 	{
 		global $donut;
 		$q = "SELECT * FROM inflections WHERE id = ".$id." LIMIT 1;";
-		$rs = $donut['db']->query($q);
+		$rs = pQuery($q);
 		if($rs->rowCount() != 0)
 		{
 			return $rs->fetchObject();
@@ -42,7 +42,7 @@ function pSearchAndInflect($word, $type, $classification, $mode, $submode, $numb
 
 		global $donut;
 			$q = "SELECT * FROM preview_inflections WHERE type_id = ".$type;
-			$rs = $donut['db']->query($q);
+			$rs = pQuery($q);
 			return $rs;
 	}
 
@@ -59,7 +59,7 @@ function pSearchAndInflect($word, $type, $classification, $mode, $submode, $numb
 		// 	$q .= " AND subclassification_id = '$subclassification'";
 
 
-		$check_for_submode_group = $donut['db']->query($q);
+		$check_for_submode_group = pQuery($q);
 		$submodetext = '';
 		if($check_for_submode_group->rowCount() != 0)
 		{
@@ -71,11 +71,11 @@ function pSearchAndInflect($word, $type, $classification, $mode, $submode, $numb
 			$submodetext .= "(classification_id = '".$classification."' AND number_id = '".$number."' AND mode_id = '".$mode."' AND submode_id = '".$submode.'\')';
 		// Is there maybe an irregular inflection?
 		$q = "SELECT * FROM inflections WHERE irregular = '1' AND irregular_word_id =  '".$word_id."' AND type_id = '".$type."' AND ".$submodetext.";";
-		$check_for_irregular = $donut['db']->query($q);
+		$check_for_irregular = pQuery($q);
 		if($check_for_irregular->rowCount() != 0)
 			return $check_for_irregular;
 		else{
-			return $donut['db']->query("SELECT * FROM inflections WHERE irregular = '0' AND type_id = '".$type."' AND ".$submodetext."");
+			return pQuery("SELECT * FROM inflections WHERE irregular = '0' AND type_id = '".$type."' AND ".$submodetext."");
 		}
 
 	}
@@ -115,7 +115,7 @@ function pSearchAndInflect($word, $type, $classification, $mode, $submode, $numb
 		// Is the current mode setting in combination with a number part of a group?
 		$q = "SELECT submode_group_id FROM submode_group_members WHERE mode_id = '$mode' AND submode_id = '$submode' AND number_id = '$number' AND classification_id = '$classification'";
 
-		$check_for_submode_group = $donut['db']->query($q);
+		$check_for_submode_group = pQuery($q);
 		
 		if($check_for_submode_group->rowCount() != 0)
 		{
@@ -126,7 +126,7 @@ function pSearchAndInflect($word, $type, $classification, $mode, $submode, $numb
 
 			$q = "SELECT * FROM stems WHERE word_id = $word_id AND applies_submode_group = 1 AND submode_group_id = $submode_id LIMIT 1;";
 
-			$get_stems = $donut['db']->query($q);
+			$get_stems = pQuery($q);
 
 			if($get_stems->rowCount() != 0){
 
@@ -157,7 +157,7 @@ function pSearchAndInflect($word, $type, $classification, $mode, $submode, $numb
 		// Is the current mode setting in combination with a number part of a group?
 		$q = "SELECT submode_group_id FROM submode_group_members WHERE mode_id = '$mode' AND submode_id = '$submode' AND number_id = '$number' AND classification_id = '$classification'";
 
-		$check_for_submode_group = $donut['db']->query($q);
+		$check_for_submode_group = pQuery($q);
 		
 		if($check_for_submode_group->rowCount() != 0)
 		{
@@ -168,7 +168,7 @@ function pSearchAndInflect($word, $type, $classification, $mode, $submode, $numb
 
 			$q = "SELECT script_id FROM inflection_script_submode_groups WHERE submode_group_id = $submode_id LIMIT 1;";
 
-			$get_script = $donut['db']->query($q);
+			$get_script = pQuery($q);
 
 			if($get_script->rowCount() != 0){
 
@@ -179,7 +179,7 @@ function pSearchAndInflect($word, $type, $classification, $mode, $submode, $numb
 				$q = "SELECT name FROM inflection_scripts WHERE (id = $script_link->script_id  AND execute_prior_to_inflection = $place) OR (execute_always = 1) ORDER BY inflection_scripts.weight DESC";
 
 
-				$get_script_name = $donut['db']->query($q);
+				$get_script_name = pQuery($q);
 				$return = array();
 
 				if($get_script->rowCount() != 0){
@@ -286,7 +286,7 @@ function pSearchAndInflect($word, $type, $classification, $mode, $submode, $numb
 
 
 				$q = "SELECT submode_group_id, aux_mode_id FROM submode_group_members WHERE mode_id = '$mode' AND submode_id = '$submode' AND number_id = '$number' AND classification_id = '$classification' LIMIT 1;";
-				$submode_group_get = $donut['db']->query($q);
+				$submode_group_get = pQuery($q);
 
 				if($submode_group_get->rowCount() != 0)
 				{
@@ -302,7 +302,7 @@ function pSearchAndInflect($word, $type, $classification, $mode, $submode, $numb
 
 						$q = "SELECT * FROM aux_conditions WHERE submode_group_id = '$submode_group_id';";
 
-						$check_for_aux = $donut['db']->query($q);
+						$check_for_aux = pQuery($q);
 
 						$aux = "";
 

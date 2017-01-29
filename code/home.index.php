@@ -14,7 +14,7 @@ pOut('<table class="noshow" style="width:100%;"><tr>');
 
 pSearchArea();
 	
-$id = $donut['db']->query("SELECT count(id) AS cnt_id FROM words WHERE hidden = 0;");
+$id = pQuery("SELECT count(id) AS cnt_id FROM words WHERE hidden = 0;");
 
 $id_c  = $id->fetchObject();
 
@@ -32,11 +32,11 @@ pOut('<td style="padding-left: 20px;">
 
 // Recently added
 
-$get_recent = $donut['db']->query("SELECT * FROM words WHERE hidden = 0 ORDER BY id  DESC LIMIT 5;");
+$get_recent = pQuery("SELECT DISTINCT id FROM words WHERE hidden = 0 ORDER BY id  DESC LIMIT 5;");
 
 
-foreach ($get_recent as $r_word) {
-	pOut(pWordShowNative($r_word['id'], 0, false, true, 'a', 'recentwords'));
+while($r_word = $get_recent->fetchObject()) {
+	pOut(pWordShowNative($r_word->id, 0, false, true, 'a', 'recentwords'));
 }
 
 
@@ -81,10 +81,10 @@ pOut('
 	}
 
 
-	if(isset($donut['get']['search'])){
+	if(isset($_GET['search'])){
 
 		pOut("<script>$(document).ready(function(){
-			$('#wordsearch').val('".urldecode($donut['get']['search'])."');
+			$('#wordsearch').val('".urldecode($_GET['search'])."');
 			$('#searchb').click();
 		});</script>");
 
