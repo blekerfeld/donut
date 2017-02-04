@@ -68,11 +68,11 @@ else{
 				$derivation_name = pDerivationName($word->derivation_name);
 			else
 				$derivation_name = pTypeName($word->derivation_type);
-			$derivation_term = " <span class='pDerivationTitle'><em>".$derivation_name."</em> from <span class='native'><a href='".pUrl('?word='.$derivation_word->id)."'>".$derivation_word->native."</a></span></span>";
+			$derivation_term = " <span class='pDerivationTitle'><em>".$derivation_name."</em> from <span class='native'><a href='".pUrl('?lemma='.$derivation_word->id)."'>".$derivation_word->native."</a></span></span>";
 		}
 		
 
-		pOut("<span class='title'><strong class='pWord' id='ajax_dov_".$word->id."'><a href='".pUrl('?word='.$word->id)."'><span class='native'>".html_entity_decode($word->native)."</span></a></strong>$derivation_term</span>");
+		pOut("<span class='title'><strong class='pWord' id='ajax_dov_".$word->id."'><a href='".pUrl('?lemma='.$word->id)."'><span class='native'>".html_entity_decode($word->native)."</span></a></strong>$derivation_term</span>");
 
 
 		// Show the type and classification
@@ -247,7 +247,7 @@ else{
 
 				foreach ($derivation['words'] as $derivation_word) {
 
-					pOut('<li><span class="native"><strong class="pDerivation"><a href="'.pUrl('?word='.$derivation_word->id).'">'.$derivation_word->native.'</a></strong></span></li>');
+					pOut('<li><span class="native"><strong class="pDerivation"><a href="'.pUrl('?lemma='.$derivation_word->id).'">'.$derivation_word->native.'</a></strong></span></li>');
 				}
 
 				pOut("</ol>");
@@ -304,7 +304,7 @@ else{
 
 				$synonym_word = pGetWord($synonym_id);
 
-				pOut('<a class="synonym score-'.$synonym->score.'" href="'.pUrl('?word='.$synonym_word->id).'"><span class="native">'.$synonym_word ->native.'</span></a>');
+				pOut('<a class="synonym score-'.$synonym->score.'" href="'.pUrl('?lemma='.$synonym_word->id).'"><span class="native">'.$synonym_word ->native.'</span></a>');
 
 			}
 
@@ -331,7 +331,7 @@ else{
 
 				$antonym_word = pGetWord($antonym_id);
 
-				pOut('<a class="antonym score-'.$antonym->score.'" href="'.pUrl('?word='.$antonym_word->id).'"><span class="native">'.$antonym_word ->native.'</span></a>');
+				pOut('<a class="antonym score-'.$antonym->score.'" href="'.pUrl('?lemma='.$antonym_word->id).'"><span class="native">'.$antonym_word ->native.'</span></a>');
 
 			}
 

@@ -13,32 +13,28 @@
 	function pSearchDict($searchlang, $returnlang, $search, $wholeword)
 	{
 
-		global $donut;
-
 		$r = array();
 
 
 		if($wholeword)
-			$ww = "REGEXP '[[:<:]]".trim($search)."[[:>:]]'";
+			$ww = "REGEXP '[[:<:]]".trim(pEscape($search))."[[:>:]]'";
 		else
-			$ww = "LIKE \"%".trim($search)."%\"";
+			$ww = "LIKE \"%".trim(pEscape($search))."%\"";
 	
+
 		if($searchlang == 0)
-			$q = "SELECT DISTINCT ".DBP."translation_words.word_id  
-					FROM ".DBP."words 
-					INNER JOIN ".DBP."translation_words ON ".DBP."translation_words.word_id=".DBP."words.id 
-					INNER JOIN ".DBP."translations ON ".DBP."translations.id=".DBP."translation_words.translation_id
-					WHERE native ".$ww." AND ".DBP."translations.language_id = '".$returnlang."' ORDER BY INSTR('".trim($search)."', ".DBP."translations.translation) DESC;";
-
-	
-	
+						$q = "SELECT * FROM (SELECT DISTINCT id AS word_id, 0 AS is_inflection, 0 as inflection FROM words WHERE native ".$ww." OR native LIKE '".pEscape($search)."'  ORDER BY INSTR('".pEscape(trim($search))."', words.native) DESC) AS a UNION ALL SELECT * FROM (SELECT DISTINCT word_id, 1 AS is_inflection, inflection FROM inflection_cache WHERE inflection ".$ww." OR inflection LIKE '".pEscape($search)."' ORDER BY INSTR('".pEscape(trim($search))."', inflection) DESC) as b";	
 		else
-			$q = "SELECT DISTINCT ".DBP."translation_words.word_id FROM ".DBP."translations JOIN ".DBP."translation_words ON ".DBP."translation_words.translation_id = ".DBP."translations.id WHERE language_id = '".$searchlang."' AND translation ".$ww." ORDER BY INSTR('".trim($search)."', translation) DESC;";		
+			$q = "SELECT * FROM (SELECT DISTINCT translation_words.word_id, 0 AS is_inflection, 0 AS is_alternative, 0 AS inflection, 0 AS trans_id
+					FROM words 
+					INNER JOIN translation_words ON translation_words.word_id=words.id 
+					INNER JOIN translations ON translations.id=translation_words.translation_id
+					WHERE translations.translation ".$ww." AND translations.language_id = '".$searchlang."' ORDER BY INSTR('".pEscape(trim($search))."', translations.translation) DESC) AS a UNION ALL
+					SELECT * FROM (SELECT DISTINCT word_id, 0 AS is_inflection, 1 AS is_alternative, alternative, translation_alternatives.translation_id AS trans_id FROM translation_words INNER JOIN translations ON translations.id = translation_words.translation_id INNER JOIN translation_alternatives WHERE translation_alternatives.alternative ".$ww." AND translation_words.translation_id = translation_alternatives.translation_id AND translations.language_id = '".$searchlang."' ORDER BY INSTR('".pEscape(trim($search))."', translations.translation) DESC) AS b;";
 
-				echo $q;
         $rs = pQuery($q);
 
-		if($rs->rowCount() != 0){
+ 		if($rs->rowCount() != 0){
 
 			while($fc = $rs->fetchObject())
 				$r[] = $fc;
@@ -47,6 +43,61 @@
 		}
 
 		return false;
+
+	}
+
+	function pGetWordByHash($hash){
+
+		if(is_numeric($hash))
+			return pGetWord($hash);	
+		elseif(ctype_alpha($hash))
+		{
+			$decode = pHashId($hash, true);
+			if(array_key_exists(0, $decode)){
+				return pGetWord($decode[0]);	
+			}
+			else
+				$hash = $word->id;
+		}
+	}
+
+
+	// Word link
+	function pWordLinks($text){
+
+		return preg_replace_callback('/\[\[([^\]]+)\]\]/', function($matches) {
+
+		$link_par = explode("|", $matches[1]);
+
+
+				if(is_numeric($link_par[0])){
+					$word = pGetWord($link_par[0]);
+					$link_par[1] = $word->native;		
+				}
+				elseif(ctype_alpha($link_par[0]))
+				{
+					$decode = pHashId($link_par[0], true);
+					if(array_key_exists(0, $decode) and $id = $decode[0]){
+						if(!$word = pGetWord($decode[0]))
+							return "";
+						$link_par[0] = $word->id;	
+						if(!array_key_exists(1, $link_par))
+							$link_par[1] = $word->native;		
+					}
+					else{
+						if(!($word = pGetWordByNative($link_par[0])))
+							return '<a class="wordLink tooltip broken" href="'.pUrl('?nonexistant&search='.urlencode($link_par[0])).'">'.(array_key_exists(1, $link_par) ? $link_par[1] : $link_par[0]).'</a>';
+						$link_par[0] = $word->id;
+						if(!array_key_exists(1, $link_par))
+							$link_par[1] = $word->native;	
+					}
+				}
+
+				$link = "?lemma=".pHashId($link_par[0]);
+
+
+		    return '<a class="wordLink tooltip" href="' . pUrl($link) . '"><span class="native">' . $link_par[1] . '</span></a>';
+		}, $text);
 
 	}
 
@@ -70,24 +121,28 @@
 
 	function pGetWord($id)
 	{
-		global $donut;
-		$q = "SELECT * FROM words WHERE id = ".$id." LIMIT 1;";
-		$rs = pQuery($q);
+		if(!is_numeric($id))
+			return pGetWordByHash($id);
+		$rs = pQuery("SELECT * FROM words WHERE id = ".$id." LIMIT 1;");
 		if($rs->rowCount() != 0)
-		{
 			return $rs->fetchObject();
-		}
 		else
-		{
 			return false;
-		}
+	}
+
+	function pGetWordByNative($native)
+	{
+		$rs = pQuery("SELECT * FROM words WHERE native = '".pEscape($native)."' LIMIT 1;");
+		if($rs->rowCount() != 0)
+			return $rs->fetchObject();
+		else
+			return false;
 	}
 
 	
 	
 	function pWordDelete($id)
 	{
-		global $donut;
 		pQuery("DELETE FROM words WHERE id = $id;");
 	}
 	
@@ -130,9 +185,9 @@
 		global $donut;
 
 		if(!$clone)
-			return pQuery("SELECT * FROM translations INNER JOIN translation_words ON translations.id = translation_words.translation_id WHERE translation_words.word_id = $word_id AND translations.language_id = $language_id;");
+			return pQuery("SELECT *, translations.id AS real_id FROM translations INNER JOIN translation_words ON translations.id = translation_words.translation_id WHERE translation_words.word_id = $word_id AND translations.language_id = $language_id;");
 		else{
-			return pQuery("SELECT * FROM translations INNER JOIN translation_words ON translations.id = translation_words.translation_id WHERE (translation_words.word_id = $word_id OR translation_words.word_id = $clone_id) AND translations.language_id = $language_id;");
+			return pQuery("SELECT *, , translations.id AS real_id FROM translations INNER JOIN translation_words ON translations.id = translation_words.translation_id WHERE (translation_words.word_id = $word_id OR translation_words.word_id = $clone_id) AND translations.language_id = $language_id;");
 		}
 
 	}
@@ -206,7 +261,6 @@
 	}
 
 	function pGetTranslationOfIdiomByLang($idiom_id){
-		global $donut;
 		return pQuery("SELECT * FROM idiom_translations WHERE idiom_id = $idiom_id ORDER BY language_id;");
 	}
 
@@ -315,7 +369,7 @@
 			return false;
 	}
 	
-	function pWordShowNative($translation, $lang, $onlywords = false, $show_no_buttons = false, $class_prefix = 'd', $url_extra = 'searchresult')
+	function pWordShowNative($translation, $lang, $onlywords = false, $show_no_buttons = false, $class_prefix = 'd', $url_extra = 'searchresult', $before_word = "")
 	{
 		global $donut;
 
@@ -338,18 +392,30 @@
 				return false;
 
 		$text = '';
-		// if(pLogged())
-		// 	$editbutton = "<a class='actionbutton floatright' href='javascript:void(0);' onClick='$(\"#fadeOut_".$word->id."\").fadeOut();$(\".loadDelete\").load(\"".pUrl('?deleteword='.$word->id.'&ajax')."\")'><i class='fa fa-times' style='font-size: 12px!important;'></i> Delete word</i></a> 
-		// <a class='actionbutton floatright' onClick='$(\".dialogaddnew\").slideUp();$(\".dialogedit\").slideUp();$(\".dialog".$word->id."\").hide().load(\"".pUrl('?editword='.$word->id.'&ajaxOUT')."\", function(){
-		// 	$(\".dialog".$word->id."\").slideDown();
-		// })' href='javascript:void(0);' target='_blank'><i class='fa fa-pencil' style='font-size: 12px!important;'></i> Edit word</i></a>";
+
+		// More info button
+
+			$text .= "<span class='floatright'><br />";
+
+			if(!isset($_GET['wordsonly']) and !($show_no_buttons))
+				$text .= "<a class='actionbutton readmore' href='".pUrl('?searchresult&lemma='.pHashId($word->id))."'><i class='fa fa-12 fa-info-circle'></i> ".DICT_READMORE."</a>";
+
+			// The logged in buttons
+			if(pLogged() and !isset($_GET['wordsonly']) and !($show_no_buttons))
+				$text .= "<a class='actionbutton readmore' href='javascript:void(0);'><i class='fa fa-12 fa-angle-double-down'></i></a>";
+
+			$text .= "</span>";
+
 
 		// We need to start
 		$text .= "<div id='fadeOut_".$word->id."'><div class='".$class_prefix."WordWrapper'><input type='hidden' value='".$lang."' id='ajax_lang_".html_entity_decode($word->id)."' /> ";
 
+		if(isset($translation->is_inflection) and $translation->is_inflection == 1 and $before_word == "")
+			$before_word =  "<em class='medium'><span class='native'><a class='tooltip wordLink'>".$translation->inflection."</a></span></em><br /><div class='tab'>↳";
+
 		// Then we need to show the native word
 
-		$text .= "<strong class='".$class_prefix."Word' id='ajax_nat_".$word->id."'><a href='".pUrl('?'.$url_extra.'&word='.$word->id.'')."'><span class='native'>".html_entity_decode($word->native)."</span></a></strong> ";
+		$text .= "".$before_word."<strong class='".$class_prefix."Word' id='ajax_nat_".$word->id."'><a href='".pUrl('?'.$url_extra.'&lemma='.pHashId($word->id).'')."'><span class='native'>".html_entity_decode($word->native)."</span></a></strong> ";
 
 		// Previewing the inflections
 		$preview_inflections =  pGetPreviewInflections($type->id);
@@ -375,12 +441,10 @@
 		}
 
 
-
 		// Getting the translations
 		$all_translations = pGetTranslations($word->id, '', $lang);
-
 		if($all_translations->rowCount()  != 0)
-			$text .= "<ol>"; 
+			$text .= "<ol ".(($all_translations->rowCount() > 3) ? "style = 'columns:200px 2;-moz-columns:200px 2;width:100%;'" : "").">"; 
 
 
 		while($show_translation = $all_translations->fetchObject())
@@ -391,10 +455,22 @@
 			if(!$onlywords)
 				$text .= (($show_translation->specification != '') ? ('<em>('.$show_translation->specification.')</em> ') : (''));
 
+		if(isset($translation->is_alternative) and $translation->is_alternative == 1 and $translation->trans_id == $show_translation->real_id and isset($translation->inflection))
+					$text .=  "<em><span class='native'><span class='translation tooltip'>".$translation->inflection."</a></span></em><br /><span class='tab'>↳";
+
 			$text .= "<span class='translation tooltip'>".$show_translation->translation."</span>";
+
+		
+
 
 			if($description = pGetDescription($show_translation->id))
 				$text .= "<br /><p class='desc'>".$description."</p>";
+
+
+			if(isset($translation->is_alternative) and $translation->is_alternative == 1 and $translation->trans_id == $show_translation->real_id and isset($translation->inflection))
+				$text .= "</span>";
+		
+
 
 			$text .= "</span></li>";
 
@@ -409,13 +485,9 @@
 		if($all_translations->rowCount() != 0)
 			$text .= "</ol>";
 
-		// More info button
-		if(!isset($_GET['wordsonly']) and !($show_no_buttons))
-			$text .= "<a class='actionbutton' href='".pUrl('?searchresult&word='.$word->id)."'><i class='fa fa-12 fa-info-circle'></i> Read more</a>";
+		if(isset($translation->is_inflection) and $translation->is_inflection == 1)
+			$text .= "</div>";
 
-		// The logged in buttons
-		if(pLogged() and !isset($_GET['wordsonly']) and !($show_no_buttons))
-			$text .= "<a class='actionbutton' href='javascript:void(0);'>...</a>";
 
 		$text .= "</div></div>";
 
@@ -425,6 +497,25 @@
 
 		return $text;
 	}
+
+
+
+	function pAddWord($native, $ipa, $type_id, $classification_id, $subclassification_id, $translations){
+
+			global $donut;
+
+			pQuery("INSERT INTO words(native, ipa, type_id, classification_id, subclassification_id) VALUES(".$donut['db']->quote(pEscape($native)).", ".$donut['db']->quote(pEscape($ipa)).", ".$donut['db']->quote(pEscape($type_id)).", ".$donut['db']->quote(pEscape($classification_id)).", ".$donut['db']->quote(pEscape($subclassification_id)).");");
+
+		
+			// We need to get a hold of the last inserted id
+			$new_word_id = $donut['db']->lastInsertId(); 
+
+			// Adding the translations
+			pAddTranslations($translations, $new_word_id);
+
+			return pAllInflections(pGetWord($new_word_id), pGetType($type_id));
+
+		}
 
 
 	function pAddTranslations($translation_string, $word_id){

@@ -8,7 +8,7 @@ function pMarkDownParse($text){
 
 	$parse = new ParsedownExtra;
 
-	return nl2br($parse->text($text));
+	return pWordLinks(nl2br($parse->text($text)));
 }
 
 
@@ -374,6 +374,21 @@ function pSubclassificationName($id)
 }
 
 
+function pGetSubmodeNative($submode, $number){
+
+	$return = array();
+
+	if(@$rs = pQuery("SELECT native FROM submode_native_numbers WHERE submode_id = $submode->id AND number_id = $number->id") AND $rs->rowCount() != 0){
+		while($row = $rs->fetchObject())
+			$return[] = pGetWordByHash($row->native)->native;
+		return "<span class='native'>".implode('/', $return)."</span>";
+	}
+	else
+		return $submode->name; 
+
+}
+
+
 
 function pGetNumbers($type = 0, $force = false, $force_get = 0, $offset = ''){
 
@@ -384,7 +399,7 @@ function pGetNumbers($type = 0, $force = false, $force_get = 0, $offset = ''){
 		return $rs;
 	}
 	elseif(!$force){
-		$q = "SELECT * FROM number_apply WHERE type_id = ".$type. " $offset";
+		$q = "SELECT * FROM number_apply WHERE mode_type_id = ".$type. " $offset";
 		$rs = pQuery($q);
 		$results = array();
 		if($rs->rowCount() == 0)
@@ -423,7 +438,7 @@ function pCountNumbersApply($id){
 
 function pExistNumberApply($number_id, $type_id){
 	global $donut;
-	$q = "SELECT * FROM number_apply WHERE type_id = '$type_id' AND number_id = '$number_id'";
+	$q = "SELECT * FROM number_apply WHERE mode_type_id = '$type_id' AND number_id = '$number_id'";
 	$rs = pQuery($q);
 	if($rs->rowCount() == 0)
 		return false;
@@ -441,7 +456,7 @@ function pGetNumbersApply($id, $offset = ''){
 function pNumberApplyDelete($type_id, $number_id){
 
 	global $donut;
-	$q = "DELETE FROM number_apply WHERE type_id = '$type_id' AND number_id = '$number_id';";
+	$q = "DELETE FROM number_apply WHERE mode_type_id = '$type_id' AND number_id = '$number_id';";
 	return pQuery($q);
 }
 
@@ -499,15 +514,19 @@ function pNumberName($id)
 
 
 
-function pGetModes($type = 0, $offset = ''){
+function pGetModes($type = 0, $template = 0, $offset = ''){
 
 	global $donut;
 
-	if($type == 0)
-		$q = "SELECT * FROM modes $offset";
+	if($type == 0 and $template == 0){
+		$q = "SELECT * FROM modes ORDER BY id ASC $offset";
+	}
+	elseif($type == 0 and $template > 0)
+		$q = "SELECT * FROM modes  WHERE type_id = $template $offset";
 	else
 		$q = "SELECT * FROM mode_apply WHERE type_id = ".$type." $offset";
 	
+
 	$rs = pQuery($q);
 	$results = array();
 
@@ -799,7 +818,7 @@ function pGetSubModes($type = 0, $offset = ''){
 	if($type == 0)
 		$q = "SELECT * FROM submodes $offset";
 	else
-		$q = "SELECT * FROM submode_apply WHERE type_id = ".$type." $offset";
+		$q = "SELECT * FROM submode_apply WHERE mode_type_id = ".$type." $offset";
 	
 
 
@@ -811,7 +830,7 @@ function pGetSubModes($type = 0, $offset = ''){
 
 
 	if($rs->rowCount() == 0)
-		return false;
+		return array();
 	else{
 		while($submode_apply = $rs->fetchObject()){
 			$results[] = pGetSubMode($submode_apply->submode_id);
@@ -849,7 +868,7 @@ function pCountSubmodesApply($id, $offset = ''){
 
 function pExistSubmodeApply($submode_id, $type_id){
 	global $donut;
-	$q = "SELECT * FROM submode_apply WHERE type_id = '$type_id' AND submode_id = '$submode_id'";
+	$q = "SELECT * FROM submode_apply WHERE mode_type_id = '$type_id' AND submode_id = '$submode_id'";
 	$rs = pQuery($q);
 	if($rs->rowCount() == 0)
 		return false;
@@ -867,7 +886,7 @@ function pGetSubmodesApply($id){
 function pSubModeApplyDelete($type_id, $submode_id){
 
 	global $donut;
-	$q = "DELETE FROM submode_apply WHERE type_id = '$type_id' AND submode_id = '$submode_id';";
+	$q = "DELETE FROM submode_apply WHERE mode_type_id = '$type_id' AND submode_id = '$submode_id';";
 	return pQuery($q);
 }
 
@@ -879,20 +898,19 @@ function pSubModeApplyAdd($submode_id, $type_id){
 }
 
 
-function pSubModeUpdate($id, $name, $shortname, $entry, $mode_type_id){
+function pSubModeUpdate($id, $name, $shortname, $entry){
 
 	global $donut;
-	$q = "UPDATE submodes SET name = '$name', short_name = '$shortname', hidden_native_entry  = '$entry', 
-		mode_type_id = '$mode_type_id'
+	$q = "UPDATE submodes SET name = '$name', short_name = '$shortname', hidden_native_entry  = '$entry'
 	 WHERE id = '$id';";
 	return pQuery($q);
 }
 
 
-function pSubModeAdd($name, $shortname, $entry, $mode_type_id){
+function pSubModeAdd($name, $shortname, $entry){
 
 	global $donut;
-	$q = "INSERT INTO submodes VALUES (NULL, '$name', '$shortname', '$entry', '$mode_type_id');";
+	$q = "INSERT INTO submodes VALUES (NULL, '$name', '$shortname', '$entry');";
 	if($rs = pQuery($q))
 	{
 		if($aux_mode_id == '0')

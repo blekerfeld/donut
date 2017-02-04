@@ -3,16 +3,17 @@
 
 // Do we need to load a different page?
 
-if(isset($_REQUEST['word_discussion']) and pLogged()){
-	require_once pFromRoot('code/word.discussion.php');
+if(isset($_REQUEST['discuss-lemma']) and pLogged()){
+	require_once pFromRoot('code/lemma.discussion.php');
 	return;
 }
 
 // Template stuff
 pDictionaryHeader();
 
-pOut('<table class="noshow" style="width:100%;"><tr>');
 
+pOut('<table class="noshow" style="width:100%;"><tr>');
+	
 // Search area
 if(isset($_GET['searchresult']))
 	pSearchArea($_SESSION['search'], true);
@@ -26,12 +27,30 @@ pOut('<td style="padding-left: 20px;"><div class="notice hide" style="display: n
       <div class="drop">');
 
 // Get noun
-global $donut;
-$rs = pQuery("SELECT * FROM words WHERE id = ".$_REQUEST['word']."");
+if($_REQUEST['lemma'] == '')
+	pUrl('', true);
+if(is_numeric($_REQUEST['lemma']))
+	$lemma = $_REQUEST['lemma'];
+elseif(ctype_alnum($_REQUEST['lemma'])){
+	$lemma = pHashId($_REQUEST['lemma'], true);
+	if(array_key_exists(0, $lemma))
+		$lemma = $lemma[0];
+	else
+		$lemma = 0;
+}
+
+$rs = pQuery("SELECT * FROM words WHERE id = ".$lemma."");
 if(!$word = $rs->fetchObject()){
-	pOut('<div class="notice danger-notice" id="empty"><i class="fa fa-warning"></i> The requested word is not a noun or doesn\'t exist.</div>');
+	pOut('<div class="notice danger-notice" id="empty"><i class="fa fa-warning"></i> The requested word doesn\'t exist.</div>');
 }
 else{
+
+	// Page title, we may need to force it through again later
+	$donut['page']['title'] = $word->native." - ".$donut['page']['title']; 
+	
+	// Lemma-code
+	pOut('<a class="lemma-code floatright" title="'.$lemma.'"><i class="fa fa-bookmark-o"></i> '.pHashId($lemma).'</a>');
+
 
 	// Title
 
@@ -49,7 +68,7 @@ else{
 
 	// Discussion button
 	if(pLogged())
-		pOut('<a class="actionbutton" href="'.pUrl('?word_discussion='.$_REQUEST['word']).'"><i class="fa fa-comments"></i> '.WD_TITLE.'</a><br /><br />');
+		pOut('<a class="actionbutton" href="'.pUrl('?discuss-lemma='.$_REQUEST['lemma']).'"><i class="fa fa-comments"></i> '.WD_TITLE.'</a><br /><br />');
 
 
 	// Getting languages
@@ -69,10 +88,7 @@ else{
 	$type = pGetType($word->type_id);
 	$classification = pGetClassification($word->classification_id);
 
-	// Get modes
-	$modes = pGetModes($word->type_id);
 
-	
 	// We need to start
 		pOut("<div id='fadeOut_".$word->id."'>");
 
@@ -84,20 +100,22 @@ else{
 				$derivation_name = pDerivationName($word->derivation_name);
 			else
 				$derivation_name = pTypeName($word->derivation_type);
-			$derivation_term = " <span class='pDerivationTitle'><em>".$derivation_name."</em> from <span class='native'><a href='".pUrl('?word='.$derivation_word->id)."'>".$derivation_word->native."</a></span></span>";
+			$derivation_term = " <span class='pDerivationTitle'><em>".$derivation_name."</em> from <span class='native'><a href='".pUrl('?lemma='.pHashId($derivation_word->id))."'>".$derivation_word->native."</a></span></span>";
 		}
 		
 
-		pOut("<span class='pSectionTitle'><strong class='pWord' id='ajax_dov_".$word->id."'><a href='".pUrl('?word='.$word->id)."'><span class='native'>".html_entity_decode($word->native)."</span></a></strong>$derivation_term</span><div class='pSectionWrapper'>");
+		pOut("<span class='pSectionTitle'><strong class='pWord' id='ajax_dov_".$word->id."'><a href='".pUrl('?lemma='.pHashId($word->id))."'><span class='native'>".html_entity_decode($word->native)."</span></a></strong>$derivation_term</span><div class='pSectionWrapper'>");
+
+
 
 
 		// Show the type and classification
-		pOut('<strong class="label">Part of speech:</strong><span id="tab"><em><span class="tooltip" >'.$type->name.'</span></em></span> <br />');
+		pOut('<em><span class="tooltip" >'.$type->name.'</span></em> ');
 		if(!pTypeInflectClassifications($type->id))
-			pOut('<strong class="label">Classification:</strong><span id="tab"><span class="tooltip" ><em><span class="tooltip" >'.$classification->name.'</em></span></span>');
+			pOut('<span class="tooltip" ><em><span class="tooltip" >'.$classification->name.'</em></span></span> ');
 
 		if($word->subclassification_id != 0 and !pTypeInflectClassifications($type->id))
-			pOut('<br /><strong class="label">Subclassification:</strong><span id="tab"><span class="tooltip" ><em><span class="tooltip" >'.pSubclassificationName($word->subclassification_id).'</em></span>');
+			pOut('<span class="tooltip" ><em><span class="tooltip" >'.pSubclassificationName($word->subclassification_id).'</em>');
 		pOut('</div>');
 
 
@@ -115,113 +133,8 @@ else{
 
 
 	// The inflection!
-	pOut('<span style="cursor: pointer;" onClick="$(\'.inflections\').slideToggle(\'fast\');$(\'.hideIconInflect\').toggle();$(\'.showIconInflect\').toggle(function(){
-	});"><span class="pSectionTitle extra">Inflections <span class="showIconInflect"><i class="fa fa-12 fa-chevron-down "></i></span><span class="hideIconInflect hide"><i class="fa fa-12 fa-chevron-up "></i> </span></span></span><div class="pSectionWrapper hide inflections"><div>');
-
-	// Mode scopus
-
-	foreach($modes as $mode){
-
-
-		// Start the table
-		pOut('<div class="floatleft" style="width: 300px;margin-right: 4px;"><table class="verbs">
-				<tr class="temps"><td colspan=2><b>'.strtoupper($mode->name).'</b></td></tr>');
-
-		// Get numbers
-		$numbers = pGetNumbers($word->type_id);
-
-		// Number scopus
-		foreach($numbers as $number){
-
-
-			// Getting the submodes
-			$submodes = pGetSubModes($word->type_id);
-
-			pOut('<tr><td class="number" colspan=2><b>'.$number->name.'</b></td></tr>');
-
-
-			foreach($submodes as $submode){
-
-				$td_contents = "";
-
-				$td_contents = '<tr><td class="singa"><em>'.$submode->name.'</em></td>';
-
-
-				$gotten_classifications = array();
-				$show_classification_name = false;
-
-				// Does this word need to be inflected by its classification types?
-				if($type->inflect_classifications == 1){
-					// YES we need to get all the classifications
-					$gotten_classifications = pGetClassifications($type->id);
-					$show_classification_name = true;
-				}
-				else{
-					// Just getting one for the sake of the loop!
-					$gotten_classifications = pGetClassifications($type->id, true, $word->classification_id);
-				}
-
-
-
-
-
-				if($show_classification_name)
-					$td_contents .= '<td class="sing" style="padding: 0!important;margin:0px;">';
-				else
-					$td_contents .= '<td class="sing" style="width:50%">';
-
-				if($show_classification_name)
-						$td_contents .= '<table class="verbs" style="margin:0px;">';
-
-				foreach ($gotten_classifications as $inflect_classification) {
-					// The main inflection time!
-
-
-					if($show_classification_name)
-						$td_contents .= "<tr><td style='width:50%' class='classa'>".$inflect_classification->name."</td><td class='singb' style='width:50%'>";
-
-					
-
-					$inflections = pGetInflections($word->id, $word->type_id, $inflect_classification->id, $mode->id, $submode->id, $number->id, $word->subclassification_id);
-					if($inflections->rowCount() == 0)
-						$td_contents .= "<span class='native'>".pInflect($word->id, false, $number->id, $mode->id, $submode->id, $word->classification_id, 0, '', 0, $word->subclassification_id)."</span><br />";
-					else{
-						while($inflection = $inflections->fetchObject()){
-							$td_contents .= "<span class='native'>".pInflect($word->id, $inflection, $number->id, $mode->id, $submode->id, $word->classification_id, 0, '', 0, $word->subclassification_id)."</span><br />";
-						}
-
-					}
-
-					if($show_classification_name)
-						$td_contents .= "</td>";
-
-
-
-
-				}
-
-				if($show_classification_name)
-					$td_contents .= '</table>';
-
-
-					$td_contents .= '</td></tr>';
-
-
-
-				if (strpos($td_contents, '@[[DISABLE]]') === false) {
-				    pOut($td_contents);
-				}
-
-
-			}
-		}
-
-						pOut('</table></div>');
-
-
-	}
-
-		pOut("<br id='cl' /></div></div><br />");
+	pOut('<span style="cursor: pointer;" onClick="$(\'.inflections_title\').toggleClass(\'closed\');$(\'.inflections\').slideToggle(\'fast\');$(\'.hideIconInflect\').toggle();$(\'.showIconInflect\').toggle(function(){
+	});"><span class="pSectionTitle extra closed inflections_title">Inflections <span class="showIconInflect"><i class="fa fa-12 fa-chevron-down "></i></span><span class="hideIconInflect hide"><i class="fa fa-12 fa-chevron-up "></i> </span></span></span><div class="pSectionWrapper hide inflections"><div>'.pAllInflections($word, $type)."<br id='cl' /></div></div><br />");
 
 		$slang = 0; 
 		//  Getting search and return language
@@ -264,7 +177,7 @@ else{
 				foreach($trans_array[$lang->id] as $trans){
 					pOut('<li><span>'.(($trans->specification != '') ? (' <em>('.$trans->specification.')</em>') : ('')).' <span href="javascript:void(0);" class="translation trans_'.$trans->id.' tooltip">'.$trans->translation.'</span>');
 					if($description = html_entity_decode(pGetDescription($trans->translation_id)))
-						pOut("<br /><p class='desc'>".$description."</p>");
+						pOut("<p class='desc'>".$description."</p>");
 					pOut('</span></li>');
 				}
 				pOut("</ol>");
@@ -286,8 +199,8 @@ else{
 					pOut("<br />");
 					$count = 0;
 					$max_count = $translations_idiom->rowCount();
-					foreach ($translations_idiom as $trans_idiom) {
-						pOut("<span class='pIdiomTranslation'><em>".pLanguageName($trans_idiom['language_id'])."</em> ".$trans_idiom['translation']."</span>");
+					while ($trans_idiom = $translations_idiom->fetchObject()) {
+						pOut("<span class='pIdiomTranslation'><em>".pLanguageName($trans_idiom->language_id)."</em> ".$trans_idiom->translation."</span>");
 						$count++;
 						if($count > $max_count)
 						{
@@ -316,7 +229,7 @@ else{
 
 				foreach ($derivation['words'] as $derivation_word) {
 
-					pOut('<li><span class="native"><strong class="pDerivation"><a href="'.pUrl('?word='.$derivation_word->id).'">'.$derivation_word->native.'</a></strong></span></li>');
+					pOut('<li><span class="native"><strong class="pDerivation"><a href="'.pUrl('?lemma='.pHashId($derivation_word->id)).'">'.$derivation_word->native.'</a></strong></span></li>');
 				}
 
 				pOut("</ol>");
@@ -374,7 +287,7 @@ else{
 
 				$synonym_word = pGetWord($synonym_id);
 
-				pOut('<a class="synonym score-'.$synonym->score.'" href="'.pUrl('?word='.$synonym_word->id).'"><span class="native">'.$synonym_word ->native.'</span></a>');
+				pOut('<a class="synonym score-'.$synonym->score.'" href="'.pUrl('?lemma='.pHashId($synonym_word->id)).'"><span class="native">'.$synonym_word ->native.'</span></a>');
 
 			}
 
@@ -401,7 +314,7 @@ else{
 
 				$antonym_word = pGetWord($antonym_id);
 
-				pOut('<a class="antonym score-'.$antonym->score.'" href="'.pUrl('?word='.$antonym_word->id).'"><span class="native">'.$antonym_word ->native.'</span></a>');
+				pOut('<a class="antonym score-'.$antonym->score.'" href="'.pUrl('?lemma='.pHashId($antonym_word->id)).'"><span class="native">'.$antonym_word ->native.'</span></a>');
 
 			}
 
@@ -421,9 +334,10 @@ else{
 
 			".'$(".moveResults").load("'.pUrl('?getword&wordsonly&ajax').'", {"word": $("#wordsearch").val(), "dict": $("#dictionary").val(), "wholeword":  $("#wholeword").is(":checked")}, function(){
 					$(".dWordWrapper ol p.desc").hide();
-			});'."
+					document.title = "'.pEscape($donut['page']['title']).'";
+			});
 
-		});</script>");
+			});</script>');
 	}
 
 	
@@ -433,7 +347,7 @@ else{
       		$("#pageload i").show();
       		$(".ajaxload").slideUp();
       		$(".drop").hide();
-	      		$(".ajaxload").load("'.pUrl('?getword&ajax&wordsearch='.$_GET['word']).'", {"word": $("#wordsearch").val(), "dict": $("#dictionary").val(), "wholeword":  $("#wholeword").is(":checked")}, function(){$(".ajaxload").slideDown(function(){
+	      		$(".ajaxload").load("'.pUrl('?getword&ajax&wordsearch='.$_GET['lemma']).'", {"word": $("#wordsearch").val(), "dict": $("#dictionary").val(), "wholeword":  $("#wholeword").is(":checked")}, function(){$(".ajaxload").slideDown(function(){
 	      								 $("#pageload i").delay(100).hide(400);
 	      		})}, function(){
       		});

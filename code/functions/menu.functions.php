@@ -11,7 +11,7 @@
 
 	function pMenu()
 	{
-  			return '<a href="'.pUrl('?home').'" '.pActiveMenu('home').' '.pActiveMenu('search').' '.pActiveMenu('word').' '.pActiveMenu('alphabet').' '.pActiveMenu('generate').'>
+  			return '<a href="'.pUrl('?home').'" '.pActiveMenu('home').' '.pActiveMenu('search').' '.pActiveMenu('lemma').' '.pActiveMenu('discuss-lemma').' '.pActiveMenu('alphabet').' '.pActiveMenu('generate').'>
 				'.MMENU_DICTIONARY.'</a> 
   			'.((pLogged()) ? '<a href="'.pUrl('?admin').'" '.pActiveMenu('admin').' >'.MMENU_MANAGE.'</a>' : '');
 	}

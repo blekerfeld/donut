@@ -14,7 +14,7 @@
 		global $donut;
 
 		if($link == '')
-			$link = '?word_discussion='.$word_id;
+			$link = '?discuss-lemma='.$word_id;
 		else
 			$link .= $word_id;
 

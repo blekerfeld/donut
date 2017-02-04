@@ -56,7 +56,7 @@
 
 
 
-	pOut('<span class="floatleft title_header"><div class="icon-box throw"><i class="fa fa-tasks"></i></div> <img class="logo-admin" src="'.pUrl('pol://library/images/static/admin_logo.png').'" /></span>', true);
+	pOut('<span class="floatleft title_header"><div class="icon-box throw"><i class="fa fa-tasks"></i></div> Control panel</span>', true);
 
 
 	pOut('
@@ -79,12 +79,13 @@
 		pOut('
 			<div class="adminsubmenu">
 				<span class="dots">. . .</span>
-				<a href="'.pUrl('?admin&section=types').'" '.pAMenuLink('types').'><i class="fa fa-database"></i> Parts of speech</a>
-				<a href="'.pUrl('?admin&section=classifications').'" '.pAMenuLink('classifications').'><i class="fa fa-venus-mars "></i> Classifications</a>
-				<a href="'.pUrl('?admin&section=subclassifications').'" '.pAMenuLink('subclassifications').'><i class="fa fa-code-fork "></i> Subclassifications</a>
-				<a href="'.pUrl('?admin&section=numbers').'" '.pAMenuLink('numbers').'><i class="fa fa-sort-numeric-asc"></i> Numbers</a>
-				<a href="'.pUrl('?admin&section=modes').'" '.pAMenuLink('modes').'><i class="fa fa-arrows "></i> Modes</a>
-				<a href="'.pUrl('?admin&section=submodes').'" '.pAMenuLink('submodes').'><i class="fa fa-table "></i> Submodes</a>
+				<a href="'.pUrl('?admin&section=types').'" '.pAMenuLink('types').'><i class="fa fa-folder"></i> Lexical categories</a>
+				<a href="'.pUrl('?admin&section=classifications').'" '.pAMenuLink('classifications').'><i class="fa fa-code-fork "></i> Grammatical divisions</a>
+				<a href="'.pUrl('?admin&section=subclassifications').'" '.pAMenuLink('subclassifications').'><i class="fa fa-tags "></i> Grammatical tags</a>
+
+				<a href="'.pUrl('?admin&section=modes').'" '.pAMenuLink('modes').'><i class="fa fa-th-list "></i> Inflection Tables</a>
+				<a href="'.pUrl('?admin&section=numbers').'" '.pAMenuLink('numbers').'><i class="fa fa-header"></i> Headings</a>
+				<a href="'.pUrl('?admin&section=submodes').'" '.pAMenuLink('submodes').'><i class="fa fa-table "></i> Rows</a>
 			</div>
 
 
@@ -176,7 +177,7 @@
 	// Otherwise just the homepage I guess, eh!
 
 	else{
-		pOut('homepage');
+		pOut("<div class='notice'><i class='fa fa-info-circle'></i> The admin home page is work in progress...</div><br /><br /><br />");
 	}
 
  ?>

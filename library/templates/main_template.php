@@ -62,7 +62,6 @@
                 <div class='ajaxHide'>
                 <?php global $donut; echo $donut['page']['content_final']; ?>
                 </div>
-                <span>Page loaded using <?php  echo $donut['db_query_count']; ?> queries</span> 
             </div>
             <?php if(!isset($_REQUEST['wap']))
             { ?>

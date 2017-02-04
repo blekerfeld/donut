@@ -31,8 +31,6 @@
 
 
 
-$donut['queries'] = array();
-
 function pQuery($sql, $force_no_cache = false, $force_no_count = false){
 
 	global $donut;
@@ -48,21 +46,24 @@ function pQuery($sql, $force_no_cache = false, $force_no_count = false){
 	// Replacing the table names with the prefixed ones.
 	$sql = pReplaceDbPrefix($sql);
 
+	// We need the queries hash
+	$table_name = preg_match_all("/\b(FROM|INTO|UPDATE)\b\s*(\w+)/", $sql, $matches);
+	
+
 	// If query caching is disabled, we just need to execute the query
 	if($force_no_cache or $donut['enable_query_caching'] == 0)
 		return $donut["db"]->query($sql);
 
 	// If this is not a select query, it will change something, therefore the cache needs to be cleaned
 	if(!pStartsWith($sql, "SELECT"))
-		pCleanCache();
+		pCleanCache('queries', $matches[2][0].'_');
 
 	// Only select queries can be cached
 	if(!pStartsWith($sql, "SELECT"))
 		return $donut["db"]->query($sql);
 
-
-	// We need the queries hash
-	$hash = md5($sql);
+	// File infomation
+	$hash = $matches[2][0]."_".md5($sql);
 	$cache_file = pFromRoot('library/cache/queries/'.$hash.'.cache');
 	$cache_folder = pFromRoot('library/cache/queries');
 	$cache_time = $donut['query_caching_time'];
@@ -95,10 +96,9 @@ function pQuery($sql, $force_no_cache = false, $force_no_count = false){
 
 		$execute = $donut['db']->query($sql);
 
-
-		// If the rowCount is 0, we can just create an empty cached query
+		// If the rowCount is 0, we just don't cache then!
 		if($execute->rowCount() == 0)
-			$cache_query = new pClassCachedQuery(array(), 0, $sql);
+			return $execute;
 
 		// Otherwise we need to do a little more...
 		else{
@@ -131,11 +131,11 @@ function pQuery($sql, $force_no_cache = false, $force_no_count = false){
 
 
 // This will just delete all cache files in a certain section
-function pCleanCache($section = 'queries'){
+function pCleanCache($section = 'queries', $prefix = ''){
 
 	global $donut;
 
-	foreach(glob($donut['root_path'] . '/library/cache/' . $section . '/*.cache') as $filename)
+	foreach(glob($donut['root_path'] . '/library/cache/' . $section . '/'.$prefix.'*.cache') as $filename)
 		unlink($filename);
 
 	return true;

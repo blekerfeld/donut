@@ -427,38 +427,46 @@
 	// We have not died yet!
 	if(!(isset($_REQUEST['action'])) OR !(in_array($_REQUEST['action'], $die_actions))){
 
+		// Offset system loading
+			$total_number = pCountTable('modes');
+			$offset_system = pSimpleOffsetSystem($total_number, 10, "?admin&section=modes");
+			pOut($offset_system['restore_offset_script']);
+
 		// table head
 
-		pOut("
 
-			<a class='actionbutton' href='".pUrl('?admin&section=modes&action=add_mode')."'><i class='fa fa-plus-circle' style='font-size: 12px!important;'></i> Add mode</i></a><a class='actionbutton' href='".pUrl('?admin&section=modes&action=mode_types')."'><i class='fa fa-list-alt' style='font-size: 12px!important;'></i> Manage mode types</i></a><br /><br />
+		if(isset($_REQUEST['template']) and is_numeric($_REQUEST['template'])){
+			$modes = pGetModes(0, $_REQUEST['template'], "LIMIT ".$offset_system['offset'].",10");
+			pOut("<strong class='inline-title'>".sprintf(ADMIN_SHOWINGOFTEMPLATE, "<em>".pModeTypeName($_REQUEST['template'])."</em>")." <a class='tooltip small' href='".pUrl('?admin&section=modes')."'>".ADMIN_SHOWALL."</a></strong><br /><br />");
+		}
+		else
+			$modes = pGetModes(0,0, "LIMIT ".$offset_system['offset'].",10");
+
+		pOut("
+			<span class='floatright'>".ADMIN_PAGE.$offset_system['select_box']."</span>
+			<a class='actionbutton' href='".pUrl('?admin&section=modes&action=add_mode')."'><i class='fa fa-plus-circle' style='font-size: 12px!important;'></i> Add mode</i></a><a class='actionbutton' href='".pUrl('?admin&section=modes&action=mode_types')."'><i class='fa fa-puzzle-piece fa-12'></i> ".ADMIN_MANAGETEMPLATES."</i></a><br /><br />
 
 			<table class='admin'>
 				<thead>
 				<tr role='row'  class='title'>
-					<td style='width: 80px;'>ID</td>
-					<td>Mode type</td>
+					<td><span class='small'>Using template</small></td>
+					<td style='width: 40px;'><span class='small'>id.</span></td>
 					<td style='width: 20%;'>Name</td>
-					<td>Short name</td>
-					<td>Native entry</td>
-					<td>Links</td>
+					<td>".ADMIN_ABBREV."</td>
+					<td>".ADMIN_USEDWITH."</td>
 					<td>Actions</td>
 				</tr></thead>");
-
-		
-		$modes = pGetModes();
 
 		while($mode = $modes->fetchObject()){
 
 
 			pOut("<tr>
-				<td>$mode->id</td>
-				<td>".pModeTypeName($mode->mode_type_id)."</td>
-				<td>$mode->name</td>
-				<td>$mode->short_name</td>
-				<td>$mode->hidden_native_entry</td>
-				<td>".pCountModesApply($mode->id)."
-					<a class='actionbutton' href='".pUrl('?admin&section=modes&action=mode_apply&mode_id='.$mode->id)."'><i class='fa fa-link' style='font-size: 12px!important;'></i> Manage links</i></a>	
+				<td><span class='small'><a class='tooltip' href='".pUrl('?admin&section=modes&template='.$mode->mode_type_id)."'><i class='fa fa-puzzle-piece fa-8'></i> ".pModeTypeName($mode->mode_type_id)."</a></span></td>
+				<td><span class='small'><em>$mode->id</em></span></td>
+				<td><span class='small-caps'>$mode->name</span></td>
+				<td><span class='small tooltip'><em>$mode->short_name</em></span></td>
+				<td>
+					<a class='tooltip small' href='".pUrl('?admin&section=modes&action=mode_apply&mode_id='.$mode->id)."'><i class='fa fa-link fa-10'></i> Show associations <span class='counter'>".pCountModesApply($mode->id)."</span></i></a>	
 				</td>
 				<td><a class='actionbutton' href='".pUrl('?admin&section=modes&action=edit_mode&mode_id='.$mode->id)."'><i class='fa fa-pencil' style='font-size: 12px!important;'></i> Edit mode</i></a>
 				<a class='actionbutton' href='".pUrl('?admin&section=modes&action=delete_mode_sure&mode_id='.$mode->id)."'><i class='fa fa-times' style='font-size: 12px!important;'></i> Delete mode</i></a>
@@ -469,7 +477,7 @@
 
 		// table end
 
-		pOut('</table><br />'."<a class='actionbutton' href='".pUrl('?admin&section=modes&action=add_mode')."'><i class='fa fa-plus-circle' style='font-size: 12px!important;'></i> Add mode</i></a><a class='actionbutton' href='".pUrl('?admin&section=modes&action=mode_types')."'><i class='fa fa-list-alt' style='font-size: 12px!important;'></i> Manage mode types</i></a>".'<br /><br />');
+		pOut('</table><br />'."<span class='floatright'>".ADMIN_PAGE.$offset_system['select_box']."</span><a class='actionbutton' href='".pUrl('?admin&section=modes&action=add_mode')."'><i class='fa fa-plus-circle' style='font-size: 12px!important;'></i> Add mode</i></a><a class='actionbutton' href='".pUrl('?admin&section=modes&action=mode_types')."'><i class='fa fa-12 fa-puzzle-piece'></i> ".ADMIN_MANAGETEMPLATES."</i></a>".$offset_system['back_button'].$offset_system['next_button'].'<br /><br />');
 
 	}
 

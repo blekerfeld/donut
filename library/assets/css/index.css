@@ -51,8 +51,44 @@ a{
 	color: #005b7f;
 }
 
+a:active  {
+  transition: color .3s;
+}
+
 .small{
 	font-size: 11px;
+}
+
+.medium{
+	font-size: 13px;
+}
+
+.counter {
+	display: inline-block;
+	padding: 2px 5px;
+	font-size: 11px;
+	font-weight: bold;
+	line-height: 1;
+	color: #666;
+	background-color: #ddd;
+	border-radius: 20px;
+}
+
+.inline-title, .small-caps
+{
+	font-size: 15px;
+	color: #000;
+	text-decoration: none;
+	text-transform: uppercase;
+	letter-spacing: .1em;
+	white-space: normal;
+	font-weight: 500;
+}
+
+span.tab, div.tab{
+	display: inline-block;
+	padding-left: 15px;
+	padding-top: 5px;
 }
 
 
@@ -107,9 +143,11 @@ html.pAdmin div.logotop img.logo-admin{
 
 
 div.outerwrap{
-	background: #f9f9f9;
+	background: #f6f6f6;
 	border-top: 1px solid #e9e9e9;
 	border-bottom: 1px solid #e9e9e9;
+	margin-top: 20px;
+	box-shadow: 0px 0px 50px 2px rgba(0,0,0,0.05);
 }
 
 
@@ -120,7 +158,6 @@ div.outerwrap{
 	padding-top: 0px;
 	border-left: 1px solid #e9e9e9;
 	border-right: 1px solid #e9e9e9;
-	box-shadow: 0px 0px 5px 2px rgba(0,0,0,0.05);
 }
 
 
@@ -149,11 +186,15 @@ div.outerwrap{
 	margin-left: 5%;
 	margin-right: 5%;
 	padding: 3px;
-	padding-left: 16px;
-	opacity: 1;
+	padding-left: 2px;
+	opacity: 0.6;
 	font-size: 8.5px;
 	text-shadow: 0px 1px 1px rgba(0, 0, 0, 0.2);
 	color: #818c93;
+	text-decoration: none;
+	text-transform: uppercase;
+	letter-spacing: .1em;
+	white-space: normal;font-weight: 500;
 }
 
 .absolute_header{	
@@ -264,11 +305,13 @@ div.nav a
 {
 	padding: 8px;
 	padding-bottom: 8px;
-	font-weight: bold;
-	font-size: 15px;
-	font-family: Raleway;
+	padding-top: 10px;
+	font-size: 13px;
 	color: #000;
 	text-decoration: none;
+	text-transform: uppercase;
+	letter-spacing: .1em;
+	white-space: normal;font-weight: 500;
 
 }
 
@@ -713,6 +756,12 @@ div.userbox
 	cursor: pointer!important;
 }
 
+.actionbutton.readmore{
+	font-size: 11px;
+	background: none;
+	border: none;
+}
+
 .actionbutton:hover{
 	background: #ccc;
 }
@@ -1075,23 +1124,19 @@ strong.dWord a:hover{
 .dWordWrapper {
 	margin-bottom: 10px;
 	padding: 15px;
-	border-right: 3px double rgba(227, 227, 227, 0.3);
-	border-radius: 0px;
-
-}
-
-
-
-
-
-
-.dWordWrapper a.tooltip{
-	color: #333;
-	font-size: 16px;
+	padding-left: 7px;
+	padding-top: 5px;
+	padding-bottom: 7px;
 }
 
 .dWordWrapper:hover {
-	background: rgba(200,200,200, 0.2)!important;
+	background: rgba(200,200,200, 0.05)!important;
+}
+
+
+.dWordWrapper a.tooltip, .wordLink.tooltip{
+	color: #333;
+	font-size: 16px;
 }
 
 .dWordWrapper .tooltip{
@@ -1107,13 +1152,13 @@ strong.dWord a:hover{
 	margin: 20px;
 	margin-top: 3px;
 	margin-left: 20px;
-	margin-bottom: 20px;
+	margin-bottom: 0px;
 	padding: 0px;
 	font-weight: bolder;
 	font-size: 10px;
 	vertical-align: top;
 	color: #34392A;
-
+	  width: 50%;
 }
 
 .dWordWrapper ol span
@@ -1141,7 +1186,7 @@ vertical-align: baseline;
 	border-radius: 10px;
 }
 
-.moveResults .dWordWrapper .tooltip{
+.moveResults .dWordWrapper .tooltip, .wordLink.tooltip{
 
 	font-family: Gentium;
 
@@ -1292,6 +1337,10 @@ font-size: 11px;
 	font-style: italic;
 }
 
+a.tooltip{
+	color: black;
+}
+
 .dTranslation{
 	font: tahoma;text-decoration: underline;
 }
@@ -1328,7 +1377,9 @@ table.verbs.ipa tr td{
 
 
 table.verbs tr td{
-	background: #e3e3e3;
+	background: snow;
+	border-bottom: solid #e0e0e0 1px;
+	border-right: solid #e0e0e0 1px;
 	padding: 5px;
 
 }
@@ -1336,10 +1387,21 @@ table.verbs tr td{
 
 table.verbs tr td.number{
 	padding: 5px;
-	background: #DBDBDB;
-	border-bottom: dashed #ccc 1px;
+	background: #f1f2f3;
+	border-bottom: solid #e0e0e0 1px;
+	border-right: solid #e0e0e0 1px;
+	border-left: solid #e0e0e0 1px;
 }
 
+
+
+table.verbs tr:first-child td{
+	border-radius: 8px 8px 0px 0px;
+}
+
+table.verbs tr::last-of-type td{
+	border-radius: 0px 0px 8px 8px;
+}
 
 table.verbs tr td.ipa{
 	border: 1px solid #e9e9e9;
@@ -1347,13 +1409,16 @@ table.verbs tr td.ipa{
 }
 
 table.verbs tr td.singa, table.verbs tr td.plua{
-	border-right: dashed #ccc 1px;
-	background: #e6e6e6;
+	border-right: solid #e0e0e0 1px;
+	border-bottom: solid #e0e0e0 1px;
+	border-left: solid #e0e0e0 1px;
+	background: #f9f9f9;
+	font-style: italic;
 }
 
 table.verbs tr td.singb{
 	border-left: dashed #ccc 1px;
-	background: #e6e6e6;
+	background: #f6f6f6;
 	border-bottom: dashed #ccc 1px;
 }
 
@@ -1364,12 +1429,18 @@ table.verbs tr td.classa{
 
 table.verbs tr.temps td, table.verbs td.temps{
 	padding: 6px;
-	background-color:#3a484e;
-	color: white;
+	color:#3a484e;
+	background-color: #f2f9fc;
+	border: 1px solid #c9e6f2;
+	font-weight: 700;
+	text-transform: uppercase;
+	letter-spacing: .1em;
+	white-space: normal;
+	font-size: 13px;
 }
 
 table.verbs tr.temps{
-	background-color:#3a484e;
+	background-color: #f2f9fc;
 	color: white;
 }
 
@@ -1556,7 +1627,7 @@ input.nWord:invalid{
 
 strong.pWord
 {
-	font-size: 20px;
+	font-size: 18px;
 	cursor: pointer;
 	font-family: Merriweather;
 	font-weight: bolder;
@@ -1568,7 +1639,7 @@ span.pDerivationTitle{
 
 span.pDerivationTitle span.native a{
 	font-weight: bold;
-	color: #68777d!important;
+	color:#3a484e!important;
 	font-family: Merriweather;
 	font-size: 11px;
 }
@@ -1609,7 +1680,7 @@ img.pImage:hover{
 
 strong.pWord a{
 
-		color: #68777d;
+		color:#3a484e!important;
 }
 
 strong.pWord a:hover{
@@ -1622,15 +1693,34 @@ strong.pWord a:hover{
 #tab { display:inline-block; 
        margin-left: 20px; }
 
+
+a.lemma-code{
+	color: #000;
+	opacity: 0.2;
+	font-size: 14px!important;
+	font-family: Consolas,"Liberation Mono",Menlo,Courier,monospace;
+	transition: opacity .3s;
+	cursor: pointer;
+}
+
+a.lemma-code:hover{
+	opacity: 1;
+	border-bottom: dotted #ccc 1px;
+}
+
+a.lemma-code i.fa{
+	font-size: 12px;
+}
+
 .pSectionWrapper {
 	margin-bottom: 20px;
 	background-color: #fff;
 	border: 1px solid #ddd;
 	border-top: none;
-	border-bottom-right-radius: 3px;
-	border-bottom-left-radius: 3px;
 	padding: 10px;
-	width: 95%;
+	border-bottom-right-radius: 7px;
+	border-bottom-left-radius: 7px;
+	box-shadow: 0 4px 10px 0px rgba(0,0,0,0.02)
 }
 
 .pSectionWrapper .tooltip{
@@ -1653,37 +1743,40 @@ strong.pWord a:hover{
 
 span.pSectionTitle{
 	font-size: 29px;
-
+	box-shadow: 0 4px 10px 0px rgba(0,0,0,0.02);
 	background-color: #f2f9fc;
 	border: 1px solid #c9e6f2;
 	display: block;
 	color: #68777d;
-	border-top-right-radius: 3px;
-	border-top-left-radius: 3px;
+	border-top-right-radius: 7px;
+	border-top-left-radius: 7px;
 	padding: 10px;
 	padding-top: 0px;
 	padding-bottom: 0px;
-	width: 95%;
+	line-height: .8em;
 }
 
 span.pSectionTitle.extra{
 	font-weight: 700;
+	text-transform: uppercase;
+	letter-spacing: .1em;
+	white-space: normal;
+	line-height: normal;
+	font-size: 13px;
 	background: #fff;
 	background-color: #f5f5f5;
 	border-top: 1px solid #d8d8d8;
 	border-bottom: 1px solid #d8d8d8;
 	border-color: #d8d8d8;
-	text-transform: uppercase;
-	letter-spacing: .1em;
-	white-space: normal;
-	font-size: 13px;
 	color: #333;
-	line-height: 1.2;
-	
 	padding-left: 10px;
 	padding-right: 10px;
-	padding-bottom: 13px;
-	padding-top: 13px;
+	padding-bottom: 5px;
+	padding-top: 5px;
+}
+
+span.pSectionTitle.extra.closed{
+	border-radius: 7px;
 }
 
 .pSectionTitle.extra.sub{
@@ -1697,8 +1790,8 @@ span.pSectionTitle.extra{
 	margin: -10px;
 	width: 100%;
 	margin-bottom: 5px;
-	margin-top: 5px;
 	font-size: 12px;
+	border-radius: 0px!important;
 }
 
 .pSectionWrapper strong.label{
@@ -1717,13 +1810,17 @@ span.pSectionTitle.extra{
 	margin: 20px;
 	margin-top: 3px;
 	margin-left: 15px;
-	margin-bottom: 9px;
+	margin-bottom: 20px;
 	padding: 0px;
 	font-weight: bolder;
 	font-size: 10px;
 	vertical-align: top;
 	color: #34392A;
 
+}
+
+.pSectionWrapper ol:last-child{
+	margin-bottom: 0px;
 }
 
 .pSectionWrapper ol span
@@ -1741,6 +1838,7 @@ vertical-align: baseline;
 	background: rgba(140,140,140,0.1);
 	width: auto;
 	display: inline-block;
+	max-width: 30%;
 }
 .pSectionWrapper ol li span.pIdiom{
 	font-family: Lora;
@@ -2120,7 +2218,6 @@ color: #aaa;
     font-weight: 700;
     outline: none;
     position: relative;
-
     -webkit-transition: all 0.3s;
     -moz-transition: all 0.3s;
     transition: all 0.3s;
@@ -2262,37 +2359,37 @@ div.btButtonBar a.btAction.green{
 
 .wdContent{
 	background: #fafafa;
-	padding: 5px;
+	padding: 10px;
 	border: 1px solid rgba(240,240,240,0.4);
-	border-radius: 0px;
+	border-radius: 10px;
 	font-family: Open Sans;
-	font-size: 13px;
+	font-size: 14px;
 }
 
 .wdUserBar strong.wdUserName{
 	font-family: raleway;
-	font-size: 11px;
+	font-size: 12px;
 	text-transform: lowercase;
 }
 
 .wdUserBar span.wdDate{
 	color: #666;
-	font-size: 10px;
+	font-size: 12px;
 	text-transform: lowercase;
 }
 
 .wdUserBar span.wdDate::before{
 	content: "«";
-	font-size: 8px;
+	font-size: 10px;
 }
 
 .wdUserBar span.wdDate::after{
 	content: "»";
-	font-size: 8px;
+	font-size: 10px;
 }
 
 .wdUserBar span.wdPoints{
-	font-size: 10px;
+	font-size: 12px;
 	color: #999;
 }
 
@@ -2316,7 +2413,7 @@ a.wdTopLink, a.wdTopLink i.fa{
 }
 
 .wdLinksBar{
-	font-size: 11px;
+	font-size: 12px;
 }
 
 .wdLinksBar a{
@@ -2350,3 +2447,9 @@ a.wdTopLink, a.wdTopLink i.fa{
 	font-family: Raleway;
 	font-weight: bold;
 }
+
+a.wordLink{
+
+	font-size: 115%!important;
+}
+

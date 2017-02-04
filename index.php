@@ -42,6 +42,8 @@
 
 	// Going through the apps, looking for answers...
 	while($app = $apps->fetchObject()){
+
+
 		if(isset($_REQUEST[$app->getter]) and !$app_set)
 		{
 

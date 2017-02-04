@@ -152,8 +152,6 @@ function pSearchAndInflect($word, $type, $classification, $mode, $submode, $numb
 
 	function pFindScript($place, $type, $classification, $subclassification, $number, $mode, $submode){
 
-		global $donut;
-
 		// Is the current mode setting in combination with a number part of a group?
 		$q = "SELECT submode_group_id FROM submode_group_members WHERE mode_id = '$mode' AND submode_id = '$submode' AND number_id = '$number' AND classification_id = '$classification'";
 
@@ -184,23 +182,19 @@ function pSearchAndInflect($word, $type, $classification, $mode, $submode, $numb
 
 				if($get_script->rowCount() != 0){
 
-					while($script_name = $get_script_name->fetchObject()){
+					while($script_name = $get_script_name->fetchObject())
 						$return[] = $script_name->name;
-					}
 
 					return $return;
 				}
 
-				else{
+				else
 					return false; 
-				}
 
 			}
-			else{
-
+			else
 				return false;
 
-			}
 
 
 		}
@@ -277,6 +271,17 @@ function pSearchAndInflect($word, $type, $classification, $mode, $submode, $numb
 
 			}
 
+			// Replacing placeholders
+
+		
+			$inflect_this = str_replace(array('**', '&&'), array('<em>', '</em>'), $inflect_this);
+
+
+			// Caching
+			if($override_word != '~')
+				if(!(strip_tags($inflect_this) == $word->native))
+					pCacheInflection($inflect_this, $word_id, md5($mode.$submode.$number.$classification.$subclassification));
+
 			// Do we need to get an aux?
 
 			// Allowing aux level only to four
@@ -347,14 +352,235 @@ function pSearchAndInflect($word, $type, $classification, $mode, $submode, $numb
 			}
 
 
-			// Replacing placeholders
 
-		
-			$inflect_this = str_replace(array('**', '&&'), array('<em>', '</em>'), $inflect_this);
 
 
 			// return our inflected word
 			return html_entity_decode($inflect_this);
 	}
 
-?>
+
+	function pCacheInflection($inflection, $word, $inflection_hash){
+
+		// Let's see if this exists
+		$check = pQuery("SELECT * FROM inflection_cache WHERE word_id = $word AND inflection_hash = '$inflection_hash' LIMIT 1;");
+		if($check->rowCount() != 0 AND ($cache = $check->fetchObject()))
+			if($cache->inflection != pEscape(strip_tags($inflection)))
+				pQuery("DELETE FROM inflection_cache WHERE id = ".$cache->id);
+			else
+				return false;
+		
+		// Insert the new one, only if we are still alive
+		$check = pQuery("SELECT * FROM inflection_cache WHERE inflection = '".pEscape(strip_tags($inflection))."';");
+		if($check->rowCount() == 0)
+			return pQuery("INSERT INTO inflection_cache VALUES (NULL, '".pEscape(strip_tags($inflection))."', $word,  '".pEscape($inflection_hash)."');");
+		else
+			return false;
+
+	}
+
+
+function pAllInflections($word, $type){
+	
+	$output = '';
+
+	// Get modes
+	$modes = pGetModes($word->type_id);
+
+	// Mode scopus
+
+	foreach($modes as $mode){
+
+		// Get numbers
+		$numbers = pGetNumbers($mode->mode_type_id);
+
+
+
+
+		// Number scopus
+		if (is_array($numbers) and count($numbers) != 0)
+		{
+
+			// Start the table
+			$output .= '<div class="floatleft" style="width: 300px;margin-right: 4px;"><table class="verbs mode_'.$mode->id.'">
+				<tr class="temps"><td colspan=2><b>'.strtoupper($mode->name).'</b></td></tr>';
+
+
+			foreach($numbers as $number){
+
+				// Check if this number maybe needs to be excluded...?
+				if(pExcludeFromInflections('numbers', 'modes', $number->id, $mode->id))
+					continue;
+
+				// Getting the submodes
+				$submodes = pGetSubModes($mode->mode_type_id);
+
+				$output .=  '<tr><td class="number" colspan=2><b>'.$number->name.'</b></td></tr>';
+
+
+				foreach($submodes as $submode){
+
+					$td_contents = "";
+
+					$submode_name = pGetSubmodeNative($submode, $number);
+		
+
+					$td_contents .= '<tr><td class="singa rowname">'.$submode_name.'</td>';
+
+					$gotten_classifications = array();
+					$show_classification_name = false;
+
+					// Does this word need to be inflected by its classification types?
+					if($type->inflect_classifications == 1){
+						// YES we need to get all the classifications
+						$gotten_classifications = pGetClassifications($type->id);
+						$show_classification_name = true;
+					}
+					else
+						// Just getting one for the sake of the loop!
+						$gotten_classifications = pGetClassifications($type->id, true, $word->classification_id);
+					
+					if($show_classification_name)
+						$td_contents .= '<td class="sing inflection" style="padding: 0!important;margin:0px;">';
+					else
+						$td_contents .= '<td class="sing inflection" style="width:50%">';
+
+					if($show_classification_name)
+							$td_contents .= '<table class="verbs inside_'.$submode->id.'" style="margin:0px;">';
+
+					foreach ($gotten_classifications as $inflect_classification) {
+							// The main inflection time!
+
+
+						if($show_classification_name)
+							$td_contents .= "<tr><td style='width:50%' class='classa rowname'>".$inflect_classification->name."</td><td class='singb inflection' style='width:50%'>";	
+
+						$inflections = pGetInflections($word->id, $word->type_id, $inflect_classification->id, $mode->id, $submode->id, $number->id, $word->subclassification_id);
+
+						if($inflections->rowCount() == 0)
+								$td_contents .= "<span class='native'>".pInflect($word->id, false, $number->id, $mode->id, $submode->id, $word->classification_id, 0, '', 0, $word->subclassification_id)."</span><br />";
+						else{
+							while($inflection = $inflections->fetchObject()){
+								$td_contents .= "<span class='native'>".pInflect($word->id, $inflection, $number->id, $mode->id, $submode->id, $word->classification_id, 0, '', 0, $word->subclassification_id)."</span><br />";
+							}
+						}
+
+						if($show_classification_name)
+							$td_contents .= "</td>";
+
+					}
+
+					if($show_classification_name)
+						$td_contents .= '</table>';
+
+
+						$td_contents .= '</td></tr>';
+
+
+					
+					if (strpos($td_contents, '@//DISABLE\\') === false)
+					    $output .= $td_contents;
+
+
+			$output .= "<script>
+			var seen = {};
+
+			$('.inside_".$submode->id." tr:has(\"td.inflection\")').each(function() {
+				var appendTxt = '';
+				var restore = {};
+			    var txt = $(this).find('td.inflection').text();
+			    var txt_name = $(this).find('td.rowname').text();
+			    if (seen[txt] && $(this).children().length != 1){
+
+			    	$(this).hide();
+			    	
+			        var results = $('.mode_".$mode->id." tr td.tested').filter(function() {
+			            return $(this).text() === txt;
+			        });
+
+			        selector = 'td.rowname:not(:contains(\"'+ txt_name +'\"))';
+
+			        ding = results.parent().find(selector);
+					
+					appendTxt = '/' + txt_name;
+					ding.append(appendTxt);
+					$(this).find('td.inflection').removeClass('inflection');
+					
+			    }
+			    else{
+			        seen[txt] = true;
+			        $(this).find('td.inflection').removeClass('inflection').addClass('tested');
+			    }
+
+			});
+
+			</script>";
+
+					}
+				}
+
+						$output .=  '</table></div>';
+			}
+
+			// The javascript to remove duplicate inflections
+
+			$output .= pJSCompactTables($mode->id);
+			
+
+		}
+
+
+
+	return $output;	
+
+}
+
+
+function pJSCompactTables($id, $prefix = "mode_"){
+	return "<script>
+				var seen = {};
+
+				$('.".$prefix.$id." tr:has(\"td.inflection\")').each(function() {
+					var appendTxt = '';
+					var restore = {};
+				    var txt = $(this).find('td.inflection').text();
+				    var txt_name = $(this).find('td.rowname').text();
+				    if (seen[txt] && $(this).children().length != 1){
+
+				    	$(this).hide();
+				    	
+				        var results = $('.".$prefix.$id." tr td.tested').filter(function() {
+				            return $(this).text() === txt;
+				        });
+
+				        selector = 'td.rowname:not(:contains(\"'+ txt_name +'\"))';
+
+				        ding = results.parent().find(selector);
+						
+						appendTxt = '/' + txt_name;
+						ding.append(appendTxt);
+						
+				    }
+				    else{
+				        seen[txt] = true;
+				        $(this).find('td.inflection').removeClass('inflection').addClass('tested');
+				    }
+
+				});
+			</script>";
+
+}
+
+
+// Check whether a certain field should be excluded from a table or not
+
+function pExcludeFromInflections($exclude_table, $from_table, $exclude_id, $from_id){
+
+	$check = pQuery("SELECT id FROM inflections_exclude_from_table WHERE exclude_table = '$exclude_table' AND from_table = '$from_table' AND exclude_id = '$exclude_id' AND from_id = '$from_id';");
+
+
+
+	if($check->rowCount() == 0)
+		return false;
+	return true;
+}
