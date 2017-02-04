@@ -40,8 +40,8 @@
 	$donut['page']['content'] = array();
 	$donut['db'] = $db;
 	$donut['db_prefix'] = "";
-	$donut['enable_query_caching'] = 1;
-	$donut['query_caching_time'] = 3*60*60;
+	$donut['enable_query_caching'] = 0;
+	$donut['query_caching_time'] = 5*60;
 	$donut['session_auth'] = md5("kjj8f99e9iwj32ikm8391pok389iokn");
 
 ##	These variables are the paths to the site root.
@@ -63,6 +63,8 @@
 			$hash = hash('ripemd160', sha1($hash.$salt.$userdata).$userdata.sha1($salt));
 		return $hash;
 	}
+
+
 ##	Function to check if a string starts with a certain piece of string
 
 function pStartsWith($haystack, $needle)
@@ -119,7 +121,18 @@ function pEndsWith($haystack, $needle)
 	}
 
 	require $donut['root_path'].'/library/assets/php/vendors/str.php';
+	require $donut['root_path'].'/library/assets/php/vendors/HashGenerator.php';
+	require $donut['root_path'].'/library/assets/php/vendors/Hashids.php';
 	
+	$donut['hashid'] = new Hashids\Hashids("pol0.1");
+
+	function pHashId($hash, $decode = false){
+		global $donut;
+		if($decode)
+			return $donut['hashid']->decode($hash);
+		return $donut['hashid']->encode($hash); 
+	}
+
 	function pStr($str, $charset = null) {
 	    return new \Delight\Str\Str($str, $charset);
 	}

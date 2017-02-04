@@ -28,7 +28,7 @@
 		if(isset($_GET['alphabetsearch']))
 			$url = 'index.php?alphabet=' . $_GET['alphabetsearch'];
 		elseif(isset($_GET['wordsearch']))
-			$url = 'index.php?word=' . $_GET['wordsearch'];
+			$url = 'index.php?lemma=' . pHashId($_GET['wordsearch']);
 		else
 			$url = 'index.php?home';
 
@@ -88,8 +88,10 @@
 			{
 
 	
-				if(!in_array($translation->word_id, $donut['taken_care_of']))
-					echo "<div class='loadDelete'></div>".pWordShowNative($translation, $slang, isset($_GET['wordsonly']));
+				if(!in_array($translation->word_id, $donut['taken_care_of'])){
+
+					echo "<div class='loadDelete'></div>".pWordShowNative($translation, (($slang == 0) ? $rlang : $slang), isset($_GET['wordsonly']));
+				}
 
 			}
 	}

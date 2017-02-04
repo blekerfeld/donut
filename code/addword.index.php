@@ -19,13 +19,10 @@ if(isset($_REQUEST['ajax'])){
 		if(false)
 		die();		// TODO!!	
 		// At first we are going to insert the word to the database
-		$insert_query = "INSERT INTO words(native, ipa, type_id, classification_id, subclassification_id) VALUES(".$donut['db']->quote($_REQUEST['new_word']).", ".$donut['db']->quote($_REQUEST['ipa']).", ".$donut['db']->quote($_REQUEST['type']).", ".$donut['db']->quote($_REQUEST['classification']).", ".$donut['db']->quote($_REQUEST['subclassification']).");";
-		pQuery($insert_query);
-		
-		// We need to get a hold of the last inserted id
-		$new_word_id = $donut['db']->lastInsertId(); 
 
-		pAddTranslations($_REQUEST['translations'], $new_word_id);
+
+		pAddWord($_REQUEST['new_word'], $_REQUEST['ipa'], $_REQUEST['type'], $_REQUEST['classification'], $_REQUEST['subclassification'], $_REQUEST['translations']);
+		
 
 		echo '<div class="notice succes-notice hide" id="empty" style="margin-bottom: 20px;"><i class="fa fa-check"></i> Entry succesfully added!</div>'."<script>$('#busyadd').fadeOut().delay(1000);$('#empty').show().delay(400).effect('bounce', {duration: 1000});</script>";
 

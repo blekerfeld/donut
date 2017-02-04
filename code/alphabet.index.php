@@ -20,7 +20,18 @@ pOut('<td style="padding-left: 20px;">
       <div class="drop">
      ');
 
-$grapheme = pGetGrapheme($_GET['alphabet']);
+
+if(is_numeric($_REQUEST['alphabet']))
+	$a_get = $_REQUEST['alphabet'];
+elseif(ctype_alnum($_REQUEST['alphabet'])){
+	$a_get = pHashId($_REQUEST['alphabet'], true);
+	$a_get = $a_get[0];
+}
+else
+	pUrl('', true);
+
+
+$grapheme = pGetGrapheme($a_get);
 
 if($grapheme != false){
 

@@ -322,7 +322,7 @@
 		$select = "<select class='$class'>";
 		if($opt_val != '' AND $opt_text != '')
 			$select .= '<option value="'.$opt_val.'" selected>'.$opt_text.'</option>';
-		foreach ($get as $item) {
+		foreach ($get->fetchAll() as $item) {
 			$select .= "<option value='".$item[$value]."'>".$item[$text]."</option>";
 		}
 		$select .= "</select>";
