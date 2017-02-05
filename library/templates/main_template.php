@@ -15,6 +15,7 @@
     <script src="library/assets/js/vendors/jquery.ddslick.js"></script>
     <script src="library/assets/js/vendors/jquery.tooltip.js"></script>
     <script src="library/assets/js/vendors/jquery.datatables.js"></script>
+    <script src="library/assets/js/vendors/jquery.playsound.js"></script>
     <script src="library/assets/js/vendors/jquery.tagsinput.js"></script>
     <script src="library/assets/js/vendors/jquery.select2.js"></script>
     <script src="library/assets/js/vendors/jquery.elastic.js"></script>
@@ -76,6 +77,6 @@
       ?>
       </div>
     </div>
-    <div class='absolute_footer'>Powered by Donut – &copy; 2017 Thomas de Roo<br /></div>
+    <div class='absolute_footer'><a target="_blank" href="https://github.com/blekerfeld/donut" class='tooltip'><i class='fa fa-github fa-10'></i>/blekerfeld/donut</a> – &copy; 2017 Thomas de Roo</div>
   </body>
  </html>

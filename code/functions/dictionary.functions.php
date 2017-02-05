@@ -180,14 +180,15 @@
 		}
 	}
 
-	function pGetTranslations($word_id, $search = '', $language_id, $clone = false, $clone_id = 0){
+	function pGetTranslations($word_id, $search = '', $language_id, $clone = false, $clone_id = 0)
+	{
 
 		global $donut;
 
 		if(!$clone)
 			return pQuery("SELECT *, translations.id AS real_id FROM translations INNER JOIN translation_words ON translations.id = translation_words.translation_id WHERE translation_words.word_id = $word_id AND translations.language_id = $language_id;");
 		else{
-			return pQuery("SELECT *, , translations.id AS real_id FROM translations INNER JOIN translation_words ON translations.id = translation_words.translation_id WHERE (translation_words.word_id = $word_id OR translation_words.word_id = $clone_id) AND translations.language_id = $language_id;");
+			return pQuery("SELECT *, translations.id AS real_id FROM translations INNER JOIN translation_words ON translations.id = translation_words.translation_id WHERE translation_words.word_id = '$word_id' AND translations.language_id = $language_id;");
 		}
 
 	}
@@ -349,8 +350,7 @@
 		if(!$clone)
 			return pQuery("SELECT * FROM translations INNER JOIN translation_words ON translations.id = translation_words.translation_id WHERE translation_words.word_id = $word_id $lang_text  Order By language_id DESC;");
 		else
-			return pQuery("SELECT * FROM translations INNER JOIN translation_words ON translations.id = translation_words.translation_id WHERE (translation_words.word_id = $clone_id OR translation_words.clone_id) $lang_text Order By language_id DESC;");
-
+			return pQuery("SELECT * FROM translations INNER JOIN translation_words ON translations.id = translation_words.translation_id WHERE translation_words.word_id = $clone_id $lang_text  Order By language_id DESC;");
 
 	}
 
