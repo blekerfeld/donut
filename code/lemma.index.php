@@ -128,7 +128,12 @@ else{
 		// IPA
 
 		if($word->ipa != '')
-			pOut('<span class="pSectionTitle extra">Pronounciation</span><div class="pSectionWrapper"><span class="pPron">/'.html_entity_decode(($word->ipa)).'/</span></div>');
+			pOut('<span class="pSectionTitle extra">Pronounciation</span><div class="pSectionWrapper"><span class="pPron">/'.html_entity_decode(($word->ipa)).'/</span>'); 
+
+		// Audio
+		pOut(pGetAudioPlayers($word->id));
+
+		pOut('</div>');
 
 
 

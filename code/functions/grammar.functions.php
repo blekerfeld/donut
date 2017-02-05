@@ -522,10 +522,10 @@ function pGetModes($type = 0, $template = 0, $offset = ''){
 		$q = "SELECT * FROM modes ORDER BY id ASC $offset";
 	}
 	elseif($type == 0 and $template > 0)
-		$q = "SELECT * FROM modes  WHERE type_id = $template $offset";
+		$q = "SELECT * FROM modes  WHERE mode_type_id = $template $offset";
 	else
 		$q = "SELECT * FROM mode_apply WHERE type_id = ".$type." $offset";
-	
+
 
 	$rs = pQuery($q);
 	$results = array();

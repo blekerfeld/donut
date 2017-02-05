@@ -425,7 +425,7 @@ function pAllInflections($word, $type){
 					$submode_name = pGetSubmodeNative($submode, $number);
 		
 
-					$td_contents .= '<tr><td class="singa rowname">'.$submode_name.'</td>';
+					$td_contents .= '<tr class="mode_'.$mode->id.'_number_'.$number->id.'"><td class="singa rowname">'.$submode_name.'</td>';
 
 					$gotten_classifications = array();
 					$show_classification_name = false;
@@ -479,44 +479,14 @@ function pAllInflections($word, $type){
 
 					
 					if (strpos($td_contents, '@//DISABLE\\') === false)
-					    $output .= $td_contents;
-
-
-			$output .= "<script>
-			var seen = {};
-
-			$('.inside_".$submode->id." tr:has(\"td.inflection\")').each(function() {
-				var appendTxt = '';
-				var restore = {};
-			    var txt = $(this).find('td.inflection').text();
-			    var txt_name = $(this).find('td.rowname').text();
-			    if (seen[txt] && $(this).children().length != 1){
-
-			    	$(this).hide();
-			    	
-			        var results = $('.mode_".$mode->id." tr td.tested').filter(function() {
-			            return $(this).text() === txt;
-			        });
-
-			        selector = 'td.rowname:not(:contains(\"'+ txt_name +'\"))';
-
-			        ding = results.parent().find(selector);
-					
-					appendTxt = '/' + txt_name;
-					ding.append(appendTxt);
-					$(this).find('td.inflection').removeClass('inflection');
-					
-			    }
-			    else{
-			        seen[txt] = true;
-			        $(this).find('td.inflection').removeClass('inflection').addClass('tested');
-			    }
-
-			});
-
-			</script>";
+					    $output .= $td_contents; 
 
 					}
+				
+
+
+					$output .= pJSCompactTables($number->id, 'mode_'.$mode->id.'_number_');
+
 				}
 
 						$output .=  '</table></div>';
@@ -524,7 +494,7 @@ function pAllInflections($word, $type){
 
 			// The javascript to remove duplicate inflections
 
-			$output .= pJSCompactTables($mode->id);
+
 			
 
 		}
@@ -536,11 +506,11 @@ function pAllInflections($word, $type){
 }
 
 
-function pJSCompactTables($id, $prefix = "mode_"){
+function pJSCompactTables($id, $prefix = "number_"){
 	return "<script>
 				var seen = {};
 
-				$('.".$prefix.$id." tr:has(\"td.inflection\")').each(function() {
+				$('tr.".$prefix.$id.":has(\"td.inflection\")').each(function() {
 					var appendTxt = '';
 					var restore = {};
 				    var txt = $(this).find('td.inflection').text();
@@ -549,7 +519,7 @@ function pJSCompactTables($id, $prefix = "mode_"){
 
 				    	$(this).hide();
 				    	
-				        var results = $('.".$prefix.$id." tr td.tested').filter(function() {
+				        var results = $('tr.".$prefix.$id."  td.tested').filter(function() {
 				            return $(this).text() === txt;
 				        });
 

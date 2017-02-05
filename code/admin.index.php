@@ -78,7 +78,6 @@
 	if(isset($_REQUEST['section']) AND in_array($_REQUEST['section'], $subsection_grammar))
 		pOut('
 			<div class="adminsubmenu">
-				<span class="dots">. . .</span>
 				<a href="'.pUrl('?admin&section=types').'" '.pAMenuLink('types').'><i class="fa fa-folder"></i> Lexical categories</a>
 				<a href="'.pUrl('?admin&section=classifications').'" '.pAMenuLink('classifications').'><i class="fa fa-code-fork "></i> Grammatical divisions</a>
 				<a href="'.pUrl('?admin&section=subclassifications').'" '.pAMenuLink('subclassifications').'><i class="fa fa-tags "></i> Grammatical tags</a>
@@ -96,7 +95,6 @@
 	if(isset($_REQUEST['section']) AND in_array($_REQUEST['section'], $subsection_inflections))
 		pOut('
 			<div class="adminsubmenu">
-				<span class="dots">. . .</span>
 				<a href="'.pUrl('?admin&section=rule_groups').'" '.pAMenuLink('rule_groups').'><i class="fa fa-object-group "></i> Inflection groups</a>
 				<a href="'.pUrl('?admin&section=regular_inflections').'" '.pAMenuLink('regular_inflections').'><i class="fa fa-industry"></i> Regular inflections</a>
 				<a href="'.pUrl('?admin&section=irregular_inflections').'" '.pAMenuLink('irregular_inflections').'><i class="fa fa-eyedropper"></i> Irregular Inflections</a>
@@ -112,8 +110,6 @@
 	if(isset($_REQUEST['section']) AND in_array($_REQUEST['section'], $subsection_dictionary))
 		pOut('
 			<div class="adminsubmenu">
-				<span class="dots">. . .</span>
-
 				<a href="'.pUrl('?admin&section=words').'" '.pAMenuLink('words').'><i class="fa fa-font"></i> Word entries</a>
 				<a href="'.pUrl('?admin&section=translations').'" '.pAMenuLink('translations').'><i class="fa fa-globe"></i> Translations</a>
 				<a href="'.pUrl('?admin&section=examples').'" '.pAMenuLink('examples').'><i class="fa fa-quote-right"></i> Examples</a>
@@ -130,8 +126,6 @@
 	if(isset($_REQUEST['section']) AND in_array($_REQUEST['section'], $subsection_phonology))
 		pOut('
 			<div class="adminsubmenu">
-				<span class="dots">. . .</span>
-
 				<a href="'.pUrl('?admin&section=inventory').'" '.pAMenuLink('inventory').'><i class="fa fa-archive"></i> Phonological inventory</a>
 				<a href="'.pUrl('?admin&section=examples').'" '.pAMenuLink('examples').'><i class="fa fa-quote-right"></i> Examples</a>
 				<a href="'.pUrl('?admin&section=descriptions').'" '.pAMenuLink('descriptions').'><i class="fa fa-info-circle"></i> Descriptions</a>
@@ -146,8 +140,6 @@
 	if(isset($_REQUEST['section']) AND in_array($_REQUEST['section'], $subsection_settings))
 		pOut('
 			<div class="adminsubmenu">
-				<span class="dots">. . .</span>
-
 				<a href="'.pUrl('?admin&section=settings').'" '.pAMenuLink('settings').'><i class="fa fa-wrench"></i> Settings</a>
 				<a href="'.pUrl('?admin&section=languages').'" '.pAMenuLink('languages').'><i class="fa fa-language"></i> Languages</a>
 

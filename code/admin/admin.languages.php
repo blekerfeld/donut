@@ -1,4 +1,4 @@
-z<?php
+<?php
 /* 
 	Donut
 	Dictionary Toolkit
@@ -46,7 +46,7 @@ z<?php
 			                  $('.lang_name').val('');
 			                  $('.lang_native').val('');
 			                  $('.lang_flag').val('');
-			                  $('.flagimage').attr('src', '".purl('pol://library/flags/undef.png')."');
+			                  $('.flagimage').attr('src', '".purl('pol://library/images/flags/undef.png')."');
 			                });	
         				</script>";
      				}
@@ -135,7 +135,7 @@ z<?php
 				</tr>
 				<tr>
 					<td style='width: 150px;'><strong>Flag</strong></td>
-					<td><img class='flagimage' src='".purl('pol://library/flags/undef.png')."' /> <input  style='width:50%'  class='lang_flag' type='text' />.png</td>
+					<td><img class='flagimage' src='".purl('pol://library/images/flags/undef.png')."' /> <input  style='width:50%'  class='lang_flag' type='text' />.png</td>
 				</tr>
 				<tr>
 					<td style='width: 150px;'><strong>Dictionary entry</strong></td>
@@ -157,11 +157,11 @@ z<?php
 
 					$('.lang_flag').change(function() {
 
-				$.get('".purl('pol://library/flags/')."' + $('.lang_flag').val() + '.png')
+				$.get('".purl('pol://library/images/flags/')."' + $('.lang_flag').val() + '.png')
 				    .done(function() { 
-				        $('.flagimage').attr('src', '".purl('pol://library/flags/')."' + $('.lang_flag').val() + '.png');
+				        $('.flagimage').attr('src', '".purl('pol://library/images/flags/')."' + $('.lang_flag').val() + '.png');
 				    }).fail(function() { 
-				       $('.flagimage').attr('src', '".purl('pol://library/flags/undef.png')."');
+				       $('.flagimage').attr('src', '".purl('pol://library/images/flags/undef.png')."');
 				})
 			});
 
@@ -192,7 +192,7 @@ z<?php
 				</tr>
 				<tr>
 					<td style='width: 150px;'><strong>Flag</strong></td>
-					<td><img class='flagimage' src='".purl('pol://library/flags/'.$language->flag.'.png')."' /> <input  style='width:50%'  class='lang_flag' type='text' value='".html_entity_decode($language->flag)."' />.png</td>
+					<td><img class='flagimage' src='".purl('pol://library/images/flags/'.$language->flag.'.png')."' /> <input  style='width:50%'  class='lang_flag' type='text' value='".html_entity_decode($language->flag)."' />.png</td>
 				</tr>
 				<tr>
 					<td style='width: 150px;'><strong>Dictionary entry</strong></td>
@@ -224,11 +224,11 @@ z<?php
      		 });
 			$('.lang_flag').change(function() {
 
-				$.get('".purl('pol://library/flags/')."' + $('.lang_flag').val() + '.png')
+				$.get('".purl('pol://library/images/flags/')."' + $('.lang_flag').val() + '.png')
 				    .done(function() { 
 				        $('.flagimage').attr('src', '".purl('pol://library/flags/')."' + $('.lang_flag').val() + '.png');
 				    }).fail(function() { 
-				       $('.flagimage').attr('src', '".purl('pol://library/flags/undef.png')."');
+				       $('.flagimage').attr('src', '".purl('pol://library/images/flags/undef.png')."');
 				})
 			});
 			</script>");
@@ -260,7 +260,7 @@ z<?php
 
 		pOut("<tr>
 					<td><b><i>Dictionary language</i></b></td>
-					<td><img src='".pUrl('pol://library/flags/'.$zero_language->flag.'.png')."' /></td>
+					<td><img src='".pUrl('pol://library/images/flags/'.$zero_language->flag.'.png')."' /></td>
 					<td><span class='language-status-check'><i class='fa fa-12 fa-check'></i> Enabled</span></td>
 					<td>$zero_language->name</td>
 					<td>$zero_language->hidden_native_entry</td>
@@ -281,7 +281,7 @@ z<?php
 
 			pOut("<tr>
 				<td>$language->id</td>
-				<td><img src='".pUrl('pol://library/flags/'.$language->flag.'.png')."' /></td>
+				<td><img src='".pUrl('pol://library/images/flags/'.$language->flag.'.png')."' /></td>
 				<td><span class='language-status-$status[0]'><i class='fa fa-12 fa-$status[0]'></i> $status[1]</td>
 				<td>$language->name</td>
 				<td>$language->hidden_native_entry</td>

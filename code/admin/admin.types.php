@@ -246,7 +246,8 @@
 
 		// table head
 
-		pOut("<span class='floatright'>".ADMIN_PAGE.": ".$offset_system['select_box']."</span>
+		pOut("
+
 			<a class='actionbutton' href='".pUrl('?admin&section=types&action=add_type')."'><i class='fa fa-plus-circle' style='font-size: 12px!important;'></i> Add part of speech</i></a>".$offset_system['back_button'].$offset_system['next_button']."
 			<br />
 			<br />
@@ -293,7 +294,7 @@
 
 		// table end
 
-		pOut('</table><br />'."<span class='floatright'>".ADMIN_PAGE.": ".$offset_system['select_box']."</span><a class='actionbutton' href='".pUrl('?admin&section=types&action=add_type')."'><i class='fa fa-plus-circle' style='font-size: 12px!important;'></i> Add part of speech</i></a>".$offset_system['back_button'].$offset_system['next_button'].'<br /><br />');
+		pOut('</table><br />'."<span class='floatright'>".ADMIN_PAGE.$offset_system['select_box']."</span><a class='actionbutton' href='".pUrl('?admin&section=types&action=add_type')."'><i class='fa fa-plus-circle' style='font-size: 12px!important;'></i> Add part of speech</i></a>".$offset_system['back_button'].$offset_system['next_button'].'<br /><br />');
 
 	}
 

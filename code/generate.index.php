@@ -338,11 +338,11 @@ die();
 }
 else{
 
-	pOut('<span class="title_header">Generate dictionary TEX-file</span><br /><br />', true);
+	pOut("<span class='title_header'><a class='actionbutton' href='".pUrl('?admin')."'><i class='fa fa-tasks' style='font-size: 12px!important;'></i> <i class='fa fa-arrow-left' style='font-size: 12px!important;'></i> Back to manage</a></span><br /><br />", true);
 
 	$languages = pGetLanguages(true);
 
-	$languages_select = '<select id="lang">';
+	$languages_select = '<select class="btInput select2" id="lang">';
 
 	foreach($languages as $lang){
 		$languages_select .= '<option value="'.$lang['id'].'">'.$lang['name'].'</option>';
@@ -353,34 +353,29 @@ else{
 	pOut('<div style="width: 74%;margin: 0 auto;" class="notice hide" id="busyadd" ><i class="fa fa-spinner fa-spin"></i> Generating dictionary...</div>
        		<div style="width: 74%;margin: 0 auto;" class="ajaxloadadd"></div>');
 
-	pOut("<div class='notice' style='width: 74%;margin: 0 auto;display:block;'><strong><i class='fa fa-12 fa-info-circle'></i> Information </strong><br />
-		This page allows you to generate a LaTeX file containting a bilingual dictionary. Please note that this file still needs to be compiled in a LaTeX engine, XeLaTeX is the recommended typesetting engine, because of the Unicode support. Alternatively, you can convert the tex file to a pdf online <a href='https://cloudconvert.com/tex-to-pdf'>here</a>.
-		</div><BR />
-		<table class='admin' id='empty' style='width:75%'>
-				<tr class='title'>
-					<td style='width: 100px;'><a class='actionbutton' href='".pUrl('?admin')."'><i class='fa fa-tasks' style='font-size: 12px!important;'></i> <i class='fa fa-arrow-left' style='font-size: 12px!important;'></i> Back to manage</a></td>
-					<td colspan=2>Generate dictionary TEX-file</td>
-				</tr>
-				<tr><td></td><td></td></tr>
-				<tr>
-					<td style='width: 150px;'><strong>Secondary language</strong></td>
-					<td>$languages_select</td>
-				</tr>
-				<tr>
-					<td><strong>Subtile</strong></td>
-					<td><input style='width: 200px;' class='subtitle' type='text' /></td>
-				</tr>
-				<tr>
-					<td><strong>Author</strong></td>
-					<td><input style='width: 200px;' class='author' type='text' /></td>
-				</tr>
-				<tr><td></td><td></td></tr>
-				<tr>
-					<td></td>
-					<td>".'<a class="button remember" id="generatebutton" href="javascript:void(0);"><i class="fa-12 fa-refresh"></i> Generate dictionary</a>'."<br /></td>
-				</tr>
-				<tr><td></td><td></td></tr>
-			</table><br /><br />");
+	pOut("
+		<div class='btCard'>
+		<div class='btTitle'>Generate dictionary TEX-file</div>
+				<div class='notice'><strong><i class='fa fa-12 fa-info-circle'></i> Information </strong><br />
+			This page allows you to generate a LaTeX file containting a bilingual dictionary. Please note that this file still needs to be compiled in a LaTeX engine, XeLaTeX is the recommended typesetting engine, because of the Unicode support. Alternatively, you can convert the tex file to a pdf online <a href='https://cloudconvert.com/tex-to-pdf'>here</a>.
+			</div>
+			<div class='btSource'><span class='btLanguage'>Secondary language</span><br />
+			<span class='btNative'>$languages_select</span></div>
+
+			<div class='btSource'><span class='btLanguage'>Subtitle</span><br />
+				<span class='btNative'><input style='width: 60%;' class=' btInput nWord subtitle' type='text' /></span></div>
+
+			<div class='btSource'><span class='btLanguage'>Author</span><br />
+			<span class='btNative'><input style='width: 60%;' class='btInput nWord  author' type='text' /></span></div>
+
+
+					<div class='btButtonBar'>
+						<a class='btAction green submit' id='generatebutton' href='javascript:void(0);''><i class='fa-12 fa-refresh'></i> Generate </a> 
+						<br id='cl'/>
+					</div>
+
+		</div>
+				");
 
 	pOut("<script>$('#generatebutton').click(function(){
 		        $('#busyadd').fadeIn();

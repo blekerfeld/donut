@@ -33,7 +33,7 @@ define('FOOTER_PAGE_GENERATED', 'Page generated in %s ms with %s queries.');
 // Menu strings
 define('MMENU_DICTIONARY', "Dictionary");
 define('MMENU_MANAGE', "Control panel");
-define('MMENU_EDITORLANG', "Editor languge: ");
+define('MMENU_EDITORLANG', "Editor language: ");
 define('MMENU_EDITORLANGCHANGE', "Change");
 define('MMENU_LOGGEDIN', "Welcome, 	");
 define('MMENU_LOGIN', "Editor log in");
