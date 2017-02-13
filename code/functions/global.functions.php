@@ -151,7 +151,7 @@
 			}
 
 			var buildUrl = function(base, key) {
-			    var sep = (base.indexOf('?') > -1) ? '&' : '?';
+			    var sep = (base.indexOf('?') > -1) ? '&' : '".($donut['rewrite'] ? '&' : '?') ."';
 			    return base + sep + key;
 			}
 
@@ -265,65 +265,50 @@
 	}
 
 
-	function pSearchArea($search = '', $word = false){
+
+	function pDictionaryHeader($search = ''){
 
 
+		pOut('<span class="float-right" style="padding-right: 24px;important;display: block;">
+				<input id="wholeword" class="checkbox-wholeword xsmall" name="wholeword" type="checkbox" checked>
+        <label for="wholeword"class="checkbox-wholeword-label small">exact match</label>  
+			</span>', true);
 
-		pOut('
-			<td style="width:280px;">
-			<script>var dic = "";</script>
-			<div class="title"><div class="icon-box throw"><i class="fa fa-search"></i></div> Search the dictionary</div><br />
-			<input type="hidden" id="dictionary" value="engdov"/> 
-			<select id="selectdic">
-			');
+		pOut(pAlphabetBar(), true);
+
+		$select = ' 
+		<select id="dictionary">';
 
 		$languages = pGetLanguages(true);
 		$native_name = pLanguageName(0);
-
 		$lang_zero = pGetLanguageZero();
-
-		//pOut('<option value="0_0" data-imagesrc="flags.php?flag_1=undef&flag_2='.$lang_zero->flag.'" data-description="use this dictionary" '.((isset($_SESSION['search_language']) AND ($_SESSION['search_language'] == '0_0')) ? ' selected ' : '').'>'.$native_name.'</option>');
-
 
 		while($language = $languages->fetchObject()){
 
-			pOut('<option value="'.$language->id.'_0"  data-description="search this dictionary" '.((isset($_SESSION['search_language']) AND ($_SESSION['search_language'] == $language->id.'_0')) ? ' selected ' : '').'>'.$language->name.' - '.$native_name.'</option>
-			<option value="0_'.$language->id.'" data-description="search this dictionary" '.((isset($_SESSION['search_language']) AND ($_SESSION['search_language'] == '0_'.$language->id)) ? ' selected ' : '').'>'.$native_name.' - '.$language->name.'</option>');
+			$select .= '<option value="'.$language->id.'_0" '.((isset($_SESSION['search_language']) AND ($_SESSION['search_language'] == $language->id.'_0')) ? ' selected ' : '').'>'.$language->name.' - '.$native_name.'</option>
+			<option value="0_'.$language->id.'" '.((isset($_SESSION['search_language']) AND ($_SESSION['search_language'] == '0_'.$language->id)) ? ' selected ' : '').'>'.$native_name.' - '.$language->name.'</option>';
 
 		}
 
 
-	      pOut('</select><script>$("#selectdic").ddslick({
-		    onSelected: function(selectedData){
-		       $("#dictionary").val(selectedData.selectedData.value);
-		    }   
-		});</script><br /><input type="text" id="wordsearch" placeholder="Enter a keyword" value="'.$search.'"/> <a class="button  remember" id="searchb" href="javascript:void(0);"><i class="fa fa-search" style="font-size: 12px!important;"></i> Search</a><br />
-		
-		<input id="wholeword" class="checkbox-wholeword" name="wholeword" type="checkbox" checked>
-        <label for="wholeword"class="checkbox-wholeword-label">whole words</label>  
+	      $select .= '</select><script>$("#dictionary").select2({
+			  placeholder: ""
+			});</script>';
 
-		<div class="moveResults"></div><br id="cl"/>
-		</td>');
-
-	      return true;
-
+		pOut('
+			<div class="hSearch">'.$select.'
+				<input type="text" id="wordsearch" class="big" placeholder="Enter a keyword" value="'.$search.'"/>
+			<a class="button search  remember" id="searchb" href="javascript:void(0);"><i class="fa fa-search" style="font-size: 12px!important;"></i> '.DICT_SEARCH.'</a><br id="cl" /></div><br id="cl" />', true);	
 	}
 
-	function pDictionaryHeader(){
-
-		pOut(pAlphabetBar().'<span class="title_header"><div class="icon-box white-icon"><i class="fa fa-book"></i></div> '.DICT_TITLE.'</span><br /><br />
-      ', true);
-
-	}
-
-	function pPrepareSelect($function_name, $class, $value, $text, $opt_val = '', $opt_text = ''){
+	function pPrepareSelect($function_name, $class, $value, $text, $opt_val = '', $opt_text = '', $control = -1){
 
 		$get = $function_name();
 		$select = "<select class='$class'>";
 		if($opt_val != '' AND $opt_text != '')
 			$select .= '<option value="'.$opt_val.'" selected>'.$opt_text.'</option>';
 		foreach ($get->fetchAll() as $item) {
-			$select .= "<option value='".$item[$value]."'>".$item[$text]."</option>";
+			$select .= "<option value='".$item[$value]."' ".(($control == $item[$value]) ? "selected" : "").">".$item[$text]."</option>";
 		}
 		$select .= "</select>";
 		return $select;
@@ -417,3 +402,57 @@ function pPlural($amount, $singular = '', $plural = 's' ) {
     return $amount." ".$plural;
 }
 
+
+function pSearchScript($extra = ''){
+	return '<script>
+      	$("#searchb").click(function(){
+      		$(".page").show();
+      		$("#loading").slideDown(400);
+      		$("#pageload").show();
+      		$(".ajaxload").slideUp();
+      		$(".drop").hide();
+	      		$(".ajaxload").load("'.pUrl('?getword&ajax'.$extra).'", {"word": $("#wordsearch").val(), "dict": $("#dictionary").val(), "wholeword":  $("#wholeword").is(":checked")}, function(){$(".ajaxload").slideDown(function(){
+	      								 $("#pageload").delay(100).hide(400);
+	      								 $("#loading").slideUp(400);
+	      		})}, function(){
+      		});
+      		if($("#wordsearch").val() != ""){
+      			window.history.pushState("string", "", "?search=" + $("#wordsearch").val());
+      		}
+      		else{
+      			window.history.pushState("string", "", "?home");
+      		}
+      		
+      	});
+      </script>'."<script>
+		$(document).ready(function(){
+
+			$('.drop').slideDown();
+
+		});
+		$('#wordsearch').keydown(function(e) {
+			    switch (e.keyCode) {
+			        case 13:
+			        if($('#wordsearch').is(':focus'))
+			        {
+			        	$('#searchb').click();
+			        }
+
+			    }
+			    return; 
+			});</script>";
+}
+
+	function pNoticeBox($icon, $message, $type='notice', $id=''){
+		return '<div class="'.$type.'" id="'.$id.'"><i class="fa '.$icon.'"></i> '.$message.'<br /><br /></div>';
+	}
+
+	function pMempty()
+	{
+	    foreach(func_get_args() as $arg)
+	        if(empty($arg))
+	            continue;
+	        else
+	            return false;
+	    return true;
+	}

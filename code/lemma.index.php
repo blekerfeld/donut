@@ -8,23 +8,41 @@ if(isset($_REQUEST['discuss-lemma']) and pLogged()){
 	return;
 }
 
-// Template stuff
-pDictionaryHeader();
+if(isset($_REQUEST['edit-lemma']) and !pLogged())
+	pUrl("?lemma=".$_REQUEST['edit-lemma']);
 
+if(isset($_REQUEST['edit-lemma']) and isset($_REQUEST['ajax']) AND isset($_REQUEST['action']) and pLogged()){
+	if(file_exists(pFromRoot('code/lemma.edit_'.$_REQUEST['action'].'.php')))require_once pFromRoot('code/lemma.edit_'.$_REQUEST['action'].'.php');
+	else
+		pUrl('', true);
+	return;
+}
 
-pOut('<table class="noshow" style="width:100%;"><tr>');
-	
 // Search area
 if(isset($_GET['searchresult']))
-	pSearchArea($_SESSION['search'], true);
+	pDictionaryHeader($_SESSION['search']);
 else
-	pSearchArea('', true);
+	pDictionaryHeader('');
 
 // Start the layout stuff
 
-pOut('<td style="padding-left: 20px;"><div class="notice hide" style="display: none;" id="loading"><i class="fa fa-spinner fa-spin"></i> Loading...</div>
+pOut('<div class="home-margin"><div class="notice hide" style="display: none;" id="loading"><i class="fa fa-spinner fa-spin"></i> '.LOADING.'</div>
 	<br id="cl loading" style="display: none;"/><div class="ajaxload" style="display: none;"></div>
       <div class="drop">');
+
+
+
+if(isset($_REQUEST['edit-lemma']) and !isset($_REQUEST['lemma'])){
+	$_REQUEST['lemma'] = $_REQUEST['edit-lemma'];
+	$editMode = true;
+	$edit_field = "edit-field";
+	$edit = '<i class="edit fa fa-10 fa-pencil-square-o "></i>';
+}
+else{
+	$editMode = false;
+	$edit_field = "";
+	$edit = "";
+}
 
 // Get noun
 if($_REQUEST['lemma'] == '')
@@ -40,37 +58,52 @@ elseif(ctype_alnum($_REQUEST['lemma'])){
 }
 
 $rs = pQuery("SELECT * FROM words WHERE id = ".$lemma."");
-if(!$word = $rs->fetchObject()){
-	pOut('<div class="notice danger-notice" id="empty"><i class="fa fa-warning"></i> The requested word doesn\'t exist.</div>');
+
+$word = $rs->fetchObject();
+
+if($word == false){
+	pOut('<div class="notice danger-notice" id="empty"><i class="fa fa-warning"></i> '.LEMMA_ERROR.' (Lemma: '.pHashId($lemma).')</div>');
+	goto end;
 }
 else{
-
 	// Page title, we may need to force it through again later
 	$donut['page']['title'] = $word->native." - ".$donut['page']['title']; 
 	
 	// Lemma-code
-	pOut('<a class="lemma-code floatright" title="'.$lemma.'"><i class="fa fa-bookmark-o"></i> '.pHashId($lemma).'</a>');
-
+	pOut('<a class="lemma-code float-right" href="'.pUrl('?lemma='.pHashId($word->id)).'"title="'.$word->id.'"><i class="fa fa-bookmark-o"></i> '.pHashId($word->id).'</a>');
+	// Discussion button
+	if(pLogged())
+		pOut('
+			<a class="lemma-code discussion float-right" href="'.pUrl('?edit-lemma='.$_REQUEST['lemma']).'"><i class="fa fa-pencil-square-o "></i> '.LEMMA_EDIT.'</a><a class="lemma-code discussion float-right" href="'.pUrl('?discuss-lemma='.$_REQUEST['lemma']).'"><i class="fa fa-comments"></i> '.WD_TITLE.'</a>
+			');
 
 	// Title
-
-	pOut('<div class="title"><div class="icon-box fetch"><i class="fa fa-bookmark"></i></div> Dictionary entry</div><br />');
 
 
 
 	if(!isset($_REQUEST['ajaxOUT']))
 		if(isset($_GET['searchresult']))
-			pOut("<a class='actionbutton' href='".pUrl('?home&search='.urlencode($_SESSION['search']))."');'><i class='fa fa-arrow-left' style='font-size: 12px!important;'></i> Back</i></a> ");
+			$url = "href='".pUrl('?home&search='.urlencode($_SESSION['search']))."'";
+
 		elseif(isset($_GET['alphabetresult']))
-			pOut("<a class='actionbutton' href='".pUrl('?alphabet='.$_GET['alphabetresult'])."'><i class='fa fa-arrow-left' style='font-size: 12px!important;'></i> Back</i></a> ");
+			$url = "href='".pUrl('?alphabet='.$_GET['alphabetresult'])."'";
 		else
-			pOut("<a class='actionbutton' ".((isset($_SERVER['HTTP_REFERER'])) ? ("href='".$_SERVER['HTTP_REFERER']."'") : 'onClick="window.history.back();"')."><i class='fa fa-arrow-left' style='font-size: 12px!important;'></i> Back</i></a> ");
+			$url = ((isset($_SERVER['HTTP_REFERER'])) ? ("href='".$_SERVER['HTTP_REFERER']."'") : 'href="javascript:void();" onClick="window.history.back();"');
 
-	// Discussion button
-	if(pLogged())
-		pOut('<a class="actionbutton" href="'.pUrl('?discuss-lemma='.$_REQUEST['lemma']).'"><i class="fa fa-comments"></i> '.WD_TITLE.'</a><br /><br />');
+}
 
+		if($editMode)
+			pOut('<div class="title"><div class="icon-box fetch"><i class="fa fa-pencil"></i></div>'.LEMMA_EDIT_MODE.'</div><br />'."<a class='float-left back-mini search' href='".((isset($_REQUEST['action']) ? pUrl('?edit-lemma='.$_REQUEST['edit-lemma']) : pUrl('?lemma='.$_REQUEST['edit-lemma'])))."'><i class='fa fa-arrow-left' ></i></a>");
 
+if($word != false AND $editMode and !isset($_REQUEST['ajax']) AND isset($_REQUEST['action']) and pLogged()){
+	if(file_exists(pFromRoot('code/lemma.edit_'.$_REQUEST['action'].'.php')))
+		require_once pFromRoot('code/lemma.edit_'.$_REQUEST['action'].'.php');
+	else
+		pUrl('', true);
+}
+else{
+
+	
 	// Getting languages
 	$language = 
 	$languages = pGetLanguages();
@@ -84,11 +117,6 @@ else{
 		$trans_array[$language->id] = array();
 	}
 
-	// Get word type information
-	$type = pGetType($word->type_id);
-	$classification = pGetClassification($word->classification_id);
-
-
 	// We need to start
 		pOut("<div id='fadeOut_".$word->id."'>");
 
@@ -100,53 +128,85 @@ else{
 				$derivation_name = pDerivationName($word->derivation_name);
 			else
 				$derivation_name = pTypeName($word->derivation_type);
-			$derivation_term = " <span class='pDerivationTitle'><em>".$derivation_name."</em> from <span class='native'><a href='".pUrl('?lemma='.pHashId($derivation_word->id))."'>".$derivation_word->native."</a></span></span>";
+			$derivation_term = "<br /><span class='pDerivationTitle'><em>".$derivation_name."</em> from <span class='native'><a href='".pUrl('?lemma='.pHashId($derivation_word->id))."'>".$derivation_word->native."</a></span></span>";
 		}
+
 		
-
-		pOut("<span class='pSectionTitle'><strong class='pWord' id='ajax_dov_".$word->id."'><a href='".pUrl('?lemma='.pHashId($word->id))."'><span class='native'>".html_entity_decode($word->native)."</span></a></strong>$derivation_term</span><div class='pSectionWrapper'>");
-
-
-
-
-		// Show the type and classification
-		pOut('<em><span class="tooltip" >'.$type->name.'</span></em> ');
-		if(!pTypeInflectClassifications($type->id))
-			pOut('<span class="tooltip" ><em><span class="tooltip" >'.$classification->name.'</em></span></span> ');
-
-		if($word->subclassification_id != 0 and !pTypeInflectClassifications($type->id))
-			pOut('<span class="tooltip" ><em><span class="tooltip" >'.pSubclassificationName($word->subclassification_id).'</em>');
-		pOut('</div>');
-
-
-		// IMAGE
-
-		if($word->image != '')
-			pOut('<span class="pSectionTitle extra">Image</span><div class="pSectionWrapper"><span class="pPron"><img class="pImage" src="'.pUrl('pol://library/entry_images/'.html_entity_decode(($word->image))).'"/></span></div>');
-
-
-		// IPA
-
-		if($word->ipa != '')
-			pOut('<span class="pSectionTitle extra">Pronounciation</span><div class="pSectionWrapper"><span class="pPron">/'.html_entity_decode(($word->ipa)).'/</span>'); 
-
-		// Audio
-		pOut(pGetAudioPlayers($word->id));
-
-		pOut('</div>');
+		// Get word type information
+			$type = pGetType($word->type_id);
+			$classification = pGetClassification($word->classification_id);
 
 
 
-	// The inflection!
-	pOut('<span style="cursor: pointer;" onClick="$(\'.inflections_title\').toggleClass(\'closed\');$(\'.inflections\').slideToggle(\'fast\');$(\'.hideIconInflect\').toggle();$(\'.showIconInflect\').toggle(function(){
-	});"><span class="pSectionTitle extra closed inflections_title">Inflections <span class="showIconInflect"><i class="fa fa-12 fa-chevron-down "></i></span><span class="hideIconInflect hide"><i class="fa fa-12 fa-chevron-up "></i> </span></span></span><div class="pSectionWrapper hide inflections"><div>'.pAllInflections($word, $type)."<br id='cl' /></div></div><br />");
+			pOut("<span class='pSectionTitle float-left first ".(($editMode) ? "editing" : "")."'><strong class='pWord $edit_field' id='ajax_dov_".$word->id."'><a href='".(($editMode) ? pUrl('?edit-lemma='.$_REQUEST['lemma']."&action=basics") : pUrl('?lemma='.$_REQUEST['lemma']))."'><span class='native'>".html_entity_decode($word->native)."</span> ".$edit."</a></strong>$derivation_term<br />");
 
-		$slang = 0; 
-		//  Getting search and return language
-		if(isset($_SESSION['search_language'])){
-			$dict = explode('_', $_SESSION['search_language']);
-			$slang = $dict[0];
+			// Show the type and classification
+			if(!$editMode)
+			pOut('<em class="info"><span class="tooltip '.$edit_field.'" >'.$type->name.' '.$edit.'</span></em> ');
+			else
+				pOut('<em class="info"><a href="'.pUrl('?edit-lemma='.$_REQUEST['lemma']."&action=basics").'" class="tooltip '.$edit_field.'" >'.$type->name.' '.$edit.'</a></em> ');
+			if(!pTypeInflectClassifications($type->id) and $type->inflect_not != 1)
+				if($editMode)
+					pOut('<em class="info"><a href="'.pUrl('?edit-lemma='.$_REQUEST['lemma']."&action=basics").'" class="tooltip '.$edit_field.'" >'.$classification->name.' '.$edit.'</a></em>');
+				else
+					pOut('<em class="info"><span class="tooltip '.$edit_field.'" >'.$classification->name.' '.$edit.'</span></em>');
+
+			if($word->subclassification_id != 0 and !pTypeInflectClassifications($type->id) and $type->inflect_not != 1)
+				if($editMode)
+					pOut('<em class="info"><a href="'.pUrl('?edit-lemma='.$_REQUEST['lemma']."&action=basics").'" class="tooltip " >'.pSubclassificationName($word->subclassification_id).' '.$edit.'</a></em>');
+				else
+					pOut('<span class="tooltip" ><em class="info">'.pSubclassificationName($word->subclassification_id).'</em></span>');
+
+			pOut('</span><br id="cl" />');
+
+	// Back buttons
+		if(!$editMode)
+			pOut("<a class='float-left back-mini' ".$url."'><i class='fa fa-arrow-left' ></i></a><br />");
+
+	// IPA & AUDIO
+
+			if($word->ipa != '' OR $editMode)
+				if($editMode)
+					pOut('<span class="pSectionTitle extra editing">Pronounciation</span><div  style="position: relative;" class="pSectionWrapper editing"><a class="pPron tooltip '.$edit_field.'">/'.html_entity_decode(($word->ipa)).'/ '.$edit.'</a>'); 
+				else
+					pOut('<span class="pSectionTitle extra '.(($editMode) ? "editing" : "").'">Pronounciation</span><div  style="position: relative;" class="pSectionWrapper '.(($editMode AND $word->ipa == '') ? "editing" : "").'"><span class="pPron">/'.html_entity_decode(($word->ipa)).'/</span>'); 
+
+			// Image
+			if($word->image != '')
+				pOut('<img class="pImage '.($editMode ? 'editing' : '').'" src="'.pUrl('pol://library/images/entries/'.html_entity_decode(($word->image))).'"/>');
+
+			// Audio
+			pOut(pGetAudioPlayers($word->id));
+
+			pOut('</div>');	
+
+// The inflection!
+	if(!$editMode and $type->inflect_not != 1)
+		pOut('<span style="cursor: pointer;" onClick="$(\'.inflections_title\').toggleClass(\'closed\');$(\'.inflections\').slideToggle(\'fast\');$(\'.hideIconInflect\').toggle();$(\'.showIconInflect\').toggle(function(){
+		});"><span class="pSectionTitle extra closed inflections_title">'.LEMMA_INFLECTIONS.'<span class="showIconInflect"><i class="fa fa-12 fa-chevron-down "></i></span><span class="hideIconInflect hide"><i class="fa fa-12 fa-chevron-up "></i> </span></span></span><div class="pSectionWrapper hide inflections"><div>'.pAllInflections($word, $type)."<br id='cl' /></div></div><br />");
+	elseif($type->inflect_not != 1 and $editMode)
+		pOut("<span class='pSectionTitle extra editing'>".LEMMA_INFLECTIONS."</span><div class='pSectionWrapper editing'>
+				<a class='actionbutton editing' href='".pUrl('?edit-lemma='.$_REQUEST['lemma'].'&stems')."'><i class='fa fa-tree'></i> ".LEMMA_EDIT_STEMS."</a>
+				<a class='actionbutton editing' href='".pUrl('?edit-lemma='.$_REQUEST['lemma'].'&irregular')."'><i class='fa fa-sliders'></i> ".LEMMA_EDIT_IRREGULAR."</a>
+				</div>");
+
+
+// The Translations
+
+		if(!$editMode){
+			$slang = 0; 
+			//  Getting search and return language
+			if(isset($_SESSION['search_language']) and isset($_REQUEST['searchresult'])){
+				$dict = explode('_', $_SESSION['search_language']);
+				if($dict[0] != 0)
+					$slang = $dict[0];
+				else
+					$slang = $dict[1];
+			}
 		}
+		else
+			$slang = pEditorLanguage($_SESSION['pUser']);
+
 
 
 		// Getting the translations of the original term, if needed
@@ -158,29 +218,40 @@ else{
 
 
 
-		if($all_translations->rowCount() != 0)
+		if($all_translations->rowCount() != 0 OR $editMode)
 		{
 		
-			pOut('<span class="pSectionTitle extra">Meaning and translations</span><div class="pSectionWrapper">');
-			while($show_translation = $all_translations->fetchObject())
-			{
+			pOut('<span class="pSectionTitle extra '.(($editMode) ? "editing" : "").'">'.LEMMA_TRANSLATIONS.'</span><div class="pSectionWrapper '.(($editMode) ? "editing" : "").'">');
 
+			$edit_button = "";
+
+			if($editMode)
+					$edit_button = "<a class='float-right actionbutton editing' href='".pUrl('?translate='.$word->id)."'><i class='fa fa-language'></i> ".LEMMA_EDIT_TRANSLATIONS."</a>";
+
+			while($show_translation = $all_translations->fetchObject())
 				$trans_array[$show_translation->language_id][] = $show_translation;
-			}
+
 
 		}
 
-		
+		$check = 0;
 		foreach($lang_array as $lang){
 
-			if(!@empty($trans_array[$lang->id]) and !pDisabledLanguage($lang->id))
+			if(!@empty($trans_array[$lang->id]) and !pDisabledLanguage($lang->id) )
 			{
+
+				$check++;
+
 				if($lang->id == 0)
-					pOut("<span class='pSectionTitle extra sub'>other meanings/alternate forms in <img class='pFlag' src='".pUrl('pol://library/images/flags/'.$lang->flag.'.png')."' /> 	".$lang->name."</span><ol>");
+					pOut("<span class='pSectionTitle extra sub".(($editMode) ? "editing" : "")."'>".sprintf(LEMMA_TRANSLATIONS_MEANINGS, "<img class='pFlag' src='".pUrl('pol://library/images/flags/'.$lang->flag.'.png')."' /> ".$lang->name)."</span><ol>");
 				else
-					pOut("<span class='pSectionTitle extra sub'>Translations into <img class='pFlag' src='".pUrl('pol://library/images/flags/'.$lang->flag.'.png')."' /> 	".$lang->name."</span><ol>");
+					pOut("<span class='pSectionTitle extra sub ".(($editMode) ? "editing" : "")."'>".sprintf(LEMMA_TRANSLATIONS_INTO, "<img class='pFlag' src='".pUrl('pol://library/images/flags/'.$lang->flag.'.png')."' /> ".$lang->name)."</span><ol>");
+
+
+				pOut($edit_button);
+
 				foreach($trans_array[$lang->id] as $trans){
-					pOut('<li><span>'.(($trans->specification != '') ? (' <em>('.$trans->specification.')</em>') : ('')).' <span href="javascript:void(0);" class="translation trans_'.$trans->id.' tooltip">'.$trans->translation.'</span>');
+					pOut('<li><span>'.(($trans->specification != '') ? (' <em>('.$trans->specification.')</em>') : ('')).' <span href="javascript:void(0);" class="translation trans_'.$trans->translation_id.' tooltip">'.$trans->translation.'</span>');
 					if($description = html_entity_decode(pGetDescription($trans->translation_id)))
 						pOut("<p class='desc'>".$description."</p>");
 					pOut('</span></li>');
@@ -190,37 +261,86 @@ else{
 
 		}
 
-		pOut("</div></div>");
-
-		// Idioms
-
-		$idioms = pGetIdiomsOfWords($word->id);
-		if($idioms->rowCount() != 0){
-			pOut('<span class="pSectionTitle extra">Idiom and examples</span><div class="pSectionWrapper"><ol>');
-			while($idiom = $idioms->fetchObject()){
-				pOut('<li><span class="pIdiom">'.pHighlight($idiom->keyword, $idiom->idiom, '<span class="pIdiomHighlight">', '</span>'));
-				$translations_idiom = pGetTranslationOfIdiomByLang($idiom->idiom_id);
-				if($translations_idiom->rowCount() != 0){
-					pOut("<br />");
-					$count = 0;
-					$max_count = $translations_idiom->rowCount();
-					while ($trans_idiom = $translations_idiom->fetchObject()) {
-						pOut("<span class='pIdiomTranslation'><em>".pLanguageName($trans_idiom->language_id)."</em> ".$trans_idiom->translation."</span>");
-						$count++;
-						if($count > $max_count)
-						{
-							pOut(', ');
-						}
-					}
-				}
-				pOut('</span></li>'); 
-			}
-			pOut('</ol></div>');
+		if($check == 0){
+			pOut("<a class='actionbutton editing' href='".pUrl('?translate='.$_REQUEST['lemma'].'&stems')."'><i class='fa fa-language'></i> ".LEMMA_EDIT_TRANSLATIONS."</a> ");
 		}
 
-		// Derivations
+
+		if($all_translations->rowCount() != 0 OR $editMode)
+			pOut("</div>");
+
+// Idioms
+
+		$idioms = pGetIdiomsOfWords($word->id);
+		if($idioms->rowCount() != 0 OR $editMode){
+			pOut('<span class="pSectionTitle extra '.(($editMode) ? "editing" : "").'">Idiom and examples</span><div class="pSectionWrapper '.(($editMode) ? "editing" : "").'">');
+			if(!$editMode){
+				pOut("<ol>");
+				while($idiom = $idioms->fetchObject()){
+					pOut('<li><span class="pIdiom native">'.pHighlight($idiom->keyword, pMarkDownParse($idiom->idiom), '<span class="pIdiomHighlight">', '</span>'));
+					$translations_idiom = pGetTranslationOfIdiomByLang($idiom->idiom_id);
+					// Audio
+					$audio_p = pGetAudioPlayers($idiom->idiom_id, true);
+					if($audio_p != false)
+						pOut($audio_p);
+					if($translations_idiom->rowCount() != 0){
+						pOut("<br />");
+						$count = 0;
+						$max_count = $translations_idiom->rowCount();
+						while ($trans_idiom = $translations_idiom->fetchObject()) {
+							pOut("<span class='pIdiomTranslation'><em>".pLanguageName($trans_idiom->language_id)."</em> ".$trans_idiom->translation."</span>");
+							$count++;
+							if($count > $max_count)
+							{
+								pOut(', ');
+							}
+						}
+					}
+					pOut('</span></li>'); 
+				}
+				pOut('</ol>');
+				pOut("</div>");
+			}
+			else{
+				pOut("<table class='admin editing' style='width: 100%;'>
+						<thead>
+						<tr class='title' style=''>
+							<td style='width: 60%;'><i class='fa fa-quote-left xsmall'></i>  Example / idiom</td>
+							<td><i class='fa xsmall fa-link'></i> Linked on</td>
+						</tr></thead>
+						<tbody>");
+				if($idioms->rowCount() == 0)
+					pOut("<tr><td>No examples found</td><td> - </td></tr></tbody></table>");
+				else
+					while($idiom = $idioms->fetchObject())
+						pOut("<tr class='ipa'>
+								<td>
+	
+										<a class='float-right actionbutton editing editing xsmall'><i class='fa fa-pencil-square-o'></i> Edit example</a>
+										<a class='tooltip float-right editing small'><i class='fa fa-volume-up'></i> Audio</a>
+										<a class='tooltip small editing float-right'><i class='fa fa-language'></i> Translations  </a>  
+									<span class='pIdiom native'>".pHighlight($idiom->keyword, pMarkDownParse($idiom->idiom), '<span class="pIdiomHighlight">', '</span>')."</span>
+								</td>
+								<td>
+									<a class='float-right actionbutton editing xsmall'><i class='fa fa-times'></i> Delete link</a>
+									<a class='float-right actionbutton editing xsmall'><i class='fa fa-pencil-square-o'></i> Edit link</a>
+									<span class='native pIdiom'>$idiom->keyword</span>
+								</td>
+							</tr>");
+
+
+				pOut("</tbody></table>");
+
+				pOut("<a class='actionbutton editing' href='".pUrl('?edit-lemma='.$_REQUEST['lemma'].'&action=new-idiom')."'><i class='fa fa-plus xsmall'></i> Add new example</a><a class='actionbutton editing' href='".pUrl('?edit-lemma='.$_REQUEST['lemma'].'&action=new-idiom')."'><i class='fa fa-external-link xsmall'></i> Link an existing example</a>");
+
+			}
+			pOut("</div>");
+		}
+		
+
+// Derivations
 		$derivations = pGetDerivations($word->id);
-		if(!($derivations == false))
+		if(!($derivations == false) AND !$editMode)
 		{
 
 	
@@ -228,6 +348,7 @@ else{
 
 			$i = 0;
 			$max_i = count($derivations);
+
 			foreach($derivations as $derivation){
 
 				pOut("<strong class='pDerivationName'>".$derivation['name']."</strong><ol class='inline'>");
@@ -244,12 +365,48 @@ else{
 				$i++;
 
 			}
+			pOut("</div>");
+		}
+		elseif($editMode){
+			pOut("
+				<span class='pSectionTitle editing extra'>Derived terms</span><div class='pSectionWrapper editing'>
+				<table class='admin editing' style='width: 100%;'>
+								<thead>
+								<tr class='title' style=''>
+									<td style='width: 14%;'><i class='fa fa-folder xsmall'></i>  Type of derivation</td>
+									<td><i class='fa fa-bookmark-o xsmall'></i> Lemma</td>
+								</tr></thead>
+								<tbody>");
+						if($derivations == false)
+							pOut("<tr><td>No derivations found</td><td> - </td></tr></tbody></table>");
 
-			pOut('</div>');
+						else{
+							foreach($derivations as $derv)
+								foreach($derv['words'] as $derivation_word)
+								pOut("<tr class='ipa'>
+										<td>
+												".$derv['name']."
+										</td>
+										<td>	
+										".pWordLinks("[[".$derivation_word->id."]]")."
+												<a class='float-right actionbutton editing xsmall'><i class='fa fa-times'></i> Delete link</a>
+											<a class='float-right actionbutton editing xsmall'><i class='fa fa-pencil-square-o'></i> Edit link</a> 
+											
+										</td>
+									</tr>");
+
+
+							pOut("</tbody></table>");
+
+		
+					}
+			pOut("<a class='actionbutton editing' href='".pUrl('?edit-lemma='.$_REQUEST['lemma'].'&action=new-idiom')."'><i class='fa fa-external-link xsmall'></i> Link derivation</a>");
+
+			pOut("</div>");
 		}
 
 
-	// The origin
+// The origin
 
 	$etymologies =  pGetEtymology($word->id);
 
@@ -259,12 +416,25 @@ else{
 		pOut('<span class="pSectionTitle extra">Etymology</span><div class="pSectionWrapper">');
 
 			// For each synonym show the block
-			$count = 1;
+		$count = 1;
 			while($etymology = $etymologies->fetchObject()){
-				pOut("<span class='title extra sub'>".$count.".</span>");
-				pOut($etymology->desc);
-				if($etymology->cognates_native != '' OR $etymology->cognates_translations != '')
-					pOut("<br /><br /><strong>Cognates</strong>: ");
+				pOut("<span class='pSectionTitle extra sub'>$count. <em class='small'>First attested in $etymology->first_attestation:</em></span><span class='pEtymology'>".pMarkDownParse($etymology->desc).'</span>');
+				if($etymology->cognates_native != '' OR $etymology->cognates_translations != ''){
+					pOut("<span class='pCognates'><strong>Cognates</strong>: ");
+					$nat  = explode(',', $etymology->cognates_native);
+					$trans = explode(',', $etymology->cognates_translations);
+					$save = array();
+					foreach($nat as $nat_c)
+						if($nat_c != '')
+							$save[] = pWordLinks("[[".$nat_c."]]");
+					foreach($trans as $trans_c){
+						$trans_c = pGetTranslation($trans_c);
+						if($trans_c != '')
+							$save[] = $trans_c->translation." (".pLanguageName($trans_c->language_id).")";
+					}
+					pOut(implode(', ', $save));
+					pOut("</span>");
+				}
 				$count++;
 			}
 
@@ -272,7 +442,7 @@ else{
 	}
 
 
-	// The synonyms
+// The synonyms
 
 	$synonyms =  pGetSynonyms($word->id);
 
@@ -299,7 +469,7 @@ else{
 		pOut('</div>');
 	}
 
-	// The antonyms
+// The antonyms
 
 	$antonyms =  pGetAntonyms($word->id);
 
@@ -327,69 +497,32 @@ else{
 	}
 
 
-	// Regetting older results as a help
+	// // Re-getting older results as a help
 
-	if(isset($_SESSION['wholeword'])){
-		pOut("<script>$('#wholeword').attr('checked', ".$_SESSION['wholeword'].");</script>");
-	}
+	// if(isset($_SESSION['wholeword'])){
+	// 	pOut("<script>$('#wholeword').attr('checked', ".$_SESSION['wholeword'].");</script>");
+	// }
 
-	if(isset($_GET['searchresult']))
-	{
-		pOut("<script>$(document).ready(function(){
+	// if(isset($_GET['searchresult']))
+	// {
+	// 	pOut("<script>$(document).ready(function(){
 
-			".'$(".moveResults").load("'.pUrl('?getword&wordsonly&ajax').'", {"word": $("#wordsearch").val(), "dict": $("#dictionary").val(), "wholeword":  $("#wholeword").is(":checked")}, function(){
-					$(".dWordWrapper ol p.desc").hide();
-					document.title = "'.pEscape($donut['page']['title']).'";
-			});
+	// 		".'$(".moveResults").load("'.pUrl('?getword&wordsonly&ajax').'", {"word": $("#wordsearch").val(), "dict": $("#dictionary").val(), "wholeword":  $("#wholeword").is(":checked")}, function(){
+	// 				$(".dWordWrapper ol p.desc").hide();
+	// 				document.title = "'.pEscape($donut['page']['title']).'";
+	// 		});
 
-			});</script>');
-	}
-
-	
-
-	pOut('<script>
-      	$("#searchb").click(function(){
-      		$("#pageload i").show();
-      		$(".ajaxload").slideUp();
-      		$(".drop").hide();
-	      		$(".ajaxload").load("'.pUrl('?getword&ajax&wordsearch='.$_GET['lemma']).'", {"word": $("#wordsearch").val(), "dict": $("#dictionary").val(), "wholeword":  $("#wholeword").is(":checked")}, function(){$(".ajaxload").slideDown(function(){
-	      								 $("#pageload i").delay(100).hide(400);
-	      		})}, function(){
-      		});
-      		if($("#wordsearch").val() != ""){
-      			window.history.pushState("string", "", "index.php?search=" + $("#wordsearch").val());
-      		}
-      		else{
-      			window.history.pushState("string", "", "index.php?home");
-      		}
-      		
-      	});
-      </script>'."<script>
-		$(document).ready(function(){
-
-			$('.drop').slideDown();
-
-		});
-		$('#wordsearch').keydown(function(e) {
-			    switch (e.keyCode) {
-			        case 13:
-			        if($('#wordsearch').is(':focus'))
-			        {
-			        	$('#searchb').click();
-			        }
-
-			    }
-			    return; 
-			});</script>");
+	// 		});</script>');
+	// }
 
 }
 
-	pOut('</div></td></tr></table><br id="cl"/>');
+end:
 
-	pOut('<br id="cl" />');
+// Search script
 
-
-
+pOut(pSearchScript("&wordsearch=".$_REQUEST['lemma']));
+pOut('</div></div>');
 if(isset($_REQUEST['ajaxOUT']))
 	die();
 

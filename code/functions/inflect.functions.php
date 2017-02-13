@@ -278,7 +278,7 @@ function pSearchAndInflect($word, $type, $classification, $mode, $submode, $numb
 
 
 			// Caching
-			if($override_word != '~')
+			if($inflection != false AND !in_array($override_word, array('~', '\textasciitilde{}')) AND $inflection->irregular != 1)
 				if(!(strip_tags($inflect_this) == $word->native))
 					pCacheInflection($inflect_this, $word_id, md5($mode.$submode.$number.$classification.$subclassification));
 
@@ -402,7 +402,7 @@ function pAllInflections($word, $type){
 		{
 
 			// Start the table
-			$output .= '<div class="floatleft" style="width: 300px;margin-right: 4px;"><table class="verbs mode_'.$mode->id.'">
+			$output .= '<div style="width: 31%;float: left;margin: 1%;"><table class="verbs mode_'.$mode->id.'">
 				<tr class="temps"><td colspan=2><b>'.strtoupper($mode->name).'</b></td></tr>';
 
 
@@ -443,7 +443,7 @@ function pAllInflections($word, $type){
 					if($show_classification_name)
 						$td_contents .= '<td class="sing inflection" style="padding: 0!important;margin:0px;">';
 					else
-						$td_contents .= '<td class="sing inflection" style="width:50%">';
+						$td_contents .= '<td class="sing inflection" style="width:40%">';
 
 					if($show_classification_name)
 							$td_contents .= '<table class="verbs inside_'.$submode->id.'" style="margin:0px;">';

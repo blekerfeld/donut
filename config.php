@@ -25,7 +25,8 @@
 
 	//	Global array
 	$donut = array();
-	$donut['is_beta'] = false;
+	$donut['rewrite'] = false;
+	$donut['is_beta'] = true;
 	$donut['file'] = 'index.php';
 	$donut['settings'] =array();
 	$donut['page'] = array();
@@ -40,7 +41,7 @@
 	$donut['page']['content'] = array();
 	$donut['db'] = $db;
 	$donut['db_prefix'] = "";
-	$donut['enable_query_caching'] = 0;
+	$donut['enable_query_caching'] = 1;
 	$donut['query_caching_time'] = 5*60;
 	$donut['session_auth'] = md5("kjj8f99e9iwj32ikm8391pok389iokn");
 
@@ -96,8 +97,13 @@ function pEndsWith($haystack, $needle)
 		// Needed. :)
 		global $donut;
 
+		if($donut['file'] == 'index.php')
+			$donut['file'] = '';
+
 		// Just an adition on the index.php?
-		if(pStartsWith($url, '?'))
+		if(pStartsWith($url, '?') and $donut['rewrite'])
+			$url = $donut['absolute_path'].$donut['file'].pStr($url)->replacePrefix('?', '');
+		elseif(pStartsWith($url, '?') and !$donut['rewrite'])
 			$url = $donut['absolute_path'].$donut['file'].$url;
 
 

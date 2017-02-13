@@ -22,7 +22,7 @@
     defaults = {
         data: [],
         keepJSONItemsOnTop: false,
-        width: 275,
+        width: "100%",
         height: null,
         background: "#f9f9f9",
         selectText: "",
@@ -35,7 +35,7 @@
     },
 
     ddSelectHtml = '<div class="dd-select"><input class="dd-selected-value" type="hidden" /><a class="dd-selected"></a><span class="dd-pointer dd-pointer-down"></span></div>',
-    ddOptionsHtml = '<ul class="dd-options"></ul>',
+    ddOptionsHtml = '<ul class="dd-options hide"></ul>',
 
     //CSS for ddSlick
     ddslickCSS = '<style id="css-ddslick" type="text/css">' +
@@ -46,7 +46,7 @@
                 '.dd-pointer{ width:0; height:0; position:absolute; right:10px; top:50%; margin-top:-3px;}' +
                 '.dd-pointer-down{ border:solid 5px transparent; border-top:solid 5px white; }' +
                 '.dd-pointer-up{border:solid 5px transparent !important; border-bottom:solid 5px  !important; margin-top:-8px;}' +
-                '.dd-options{ border:solid 1px #252627; border-top:none; list-style:none;display:none; position:absolute; z-index:2000; margin:0; padding:0;background:#fff; overflow:auto;}' +
+                '.dd-options{ display:none; border:solid 1px #252627; border-top:none; list-style:none;display:none; position:absolute; z-index:2000; margin:0; padding:0;background:#fff; overflow:auto;}' +
                 '.dd-option{ padding:10px; display:block; border-bottom:solid 1px #ddd; overflow:hidden; text-decoration:none; color:#333; cursor:pointer;}' +
                 '.dd-options > li:last-child > .dd-option{ border-bottom:none;}' +
                 '.dd-option:hover{ background: #5b6170; color:#fff; }' +
@@ -111,7 +111,7 @@
 
                 //Set height
                 if (options.height != null)
-                    ddOptions.css({ height: options.height, overflow: 'auto' });
+                    ddOptions.css({ height: options.height, overflow: 'hidden' });
 
                 //Add ddOptions to the container. Replace with template engine later.
                 $.each(options.data, function (index, item) {

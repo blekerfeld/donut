@@ -15,3 +15,34 @@
 // Dictionary
 define('DICT_TITLE', 'Dictionary');
 define('DICT_READMORE', 'Go to lemma');
+define('DICT_SEARCH', 'Search');
+
+// Lemma information
+define('LEMMA_ERROR', "The requested lemma doesn't exist, please look for errors in the URL.");
+define("LEMMA_INFLECTIONS", "Inflections");
+define("LEMMA_TRANSLATIONS", 'Meaning and translations');
+define("LEMMA_TRANSLATIONS_INTO", 'Translations into %s');
+define("LEMMA_TRANSLATIONS_MEANINGS", 'Other meanings/alternate forms in %s');
+
+// Lemma edit
+define('LEMMA_EDIT', "Edit lemma");
+define('LEMMA_EDIT_MODE', "Edit lemma");
+define('LEMMA_EDIT_BASICS', "Change basic information");
+
+define("LEMMA_EDIT_STEMS", "Manage stems");
+define("LEMMA_EDIT_IRREGULAR", "Manage irregularities");
+define("LEMMA_EDIT_TRANSLATIONS", "Edit translations");
+define("LEMMA_CLONE_TRANSLATIONS", "Clone translations");
+define("LEMMA_EDIT_TRANSLATIONS_INFO", "If you want to edit translations in another language, you need to <a href'".pUrl("?editorlanguage")."'>change your editor language</a>.");
+
+define("", '');
+
+
+// Edit basics
+define('LE_BASICS_TITLE', "Edit basic information");
+define('LE_BASICS_WORD', "Word in %s");
+define('LE_BASICS_TYPE', "Part of speech:");
+define('LE_BASICS_CLASSIFICATION', "Classification:");
+define('LE_BASICS_TAGS', "Tag:");
+
+

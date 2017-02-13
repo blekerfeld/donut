@@ -11,9 +11,13 @@
 
 // For audiofiles
 function pAudioFramework($element, $audiofile){
+	if(pStartsWith($audiofile, 'http://') or pStartsWith($audiofile, 'https://'))
+		$file = $audiofile;
+	else
+		$file = pUrl('pol://library/audio/'.$audiofile);
 	return "<script>
 		$('.".$element."').click(function(){
-			$.playSound('".pUrl('pol://library/audio/'.$audiofile)."', function(){
+			$.playSound('".$file."', function(){
 				$(document.body).css({ 'cursor': 'default' });
 			});
 
@@ -25,7 +29,7 @@ function pAudioFramework($element, $audiofile){
 
 function pGetAudioPlayers($id, $idiom = false){
 
-	$return = '<ol>';
+	
 
 	if($idiom)
 		$audiofiles = pQuery("SELECT * FROM audio_idiom WHERE idiom_id = $id LIMIT 1;");
@@ -33,11 +37,25 @@ function pGetAudioPlayers($id, $idiom = false){
 		$audiofiles = pQuery("SELECT * FROM audio_words WHERE word_id = $id;");
 
 
-	if(!$idiom)
-		foreach($audiofiles->fetchAll() as $audiofile)
-			$return .= "<li><a class='small tooltip audio_".$audiofile['id']."'>[<i class='fa  fa-8 fa-play'></i> PLAY]".(($audiofile['description'] != '') ? " <em class='small'>(".$audiofile['description'] .")</em>" : "")."</a></li>".pAudioFramework("audio_".$audiofile['id'] , $audiofile['audio_file']);
-	else
-		return $audiofiles;
+	if($audiofiles->rowCount() == 0)
+		return false; 
+
+	$extra = pHashId(rand(3,8));
+
+	if(!$idiom){
+		$return = '<ol>';
+		foreach($audiofiles->fetchAll() as $audiofile){
+			$return .= "<li><a class='small tooltip audio_".$audiofile['id'].$extra."'>[<i class='fa  fa-8 fa-play'></i> PLAY]".(($audiofile['description'] != '') ? " <em class='small'>(".$audiofile['description'] .")</em>" : "")."</a></li>".pAudioFramework("audio_".$audiofile['id'].$extra , $audiofile['audio_file']);
+		}
+		return $return.'</ol>';
+	}
+	else{
+		$return = '';
+		foreach($audiofiles->fetchAll() as $audiofile){
+			$return .= "<a class='small tooltip audio_".$audiofile['id'].$extra."'>[<i class='fa  fa-8 fa-play'></i> PLAY]".(($audiofile['description'] != '') ? " <em class='small'>(".$audiofile['description'] .")</em>" : "")."</a>".pAudioFramework("audio_".$audiofile['id'].$extra , $audiofile['audio_file']);
+		}
+		return $return;
+	}
 	
-	return $return.'</ol>';
+
 }

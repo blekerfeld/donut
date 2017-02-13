@@ -15,6 +15,7 @@ global $donut;
 
 $donut['lang_sub_files'] = array('date', 'dictionary', 'admin');
 	
+
 // 404 text
 define('ERROR_404_TITLE', 'Oops. Page not found. ');
 define('ERROR_404_MESSAGE', 'The page or file you requested could not be found.');
@@ -26,9 +27,14 @@ define('LANGUAGE_NUMBER_DECIMALS_SEPARATOR', '.');
 define('LANGUAGE_NUMBER_DECIMALS', 2);
 define('LANGUAGE_NUMBER_THOUSANDS_SEPARATOR', ',');
 
-// Strings that are used pretty much everywhere
-define('FOOTER_LANGUAGE', 'Language: ');
-define('FOOTER_PAGE_GENERATED', 'Page generated in %s ms with %s queries.');
+define('LOADING', "Loading...");
+define('BACK', "Back");
+define('SAVE', "Save changes");
+define('SAVING', "Saving changes");
+define('SAVED', "Changes succesfully saved");
+define('SAVED_REDIRECT', SAVED.", you will be redirected.");
+define('SAVED_ERROR', "An error occured while saving");
+define('SAVED_EMPTY', "Please submit all required information");
 
 // Menu strings
 define('MMENU_DICTIONARY', "Dictionary");
@@ -57,7 +63,7 @@ define('BTRANS_SKIP', "Skip translation ");
 
 // Word dicussion
 define('WD_TITLE', "Discussion");
-define('WD_TITLE_MORE', "Discussing the word '%s'");
+define('WD_TITLE_MORE', "Discussing lemma %s");
 define('WD_POINT', "point");
 define('WD_POINTS', "points");
 define('WD_NEW_THREAD', "New thread");

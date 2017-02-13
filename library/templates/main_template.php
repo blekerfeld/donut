@@ -2,7 +2,7 @@
 <html>
   <head>
     <link href="library/assets/css/index.css" rel="stylesheet">
-    <link rel="shortcut icon" href="library/images/static/bookmark_icon.png">
+    <link rel="shortcut icon" href="library/images/static/donutico.png">
     <link rel="stylesheet" href="library/assets/css/vendors/font-awesome.css">
     <link rel="stylesheet" href="library/assets/css/vendors/tooltipster.css">
     <link rel="stylesheet" href="library/assets/css/vendors/tooltipster-noir.css">
@@ -47,34 +47,36 @@
       </div>
     </div>
     <div class="outerwrap">
-      <div class="ulWrap">
-        <noscript>
-          <center><div class='notice danger-notice'><i class='fa fa-warning fa-12'></i> This site needs javascript to function, with javascript turned off, most of the functionality won't work!</div></center>
-        </noscript>
-        <div class='ajaxOutLoad'>
-          <div class='nav'>
-                <?php echo $donut['page']['menu']; ?>
-          </div>
-            <?php
-                if(!empty($donut['page']['header']))
-                  echo "<div class='header'>\n".$donut['page']['header_final']."\n </div>" ;
-            ?>
-            <div class='page'>
-                <div class='ajaxHide'>
-                <?php global $donut; echo $donut['page']['content_final']; ?>
-                </div>
+      <div class="fill_gaps">
+        <div class="ulWrap">
+          <noscript>
+            <center><div class='notice danger-notice'><i class='fa fa-warning fa-12'></i> This site needs javascript to function, with javascript turned off, most of the functionality won't work!</div></center>
+          </noscript>
+          <div class='ajaxOutLoad'>
+            <div class='nav'>
+                  <?php echo $donut['page']['menu']; ?>
             </div>
-            <?php if(!isset($_REQUEST['wap']))
-            { ?>
+              <?php
+                  if(!empty($donut['page']['header']))
+                    echo "<div class='header'>\n".$donut['page']['header_final']."\n </div>" ;
+              ?>
+              <div class='page'>
+                  <div class='ajaxHide'>
+                  <?php global $donut; echo $donut['page']['content_final']; ?>
+                  </div>
+              </div>
+              <?php if(!isset($_REQUEST['wap']))
+              { ?>
+            </div>
+          <div class='footer'>
+            <div class='inner_footer'>
+              <img src='library/images/static/logobw.png' /> <?php if(!pLogged()){ echo '<a href="'.pUrl('?login').'">'.MMENU_LOGIN.'</a> | '; } ?> <a href=''>About us</a> | <a href=''>Terms of use</a> | <a href=''>Contact</a>  
+            </div>  
           </div>
-        <div class='footer'>
-          <div class='inner_footer'>
-            <img src='library/images/static/logobw.png' /> <?php if(!pLogged()){ echo '<a href="'.pUrl('?login').'">'.MMENU_LOGIN.'</a> | '; } ?> <a href='#'>About us</a> | <a href='#'>Terms of use</a> | <a href='#'>Contact</a>  
-          </div>  
+        <?php
+        }
+        ?>
         </div>
-      <?php
-      }
-      ?>
       </div>
     </div>
     <div class='absolute_footer'><a target="_blank" href="https://github.com/blekerfeld/donut" class='tooltip'><i class='fa fa-github fa-10'></i>/blekerfeld/donut</a> – &copy; 2017 Thomas de Roo</div>

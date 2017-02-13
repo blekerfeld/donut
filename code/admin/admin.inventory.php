@@ -318,7 +318,7 @@
 										$g_string = rtrim($g_string, ',');
 										if($g_string != '')
 											$g_string = " <".$g_string.">";
-										$e .= '<a href="'.pUrl('index.php?admin&section=inventory&action=edit_copy&copy=v_'.$voiceless_id).'"><span class="v-'.$voiceless_id.' ipa '.(($voiceless_active  == '1') ? 'selected' : '').'">'.$voiceless_symbol.$g_string.'</span></a>';
+										$e .= '<a href="'.pUrl('?admin&section=inventory&action=edit_copy&copy=v_'.$voiceless_id).'"><span class="v-'.$voiceless_id.' ipa '.(($voiceless_active  == '1') ? 'selected' : '').'">'.$voiceless_symbol.$g_string.'</span></a>';
 										$count_shown++;
 								}
 
@@ -358,7 +358,7 @@
 										$g_string = rtrim($g_string, ',');
 										if($g_string != '')
 											$g_string = " <".$g_string.">";
-										$e .= '<a href="'.pUrl('index.php?admin&section=inventory&action=edit_copy&copy=v_'.$voiceless_id).'"><span class="v-'.$voiceless_id.' ipa '.(($voiceless_active  == '1') ? 'selected' : '').'">'.$voiceless_symbol.$g_string.'</span></a>';
+										$e .= '<a href="'.pUrl('?admin&section=inventory&action=edit_copy&copy=v_'.$voiceless_id).'"><span class="v-'.$voiceless_id.' ipa '.(($voiceless_active  == '1') ? 'selected' : '').'">'.$voiceless_symbol.$g_string.'</span></a>';
 										$count_shown++;
 								}
 

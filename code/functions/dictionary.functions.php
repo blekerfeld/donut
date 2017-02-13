@@ -16,6 +16,10 @@
 		$r = array();
 
 
+		$search = str_replace('\\', "\\\\", $search);
+		$search = str_replace('\'', "\\'", $search);
+		$search = str_replace('"', '\\"', $search);
+
 		if($wholeword)
 			$ww = "REGEXP '[[:<:]]".trim(pEscape($search))."[[:>:]]'";
 		else
@@ -23,7 +27,7 @@
 	
 
 		if($searchlang == 0)
-						$q = "SELECT * FROM (SELECT DISTINCT id AS word_id, 0 AS is_inflection, 0 as inflection FROM words WHERE native ".$ww." OR native LIKE '".pEscape($search)."'  ORDER BY INSTR('".pEscape(trim($search))."', words.native) DESC) AS a UNION ALL SELECT * FROM (SELECT DISTINCT word_id, 1 AS is_inflection, inflection FROM inflection_cache WHERE inflection ".$ww." OR inflection LIKE '".pEscape($search)."' ORDER BY INSTR('".pEscape(trim($search))."', inflection) DESC) as b";	
+			$q = "SELECT * FROM (SELECT DISTINCT id AS word_id, 0 AS is_inflection, 0 as inflection FROM words WHERE native ".$ww." OR native LIKE '".pEscape($search)."'  ORDER BY INSTR('".pEscape(trim($search))."', words.native) DESC) AS a UNION ALL SELECT * FROM (SELECT DISTINCT word_id, 1 AS is_inflection, inflection FROM inflection_cache WHERE inflection ".$ww." OR inflection LIKE '".pEscape($search)."' ORDER BY INSTR('".pEscape(trim($search))."', inflection) DESC) as b UNION ALL SELECT * FROM (SELECT DISTINCT irregular_word_id AS word_id, 1 AS is_inflection, irregular_override AS inflection FROM inflections WHERE irregular_override ".$ww." ORDER BY INSTR('".pEscape(trim($search))."', irregular_override) DESC) AS c";	
 		else
 			$q = "SELECT * FROM (SELECT DISTINCT translation_words.word_id, 0 AS is_inflection, 0 AS is_alternative, 0 AS inflection, 0 AS trans_id
 					FROM words 
@@ -46,18 +50,24 @@
 
 	}
 
-	function pGetWordByHash($hash){
 
-		if(is_numeric($hash))
+	function pGetWordByHash($hash, $only_number = false){
+
+		if(is_numeric($hash)){
+			if($only_number)
+					return $hash;
 			return pGetWord($hash);	
+		}
 		elseif(ctype_alpha($hash))
 		{
 			$decode = pHashId($hash, true);
 			if(array_key_exists(0, $decode)){
+				if($only_number)
+					return $decode[0];
 				return pGetWord($decode[0]);	
 			}
 			else
-				$hash = $word->id;
+				return false;
 		}
 	}
 
@@ -86,7 +96,7 @@
 					}
 					else{
 						if(!($word = pGetWordByNative($link_par[0])))
-							return '<a class="wordLink tooltip broken" href="'.pUrl('?nonexistant&search='.urlencode($link_par[0])).'">'.(array_key_exists(1, $link_par) ? $link_par[1] : $link_par[0]).'</a>';
+							return '<a class="wordLink native tooltip broken" href="'.pUrl('?nonexistant&search='.urlencode($link_par[0])).'">'.(array_key_exists(1, $link_par) ? $link_par[1] : $link_par[0]).'</a>';
 						$link_par[0] = $word->id;
 						if(!array_key_exists(1, $link_par))
 							$link_par[1] = $word->native;	
@@ -96,7 +106,7 @@
 				$link = "?lemma=".pHashId($link_par[0]);
 
 
-		    return '<a class="wordLink tooltip" href="' . pUrl($link) . '"><span class="native">' . $link_par[1] . '</span></a>';
+		    return '<a class="wordLink tooltip native" href="' . pUrl($link) . '"><span class="native">' . $link_par[1] . '</span></a>';
 		}, $text);
 
 	}
@@ -178,6 +188,12 @@
             $rtext .= '</select>';
             return $rtext;
 		}
+	}
+
+	function pGetTranslation($id){
+
+		return pQuery("SELECT * FROM translations WHERE id = $id")->fetchObject();
+
 	}
 
 	function pGetTranslations($word_id, $search = '', $language_id, $clone = false, $clone_id = 0)
@@ -395,7 +411,7 @@
 
 		// More info button
 
-			$text .= "<span class='floatright'><br />";
+			$text .= "<span class='float-right'><br />";
 
 			if(!isset($_GET['wordsonly']) and !($show_no_buttons))
 				$text .= "<a class='actionbutton readmore' href='".pUrl('?searchresult&lemma='.pHashId($word->id))."'><i class='fa fa-12 fa-info-circle'></i> ".DICT_READMORE."</a>";
@@ -432,12 +448,12 @@
 
 
 		// Show the type and classification
-		$text .= '<em><a href="javascript:void(0);"  class="tooltip" title="'.htmlentities($type->name).'">'.html_entity_decode($type->short_name).'</a></em> ';
-		if(!pTypeInflectClassifications($type->id))
-			$text .= '<em><a href="javascript:void(0);" class="tooltip"  title="'.htmlentities($classification->name).'">'.html_entity_decode($classification->short_name).'</a></em> ';
-		if($word->subclassification_id != 0 and !pTypeInflectClassifications($type->id)){
+		$text .= '<em class="small dType"><a href="javascript:void(0);"  class="tooltip" title="'.htmlentities($type->name).'">'.html_entity_decode($type->short_name).'</a></em> ';
+		if(!pTypeInflectClassifications($type->id) and $type->inflect_not != 1)
+			$text .= '<em class="small dType"><a href="javascript:void(0);" class="tooltip"  title="'.htmlentities($classification->name).'">'.html_entity_decode($classification->short_name).'</a></em> ';
+		if($word->subclassification_id != 0 and !pTypeInflectClassifications($type->id) and $type->inflect_not != 1){
 			$subclassification = pGetSubclassification($word->subclassification_id);
-			$text .= '<em><a href="javascript:void(0);"  class="tooltip" title="'.htmlentities($subclassification->name).'">'.html_entity_decode($subclassification->short_name).'</a></em> ';
+			$text .= '<em class="small dType"><a href="javascript:void(0);"  class="tooltip" title="'.htmlentities($subclassification->name).'">'.html_entity_decode($subclassification->short_name).'</a></em> ';
 		}
 
 

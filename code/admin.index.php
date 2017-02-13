@@ -51,14 +51,6 @@
 	}
 
 
-
-	// Title
-
-
-
-	pOut('<span class="floatleft title_header"><div class="icon-box throw"><i class="fa fa-tasks"></i></div> Control panel</span>', true);
-
-
 	pOut('
 
 		<div class="adminmenu">
@@ -71,7 +63,7 @@
 
 		', true);
 
-	// The sub menu
+	//The sub menu
 
 
 	// Grammar section
@@ -148,7 +140,15 @@
 
 			', true);
 
-	pOut('</div><br id="cl"/><br />', true);
+	pOut('</div>', true);
+
+	// Title
+
+
+
+	pOut('<span class="title_header"><div class="icon-box throw"><i class="fa fa-tasks"></i></div> Control panel</span><br /><br />', true);
+
+
 
 	
 	// Do we need to load a section?
