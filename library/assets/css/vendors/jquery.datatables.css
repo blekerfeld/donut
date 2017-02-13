@@ -9,6 +9,6 @@ table.dataTable thead .sorting:hover,table.dataTable thead.sorting_asc:hover,tab
 table.dataTable thead .sorting:hover:after, table.dataTable thead .sorting_desc:hover:after, table.dataTable thead .sorting_asc:hover:after{
 
 	content: " ⮃"!important;
-	font-size: 13px;
+	font-size: 9px;
 }
 

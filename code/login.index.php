@@ -94,7 +94,7 @@
                           <tr>
                             <td></td>
                             <td>
-                              <a class="button fetch floatright" id="loginstart" href="javascript:void(0);"><i class="fa-12 fa-sign-in"></i> '.LOGIN_PROCEED.'</a>
+                              <a class="button fetch float-right" id="loginstart" href="javascript:void(0);"><i class="fa-12 fa-sign-in"></i> '.LOGIN_PROCEED.'</a>
                             </td>
                           </tr>
                         </tbody></table>');

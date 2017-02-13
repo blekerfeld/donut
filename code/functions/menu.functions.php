@@ -11,9 +11,12 @@
 
 	function pMenu()
 	{
-  			return '<a href="'.pUrl('?home').'" '.pActiveMenu('home').' '.pActiveMenu('search').' '.pActiveMenu('lemma').' '.pActiveMenu('discuss-lemma').' '.pActiveMenu('alphabet').' '.pActiveMenu('generate').'>
+  			return '<a href="'.pUrl('?home').'" '.pActiveMenu('home').' '.pActiveMenu('search').' '.pActiveMenu('lemma').' '.pActiveMenu('discuss-lemma').'  '.pActiveMenu('edit-lemma').' '.pActiveMenu('alphabet').' '.pActiveMenu('generate').'><i class="fa fa-book fa-12"></i> 
 				'.MMENU_DICTIONARY.'</a> 
-  			'.((pLogged()) ? '<a href="'.pUrl('?admin').'" '.pActiveMenu('admin').' >'.MMENU_MANAGE.'</a>' : '');
+
+
+  			'.((pLogged()) ? '<a href="'.pUrl('?admin').'" '.pActiveMenu('admin').' ><i class="fa fa-tasks fa-12"></i> 
+  				'.MMENU_MANAGE.'</a>' : '');
 	}
 
 	function pActiveMenu($request)

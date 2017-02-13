@@ -9,12 +9,8 @@
 */
 
 pDictionaryHeader();
-
-pOut('<table class="noshow" style="width:100%;"><tr>');
-
-pSearchArea();
 	
-pOut('<td style="padding-left: 20px;">
+pOut('<div class="home-margin">
 	<div class="notice hide" style="display: none;" id="loading"><i class="fa fa-spinner fa-spin"></i> Loading...</div>
 	<br id="cl loading" style="display: none;"/><div class="ajaxload" style="display: none;"></div>
       <div class="drop">
@@ -31,6 +27,7 @@ else
 	pUrl('', true);
 
 
+
 $grapheme = pGetGrapheme($a_get);
 
 if($grapheme != false){
@@ -38,6 +35,8 @@ if($grapheme != false){
 	// Let's do a title
 	pOut('<div class="title"><div class="icon-box fetch">'.$grapheme->grapheme.'</div><input id="filter" style="margin-top: -7px;" placeholder="Filter" /></div><br />');
 
+
+pOut("<a class='float-left back-mini alphabet' href='".pUrl('?home')."'><i class='fa fa-arrow-left' ></i></a><br />");
 	// Our no results placeholder
 
 	pOut('<div class="notice hide" id="noresults">No matches found. Please note that you are searching in the list of words starting with \''.$grapheme->grapheme.'\'.</div>');
@@ -85,7 +84,7 @@ else{
 
 
 pOut('
-	</td></tr></table>
+	</div></div>
       <script>
       	$("#searchb").click(function(){
       		$("#pageload i").show();

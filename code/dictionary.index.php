@@ -2,7 +2,7 @@
 <?php
 
 	// We need this
-	global $donut;
+
 	$donut['taken_care_of'] = array();
 	$donut['taken_care_of_words'] = array();
 	
@@ -32,9 +32,9 @@
 		else
 			$url = 'index.php?home';
 
-		echo '<div class="title"><div class="icon-box fetch"><i class="fa fa-th-list"></i></div> Search results</div><br />'.
-	"<a class='actionbutton' href='javascript:void(0);' onClick=\"$('#loading').slideDown();$('.ajaxload').slideUp(function(){ $('.drop').slideDown();$('#loading').slideUp(); });
-	$('#wordsearch').val('').focus();window.history.pushState('string', '', '".$url."');\"><i class='fa fa-arrow-left' style='font-size: 12px!important;'></i> Back</i></a><br /><br />";
+		echo '<div class="title"><div class="icon-box fetch"><i class="fa fa-search"></i></div> Search results</div><br />'.
+	"<a class='float-left back-mini search' href='javascript:void(0);' onClick=\"$('#loading').slideDown();$('.ajaxload').slideUp(function(){ $('.drop').slideDown();$('#loading').slideUp(); });
+	$('#wordsearch').val('').focus();window.history.pushState('string', '', '".$url."');\"><i class='fa fa-arrow-left' style='font-size: 12px!important;'></i></a>";
 
 
 	}
@@ -73,27 +73,34 @@
 		if($translations = pSearchDict($slang, $rlang, $_REQUEST["word"], $ww))
 		{
 			
-			if(!isset($_GET['wordsonly']))
-			{
-				if(count($translations) == 1)
-					echo "<span class='results'>Your query returned 1 match</span><br id='cl' />";
-				else
-					echo "<span class='results'>Your query returned ".count($translations)." matches</span><br id='cl' />";
-			}
+			$top = '';
+			$rest = '';
 
 
 
+			$count = 0;
 			// Going through the translations
 			foreach($translations as $translation)
 			{
 
 	
 				if(!in_array($translation->word_id, $donut['taken_care_of'])){
-
-					echo "<div class='loadDelete'></div>".pWordShowNative($translation, (($slang == 0) ? $rlang : $slang), isset($_GET['wordsonly']));
+					$count += 1; 
+					$rest .= "<div class='loadDelete'></div>".pWordShowNative($translation, (($slang == 0) ? $rlang : $slang), isset($_GET['wordsonly']));
 				}
 
 			}
+
+			if(!isset($_GET['wordsonly']))
+			{
+				if($count == 1)
+					$top =  "<span class='results'>Your query returned 1 match</span><br id='cl' />";
+				else
+					$top = "<span class='results'>Your query returned ".$count." matches</span><br id='cl' />";
+			}
+
+			echo $top.$rest;
+
 	}
 	else
 	{
@@ -111,4 +118,3 @@ echo pAjaxLinks();
             $('.tooltip').tooltipster({theme: 'tooltipster-noir'});
 
         });</script>
-<br id="cl" />

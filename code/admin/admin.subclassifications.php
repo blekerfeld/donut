@@ -303,7 +303,7 @@
 
 		// table head
 
-		pOut("<span class='floatright'>Page: ".$offset_system['select_box']."</span>
+		pOut("<span class='float-right'>Page: ".$offset_system['select_box']."</span>
 
 			<a class='actionbutton' href='".pUrl('?admin&section=subclassifications&action=add_subclassification')."'><i class='fa fa-plus-circle' style='font-size: 12px!important;'></i> Add subclassification</i></a>".$offset_system['back_button'].$offset_system['next_button']."<br /><br />
 

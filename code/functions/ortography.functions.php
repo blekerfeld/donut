@@ -363,9 +363,9 @@
 
 	function pAlphabetBar(){
 		$alphabet = pGetAlphabet();
-		$text = '<div class="10-minus alphabetbar floatright">';
+		$text = '<div class="alphabetbar">';
 		while($grapheme = $alphabet->fetchObject())
-			$text .= "<a href='".pUrl('index.php?alphabet='.$grapheme->id)."' class='".((isset($_GET['alphabet']) AND ($_GET['alphabet'] == $grapheme->id)) ? 'selected' : '')." ".((isset($_GET['alphabetresult']) AND ($_GET['alphabetresult'] == $grapheme->id)) ? 'selected' : '')."'>".$grapheme->grapheme."</a>";
+			$text .= "<a href='".pUrl('?alphabet='.$grapheme->id)."' class='".((isset($_GET['alphabet']) AND ($_GET['alphabet'] == $grapheme->id)) ? 'selected' : '')." ".((isset($_GET['alphabetresult']) AND ($_GET['alphabetresult'] == $grapheme->id)) ? 'selected' : '')."'>".$grapheme->grapheme."</a>";
 		$text .= '</div>';
 		return $text;
 	}

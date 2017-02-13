@@ -323,7 +323,7 @@
 		// table head
 
 		pOut("
-			<span class='floatright'>Page: ".$offset_system['select_box']."</span>
+			<span class='float-right'>Page: ".$offset_system['select_box']."</span>
 			<a class='actionbutton' href='".pUrl('?admin&section=rule_groups&action=add_rule_group')."'><i class='fa fa-plus-circle' style='font-size: 12px!important;'></i> New condition group</i></a>".$offset_system['back_button'].$offset_system['next_button']."<br /><br />
 
 			<table class='admin' id='#DataTable'>
@@ -361,7 +361,7 @@
 
 		// table end
 
-		pOut('</table><br /><br />'."<span class='floatright'>Page: ".$offset_system['select_box']."</span><a class='actionbutton' href='".pUrl('?admin&section=modes&action=add_rule_group')."'><i class='fa fa-plus-circle' style='font-size: 12px!important;'></i> New condition group</i></a>".$offset_system['back_button'].$offset_system['next_button'].'<br /><br />');
+		pOut('</table><br /><br />'."<span class='float-right'>Page: ".$offset_system['select_box']."</span><a class='actionbutton' href='".pUrl('?admin&section=modes&action=add_rule_group')."'><i class='fa fa-plus-circle' style='font-size: 12px!important;'></i> New condition group</i></a>".$offset_system['back_button'].$offset_system['next_button'].'<br /><br />');
 
 	}
 
