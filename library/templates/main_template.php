@@ -2,6 +2,7 @@
 <html>
   <head>
     <link href="library/assets/css/index.css" rel="stylesheet">
+    <?php echo (pCheckMobile() ? '<link href="library/assets/css/mobile.css" rel="stylesheet">' : '' ); ?>
     <link rel="shortcut icon" href="library/images/static/donutico.png">
     <link rel="stylesheet" href="library/assets/css/vendors/font-awesome.css">
     <link rel="stylesheet" href="library/assets/css/vendors/tooltipster.css">
@@ -11,11 +12,11 @@
     <link rel="stylesheet" href="library/assets/css/vendors/jquery.select2.css">
     <link href='http://fonts.googleapis.com/css?family=Slabo+27px' rel='stylesheet' type='text/css'>
     <script src="library/assets/js/vendors/jquery.js"></script>
-    <script src="library/assets/js/vendors/ipakeyboard.js"></script>
     <script src="library/assets/js/vendors/jquery.ddslick.js"></script>
     <script src="library/assets/js/vendors/jquery.tooltip.js"></script>
     <script src="library/assets/js/vendors/jquery.datatables.js"></script>
     <script src="library/assets/js/vendors/jquery.playsound.js"></script>
+    <script src="library/assets/js/vendors/jquery.pulsate.js"></script>
     <script src="library/assets/js/vendors/jquery.tagsinput.js"></script>
     <script src="library/assets/js/vendors/jquery.select2.js"></script>
     <script src="library/assets/js/vendors/jquery.elastic.js"></script>
@@ -27,24 +28,8 @@
   <title><?php global $donut; echo $donut['page']['title']; ?></title>
   </head>
   <body class='dashboard'>
-    <div class='topstripe'></div>
-    <div class='logotop'>
-
-      <img class='logo-center' src='<?php echo pUrl('pol://library/images/static/logo.png') ; ?>' /><?php 
-        if($donut['is_beta'] == true){
-          echo "<span class='beta'><i class='fa fa-12 fa-flask beta-icon'></i> beta</span>";
-        }
-      ?><i style="display: none;" id="pageload" class='fa fa-spinner fa-spin'></i>
-      <div class='absolute_header'>
-       <?php if(pLogged()){ 
-          echo "<span style='float:right'>".MMENU_EDITORLANG."<span class='editorlangname'>".pLanguageName(pEditorLanguage($_SESSION['pUser']))."</span> (<a href='".pUrl('?editorlanguage')."'>".MMENU_EDITORLANGCHANGE."</a>)</span>";
-          echo MMENU_LOGGEDIN.pUsername($_SESSION['pUser'])." (<a href='".pUrl('?logout')."'>".MMENU_LOGOUT."</a>)";
-        }
-        else {
-          echo"<br />";
-          } 
-        ?>
-      </div>
+    <div class="absolute_header">
+      <?php echo pAbsHeader(); ?>
     </div>
     <div class="outerwrap">
       <div class="fill_gaps">
@@ -53,12 +38,13 @@
             <center><div class='notice danger-notice'><i class='fa fa-warning fa-12'></i> This site needs javascript to function, with javascript turned off, most of the functionality won't work!</div></center>
           </noscript>
           <div class='ajaxOutLoad'>
-            <div class='nav'>
+            <div class='nav <?php echo (isset($_REQUEST['home']) ? 'home' : '');?>'>
                   <?php echo $donut['page']['menu']; ?>
             </div>
               <?php
                   if(!empty($donut['page']['header']))
                     echo "<div class='header'>\n".$donut['page']['header_final']."\n </div>" ;
+                  echo $donut['page']['outofinner'];
               ?>
               <div class='page'>
                   <div class='ajaxHide'>

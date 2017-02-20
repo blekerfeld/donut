@@ -58,7 +58,7 @@ pOut('<div class="home-margin"><div class="notice hide" style="display: none;" i
 			<a class="lemma-code discussion float-right" href="'.pUrl('?edit-lemma='.$_REQUEST['discuss-lemma']).'"><i class="fa fa-pencil-square-o "></i> '.LEMMA_EDIT.'</a><a class="lemma-code discussion float-right" href="'.pUrl('?discuss-lemma='.$_REQUEST['discuss-lemma']).'"><i class="fa fa-comments"></i> '.WD_TITLE.'</a>
 			');
 
-pOut('<div class="title"><div class="icon-box throw"><i class="fa fa-comments"></i></div> '.sprintf(WD_TITLE_MORE, pWordLinks("[[man]]")).'</div><br />'.
+pOut('<div class="title"><div class="icon-box throw"><i class="fa fa-comments"></i></div> '.sprintf(WD_TITLE_MORE, pWordLinks("[[".$word->id."]]")).'</div><br />'.
 	"<a class='float-left back-mini search' href='".pUrl('?lemma='.pHashId($word->id))."'><i class='fa fa-arrow-left' style='font-size: 12px!important;'></i></a>");
 
 
@@ -80,7 +80,7 @@ pOut('<div class="title"><div class="icon-box throw"><i class="fa fa-comments"><
 		pOut("<div class='children'>
 				<div class='wdComment'>
 				<div class='ajaxLoad'></div>
-				<div class='title small'><div class='icon-box fetch small'><i class='fa fa-pencil-square-o'></i></div> ".WD_REPLY_TITLE."</div><textarea class='nWord small elastic message' placeholder='".WD_REPLY_PLACEHOLDER."'></textarea><br /><a class='actionbutton throw small' id='send-action'><i class='fa fa-paper-plane'></i> ".WD_REPLY_SEND."</a><br /></div>
+				<div class='title small'><div class='icon-box fetch small'><i class='fa fa-pencil-square-o fa-10'></i></div> ".WD_REPLY_TITLE."</div><textarea class='nWord small elastic message' placeholder='".WD_REPLY_PLACEHOLDER."'></textarea><br /><a class='actionbutton throw small' id='send-action'><i class='fa fa-paper-plane'></i> ".WD_REPLY_SEND."</a><br /></div>
 			</div>
 			<script>
 				$('#send-action').click(function(){

@@ -269,12 +269,12 @@
 	}
 
 	function pGetIdiomsOfWords($word_id){
-
-		global $donut;
-
 		return pQuery("SELECT words.id, idioms.id AS idiom_id, idioms.idiom, idiom_words.keyword FROM words JOIN idiom_words ON idiom_words.word_id = words.id JOIN idioms ON  idioms.id = idiom_words.idiom_id  WHERE words.id = $word_id;");
+	}
 
 
+	function pGetUsageNotes($word_id){
+		return pQuery("SELECT * FROM usage_notes WHERE word_id = $word_id LIMIT 1;");
 	}
 
 	function pGetTranslationOfIdiomByLang($idiom_id){

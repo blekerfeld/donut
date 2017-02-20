@@ -65,7 +65,6 @@
 		return $hash;
 	}
 
-
 ##	Function to check if a string starts with a certain piece of string
 
 function pStartsWith($haystack, $needle)
@@ -149,6 +148,9 @@ function pEndsWith($haystack, $needle)
 		return $donut['root_path'].'/'.$url;
 	}
 
+	function pCheckMobile()  {
+ 		return preg_match("/Mobile|Android|BlackBerry|iPhone|Windows Phone/", $_SERVER['HTTP_USER_AGENT']);
+	}
 
 // Unsetting used variables
 	unset($db);

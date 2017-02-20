@@ -13,7 +13,7 @@
 		if($_REQUEST['password'] == "" or $_REQUEST['username'] == "")
 		{
 			echo '<div class="notice hide danger-notice" id="empty"><i class="fa fa-warning"></i> '.LOGIN_FIELDS.'</div>';
-			echo "<script>$('#busy').fadeOut();$('#empty').show().delay(400).effect('bounce', {duration: 1000});$('.tbllogin').delay(500).effect('slide')</script>";
+			echo "<script>$('#busy').fadeOut();$('#empty').show().pulsate({color: $('#empty').css('color'), repeat: 2, glow: false, speed: 500});$('.tbllogin').delay(500).slideDown(1500);</script>";
 		}
 		else
 		{
@@ -21,11 +21,11 @@
 			if(pMemberExists($id) and pPasswordCheck($id, $_REQUEST['password']))
 			{
 				echo '<div class="notice hide succes-notice" id="empty"><i class="fa fa-check"></i> '.LOGIN_SUCCESS.'</div>';
-				echo "<script>$('#busy').fadeOut();$('#empty').delay(401).effect('slide');</script>
+				echo "<script>$('#busy').fadeOut();$('#empty').delay(401).slideDown();</script>
 				<script>	
 						setTimeout(function() {
 									window.location = '".pUrl('')."';
-								}, 3000);
+								}, 1500);
 				</script>";
 				$arr = array($id, pHash($_REQUEST['password'], pRegDate($id)), $_REQUEST['username']);
 				setcookie('pKeepLogged', serialize($arr), time()+5*52*7*24*3600);
@@ -35,7 +35,7 @@
 			else
 			{
 				echo '<div class="notice hide danger-notice" id="empty"><i class="fa fa-warning"></i> '.LOGIN_WRONG.'</div>';
-				echo "<script>$('#busy').fadeOut();$('#empty').show().delay(200).effect('bounce', {duration: 1000});$('.tbllogin').delay(500).effect('slide')</script>";
+				echo "<script>$('#busy').fadeOut();$('#empty').show().pulsate({color: $('#empty').css('color'), repeat: 2, glow: false, speed: 500});$('.tbllogin').delay(500).slideDown(1500);</script>";
 			}
 		}
 	}
@@ -73,7 +73,7 @@
 
 	 pOut('<div class="title" style="margin: 1px auto;width: 75%;"><div class="icon-box throw"><i class="fa fa-sign-in"></i></div> '.LOGIN_TITLE_SHORT.'</div><br />
        <div style="width: 75%;margin: 0 auto;"><div class="notice hide" id="busy"><i class="fa fa-spinner fa-spin"></i> '.LOGIN_CHECKING.'</div></div>
-       <div style="width: 75%;margin: 0 auto;"><div class="ajaxload"></div></div>
+       <div style="width: 75%;margin: 0 auto;"><div class="loginload"></div></div>
        <table style="width: 75%;" class="login tbllogin">
                           <tbody><tr id="usernamefadeout" style="display: table-row;">
                             <td style="width: 90px;">
@@ -109,8 +109,8 @@
 			$('#loginstart').click(function(){
 				$('#busy').fadeIn();
 				$('#empty').hide();
-				$('.tbllogin').effect('drop');
-				$('.ajaxload').load('".pUrl('?login&ajax')."', {'username': $('#username').val(),  'password': $('#password').val()})
+				$('.tbllogin').hide();
+				$('.loginload').load('".pUrl('?login&ajax')."', {'username': $('#username').val(),  'password': $('#password').val()})
 			});
 		</script>");
 

@@ -33,7 +33,7 @@
 			$url = 'index.php?home';
 
 		echo '<div class="title"><div class="icon-box fetch"><i class="fa fa-search"></i></div> Search results</div><br />'.
-	"<a class='float-left back-mini search' href='javascript:void(0);' onClick=\"$('#loading').slideDown();$('.ajaxload').slideUp(function(){ $('.drop').slideDown();$('#loading').slideUp(); });
+	"<a class='float-left back-mini search' href='javascript:void(0);' onClick=\"$('.header.dictionary').removeClass('home-search').addClass('home');$('#loading').slideDown();$('.ajaxload').slideUp(function(){ $('.drop').slideDown();$('#loading').slideUp();});
 	$('#wordsearch').val('').focus();window.history.pushState('string', '', '".$url."');\"><i class='fa fa-arrow-left' style='font-size: 12px!important;'></i></a>";
 
 
@@ -50,8 +50,12 @@
 
 	// Something has to be done!
 	if(trim($_REQUEST['word']) == '')
-		echo '<div class="notice danger-notice" id="empty"><i class="fa fa-warning"></i> Please submit a search query.</div>
-		<br id="cl"/>';
+		echo "<script>
+				$('.header.dictionary').removeClass('home-search').addClass('home');$('.ajaxload').slideUp(function(){ $('.drop').slideDown(); });
+					$('#wordsearch').val('').focus().pulsate({color: 'red', repeat: 2, glow: false, speed: 500});
+
+
+		</script>";
 
 
 	// Requesting all words!
@@ -94,12 +98,12 @@
 			if(!isset($_GET['wordsonly']))
 			{
 				if($count == 1)
-					$top =  "<span class='results'>Your query returned 1 match</span><br id='cl' />";
+					$top =  "<span class='results small'>".sprintf(DICT_MATCH, 1)."</span>";
 				else
-					$top = "<span class='results'>Your query returned ".$count." matches</span><br id='cl' />";
+					$top = "<span class='results small'>".sprintf(DICT_MATCHES, $count)."</span>";
 			}
 
-			echo $top.$rest;
+			echo $top."<br id='cl' />".$rest;
 
 	}
 	else

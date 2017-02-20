@@ -192,6 +192,8 @@
 
 	function pParsePolyphthong($combination){
 
+		echo $combination;
+
 		$exploded = explode(',', $combination);
 
 		$polyphtong = '';

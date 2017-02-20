@@ -1,0 +1,214 @@
+.nav{
+	margin: 0px;
+	margin-top: 10px;
+	padding: 0px;
+	z-index: 2000;
+	position: fixed;
+	width: 100%;
+	right: 0px;
+	top: -10px;
+	border-radius: 0px!important;
+
+} 
+
+.absolute_header{
+	border: none;
+	position: relative;
+	top: 40px;
+	font-size: 10px;
+	text-align: center;
+	padding: 0!important;
+}
+
+.absolute_header span{
+	float: none!important;
+}
+
+#pageload{
+	font-size: 8px!important;
+}
+
+.nav{
+			background-color: #333!important;
+		color: #fff;
+}
+
+.nav:hover{
+		background-color: #f2f9fc!important;
+}
+
+.nav a{display: none;font-size: 11px!important;margin: 0 auto!important;width: 40%;}
+
+.nav a#admin, .nav a#editor{
+	margin: 0 auto!important;width: 40%;
+	float: none!important;
+	border: none!important;
+}
+
+.nav::after{
+	content: "↓";
+	color: #fff;
+	display: block;
+	margin: 0 auto;
+	margin-top: -4px;
+	font-size: 10px;
+	text-align: center;
+}
+
+.nav:hover::after{
+	content: "";
+}
+
+.float-right{
+	float: none!important;
+}
+
+.footer{
+	display: none;
+}
+
+.header.dictionary div.hSearch{
+	display: none;
+}
+
+.header.dictionary:hover div.hSearch{
+	display: block;
+}
+
+.header.dictionary span.float-right{
+	display: none!important;
+}
+
+.header.dictionary::after{
+	content: "hoi";
+}
+
+.header.dictionary:hover::after{
+	content: "";
+}
+.absolute_footer{
+	display: none;
+}
+
+.float-left{
+	float: none!important;
+}
+
+.nav:hover a{
+	display: block!important;
+}
+
+#wordsearch{
+	width: 90%!important;
+	margin: 0 auto;
+	float: left;
+}
+
+a.button{
+	width: 100%!important;
+	margin: 0 auto;
+	display: block;
+	padding-left: 0px!important;
+	padding-right: 0px!important;
+	float: none!important;
+}
+
+.nav a{font-size: 10px!imporant;}
+
+.logotop{
+	margin: 0!important;
+	margin-top: 30px;
+	max-height: 75px;
+	text-align: center;
+	margin: 0px;
+	padding: 0px!important;
+	z-index: 5000;
+	position: fixed!important;
+	width: 100%;
+	right: 0px;
+	top: 18.45px!important;
+	border-radius: 0px!important;
+	background-color: #f2f9fc!important;
+	 border-bottom: 1px solid #c9e6f2;;
+} 
+
+.beta{
+	display: none!important;
+}
+
+.logotop img.logo-center{
+	height: 15px!important;
+	width: auto;
+}
+
+.row-center{
+	width: 100%;
+}
+
+.row-left{
+	width: 100%;
+}
+
+.row-right{
+	width: 100%;
+}
+
+.home-margin{
+
+	width: 100%!important;
+	margin: 0; 
+
+}
+
+
+.page{
+	
+
+}
+
+html .lemma-code:first-child::before{
+	content: "lemma menu";
+	background: #ddd;
+	padding: 4px;
+	display: block;
+	width: 100%!important;
+}
+
+.lemma-code{
+	float: none!important;
+	font-size: 10px!important;
+	text-transform: uppercase;
+	opacity: 1!important;
+	display: block;
+	width: 50%;
+	padding: 3px;
+	border-bottom: 1px solid transparent;
+}
+
+.lemma-code.discussion{
+	margin-right: 0px!important;
+}
+
+
+.lemma-code i.fa{
+	font-size: 10px!important
+}
+
+.pSectionTitle.float-left.first{
+	float: none!important;
+	margin-top: 20px!important;
+}
+
+div.header .alphabetbar
+{
+	display: none;
+} 
+.fill_gaps{
+	margin: 0!important;
+		margin-top: 30px!important;
+} 
+
+.ulWrap{
+	margin: 0!important;
+
+}

@@ -54,7 +54,6 @@
 	pOut('
 
 		<div class="adminmenu">
-			<a href="'.pUrl('?admin').'" '.pAMenuLink('home').'><i class="fa fa-tachometer"></i> Dashboard</a>
 			<a href="'.pUrl('?admin&section=words').'" '.pAMenuLink($subsection_dictionary).'><i class="fa fa-book"></i> Dictionary</a>
 			<a href="'.pUrl('?admin&section=types').'" '.pAMenuLink($subsection_grammar).'><i class="fa fa-database"></i> Grammar</a>
 			<a href="'.pUrl('?admin&section=rule_groups').'" '.pAMenuLink($subsection_inflections).'><i class="fa fa-adjust"></i> Inflections</a>
@@ -70,7 +69,7 @@
 	if(isset($_REQUEST['section']) AND in_array($_REQUEST['section'], $subsection_grammar))
 		pOut('
 			<div class="adminsubmenu">
-				<a href="'.pUrl('?admin&section=types').'" '.pAMenuLink('types').'><i class="fa fa-folder"></i> Lexical categories</a>
+				<a href="'.pUrl('?admin&section=types').'" '.pAMenuLink('types').'><i class="fa fa-cubes"></i> Lexical categories</a>
 				<a href="'.pUrl('?admin&section=classifications').'" '.pAMenuLink('classifications').'><i class="fa fa-code-fork "></i> Grammatical divisions</a>
 				<a href="'.pUrl('?admin&section=subclassifications').'" '.pAMenuLink('subclassifications').'><i class="fa fa-tags "></i> Grammatical tags</a>
 
@@ -166,10 +165,4 @@
 		}
 	}
 
-	// Otherwise just the homepage I guess, eh!
 
-	else{
-		pOut("<div class='notice'><i class='fa fa-info-circle'></i> The admin home page is work in progress...</div><br /><br /><br />");
-	}
-
- ?>

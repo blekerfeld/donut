@@ -344,7 +344,7 @@ else{
 
 	$languages_select = '<select class="btInput select2" id="lang">';
 
-	foreach($languages as $lang){
+	foreach($languages->fetchAll() as $lang){
 		$languages_select .= '<option value="'.$lang['id'].'">'.$lang['name'].'</option>';
 	}
 
