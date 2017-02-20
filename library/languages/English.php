@@ -38,7 +38,12 @@ define('SAVED_EMPTY', "Please submit all required information");
 
 // Menu strings
 define('MMENU_DICTIONARY', "Dictionary");
-define('MMENU_MANAGE', "Control panel");
+define('MMENU_SETTINGS', "Settings");
+define('MMENU_DASHBOARD', "Dashboard");
+define('MMENU_BLOG', "Blog");
+define('MMENU_ARTICLES', "Grammar");
+define('MMENU_PHONOLOGY', "Phonology");
+define('MMENU_TEXTS', "TEXTS");
 define('MMENU_EDITORLANG', "Editor language: ");
 define('MMENU_EDITORLANGCHANGE', "Change");
 define('MMENU_LOGGEDIN', "Welcome, 	");
@@ -46,13 +51,13 @@ define('MMENU_LOGIN', "Editor log in");
 define('MMENU_LOGOUT', "Log out");
 
 // Login string
-define('LOGIN_TITLE', "Welcome, please log in to be able to edit");
+define('LOGIN_TITLE', "Welcome, editor.");
 define('LOGIN_TITLE_SHORT', "Log in");
 define('LOGIN_USERNAME', "Username");
 define('LOGIN_PASSWORD', "Password");
 define('LOGIN_PROCEED', "Proceed");
-define('LOGIN_ERROR_FIELDS', "Please submit both an username and a password.");
-define('LOGIN_ERROR_WRONG', "Password or username is wrong.");
+define('LOGIN_FIELDS', "Please submit both an username and a password.");
+define('LOGIN_WRONG', "Password or username is wrong.");
 define('LOGIN_SUCCESS', "Succesfully logged in, you will be redirected...");
 define('LOGIN_CHECKING', "Checking...");
 
@@ -81,3 +86,8 @@ define('WD_DELETE_CONFIRM', "Are you sure you want to delete this message and al
 define('WD_BACK_TO_THREAD', "Back to thread");
 define('WD_BACK_TO_WORD', "Back to entry");
 define('WD_NO_THREADS', "There are no threads yet");
+
+
+// Dashboard strings
+define('DB_TITLE', "Dashboard");
+define('DB_', "");

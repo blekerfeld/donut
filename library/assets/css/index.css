@@ -25,7 +25,7 @@ html, body {
   margin: 0;
   padding: 0;
   font-family: Calibri;
-  background: #F5F5F5;
+  background: #eee url('../../images/static/bg.png') repeat;
   font-size: 100%;
 }
 
@@ -63,6 +63,10 @@ p{
 
 .medium {
   font-size: 13px!important;
+}
+
+.opensans{
+  font-family: arial!important;
 }
 
 .counter {
@@ -126,9 +130,9 @@ span.tab, div.tab {
   width: 49%;
 }
 
-.row-left{ float: left; width: 33%; padding: 20px;}
-.row-right{ float: right; width: 33%; padding: 20px;}
-.row-center{ display: inline-block; width: 33%; padding: 20px;}
+.row-left{ float: left; width: 33%; padding: 1px;}
+.row-right{ float: right; width: 33%; padding: 1px;}
+.row-center{ display: inline-block; width: 33%; padding: 1px;}
 
 #cl {
   clear: both;
@@ -142,76 +146,66 @@ span.tab, div.tab {
   line-height: 1em;
 }
 
+.no-border{
+  border: none!important;
+}
+
 
 /* Basic layout elements*/
 
 .topstripe {
   width: 100%;
-  background: #525E7A;
-  border-bottom: #6F7791 1px solid;
-  opacity: 0;
+  background: #606772;
+  min-height: 2px;
+  opacity: 1;
 }
 
 .absolute_header {
   padding: 3px;
-  font-size: 12px;
-  color: #818c93;
+  padding-left: 5%;
+  padding-right: 5%;
+  font-size: 13px;
+  background: #161616;
+   border-bottom: 1px solid #111;
+  color: snow;
+  min-height: 15px;
 }
+
+.absolute_header a{
+  color: #fff;
+}
+
+
 
 .absolute_header a:hover, html.pAdmin .absolute_header a:hover {
   color: orange;
 }
 
-div.logotop {
-  z-index: 20;
-  position: relative;
-  margin: 0 auto!important;
-  padding-top: 20px!important;
-  display: block;
-  padding-left: 5%!important;
-  padding-right: 5%!important;
-  padding-bottom: 5px;
-  background: #f2f2f2;
-}
-
-div.logotop img.logo-center {
-  height: 50px;
-  width: auto;
-  opacity: 1;
-}
-
-.logo img {
-  height: 50px;
-  width: auto;
-  margin: 10px;
-  position: relative;
-  left: 0%;
-}
 
 #pageload {
   color: #c4c4c4;
+  font-size: 10px;
+  float: left;
+  overflow: hidden;
+  z-index: 40;
 }
 
 div.outerwrap {
-  padding-top: 6px;
-  padding-bottom: 6px;
-  background: #eee;
+
 }
 
 .ulWrap {
-  border: 4px transparent solid;
-  margin-top: 10px;
-  border-radius: 7px;
-  margin-bottom: 10px;
+  box-shadow: 0px 2px 6px rgba(100, 100, 100, 0.3);
+  border: .5px solid transparent; 
+  border-top: none; 
   padding: 0px!important;
 }
 
 
 .fill_gaps{
-  background:rgba(92,99,113,0.8); 
-  margin-left: 5%;
-  border-radius: 7px;
+  background: #eee;
   margin-right: 5%;
+  margin-left: 5%;
 }
 
 .header {
@@ -220,9 +214,16 @@ div.outerwrap {
   padding-bottom: 0px;
   font-size: 16px!important;
   background: #f2f9fc;
+   border-bottom: 1px solid #c9e6f2;;
   color: #333;
-  border-bottom: 1px solid #feffff;
+    padding-top: 20px;
+  padding-bottom: 10px;
+  padding-right: 45px;
+  padding-left: 45px;
+ 
 }
+
+
 
 .page {
   padding: 20px;
@@ -233,8 +234,8 @@ div.outerwrap {
 }
 
 .home-margin{
-  width: 85%!important;
-  margin: 0 auto!important;
+  width: 85%;
+  margin: 0 auto;
 }
 
 .absolute_footer {
@@ -264,14 +265,15 @@ div.outerwrap {
 div.nav {
   color: #fff;
   background-color: #fff;
-  border-bottom: 1px solid #c7cccf;
+  border-bottom: 1px solid #c9e6f2;;
   padding-top: 4px;
-  padding-bottom: 4px;
-  border-radius: 7px 7px 0px 0px;
+  padding-bottom: 4px;x
   clear: both;
   color: #000;
   width: 100%;
+  transition: all .3s;
 }
+
 
 div.nav a {
   padding: 8px;
@@ -284,6 +286,33 @@ div.nav a {
   letter-spacing: .1em;
   white-space: normal;
   font-weight: 500;
+}
+
+div.nav a#admin, div.nav a#editor{
+  background: #f2f9fc;
+  border-left: 1px solid #c9e6f2;;
+  border-right: 1px solid #c9e6f2;
+  border-top: 1px solid #c9e6f2;
+  padding-top: 2px;
+  padding-bottom: 5px;
+  border-radius: 7px 7px 0px 0px;
+  margin-right: 20px;
+  float: right;
+  letter-spacing: .05em;
+  font-size: 9px;
+  margin-top: 5px;
+}
+
+
+div.nav.home{
+  
+}
+
+div.nav.home a{
+}
+
+div.nav a#editor{
+  margin-right: 5px;
 }
 
 div.nav a:hover {
@@ -421,12 +450,12 @@ a.remember:hover, a.fetch:hover, a.throw:hover {
 }
 
 .footer {
-  background: #5E6573;
-  color: snow;
+  background: #f2f9fc;
+  color: #444;
   padding: 6px;
   padding-left: 10px;
-  padding-right: 10px;
-  border-radius: 0px 0px 7px 7px;
+  padding-right: 10px;  
+  border-top: 1px solid #c9e6f2;;
   font-size: 12px;
 }
 
@@ -443,7 +472,7 @@ a.remember:hover, a.fetch:hover, a.throw:hover {
 }
 
 .footer a {
-  color: snow;
+  color: #444;
   text-decoration: none;
 }
 
@@ -451,27 +480,7 @@ a.remember:hover, a.fetch:hover, a.throw:hover {
   text-decoration: underline;
 }
 
-.icon-box {
-  color: white;
-  font-family: Raleway;
-  font-weight: bolder;
-  font-weight: normal;
-  font-size: 20px;
-  padding: 20px;
-  border-radius: 40px;
-  line-height: 150%;
-  -webkit-user-select: none;
-  /* Chrome/Safari */
-  -moz-user-select: none;
-  /* Firefox */
-  -ms-user-select: none;
-  /* IE10+ */
-}
 
-.icon-box i.fa {
-  margin: 0px;
-  font-size: 19px!important;
-}
 
 .bar {
   width: 50%;
@@ -703,18 +712,42 @@ div.title.small {
 }
 
 div.icon-box {
-  padding: 3px;
+
+}
+
+.icon-box {
+
   float: left;
-  width: 28px;
-  height: 28px;
+  width: 20px;
+  height: 20px;
   text-align: center;
   margin-right: 5px;
+  color: white;
+  font-family: Raleway;
+  font-weight: bolder;
+  margin-top: 4px;
+  line-height: 55%;
+  border-radius: 40px;
+  -webkit-user-select: none;
+  /* Chrome/Safari */
+  -moz-user-select: none;
+  /* Firefox */
+  -ms-user-select: none;
+  /* IE10+ */
+}
+
+.page .icon-box{
+  line-height: 70%;
+}
+
+.icon-box i.fa {
+  margin: 0px;
+  font-size: 14px!important;
 }
 
 div.icon-box.small {
   width: 14px;
   height: 14px;
-  line-height: 14px;
 }
 
 div.icon-box i.fa {
@@ -723,7 +756,7 @@ div.icon-box i.fa {
 }
 
 div.icon-box.small i.fa {
-  font-size: 14px!important;
+  font-size: 10px!important;
 }
 
 div.coursecontainer {
@@ -867,6 +900,7 @@ table.noshow td.content {
   font-family: 'Raleway';
   font-weight: bold;
   padding: 20px;
+  padding: 0px;
 }
 
 select.pEditorlanguage {
@@ -951,7 +985,7 @@ input#wordsearch, input#filter, input#searchfilter {
   padding: 9px;
   font-size: 15px;
   text-decoration: none;
-  width: calc(67% - 18px);
+  width: calc(60% - 18px);
   font-family: Gentium;
   font-style: italic;
   color: rgb(150, 150, 150);
@@ -990,18 +1024,133 @@ a.button.search:hover{
   margin-top: 1px;
   padding: 9px;
   margin-left: 3px;
-  width: 77%;
+  width: 70%;
   margin-top: 0px;
   float: left;
   font-size: 16px;
 }
+
+
+.header.dictionary{
+  margin: -18.5px;
+  margin-top: -25px;
+  margin-bottom: 20px!important;
+  transition: all .3s;
+  background: linear-gradient(to bottom left, #383F52 , #343434);
+  border: 1px #343E56 solid!important;
+  padding: 60px;
+  padding-bottom: 0px!important;
+  padding-top: 10px;
+  margin: -35px;
+  margin-top: -24px;
+    position: relative;
+}
+
+.header.dictionary img.logo, .header.dictionary.home-search img.logo-2{
+
+  height: 25px;
+  width: auto;
+  transition: all .3s;
+  -webkit-user-select: none;
+  /* Chrome/Safari */
+  -moz-user-select: none;
+  /* Firefox */
+  -ms-user-select: none;
+  /* IE10+ */
+
+
+}
+
+.header.dictionary.home img.logo{
+
+  height: 50px;
+  width: auto;
+  transition: all .3s;
+
+}
+
+
+
+.header.dictionary.home .notice{
+  color: snow;
+}
+
+
+.header.dictionary.home{
+  padding: 70px;
+  padding-bottom: 50px!important;
+  color: #fff;
+    position: relative;
+  margin: -35px;
+  margin-top: -24px;
+  border: none;
+  border-top: 2px #26272A solid!important;
+  border: 1px #343E56 solid!important;
+  background: linear-gradient(to bottom left, #272E41 , #343E56);
+  
+}
+
+.header.dictionary:before{
+  display: block;
+  width: 10px;
+  height: 0px;
+  position: absolute;
+  bottom: -10px;
+  left: -10.25px;
+  content: "";
+  border-bottom: 10px solid transparent;
+  border-right: 14px solid #27292D;
+}
+
+.header.dictionary:after{
+  display: block;
+  width: 10px;
+  height: 0px;
+  position: absolute;
+  bottom: -9px;
+  right: -10.25px;
+  content: "";
+  border-bottom: 10px solid transparent;
+  border-left: 14px solid #27292D;
+}
+
+
+
+.header.dictionary.home-search{
+
+
+}
+
+.header.dictionary.home .hSearch .select2-container{
+  font-size: 15px!important;
+  margin-top: 6px;
+}
+
+.header.dictionary .alphabetbar a{
+  color: white;
+}
+
+.header.dictionary.home .hSearch{
+  padding: 15px;
+}
+
+
+.header.dictionary.home .hSearch input#wordsearch{
+  font-size: 30px;
+}
+
+
+.header.dictionary.home .hSearch a.button{
+  margin-top: 5px;
+}
+
 
 .hSearch .button.search{
   width: 10%;
   margin-top: 0px;
   padding: 9px;
   padding-top: 8px;
-  float: left!important;
+  float: right!important;
 }
 
 
@@ -1751,7 +1900,7 @@ strong.pWord a:hover {
 a.lemma-code {
   color: #000;
   opacity: 0.2;
-  font-size: 14px!important;
+  font-size: 14px;
   font-family: Consolas, "Liberation Mono", Menlo, Courier, monospace;
   transition: opacity .3s;
   cursor: pointer;
@@ -1760,7 +1909,7 @@ a.lemma-code {
 a.lemma-code.discussion {
   margin-right: 10px;
   font-family: Open Sans;
-  font-size: 12px!important;
+  font-size: 12px;
 }
 
 a.lemma-code:hover {
@@ -1794,8 +1943,31 @@ a.lemma-code i.fa {
 }
 
 .pEtymology {
-  font-family: Open Sans;
-  font-size: 11px;
+   font-family: Trebuchet MS;
+  font-size: 12px;
+}
+
+.pNotes{
+  margin: -10px;
+  border-top: #f5f5f5 12px solid;
+  border-bottom: #f5f5f5 12px solid;
+  margin-top: -10px;
+  margin-bottom: -10px;
+  margin-right: -10px;
+  padding: 20px;
+  padding-top: 0px;
+  padding-bottom: 0px;
+  font-size: 13PX;
+  font-family: Trebuchet MS;
+}
+
+.pNotes ul{
+  list-style: square;
+}
+
+
+.pNotes p{
+  display: normal;
 }
 
 span.pCognates {
@@ -1887,6 +2059,18 @@ span.pSectionTitle.editing.first strong.pWord a, span.pSectionTitle.editing.firs
   border: #d7d7d7 dashed 1px!important;
   border-radius: 7px!important;
   color: #68777d!important;
+}
+
+a.red-link{
+  display: inline-block!important;
+  padding: 5px!important;
+  border: #f04f48 dashed 1px!important;
+  border-radius: 7px!important;
+  color: #f04f48!important;
+}
+
+.red-link{
+ 
 }
 
 a.edit-field:hover{
@@ -2356,6 +2540,12 @@ div.btCard {
   background: #fff;
   box-shadow: 0 2px 20px -2px rgba(0, 0, 0, 0.05)
 }
+
+div.btCard input{
+  padding: 5px;
+  border: 1px solid #ddd;
+}
+
 div.btCard.editing{
   border: 1px dashed #d8d8d8;
   border-radius: 7px!important;

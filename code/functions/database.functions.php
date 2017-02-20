@@ -129,7 +129,6 @@ function pQuery($sql, $force_no_cache = false, $force_no_count = false){
 
 
 
-
 // This will just delete all cache files in a certain section
 function pCleanCache($section = 'queries', $prefix = ''){
 

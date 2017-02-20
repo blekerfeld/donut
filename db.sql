@@ -51,7 +51,8 @@ INSERT INTO `apps` (`id`, `app`, `getter`) VALUES
 (31,  'batch_translate',  'translate'),
 (32,  'lemma',  'discuss-lemma'),
 (33,  'lemma',  'edit-lemma'),
-(34,  'profile',  'profile');
+(34,  'profile',  'profile'),
+(35,  'dashboard',  'dashboard');
 
 SET NAMES utf8mb4;
 
@@ -232,10 +233,22 @@ INSERT INTO `discussions` (`id`, `word_id`, `parent_discussion`, `user_id`, `poi
 (77,  78, 0,  1,  1,  '[[p5m|test]] test',  '2017-01-31 02:12:34',  '0000-00-00 00:00:00'),
 (78,  10, 68, 1,  1,  '12th level', '2017-02-05 19:40:59',  '0000-00-00 00:00:00'),
 (79,  18, 0,  1,  1,  'Poesje miauw, kom eens gauw, \nik heb lekkere melk voor jou!', '2017-02-06 00:28:36',  '0000-00-00 00:00:00'),
-(81,  10, 0,  1,  1,  'boeeei\n', '2017-02-12 15:05:50',  '0000-00-00 00:00:00'),
 (82,  1,  0,  1,  1,  'man\n',  '2017-02-12 15:08:24',  '0000-00-00 00:00:00'),
 (83,  1,  0,  1,  1,  '**HOI**',  '2017-02-12 15:10:26',  '0000-00-00 00:00:00'),
-(84,  1,  83, 1,  1,  'OOK HALLO',  '2017-02-12 15:10:45',  '0000-00-00 00:00:00');
+(84,  1,  83, 1,  1,  'OOK HALLO',  '2017-02-12 15:10:45',  '0000-00-00 00:00:00'),
+(85,  87, 0,  1,  1,  'This is a lemma!', '2017-02-15 01:28:27',  '0000-00-00 00:00:00'),
+(86,  87, 85, 1,  1,  'No, this is a lemma - dicsussion page!', '2017-02-15 01:30:46',  '0000-00-00 00:00:00'),
+(87,  44, 0,  1,  1,  'test\n', '2017-02-18 00:47:46',  '0000-00-00 00:00:00'),
+(89,  44, 87, 1,  1,  '/ ', '2017-02-18 00:48:08',  '0000-00-00 00:00:00'),
+(90,  10, 0,  1,  1,  'Test', '2017-02-18 13:56:48',  '0000-00-00 00:00:00'),
+(91,  10, 90, 1,  1,  'Test', '2017-02-18 13:56:54',  '0000-00-00 00:00:00'),
+(92,  10, 91, 1,  1,  'test', '2017-02-18 13:57:03',  '0000-00-00 00:00:00'),
+(93,  10, 0,  1,  1,  '[[Ma]]', '2017-02-18 13:57:18',  '0000-00-00 00:00:00'),
+(94,  20, 0,  1,  1,  'This is a test discussion! :)',  '2017-02-18 14:05:18',  '0000-00-00 00:00:00'),
+(95,  20, 94, 1,  1,  'Word links are cool! [[YG]] is a type of [[Ma]]',  '2017-02-18 14:05:49',  '0000-00-00 00:00:00'),
+(96,  7,  76, 1,  1,  'Discussion threads are cool!', '2017-02-18 14:16:21',  '0000-00-00 00:00:00'),
+(97,  7,  96, 1,  1,  ' Word links as well: [[ja]] [[Ma]] [[VX]]',  '2017-02-18 14:16:44',  '0000-00-00 00:00:00'),
+(98,  7,  97, 1,  1,  'Oops, VX does not exist',  '2017-02-18 14:16:58',  '0000-00-00 00:00:00');
 
 DROP TABLE IF EXISTS `etymology`;
 CREATE TABLE `etymology` (
@@ -502,8 +515,6 @@ INSERT INTO `inflection_cache` (`id`, `inflection`, `word_id`, `inflection_hash`
 (549, 'leuke',  69, 'bbbf8fb3a8cdbd052fa5ce60516f9fac'),
 (552, 'leukere',  69, '31f43dcc0353f362d0ab49b1beb2c7f9'),
 (555, 'leukste',  69, '8c3ff81f1e5941a1889ee15850fea0b6'),
-(556, 'leuker', 69, '08a4948d772d85f5f936f2d66445d46c'),
-(557, 'leukst', 69, 'dddd3245725628985e28c1044dd94bbf'),
 (558, 'werk', 7,  '8bf73c1e802b8e2a11e970c171f7cb6f'),
 (559, 'werkt',  7,  '07faa339cbdf6c2f5d86aba01f6b37e2'),
 (560, 'werkte', 7,  'ec721811e61b2ea5fa515964ceb95067'),
@@ -517,8 +528,20 @@ INSERT INTO `inflection_cache` (`id`, `inflection`, `word_id`, `inflection_hash`
 (568, 'jonge',  82, 'f9dfc45f94459e25cec1177959d980ca'),
 (571, 'jongere',  82, 'aea48f06c8b4ede4347036903a90d1f4'),
 (574, 'jongste',  82, '98ef73dcb4b6f5916ad105a42adf8001'),
-(579, 'jonger', 82, '4cd6edb84f9657e55a1f922766f8ef58'),
-(580, 'jongst', 82, '747230e27465321b64d246c67142c0ff');
+(585, 'jonger', 82, '4cd6edb84f9657e55a1f922766f8ef58'),
+(586, 'jongst', 82, '747230e27465321b64d246c67142c0ff'),
+(587, 'leuker', 69, '08a4948d772d85f5f936f2d66445d46c'),
+(588, 'leukst', 69, 'dddd3245725628985e28c1044dd94bbf'),
+(589, 'test', 88, '8bf73c1e802b8e2a11e970c171f7cb6f'),
+(590, 'testt',  88, '07faa339cbdf6c2f5d86aba01f6b37e2'),
+(591, 'testte', 88, 'ec721811e61b2ea5fa515964ceb95067'),
+(592, 'testten',  88, '7839a539755e35dc00b94115f3402515'),
+(593, 'getestt',  88, 'd4d21c00f71ddb8db3bc9dceb9e54b15'),
+(599, 'goede',  29, 'bbbf8fb3a8cdbd052fa5ce60516f9fac'),
+(602, 'betere', 29, '31f43dcc0353f362d0ab49b1beb2c7f9'),
+(605, 'beste',  29, '8c3ff81f1e5941a1889ee15850fea0b6'),
+(606, 'beter',  29, '08a4948d772d85f5f936f2d66445d46c'),
+(607, 'best', 29, 'dddd3245725628985e28c1044dd94bbf');
 
 DROP TABLE IF EXISTS `inflection_scripts`;
 CREATE TABLE `inflection_scripts` (
@@ -1316,7 +1339,6 @@ INSERT INTO `synonyms` (`id`, `word_id_1`, `word_id_2`, `score`) VALUES
 (1, 1,  10, 50),
 (2, 1,  11, 100),
 (3, 11, 10, 50),
-(4, 1,  12, 25),
 (5, 15, 14, 100),
 (6, 8,  15, 25),
 (7, 17, 18, 100),
@@ -1547,7 +1569,10 @@ INSERT INTO `translations` (`id`, `language_id`, `translation`) VALUES
 (336, 1,  'wish'),
 (337, 8,  'dom'),
 (338, 1,  'house'),
-(339, 1,  'without');
+(339, 1,  'without'),
+(340, 10, 'testa'),
+(341, 10, 'försöka'),
+(342, 10, '');
 
 DROP TABLE IF EXISTS `translation_alternatives`;
 CREATE TABLE `translation_alternatives` (
@@ -1566,7 +1591,8 @@ INSERT INTO `translation_alternatives` (`id`, `translation_id`, `alternative`) V
 (6, 325,  'being'),
 (7, 325,  'is'),
 (8, 325,  'was'),
-(9, 325,  'am');
+(9, 325,  'am'),
+(10,  1,  'male');
 
 DROP TABLE IF EXISTS `translation_exceptions`;
 CREATE TABLE `translation_exceptions` (
@@ -1614,7 +1640,6 @@ INSERT INTO `translation_words` (`id`, `word_id`, `translation_id`, `specificati
 (7, 9,  6,  ''),
 (8, 5,  7,  ''),
 (9, 11, 10, ''),
-(10,  12, 11, ''),
 (11,  14, 13, ''),
 (12,  15, 15, ''),
 (13,  17, 23, ''),
@@ -1635,8 +1660,6 @@ INSERT INTO `translation_words` (`id`, `word_id`, `translation_id`, `specificati
 (56,  25, 42, 'dated'),
 (58,  28, 45, ''),
 (61,  29, 48, ''),
-(62,  30, 49, ''),
-(63,  30, 50, ''),
 (64,  31, 51, ''),
 (65,  32, 52, ''),
 (66,  33, 52, 'unstressed'),
@@ -1662,7 +1685,6 @@ INSERT INTO `translation_words` (`id`, `word_id`, `translation_id`, `specificati
 (110, 61, 94, ''),
 (111, 62, 95, ''),
 (113, 64, 97, ''),
-(114, 65, 100,  ''),
 (115, 66, 101,  ''),
 (116, 67, 102,  ''),
 (117, 68, 103,  ''),
@@ -1672,7 +1694,6 @@ INSERT INTO `translation_words` (`id`, `word_id`, `translation_id`, `specificati
 (121, 69, 107,  ''),
 (122, 69, 108,  ''),
 (123, 69, 109,  'about a person'),
-(124, 70, 110,  ''),
 (125, 71, 111,  ''),
 (126, 71, 112,  'pole shaped'),
 (127, 72, 113,  ''),
@@ -1698,7 +1719,6 @@ INSERT INTO `translation_words` (`id`, `word_id`, `translation_id`, `specificati
 (221, 20, 208,  'animal kingdom'),
 (222, 20, 209,  'informal'),
 (223, 24, 210,  ''),
-(224, 36, 211,  ''),
 (225, 5,  212,  ''),
 (226, 7,  213,  'like a job'),
 (227, 7,  214,  'function (like a machine)'),
@@ -1708,7 +1728,6 @@ INSERT INTO `translation_words` (`id`, `word_id`, `translation_id`, `specificati
 (231, 9,  218,  ''),
 (232, 10, 219,  ''),
 (233, 11, 220,  ''),
-(234, 12, 221,  ''),
 (235, 17, 222,  ''),
 (237, 18, 224,  ''),
 (238, 18, 225,  'vulgar'),
@@ -1730,7 +1749,6 @@ INSERT INTO `translation_words` (`id`, `word_id`, `translation_id`, `specificati
 (261, 29, 248,  'interjection'),
 (262, 29, 249,  ''),
 (263, 29, 250,  ''),
-(264, 30, 251,  ''),
 (265, 32, 252,  ''),
 (266, 33, 253,  ''),
 (267, 34, 254,  ''),
@@ -1750,8 +1768,6 @@ INSERT INTO `translation_words` (`id`, `word_id`, `translation_id`, `specificati
 (281, 10, 268,  ''),
 (282, 10, 269,  ''),
 (283, 11, 270,  ''),
-(284, 12, 271,  ''),
-(285, 12, 272,  ''),
 (286, 14, 273,  ''),
 (287, 14, 274,  ''),
 (288, 15, 275,  ''),
@@ -1765,8 +1781,6 @@ INSERT INTO `translation_words` (`id`, `word_id`, `translation_id`, `specificati
 (296, 28, 283,  ''),
 (297, 29, 284,  ''),
 (298, 29, 285,  ''),
-(299, 30, 286,  ''),
-(300, 30, 287,  ''),
 (301, 31, 288,  ''),
 (302, 32, 289,  ''),
 (303, 33, 290,  ''),
@@ -1808,7 +1822,9 @@ INSERT INTO `translation_words` (`id`, `word_id`, `translation_id`, `specificati
 (347, 85, 336,  ''),
 (348, 86, 337,  ''),
 (349, 86, 338,  ''),
-(350, 87, 339,  '');
+(350, 87, 339,  ''),
+(351, 88, 340,  ''),
+(352, 88, 341,  '');
 
 DROP TABLE IF EXISTS `types`;
 CREATE TABLE `types` (
@@ -1853,6 +1869,8 @@ CREATE TABLE `usage_notes` (
   CONSTRAINT `usage_notes_ibfk_2` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
+INSERT INTO `usage_notes` (`id`, `word_id`, `last_update`, `created_on`, `user_id`, `note`) VALUES
+(1, 1,  '2017-02-15 23:41:20',  '2017-02-15 23:38:50',  1,  '* The normal plural is *mannen*. The unchanged form man is used after numerals only; it refers to the size of a group rather than a number of individuals. For example: In totaal verloren er 5000 man hun leven in die slag. (“5000 men altogether lost their lives in that battle.”)\r\n\r\n* Compound words with -man as their last component often take -lieden or -lui in the plural, rather than -mannen. For example: brandweerman ‎(“firefighter”) → brandweerlieden (alongside brandweerlui and brandweermannen).\r\n');
 
 DROP TABLE IF EXISTS `users`;
 CREATE TABLE `users` (
@@ -1862,14 +1880,16 @@ CREATE TABLE `users` (
   `password` varchar(255) NOT NULL,
   `editor_lang` int(11) NOT NULL,
   `reg_date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  `role` int(11) NOT NULL,
   PRIMARY KEY (`id`),
   KEY `editor_lang` (`editor_lang`),
   CONSTRAINT `users_ibfk_1` FOREIGN KEY (`editor_lang`) REFERENCES `languages` (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
-INSERT INTO `users` (`id`, `longname`, `username`, `password`, `editor_lang`, `reg_date`) VALUES
-(1, 'Thomas de Roo',  'Thomas', 'd88aad0fd193b6ac9c03db2edddf9d1402956df84e709932dd2c4b70e5dc7f1b', 1,  '2017-02-12 17:54:35'),
-(2, '', 'Charlie',  'd88aad0fd193b6ac9c03db2edddf9d1402956df84e709932dd2c4b70e5dc7f1b', 1,  '2017-02-12 17:41:56');
+INSERT INTO `users` (`id`, `longname`, `username`, `password`, `editor_lang`, `reg_date`, `role`) VALUES
+(1, 'Thomas de Roo',  'Thomas', 'd88aad0fd193b6ac9c03db2edddf9d1402956df84e709932dd2c4b70e5dc7f1b', 8,  '2017-02-18 17:20:23',  0),
+(2, '', 'Charlie',  'd88aad0fd193b6ac9c03db2edddf9d1402956df84e709932dd2c4b70e5dc7f1b', 1,  '2017-02-12 17:41:56',  0),
+(3, 'Donut User', 'donut',  'e69fd784f93f82eb6bf5148f0a0e3f5282df5ac10427ab3d6704799adca95a07', 1,  '2017-02-20 10:21:28',  0);
 
 DROP TABLE IF EXISTS `votes`;
 CREATE TABLE `votes` (
@@ -1914,22 +1934,21 @@ CREATE TABLE `words` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 INSERT INTO `words` (`id`, `native`, `ipa`, `hidden`, `type_id`, `classification_id`, `subclassification_id`, `derivation_of`, `derivation_type`, `derivation_name`, `derivation_clonetranslations`, `derivation_show_in_title`, `created`, `updated`, `created_by`, `image`) VALUES
-(1, 'man',  'mɑn',  0,  1,  1,  0,  0,  0,  0,  0,  0,  '2017-02-06 00:21:03',  '2017-02-12 17:39:50',  1,  NULL),
+(1, 'man',  'mɑn',  0,  1,  1,  0,  0,  0,  0,  0,  0,  '2017-02-06 00:21:03',  '2017-02-13 11:40:04',  1,  NULL),
 (2, 'een',  '', 0,  10, 1,  0,  0,  0,  0,  0,  0,  '2017-02-06 00:21:03',  '2017-02-12 17:39:50',  1,  NULL),
 (5, 'hebben', '', 0,  2,  6,  0,  0,  0,  0,  0,  0,  '2017-02-06 00:21:03',  '2017-02-12 17:39:50',  1,  NULL),
-(7, 'werken', '', 0,  2,  5,  1,  0,  0,  0,  0,  0,  '2017-02-06 00:21:03',  '2017-02-12 17:39:50',  1,  NULL),
+(7, 'werken', 'wərkm',  0,  2,  5,  1,  0,  0,  0,  0,  0,  '2017-02-06 00:21:03',  '2017-02-18 14:17:52',  1,  NULL),
 (8, 'juichen',  '', 0,  2,  5,  0,  0,  0,  0,  0,  0,  '2017-02-06 00:21:03',  '2017-02-12 17:39:50',  1,  NULL),
 (9, 'vrouw',  'vrɑu̯',  0,  1,  2,  0,  0,  0,  0,  0,  0,  '2017-02-06 00:21:03',  '2017-02-12 17:39:50',  1,  NULL),
 (10,  'echtgenoot', 'ɛxtxəˌnot',  0,  1,  1,  0,  0,  0,  0,  0,  0,  '2017-02-06 00:21:03',  '2017-02-12 17:39:50',  1,  NULL),
 (11,  'hij',  '', 0,  4,  10, 2,  0,  0,  0,  0,  0,  '2017-02-06 00:21:03',  '2017-02-12 17:39:50',  1,  NULL),
-(12,  'oom',  '', 0,  1,  1,  0,  0,  0,  0,  0,  0,  '2017-02-06 00:21:03',  '2017-02-12 17:39:50',  1,  NULL),
 (14,  'verliezen',  '', 0,  2,  6,  0,  0,  0,  0,  0,  0,  '2017-02-06 00:21:03',  '2017-02-12 17:39:50',  1,  NULL),
 (15,  'winnen', '', 0,  2,  5,  1,  0,  0,  0,  0,  0,  '2017-02-06 00:21:03',  '2017-02-12 17:39:50',  1,  NULL),
 (16,  'de', '', 0,  10, 1,  0,  0,  0,  0,  0,  0,  '2017-02-06 00:21:03',  '2017-02-12 17:39:50',  1,  NULL),
 (17,  'kat',  'kɑt',  0,  1,  2,  0,  0,  0,  0,  0,  0,  '2017-02-06 00:21:03',  '2017-02-12 17:39:50',  1,  'kat.png'),
 (18,  'poes', 'pus',  0,  1,  2,  0,  0,  0,  0,  0,  0,  '2017-02-06 00:21:03',  '2017-02-12 17:39:50',  1,  NULL),
 (19,  'katje',  'kɑtjə',  0,  1,  3,  0,  17, 0,  1,  1,  1,  '2017-02-06 00:21:03',  '2017-02-12 17:39:50',  1,  NULL),
-(20,  'mannetje', 'mɑn.ətjə', 1,  1,  3,  0,  1,  0,  1,  0,  1,  '2017-02-06 00:21:03',  '2017-02-12 17:39:50',  1,  NULL),
+(20,  'mannetje', 'mɑn.ətjə', 0,  1,  3,  0,  1,  0,  1,  0,  1,  '2017-02-06 00:21:03',  '2017-02-15 23:57:43',  1,  NULL),
 (22,  'men',  'mɛn',  0,  4,  3,  0,  1,  4,  0,  0,  0,  '2017-02-06 00:21:03',  '2017-02-12 17:39:50',  1,  NULL),
 (23,  'kater',  'kaːtə̣r',  0,  1,  1,  0,  17, 1,  0,  0,  0,  '2017-02-06 00:21:03',  '2017-02-12 17:39:50',  1,  NULL),
 (24,  'katertje', 'kaːtərtjə',  0,  1,  3,  0,  23, 0,  1,  1,  1,  '2017-02-06 00:21:03',  '2017-02-12 17:39:50',  1,  NULL),
@@ -1937,18 +1956,16 @@ INSERT INTO `words` (`id`, `native`, `ipa`, `hidden`, `type_id`, `classification
 (27,  'meneertje',  '', 0,  1,  3,  0,  25, 0,  1,  0,  1,  '2017-02-06 00:21:03',  '2017-02-12 17:39:50',  1,  NULL),
 (28,  'zij',  '', 0,  4,  11, 2,  0,  0,  0,  0,  0,  '2017-02-06 00:21:03',  '2017-02-12 17:39:50',  1,  NULL),
 (29,  'goed', 'xut',  0,  5,  13, 4,  0,  0,  0,  0,  0,  '2017-02-06 00:21:03',  '2017-02-12 17:39:50',  1,  NULL),
-(30,  'ijs',  '', 0,  1,  3,  0,  0,  0,  0,  0,  0,  '2017-02-06 00:21:03',  '2017-02-12 17:39:50',  1,  NULL),
 (31,  'ik', 'ik', 0,  4,  8,  2,  0,  0,  0,  0,  0,  '2017-02-06 00:21:03',  '2017-02-12 17:39:50',  1,  NULL),
 (32,  'jij',  'jɛi̯/, (unstressed) /jə',  0,  4,  9,  2,  0,  0,  0,  0,  0,  '2017-02-06 00:21:03',  '2017-02-12 17:39:50',  1,  NULL),
 (33,  'je', '', 0,  4,  9,  2,  32, 4,  0,  0,  1,  '2017-02-06 00:21:03',  '2017-02-12 17:39:50',  1,  NULL),
 (34,  'wij',  'ʋɛi̯', 0,  4,  8,  3,  0,  0,  0,  0,  0,  '2017-02-06 00:21:03',  '2017-02-12 17:39:50',  1,  NULL),
 (35,  'we', 'ʋə', 0,  4,  8,  3,  34, 4,  0,  0,  1,  '2017-02-06 00:21:03',  '2017-02-12 17:39:50',  1,  NULL),
-(36,  'bankschroef',  'bank.sxruf', 0,  1,  2,  0,  0,  0,  0,  0,  0,  '2017-02-06 00:21:03',  '2017-02-12 17:39:50',  1,  NULL),
 (40,  'aardappel',  'ɑ:rdappəl',  0,  1,  1,  0,  0,  0,  0,  0,  0,  '2017-02-06 00:21:03',  '2017-02-12 17:39:50',  1,  NULL),
 (41,  'aarde',  'ɑ:rdə',  0,  1,  2,  0,  0,  0,  0,  0,  0,  '2017-02-06 00:21:03',  '2017-02-12 17:39:50',  1,  NULL),
 (42,  'alle', 'ɑl:ə', 0,  5,  13, 4,  0,  0,  0,  0,  0,  '2017-02-06 00:21:03',  '2017-02-12 17:39:50',  1,  NULL),
 (43,  'aaien',  '', 0,  2,  6,  0,  0,  0,  0,  0,  0,  '2017-02-06 00:21:03',  '2017-02-12 17:39:50',  1,  NULL),
-(44,  'allemaal', '', 0,  4,  3,  0,  0,  0,  0,  0,  0,  '2017-02-06 00:21:03',  '2017-02-12 17:39:50',  1,  NULL),
+(44,  'allemaal', 'llem', 0,  4,  3,  0,  0,  0,  0,  0,  0,  '2017-02-06 00:21:03',  '2017-02-18 00:49:18',  1,  NULL),
 (51,  'feest',  '', 0,  1,  3,  0,  0,  0,  0,  0,  0,  '2017-02-06 00:21:03',  '2017-02-12 17:39:50',  1,  NULL),
 (56,  'boek', 'buk',  0,  1,  3,  0,  0,  0,  0,  0,  0,  '2017-02-06 00:21:03',  '2017-02-12 17:39:50',  1,  NULL),
 (57,  'steen',  'steː:n', 0,  1,  1,  0,  0,  0,  0,  0,  0,  '2017-02-06 00:21:03',  '2017-02-12 17:39:50',  1,  NULL),
@@ -1958,12 +1975,10 @@ INSERT INTO `words` (`id`, `native`, `ipa`, `hidden`, `type_id`, `classification
 (61,  'maan', 'ma:n', 0,  1,  2,  0,  0,  0,  0,  0,  0,  '2017-02-06 00:21:03',  '2017-02-12 17:39:50',  1,  NULL),
 (62,  'maand',  'ma:nt',  0,  1,  2,  0,  0,  0,  0,  0,  0,  '2017-02-06 00:21:03',  '2017-02-12 17:39:50',  1,  NULL),
 (64,  'citroen',  'siˈtrun',  0,  1,  2,  0,  0,  0,  0,  0,  0,  '2017-02-06 00:21:03',  '2017-02-12 17:39:50',  1,  'lemons.jpg'),
-(65,  'regenen',  'rex.en.ən',  0,  2,  5,  1,  0,  0,  0,  0,  0,  '2017-02-06 00:21:03',  '2017-02-12 17:39:50',  1,  NULL),
 (66,  'hagelen',  'ha:xell:en', 0,  2,  5,  1,  0,  0,  0,  0,  0,  '2017-02-06 00:21:03',  '2017-02-12 17:39:50',  1,  NULL),
 (67,  'picknick', '', 0,  1,  1,  0,  0,  0,  0,  0,  0,  '2017-02-06 00:21:03',  '2017-02-12 17:39:50',  1,  NULL),
 (68,  'hond', 'hond', 0,  1,  1,  0,  0,  0,  0,  0,  0,  '2017-02-06 00:21:03',  '2017-02-12 17:39:50',  1,  NULL),
 (69,  'leuk', 'løːk', 0,  5,  13, 4,  0,  0,  0,  0,  0,  '2017-02-06 00:21:03',  '2017-02-12 17:39:50',  1,  NULL),
-(70,  'quote',  'kwəʊt',  0,  1,  1,  0,  0,  0,  0,  0,  0,  '2017-02-06 00:21:03',  '2017-02-12 17:39:50',  1,  NULL),
 (71,  'boom', 'bo:m', 0,  1,  1,  0,  0,  0,  0,  0,  0,  '2017-02-06 00:21:03',  '2017-02-12 17:39:50',  1,  NULL),
 (72,  'mooi', 'moːi̯',  0,  5,  13, 0,  0,  0,  0,  0,  0,  '2017-02-06 00:21:03',  '2017-02-12 17:39:50',  1,  NULL),
 (73,  'slecht', 'slɛxt',  0,  5,  13, 4,  0,  0,  0,  0,  0,  '2017-02-06 00:21:03',  '2017-02-12 17:39:50',  1,  NULL),
@@ -1978,6 +1993,7 @@ INSERT INTO `words` (`id`, `native`, `ipa`, `hidden`, `type_id`, `classification
 (84,  'zij',  '', 0,  4,  12, 0,  0,  0,  0,  0,  0,  '2017-02-06 00:21:03',  '2017-02-12 17:39:50',  1,  NULL),
 (85,  'wensen', '', 0,  2,  5,  0,  0,  0,  0,  0,  0,  '2017-02-06 00:21:03',  '2017-02-12 17:39:50',  1,  NULL),
 (86,  'huis', 'ɦœʏ̯s',  0,  1,  3,  0,  0,  0,  0,  0,  0,  '2017-02-12 17:53:05',  '2017-02-12 17:53:39',  NULL, NULL),
-(87,  'zonder', '', 0,  8,  1,  0,  0,  0,  0,  0,  0,  '2017-02-12 23:54:33',  NULL, NULL, NULL);
+(87,  'zonder', 'zonder', 0,  8,  1,  0,  0,  0,  0,  0,  0,  '2017-02-12 23:54:33',  '2017-02-13 11:49:11',  NULL, NULL),
+(88,  'testen', 'tɛst.m', 0,  2,  5,  1,  0,  0,  0,  0,  0,  '2017-02-18 14:19:50',  NULL, NULL, NULL);
 
--- 2017-02-13 00:00:59
+-- 2017-02-20 10:21:58

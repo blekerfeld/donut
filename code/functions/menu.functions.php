@@ -11,12 +11,17 @@
 
 	function pMenu()
 	{
-  			return '<a href="'.pUrl('?home').'" '.pActiveMenu('home').' '.pActiveMenu('search').' '.pActiveMenu('lemma').' '.pActiveMenu('discuss-lemma').'  '.pActiveMenu('edit-lemma').' '.pActiveMenu('alphabet').' '.pActiveMenu('generate').'><i class="fa fa-book fa-12"></i> 
+  			return '<a onClick="" href="'.pUrl('?home').'" '.pActiveMenu('home').' '.pActiveMenu('search').' '.pActiveMenu('lemma').' '.pActiveMenu('discuss-lemma').'  '.pActiveMenu('edit-lemma').' '.pActiveMenu('alphabet').' '.pActiveMenu('generate').'><i class="fa fa-book fa-8 fa-ccc"></i> 
 				'.MMENU_DICTIONARY.'</a> 
+ 
+
+				<a href="'.pUrl('?phonology').'" '.pActiveMenu('phonology').'><i class="fa fa-headphones fa-8"></i> 
+				'.MMENU_PHONOLOGY.'</a> 
 
 
-  			'.((pLogged()) ? '<a href="'.pUrl('?admin').'" '.pActiveMenu('admin').' ><i class="fa fa-tasks fa-12"></i> 
-  				'.MMENU_MANAGE.'</a>' : '');
+  			'.((pLogged()) ? '<a id="admin" href="'.pUrl('?admin').'" '.pActiveMenu('admin').' ><i class="fa fa-wrench fa-8"></i> '.MMENU_SETTINGS.'</a>' : '').((pLogged()) ? '<a id="editor" href="'.pUrl('?dashboard').'" '.pActiveMenu('dashboard').' ><i class="fa fa-lightbulb-o  fa-8"></i> Dashboard</a>' : '');
+
+
 	}
 
 	function pActiveMenu($request)
@@ -29,5 +34,7 @@
 		return '';
 	}
 
-
- ?>	
+	function pAbsHeader(){
+		if(pLogged())
+			return "<span style='float:right'>".MMENU_LOGGEDIN.pUsername($_SESSION['pUser'])." (<a href='".pUrl('?logout')."'>".MMENU_LOGOUT."</a>) – <em class='small'>".MMENU_EDITORLANG."<span class='editorlangname'>".pLanguageName(pEditorLanguage($_SESSION['pUser']))."</span> (<a href='".pUrl('?editorlanguage')."'>".MMENU_EDITORLANGCHANGE."</a>)</em></span><br id='cl' />";
+	}

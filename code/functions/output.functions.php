@@ -8,16 +8,18 @@
 	File: output.functions.php
 */
 
-	function pOut($content, $header = false)
+	function pOut($content, $header = false, $outer = false)
 	{
 		global $donut;
 		if(!isset($_REQUEST["ajaxOUT"]))
 		{
-			if(!$header)
-				return $donut['page']['content'][] = $content;
-			else
+			if($header)
 				return $donut['page']['header'][] = $content;
-		}	
+			elseif($outer)
+				return $donut['page']['outofinner'] .= $content;
+			else
+				return $donut['page']['content'][] = $content;
+		}
 		else{
 			echo $content;
 			return true;

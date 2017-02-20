@@ -8,123 +8,66 @@ function pMarkDownParse($text){
 
 	$parse = new ParsedownExtra;
 
-	return pWordLinks(nl2br($parse->text($text)));
+	return pWordLinks($parse->text($text));
 }
 
 
 function pLanguageDelete($id){
-
-	global $donut;
-	// First we need to loop through all the translation
-	$q = "DELETE translation_words FROM translation_words JOIN translations ON translations.id = translation_words.translation_id WHERE translations.language_id = $id;
+	return pQuery("DELETE translation_words FROM translation_words JOIN translations ON translations.id = translation_words.translation_id WHERE translations.language_id = $id;
 	DELETE FROM idiom_translations WHERE language_id = $id;
 	DELETE FROM translations WHERE language_id = $id;
 	UPDATE users SET editor_lang = 1 WHERE editor_lang = $id;
-	DELETE FROM languages WHERE id = $id";
-	return pQuery($q);
+	DELETE FROM languages WHERE id = $id");
 }
 
 function pLanguageUpdate($id, $name, $hidden_entry, $flag, $activated){
-
-	global $donut;
-	$q = "UPDATE languages SET name = '$name', hidden_native_entry  = '$hidden_entry',  flag = '$flag', activated = '$activated' WHERE id = '$id';";
-	return pQuery($q);
+	return pQuery("UPDATE languages SET name = '$name', hidden_native_entry  = '$hidden_entry',  flag = '$flag', activated = '$activated' WHERE id = '$id';");
 }
 
 function pLanguageAdd($name, $hidden_entry, $flag,  $activated){
-
-	global $donut;
-	$q = "INSERT INTO languages (`name`, `hidden_native_entry`, `flag`, `activated`) VALUES ('$name', '$hidden_entry', '$flag', '$activated');";
-	return pQuery($q);
+	return pQuery("INSERT INTO languages (`name`, `hidden_native_entry`, `flag`, `activated`) VALUES ('$name', '$hidden_entry', '$flag', '$activated');");
 }
 
-
 function pGetLanguages($activated = true, $offset = ''){
+	return pQuery("SELECT * FROM languages WHERE id <> 0 $offset".($activated ? ' AND activated = "1"' : ''));
+}
 
-	global $donut;
-	$q = "SELECT * FROM languages WHERE id <> 0 $offset";
-	if($activated)
-		$q .= ' AND activated = "1"';
-	return pQuery($q);
+function pGetLanguagesAll($activated = true, $offset = ''){
+	return pQuery("SELECT * FROM languages WHERE $offset".($activated ? 'activated = "1"' : ''));
 }
 
 function pDisabledLanguage($id){
-
-	$lang = pGetLanguage($id);
-
-	if($lang->activated == 0)
-		return true;
-	else
-		return false;
-
+	return (pGetLanguage($id)->activated == 0);
 }
 
 function pGetLanguageZero(){
-	global $donut;
-	$q = "SELECT * FROM languages WHERE id = 0";
-	$rs = pQuery($q);
-	if($rs->rowCount() == 0)
-		return false;
-	else
-		return $rs->fetchObject();
+	$rs = pQuery("SELECT * FROM languages WHERE id = 0");
+	return (($rs->rowCount() == 0) ? false : $rs->fetchObject());
 }
 
 function pGetLanguage($id){
-	global $donut;
-	$q = "SELECT * FROM languages WHERE id = $id";
-	$rs = pQuery($q);
-	if($rs->rowCount() == 0)
-		return false;
-	else
-		return $rs->fetchObject();
+	$rs = pQuery("SELECT * FROM languages WHERE id = $id");
+	return (($rs->rowCount() == 0) ? false : $rs->fetchObject());
 }
 
 
 function pLanguageName($id)
 {
-	global $donut;
-	$q = "SELECT * FROM languages WHERE id = '".$id."' LIMIT 1;";
-	$rs = pQuery($q);
-	if($rs->rowCount() != 0)
-	{
-		$rt = $rs->fetchObject();
-		return $rt->name;
-	}
-	else
-	{
-		return false;
-	}
+	$rs = pQuery("SELECT * FROM languages WHERE id = $id");
+	return (($rs->rowCount() == 0) ? false : $rs->fetchObject()->name);
 }
 
-
-
-
-
 function pGetClassificationsApply($id, $offset = ''){
-	global $donut;
-	$q = "SELECT * FROM classification_apply WHERE classification_id = ".$id." $offset";
-	$rs = pQuery($q);
-	return $rs;
+	return pQuery("SELECT * FROM classification_apply WHERE classification_id = ".$id." $offset");
 }
 
 function pCountClassificationsApply($id){
-	global $donut;
-	$q = "SELECT * FROM classification_apply WHERE classification_id = ".$id;
-	$rs = pQuery($q);
-	return $rs->rowCount();
+	return pGetClassificationsApply($id)->rowCount();
 }
-
 
 function pExistClassificationApply($classification_id, $type_id){
-	global $donut;
-	$q = "SELECT * FROM classification_apply WHERE type_id = '$type_id' AND classification_id = '$classification_id'";
-	$rs = pQuery($q);
-	if($rs->rowCount() == 0)
-		return false;
-	else
-		return true;
+	return (pQuery("SELECT * FROM classification_apply WHERE type_id = '$type_id' AND classification_id = '$classification_id'")->rowCount != 0);
 }
-
 
 function pGetClassifications($type = 0, $force = false, $force_get = 0, $offset = ''){
 

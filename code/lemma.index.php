@@ -18,20 +18,6 @@ if(isset($_REQUEST['edit-lemma']) and isset($_REQUEST['ajax']) AND isset($_REQUE
 	return;
 }
 
-// Search area
-if(isset($_GET['searchresult']))
-	pDictionaryHeader($_SESSION['search']);
-else
-	pDictionaryHeader('');
-
-// Start the layout stuff
-
-pOut('<div class="home-margin"><div class="notice hide" style="display: none;" id="loading"><i class="fa fa-spinner fa-spin"></i> '.LOADING.'</div>
-	<br id="cl loading" style="display: none;"/><div class="ajaxload" style="display: none;"></div>
-      <div class="drop">');
-
-
-
 if(isset($_REQUEST['edit-lemma']) and !isset($_REQUEST['lemma'])){
 	$_REQUEST['lemma'] = $_REQUEST['edit-lemma'];
 	$editMode = true;
@@ -44,7 +30,7 @@ else{
 	$edit = "";
 }
 
-// Get noun
+// Get lemma
 if($_REQUEST['lemma'] == '')
 	pUrl('', true);
 if(is_numeric($_REQUEST['lemma']))
@@ -56,6 +42,25 @@ elseif(ctype_alnum($_REQUEST['lemma'])){
 	else
 		$lemma = 0;
 }
+
+
+if(isset($_REQUEST['edit-lemma'],$_REQUEST['ajax'], $_REQUEST['delete']))
+	if(pDeleteLemma($lemma))
+		return die(pUrl('?home', true));
+
+
+// Search area
+if(isset($_GET['searchresult']))
+	pDictionaryHeader($_SESSION['search']);
+else
+	pDictionaryHeader('');
+
+// Start the layout stuff
+
+pOut('<div class="home-margin"><div class="notice hide" style="display: none;" id="loading"><i class="fa fa-spinner fa-spin"></i> '.LOADING.'</div>
+	<br id="cl loading" style="display: none;"/><div class="ajaxload" style="display: none;"></div>
+      <div class="drop">');
+
 
 $rs = pQuery("SELECT * FROM words WHERE id = ".$lemma."");
 
@@ -93,7 +98,7 @@ else{
 }
 
 		if($editMode)
-			pOut('<div class="title"><div class="icon-box fetch"><i class="fa fa-pencil"></i></div>'.LEMMA_EDIT_MODE.'</div><br />'."<a class='float-left back-mini search' href='".((isset($_REQUEST['action']) ? pUrl('?edit-lemma='.$_REQUEST['edit-lemma']) : pUrl('?lemma='.$_REQUEST['edit-lemma'])))."'><i class='fa fa-arrow-left' ></i></a>");
+			pOut('<div class="title">'.LEMMA_EDIT_MODE.'</div><br />'."<a class='float-left back-mini search' href='".((isset($_REQUEST['action']) ? pUrl('?edit-lemma='.$_REQUEST['edit-lemma']) : pUrl('?lemma='.$_REQUEST['edit-lemma'])))."'><i class='fa fa-arrow-left' ></i></a>");
 
 if($word != false AND $editMode and !isset($_REQUEST['ajax']) AND isset($_REQUEST['action']) and pLogged()){
 	if(file_exists(pFromRoot('code/lemma.edit_'.$_REQUEST['action'].'.php')))
@@ -137,7 +142,6 @@ else{
 			$classification = pGetClassification($word->classification_id);
 
 
-
 			pOut("<span class='pSectionTitle float-left first ".(($editMode) ? "editing" : "")."'><strong class='pWord $edit_field' id='ajax_dov_".$word->id."'><a href='".(($editMode) ? pUrl('?edit-lemma='.$_REQUEST['lemma']."&action=basics") : pUrl('?lemma='.$_REQUEST['lemma']))."'><span class='native'>".html_entity_decode($word->native)."</span> ".$edit."</a></strong>$derivation_term<br />");
 
 			// Show the type and classification
@@ -157,6 +161,19 @@ else{
 				else
 					pOut('<span class="tooltip" ><em class="info">'.pSubclassificationName($word->subclassification_id).'</em></span>');
 
+			if($editMode)
+			pOut('<br /><div class="deleteLoad"></div><a class="red-link small delete-lemma first" href="javascript:void(0);" onClick="
+					$(this).removeClass(\'first\');
+					if (confirm(\''.LEMMA_EDIT_DELETE_SURE.'\') == true) {
+			    		$(\'.deleteLoad\').load(\''.pUrl(
+			    			'?edit-lemma='.$_REQUEST['edit-lemma'].'&ajax&delete').'\');
+					}">'.LEMMA_EDIT_DELETE.'</a>
+				<script>
+
+				};
+			</script>');
+
+
 			pOut('</span><br id="cl" />');
 
 	// Back buttons
@@ -165,9 +182,14 @@ else{
 
 	// IPA & AUDIO
 
+			if($word->ipa != '')
+				$ipa_s = "/".html_entity_decode(($word->ipa))."/";
+			else
+				$ipa_s = "<em>No IPA transcription found</em>";
+
 			if($word->ipa != '' OR $editMode)
 				if($editMode)
-					pOut('<span class="pSectionTitle extra editing">Pronounciation</span><div  style="position: relative;" class="pSectionWrapper editing"><a class="pPron tooltip '.$edit_field.'">/'.html_entity_decode(($word->ipa)).'/ '.$edit.'</a>'); 
+					pOut('<span class="pSectionTitle extra editing">Pronounciation</span><div  style="position: relative;" class="pSectionWrapper editing"><a href="'.pUrl('?edit-lemma='.$_REQUEST['edit-lemma']."&action=ipa").'"class="pPron tooltip '.$edit_field.'">'.$ipa_s.$edit.'</a>'); 
 				else
 					pOut('<span class="pSectionTitle extra '.(($editMode) ? "editing" : "").'">Pronounciation</span><div  style="position: relative;" class="pSectionWrapper '.(($editMode AND $word->ipa == '') ? "editing" : "").'"><span class="pPron">/'.html_entity_decode(($word->ipa)).'/</span>'); 
 
@@ -186,7 +208,9 @@ else{
 		});"><span class="pSectionTitle extra closed inflections_title">'.LEMMA_INFLECTIONS.'<span class="showIconInflect"><i class="fa fa-12 fa-chevron-down "></i></span><span class="hideIconInflect hide"><i class="fa fa-12 fa-chevron-up "></i> </span></span></span><div class="pSectionWrapper hide inflections"><div>'.pAllInflections($word, $type)."<br id='cl' /></div></div><br />");
 	elseif($type->inflect_not != 1 and $editMode)
 		pOut("<span class='pSectionTitle extra editing'>".LEMMA_INFLECTIONS."</span><div class='pSectionWrapper editing'>
-				<a class='actionbutton editing' href='".pUrl('?edit-lemma='.$_REQUEST['lemma'].'&stems')."'><i class='fa fa-tree'></i> ".LEMMA_EDIT_STEMS."</a>
+				".(($stems = pEL_StemOverview($lemma) AND $stems != '') ? "<strong class='small-caps' style='font-weight: bolder!important;'> Irregular stems:</strong> <span class='native tooltip'>".$stems."</span>	<br /><br />" : '')."
+				".(($stems = pEL_IrregularOverview($lemma) AND $stems != '') ? "<strong class='small-caps' style='font-weight: bolder!important;'> Irregular forms:</strong> <span class='native tooltip'>".$stems."</span>	<br /><br />" : '')."
+				<a class='actionbutton editing' href='".pUrl('?edit-lemma='.$_REQUEST['lemma'].'&action=stems')."'><i class='fa fa-tree'></i> ".LEMMA_EDIT_STEMS."</a>
 				<a class='actionbutton editing' href='".pUrl('?edit-lemma='.$_REQUEST['lemma'].'&irregular')."'><i class='fa fa-sliders'></i> ".LEMMA_EDIT_IRREGULAR."</a>
 				</div>");
 
@@ -337,7 +361,31 @@ else{
 			pOut("</div>");
 		}
 		
+usage_notes:
+// Usage notes
 
+		$usage_notes = pGetUsageNotes($word->id);
+
+		if($usage_notes->rowCount() == 0 and !$editMode)
+			goto derivations;
+
+		$note = $usage_notes->fetchObject();
+
+		pOut("<span class='pSectionTitle extra'>
+				".LEMMA_USAGE_NOTES."
+			</span>
+
+			<div class='pSectionWrapper'>
+
+				<div class='pNotes'>
+
+						".($usage_notes->rowCount() == 0 ? '' :pMarkDownParse($note->note))."
+
+				</div>
+
+			</div>");
+
+derivations:
 // Derivations
 		$derivations = pGetDerivations($word->id);
 		if(!($derivations == false) AND !$editMode)

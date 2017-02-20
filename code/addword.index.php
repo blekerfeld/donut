@@ -48,6 +48,16 @@ else{
 	$class_select = pPrepareSelect('pGetClassifications', 'classifications', 'id', 'name');
 	$subclass_select = pPrepareSelect('pGetSubclassifications', 'subclassifications', 'id', 'name', '0', '(optional)');
 
+
+	$types = pGetTypes();
+	$array_types = array();
+
+		while($type = $types->fetchObject())
+		if($type->inflect_not == 1 OR $type->inflect_classifications == 1)
+			$array_types[] = $type->id;
+
+		$array_types_json = json_encode($array_types);
+
 	pOut('<div style="width: 74%;margin: 0 auto;" class="notice hide" id="busyadd" ><i class="fa fa-spinner fa-spin"></i> Saving entry...</div>
        		<div style="width: 74%;margin: 0 auto;" class="ajaxloadadd"></div><div class="ajaxscripts"></div>');
 
@@ -73,13 +83,13 @@ else{
 				<tr>
 					<td class='center'><strong class='title'>Part of speech</strong></td>
 					<td>".$type_select."</td>
-					<td class='center'><strong class='title'>Classification</strong></td>
-					<td>".$class_select."</td>
+					<td class='center class_select'><strong class='title'>Classification</strong></td>
+					<td class='class_select'>".$class_select."</td>
 				</tr>
 				<tr>
 					<td></td><td></td>
-					<td class='center'><strong class='title'>Subclassification</strong><br /><em class='small'>optional</em></td>
-					<td>".$subclass_select."</td>
+					<td class='center subclass_select'><strong class='title'>Subclassification</strong><br /><em class='small'>optional</em></td>
+					<td class='subclass_select'>".$subclass_select."</td>
 				</tr>
 				<tr><td></td><td></td></tr>
 				<tr>
@@ -102,6 +112,22 @@ else{
 			});$('.subclassifications').select2({
 			  placeholder: 'Subclassification'
 			});
+
+
+			var arrTypes = ".$array_types_json.";
+
+			 $('.types').on('change', function(e) {
+	          if(arrTypes.indexOf($('.types').val()) != -1)
+	          {
+	          	$('.class_select').css('opacity', 0);
+	          	$('.subclass_select').css('opacity', 0);
+	          }
+	          else{
+	          	$('.class_select').css('opacity', 1);
+	          	$('.subclass_select').css('opacity', 1);
+	          }
+	        });
+
 		})
 		$('#addbutton').click(function(){
 		        $('#busyadd').fadeIn();

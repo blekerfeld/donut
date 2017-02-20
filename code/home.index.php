@@ -16,10 +16,10 @@ $id = pQuery("SELECT count(id) AS cnt_id FROM words WHERE hidden = 0;");
 $id_c  = $id->fetchObject();
 
 
-pOut(pNoticeBox('fa-spinner fa-spin', LOADING, 'notice hide home-margin', 'loading').
-	'<br id="cl loading" style="display: none;"/><div class="ajaxload home-margin" style="display: none;"></div>
+pOut('<div class="home-margin">'.pNoticeBox('fa-spinner fa-spin', LOADING, 'notice hide home-margin', 'loading').
+	'</div><div class="ajaxload home-margin" style="display: none;"></div>
       <div class="drop home-margin">
-    
+    	
 
       <div class="row-center"> <div class="title"><div class="icon-box fetch"><i class="fa fa-clock-o"></i></div> Recently added</div><br />
      ');
@@ -34,18 +34,21 @@ pOut('</div>
       <div class="row-left"><div class="title"><div class="icon-box throw"><i class="fa fa-home"></i> </div>Welcome</div><br />
       <img src="http://louisianaconsularcorps.com/wp-content/gallery/norway/norway-1.jpg" style="width: 50%; float: left; height: auto; margin-right: 30px;" />Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vestibulum mauris turpis, feugiat non nulla vel, iaculis tincidunt erat. Aenean ac euismod mi. Nullam feugiat felis sed venenatis laoreet. Vestibulum sodales nisl vitae ex dignissim maximus. Nam hendrerit sed dolor et convallis. Phasellus nec ipsum eget eros porttitor accumsan. Duis pretium malesuada dui, vitae lobortis dolor faucibus sit amet. Donec interdum, turpis id pretium interdum, ante eros sagittis elit, vel aliquam elit est vel ex. Nullam nulla risus, fringilla ac posuere ut, convallis pretium magna. Fusce pellentesque quis erat vel dignissim. Curabitur in augue vel nisi laoreet placerat. Phasellus dapibus augue sed ex interdum, vulputate tristique nunc congue. Aenean efficitur sapien at libero tempor efficitur. Pellentesque facilisis posuere leo at elementum. Donec ac lectus nec lorem consequat dictum. Nulla facilisi. 
       </div>
-      <div class="row-right">HOI</div>
-      <br id="clear" />
-      <br /><br />
-
+      <div class="row-right" style="text-align; center!important;">
      <div class="title"><div class="icon-box fetch"><i class="fa fa-line-chart"></i></div> Statistics</div><br />
-      <span class="count">'.$id_c->cnt_id.' words</span>
-      </div> 	
+      <span class="count" style="text-align; center!important;margin: 0 auto;display: block;width: 45%;">'.$id_c->cnt_id.' words</span></div>
+      <br id="clear" />
+ 
+
+      </div> 
+   	<br id="cl" />
      ');
 
  pOut(pSearchScript());
 
-	pOut("<script>$('#wordsearch').keydown(function(e) {
+	pOut("<script>
+
+		$('#wordsearch').keydown(function(e) {
 			    switch (e.keyCode) {
 			        case 13:
 			        if($('#wordsearch').is(':focus'))

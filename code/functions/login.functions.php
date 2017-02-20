@@ -13,10 +13,20 @@
 		return isset($_SESSION['pUser']);
 	}
 
+	function pUser(){
+		return $_SESSION['pUser'];
+	}
 
 	function pCheckAdmin($id = 0){
 		return pLogged();
 	}
+
+
+	function pCheckRole($id, $minus = 3){
+		$role = pGetUserRole($id);
+		return ($role == (3 - $minus) OR $role < (3 - $minus));
+	}
+
 
 	function pMemberExists($id)
 	{
@@ -56,29 +66,22 @@
 
 	function pUserName($id)
 	{
-		global $donut;
 		$result = pQuery("SELECT username FROM users WHERE id = '$id' LIMIT 1;");
-		if($result->rowCount() == 1)
-		{
-			$user = $result->fetchObject();
-			return $user->username;
-		}
-		else
-			return false;
+		return $result->fetchObject()->username;
 	}
 
 	function pEditorLanguage($id)
 	{
-		global $donut;
 		$result = pQuery("SELECT editor_lang FROM users WHERE id = '$id' LIMIT 1;");
-		if($result->rowCount() == 1)
-		{
-			$user = $result->fetchObject();
-			return $user->editor_lang;
-		}
-		else
-			return false;
+		return $result->fetchObject()->editor_lang;
 	}
+
+	function pGetUserRole($id)
+	{
+		$result = pQuery("SELECT role FROM users WHERE id = '$id' LIMIT 1;");
+		return $result->fetchObject()->role;
+	}
+
 
 	function pRegDate($id)
 	{

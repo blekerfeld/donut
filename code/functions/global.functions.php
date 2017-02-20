@@ -174,6 +174,12 @@
 
 			  $('.ajaxOutLoad').slideDown(150);
 			  $('#pageload').delay(100).hide(400);
+
+
+			  
+
+
+
 			}
 
 
@@ -247,7 +253,7 @@
 		if(isset($_REQUEST['ajax_pOut'])){
 
 			//	And... we need the link system itself!
-			echo pAjaxLinks($donut['page']['title'])."<div class='nav'>".$donut['page']['menu']."</div>";
+			echo pAjaxLinks($donut['page']['title'])."<div class='nav ".(isset($_REQUEST['home']) ? 'home' : '')."'>".$donut['page']['menu']."</div>";
 
 			//	Mimicing the header structure
 			if(!empty($donut['page']['header']))
@@ -269,12 +275,13 @@
 	function pDictionaryHeader($search = ''){
 
 
-		pOut('<span class="float-right" style="padding-right: 24px;important;display: block;">
+		pOut('<div class="header dictionary '.(isset($_REQUEST['home']) ? 'home' : '').'"><img src="'.pUrl("pol://library/images/static/example_logo.png").'" class="logo" />
+			<span class="float-right" style="padding-right: 24px;important;display: block;">
 				<input id="wholeword" class="checkbox-wholeword xsmall" name="wholeword" type="checkbox" checked>
         <label for="wholeword"class="checkbox-wholeword-label small">exact match</label>  
-			</span>', true);
+			</span>');
 
-		pOut(pAlphabetBar(), true);
+		pOut(pAlphabetBar());
 
 		$select = ' 
 		<select id="dictionary">';
@@ -295,10 +302,9 @@
 			  placeholder: ""
 			});</script>';
 
-		pOut('
-			<div class="hSearch">'.$select.'
-				<input type="text" id="wordsearch" class="big" placeholder="Enter a keyword" value="'.$search.'"/>
-			<a class="button search  remember" id="searchb" href="javascript:void(0);"><i class="fa fa-search" style="font-size: 12px!important;"></i> '.DICT_SEARCH.'</a><br id="cl" /></div><br id="cl" />', true);	
+		pOut('<div class="hSearch">'.$select.'
+				<input type="text" id="wordsearch" class="big" placeholder="Enter a keyword" value="'.$search.'"/><a class="button search  remember" id="searchb" href="javascript:void(0);"><i class="fa fa-search" style="font-size: 12px!important;"></i> '.DICT_SEARCH.'</a>
+			<br id="cl" /></div><br id="cl" /></div>');	
 	}
 
 	function pPrepareSelect($function_name, $class, $value, $text, $opt_val = '', $opt_text = '', $control = -1){
@@ -407,6 +413,8 @@ function pSearchScript($extra = ''){
 	return '<script>
       	$("#searchb").click(function(){
       		$(".page").show();
+      		$(".header.dictionary").removeClass("home").addClass("home-search");
+      		$(".nav.home").removeClass("home");
       		$("#loading").slideDown(400);
       		$("#pageload").show();
       		$(".ajaxload").slideUp();
@@ -444,7 +452,7 @@ function pSearchScript($extra = ''){
 }
 
 	function pNoticeBox($icon, $message, $type='notice', $id=''){
-		return '<div class="'.$type.'" id="'.$id.'"><i class="fa '.$icon.'"></i> '.$message.'<br /><br /></div>';
+		return '<div class="'.$type.'" id="'.$id.'"><i class="fa '.$icon.'"></i> '.$message.'</div>';
 	}
 
 	function pMempty()
@@ -456,3 +464,5 @@ function pSearchScript($extra = ''){
 	            return false;
 	    return true;
 	}
+
+
