@@ -1,4 +1,8 @@
-@import url(https://fonts.googleapis.com/css?family=Lora|Merriweather|Lato|Open+Sans|Raleway|Roboto);@font-face{font-family:Simlish;src:url(vendors/fonts/simlish.ttf)}@font-face{font-family:Kollektif;src:url(vendors/fonts/kollektif_bold.ttf)}@font-face{font-family:Gentium;src:url(vendors/fonts/GenBasR.ttf)}@font-face{font-family:Gentium;src:url(vendors/fonts/GenBasB.ttf);font-weight:700}@font-face{font-family:Gentium;src:url(vendors/fonts/GenBasI.ttf);font-style:italic}
+@import url(https://fonts.googleapis.com/css?family=Lora|Merriweather|Lato|Open+Sans|Raleway|Roboto);
+@import url('https://fonts.googleapis.com/css?family=Barrio');
+@font-face{font-family:Kollektif;src:url(vendors/fonts/kollektif_bold.ttf)}@font-face{font-family:Gentium;src:url(vendors/fonts/GenBasR.ttf)}@font-face{font-family:Gentium;src:url(vendors/fonts/GenBasB.ttf);font-weight:700}@font-face{font-family:Gentium;src:url(vendors/fonts/GenBasI.ttf);font-style:italic}
+
+
 /* Basic elements */
 
 *, *:before, *:after {
@@ -162,8 +166,8 @@ span.tab, div.tab {
 
 .absolute_header {
   padding: 3px;
-  padding-left: 5%;
-  padding-right: 5%;
+  padding-left: 8%;
+  padding-right: 8%;
   font-size: 13px;
   background: #161616;
    border-bottom: 1px solid #111;
@@ -185,12 +189,37 @@ span.tab, div.tab {
 #pageload {
   color: #c4c4c4;
   font-size: 10px;
-  float: left;
-  overflow: hidden;
-  z-index: 40;
+}
+
+div.logotop{
+    margin-right: 8%;
+  margin-left: 8%;
+  font-family: Lato;
+  padding: 10px;
+  font-size: 30px;
+  padding-left: 0px;
+  padding-right: 0px;
+  padding-bottom: 25px;
+  color: #2E364C;
+  cursor: pointer;
+}
+
+div.logotop a {
+  padding-bottom: 2px;
+    color: #2E364C;
+  border-bottom: 3px double rgba(46,54,76, 0.1);
+}
+
+div.logotop a:hover{
+  border-bottom: 1px dotted #ccc;
 }
 
 div.outerwrap {
+
+  background: rgba(180,180,180,0.1);
+  padding: 6px;
+  padding-left: 0px;
+  padding-right: 0px;
 
 }
 
@@ -204,8 +233,8 @@ div.outerwrap {
 
 .fill_gaps{
   background: #eee;
-  margin-right: 5%;
-  margin-left: 5%;
+  margin-right: 8%;
+  margin-left: 8%;
 }
 
 .header {
@@ -234,14 +263,15 @@ div.outerwrap {
 }
 
 .home-margin{
-  width: 85%;
+  width: 88%;
   margin: 0 auto;
 }
 
 .absolute_footer {
   margin-bottom: 50px;
-  margin-left: 5%;
-  margin-right: 5%;
+  margin-left: 8%;
+  margin-right: 8%;
+  margin-top: 6px;
   padding: 3px;
   padding-left: 2px;
   opacity: 1;
@@ -468,7 +498,6 @@ a.remember:hover, a.fetch:hover, a.throw:hover {
   height: 15px;
   float: right;
   width: auto;
-  filter: drop-shadow(0px 1.5px 0px rgba(0, 0, 0, 0.2)) brightness(1)!important;
 }
 
 .footer a {
@@ -663,6 +692,11 @@ div.userbox {
   color: #333;
 }
 
+.back-mini.wiki{
+  top: 7px;
+  left: -20px;
+}
+
 .back-mini.alphabet{
   top: -48px;
   color: #333;
@@ -726,7 +760,7 @@ div.icon-box {
   font-family: Raleway;
   font-weight: bolder;
   margin-top: 4px;
-  line-height: 55%;
+  line-height: 58%;
   border-radius: 40px;
   -webkit-user-select: none;
   /* Chrome/Safari */
@@ -762,7 +796,7 @@ div.icon-box.small i.fa {
 div.coursecontainer {
   margin: 3px;
   padding: 10px;
-  width: 95%;
+  width: 98%;
   background: #D1D1D1;
   border-radius: 3px;
   border: #c1c1c1 solid 1px;
@@ -890,7 +924,7 @@ table.noshow td.content {
   display: block;
   padding-top: 10px;
   padding: 0px;
-  width: calc(80.5% - 45px);
+  width: calc(80.8% - 45px);
   float: right;  
   position: static;
 }
@@ -1032,17 +1066,18 @@ a.button.search:hover{
 
 
 .header.dictionary{
-  margin: -18.5px;
-  margin-top: -25px;
-  margin-bottom: 20px!important;
+
   transition: all .3s;
-  background: linear-gradient(to bottom left, #383F52 , #343434);
-  border: 1px #343E56 solid!important;
+  background: linear-gradient(to bottom left, #F2F9FC, #EAF0F2);
+  border: 1px #B8D1DB solid!important;
+  border-left: none!important;
+  border-right: none!important;
+  border-top: none!important;
   padding: 60px;
   padding-bottom: 0px!important;
   padding-top: 10px;
-  margin: -35px;
-  margin-top: -24px;
+  margin-top: -7.5px;
+  margin-bottom: 25px;
     position: relative;
 }
 
@@ -1057,16 +1092,27 @@ a.button.search:hover{
   /* Firefox */
   -ms-user-select: none;
   /* IE10+ */
+  background: #2B3D4F;
+  padding: 5px;
+  border-radius: 0px 0px 7px 7px;
+  padding-bottom: 10px;
+  display: block;
+  margin-top: -10px;
+  margin-left: -45px;
 
 
 }
 
-.header.dictionary.home img.logo{
 
+.header.dictionary.home img.logo{
+  border: none;
   height: 50px;
   width: auto;
   transition: all .3s;
-
+  padding: 0px;
+  margin: 0px;
+  filter: none;
+  background: transparent;
 }
 
 
@@ -1080,53 +1126,22 @@ a.button.search:hover{
   padding: 70px;
   padding-bottom: 50px!important;
   color: #fff;
-    position: relative;
-  margin: -35px;
-  margin-top: -24px;
-  border: none;
-  border-top: 2px #26272A solid!important;
-  border: 1px #343E56 solid!important;
-  background: linear-gradient(to bottom left, #272E41 , #343E56);
+  position: relative;
+
+  border-bottom: 1px #121C34 solid!important;
+  background: #343E56;
   
 }
 
-.header.dictionary:before{
-  display: block;
-  width: 10px;
-  height: 0px;
-  position: absolute;
-  bottom: -10px;
-  left: -10.25px;
-  content: "";
-  border-bottom: 10px solid transparent;
-  border-right: 14px solid #27292D;
-}
-
-.header.dictionary:after{
-  display: block;
-  width: 10px;
-  height: 0px;
-  position: absolute;
-  bottom: -9px;
-  right: -10.25px;
-  content: "";
-  border-bottom: 10px solid transparent;
-  border-left: 14px solid #27292D;
-}
 
 
-
-.header.dictionary.home-search{
-
-
-}
 
 .header.dictionary.home .hSearch .select2-container{
   font-size: 15px!important;
   margin-top: 6px;
 }
 
-.header.dictionary .alphabetbar a{
+.header.dictionary.home .alphabetbar a{
   color: white;
 }
 
@@ -1741,9 +1756,9 @@ a.gramcat.active {
 
 .flipswitch:after {
   position: absolute;
-  top: 5%;
+  top: 8%;
   display: block;
-  width: 45%;
+  width: 48%;
   height: 90%;
   background: #fff;
   box-sizing: border-box;
@@ -1789,7 +1804,7 @@ input.nWord, textarea.nWord {
   color: #000!important;
   font-family: Merriweather;
   font-weight: bolder;
-  width: 95%!important;
+  width: 98%!important;
   display: inline-block;
   margin: 0 auto;
   padding: 18px!important;
@@ -1936,6 +1951,8 @@ a.lemma-code i.fa {
   background: #fff;
   border-style: dashed;
   border-top: none;
+  margin: 40px;
+  margin-top: 0px;
 }
 
 .pSectionWrapper .tooltip {
@@ -2042,6 +2059,9 @@ span.pSectionTitle.extra {
 
 span.pSectionTitle.editing {
   border-style: dashed;
+   margin: 40px;
+  margin-top: 0px;
+  margin-bottom: 0px;
 }
 
 span.pSectionTitle.editing.first{
@@ -2049,7 +2069,6 @@ span.pSectionTitle.editing.first{
   background-color: #f2f9fc;
   border: 1px dashed #c9e6f2!important;
   margin-bottom: 10px;
-  
   padding: 18px;
 }
 
@@ -2724,6 +2743,62 @@ a.wdTopLink, a.wdTopLink i.fa {
   color: #677461;
   font-family: Open Sans;
   font-size: 10px;
+}
+
+
+.wikiSidebar{
+  float: left;
+  width: 25%;
+}
+
+.wikiContent{
+  float: left;
+  width: 75%;
+}
+
+span.wikiTitle{
+  font-family: Merriweather;
+  font-weight: bolder;
+  font-size: 25px;
+  border-bottom: 1px solid #222;
+  padding-bottom: 5px;
+  display: block;
+}
+
+
+.wikiArticleInner h1, .wikiArticleInner h2, .wikiArticleInner h3, .wikiArticleInner h4, .wikiArticleInner h4, .wikiArticleInner h5, .wikiArticleInner h6{
+  font-family: Raleway;
+}
+.wikiArticleInner h1{
+  font-size: 20px;
+  
+}
+.wikiArticleInner h2{
+  font-size: 16px;
+}
+
+.wikiArticleInner ol, .wikiArticleInner ul{
+  margin: 0;
+  padding: 2px;
+  padding-left: 40px;
+  margin-bottom: 7px;
+}
+
+.wikiArticleInner li{
+  list-style: square;
+  margin: 0;
+}
+
+.wikiArticleInner table{
+  width: 80%;
+}
+
+.wikiArticleInner table th{
+  border-bottom: solid #eee 1px;
+  padding: 3px;
+}
+.wikiArticleInner table td, .wikiArticleInner table tr{
+  border: dashed 1px #eee;
 }
 
 /*TESTING CONSCRIPT SUPPORT*/

@@ -52,7 +52,8 @@ INSERT INTO `apps` (`id`, `app`, `getter`) VALUES
 (32,  'lemma',  'discuss-lemma'),
 (33,  'lemma',  'edit-lemma'),
 (34,  'profile',  'profile'),
-(35,  'dashboard',  'dashboard');
+(35,  'dashboard',  'dashboard'),
+(36,  'wiki', 'wiki');
 
 SET NAMES utf8mb4;
 
@@ -158,6 +159,21 @@ INSERT INTO `classification_apply` (`id`, `classification_id`, `type_id`) VALUES
 (22,  13, 5),
 (23,  3,  5);
 
+DROP TABLE IF EXISTS `config`;
+CREATE TABLE `config` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `SETTING_NAME` text COLLATE utf8mb4_unicode_ci NOT NULL,
+  `SETTING_VALUE` text COLLATE utf8mb4_unicode_ci NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+INSERT INTO `config` (`id`, `SETTING_NAME`, `SETTING_VALUE`) VALUES
+(1, 'ENABLE_QUERY_CACHING', '0'),
+(2, 'QC_TIME',  '100000'),
+(3, 'SITE_TITLE', 'ED by donut'),
+(4, 'LOGO_TITLE', 'Example Dictionary <span class=\'xsmall\'>*by donut*</span>'),
+(5, 'HOMEPAGE', 'wiki');
+
 DROP TABLE IF EXISTS `derivations`;
 CREATE TABLE `derivations` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
@@ -248,7 +264,8 @@ INSERT INTO `discussions` (`id`, `word_id`, `parent_discussion`, `user_id`, `poi
 (95,  20, 94, 1,  1,  'Word links are cool! [[YG]] is a type of [[Ma]]',  '2017-02-18 14:05:49',  '0000-00-00 00:00:00'),
 (96,  7,  76, 1,  1,  'Discussion threads are cool!', '2017-02-18 14:16:21',  '0000-00-00 00:00:00'),
 (97,  7,  96, 1,  1,  ' Word links as well: [[ja]] [[Ma]] [[VX]]',  '2017-02-18 14:16:44',  '0000-00-00 00:00:00'),
-(98,  7,  97, 1,  1,  'Oops, VX does not exist',  '2017-02-18 14:16:58',  '0000-00-00 00:00:00');
+(98,  7,  97, 1,  1,  'Oops, VX does not exist',  '2017-02-18 14:16:58',  '0000-00-00 00:00:00'),
+(99,  17, 0,  3,  1,  'Meow!!', '2017-02-25 17:23:51',  '0000-00-00 00:00:00');
 
 DROP TABLE IF EXISTS `etymology`;
 CREATE TABLE `etymology` (
@@ -528,10 +545,6 @@ INSERT INTO `inflection_cache` (`id`, `inflection`, `word_id`, `inflection_hash`
 (568, 'jonge',  82, 'f9dfc45f94459e25cec1177959d980ca'),
 (571, 'jongere',  82, 'aea48f06c8b4ede4347036903a90d1f4'),
 (574, 'jongste',  82, '98ef73dcb4b6f5916ad105a42adf8001'),
-(585, 'jonger', 82, '4cd6edb84f9657e55a1f922766f8ef58'),
-(586, 'jongst', 82, '747230e27465321b64d246c67142c0ff'),
-(587, 'leuker', 69, '08a4948d772d85f5f936f2d66445d46c'),
-(588, 'leukst', 69, 'dddd3245725628985e28c1044dd94bbf'),
 (589, 'test', 88, '8bf73c1e802b8e2a11e970c171f7cb6f'),
 (590, 'testt',  88, '07faa339cbdf6c2f5d86aba01f6b37e2'),
 (591, 'testte', 88, 'ec721811e61b2ea5fa515964ceb95067'),
@@ -541,7 +554,16 @@ INSERT INTO `inflection_cache` (`id`, `inflection`, `word_id`, `inflection_hash`
 (602, 'betere', 29, '31f43dcc0353f362d0ab49b1beb2c7f9'),
 (605, 'beste',  29, '8c3ff81f1e5941a1889ee15850fea0b6'),
 (606, 'beter',  29, '08a4948d772d85f5f936f2d66445d46c'),
-(607, 'best', 29, 'dddd3245725628985e28c1044dd94bbf');
+(607, 'best', 29, 'dddd3245725628985e28c1044dd94bbf'),
+(608, 'jonger', 82, '4cd6edb84f9657e55a1f922766f8ef58'),
+(609, 'jongst', 82, '747230e27465321b64d246c67142c0ff'),
+(610, 'winn', 15, '8bf73c1e802b8e2a11e970c171f7cb6f'),
+(611, 'winnt',  15, '07faa339cbdf6c2f5d86aba01f6b37e2'),
+(612, 'winnte', 15, 'ec721811e61b2ea5fa515964ceb95067'),
+(613, 'winnten',  15, '7839a539755e35dc00b94115f3402515'),
+(614, 'gewinnt',  15, 'd4d21c00f71ddb8db3bc9dceb9e54b15'),
+(615, 'leuker', 69, '08a4948d772d85f5f936f2d66445d46c'),
+(616, 'leukst', 69, 'dddd3245725628985e28c1044dd94bbf');
 
 DROP TABLE IF EXISTS `inflection_scripts`;
 CREATE TABLE `inflection_scripts` (
@@ -1572,7 +1594,20 @@ INSERT INTO `translations` (`id`, `language_id`, `translation`) VALUES
 (339, 1,  'without'),
 (340, 10, 'testa'),
 (341, 10, 'försöka'),
-(342, 10, '');
+(342, 10, ''),
+(343, 8,  'jeden'),
+(344, 8,  'blablabla'),
+(345, 8,  'blablabla'),
+(346, 8,  'man'),
+(347, 8,  ''),
+(348, 8,  ''),
+(349, 8,  ''),
+(350, 8,  ''),
+(351, 8,  ''),
+(352, 8,  ''),
+(353, 8,  ''),
+(354, 1,  'sheep'),
+(355, 1,  'test');
 
 DROP TABLE IF EXISTS `translation_alternatives`;
 CREATE TABLE `translation_alternatives` (
@@ -1616,7 +1651,24 @@ INSERT INTO `translation_exceptions` (`id`, `word_id`, `language_id`, `user_id`)
 (5, 22, 8,  1),
 (6, 27, 8,  1),
 (7, 19, 10, 1),
-(8, 20, 10, 1);
+(8, 20, 10, 1),
+(9, 15, 8,  1),
+(10,  15, 8,  1),
+(11,  15, 8,  1),
+(12,  43, 8,  1),
+(13,  43, 8,  1),
+(14,  44, 8,  1),
+(15,  51, 8,  1),
+(16,  51, 8,  1),
+(17,  56, 8,  1),
+(18,  57, 8,  1),
+(19,  58, 8,  1),
+(20,  59, 8,  1),
+(21,  60, 8,  1),
+(22,  56, 8,  1),
+(23,  61, 8,  1),
+(24,  62, 8,  1),
+(25,  88, 1,  1);
 
 DROP TABLE IF EXISTS `translation_words`;
 CREATE TABLE `translation_words` (
@@ -1824,7 +1876,20 @@ INSERT INTO `translation_words` (`id`, `word_id`, `translation_id`, `specificati
 (349, 86, 338,  ''),
 (350, 87, 339,  ''),
 (351, 88, 340,  ''),
-(352, 88, 341,  '');
+(352, 88, 341,  ''),
+(353, 2,  343,  ''),
+(354, 14, 344,  ''),
+(355, 14, 345,  'test'),
+(356, 14, 346,  ''),
+(357, 15, 347,  ''),
+(358, 41, 348,  ''),
+(359, 42, 349,  ''),
+(360, 15, 350,  ''),
+(361, 41, 351,  ''),
+(362, 15, 352,  ''),
+(363, 15, 353,  ''),
+(364, 89, 354,  ''),
+(365, 88, 355,  '');
 
 DROP TABLE IF EXISTS `types`;
 CREATE TABLE `types` (
@@ -1887,9 +1952,9 @@ CREATE TABLE `users` (
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 INSERT INTO `users` (`id`, `longname`, `username`, `password`, `editor_lang`, `reg_date`, `role`) VALUES
-(1, 'Thomas de Roo',  'Thomas', 'd88aad0fd193b6ac9c03db2edddf9d1402956df84e709932dd2c4b70e5dc7f1b', 8,  '2017-02-18 17:20:23',  0),
+(1, 'Thomas de Roo',  'Thomas', 'd88aad0fd193b6ac9c03db2edddf9d1402956df84e709932dd2c4b70e5dc7f1b', 8,  '2017-02-25 18:00:30',  0),
 (2, '', 'Charlie',  'd88aad0fd193b6ac9c03db2edddf9d1402956df84e709932dd2c4b70e5dc7f1b', 1,  '2017-02-12 17:41:56',  0),
-(3, 'Donut User', 'donut',  'e69fd784f93f82eb6bf5148f0a0e3f5282df5ac10427ab3d6704799adca95a07', 1,  '2017-02-20 10:21:28',  0);
+(3, 'Mr. Donut',  'donut',  'e69fd784f93f82eb6bf5148f0a0e3f5282df5ac10427ab3d6704799adca95a07', 1,  '2017-02-25 17:12:45',  0);
 
 DROP TABLE IF EXISTS `votes`;
 CREATE TABLE `votes` (
@@ -1905,6 +1970,23 @@ CREATE TABLE `votes` (
 
 INSERT INTO `votes` (`id`, `user_id`, `table_name`, `table_id`, `value`) VALUES
 (1, 1,  'discussions',  10, 1);
+
+DROP TABLE IF EXISTS `wiki`;
+CREATE TABLE `wiki` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `reference` int(11) NOT NULL,
+  `article_title` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `article_content` longtext COLLATE utf8mb4_unicode_ci NOT NULL,
+  `article_date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `user_id` int(11) NOT NULL,
+  PRIMARY KEY (`id`),
+  KEY `user_id` (`user_id`),
+  CONSTRAINT `wiki_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`) ON DELETE NO ACTION
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+INSERT INTO `wiki` (`id`, `reference`, `article_title`, `article_content`, `article_date`, `user_id`) VALUES
+(1, 0,  'Article',  '# This is a testing article\r\n\r\n## Markdown is awesome\r\n\r\n- We \r\n- Can \r\n- Make\r\n- Lists\r\n\r\nAnd... **tables**:\r\n\r\n|tabeles    |do       |work   |\r\n|---   |---    |---  |\r\n|really    |       |     |\r\n|they    |do       |     |', '2017-02-25 16:44:13',  3),
+(2, 1,  '', '# This is an UPDATED testing article\r\n\r\n## Markdown is awesome\r\n\r\n- We \r\n- Can \r\n- Make\r\n- Lists\r\n\r\nAnd... **tables**:\r\n\r\n|tabeles     |do       |work   |\r\n|---   |---    |---  |\r\n|really    |       |     |\r\n|they    |do       |     |', '2017-02-25 18:31:03',  3);
 
 DROP TABLE IF EXISTS `words`;
 CREATE TABLE `words` (
@@ -1994,6 +2076,7 @@ INSERT INTO `words` (`id`, `native`, `ipa`, `hidden`, `type_id`, `classification
 (85,  'wensen', '', 0,  2,  5,  0,  0,  0,  0,  0,  0,  '2017-02-06 00:21:03',  '2017-02-12 17:39:50',  1,  NULL),
 (86,  'huis', 'ɦœʏ̯s',  0,  1,  3,  0,  0,  0,  0,  0,  0,  '2017-02-12 17:53:05',  '2017-02-12 17:53:39',  NULL, NULL),
 (87,  'zonder', 'zonder', 0,  8,  1,  0,  0,  0,  0,  0,  0,  '2017-02-12 23:54:33',  '2017-02-13 11:49:11',  NULL, NULL),
-(88,  'testen', 'tɛst.m', 0,  2,  5,  1,  0,  0,  0,  0,  0,  '2017-02-18 14:19:50',  NULL, NULL, NULL);
+(88,  'testen', 'tɛst.m', 0,  2,  5,  1,  0,  0,  0,  0,  0,  '2017-02-18 14:19:50',  NULL, NULL, NULL),
+(89,  'schaap', 'sxa:p',  0,  1,  3,  0,  0,  0,  0,  0,  0,  '2017-02-20 16:23:05',  '2017-02-20 16:23:37',  NULL, NULL);
 
--- 2017-02-20 10:21:58
+-- 2017-02-25 19:30:05

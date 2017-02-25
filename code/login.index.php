@@ -76,17 +76,20 @@
        <div style="width: 75%;margin: 0 auto;"><div class="loginload"></div></div>
        <table style="width: 75%;" class="login tbllogin">
                           <tbody><tr id="usernamefadeout" style="display: table-row;">
-                            <td style="width: 90px;">
+                            <td>
                                <i class="fa-12 fa-user"></i> '.LOGIN_USERNAME.': 
                             </td>
+                            </tr><tr>
                             <td>
                               <input type="text" id="username" name="username" value="">
                             </td>
                           </tr>
                           <tr>
-                            <td style="width: 90px;">
+                            <td>
                               <i class="fa-12 fa-lock"></i> '.LOGIN_PASSWORD.': 
                             </td>
+                           </tr>
+                           <tr>
                             <td>
                               <input type="password" id="password" name="password">
                             </td>
@@ -114,4 +117,3 @@
 			});
 		</script>");
 
- ?>

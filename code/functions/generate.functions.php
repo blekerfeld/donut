@@ -45,7 +45,7 @@
 	}
 
 	function pWriteUTF8File($filename,$content) {
-        if($f=fopen($filename,"w")){
+        if($f=@fopen($filename,"w")){
        		fwrite($f, pack("CCC",0xef,0xbb,0xbf));
        		if(fwrite($f,$content))
        			if(fclose($f))

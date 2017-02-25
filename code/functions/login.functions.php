@@ -64,6 +64,10 @@
 			return false;
 	}
 
+	function pGetUser($id = 0){
+		return pQuery("SELECT * FROM users WHERE id = ".(($id == 0) ? pUser() : $id)." LIMIT 1")->fetchObject();
+	}
+
 	function pUserName($id)
 	{
 		$result = pQuery("SELECT username FROM users WHERE id = '$id' LIMIT 1;");

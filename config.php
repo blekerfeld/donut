@@ -16,12 +16,22 @@
 		$dbDatabase = 'donut'; 	
 
 	// Setting up the connection, die if it fails
-		if(!($db = new PDO('mysql:host='.$dbHost.';dbname='.$dbDatabase, $dbUser, $dbPassword)))
-			die("COULD NOT CONNECT TO THE DATABASE!");
+
+	try{
+		$db = new PDO('mysql:host='.$dbHost.';dbname='.$dbDatabase, $dbUser, $dbPassword);
+	}
+	catch (Exception $e){
+		die("COULD NOT CONNECT TO THE DATABASE! ERROR: ".$e->getMessage());
+	}
 	
 	//	We want the connection to be able to take everything in UTF8!
 		$db->exec("SET NAMES UTF8");
 		$db->query("SET CHARACTER_SET_RESULTS='UTF8'");
+
+	##  Getting all settings and defining them as constants
+	$settings = $db->query("SELECT * FROM config");
+	while($setting = $settings->fetchObject())
+		define("CONFIG_".$setting->SETTING_NAME, $setting->SETTING_VALUE);
 
 	//	Global array
 	$donut = array();
@@ -30,8 +40,7 @@
 	$donut['file'] = 'index.php';
 	$donut['settings'] =array();
 	$donut['page'] = array();
-	$donut['title'] = "Donut";
-	$donut['page']['title'] = "Donut";
+	$donut['page']['title'] = CONFIG_SITE_TITLE;
 	$donut['page']['outofinner'] = null;
 	$donut['page']['menu'] = null;
 	$donut['page']['head'] = array();
@@ -41,9 +50,9 @@
 	$donut['page']['content'] = array();
 	$donut['db'] = $db;
 	$donut['db_prefix'] = "";
-	$donut['enable_query_caching'] = 1;
-	$donut['query_caching_time'] = 5*60;
 	$donut['session_auth'] = md5("kjj8f99e9iwj32ikm8391pok389iokn");
+
+
 
 ##	These variables are the paths to the site root.
 	$donut['root_path'] = dirname(__FILE__);

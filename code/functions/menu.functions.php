@@ -15,6 +15,9 @@
 				'.MMENU_DICTIONARY.'</a> 
  
 
+				<a href="'.pUrl('?wiki').'" '.pActiveMenu('wiki').'><i class="fa fa-map-signs fa-ccc fa-8"></i> 
+				'.MMENU_WIKI.'</a> 
+
 				<a href="'.pUrl('?phonology').'" '.pActiveMenu('phonology').'><i class="fa fa-headphones fa-8"></i> 
 				'.MMENU_PHONOLOGY.'</a> 
 
@@ -35,6 +38,7 @@
 	}
 
 	function pAbsHeader(){
+		global $donut; 
 		if(pLogged())
-			return "<span style='float:right'>".MMENU_LOGGEDIN.pUsername($_SESSION['pUser'])." (<a href='".pUrl('?logout')."'>".MMENU_LOGOUT."</a>) – <em class='small'>".MMENU_EDITORLANG."<span class='editorlangname'>".pLanguageName(pEditorLanguage($_SESSION['pUser']))."</span> (<a href='".pUrl('?editorlanguage')."'>".MMENU_EDITORLANGCHANGE."</a>)</em></span><br id='cl' />";
+			return "<span style='float:right'>".MMENU_LOGGEDIN.($donut['user']->longname != '' ? $donut['user']->longname : $donut['user']->username)." (<a href='".pUrl('?logout')."'>".MMENU_LOGOUT."</a>) – <em class='small'>".MMENU_EDITORLANG."<span class='editorlangname'>".pLanguageName(pEditorLanguage($_SESSION['pUser']))."</span> (<a href='".pUrl('?editorlanguage')."'>".MMENU_EDITORLANGCHANGE."</a>)</em></span><br id='cl' />";
 	}

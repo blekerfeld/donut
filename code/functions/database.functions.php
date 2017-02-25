@@ -51,12 +51,13 @@ function pQuery($sql, $force_no_cache = false, $force_no_count = false){
 	
 
 	// If query caching is disabled, we just need to execute the query
-	if($force_no_cache or $donut['enable_query_caching'] == 0)
+	if($force_no_cache or CONFIG_ENABLE_QUERY_CACHING == 0)
 		return $donut["db"]->query($sql);
 
 	// If this is not a select query, it will change something, therefore the cache needs to be cleaned
-	if(!pStartsWith($sql, "SELECT"))
+	if(!pStartsWith($sql, "SELECT")){
 		pCleanCache('queries', $matches[2][0].'_');
+	}
 
 	// Only select queries can be cached
 	if(!pStartsWith($sql, "SELECT"))
@@ -66,7 +67,7 @@ function pQuery($sql, $force_no_cache = false, $force_no_count = false){
 	$hash = $matches[2][0]."_".md5($sql);
 	$cache_file = pFromRoot('library/cache/queries/'.$hash.'.cache');
 	$cache_folder = pFromRoot('library/cache/queries');
-	$cache_time = $donut['query_caching_time'];
+	$cache_time = CONFIG_QC_TIME;
 
 	// If we are not writable, we have to run the query without cache
 	if(!is_writable($cache_folder))
@@ -142,7 +143,6 @@ function pCleanCache($section = 'queries', $prefix = ''){
 }
 
 
-
 function pReplaceDbPrefix($sql) 
 {
 
@@ -159,7 +159,7 @@ function pReplaceDbPrefix($sql)
             if (!empty($matches[0][$i]))
             {
                 $array[$i] = trim($matches[0][$i]);
-                $sql = str_replace($matches[0][$i], '<#encode:'.$i.':code#>', $sql);
+                $sql = str_replace($matches[0][$i], '<#encode:'.$i.':encode#>', $sql);
             }
         }
     }
@@ -174,7 +174,7 @@ function pReplaceDbPrefix($sql)
 
     foreach ($array as $key => $js)
     {
-        $sql = str_replace('<#encode:'.$key.':code#>', $js, $sql);
+        $sql = str_replace('<#encode:'.$key.':encode#>', $js, $sql);
     }
 
     return $sql;
