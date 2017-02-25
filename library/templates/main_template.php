@@ -31,6 +31,9 @@
     <div class="absolute_header">
       <?php echo pAbsHeader(); ?>
     </div>
+    <div class="logotop">
+        <a href="<?php echo pUrl("?home"); ?>"><?php echo pMarkDownParse(CONFIG_LOGO_TITLE); ?></a><span id="pageload">hoi</span>
+    </div>
     <div class="outerwrap">
       <div class="fill_gaps">
         <div class="ulWrap">

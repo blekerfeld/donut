@@ -17,7 +17,7 @@ $ipa_c_modes = pQuery("SELECT * FROM ipa_c_mode;");
 pOut("<table class='verbs ipa' style='width: 50%!important;'>");
 pOut("<tr class='temps'><td class='filler' style='width: 20px;'><strong>Consonants</strong></td>");
 $places = array();
-foreach ($ipa_c_places as $ipa_c_place) {
+foreach ($ipa_c_places->fetchAll() as $ipa_c_place) {
 	if(array_key_exists(1, $ipa) AND array_key_exists($ipa_c_place['id'], $ipa[1]) OR array_key_exists(2, $ipa) AND array_key_exists($ipa_c_place['id'], $ipa[2]))
 		pOut("<td>".$ipa_c_place['name']."</td>");
 	$places[] = $ipa_c_place['id'];
@@ -27,8 +27,8 @@ pOut("</tr>");
 
 $ipa_c_articulation = pQuery("SELECT * FROM ipa_c_articulation;");
 $ipa_c_places = pQuery("SELECT * FROM ipa_c_place;");
-foreach ($ipa_c_places as $ipa_c_place) {
-	foreach ($ipa_c_articulation as $articulation) {
+foreach ($ipa_c_places->fetchAll() as $ipa_c_place) {
+	foreach ($ipa_c_articulation->fetchAll() as $articulation) {
 
 		$e = "";
 		$count_shown = 0;
@@ -235,10 +235,3 @@ pOut("<script>
 				pOut("</tr>");
 
 				pOut("</table><br />");
-
-
-
-
-
-?>
-

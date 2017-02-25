@@ -39,6 +39,7 @@ define('SAVED_EMPTY', "Please submit all required information");
 // Menu strings
 define('MMENU_DICTIONARY', "Dictionary");
 define('MMENU_SETTINGS', "Settings");
+define('MMENU_WIKI', "Wiki");
 define('MMENU_DASHBOARD', "Dashboard");
 define('MMENU_BLOG', "Blog");
 define('MMENU_ARTICLES', "Grammar");
@@ -91,3 +92,8 @@ define('WD_NO_THREADS', "There are no threads yet");
 // Dashboard strings
 define('DB_TITLE', "Dashboard");
 define('DB_', "");
+
+
+// Wiki string
+define('WIKI_TITLE', "Wiki");
+define('WIKI_', "");

@@ -71,6 +71,8 @@ function pTranslateCard($show_skip = true){
 					});
 
 
+
+
 					</script>
 
 					</div>
@@ -82,16 +84,21 @@ function pTranslateCard($show_skip = true){
 
 if(isset($_REQUEST['ajax'], $_REQUEST['word_id'], $_REQUEST['translate'], $_REQUEST['translations'])){
 
-
 	// Calling the appropiate function
 
 	pAddTranslations($_REQUEST['translations'], $_REQUEST['word_id']);
+	pCleanCache('queries', 'words');
+	pCleanCache('queries', 'translations');
+	pCleanCache('queries', 'translation_words');
 
 }
 
 elseif(isset($_REQUEST['ajax'], $_REQUEST['untranslatable'], $_REQUEST['word_id'])){
 
 	pQuery("INSERT INTO translation_exceptions VALUES (NULL, '".$_REQUEST['word_id']."', '".pEditorLanguage($_SESSION['pUser'])."', '".$_SESSION['pUser']."');");
+
+	pCleanCache('queries', 'words');
+	pCleanCache('queries', 'translations');
 
 	die();
 

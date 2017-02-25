@@ -27,6 +27,12 @@
 	//	Rewelcome our previous-session logged in guest
 	pLogonRestore();
 
+	//	If we're logged in, we need to have the user to our disposal
+	if(pLogged())
+		$donut['user'] = pGetUser();
+	else
+		$donut['user'] = null;
+
 	//	We need to get the language loaded
 	pLoadLanguage('English');
 
@@ -50,7 +56,7 @@
 			if(($app_file = $donut['root_path'] . '/code/' . $app->app . '.index.php') && file_exists($app_file))
 				require_once $app_file;
 			else
-				die("<div class='header'>Fatal error: Donut failed loading the ".$app->app."-section</div>");
+				die("<div class='header'>Fatal error: Donut failed loading the ".$app->app."-section</div><br />");
 
 			$app_set = true;
 
@@ -63,7 +69,7 @@
 
 	//	No app means back to home
 	if($app_set == false)
-		pUrl("?home", true);
+		pUrl("?".CONFIG_HOMEPAGE, true);
 		
 	//	Starting with content output
 	$donut['page']['header_final'] = "";

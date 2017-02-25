@@ -561,6 +561,8 @@
 			// If it does not exists, we need to add it of couuuurse! ;)
 			if($previous_id == 0)
 				$status =  pQuery("INSERT INTO translations(language_id, translation) VALUES(".$donut['db']->quote(pEditorLanguage($_SESSION['pUser'])).", ".$donut['db']->quote($translations[0]).");SET @TRANSLATIONID=LAST_INSERT_ID();INSERT INTO translation_words(word_id, translation_id, specification) VALUES (".$word_id.", @TRANSLATIONID, ".$donut['db']->quote($specification).");");
+
+			echo "<script>alert('INSERT INTO translations(language_id, translation) VALUES(".$donut['db']->quote(pEditorLanguage($_SESSION['pUser'])).", ".$donut['db']->quote($translations[0]).");SET @TRANSLATIONID=LAST_INSERT_ID();INSERT INTO translation_words(word_id, translation_id, specification) VALUES (".$word_id.", @TRANSLATIONID, ".$donut['db']->quote($specification).");')</script>";
 			
 			// The translation existed already, hooray, half the job it is then.
 			$status = pQuery("INSERT INTO translation_words(word_id, translation_id, specification) VALUES (".$word_id.", ".$previous_id.", ".$donut['db']->quote($specification).");");

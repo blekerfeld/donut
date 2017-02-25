@@ -275,7 +275,7 @@
 	function pDictionaryHeader($search = ''){
 
 
-		pOut('<div class="header dictionary '.(isset($_REQUEST['home']) ? 'home' : '').'"><img src="'.pUrl("pol://library/images/static/example_logo.png").'" class="logo" />
+		pOut('<div class="header dictionary '.(isset($_REQUEST['home']) ? 'home' : '').'">
 			<span class="float-right" style="padding-right: 24px;important;display: block;">
 				<input id="wholeword" class="checkbox-wholeword xsmall" name="wholeword" type="checkbox" checked>
         <label for="wholeword"class="checkbox-wholeword-label small">exact match</label>  
