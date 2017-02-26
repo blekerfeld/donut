@@ -51,6 +51,7 @@ function pDeleteLemma($id){
 	$long_query = "
 		DELETE FROM usage_notes WHERE word_id = $id;
 		DELETE FROM stems WHERE word_id = $id;
+		DELETE FROM words_wiki WHERE word_id = $id;
 		DELETE FROM translation_words WHERE word_id = $id;
 		DELETE FROM translation_exceptions WHERE word_id = $id;
 		DELETE FROM audio_words WHERE word_id = $id;

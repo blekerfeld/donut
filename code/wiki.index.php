@@ -10,35 +10,136 @@
 
 
 // Let's fabricate our header
-pOut("<div class='title_header'><div class='icon-box throw'><i class='fa fa-map-signs'></i></div> ".WIKI_TITLE."</div>", true);
+//pOut("<div class='title_header'><div class='icon-box throw'><i class='fa fa-map-signs'></i></div> ".WIKI_TITLE."</div>", true);
+pOut(" ", true);
 
 pOut("<div class='home-margin'>");
 
 // Let's call the sidebar
 pWikiSidebar();
 
+if(isset($_REQUEST['ajax'], $_REQUEST['preview'], $_REQUEST['text']) AND $_REQUEST['text'] != ''){
+	die("<div class='btTitle'><i class='fa fa-eye fa-10'></i> ".WIKI_EDIT_PREVIEWING."</div>".pMarkDownParse($_REQUEST['text']));
+}
+
+
+if(isset($_REQUEST['ajax'], $_REQUEST['create'], $_REQUEST['name'], $_REQUEST['text']) AND $_REQUEST['text'] != '' AND $_REQUEST['name'] != ''){
+	$id = pWikiNewArticle($_REQUEST['name'], $_REQUEST['text'], pUser());
+	die(pUrl("?wiki=".urlencode($_REQUEST['name']), true));
+}
+
+
 pOut("<div class='wikiContent'>");
 
-if(is_numeric($_REQUEST['wiki']) and !isset($_REQUEST['history'])){
+start_of_page:
+
+if(!empty($_REQUEST['wiki']) and !is_numeric($_REQUEST['wiki'])){
+	$wiki_name = urldecode($_REQUEST['wiki']);
+	$search = pWikiArticleByName(urldecode($_REQUEST['wiki']))->fetchObject();
+	if(!($_REQUEST['wiki'] = @$search->id)){
+		$_REQUEST['wiki'] = -1;
+	}
+		
+}
+
+if(isset($_REQUEST['history']) and !empty($_REQUEST['history']) and !is_numeric($_REQUEST['history'])){
+	$search = pWikiArticleByName(urldecode($_REQUEST['history']))->fetchObject();
+	$_REQUEST['history'] = $search->id;
+}
+
+if(is_numeric($_REQUEST['wiki'])){
 
 	$w_id = $_REQUEST['wiki'];
+
+	if($w_id == -1)
+		goto handle_non_existence;
 
 	// Here we do the article display
 
 	// Getting the article to display
 	if(isset($_REQUEST['permalink'])){
-		if(!($article = pWikiGetArticle($w_id, true)))
-			return pUrl('?wiki', true);
+		if(!($article = @pWikiGetArticle($w_id, true)))
+			goto handle_non_existence;
 	}
 	else{
-		if(!($article = pWikiGetRealArticle($w_id)))
-			return pUrl('?wiki', true);
+		if(!($article = @pWikiGetRealArticle($w_id)))
+			goto handle_non_existence;
 	}
 
 
-	pWikiShowArticle($article);
+	pWikiShowArticle($article, isset($_REQUEST['permalink']));
 
+	goto end_of_page;
+
+	handle_non_existence:
+	pWikiShowEmptyArticle($wiki_name);
+}
+
+if(isset($_REQUEST['history']) and is_numeric($_REQUEST['history']) and !is_numeric($_REQUEST['wiki'])){
+
+	$w_id = $_REQUEST['history'];
+	$article = pWikiGetArticle($w_id, true);
+	if($article->reference != 0)
+		pUrl("?wiki&history=".$article->reference, true);
+
+	pWikiShowHistory($article);
+
+	goto end_of_page;
+}
+
+if(isset($_REQUEST['edit']) and is_numeric($_REQUEST['edit']) and !is_numeric($_REQUEST['wiki'])){
+
+	$w_id = $_REQUEST['edit'];
+	$article = pWikiGetArticle($w_id, true);
+	if($article->reference != 0)
+		pUrl("?wiki&edit=".$article->reference, true);
+
+	$article_real = pWikiGetRealArticle($w_id);
+
+	pWikiShowEdit($article_real, $article);
+
+	goto end_of_page;
 }
 
 
+if(isset($_REQUEST['discussion']) and is_numeric($_REQUEST['discussion']) and !is_numeric($_REQUEST['wiki'])){
+
+	$w_id = $_REQUEST['discussion'];
+	$article = pWikiGetArticle($w_id, true);
+	if($article->reference != 0)
+		pUrl("?wiki&discussion=".$article->reference, true);
+
+	pWikiShowDiscussion(pWikiGetArticle($_REQUEST['discussion'], true));
+
+	goto end_of_page;
+}
+
+
+
+if(isset($_REQUEST['w_search']) and $_REQUEST['w_search'] != '')
+{
+
+	pWikiShowSearch(urldecode($_REQUEST['w_search']));
+
+	goto end_of_page;
+
+}
+
+if(isset($_REQUEST['revert'], $_REQUEST['to'])){
+	$article_real = pWikiGetRealArticle($_REQUEST['revert']);
+	if(pLogged() AND $article_real->id != $_REQUEST['to']){
+		pWikiRevert($_REQUEST['revert'], $_REQUEST['to']);
+		$_REQUEST['wiki'] = $_REQUEST['revert'];
+		pOut("<div class='notice'><i class='fa fa-info-circle'></i> ".WIKI_REVERTED_S."</div>");
+	}
+	else{
+		$_REQUEST['wiki'] = $_REQUEST['revert'];
+		pOut("<div class='danger-notice'><i class='fa fa-warning'></i> ".WIKI_REVERTED_ERROR."</div>");
+	}
+
+	goto start_of_page;
+}
+
+
+end_of_page:
 pOut("</div></div><br id='cl' />");

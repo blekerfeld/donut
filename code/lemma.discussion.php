@@ -1,26 +1,7 @@
 
 <?php 
 
-if(isset($_REQUEST['ajax'], $_REQUEST['reply_thread'], $_REQUEST['content'])){
-
-
-	if(pReplyThread($_REQUEST['reply_thread'], $_REQUEST['discuss-lemma'], $_REQUEST['content'], $_SESSION['pUser']) AND trim($_REQUEST['content']) != '')
-		echo "<script>loadfunction('".pUrl('?discuss-lemma='.$_REQUEST['discuss-lemma'])."');</script>";
-	elseif(trim($_REQUEST['content']) == '')
-		echo "<div class='notice danger-notice'><i class='fa fa-warning'></i> ".WD_REPLY_EMPTY."</div>";
-	else
-		echo "<div class='notice danger-notice'><i class='fa fa-warning'></i> ".WD_REPLY_ERROR."</div>";
-	
-	die();
-}
-elseif(isset($_REQUEST['ajax'], $_REQUEST['delete_thread'])){
-
-	if(pDeleteThread($_REQUEST['delete_thread'])){
-		echo "<script>loadfunction('".pUrl('?discuss-lemma='.$_REQUEST['discuss-lemma'])."');</script>";
-	}
-
-
-}
+pDiscussionStructure($_REQUEST['discuss-lemma'], '', 'discuss-lemma', true, false);
 
 if(is_numeric($_REQUEST['discuss-lemma']))
 	$lemma = $_REQUEST['discuss-lemma'];
@@ -58,7 +39,7 @@ pOut('<div class="home-margin"><div class="notice hide" style="display: none;" i
 			<a class="lemma-code discussion float-right" href="'.pUrl('?edit-lemma='.$_REQUEST['discuss-lemma']).'"><i class="fa fa-pencil-square-o "></i> '.LEMMA_EDIT.'</a><a class="lemma-code discussion float-right" href="'.pUrl('?discuss-lemma='.$_REQUEST['discuss-lemma']).'"><i class="fa fa-comments"></i> '.WD_TITLE.'</a>
 			');
 
-pOut('<div class="title"><div class="icon-box throw"><i class="fa fa-comments"></i></div> '.sprintf(WD_TITLE_MORE, pWordLinks("[[".$word->id."]]")).'</div><br />'.
+pOut('<div class="title"><div class="icon-box throw"><i class="fa fa-comments"></i></div> '.sprintf(WD_TITLE_MORE, pWordLinks("{{".$word->id."}}")).'</div><br />'.
 	"<a class='float-left back-mini search' href='".pUrl('?lemma='.pHashId($word->id))."'><i class='fa fa-arrow-left' style='font-size: 12px!important;'></i></a>");
 
 
@@ -71,67 +52,8 @@ pOut('<div class="title"><div class="icon-box throw"><i class="fa fa-comments"><
 
 
 
-	if(isset($_REQUEST['reply_thread']) AND !isset($_REQUEST['ajax'])){
 
-		// Title
-		
-		pOut("<div class='wdComments'>");
-		pDiscussionThreadGet($_REQUEST['reply_thread'], true);
-		pOut("<div class='children'>
-				<div class='wdComment'>
-				<div class='ajaxLoad'></div>
-				<div class='title small'><div class='icon-box fetch small'><i class='fa fa-pencil-square-o fa-10'></i></div> ".WD_REPLY_TITLE."</div><textarea class='nWord small elastic message' placeholder='".WD_REPLY_PLACEHOLDER."'></textarea><br /><a class='actionbutton throw small' id='send-action'><i class='fa fa-paper-plane'></i> ".WD_REPLY_SEND."</a><br /></div>
-			</div>
-			<script>
-				$('#send-action').click(function(){
-					$('.ajaxLoad').slideUp().load('".pUrl('?discuss-lemma='.$lemma.'&ajax&reply_thread='.$_REQUEST['reply_thread'])."', {'content': $('.message').val()}).slideDown();
-				})
-				$(document).ready(function(){
-			        $('.elastic').elastic();
-			    });
-
-			</script>");
-		pOut("</div>");
-						pOut("<br /><a href='".pUrl('?discuss-lemma='.$_REQUEST['discuss-lemma'])."' class='editing small actionbutton'><i class='fa fa-12 fa-arrow-left'></i> ".WD_BACK_TO_THREAD."</a>");
-
-	}
-	elseif(isset($_REQUEST['new_thread']) AND !isset($_REQUEST['ajax'])){
-
-		// Title
-		
-
-		pOut("<div class='wdComments'>");
-		pOut("<div class='children'>
-				<div class='wdComment'>
-				<div class='ajaxLoad'></div>
-				<div class='title small'><div class='icon-box fetch small'><i class='fa fa-plus'></i></div> ".WD_NEW_THREAD_TITLE."</div><textarea class='nWord small elastic message' placeholder='".WD_REPLY_PLACEHOLDER."'></textarea><br /><a class='actionbutton throw small' id='send-action'><i class='fa fa-paper-plane'></i> ".WD_REPLY_SEND."</a><br /></div>
-			</div>
-			<script>
-				$('#send-action').click(function(){
-					$('.ajaxLoad').slideUp().load('".pUrl('?discuss-lemma='.$lemma.'&ajax&reply_thread=0')."', {'content': $('.message').val()}).slideDown();
-				})
-				$(document).ready(function(){
-			        $('.elastic').elastic();
-			    });
-
-			</script>");
-		pOut("</div>");
-				pOut("<br /><a href='".pUrl('?discuss-lemma='.$_REQUEST['discuss-lemma'])."' class='editing small actionbutton'><i class='fa fa-12 fa-arrow-left'></i> ".WD_BACK_TO_THREAD."</a>");
-
-	}
-	else{
-
-		// Getting the dicussions for this word
-		pOut("<br /><a class='actionbutton' href='".pUrl('?discuss-lemma='.$lemma."&new_thread")."'><i class='fa fa-plus'></i> ".WD_NEW_THREAD."</a><br id='cl' />");
-		pOut("<div class='wdComments'>");
-		pDiscussionThreadGet($word->id);
-		pOut("</div>");
-
-	}
-
-
-
-
+	pDiscussionStructure($_REQUEST['discuss-lemma'], '', 'discuss-lemma', false, true);
 
 
 	pOut(pSearchScript("&wordsearch=".$_REQUEST['discuss-lemma']));

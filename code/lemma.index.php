@@ -436,7 +436,7 @@ derivations:
 												".$derv['name']."
 										</td>
 										<td>	
-										".pWordLinks("[[".$derivation_word->id."]]")."
+										".pWordLinks("{{".$derivation_word->id."}}")."
 												<a class='float-right actionbutton editing xsmall'><i class='fa fa-times'></i> Delete link</a>
 											<a class='float-right actionbutton editing xsmall'><i class='fa fa-pencil-square-o'></i> Edit link</a> 
 											
@@ -474,7 +474,7 @@ derivations:
 					$save = array();
 					foreach($nat as $nat_c)
 						if($nat_c != '')
-							$save[] = pWordLinks("[[".$nat_c."]]");
+							$save[] = pWordLinks("{{".$nat_c."}}");
 					foreach($trans as $trans_c){
 						$trans_c = pGetTranslation($trans_c);
 						if($trans_c != '')

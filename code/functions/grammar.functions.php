@@ -8,7 +8,7 @@ function pMarkDownParse($text){
 
 	$parse = new ParsedownExtra;
 
-	return pWordLinks($parse->text($text));
+	return pWikiLinks(pWordLinks($parse->text($text)));
 }
 
 
