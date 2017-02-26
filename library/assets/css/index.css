@@ -2652,8 +2652,13 @@ div.btButtonBar a.btAction {
   text-shadow: 0px 1px 2px rgba(50, 50, 50, 0.2);
   margin-left: 5px;
   font-size: 13px;
+  cursor: pointer;
   font-family: Raleway;
   float: right;
+}
+
+a.btAction.wikiEdit{
+  float: left!important;
 }
 div.btButtonBar a.btAction:hover, div.btButtonBar a.btAction.green:hover {
   background: #b2dde4;
@@ -2748,23 +2753,89 @@ a.wdTopLink, a.wdTopLink i.fa {
 
 .wikiSidebar{
   float: left;
-  width: 25%;
+  width: 15%;
+  margin-right: 30px;
+}
+
+.wikiSidebar div{
+  background: #f5f5f5;
+  padding: 10px;
+}
+
+.wikiSearch{
+  border: rgba(150, 150, 150, 0.1) 1px solid;
+  border-bottom: 3px double #D26232;
+  padding: 10px;
+  font-family: Arial;
+  font-style: italic;
+  font-size: 15px;
+  width: 85%;
+}
+
+.wikiHistory li{
+  margin-bottom: 5px;
+}
+
+.wikiSidebar div a{
+  display: block;
+
+  border-bottom: 3px white double;
+  padding: 4px;
+  color: #333;
+  font-size: 13px;
+  margin-bottom: 3px;
+  font-family: Arial;
+}
+
+.wikiSidebar div a:hover{
+  border-bottom: 3px double #B04010;
+}
+
+.wikiSidebar div a.orange{
+    font-weight: bolder;
+    border-bottom: 3px double #D26232;
+    background: #B04010;
+    color: white;
 }
 
 .wikiContent{
   float: left;
-  width: 75%;
+  width: 80%;
+  margin-left: 20px;
+}
+
+.wikiContent a.lemma-code{
+  background: #B04010;
+  padding: 4px;
+  opacity: 0.8;
+  display: inline-block;
+  color: white;
+  font-size: 10px;
+}
+
+.wikiContent a.lemma-code:hover{
+   opacity: 1;
+}
+
+.wikiContent a.lemma-code.wiki{
+  padding: 2px;
 }
 
 span.wikiTitle{
   font-family: Merriweather;
   font-weight: bolder;
   font-size: 25px;
-  border-bottom: 1px solid #222;
+  border-bottom: 3px double #ddd;
   padding-bottom: 5px;
   display: block;
 }
 
+span.wikiTitle a{
+  color: #444;
+}
+span.wikiTitle a:hover{
+  text-decoration: underline;
+}
 
 .wikiArticleInner h1, .wikiArticleInner h2, .wikiArticleInner h3, .wikiArticleInner h4, .wikiArticleInner h4, .wikiArticleInner h5, .wikiArticleInner h6{
   font-family: Raleway;
@@ -2799,6 +2870,44 @@ span.wikiTitle{
 }
 .wikiArticleInner table td, .wikiArticleInner table tr{
   border: dashed 1px #eee;
+}
+
+ul.wikiHistory li a span.wikiReverted{
+  color: #333;
+  font-size: 10px;
+  text-decoration: underline;
+}
+
+ul.wikiHistory li a span.wikiReverted i.fa{
+  text-decoration: underline;
+}
+
+a.wikiLink.red{
+  color: darkred;
+}
+
+input.wikiEditTitle{
+  background: transparent;
+  border: none!important;
+  border-bottom: solid 1px white!important;
+  width: 80%;
+  color: white;
+}
+
+input.wikiEditSpecification{
+  margin-left: 3px;
+  padding: 2px;
+  width: 60%;
+}
+
+textarea.wikiEditContent{
+  width: 100%;
+  min-height: 500px;
+  border: none;
+  font-family: Calibri;
+  padding: 10px;
+  border-top: 1px #ccc solid;
+  border-bottom: 1px #ccc solid;
 }
 
 /*TESTING CONSCRIPT SUPPORT*/

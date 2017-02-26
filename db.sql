@@ -172,7 +172,12 @@ INSERT INTO `config` (`id`, `SETTING_NAME`, `SETTING_VALUE`) VALUES
 (2, 'QC_TIME',  '100000'),
 (3, 'SITE_TITLE', 'ED by donut'),
 (4, 'LOGO_TITLE', 'Example Dictionary <span class=\'xsmall\'>*by donut*</span>'),
-(5, 'HOMEPAGE', 'wiki');
+(5, 'HOMEPAGE', 'wiki'),
+(6, 'WIKI_ENABLE_HISTORY',  '1'),
+(7, 'WIKI_HISTORY_ONLY_LOGGED', '0'),
+(8, 'WIKI_ALLOW_GUEST_EDITING', '1'),
+(9, 'WIKI_ALLOW_DISCUSSION_GUEST',  '0'),
+(10,  'WIKI_ENABLE_DISCUSSION', '1');
 
 DROP TABLE IF EXISTS `derivations`;
 CREATE TABLE `derivations` (
@@ -208,6 +213,7 @@ CREATE TABLE `discussions` (
   `user_id` int(11) NOT NULL,
   `points` int(11) NOT NULL,
   `content` text CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL,
+  `table_name` varchar(255) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL,
   `post_date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `last_update` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00' ON UPDATE CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`),
@@ -217,55 +223,61 @@ CREATE TABLE `discussions` (
   CONSTRAINT `discussions_ibfk_2` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
-INSERT INTO `discussions` (`id`, `word_id`, `parent_discussion`, `user_id`, `points`, `content`, `post_date`, `last_update`) VALUES
-(4, 1,  3,  2,  0,  'Jaweljawel!',  '2017-01-23 02:00:59',  '0000-00-00 00:00:00'),
-(33,  1,  31, 1,  1,  'But I am stupid',  '2017-01-23 03:50:01',  '0000-00-00 00:00:00'),
-(35,  32, 0,  1,  1,  'Jij en je, should they be two different lemmas?',  '2017-01-23 11:17:47',  '0000-00-00 00:00:00'),
-(36,  32, 35, 1,  1,  'I don\'t know. Would that be useful?', '2017-01-23 12:07:05',  '0000-00-00 00:00:00'),
-(39,  10, 38, 1,  1,  'Third level',  '2017-01-23 12:27:07',  '0000-00-00 00:00:00'),
-(41,  10, 39, 1,  1,  'Fourth level', '2017-01-23 12:27:19',  '0000-00-00 00:00:00'),
-(42,  10, 41, 1,  1,  'Fifth level',  '2017-01-23 12:27:26',  '0000-00-00 00:00:00'),
-(43,  10, 42, 1,  1,  'Sixth level',  '2017-01-23 12:27:34',  '0000-00-00 00:00:00'),
-(44,  10, 43, 1,  1,  'Seventh level',  '2017-01-23 12:27:55',  '0000-00-00 00:00:00'),
-(45,  10, 44, 1,  1,  'Eighth level', '2017-01-23 12:28:05',  '0000-00-00 00:00:00'),
-(46,  10, 45, 1,  1,  '9th level',  '2017-01-23 13:16:10',  '0000-00-00 00:00:00'),
-(47,  10, 46, 1,  1,  '10th level', '2017-01-23 13:16:34',  '0000-00-00 00:00:00'),
-(48,  44, 0,  1,  1,  'First',  '2017-01-23 13:50:50',  '0000-00-00 00:00:00'),
-(52,  1,  51, 1,  1,  'Never mind, I don\'t think it\'s that important...', '2017-01-23 15:10:18',  '0000-00-00 00:00:00'),
-(58,  1,  57, 1,  1,  'Eventuelt äkta maka.', '2017-01-23 16:27:55',  '0000-00-00 00:00:00'),
-(59,  1,  55, 1,  1,  'karl kan va, och kanske även gubbe??', '2017-01-23 16:28:40',  '0000-00-00 00:00:00'),
-(60,  1,  59, 1,  1,  'Gubbe i betydelse av \'een oude mannetje\'', '2017-01-23 16:28:59',  '0000-00-00 00:00:00'),
-(66,  62, 0,  1,  1,  '**Etymology**\n[[62]] might come from [[maan]] right?',  '2017-01-30 00:28:14',  '0000-00-00 00:00:00'),
-(67,  62, 66, 1,  1,  '(heeft niks met [[man]] te doen...)',  '2017-01-30 00:39:48',  '0000-00-00 00:00:00'),
-(68,  10, 47, 1,  1,  '11th level', '2017-01-30 09:42:29',  '0000-00-00 00:00:00'),
-(69,  61, 0,  1,  1,  'Maybe from [[maand]] ??',  '2017-01-30 13:53:57',  '0000-00-00 00:00:00'),
-(70,  16, 0,  1,  1,  'test', '2017-01-31 00:21:27',  '2017-01-31 00:25:57'),
-(71,  16, 0,  1,  1,  '', '2017-01-31 00:22:40',  '0000-00-00 00:00:00'),
-(72,  16, 0,  1,  1,  'aaa',  '2017-01-31 00:22:42',  '0000-00-00 00:00:00'),
-(73,  16, 70, 1,  1,  'vind ik ook [[Qe]]', '2017-01-31 00:27:50',  '0000-00-00 00:00:00'),
-(74,  16, 0,  1,  1,  '[[1]]',  '2017-01-31 00:31:53',  '0000-00-00 00:00:00'),
-(75,  16, 73, 1,  1,  '[[maan]] [[kat]] [[kater]] [[ao|katers]]', '2017-01-31 00:42:26',  '0000-00-00 00:00:00'),
-(76,  7,  0,  1,  1,  '[[Xd|werkte]]',  '2017-01-31 01:31:50',  '0000-00-00 00:00:00'),
-(77,  78, 0,  1,  1,  '[[p5m|test]] test',  '2017-01-31 02:12:34',  '0000-00-00 00:00:00'),
-(78,  10, 68, 1,  1,  '12th level', '2017-02-05 19:40:59',  '0000-00-00 00:00:00'),
-(79,  18, 0,  1,  1,  'Poesje miauw, kom eens gauw, \nik heb lekkere melk voor jou!', '2017-02-06 00:28:36',  '0000-00-00 00:00:00'),
-(82,  1,  0,  1,  1,  'man\n',  '2017-02-12 15:08:24',  '0000-00-00 00:00:00'),
-(83,  1,  0,  1,  1,  '**HOI**',  '2017-02-12 15:10:26',  '0000-00-00 00:00:00'),
-(84,  1,  83, 1,  1,  'OOK HALLO',  '2017-02-12 15:10:45',  '0000-00-00 00:00:00'),
-(85,  87, 0,  1,  1,  'This is a lemma!', '2017-02-15 01:28:27',  '0000-00-00 00:00:00'),
-(86,  87, 85, 1,  1,  'No, this is a lemma - dicsussion page!', '2017-02-15 01:30:46',  '0000-00-00 00:00:00'),
-(87,  44, 0,  1,  1,  'test\n', '2017-02-18 00:47:46',  '0000-00-00 00:00:00'),
-(89,  44, 87, 1,  1,  '/ ', '2017-02-18 00:48:08',  '0000-00-00 00:00:00'),
-(90,  10, 0,  1,  1,  'Test', '2017-02-18 13:56:48',  '0000-00-00 00:00:00'),
-(91,  10, 90, 1,  1,  'Test', '2017-02-18 13:56:54',  '0000-00-00 00:00:00'),
-(92,  10, 91, 1,  1,  'test', '2017-02-18 13:57:03',  '0000-00-00 00:00:00'),
-(93,  10, 0,  1,  1,  '[[Ma]]', '2017-02-18 13:57:18',  '0000-00-00 00:00:00'),
-(94,  20, 0,  1,  1,  'This is a test discussion! :)',  '2017-02-18 14:05:18',  '0000-00-00 00:00:00'),
-(95,  20, 94, 1,  1,  'Word links are cool! [[YG]] is a type of [[Ma]]',  '2017-02-18 14:05:49',  '0000-00-00 00:00:00'),
-(96,  7,  76, 1,  1,  'Discussion threads are cool!', '2017-02-18 14:16:21',  '0000-00-00 00:00:00'),
-(97,  7,  96, 1,  1,  ' Word links as well: [[ja]] [[Ma]] [[VX]]',  '2017-02-18 14:16:44',  '0000-00-00 00:00:00'),
-(98,  7,  97, 1,  1,  'Oops, VX does not exist',  '2017-02-18 14:16:58',  '0000-00-00 00:00:00'),
-(99,  17, 0,  3,  1,  'Meow!!', '2017-02-25 17:23:51',  '0000-00-00 00:00:00');
+INSERT INTO `discussions` (`id`, `word_id`, `parent_discussion`, `user_id`, `points`, `content`, `table_name`, `post_date`, `last_update`) VALUES
+(4, 1,  3,  2,  0,  'Jaweljawel!',  '', '2017-01-23 02:00:59',  '0000-00-00 00:00:00'),
+(33,  1,  31, 1,  1,  'But I am stupid',  '', '2017-01-23 03:50:01',  '0000-00-00 00:00:00'),
+(35,  32, 0,  1,  1,  'Jij en je, should they be two different lemmas?',  '', '2017-01-23 11:17:47',  '0000-00-00 00:00:00'),
+(36,  32, 35, 1,  1,  'I don\'t know. Would that be useful?', '', '2017-01-23 12:07:05',  '0000-00-00 00:00:00'),
+(39,  10, 38, 1,  1,  'Third level',  '', '2017-01-23 12:27:07',  '0000-00-00 00:00:00'),
+(41,  10, 39, 1,  1,  'Fourth level', '', '2017-01-23 12:27:19',  '0000-00-00 00:00:00'),
+(42,  10, 41, 1,  1,  'Fifth level',  '', '2017-01-23 12:27:26',  '0000-00-00 00:00:00'),
+(43,  10, 42, 1,  1,  'Sixth level',  '', '2017-01-23 12:27:34',  '0000-00-00 00:00:00'),
+(44,  10, 43, 1,  1,  'Seventh level',  '', '2017-01-23 12:27:55',  '0000-00-00 00:00:00'),
+(45,  10, 44, 1,  1,  'Eighth level', '', '2017-01-23 12:28:05',  '0000-00-00 00:00:00'),
+(46,  10, 45, 1,  1,  '9th level',  '', '2017-01-23 13:16:10',  '0000-00-00 00:00:00'),
+(47,  10, 46, 1,  1,  '10th level', '', '2017-01-23 13:16:34',  '0000-00-00 00:00:00'),
+(48,  44, 0,  1,  1,  'First',  '', '2017-01-23 13:50:50',  '0000-00-00 00:00:00'),
+(52,  1,  51, 1,  1,  'Never mind, I don\'t think it\'s that important...', '', '2017-01-23 15:10:18',  '0000-00-00 00:00:00'),
+(58,  1,  57, 1,  1,  'Eventuelt äkta maka.', '', '2017-01-23 16:27:55',  '0000-00-00 00:00:00'),
+(59,  1,  55, 1,  1,  'karl kan va, och kanske även gubbe??', '', '2017-01-23 16:28:40',  '0000-00-00 00:00:00'),
+(60,  1,  59, 1,  1,  'Gubbe i betydelse av \'een oude mannetje\'', '', '2017-01-23 16:28:59',  '0000-00-00 00:00:00'),
+(66,  62, 0,  1,  1,  '**Etymology**\n[[62]] might come from [[maan]] right?',  '', '2017-01-30 00:28:14',  '0000-00-00 00:00:00'),
+(67,  62, 66, 1,  1,  '(heeft niks met [[man]] te doen...)',  '', '2017-01-30 00:39:48',  '0000-00-00 00:00:00'),
+(68,  10, 47, 1,  1,  '11th level', '', '2017-01-30 09:42:29',  '0000-00-00 00:00:00'),
+(69,  61, 0,  1,  1,  'Maybe from [[maand]] ??',  '', '2017-01-30 13:53:57',  '0000-00-00 00:00:00'),
+(70,  16, 0,  1,  1,  'test', '', '2017-01-31 00:21:27',  '2017-01-31 00:25:57'),
+(71,  16, 0,  1,  1,  '', '', '2017-01-31 00:22:40',  '0000-00-00 00:00:00'),
+(72,  16, 0,  1,  1,  'aaa',  '', '2017-01-31 00:22:42',  '0000-00-00 00:00:00'),
+(73,  16, 70, 1,  1,  'vind ik ook [[Qe]]', '', '2017-01-31 00:27:50',  '0000-00-00 00:00:00'),
+(74,  16, 0,  1,  1,  '[[1]]',  '', '2017-01-31 00:31:53',  '0000-00-00 00:00:00'),
+(75,  16, 73, 1,  1,  '[[maan]] [[kat]] [[kater]] [[ao|katers]]', '', '2017-01-31 00:42:26',  '0000-00-00 00:00:00'),
+(76,  7,  0,  1,  1,  '[[Xd|werkte]]',  '', '2017-01-31 01:31:50',  '0000-00-00 00:00:00'),
+(77,  78, 0,  1,  1,  '[[p5m|test]] test',  '', '2017-01-31 02:12:34',  '0000-00-00 00:00:00'),
+(78,  10, 68, 1,  1,  '12th level', '', '2017-02-05 19:40:59',  '0000-00-00 00:00:00'),
+(79,  18, 0,  1,  1,  'Poesje miauw, kom eens gauw, \nik heb lekkere melk voor jou!', '', '2017-02-06 00:28:36',  '0000-00-00 00:00:00'),
+(82,  1,  0,  1,  1,  'man\n',  '', '2017-02-12 15:08:24',  '0000-00-00 00:00:00'),
+(83,  1,  0,  1,  1,  '**HOI**',  '', '2017-02-12 15:10:26',  '0000-00-00 00:00:00'),
+(84,  1,  83, 1,  1,  'OOK HALLO',  '', '2017-02-12 15:10:45',  '0000-00-00 00:00:00'),
+(85,  87, 0,  1,  1,  'This is a lemma!', '', '2017-02-15 01:28:27',  '0000-00-00 00:00:00'),
+(86,  87, 85, 1,  1,  'No, this is a lemma - dicsussion page!', '', '2017-02-15 01:30:46',  '0000-00-00 00:00:00'),
+(87,  44, 0,  1,  1,  'test\n', '', '2017-02-18 00:47:46',  '0000-00-00 00:00:00'),
+(89,  44, 87, 1,  1,  '/ ', '', '2017-02-18 00:48:08',  '0000-00-00 00:00:00'),
+(90,  10, 0,  1,  1,  'Test', '', '2017-02-18 13:56:48',  '0000-00-00 00:00:00'),
+(91,  10, 90, 1,  1,  'Test', '', '2017-02-18 13:56:54',  '0000-00-00 00:00:00'),
+(92,  10, 91, 1,  1,  'test', '', '2017-02-18 13:57:03',  '0000-00-00 00:00:00'),
+(93,  10, 0,  1,  1,  '[[Ma]]', '', '2017-02-18 13:57:18',  '0000-00-00 00:00:00'),
+(94,  20, 0,  1,  1,  'This is a test discussion! :)',  '', '2017-02-18 14:05:18',  '0000-00-00 00:00:00'),
+(95,  20, 94, 1,  1,  'Word links are cool! [[YG]] is a type of [[Ma]]',  '', '2017-02-18 14:05:49',  '0000-00-00 00:00:00'),
+(96,  7,  76, 1,  1,  'Discussion threads are cool!', '', '2017-02-18 14:16:21',  '0000-00-00 00:00:00'),
+(97,  7,  96, 1,  1,  ' Word links as well: [[ja]] [[Ma]] [[VX]]',  '', '2017-02-18 14:16:44',  '0000-00-00 00:00:00'),
+(98,  7,  97, 1,  1,  'Oops, VX does not exist',  '', '2017-02-18 14:16:58',  '0000-00-00 00:00:00'),
+(99,  17, 0,  3,  1,  'Meow!!', '', '2017-02-25 17:23:51',  '0000-00-00 00:00:00'),
+(107, 1,  100,  3,  1,  'hoi',  'discussions',  '2017-02-26 00:45:52',  '0000-00-00 00:00:00'),
+(108, 1,  100,  3,  1,  'hoi',  'discussions',  '2017-02-26 00:46:02',  '0000-00-00 00:00:00'),
+(109, 1,  100,  3,  1,  'hoi',  'discussions',  '2017-02-26 00:46:36',  '0000-00-00 00:00:00'),
+(110, 1,  100,  3,  1,  '', 'discussions',  '2017-02-26 00:46:45',  '0000-00-00 00:00:00'),
+(111, 1,  100,  3,  1,  'hoi',  'discussions',  '2017-02-26 00:46:54',  '0000-00-00 00:00:00'),
+(117, 1,  0,  3,  1,  'HOI',  'wiki', '2017-02-26 01:00:45',  '0000-00-00 00:00:00');
 
 DROP TABLE IF EXISTS `etymology`;
 CREATE TABLE `etymology` (
@@ -1979,14 +1991,34 @@ CREATE TABLE `wiki` (
   `article_content` longtext COLLATE utf8mb4_unicode_ci NOT NULL,
   `article_date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `user_id` int(11) NOT NULL,
+  `specification` text COLLATE utf8mb4_unicode_ci NOT NULL,
+  `revert_to` int(11) NOT NULL,
   PRIMARY KEY (`id`),
   KEY `user_id` (`user_id`),
   CONSTRAINT `wiki_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`) ON DELETE NO ACTION
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
-INSERT INTO `wiki` (`id`, `reference`, `article_title`, `article_content`, `article_date`, `user_id`) VALUES
-(1, 0,  'Article',  '# This is a testing article\r\n\r\n## Markdown is awesome\r\n\r\n- We \r\n- Can \r\n- Make\r\n- Lists\r\n\r\nAnd... **tables**:\r\n\r\n|tabeles    |do       |work   |\r\n|---   |---    |---  |\r\n|really    |       |     |\r\n|they    |do       |     |', '2017-02-25 16:44:13',  3),
-(2, 1,  '', '# This is an UPDATED testing article\r\n\r\n## Markdown is awesome\r\n\r\n- We \r\n- Can \r\n- Make\r\n- Lists\r\n\r\nAnd... **tables**:\r\n\r\n|tabeles     |do       |work   |\r\n|---   |---    |---  |\r\n|really    |       |     |\r\n|they    |do       |     |', '2017-02-25 18:31:03',  3);
+INSERT INTO `wiki` (`id`, `reference`, `article_title`, `article_content`, `article_date`, `user_id`, `specification`, `revert_to`) VALUES
+(1, 0,  'Article',  '# This is a testing article\r\n\r\n## Markdown is awesome\r\n\r\n- We \r\n- Can \r\n- Make\r\n- Lists\r\n\r\nAnd... **tables**:\r\n\r\n|tabeles    |do       |work   |\r\n|---   |---    |---  |\r\n|really    |       |     |\r\n|they    |do       |     |', '2017-02-25 16:44:13',  3,  '', 0),
+(2, 1,  '', '# This is an UPDATED testing article\r\n\r\n## Markdown is awesome\r\n\r\n- We \r\n- Can \r\n- Make\r\n- Lists\r\n\r\nAnd... **tables**:\r\n\r\n|tabeles     |do       |work   |\r\n|---   |---    |---  |\r\n|really    |       |     |\r\n|they    |do       |     |', '2017-02-25 18:31:03',  3,  'Just a test update', 0),
+(3, 1,  '', '', '2017-02-25 20:43:39',  1,  '', 1),
+(4, 1,  '', '[[Article]]\r\n\r\n[[Article|Link]]\r\n\r\n[[Ik besta niet]]', '2017-02-25 21:11:24',  1,  '', 0),
+(5, 1,  'Testtje',  'Testtje',  '2017-02-25 23:13:51',  3,  'Klein testje', 0),
+(6, 1,  'Kijk nieuwe veranderingen',  '[[Article]]\n\n[[Article|Link]]\n\n[[Ik besta niet]]\n\nblabla', '2017-02-25 23:17:35',  3,  'Een kleine test',  0),
+(14,  1,  '', '', '2017-02-25 23:32:46',  3,  '', 1),
+(15,  1,  '', '', '2017-02-25 23:35:11',  3,  '', 2),
+(16,  1,  '', '', '2017-02-25 23:35:27',  3,  '', 5),
+(17,  1,  '', '', '2017-02-25 23:35:27',  3,  '', 5),
+(18,  1,  '', '', '2017-02-25 23:36:55',  3,  '', 2),
+(19,  1,  '', '', '2017-02-25 23:38:35',  3,  '', 2),
+(20,  1,  '', '', '2017-02-25 23:39:00',  3,  '', 2),
+(21,  1,  '', '', '2017-02-25 23:41:43',  3,  '', 20),
+(22,  1,  '', '', '2017-02-25 23:41:48',  3,  '', 21),
+(23,  1,  '', '', '2017-02-25 23:42:26',  3,  '', 22),
+(24,  1,  '', '', '2017-02-25 23:42:47',  3,  '', 22),
+(25,  1,  '', '', '2017-02-25 23:42:57',  3,  '', 1),
+(26,  0,  'man',  'Enter your content here...', '2017-02-26 00:15:39',  3,  'Initial Creation', 0),
+(27,  0,  'Nominative', 'In Dutch the nominative case is very cool! \n\nThe *nominative case* (abbreviated **NOM**) is one of the grammatical cases of a noun or other part of speech, which generally marks the subject of a verb or the predicate noun or predicate adjective, as opposed to its object or other verb arguments. Generally, the noun \"that is doing something\" is in the nominative, and the nominative is the dictionary form of the noun.', '2017-02-26 00:17:18',  3,  'Initial Creation', 0);
 
 DROP TABLE IF EXISTS `words`;
 CREATE TABLE `words` (
@@ -2079,4 +2111,17 @@ INSERT INTO `words` (`id`, `native`, `ipa`, `hidden`, `type_id`, `classification
 (88,  'testen', 'tɛst.m', 0,  2,  5,  1,  0,  0,  0,  0,  0,  '2017-02-18 14:19:50',  NULL, NULL, NULL),
 (89,  'schaap', 'sxa:p',  0,  1,  3,  0,  0,  0,  0,  0,  0,  '2017-02-20 16:23:05',  '2017-02-20 16:23:37',  NULL, NULL);
 
--- 2017-02-25 19:30:05
+DROP TABLE IF EXISTS `words_wiki`;
+CREATE TABLE `words_wiki` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `word_id` int(11) NOT NULL,
+  `wiki_id` int(11) NOT NULL,
+  PRIMARY KEY (`id`),
+  KEY `word_id` (`word_id`),
+  KEY `wiki_id` (`wiki_id`),
+  CONSTRAINT `words_wiki_ibfk_1` FOREIGN KEY (`word_id`) REFERENCES `words` (`id`),
+  CONSTRAINT `words_wiki_ibfk_2` FOREIGN KEY (`wiki_id`) REFERENCES `wiki` (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+
+-- 2017-02-26 01:09:16

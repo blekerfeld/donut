@@ -20,10 +20,7 @@
     <script src="library/assets/js/vendors/jquery.tagsinput.js"></script>
     <script src="library/assets/js/vendors/jquery.select2.js"></script>
     <script src="library/assets/js/vendors/jquery.elastic.js"></script>
-    <script>$(document).ready(function(){
-        $(".elastic").elastic();
-    });
-    </script> 
+    <script src="library/assets/js/index.js"></script>
   <?php echo pAjaxLinks($donut['page']['title']); ?>
   <title><?php global $donut; echo $donut['page']['title']; ?></title>
   </head>
