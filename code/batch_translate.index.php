@@ -3,7 +3,7 @@
 if(!pLogged())
 	pUrl('', true);
 
-
+pOut('<div style="overflow: hidden;">');
 
 function pTranslateCard($show_skip = true){
 
@@ -250,7 +250,7 @@ else{
 
 
 
-
+pOut("</div>");
 
 
 ?>

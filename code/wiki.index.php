@@ -9,19 +9,10 @@
 	//	++	File: code/wiki.index.php
 
 
-// Let's fabricate our header
-//pOut("<div class='title_header'><div class='icon-box throw'><i class='fa fa-map-signs'></i></div> ".WIKI_TITLE."</div>", true);
-pOut(" ", true);
-
-pOut("<div class='home-margin'>");
+pOut("<div class='header dictionary home wiki'><div class='title_header'><div class='header-icon'><i class='fa fa-map-signs'></i></div> ".WIKI_TITLE."</div></div>");
 
 // Let's call the sidebar
 pWikiSidebar();
-
-if(isset($_REQUEST['ajax'], $_REQUEST['preview'], $_REQUEST['text']) AND $_REQUEST['text'] != ''){
-	die("<div class='btTitle'><i class='fa fa-eye fa-10'></i> ".WIKI_EDIT_PREVIEWING."</div>".pMarkDownParse($_REQUEST['text']));
-}
-
 
 if(isset($_REQUEST['ajax'], $_REQUEST['create'], $_REQUEST['name'], $_REQUEST['text']) AND $_REQUEST['text'] != '' AND $_REQUEST['name'] != ''){
 	$id = pWikiNewArticle($_REQUEST['name'], $_REQUEST['text'], pUser());
@@ -32,6 +23,12 @@ if(isset($_REQUEST['ajax'], $_REQUEST['create'], $_REQUEST['name'], $_REQUEST['t
 pOut("<div class='wikiContent'>");
 
 start_of_page:
+
+if(isset($_REQUEST['random'])){
+	$article = pQuery("SELECT article_title FROM wiki WHERE reference = 0 ORDER BY RAND() LIMIT 1")->fetchObject();
+	pUrl('?wiki='.urlencode($article->article_title), true);
+}
+
 
 if(!empty($_REQUEST['wiki']) and !is_numeric($_REQUEST['wiki'])){
 	$wiki_name = urldecode($_REQUEST['wiki']);
@@ -80,7 +77,7 @@ if(isset($_REQUEST['history']) and is_numeric($_REQUEST['history']) and !is_nume
 	$w_id = $_REQUEST['history'];
 	$article = pWikiGetArticle($w_id, true);
 	if($article->reference != 0)
-		pUrl("?wiki&history=".$article->reference, true);
+		pUrl("?wiki&history=".$article->reference, true, true);
 
 	pWikiShowHistory($article);
 
@@ -92,7 +89,7 @@ if(isset($_REQUEST['edit']) and is_numeric($_REQUEST['edit']) and !is_numeric($_
 	$w_id = $_REQUEST['edit'];
 	$article = pWikiGetArticle($w_id, true);
 	if($article->reference != 0)
-		pUrl("?wiki&edit=".$article->reference, true);
+		pUrl("?wiki&edit=".$article->reference, true, true);
 
 	$article_real = pWikiGetRealArticle($w_id);
 
@@ -107,7 +104,7 @@ if(isset($_REQUEST['discussion']) and is_numeric($_REQUEST['discussion']) and !i
 	$w_id = $_REQUEST['discussion'];
 	$article = pWikiGetArticle($w_id, true);
 	if($article->reference != 0)
-		pUrl("?wiki&discussion=".$article->reference, true);
+		pUrl("?wiki&discussion=".$article->reference, true, true);
 
 	pWikiShowDiscussion(pWikiGetArticle($_REQUEST['discussion'], true));
 

@@ -355,3 +355,25 @@
 
 
 	}
+
+	function pSettingsElement($setting, $type){
+
+		$value = constant('CONFIG_'.$setting);
+		$text = constanst('SETTINGS_'.$setting);
+		$desc = (!defined(constant('SETTINGS_DESC_'.$setting) ? '' : constant('SETTINGS_DESC_'.$setting)));
+
+
+		if($type = 'boolean'){
+
+			$value_display = "<span class='pSettingsBoolean-$value'>".($value == 1 ? 'enabled' : 'disabled')."</span>";
+
+			pOut("<div class='setting_load_$setting'></div><div class='pSettingsElement'>
+
+				</div>");
+		}
+
+	}
+
+	function pSettingsElementAjax($element, $value){
+
+	}

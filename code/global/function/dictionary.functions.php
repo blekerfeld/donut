@@ -75,10 +75,9 @@
 	// Word link
 	function pWordLinks($text){
 
-		return preg_replace_callback('/\{\{([^\]]+)\}\}/', function($matches) {
+		return preg_replace_callback('/\[([^\]]+)\]/', function($matches) {
 
 		$link_par = explode("|", $matches[1]);
-
 
 				if(is_numeric($link_par[0])){
 					$word = pGetWord($link_par[0]);
@@ -105,8 +104,8 @@
 
 				$link = "?lemma=".pHashId($link_par[0]);
 
-
-		    return '<a class="wordLink tooltip native" href="' . pUrl($link) . '"><span class="native">' . $link_par[1] . '</span></a>';
+				var_dump($link_par);
+		   return '<a class="wordLink tooltip native" href="' . pUrl($link) . '"><span class="native">' . $link_par[1] . '</span></a>';
 		}, $text);
 
 	}
@@ -562,7 +561,6 @@
 			if($previous_id == 0)
 				$status =  pQuery("INSERT INTO translations(language_id, translation) VALUES(".$donut['db']->quote(pEditorLanguage($_SESSION['pUser'])).", ".$donut['db']->quote($translations[0]).");SET @TRANSLATIONID=LAST_INSERT_ID();INSERT INTO translation_words(word_id, translation_id, specification) VALUES (".$word_id.", @TRANSLATIONID, ".$donut['db']->quote($specification).");");
 
-			echo "<script>alert('INSERT INTO translations(language_id, translation) VALUES(".$donut['db']->quote(pEditorLanguage($_SESSION['pUser'])).", ".$donut['db']->quote($translations[0]).");SET @TRANSLATIONID=LAST_INSERT_ID();INSERT INTO translation_words(word_id, translation_id, specification) VALUES (".$word_id.", @TRANSLATIONID, ".$donut['db']->quote($specification).");')</script>";
 			
 			// The translation existed already, hooray, half the job it is then.
 			$status = pQuery("INSERT INTO translation_words(word_id, translation_id, specification) VALUES (".$word_id.", ".$previous_id.", ".$donut['db']->quote($specification).");");

@@ -244,13 +244,12 @@
 
 		// table head
 
-		pOut("<table class='admin'>
+		pOut("<a class='actionbutton' href='".pUrl('?admin&section=languages&action=add_language')."'><i class='fa fa-plus-circle' style='font-size: 12px!important;'></i> Add language</i></a><br /><br /><table class='admin'>
 				<tr class='title'>
-					<td style='width: 150px;'>ID</td>
-					<td style='width: 150px;'>Flag</td>
-					<td style='width: 150px;'>Status</td>
-					<td style='width: 30%;'>Name</td>
-					<td>Native entry</td>
+					<td style='width: 200px;'>ID</td>
+					<td style='width: 30px;'>Flag</td>
+					<td style='width: 90px;'>Status</td>
+					<td style='width: 20%;'>Name</td>
 					<td>Actions</td>
 				</tr>");
 
@@ -263,7 +262,6 @@
 					<td><img src='".pUrl('pol://library/images/flags/'.$zero_language->flag.'.png')."' /></td>
 					<td><span class='language-status-check'><i class='fa fa-12 fa-check'></i> Enabled</span></td>
 					<td>$zero_language->name</td>
-					<td>$zero_language->hidden_native_entry</td>
 					<td><a class='actionbutton' href='".pUrl('?admin&section=languages&action=edit_language&lang_id='.$zero_language->id)."'><i class='fa fa-pencil' style='font-size: 12px!important;'></i> Edit language</i></a></td>
 				</tr>");
 
@@ -284,7 +282,6 @@
 				<td><img src='".pUrl('pol://library/images/flags/'.$language->flag.'.png')."' /></td>
 				<td><span class='language-status-$status[0]'><i class='fa fa-12 fa-$status[0]'></i> $status[1]</td>
 				<td>$language->name</td>
-				<td>$language->hidden_native_entry</td>
 				<td><a class='actionbutton' href='".pUrl('?admin&section=languages&action=edit_language&lang_id='.$language->id)."'><i class='fa fa-pencil' style='font-size: 12px!important;'></i> Edit language</i></a>
 				<a class='actionbutton' href='".pUrl('?admin&section=languages&action=delete_language_sure&lang_id='.$language->id)."'><i class='fa fa-times' style='font-size: 12px!important;'></i> Delete language</i></a>
 				</td>
@@ -294,12 +291,7 @@
 
 		// table end
 
-		pOut('</table><br />'."<a class='actionbutton' href='".pUrl('?admin&section=languages&action=add_language')."'><i class='fa fa-plus-circle' style='font-size: 12px!important;'></i> Add language</i></a>".'<br /><br />');
+		pOut('</table>'."<a class='actionbutton' href='".pUrl('?admin&section=languages&action=add_language')."'><i class='fa fa-plus-circle' style='font-size: 12px!important;'></i> Add language</i></a>".'<br /><br />');
 
 	}
 
-	
-	
-	
-
- ?>

@@ -1,5 +1,4 @@
 <?php
-
 	header('Content-Type: image/png');
 
 	$count = 0;
@@ -23,5 +22,3 @@
 
 
 	die();
-
-?>

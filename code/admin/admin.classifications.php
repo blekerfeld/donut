@@ -305,12 +305,10 @@
 			<table class='admin'>
 				<thead>
 				<tr role='row'  class='title'>
-					<td style='width: 80px;'>ID</td>
-					<td style='width: 20%;'>Name</td>
-					<td style='width: 150px;'>Short name</td>
+					<td style='width: 25px;'>ID</td>
+					<td style='width: 15%;'>Name</td>
+					<td style='width: 8%px;'>Short name</td>
 					<td>Links</td>
-					<td>Native entry</td>
-					<td>Shorthand entry</td>
 					<td>Actions</td>
 				</tr></thead>");
 
@@ -329,8 +327,6 @@
 				<td>".pCountClassificationsApply($classification->id)."
 <a class='actionbutton' href='".pUrl('?admin&section=classifications&action=classification_apply&classification_id='.$classification->id)."'><i class='fa fa-link' style='font-size: 12px!important;'></i> Manage links</i></a>	
 				</td>
-				<td>$classification->native_hidden_entry</td>
-				<td>$classification->native_hidden_entry_short</td>
 				<td><a class='actionbutton' href='".pUrl('?admin&section=classifications&action=edit_classification&classification_id='.$classification->id)."'><i class='fa fa-pencil' style='font-size: 12px!important;'></i> Edit classification</i></a>
 				<a class='actionbutton' href='".pUrl('?admin&section=classifications&action=delete_classification_sure&classification_id='.$classification->id)."'><i class='fa fa-times' style='font-size: 12px!important;'></i> Delete classification</i></a>
 				</td>

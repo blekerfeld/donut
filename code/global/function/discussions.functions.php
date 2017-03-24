@@ -25,7 +25,7 @@
 			$parent = "AND parent_discussion = $parent_id";
 		}
 
-		$discussions = pQuery("SELECT * FROM discussions WHERE $word $parent AND table_name = '".$table_name."'");
+		$discussions = pQuery("SELECT * FROM discussions WHERE $word $parent AND table_name = '".$table_name."'");	
 
 		if($discussions->rowCount() == 0 and $parent_id == 0)
 			pOut("<div class='notice'><br /><i class='fa fa-info-circle'></i> ".WD_NO_THREADS."</div>");
@@ -119,8 +119,10 @@ function pDiscussionStructure($thread, $table, $section, $ajax = false, $normal 
 	if(isset($_REQUEST['ajax'], $_REQUEST['reply_thread'], $_REQUEST['content'])){
 
 
-		if(pReplyThread($_REQUEST['reply_thread'], $thread, $_REQUEST['content'], $_SESSION['pUser'], 'wiki') AND trim($_REQUEST['content']) != '')
+		if(pReplyThread($_REQUEST['reply_thread'], $thread, $_REQUEST['content'], $_SESSION['pUser'], 'wiki') AND trim($_REQUEST['content']) != ''){
+			pUrl('?'.$section.'='.$thread, true, true);
 			echo "<script>loadfunction('".pUrl('?'.$section.'='.$thread)."');</script>";
+		}
 		elseif(trim($_REQUEST['content']) == '')
 			echo "<div class='notice danger-notice'><i class='fa fa-warning'></i> ".WD_REPLY_EMPTY."</div>";
 		else

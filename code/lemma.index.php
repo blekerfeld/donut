@@ -1,11 +1,10 @@
-
 <?php 
 
 // Do we need to load a different page?
 
-if(isset($_REQUEST['discuss-lemma']) and pLogged()){
-	require_once pFromRoot('code/lemma.discussion.php');
-	return;
+if(isset($_REQUEST['discuss-lemma'])){
+		require_once pFromRoot('code/lemma.discussion.php');
+		return;
 }
 
 if(isset($_REQUEST['edit-lemma']) and !pLogged())
@@ -232,7 +231,6 @@ else{
 			$slang = pEditorLanguage($_SESSION['pUser']);
 
 
-
 		// Getting the translations of the original term, if needed
 		if($word->derivation_clonetranslations == 1)
 			$all_translations = pGetTranslationsByLang($word->id, $slang, true, $word->derivation_of);
@@ -267,7 +265,7 @@ else{
 				$check++;
 
 				if($lang->id == 0)
-					pOut("<span class='pSectionTitle extra sub".(($editMode) ? "editing" : "")."'>".sprintf(LEMMA_TRANSLATIONS_MEANINGS, "<img class='pFlag' src='".pUrl('pol://library/images/flags/'.$lang->flag.'.png')."' /> ".$lang->name)."</span><ol>");
+					pOut("<span class='pSectionTitle extra sub ".(($editMode) ? "editing" : "")."'>".sprintf(LEMMA_TRANSLATIONS_MEANINGS, "<img class='pFlag' src='".pUrl('pol://library/images/flags/'.$lang->flag.'.png')."' /> ".$lang->name)."</span><ol>");
 				else
 					pOut("<span class='pSectionTitle extra sub ".(($editMode) ? "editing" : "")."'>".sprintf(LEMMA_TRANSLATIONS_INTO, "<img class='pFlag' src='".pUrl('pol://library/images/flags/'.$lang->flag.'.png')."' /> ".$lang->name)."</span><ol>");
 
@@ -371,19 +369,22 @@ usage_notes:
 
 		$note = $usage_notes->fetchObject();
 
-		pOut("<span class='pSectionTitle extra'>
-				".LEMMA_USAGE_NOTES."
+		if(@$note->note == '' and !$editMode)
+			goto derivations;
+
+		pOut("<span class='pSectionTitle extra ".(($editMode) ? "editing" : "")."'>
+				".LEMMA_USAGE_NOTES."<a class='actionbutton editing xsmall ' href='".pUrl('?edit-lemma='.$_REQUEST['lemma'].'&action=usage-notes')."'><i class='fa fa-pencil xsmall'></i> Edit</a>
 			</span>
 
-			<div class='pSectionWrapper'>
+			<div class='pSectionWrapper ".(($editMode) ? "editing" : "")."'>
 
-				<div class='pNotes'>
-
-						".($usage_notes->rowCount() == 0 ? '' :pMarkDownParse($note->note))."
-
-				</div>
+				
+						".((($editMode and $usage_notes->rowCount() == 0) OR ($editMode and $note->note == '')) ? "<em>Empty</em>" : "")."
+						".($usage_notes->rowCount() == 0 ? '' :"<div class='pNotes'>".pMarkDownParse($note->note)."</div>")."
+						
 
 			</div>");
+
 
 derivations:
 // Derivations
@@ -544,36 +545,16 @@ derivations:
 		pOut('</div>');
 	}
 
-
-	// // Re-getting older results as a help
-
-	// if(isset($_SESSION['wholeword'])){
-	// 	pOut("<script>$('#wholeword').attr('checked', ".$_SESSION['wholeword'].");</script>");
-	// }
-
-	// if(isset($_GET['searchresult']))
-	// {
-	// 	pOut("<script>$(document).ready(function(){
-
-	// 		".'$(".moveResults").load("'.pUrl('?getword&wordsonly&ajax').'", {"word": $("#wordsearch").val(), "dict": $("#dictionary").val(), "wholeword":  $("#wholeword").is(":checked")}, function(){
-	// 				$(".dWordWrapper ol p.desc").hide();
-	// 				document.title = "'.pEscape($donut['page']['title']).'";
-	// 		});
-
-	// 		});</script>');
-	// }
-
 }
 
 end:
 
 // Search script
 
-pOut(pSearchScript("&wordsearch=".$_REQUEST['lemma']));
-pOut('</div></div>');
+	pOut(pSearchScript("&wordsearch=".$_REQUEST['lemma']));
+
+pOut('</div></div></div>');
+
 if(isset($_REQUEST['ajaxOUT']))
 	die();
-
- ?>
-
 

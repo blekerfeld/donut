@@ -8,7 +8,7 @@ function pMarkDownParse($text){
 
 	$parse = new ParsedownExtra;
 
-	return pWikiLinks(pWordLinks($parse->text($text)));
+	return pWordLinks($parse->text($text));
 }
 
 
@@ -698,6 +698,10 @@ function pGetTypes($offset = ''){
 	return pQuery($q);
 }
 
+// Allias for the time being
+function pTypesGet($offset = ''){
+	return pGetTypes($offset);
+}
 
 function pTypeUpdate($id, $name, $shortname, $entry, $entry_short, $inflect_classifications){
 

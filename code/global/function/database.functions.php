@@ -114,7 +114,7 @@ function pQuery($sql, $force_no_cache = false, $force_no_count = false){
 
 
 			// Create the cached query
-			$cache_query = new pClassCachedQuery($objects, $execute->rowCount(), $sql);
+			$cache_query = new pCachedQuery($objects, $execute->rowCount(), $sql);
 
 		}
 
@@ -135,7 +135,7 @@ function pCleanCache($section = 'queries', $prefix = ''){
 
 	global $donut;
 
-	foreach(glob($donut['root_path'] . '/library/cache/' . $section . '/'.$prefix.'*.cache') as $filename)
+	foreach(glob($donut['root_path'] . '//cache/' . $section . '/'.$prefix.'*.cache') as $filename)
 		unlink($filename);
 
 	return true;
@@ -192,67 +192,8 @@ function pEscape($value){
 
 }
 
-
-// For some change, this is not a function, but a simple class that contains information about cached queries
-class pClassCachedQuery implements Iterator{
-
-
-	// The few variables this class needs
-	private $_row_count = 0;
-	private $_array_count = 0;
-	private $_db_objects = null;
-	private $position = -1;
-	private $_query = null;
-
-
-   function __construct($db_objects = array(), $row_count = 0, $query = '') {
-       $this->_row_count = $row_count;
-       $this->_db_objects = $db_objects;
-       $this->_db_objects = new ArrayObject($db_objects);
-       $this->_query = $query;
-   }
-
-   // Returns the fixed row count of the original query
-   function rowCount(){
-   		return $this->_row_count;
-   }
-
-   function fetchAll(){
-   		$array = array();
-   		foreach ($this->_db_objects as $object) {
-   			$array[] = (array)$object;
-   		}
-   		return $array;
-   }
-
-   // Return the next object, as the original query would
-   function fetchObject(){
-   		return $this->current(true);
-   }
-
-   // Rewind up to -1, so that the object can be used again.
-    function rewind() {
-        $this->position = -1;
-    }
-
-    function current($object = false) {
-    	$this->next();
-    	if($object)
-        	return @$this->_db_objects[$this->position];
-        else
-        	return @get_object_vars($this->_db_objects[$this->position]);
-    }
-
-    function key() {
-        return $this->position;
-    }
-
-    function next() {
-        ++$this->position;
-    }
-
-    function valid() {
-        return isset($this->_db_objects[$this->position]);
-    }
-
+function pQuote($value){
+	global $donut;
+	return $donut['db']->quote(pEscape($value));
 }
+

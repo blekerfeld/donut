@@ -87,20 +87,24 @@ function pEndsWith($haystack, $needle)
     return $needle === "" || substr($haystack, -strlen($needle)) === $needle;
 }
 	
-##	This function is used to load all the other functions
-	function polLoadFunctions()
+##	This function is used to load all the other functions and needed classes
+	function pLoadGlobalCode()
 	{
 		global $donut;
-		foreach (glob($donut['root_path']."/code/functions/*.functions.php") as $filename)
-		{
+
+		foreach (glob($donut['root_path']."/code/global/class/*.cset.php") as $filename)
 			require $filename;
-		}
+
+		foreach (glob($donut['root_path']."/code/global/function/*.functions.php") as $filename)
+			require $filename;
+
+
 	}
 
 
 ## This function is used for urls
 
-	function pUrl($url = '', $header = false)
+	function pUrl($url = '', $header = false, $force = false)
 	{
 		// Needed. :)
 		global $donut;
@@ -128,7 +132,7 @@ function pEndsWith($haystack, $needle)
 			return $url;
 
 		else
-			if(isset($_GET['ajax']) OR isset($_GET['ajax_pOut']))
+			if(isset($_GET['ajax']) OR isset($_GET['ajax_pOut']) and !$force)
 				return "<script>window.location = '".$url."';</script>";
 				
 			return header("Location:".$url);
