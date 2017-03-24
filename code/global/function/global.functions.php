@@ -128,116 +128,18 @@
 
 	}
 
-	function pAjaxLinks($title = ''){
+	function pAjaxLinks($title = '' ){
 
 		global $donut;
 
-		if(isset($_REQUEST['admin']))
-			$extra = "$('html').addClass('pAdmin');";
-		else
-			$extra = "$('html').removeClass('pAdmin');";
+		echo '<script>';
 
-		return "
-			<script>
+		$_GET['page_title'] = urlencode($title);
+		$_GET['rewrite'] = urlencode($donut['rewrite']);
 
-			document.title = '".$donut['page']['title']."';
+		require pFromRoot('library/assets/js/ajaxlinks.js.php');
 
-			var isExternal = function(url) {
-			    var domain = function(url) {
-			        return url.replace('http://','').replace('https://','').split('/')[0];
-			    };
-
-			    return domain(location.href) !== domain(url);
-			}
-
-			var buildUrl = function(base, key) {
-			    var sep = (base.indexOf('?') > -1) ? '&' : '".($donut['rewrite'] ? '&' : '?') ."';
-			    return base + sep + key;
-			}
-
-			var loadfunction = function (oldurl, skipPushState) {
-				
-				$('#pageload').show();
-
-				localStorage.topper = document.body.scrollTop;
-
-			  $('.ajaxOutLoad').load(buildUrl(oldurl, 'ajax_pOut'), function(){
-
-			    if (!skipPushState) {
-			      window.history.pushState('', 'Donut', oldurl);
-			      if(localStorage.topper > 0){ 
-			      		$('html, body').animate({ scrollTop:  localStorage.topper});
-					  }
-			    }
-			    
-			  });
-
-			  $('.ajaxOutLoad').slideDown(150);
-			  $('#pageload').delay(100).hide(400);
-
-
-			  
-
-
-
-			}
-
-
-
-			$(window).on('popstate', function () {
-
-			    var hrefje = String(location.href);
-			    
-
-			    if(localStorage.href != hrefje){
-			    	loadfunction(hrefje, true);
-			   		localStorage.href = hrefje;
-			    }
-
-			  
-			});
-
-
-
-			$(document).ready(function() {
-
-				    $('table.admin').DataTable({paging: false, searching: false, info: false});
-
-				".$extra."
-
-
-	            $('a[href!=\"javascript:void(0);\"]').click(function(e, options) {
-
-	            	options = options || {};
-
-
-					if ( !options.lots_of_stuff_done ) {
-			            	if($(this).attr('href') == '".pUrl('?logout')."'){
-			            		$(e.currentTarget).trigger('click', { 'lots_of_stuff_done': true });
-			            	}
-			            	else if(isExternal($(this).attr('href'))){
-			            		$(e.currentTarget).trigger('click', { 'lots_of_stuff_done': true });
-			            	}
-
-			            	else{
-			            		
-			            		e.preventDefault();
-			            	
-
-			 					loadfunction($(this).attr('href'), false);
-			
-			            	}
-					    } else {
-					        /* allow default behavior to happen */
-					    }
-
-	        	});
-
-
-			});
-
-      	</script>";
-
+		echo '</script>';
 
 	}
 
@@ -412,24 +314,30 @@ function pPlural($amount, $singular = '', $plural = 's' ) {
 function pSearchScript($extra = ''){
 	return '<script>
       	$("#searchb").click(function(){
-      		$(".page").show();
-      		$(".header.dictionary").removeClass("home").addClass("home-search");
-      		$(".nav.home").removeClass("home");
-      		$("#loading").slideDown(400);
-      		$("#pageload").show();
-      		$(".ajaxload").slideUp();
-      		$(".drop").hide();
-	      		$(".ajaxload").load("'.pUrl('?getword&ajax'.$extra).'", {"word": $("#wordsearch").val(), "dict": $("#dictionary").val(), "wholeword":  $("#wholeword").is(":checked")}, function(){$(".ajaxload").slideDown(function(){
-	      								 $("#pageload").delay(100).hide(400);
-	      								 $("#loading").slideUp(400);
-	      		})}, function(){
-      		});
-      		if($("#wordsearch").val() != ""){
-      			window.history.pushState("string", "", "?search=" + $("#wordsearch").val());
+      		if($("#wordsearch").val() == \'\'){
+      			$("#wordsearch").val("").focus().pulsate({color: "red", repeat: 2, glow: false, speed: 100});
       		}
       		else{
-      			window.history.pushState("string", "", "?home");
+      			$(".page").show();
+	      		$(".header.dictionary").removeClass("home").addClass("home-search");
+	      		$(".nav.home").removeClass("home");
+	      		$("#loading").slideDown(400);
+	      		$("#pageload").show();
+	      		$(".ajaxload").slideUp();
+	      		$(".drop").hide();
+		      		$(".ajaxload").load("'.pUrl('?getword&ajax'.$extra).'", {"word": $("#wordsearch").val(), "dict": $("#dictionary").val(), "wholeword":  $("#wholeword").is(":checked")}, function(){$(".ajaxload").slideDown(function(){
+		      								 $("#pageload").delay(100).hide(400);
+		      								 $("#loading").slideUp(400);
+		      		})}, function(){
+	      		});
+	      		if($("#wordsearch").val() != ""){
+	      			window.history.pushState("string", "", "?search=" + $("#wordsearch").val());
+	      		}
+	      		else{
+	      			window.history.pushState("string", "", "?home");
+	      		}
       		}
+      		
       		
       	});
       </script>'."<script>

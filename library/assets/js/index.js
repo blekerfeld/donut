@@ -1,9 +1,20 @@
-
-
 $(document).ready(function(){
+
+
+
         $(".elastic").elastic();
 
     });
+
+    $('table.admin').DataTable();
+
+
+}
+
+
+function loadfunction(url){
+    window.location = url;
+}
 
 
 function wrapText(elementID, openTag, closeTag) {

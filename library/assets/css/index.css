@@ -29,9 +29,10 @@ html, body {
   margin: 0;
   padding: 0;
   font-family: Calibri;
-  background: #eee url('../../images/static/bg.png') repeat;
+  background: rgba(240,240,240,1);
   font-size: 100%;
 }
+
 
 div {
   transition: none;
@@ -40,11 +41,15 @@ div {
 a {
   text-decoration: none;
   color: #005b7f;
+  outline: 0;
+   transition: color .3s;
 }
 
-a:active {
-  transition: color .3s;
+
+a:hover, a:active, a:focus {
+  /* styling for any way a link is about to be used */
 }
+
 
 a:hover {
   color: black;
@@ -169,8 +174,8 @@ span.tab, div.tab {
   padding-left: 8%;
   padding-right: 8%;
   font-size: 13px;
-  background: #161616;
-   border-bottom: 1px solid #111;
+  background: #333;
+   border-bottom: 1px solid #222;
   color: snow;
   min-height: 15px;
 }
@@ -189,6 +194,12 @@ span.tab, div.tab {
 #pageload {
   color: #c4c4c4;
   font-size: 10px;
+  display: none;
+}
+
+body.loading #pageload{
+  display: inline-block;
+  margin-left: 10px;
 }
 
 div.logotop{
@@ -196,10 +207,11 @@ div.logotop{
   margin-left: 8%;
   font-family: Lato;
   padding: 10px;
-  font-size: 30px;
+  font-size: 20px;
+  font-weight: bolder;
   padding-left: 0px;
   padding-right: 0px;
-  padding-bottom: 25px;
+  padding-bottom: 15px;
   color: #2E364C;
   cursor: pointer;
 }
@@ -216,18 +228,19 @@ div.logotop a:hover{
 
 div.outerwrap {
 
-  background: rgba(180,180,180,0.1);
-  padding: 6px;
+  background: rgba(230,230,230,0.2)  repeat;
+  padding: 10px;
   padding-left: 0px;
-  padding-right: 0px;
+  padding-right: 0px; 
+  border-bottom: #ddd 1px solid;
 
 }
 
 .ulWrap {
-  box-shadow: 0px 2px 6px rgba(100, 100, 100, 0.3);
-  border: .5px solid transparent; 
-  border-top: none; 
+  box-shadow: 0px 1px 3px rgba(100, 100, 100, 0.05);
+  border: 1px solid rgba(100, 100, 100, 0.1 ); 
   padding: 0px!important;
+  border-radius: 8px;
 }
 
 
@@ -252,19 +265,36 @@ div.outerwrap {
  
 }
 
+.header-icon{
+  margin-top: -2px;!important;float: left;margin-right: 5px;
+}
+
 
 
 .page {
-  padding: 20px;
+  padding: 0px;
   padding-top: 25px;
   padding-bottom: 20px;
-  background: rgba(254, 254, 254, 1);
+  background-position: 10% 10%;
+  background: rgba(254,254,254, 1);
   height: auto;
+    border-bottom:  1px solid #c9e6f2;
+  padding-bottom: 8px;
+}
+
+.inner-page{
+    background-image: -webkit-linear-gradient(top, rgba(240,240,240, 0.3), rgba(254,254,254, 0.6) 50%);
+    margin: 5px;
+    padding: 10px;
+    margin-top: -20px;
+    padding-bottom: 0px;
+    margin-bottom: 0px;
 }
 
 .home-margin{
   width: 88%;
   margin: 0 auto;
+
 }
 
 .absolute_footer {
@@ -296,6 +326,7 @@ div.nav {
   color: #fff;
   background-color: #fff;
   border-bottom: 1px solid #c9e6f2;;
+  border-radius: 8px 8px 0px 0px;
   padding-top: 4px;
   padding-bottom: 4px;x
   clear: both;
@@ -485,7 +516,7 @@ a.remember:hover, a.fetch:hover, a.throw:hover {
   padding: 6px;
   padding-left: 10px;
   padding-right: 10px;  
-  border-top: 1px solid #c9e6f2;;
+  border-radius: 0px 0px 8px 8px;
   font-size: 12px;
 }
 
@@ -1029,8 +1060,8 @@ input#wordsearch, input#filter, input#searchfilter {
 a.button.search{
   display: inline-block;
   float: right;
-  border: double 3px #DB825C;
-  background: #D26232;
+  background: #D85600;
+  border: 3px double #B63400;
   text-align: center;
   padding: 11PX;
   margin-top: 1px;
@@ -1068,17 +1099,13 @@ a.button.search:hover{
 .header.dictionary{
 
   transition: all .3s;
-  background: linear-gradient(to bottom left, #F2F9FC, #EAF0F2);
-  border: 1px #B8D1DB solid!important;
-  border-left: none!important;
-  border-right: none!important;
-  border-top: none!important;
+  background: rgba(240,247,250, 0.6);
   padding: 60px;
   padding-bottom: 0px!important;
   padding-top: 10px;
-  margin-top: -7.5px;
+  border: none;
   margin-bottom: 25px;
-    position: relative;
+  position: relative;
 }
 
 .header.dictionary img.logo, .header.dictionary.home-search img.logo-2{
@@ -1125,12 +1152,16 @@ a.button.search:hover{
 .header.dictionary.home{
   padding: 70px;
   padding-bottom: 50px!important;
-  color: #fff;
   position: relative;
+  border: 1px transparent solid!important;
+  background: transparent;
 
-  border-bottom: 1px #121C34 solid!important;
-  background: #343E56;
   
+}
+
+.header.dictionary.home.wiki{
+  padding: 20px!important;
+  margin-bottom: 10px;
 }
 
 
@@ -1141,9 +1172,7 @@ a.button.search:hover{
   margin-top: 6px;
 }
 
-.header.dictionary.home .alphabetbar a{
-  color: white;
-}
+
 
 .header.dictionary.home .hSearch{
   padding: 15px;
@@ -1878,7 +1907,7 @@ img.pImage {
   display: box;
   margin-left: 0px;
   background-color: #f5f5f5;
-  border: 3px  double #a8a8a8;
+  border: 1px solid #ddd;
   transition: border-radius .1s, max-height .1s, border .3s;
   border-radius: 7px;
 }
@@ -1938,7 +1967,7 @@ a.lemma-code i.fa {
 
 .pSectionWrapper {
   margin-bottom: 10px;
-  background-color: #fff;
+  background-color: rgba(255,255,255,0.7);
   border: 1px solid #ddd;
   border-top: none;
   padding: 10px;
@@ -1951,7 +1980,6 @@ a.lemma-code i.fa {
   background: #fff;
   border-style: dashed;
   border-top: none;
-  margin: 40px;
   margin-top: 0px;
 }
 
@@ -1965,13 +1993,6 @@ a.lemma-code i.fa {
 }
 
 .pNotes{
-  margin: -10px;
-  border-top: #f5f5f5 12px solid;
-  border-bottom: #f5f5f5 12px solid;
-  margin-top: -10px;
-  margin-bottom: -10px;
-  margin-right: -10px;
-  padding: 20px;
   padding-top: 0px;
   padding-bottom: 0px;
   font-size: 13PX;
@@ -2059,7 +2080,6 @@ span.pSectionTitle.extra {
 
 span.pSectionTitle.editing {
   border-style: dashed;
-   margin: 40px;
   margin-top: 0px;
   margin-bottom: 0px;
 }
@@ -2554,10 +2574,14 @@ span.ipa:hover {
 div.btCard {
   margin: 50px auto;
   margin-top: 10px;
-  width: 50%;
+  width: 70%;
   padding: 30px;
   background: #fff;
   box-shadow: 0 2px 20px -2px rgba(0, 0, 0, 0.05)
+}
+
+div.btCard.admin{
+  width: 95%;
 }
 
 div.btCard input{
@@ -2753,12 +2777,12 @@ a.wdTopLink, a.wdTopLink i.fa {
 
 .wikiSidebar{
   float: left;
-  width: 15%;
-  margin-right: 30px;
+  width: 20%;
+  margin-right: 0px;
 }
 
 .wikiSidebar div{
-  background: #f5f5f5;
+  background: rgba(230, 230,230, 0.4);
   padding: 10px;
 }
 
@@ -2778,30 +2802,46 @@ a.wdTopLink, a.wdTopLink i.fa {
 
 .wikiSidebar div a{
   display: block;
-
+  background: #fff;
   border-bottom: 3px white double;
   padding: 4px;
   color: #333;
-  font-size: 13px;
+  font-size: 14px;
   margin-bottom: 3px;
-  font-family: Arial;
 }
+
 
 .wikiSidebar div a:hover{
   border-bottom: 3px double #B04010;
 }
 
 .wikiSidebar div a.orange{
-    font-weight: bolder;
     border-bottom: 3px double #D26232;
     background: #B04010;
     color: white;
 }
 
+.wikiSidebar div a.sub{
+  margin-left: 30px;
+  border-left: 3px double transparent;
+  font-size: 13px;
+}
+
+.wikiSidebar div a.sub.orange{
+  background: #f9f9f9;
+  border: none;
+  color: #333;
+  border-left: 3px double #D26232;
+}
+
+.wikiSidebar div a.sub i.fa{
+  font-size: 12px;
+}
+
 .wikiContent{
-  float: left;
-  width: 80%;
-  margin-left: 20px;
+  float: right;
+  width: calc(80% - 45px);
+  padding-left: 40px;
 }
 
 .wikiContent a.lemma-code{

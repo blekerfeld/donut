@@ -54,3 +54,7 @@ define('LE_BASICS_TAGS', "Tag:");
 
 define('LE_IPA_TITLE', "Edit IPA transcription");
 define('LE_IPA', "IPA transcription");
+
+
+// D_admin
+define('DA_TITLE', "Dictionary settings");

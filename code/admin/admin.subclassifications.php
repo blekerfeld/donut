@@ -310,12 +310,10 @@
 			<table class='admin'>
 				<thead>
 				<tr role='row'  class='title'>
-					<td style='width: 80px;'>ID</td>
-					<td style='width: 20%;'>Name</td>
-					<td style='width: 150px;'>Short name</td>
+					<td style='width: 25px;'>ID</td>
+					<td style='width: 35%;'>Name</td>
+					<td style='width: 10%;'>Short name</td>
 					<td>Links</td>
-					<td>Native entry</td>
-					<td>Shorthand entry</td>
 					<td>Actions</td>
 				</tr></thead>");
 
@@ -334,8 +332,6 @@
 				<td>".pCountSubclassificationsApply($subclassification->id)."
 <a class='actionbutton' href='".pUrl('?admin&section=subclassifications&action=subclassification_apply&subclassification_id='.$subclassification->id)."'><i class='fa fa-link' style='font-size: 12px!important;'></i> Manage links</i></a>	
 				</td>
-				<td>$subclassification->native_hidden_entry</td>
-				<td>$subclassification->native_hidden_entry_short</td>
 				<td><a class='actionbutton' href='".pUrl('?admin&section=subclassifications&action=edit_subclassification&subclassification_id='.$subclassification->id)."'><i class='fa fa-pencil' style='font-size: 12px!important;'></i> Edit subclassification</i></a>
 				<a class='actionbutton' href='".pUrl('?admin&section=subclassifications&action=delete_subclassification_sure&subclassification_id='.$subclassification->id)."'><i class='fa fa-times' style='font-size: 12px!important;'></i> Delete subclassification</i></a>
 				</td>

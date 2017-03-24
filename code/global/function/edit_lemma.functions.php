@@ -28,6 +28,21 @@ function pEL_IPA($id, $ipa){
 
 }
 
+function pEL_UsageNotes($id, $text){
+
+	// The donut is EVERY WHERE
+
+	global $donut;
+
+	$check = pGetUsageNotes($id);
+
+	if($check->rowCount() != 0)
+		pQuery("DELETE FROM usage_notes WHERE id = ".$check->fetchObject()->id);
+
+	return pQuery("INSERT INTO usage_notes (word_id, created_on	, user_id, note) VALUES($id, NOW(), ".pUser().",".$donut['db']->quote($text).")");
+
+}
+
 
 function pEL_StemOverview($id){
 	$stems = pQuery("SELECT * FROM stems WHERE word_id = $id;");

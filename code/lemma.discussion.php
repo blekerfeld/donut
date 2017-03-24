@@ -1,7 +1,4 @@
-
 <?php 
-
-pDiscussionStructure($_REQUEST['discuss-lemma'], '', 'discuss-lemma', true, false);
 
 if(is_numeric($_REQUEST['discuss-lemma']))
 	$lemma = $_REQUEST['discuss-lemma'];
@@ -12,15 +9,12 @@ elseif(ctype_alnum($_REQUEST['discuss-lemma'])){
 }
 
 $word = pGetWord($lemma);
-	//pUrl('', true);
 
 // Search area
 if(isset($_GET['searchresult']))
 	pDictionaryHeader($_SESSION['search']);
 else
 	pDictionaryHeader('');
-
-
 
 
 
@@ -53,7 +47,9 @@ pOut('<div class="title"><div class="icon-box throw"><i class="fa fa-comments"><
 
 
 
-	pDiscussionStructure($_REQUEST['discuss-lemma'], '', 'discuss-lemma', false, true);
+
+		
+pDiscussionStructure($word->id, '', 'discuss-lemma');
 
 
 	pOut(pSearchScript("&wordsearch=".$_REQUEST['discuss-lemma']));

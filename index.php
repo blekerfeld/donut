@@ -21,8 +21,8 @@
 	// 	Include config.php, an important file
 	require 'config.php';
 
-	//	Let's load ALL the functions we got
-	polLoadFunctions();
+	//	Let's load ALL the global code (functions and classes)
+	pLoadGlobalCode();
 
 	//	Rewelcome our previous-session logged in guest
 	pLogonRestore();

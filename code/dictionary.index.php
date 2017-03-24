@@ -52,7 +52,7 @@
 	if(trim($_REQUEST['word']) == '')
 		echo "<script>
 				$('.header.dictionary').removeClass('home-search').addClass('home');$('.ajaxload').slideUp(function(){ $('.drop').slideDown(); });
-					$('#wordsearch').val('').focus().pulsate({color: 'red', repeat: 2, glow: false, speed: 500});
+					
 
 
 		</script>";

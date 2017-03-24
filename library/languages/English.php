@@ -1,6 +1,5 @@
 <?php
 /*
-
 	Donut
 	Dictionary Toolkit
 	Version a.1
@@ -28,6 +27,9 @@ define('LANGUAGE_NUMBER_DECIMALS', 2);
 define('LANGUAGE_NUMBER_THOUSANDS_SEPARATOR', ',');
 
 define('LOADING', "Loading...");
+define('ACTIONS', "Actions");
+define('BL_ENABLED', "Enabled");
+define('BL_DISABLED', "Disabled");
 define('BACK', "Back");
 define('SAVE', "Save changes");
 define('SAVING', "Saving changes");
@@ -113,6 +115,7 @@ define('WIKI_HISTORY_OF', "History of %s");
 define('WIKI_DISCUSSION_OF', "Discussing %s");
 define('WIKI_EDITING', "Editing %s");
 define('WIKI_EDIT_SAVE', "Save article");
+define('WIKI_EDIT_ERROR', "The article could not be saved");
 define('WIKI_EDIT_PREVIEW', "Preview");
 define('WIKI_EDIT_PREVIEWING', "Preview of formated article");
 define('WIKI_CURRENT', "Current");
@@ -125,3 +128,4 @@ define('WIKI_DOES_NOT_EXIST_MAKE', "This article does not exist, but if you need
 define('WIKI_REVERTED_S', "Succesfully reverted to an earlier version.");
 define('WIKI_REVERTED_ERROR', "You cannot revert this article to the current version.");
 define('WIKI_REVERTED', "Reverted to the version of %s by %s");
+define('WIKI_LOADING_RANDOM', "Loading a random article");

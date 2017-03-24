@@ -12,15 +12,17 @@
 function pWikiGetArticle($id, $not_new = false){
 	if($not_new)
 		return pQuery("SELECT * FROM wiki WHERE id = $id LIMIT 1")->fetchObject();
-	else
+	else{
+
 		return pQuery("SELECT * FROM wiki WHERE id = $id OR reference = $id ORDER BY article_date DESC LIMIT 1;")->fetchObject();
+	}
 }
 
 function pWikiSidebar(){
 	return pOut("<div class='wikiSidebar'><div>
 			<input class='wikiSearch' id='search' value='".(isset($_REQUEST['w_search']) ? $_REQUEST['w_search'] : '')."' placeholder='".WIKI_SEARCH_PLACEHOLDER."'/><br /><br />
 			<a href='".pUrl('?wiki')."' class='".((!is_numeric($_REQUEST['wiki']) and !isset($_REQUEST['w_search']))? 'orange' : '')."'><i class='fa fa-8 fa-map-signs'></i> ".WIKI_MENU_WIKI."</a>
-			<a href='".pUrl('?wiki&random')."'><i class='fa fa-8 fa-random'></i> ".WIKI_MENU_RANDOM."</a>
+			<a class='ssignore' href='".pUrl('?wiki&random')."'><i class='fa fa-8 fa-random'></i> ".WIKI_MENU_RANDOM."</a>
 			</div>
 		</div>
 		<script>
@@ -50,7 +52,7 @@ function pWikiGetRealArticle($id){
 	if($check->reference == 0)
 		return pWikiGetArticle($id);
 	else
-		return pWikiGetArticle($id, true);
+		return pWikiGetArticle($id);
 }
 
 function pWikiShowArticle($article, $permalink = false){
@@ -78,8 +80,6 @@ function pWikiShowArticle($article, $permalink = false){
 
 	$output .= ' <a href="'.pUrl('?wiki&discussion='.$reference->id).'" class="lemma-code discussion float-right"><i class="fa fa-12 fa-comments"></i> '.WIKI_MENU_DISCUSS.'</a> ';
 
-	if($permalink AND !pWikiCurrent($article->id))
-		$output .= "<div class='notice'><i class='fa fa-info-circle'></i> ".sprintf(WIKI_PERMALINK, "<em><u>".strtolower(pDate($article->article_date))."</u></em>")."</div>";
 
 	$output .= "<div class='wikiArticle' style='position: normal;'>";
 
@@ -88,7 +88,11 @@ function pWikiShowArticle($article, $permalink = false){
 	if($article->article_title == '')
 		$article->article_title = $reference->article_title;
 
-	$output .= "<a class='float-left back-mini wiki' href='".pUrl('?wiki')."'><i class='fa fa-home' style='font-size: 12px!important;'></i></a><span class='wikiTitle'>".$article->article_title."</span>";
+	$output .= "	<span class='wikiTitle'>".$article->article_title."</span>";
+
+
+	if($permalink AND !pWikiCurrent($article->id))
+		$output .= "<div class='notice'><i class='fa fa-info-circle'></i> ".sprintf(WIKI_PERMALINK, "<em><u>".strtolower(pDate($article->article_date))."</u></em>")."</div>";
 
 	$output .= "<div class='wikiArticleInner'>";
 		$output .= pMarkDownParse($article->article_content);
@@ -116,6 +120,7 @@ function pWikiShowEmptyArticle($name){
 	else
 		$output .= '<div class="ajaxLoad"></div><span class="wikiTitle red">'.$name.'</span>'."<div class='notice'><i class='fa fa-info-circle'></i> ".WIKI_DOES_NOT_EXIST_MAKE."</div><textarea class='wikiEditContent elastic allowtabs' style='min-height: 100px;'>".WIKI_ENTER_CONTENT."</textarea><div class='btButtonBar'><a class='btAction green wikiEdit create'>".WIKI_CREATE."</a><br id='cl' /></div>
 		<script>
+		var simplemde = new SimpleMDE();
 			$('.create').click(function(){
 				$('.ajaxLoad').load('".pUrl('?wiki&create&ajax')."', {'name': '".$name."', 'text': $('.wikiEditContent').val()});
 			});
@@ -151,7 +156,7 @@ function pWikiShowHistory($article){
 
 	$output .= "<div class='wikiArticle' style='position: normal;'>";
 
-	$output .= "<a class='float-left back-mini wiki' href='".pUrl('?wiki')."'><i class='fa fa-home' style='font-size: 12px!important;'></i></a><span class='wikiTitle'>".sprintf(WIKI_HISTORY_OF, "<a href='".pUrl('?wiki='.$article->id)."'><em>".$article->article_title."</em></a>")."</span>";
+	$output .= "<span class='wikiTitle'>".sprintf(WIKI_HISTORY_OF, "<a href='".pUrl('?wiki='.$article->id)."'><em>".$article->article_title."</em></a>")."</span>";
 
 	$history = pWikiGetHistory($article->id);
 
@@ -194,7 +199,14 @@ function pWikiShowEdit($article, $reference){
 	if(!is_object($article))
 		return false;
 
+	// Is this a revertion?
+	if($article->revert_to != 0)
+		$article = pWikiGetArticle($article->revert_to, true);
+
 	if(isset($_REQUEST['ajax'])){
+
+		echo "<script>$('#busysave').fadeOut();</script>";
+
 		if(isset($_REQUEST['title'], $_REQUEST['text'], $_REQUEST['specification']) and !pMempty($_REQUEST['text'])){
 
 			if($_REQUEST['title'] == '' AND $article->title == '')
@@ -204,10 +216,18 @@ function pWikiShowEdit($article, $reference){
 			else
 				$title = $_REQUEST['title'];
 
-			pWikiAddRevision($reference->id, $title, $_REQUEST['specification'], $_REQUEST['text'], pUser());
 
-			die("<script>$('#busysave').fadeOut();</script>");
+
+			if(pWikiAddRevision($reference->id, $title, $_REQUEST['specification'], $_REQUEST['text'], pUser()))
+				die("<script>loadfunction('".pUrl('?wiki='.$reference->id)."');</script>");
+			else
+				goto error_edit;
+		
 		}
+		else
+			goto error_edit;
+		error_edit:
+			die("<div class='danger-notice'><i class='fa fa-warning'></i> ".WIKI_EDIT_ERROR."</div>");
 	}
 
 	$output = '';
@@ -220,20 +240,20 @@ function pWikiShowEdit($article, $reference){
 
 	$output .= "<div class='wikiArticle' style='position: normal;'>";
 
-	$output .= "<a class='float-left back-mini wiki' href='".pUrl('?wiki')."'><i class='fa fa-home' style='font-size: 12px!important;'></i></a><span class='wikiTitle'>".sprintf(WIKI_EDITING, "<a href='".pUrl('?wiki='.urlencode($article->article_title))."'><em>".$article->article_title."</em></a>")."</span>";
+	$output .= "<span class='wikiTitle'>".sprintf(WIKI_EDITING, "<a href='".pUrl('?wiki='.urlencode($article->article_title))."'><em>".$article->article_title."</em></a>")."</span>";
 
-	$output .= "<div class='ajaxpreview hide btCard' style='width:100%!important;margin-bottom: 0px!important;'></div><div class='ajaxsave'>
+	$output .= "<br /><div class='ajaxpreview hide btCard' style='width:90%!important;margin: 0px!important;'></div><div class='ajaxsave'>
 		</div>".pNoticeBox('fa-spinner fa-spin', SAVING, 'notice hide', 'busysave')."
-	<div class='btCard' style='width:100%;'><div class='btTitle'>Title: <input class='wikiEditTitle' value='".$article->article_title."' placeholder='".$reference->article_title." **".WIKI_UNCHANGED."**'/></div><textarea class='allowtabs elastic wikiEditContent'>".$article->article_content."</textarea>
+	<div class='btCard' style='width:90%;margin: 0px!important;'><div class='btTitle'>Title: <input class='wikiEditTitle' value='".$article->article_title."' placeholder='".$reference->article_title." **".WIKI_UNCHANGED."**'/></div><textarea class='allowtabs elastic wikiEditContent'>".$article->article_content."</textarea>
 	
 	<div class='btButtonBar'>
-	<a class='btAction green submit'><i class='fa fa-save fa-12'></i> ".WIKI_EDIT_SAVE."</a><a class='btAction preview'><i class='fa fa-eye fa-12'></i> ".WIKI_EDIT_PREVIEW."</a>
-	<a class='btAction wikiEdit' onClick='wrapText(\".wikiEditContent\", \"**\", \"**\");'><i class='fa fa-bold fa-8'></i></a><a class='btAction wikiEdit' onClick='wrapText(\".wikiEditContent\", \"*\", \"*\");'><i class='fa fa-italic fa-8'></i></a><a class='btAction wikiEdit' onClick='wrapText(\".wikiEditContent\", \"[[\", \"]]\");'><i class='fa fa-map-signs fa-8'></i></a><a class='btAction wikiEdit' onClick='wrapText(\".wikiEditContent\", \"{{\", \"}}\");'><i class='fa fa-book fa-8'></i></a>
+	<a class='btAction green submit'><i class='fa fa-save fa-12'></i> ".WIKI_EDIT_SAVE."</a>
 	<input class='wikiEditSpecification' placeholder='".WIKI_SPECIFICATION."'/>
 	<br id='cl' />
 	</div>
 	</div>
 	<script>
+	var simplemde = new SimpleMDE();
 	$('.preview').click(function(){
 		$('.ajaxpreview').load('".pUrl('?wiki&preview&ajax')."', {'text': $('.wikiEditContent').val()}).show();
 	});$('.submit').click(function(){
@@ -260,14 +280,14 @@ function pWikiShowSearch($search){
 
 	$output .= "<div class='wikiArticle' style='position: normal;'>";
 
-	$output .= "<a class='float-left back-mini wiki' href='".pUrl('?wiki')."'><i class='fa fa-home' style='font-size: 12px!important;'></i></a><span class='wikiTitle'>".WIKI_SEARCH_RESULTS."<em>".$search."</em></span>";
+	$output .= "<span class='wikiTitle'>".WIKI_SEARCH_RESULTS."<em>".$search."</em></span>";
 
 	$output .= "<ul class='wikiSearchResults'>";
 
 	$count = 0;
 
 	while($search_item = $results->fetchObject())
-		$output .= "<li>".$search_item->article_title."</li>".($count++ ? '' : '');
+		$output .= "<a href='".pUrl('?wiki='.urlencode($search_item->article_title))."' >".$search_item->article_title."</a><br />".($count++ ? '' : '');
 
 	if($count == 0)
 		$output .= "<div class='notice'><i class='fa fa-info-circle'></i> ".WIKI_NO_ARTICLES."</div>";
@@ -289,7 +309,7 @@ function pWikiCurrent($id){
 
 function pWikiArticleByName($name, $limit = "LIMIT 1", $operator = "=", $extra = ""){
 	global $donut;
-	return pQuery("SELECT DISTINCT article_title, id FROM wiki WHERE article_title $operator ".$donut['db']->quote($extra.pEscape($name).$extra)." ORDER BY article_date DESC $limit;");
+	return pQuery("SELECT DISTINCT article_title FROM wiki WHERE article_title $operator ".$donut['db']->quote($extra.pEscape($name).$extra)." ORDER BY article_date DESC $limit;");
 }
 
 function pWikiLinks($text){
@@ -303,7 +323,7 @@ function pWikiLinks($text){
 				$class = "";
 			}
 			else{
-				$link = '?wiki&w_search='.urlencode($link_par[0]);
+				$link = '?wiki='.urlencode($link_par[0]);
 				$class = "red";
 			}
 		
