@@ -74,11 +74,12 @@ class pCachedQuery implements Iterator{
 
 class pDataObject {
 
-	private $_fields = null, $table = null, $_fieldstring, $_valuestring, $_updateid, $_updatestring;
+	private $_fields = null, $table = null, $_fieldstring, $_valuestring, $_updateid, $_updatestring, $_singleId, $_paginated, $_data;
 
-	public function __construct($table, $fields){
+	public function __construct($table, $fields, $paginated = true){
 		$this->_fields = $fields;
 		$this->_table = $table;
+		$this->_paginated = $paginated;
 		$fieldString = array('id');
 		foreach($this->_fields->get() as $field)
 			$fieldString[] = $field->name;
@@ -86,12 +87,15 @@ class pDataObject {
 	}
 
 	public function getSingleObject($id, $condition = ''){
-		return pQuery("SELECT ".$this->_fieldstring." FROM ".$this->_table." WHERE id = ".$id." ".$condition." LIMIT 1");
+		$this->_singleId = $id;
+		$this->_data =  pQuery("SELECT ".$this->_fieldstring." FROM ".$this->_table." WHERE id = ".$id." ".$condition." LIMIT 1");
+		return  $this->_data;
 	}
 
 	public function getObjects($offset, $itemsperpage, $condition = ''){
 
-		return  pQuery("SELECT ".$this->_fieldstring." FROM ".$this->_table." ".$condition." LIMIT ".$offset.",".$itemsperpage.";");
+		$this->_data = pQuery("SELECT ".$this->_fieldstring." FROM ".$this->_table." ".$condition.(($this->_paginated) ? " LIMIT ".$offset.",".$itemsperpage : '').";");
+		return  $this->_data;
 	}
 
 	// Prepare funcition to prepare the dataObject for new data
@@ -100,15 +104,22 @@ class pDataObject {
 		if(count($data) != count($this->_fields->get()))
 			die("FATAL ERROR from within pDataObject->prepareForInsert(\$data). \$data does not match the field count of the object!");
 		$valueString = array('NULL');
-		foreach($this->_fields->get() as $key => $field){
+		$key = 0;
+		foreach($this->_fields->get() as $field){
 			$valueString[] = pQuote($data[$key]);
+			$key++;
 		}
 		$this->_valuestring = implode(', ', $valueString);
 	}
 
 	// Prepare funcition to prepare the dataObject for new data
-	public function prepareForUpdate($id, $data){
+	public function prepareForUpdate($data, $id = -1){
+
 		global $donut;
+
+		if($id == -1)
+			$id = $this->_singleId;
+
 		if(count($data) != count($this->_fields->get()))
 			die("FATAL ERROR from within pDataObject->prepareForUpdate(..., \$data). \$data does not match the field count of the object!");
 		
@@ -116,15 +127,22 @@ class pDataObject {
 		$key = 0;
 		foreach ($this->_fields->get() as $field) {
 			if($field->name != 'id')
-				$updateString[] = $field->name."= ".pQuote($data[$key]).";";
+				$updateString[] = $field->name."= ".pQuote($data[$key]);
 			$key++; 
 		}
 
 		$this->_updatestring = implode(', ', $updateString);
+		$this->_updateid = $id;
 	}
 
-	public function remove($selective = 0, $field = 'id', $follow_up = 0, $follow_up_field = 0){
+	public function remove($follow_up = 0, $follow_up_field = 0, $selective = -1, $field = 'id'){
+
+
 		// Follow up can be an array of other tables, that have potentionaly have references to the deleted record from the main table. Those are to be deleted as well.
+
+		if($selective == -1)
+			$selective = $this->_singleId;
+
 		if($selective == 0)
 			return pQuery("DELETE FROM ".$this->_table,";");
 		
@@ -145,18 +163,33 @@ class pDataObject {
 				$tempObject->remove($selective, $field);
 			}
 
-			return pQuery("DELETE FROM ".$this->_table." WHERE ".$this->_field = " ".pQuote($selective).";");
-
 		}
+
+		return pQuery("DELETE FROM ".$this->_table." WHERE id = ".$this->_field = " ".pQuote($selective).";");
 
 	}
 
 	public function update(){
-		return pQuery("UPDATE ".$this->_table." SET ".$this->_updatestring." WHERE id = ".$this->_updateid.";");
+
+		return pQuery("UPDATE ".$this->_table." SET ".$this->_updatestring." WHERE id = '".$this->_updateid."';");
+	}
+
+	public function count(){
+		return $this->_data->rowCount();
+	}
+
+	public function countAll(){
+		$count = (pQuery("SELECT count(id) AS total FROM ".$this->_table." WHERE 1;"))->fetchObject();
+
+		return $count->total;
 	}
 
 	public function insert(){
 		return pQuery("INSERT INTO ".$this->_table." (".$this->_fieldstring.") VALUES (".$this->_valuestring.");");
+	}
+
+	public function changePagination($value){
+		$this->_paginated = $value;
 	}
 
 }
@@ -170,11 +203,11 @@ class pSet{
 	}
 
 	public function add($field){
-		$this->_fields[spl_object_hash($field)] = $field;
+		$this->_fields[$field->name] = $field;
 	}
 
 	public function remove($field){
-		unset($this->_fields[spl_object_hash($field)]);
+		unset($this->_fields[$field->name]);
 	}
 
 	public function get(){
@@ -185,12 +218,36 @@ class pSet{
 
 class pDataField{
 
-	public $name, $width, $surface;
+	public $name, $width, $surface, $type, $showInTable, $showInForm, $required, $selectionValues, $class, $disableOnNull;
 
-	public function __construct($name, $surface = '',$width= '20%'){
+	public function __construct($name, $surface = '', $width= '20%', $type = '', $showTable = true, $showForm = true, $required = false, $class = '', $disableOnNull, $selection_values = null){
 		$this->name = $name;
 		$this->width = $width;
+		$this->type = $type;
 		$this->surface = $surface;
+		$this->showInTable = $showTable;
+		$this->showInForm = $showForm;
+		$this->required = $required;
+		$this->class = $class;
+		$this->disableOnNull = $disableOnNull;
+		$this->selectionValues = $selection_values;
+	}
+
+	public function parse($value = '', $output = ''){
+		
+		if($this->type == 'flag')
+			$output = "<img class='$this->class flagimage' src='".purl('pol://library/images/flags/'.$value.'.png')."' />";
+		
+		elseif($this->type == 'image')
+			$output = "<img class='$this->class' src='".$value."' />";
+
+		elseif($this->type == 'boolean')
+			$output = (new pFieldBoolean($value))->render();
+
+		else
+			$output = "<span class='".$this->class."'>".$value."</span>";
+
+		return $output;
 	}
 
 }

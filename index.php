@@ -84,8 +84,9 @@
 		$donut['page']['content_final'] .= "$outputsection \n";
 	
 	//	We need some extra structure if we are dealing with AJAX loaded pages
-	if(isset($_REQUEST['ajax']) OR isset($_REQUEST['ajax_pOut']))
+	if(isset($_REQUEST['ajax']) OR isset($_REQUEST['ajax_pOut'])){
 		pAjaxStructure();
+	}
 
 	//	The template is loaded, that's the begining of the end.
 	require pFromRoot("library/templates/main_template.php");

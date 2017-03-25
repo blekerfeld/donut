@@ -148,8 +148,10 @@
 		global $donut;
 
 		// The complex javascript link system is needed for the new links loaded via AJAX
-		if(isset($_REQUEST['ajax']))
+		if(isset($_REQUEST['ajax'])){
 			echo pAjaxLinks($donut['page']['title']);
+			echo $donut['page']['content_final'];
+		}
 
 		//	For the complex javascript link system, maybe we'll call it CoJaLiSy, we need to mimic the original page structure
 		if(isset($_REQUEST['ajax_pOut'])){
@@ -192,10 +194,13 @@
 		$native_name = pLanguageName(0);
 		$lang_zero = pGetLanguageZero();
 
+
+
 		while($language = $languages->fetchObject()){
 
-			$select .= '<option value="'.$language->id.'_0" '.((isset($_SESSION['search_language']) AND ($_SESSION['search_language'] == $language->id.'_0')) ? ' selected ' : '').'>'.$language->name.' - '.$native_name.'</option>
-			<option value="0_'.$language->id.'" '.((isset($_SESSION['search_language']) AND ($_SESSION['search_language'] == '0_'.$language->id)) ? ' selected ' : '').'>'.$native_name.' - '.$language->name.'</option>';
+
+			$select .= '<option value="'.$language->id.'_0" '.((isset($_SESSION['search_language']) AND ($_SESSION['search_language'] == $language->id.'_0')) ? ' selected ' : '').'>'.($language->locale != '' ? $language->locale : $language->name).' - '.($lang_zero->locale != '' ? $lang_zero->locale : $native_name).'      　&MediumSpace;</option>
+			<option value="0_'.$language->id.'" '.((isset($_SESSION['search_language']) AND ($_SESSION['search_language'] == '0_'.$language->id)) ? ' selected ' : '').'>'.($lang_zero->locale != '' ? $lang_zero->locale : $native_name).' - '.($language->locale != '' ? $language->locale : $language->name).'      　&MediumSpace;</option>';
 
 		}
 

@@ -23,7 +23,7 @@
     <script src="library/assets/js/vendors/jquery.select2.js"></script>
     <script src="library/assets/js/vendors/jquery.elastic.js"></script>
     <script src="library/assets/js/index.js"></script>
-  <title><?php global $donut; echo $donut['page']['title']; ?></title>
+  <title><?php global $donut;  echo $donut['page']['title']; ?></title>
   </head>
   <body class='dashboard'>
     <div class="absolute_header">

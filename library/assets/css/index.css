@@ -29,7 +29,7 @@ html, body {
   margin: 0;
   padding: 0;
   font-family: Calibri;
-  background: rgba(240,240,240,1);
+  background: radial-gradient(circle, #f4f4f4, #e6e6e6);
   font-size: 100%;
 }
 
@@ -61,6 +61,11 @@ p{
 }
 
 /* Basic modifiers*/
+
+.em{
+  font-style: italic;
+}
+
 
 .xsmall, .xsmall i.fa {
   font-size: 9px!important;
@@ -121,6 +126,10 @@ span.tab, div.tab {
 
 .float-left {
   float: left;
+}
+
+.no-float{
+  float: none;
 }
 
 .max-20 {
@@ -228,19 +237,17 @@ div.logotop a:hover{
 
 div.outerwrap {
 
-  background: rgba(230,230,230,0.2)  repeat;
+  background: radial-gradient(circle, #f1f1f1, #e3e3e3);
   padding: 10px;
   padding-left: 0px;
   padding-right: 0px; 
-  border-bottom: #ddd 1px solid;
 
 }
 
 .ulWrap {
-  box-shadow: 0px 1px 3px rgba(100, 100, 100, 0.05);
-  border: 1px solid rgba(100, 100, 100, 0.1 ); 
+  border: 1px solid #c9e6f2; 
   padding: 0px!important;
-  border-radius: 8px;
+
 }
 
 
@@ -248,6 +255,7 @@ div.outerwrap {
   background: #eee;
   margin-right: 8%;
   margin-left: 8%;
+
 }
 
 .header {
@@ -326,7 +334,6 @@ div.nav {
   color: #fff;
   background-color: #fff;
   border-bottom: 1px solid #c9e6f2;;
-  border-radius: 8px 8px 0px 0px;
   padding-top: 4px;
   padding-bottom: 4px;x
   clear: both;
@@ -516,7 +523,6 @@ a.remember:hover, a.fetch:hover, a.throw:hover {
   padding: 6px;
   padding-left: 10px;
   padding-right: 10px;  
-  border-radius: 0px 0px 8px 8px;
   font-size: 12px;
 }
 
@@ -1005,7 +1011,7 @@ table.login textarea, table.admin textarea {
   font-family: monospace;
 }
 
-table.login select, table.admin select {
+table.login select, table.admin select, .btCard select {
   width: 96%;
   padding: 12px;
   padding-top: 6px;
@@ -1532,6 +1538,7 @@ strong.dWord a:hover {
 .tooltip {
   cursor: pointer;
   border-bottom: dotted 1px lightgray;
+  font-family: Gentium;
 }
 
 .tooltip:hover {
@@ -1847,7 +1854,7 @@ input.nWord, textarea.nWord {
 }
 
 textarea.nWord.small {
-  font-size: 14px;
+  font-size: 18px;
   font-family: Trebuchet MS;
   color: #333;
   padding: 10px!important;
@@ -1858,6 +1865,13 @@ input.nWord:invalid {
   color: #333;
   color: rgb(150, 150, 150);
   border: rgba(150, 150, 150, 0.2) 1px solid;
+}
+
+input.nWord.normal-font{
+  font-size: 18px;
+  font-family: Trebuchet MS;
+  color: #333;
+  font-weight: normal;
 }
 
 strong.pWord {
@@ -1983,9 +1997,6 @@ a.lemma-code i.fa {
   margin-top: 0px;
 }
 
-.pSectionWrapper .tooltip {
-  font-family: Gentium;
-}
 
 .pEtymology {
    font-family: Trebuchet MS;
@@ -2106,6 +2117,13 @@ a.red-link{
   border: #f04f48 dashed 1px!important;
   border-radius: 7px!important;
   color: #f04f48!important;
+  opacity: 0.5;
+}
+
+a.red-link:hover{
+  opacity: 1;
+  background: none!important;
+  text-decoration: underline;
 }
 
 .red-link{
@@ -2295,7 +2313,9 @@ img.dFlag:hover {
   ;
 }
 
-.language-status-check {
+
+
+.language-status-check, .boolean-check {
   padding: 2px;
   display: inline-block;
   color: #fff;
@@ -2304,13 +2324,23 @@ img.dFlag:hover {
   font-size: 10px!important;
 }
 
-.language-status-times {
+.language-status-times, .boolean-ban {
   padding: 2px;
   display: inline-block;
   color: #fff;
-  background-color: #ba413f;
+  background-color: rgba(186,65,63, 0.5);
   border-color: #ba413f;
   font-size: 10px!important;
+}
+
+.boolean-ban:hover{
+  background-color: rgba(186,65,63, 1);
+  cursor: pointer;
+}
+
+.boolean-check, .boolean-ban{
+ width: 24px;
+ text-align: center; 
 }
 
 .tooltip_templates {
@@ -2584,9 +2614,40 @@ div.btCard.admin{
   width: 95%;
 }
 
+div.btCard .pages{
+  background: #eee;
+  font-size: 11px;
+  padding: 4px;
+  margin-left: 10px!important;
+  margin-right: 2.5%;
+  float: right;
+
+}
+
+div.btCard .pages div{
+  opacity: 0.4;
+  cursor: pointer;
+  display: inline-block;
+  margin-left: 10px!important;
+  margin-right: 10px!important;
+  transition: opacity .3s;
+}
+
+div.btCard .pages div:hover{
+  opacity: .9;
+}
+
 div.btCard input{
   padding: 5px;
   border: 1px solid #ddd;
+}
+
+.btCard select.selectPage{
+  width: auto;
+  padding: 0;
+  -webkit-appearance: none;
+    -moz-appearance: none;
+   font-size: 11px;
 }
 
 div.btCard.editing{
@@ -2623,12 +2684,19 @@ img.btFlag {
   width: auto!important;
   opacity: 0.6;
 }
+
+
 span.btLanguage {
   font-variant: small-caps;
   color: #ccc;
   font-size: 12px;
   font-family: Calibri!important;
 }
+
+div.btCard.admin span.btLanguage {
+  color: #333;
+}
+
 span.btField {
   color: #000!important;
   font-size: 13px!important;
@@ -2662,11 +2730,19 @@ div.btButtonBar {
   margin-right: -30px;
   margin-bottom: -30px;
   padding: 10px;
-  padding-top: 5px;
-  padding-bottom: 5px;
+
   background: #f4f4f4;
   border-top: 1px solid #eee;
 }
+
+div.btButtonBar.up{
+  margin: 0px;
+  margin-left: -30px;
+  margin-top: -10px;
+  margin-bottom: 15px;
+  margin-right: -30px;
+}
+
 div.btButtonBar a.btAction {
   display: inline-block;
   padding: 5px;
@@ -2684,7 +2760,12 @@ div.btButtonBar a.btAction {
 a.btAction.wikiEdit{
   float: left!important;
 }
-div.btButtonBar a.btAction:hover, div.btButtonBar a.btAction.green:hover {
+
+a.btAction.page{
+  float: none!important;
+}
+
+div.btButtonBar a.btAction:hover, div.btButtonBar a.btAction.green:hover, div.btButtonBar a.btAction.blue:hover  {
   background: #b2dde4;
   color: #333;
   border: 1px solid #9fd5dd;
@@ -2693,6 +2774,11 @@ div.btButtonBar a.btAction.green {
   background-color: #337357;
   color: snow;
 }
+div.btButtonBar a.btAction.blue{
+  background-color: #515763;
+  color: snow;
+}
+
 .wdComments-list, .wdComment {
   width: 100%;
   margin-top: 10px;
