@@ -57,4 +57,25 @@ define('LE_IPA', "IPA transcription");
 
 
 // D_admin
+define('DA_DEFAULT', "Default");
 define('DA_TITLE', "Dictionary settings");
+define('DA_EDIT', "Edit item");
+define('DA_EDITING', "Editing the item -");
+define('DA_DELETE', "Delete item");
+define('DA_DELETE_LINK', "Delete link");
+define('DA_DELETE_SURE', "Are you sure you want to delete this item?");
+define('DA_DELETE_SURE_LINK', "Are you sure you want to delete the link between %s and %s? This might remove additional data.");
+// D_admin languges settings
+define('DA_LANG_SURFACE', "Languages");
+define('DA_LANG_FLAG', "Flag");
+define('DA_LANG_NAME', "Language name");
+define('DA_LANG_ACTIVATED', "Activated");
+define('DA_LANG_LOCALE', "Language code");
+define('DA_LANG_EDIT', "Edit language");
+define('DA_LANG_NEW', "Add a new language");
+
+define('DA_PAGE_X_OF_Y', "Page %s of %s");
+
+define('DA_TABLE_LINKS', "Links");
+define('DA_TABLE_LINKS_CHILD_ID', "Child ID");
+define('DA_TABLE_LINKS_CHILD', "Child");
