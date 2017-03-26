@@ -18,22 +18,29 @@ class pTableObject extends pAdminObject{
 			<div class='btTitle'>
 				<i class='fa ".$this->_icon."'></i> ".$this->_surface."
 			</div>
-			<div class='btButtonBar up'>".$pages.$this->_actionbar->output."</div>
+			<div class='btButtonBar up'>".$pages.$this->_actionbar->output."</div><div class='content'>
 			");
+
+		$records = 0;
+		$col_count = 2;
 
 		pOut("<table class='admin'>
 			<thead>
-			<tr class='title' role='row'><td style='width: 20px'><span class='xsmall'>".DL_ID."</span></td>");
+			<tr class='title' role='row'><td style='width: 50px'><span class='xsmall'>".DL_ID."</span></td>");
 
 		// Building the table
 		foreach ($this->_dfs->get() as $datafield) {
-			if($datafield->showInTable == true)
+			if($datafield->showInTable == true){
 				pOut("<td style='width: ".$datafield->width."'>".$datafield->surface."</td>");
+				$col_count++;
+			}
 		}
 
 		// Links
-		if($this->_linked != null)
-			pOut("<td>".DA_TABLE_LINKS."</td>");
+		if($this->_linked != null){
+			pOut("<td style='width: auto;'><i class='fa fa-link'></i> ".DA_TABLE_LINKS."</td>");
+			$col_count++;
+		}
 
 		pOut("<td>".ACTIONS."</td>
 			</tr></thead><tbody>");
@@ -43,14 +50,30 @@ class pTableObject extends pAdminObject{
 
 			// Go through the data fields
 			foreach($this->_dfs->get() as $datafield){
-				if($datafield->showInTable == true)
+				if($datafield->showInTable == true){
 					pOut("<td style='width: ".$datafield->width."'>".$datafield->parse($data[$datafield->name])."</td>");
+					$records++;
+				}
 			}
 
 			// The links stuff
 			// Links
-			if($this->_linked != null)
-				pOut("<td>".(new pAction('link-table', 'linkTable', 'link', 'actionbutton', null, null, $this->_linked->_section, $this->_linked->_app))->render($data['id'], $this->_section)."</td>");
+			if($this->_linked != null){
+				pOut("<td>");
+				foreach($this->_linked->get() as $link){
+					$action = new pAction('link-table', "&#x205F;".$link->structure[$this->_section]['outgoing_links'][$link->_data['section_key']]['surface'], $link->structure[$this->_section]['outgoing_links'][$link->_data['section_key']]['icon']." fa-10", 'small table-link', null, null, $link->_section, $link->_app);
+
+						// Counting the links
+						$dataCount = new pDataObject($link->structure[$this->_section]['outgoing_links'][$link->_data['section_key']]['table'], new pSet);
+						$counter = "<span class='counter'>".$dataCount->countAll($link->structure[$this->_section]['outgoing_links'][$link->_data['section_key']]['field'] . " = ".$data['id'])."</span>";
+
+						$action->_surface = $counter.$action->_surface;
+
+						pOut("<span class='tooltip' title='<i class=\"".$link->structure[$this->_section]['outgoing_links'][$link->_data['section_key']]['icon']." fa-10\"></i> ".$link->structure[$this->_section]['outgoing_links'][$link->_data['section_key']]['surface']."'>".$action->render($data['id'], $this->_section).'</span><div class="hide">
+							<div id="tooltip_test" class="hide"><i class="fa fa-globe"></i> test</div></div>');
+				}
+				pOut("</td>");
+			}
 
 			// The important actions and such
 			pOut("<td class='actions'>");
@@ -63,10 +86,12 @@ class pTableObject extends pAdminObject{
 			pOut("</tr>");
 		}
 
-		pOut("</tbody></table>
-		</thead>");
+		if($records == 0)
+			pOut("<tr><td colspan=".$col_count.">".DA_NO_RECORDS."</td>");
 
-		pOut("
+		pOut("</tbody></table><script>$('.tooltip').tooltipster({theme: 'tooltipster-noir', animation: 'grow', distance: 0, contentAsHTML: true});</script>");
+
+		pOut("</div>
 			<div class='btButtonBar'>".$pages.$this->_actionbar->output."</div>
 		</div>");
 		}

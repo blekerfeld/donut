@@ -57,7 +57,7 @@
           </div>
           <div class='footer'>
             <div class='inner_footer'>
-              <img src='library/images/static/logobw.png' /> <?php if(!pLogged()){ echo '<a href="'.pUrl('?login').'">'.MMENU_LOGIN.'</a> | '; } ?> <a href=''>About us</a> | <a href=''>Terms of use</a> | <a href=''>Contact</a>  
+              <?php if(!pLogged()){ echo '<a href="'.pUrl('?login').'">'.MMENU_LOGIN.'</a> | '; } ?> <a href=''>About us</a> | <a href=''>Terms of use</a> | <a href=''>Contact</a>  
             </div>  
           </div>
         <?php
@@ -66,7 +66,9 @@
         </div>
       </div>
     </div>
-    <div class='absolute_footer'><a target="_blank" href="https://github.com/blekerfeld/donut" class='tooltip'><i class='fa fa-github fa-10'></i>/blekerfeld/donut</a> – &copy; 2017 Thomas de Roo</div>
+    <div class='absolute_footer'>
+      <img src='library/images/static/logobw.png' /> 
+    <a target="_blank" href="https://github.com/blekerfeld/donut" class='tooltip'><i class='fa fa-github fa-10'></i>/blekerfeld/donut</a> – &copy; 2017 Thomas de Roo</div>
 
     <script src="library/assets/js/vendors/jquery.smoothstate.js"></script>
       <script src="library/assets/js/smoothstate.js"></script>  

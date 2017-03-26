@@ -11,7 +11,7 @@
 
 	function pMenu()
 	{
-  			return '<a onClick="" href="'.pUrl('?home').'" '.pActiveMenu('home').' '.pActiveMenu('search').' '.pActiveMenu('lemma').' '.pActiveMenu('discuss-lemma').'  '.pActiveMenu('edit-lemma').' '.pActiveMenu('alphabet').' '.pActiveMenu('generate').'><i class="fa fa-book fa-8 fa-ccc"></i> 
+  			return '<a onClick="" href="'.pUrl('?home').'" '.pActiveMenu('home').' '.pActiveMenu('search').'  '.pActiveMenu('dictionary-admin').' '.pActiveMenu('lemma').' '.pActiveMenu('discuss-lemma').'  '.pActiveMenu('edit-lemma').' '.pActiveMenu('alphabet').' '.pActiveMenu('generate').'><i class="fa fa-book fa-8 fa-ccc"></i> 
 				'.MMENU_DICTIONARY.'</a> 
  
 
@@ -19,10 +19,7 @@
 				'.MMENU_WIKI.'</a> 
 
 				<a href="'.pUrl('?phonology').'" '.pActiveMenu('phonology').'><i class="fa fa-headphones fa-8"></i> 
-				'.MMENU_PHONOLOGY.'</a> 
-
-
-  			'.((pLogged()) ? '<a id="admin" href="'.pUrl('?admin').'" '.pActiveMenu('admin').' ><i class="fa fa-wrench fa-8"></i> '.MMENU_SETTINGS.'</a>' : '').((pLogged()) ? '<a id="editor" href="'.pUrl('?dashboard').'" '.pActiveMenu('dashboard').' ><i class="fa fa-lightbulb-o  fa-8"></i> Dashboard</a>' : '');
+				'.MMENU_PHONOLOGY.'</a>';
 
 
 	}

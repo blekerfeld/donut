@@ -11,7 +11,7 @@
 
 class pAction{
 
-	private $_surface, $_icon, $_class, $_app, $_section;
+	public $_surface, $_icon, $_class, $_app, $_section;
 
 	public $name, $followUpFields, $followUp;
 
@@ -30,14 +30,14 @@ class pAction{
 		$this->followUpFields = $follow_up_fields;
 	}
 
-	public function render($id = 0, $linked = null){
+	public function render($id = -1, $linked = null){
 
 		// Remove-actions need to be done a little different
-		if($this->name == 'remove')
+		if($this->name == 'remove' OR $this->name == 'remove-link')
 			return '<span class="delete_load_'.$id.'"></span>
 			<a class="'.$this->_class." link_".$this->name.' red-link" href="javascript:void(0);" onClick="
 					if (confirm(\''.DA_DELETE_SURE.'\') == true) {
-			    		$(\'.delete_load_'.$id.'\').load(\''.pUrl($this->actionUrl($id, true)).'\');
+			    		$(\'.delete_load_'.$id.'\').load(\''.pUrl($this->actionUrl($id, true).($linked != null ? "&linked=".$linked : '')).'\');
 			    		$(\'.item_'.$id.'\').slideUp();
 					}"><i class="'.$this->_icon.'""></i> '.$this->_surface.'</a>';
 
@@ -60,10 +60,10 @@ class pActionBar{
 		return $this->_set->get();
 	}
 
-	public function generate(){
+	public function generate($id = -1, $linked = ''){
 		$this->output = ("<div class='actionbar'>");
 		foreach($this->_set->get() as $action)
-			$this->output .= $action->render();
+			$this->output .= $action->render($id, $linked);
 		$this->output .= "</div><br id='cl' />";
 	}
 
@@ -156,8 +156,6 @@ class pMagicActionForm{
 
 	public function ajax(){
 
-
-
 		// Checking if we have any empty required fields.
 		$empty_error = 0;
 		foreach($this->_fields->get() as $field)
@@ -202,6 +200,76 @@ class pMagicActionForm{
 
 	}
 
+	public function newLinkPrepare($linkObject, $show_parent, $show_child){
+		$this->_linkObject = $linkObject->_adminObject;
+		$this->_guestObject = $linkObject;
+		$this->_show_parent = $show_parent;
+		$this->_show_child = $show_child;
+	}
+
+	public function newLinkAjax(){
+
+
+		if(!empty($_REQUEST['admin_form_child']) and is_numeric($_REQUEST['admin_form_child'])){
+
+
+			// We have to check if the relation already exists
+			if($this->_adminobject->dataObject->countAll($this->_guestObject->structure[$this->_section]['incoming_links'][$this->_guestObject->_section]['child'] . " = '" . $this->_adminobject->_matchOnValue . "' AND " . $this->_guestObject->structure[$this->_section]['incoming_links'][$this->_guestObject->_section]['parent'] . " = '" . $_REQUEST['admin_form_child'] . "'")){
+
+				pOut(pNoticeBox('fa-info-circle fa-12', DA_TABLE_RELATION_EXIST.". <a href='".pUrl("?".$this->_app."&section=".$this->_section."&action=link-table&id=".$this->_linkObject->data()[0]['id']."&linked=".$this->_guestObject->_data['section_key'])."'>".$this->_strings[6]."</a>", 'notice ajaxMessage'));
+
+			}
+			else{
+				// Time to insert
+				$this->_adminobject->dataObject->prepareForInsert(array($this->_adminobject->_matchOnValue, $_REQUEST['admin_form_child']));
+				$this->_adminobject->dataObject->insert();
+				$this->_adminobject->dataObject->getSingleObject(1);
+				pOut(pNoticeBox('fa-info-circle fa-12', DA_TABLE_RELATION_ADDED.". <a href='".pUrl("?".$this->_app."&section=".$this->_section."&action=link-table&id=".$this->_linkObject->data()[0]['id']."&linked=".$this->_guestObject->_data['section_key'])."'>".$this->_strings[6]."</a>", 'succes-notice ajaxMessage'));
+			}
+		}
+		else
+			pOut(pNoticeBox('fa-warning fa-12', $this->_strings[3], 'danger-notice ajaxMessage'));
+
+		pOut("<script type='text/javascript'>
+				$('.saving').slideUp(function(){
+					$('.ajaxMessage').slideDown();
+				});
+			</script>");
+
+	}
+
+	public function newLinkForm(){
+		pOut("<div class='btCard admin link-table'>");
+		pOut("<div class='btTitle'><i class='fa fa-plus-circle'></i> ".DA_TABLE_NEW_RELATION."<span class='medium'>".$this->_adminobject->_surface."</span></div>");
+
+		pOut(pNoticeBox('fa-spinner fa-spin fa-12', $this->_strings[2], 'notice saving hide'));
+
+		// That is where the ajax magic happens:
+		pOut("<div class='ajaxSave'></div>");
+		pOut("<div class='btSource'><span class='btLanguage'>".DA_TABLE_LINKS_PARENT."</span><br />
+			<span class='btNative'>".$this->_linkObject->data()[0][$this->_show_parent]."</span></div>");
+
+		pOut("<div class='btSource'><span class='btLanguage'>".DA_TABLE_LINKS_CHILD."</span><br /><span class='btNative'><select class='field_child'>");
+
+		foreach($this->_adminobject->_passed_data as $data)
+			pOut("<option value='".$data['id']."'>".$data[$this->_show_child]."</option>");
+
+		pOut("</select></span></div>");
+
+		pOut("<div class='btButtonBar'>
+			<a class='btAction wikiEdit' href='".pUrl("?".$this->_app."&section=".$this->_section."&action=link-table&id=".$this->_linkObject->data()[0]['id']."&linked=".$this->_guestObject->_data['section_key'])."'><i class='fa fa-12 fa-arrow-left' ></i> ".BACK."</a>
+			<a class='btAction green submit-form'><i class='fa fa-12 fa-check-circle'></i> ".$this->_strings[1]."</a><br id='cl'/></div>");
+		pOut("</div>");
+
+		pOut("<script type='text/javascript'>
+				$('.field_child').select2();
+				$('.submit-form').click(function(){
+					$('.saving').slideDown();
+					$('.ajaxSave').load('".pUrl("?".$this->_app."&section=".$this->_section."&action=new-link&id=".$this->_linkObject->data()[0]['id']."&linked=".$this->_guestObject->_data['section_key'])."&ajax', {admin_form_child: $('.field_child').val()});
+				});
+			</script>");
+	}
+
 	public function form(){
 		pOut("<div class='btCard admin'>");
 		pOut("<div class='btTitle'>".$this->_strings[0]."</div>");
@@ -228,6 +296,7 @@ class pMagicActionForm{
 		}
 
 		pOut("<script type='text/javascript'>
+				$('.btCard select').select2();
 				$('.submit-form').click(function(){
 					$('.saving').slideDown();
 					$('.ajaxSave').load('".pUrl("?".$this->_app."&section=".$this->_section."&action=".$this->_name.(($this->_edit) ? '&id='.$this->_data[0]['id'] : '')."&ajax")."', {
@@ -252,7 +321,7 @@ class pFieldBoolean{
 	}
 
 	public function render(){
-		return "<span class='boolean-".$this->_icon."'><i class='fa-10 fa fa-".$this->_icon."'></i></span>";
+		return "<div class='boolean-".$this->_icon."'><i class='fa-10 fa fa-".$this->_icon."'></i></div>";
 	}
 
 }

@@ -93,17 +93,12 @@ class pAdminParser{
 		// There are six magic actions that are coordinated by this function:
 		// Those are: new, edit, remove, link-table, link-new, link-remove
 
-		// Our action!
-		$action = $this->_adminObject->getAction($name);
-
-
 		// Link table
-		if($name == 'link-table'){
 
 			$this->_adminObject->changePagination(false);
-			$this->_adminObject->getData();
+			@$guests = new pAdminParser($this->structure, $this->structure[$linked]);
 
-			if($linked != null)
+			if($linked != null){
 
 				// The needed data fields
 				$dfs = new pSet;
@@ -114,25 +109,66 @@ class pAdminParser{
 				$actions = new pSet;
 				$actions->add(new pAction('remove-link', DA_DELETE_LINK, 'fa-12 fa-times', 'actionbutton', null, null, $this->_section, $this->_app));
 				$action_bar = new pSet;
-				$action_bar->add(new pAction('new-link', DA_DELETE_LINK, 'fa-12 fa-plus-circle', 'btAction page green', null, null, $this->_section, $this->_app));
+				$action_bar->add(new pAction('new-link', DA_TABLE_NEW_LINK, 'fa-12 fa-plus-circle', 'btAction float-left blue', null, null, $this->_section, $this->_app));
 
-				$linkTableObject = new pLinkTableObject($this->structure, 'fa-link', "Link table for blabla", $this->_data['incoming_links'][$linked]['table'], 0, $dfs, $actions, $action_bar, false, $this->_section, $this->_app);
+				$guests->compile();
+				if(isset($_REQUEST['id']))
+					$guests->runData($_REQUEST['id']);
 
-				$linkTableObject->setCondition("WHERE ".$this->_data['incoming_links'][$linked]['child']." = ".$_REQUEST['id']);
+				$linkTableObject = new pLinkTableObject($this->structure, 'fa-link',  $this->structure[$linked]['surface']."&#x205F; (&#x205F;".DA_TABLE_LINKS_PARENT."&#x205F;) &#x205F; ↔ &#x205F;".$this->_data['surface']." &#x205F;(&#x205F;".DA_TABLE_LINKS_CHILD."&#x205F;)", $this->_data['incoming_links'][$linked]['table'], 0, $dfs, $actions, $action_bar, false, $this->_section, $this->_app);
 
+				if(isset($_REQUEST['id']))
+					$linkTableObject->setCondition("WHERE ".$this->_data['incoming_links'][$linked]['child']." = ".$_REQUEST['id']);
+
+				$this->_adminObject->getData();
 				$linkTableObject->getData();
 
-				$linkTableObject->passData($this->_adminObject->data(), $this->_data['incoming_links'][$linked]['show_child'], $this->_data['incoming_links'][$linked]['parent']);
+				$linkTableObject->passData($guests, $linked,$this->_adminObject->data(), $this->_data['incoming_links'][$linked]['show_parent'], $this->_data['incoming_links'][$linked]['show_child'], $this->_data['incoming_links'][$linked]['parent'], $_REQUEST['id']);
 
-				return $linkTableObject->render();
+				if($name == 'link-table')
+					return $linkTableObject->render();
+				elseif($name == 'remove-link' && $ajax){
+					$dataObject = new pDataObject($this->_data['incoming_links'][$linked]['table'], new pSet);
+					return $dataObject->remove(0, 0, $_REQUEST['id']);
+				}
+				elseif($name == 'new-link'){
+					$action = new pMagicActionForm('new-link', $this->_data['incoming_links'][$linked]['table'], $dfs, $this->_data['save_strings'], $this->_app, $this->_section, $linkTableObject);
+
+					$action->compile();
+					$action->newLinkPrepare($guests, $this->_data['incoming_links'][$linked]['show_parent'], $this->_data['incoming_links'][$linked]['show_child']);
+
+					if($ajax)
+						return $action->newLinkAjax();
+					else
+						return $action->newLinkForm();
+				}
+			}
+
+
+		// Removing a link is like relativly simple!
+		elseif($name == 'remove-link' && $ajax && $linked != null){
+			
+		}
+
+		elseif($name == 'new-link' && $linked != null){
+
+			$fields = new pSet;
+			$fields->add(new pDataField($this->_data['incoming_links'][$linked]['child'], 'Child', '40%', 'select', true, true, true, '', false));
+
+			
+
 		}
 
 		// Removing is like very simple! 
-		if($name == 'remove' && $ajax){
+		elseif($name == 'remove' && $ajax){
 			return $this->_adminObject->dataObject->remove($action->followUp, $action->followUpFields);
 		}
 
 		// If the action is like, not removing, then we need something else:
+
+
+		// Our action!
+		$action = $this->_adminObject->getAction($name);
 		
 		// Replacing the surface string of the action
 		$this->_data['save_strings'][0] = $this->_data['surface'];
@@ -140,6 +176,7 @@ class pAdminParser{
 		$action = new pMagicActionForm($name, $this->_data['table'], $this->_fields, $this->_data['save_strings'], $this->_app, $this->_section, $this->_adminObject); 
 
 		$action->compile();
+
 		if($ajax)
 			return $action->ajax();
 
@@ -177,14 +214,13 @@ class pAdminObject{
 
 
 	public function addLink($section){
-		$this->_linked = new pAdminParser($this->_structure, $this->_structure[$section]);
+		if($this->_linked == null)
+			$this->_linked = new pSet;
+			$this->_linked->add(new pAdminParser($this->_structure, $this->_structure[$section['section']]));
 	}
 
 	public function getAction($name){
 
-		// Link table actions are generated here:
-		if($name == 'link-table')
-			return new pAction('link-table', 'linkTable', 'link', 'actionbutton', null, null, $this->_section, $this->_app);
 
 		if(isset($this->_actions->get()[$name]))
 			return $this->_actions->get()[$name];
@@ -211,12 +247,12 @@ class pAdminObject{
 
 	public function pagePrevious(){
 		if($this->_offset >= $this->_itemsperpage)
-			return "<a href='".pUrl("?".$this->_app . "&section=". $this->_section . '&offset='.($this->_offset - $this->_itemsperpage))."' class='btAction page blue'><i class='fa fa-8 fa-arrow-left' style='font-size: 12px!important;'></i> ".PREVIOUS."</a>";
+			return "<a href='".pUrl("?".$this->_app . "&section=". $this->_section . '&offset='.($this->_offset - $this->_itemsperpage))."' class='btAction page blue small'><i class='fa fa-8 fa-arrow-left'></i></a>";
 	}
 
 	public function pageNext(){
 		if($this->_total > ($this->_offset + $this->_itemsperpage))
-			return "<a href='".pUrl("?".$this->_app . "&section=". $this->_section . '&offset='.($this->_offset + $this->_itemsperpage))."' class='btAction page blue'>".NEXT." 	<i class='fa fa-8 fa-arrow-right' style='font-size: 12px!important;'></i></a> ";
+			return "<a href='".pUrl("?".$this->_app . "&section=". $this->_section . '&offset='.($this->_offset + $this->_itemsperpage))."' class='btAction page blue small'><i class='fa fa-8 fa-arrow-right' style='font-size: 12px!important;'></i></a> ";
 	}
 
 	public function changePagination($value){

@@ -1,8 +1,7 @@
 $(document).ready(function(){
 
-
-
-        $(".elastic").elastic();
+$('.tooltip').tooltipster({theme: 'tooltipster-noir'});
+$(".elastic").elastic();
 
     });
 
