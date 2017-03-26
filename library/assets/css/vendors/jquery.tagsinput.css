@@ -37,6 +37,13 @@ background: rgba(159,213,221, 0.8);
 color: #333!important; 
 }
 
+.outertag.other{
+	border: 1px solid rgb(159,213,221, 0);
+	font-family: calibri;
+	color: rgb(57,52,50)!important;
+	font-weight: normal!important;
+}
+
 div.tagsinput span.tag a 
 { 
 	font-weight: bold; 

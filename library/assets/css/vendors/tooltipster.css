@@ -4,11 +4,13 @@
 	border: 2px solid #000;
 	background: #4c4c4c;
 	color: #fff;
+	box-shadow: rgba(0, 0, 0, 0.3) 0 2px 10px;
 }
 
 /* Use this next selector to style things like font-size and line-height: */
 .tooltipster-default .tooltipster-content {
 	font-family: Arial, sans-serif;
+	box-shadow: rgba(0, 0, 0, 0.3) 0 2px 10px;
 	font-size: 14px;
 	line-height: 16px;
 	padding: 8px 10px;
@@ -54,14 +56,7 @@
 
 /* These next classes handle the styles for the little arrow attached to the tooltip. By default, the arrow will inherit the same colors and border as what is set on the main tooltip itself. */
 .tooltipster-arrow {
-	display: block;
-	text-align: center;
-	width: 100%;
-	height: 100%;
-	position: absolute;
-	top: 0;
-	left: 0;
-	z-index: -1;
+
 }
 .tooltipster-arrow span, .tooltipster-arrow-border {
 	display: block;

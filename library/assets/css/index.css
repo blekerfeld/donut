@@ -1,5 +1,5 @@
 @import url(https://fonts.googleapis.com/css?family=Lora|Merriweather|Lato|Open+Sans|Raleway|Roboto);
-@import url('https://fonts.googleapis.com/css?family=Barrio');
+@import url('https://fonts.googleapis.com/css?family=Source+Sans+Pro');
 @font-face{font-family:Kollektif;src:url(vendors/fonts/kollektif_bold.ttf)}@font-face{font-family:Gentium;src:url(vendors/fonts/GenBasR.ttf)}@font-face{font-family:Gentium;src:url(vendors/fonts/GenBasB.ttf);font-weight:700}@font-face{font-family:Gentium;src:url(vendors/fonts/GenBasI.ttf);font-style:italic}
 
 
@@ -9,9 +9,6 @@
   box-sizing: inherit;
 }
 
-* {
-  transition: all .1s;
-}
 
  ::-moz-selection {
   background: #5EA273;
@@ -27,9 +24,10 @@
 
 html, body {
   margin: 0;
+  height:100%;
   padding: 0;
   font-family: Calibri;
-  background: radial-gradient(circle, #f4f4f4, #e6e6e6);
+  background: radial-gradient(circle, #e1e1e1, #f4f4f4);
   font-size: 100%;
 }
 
@@ -86,7 +84,9 @@ p{
 .counter {
   display: inline-block;
   padding: 2px 5px;
+  font-style: normal!important;
   font-size: 11px;
+  font-family: Raleway!important;
   font-weight: bold;
   line-height: 1;
   color: #666;
@@ -121,15 +121,15 @@ span.tab, div.tab {
 }
 
 .float-right {
-  float: right;
+  float: right!important;
 }
 
 .float-left {
-  float: left;
+  float: left!important;
 }
 
 .no-float{
-  float: none;
+  float: none!important;
 }
 
 .max-20 {
@@ -180,8 +180,8 @@ span.tab, div.tab {
 
 .absolute_header {
   padding: 3px;
-  padding-left: 8%;
-  padding-right: 8%;
+  padding-left: 5%;
+  padding-right: 5%;
   font-size: 13px;
   background: #333;
    border-bottom: 1px solid #222;
@@ -212,12 +212,11 @@ body.loading #pageload{
 }
 
 div.logotop{
-    margin-right: 8%;
-  margin-left: 8%;
+  margin-right: 5%;
+  margin-left: 5%;
   font-family: Lato;
   padding: 10px;
   font-size: 20px;
-  font-weight: bolder;
   padding-left: 0px;
   padding-right: 0px;
   padding-bottom: 15px;
@@ -237,7 +236,7 @@ div.logotop a:hover{
 
 div.outerwrap {
 
-  background: radial-gradient(circle, #f1f1f1, #e3e3e3);
+  background: rgba(220, 220, 220, 0.3);
   padding: 10px;
   padding-left: 0px;
   padding-right: 0px; 
@@ -245,7 +244,8 @@ div.outerwrap {
 }
 
 .ulWrap {
-  border: 1px solid #c9e6f2; 
+  border: 1px solid rgba(201,230,242, 0.5); 
+   box-shadow: 0px 1px 3px rgba(100, 100, 100, 0.2);
   padding: 0px!important;
 
 }
@@ -253,8 +253,8 @@ div.outerwrap {
 
 .fill_gaps{
   background: #eee;
-  margin-right: 8%;
-  margin-left: 8%;
+  margin-right: 5%;
+  margin-left: 5%;
 
 }
 
@@ -286,7 +286,6 @@ div.outerwrap {
   background-position: 10% 10%;
   background: rgba(254,254,254, 1);
   height: auto;
-    border-bottom:  1px solid #c9e6f2;
   padding-bottom: 8px;
 }
 
@@ -307,8 +306,8 @@ div.outerwrap {
 
 .absolute_footer {
   margin-bottom: 50px;
-  margin-left: 8%;
-  margin-right: 8%;
+  margin-left: 5%;
+  margin-right: 5%;
   margin-top: 6px;
   padding: 3px;
   padding-left: 2px;
@@ -332,10 +331,10 @@ div.outerwrap {
 
 div.nav {
   color: #fff;
-  background-color: #fff;
-  border-bottom: 1px solid #c9e6f2;;
+  background-color: #5E6573; 
+  background: radial-gradient(circle, #f4f4f4, #f9f9f9);
   padding-top: 4px;
-  padding-bottom: 4px;x
+  padding-bottom: 4px;
   clear: both;
   color: #000;
   width: 100%;
@@ -344,10 +343,11 @@ div.nav {
 
 
 div.nav a {
-  padding: 8px;
+  padding: 15px;
   padding-top: 6px;
   padding-bottom: 4px;
   font-size: 13px;
+  background: rgba(240, 245, 248, 0.3);
   color: #000;
   text-decoration: none;
   text-transform: uppercase;
@@ -357,18 +357,22 @@ div.nav a {
 }
 
 div.nav a#admin, div.nav a#editor{
-  background: #f2f9fc;
-  border-left: 1px solid #c9e6f2;;
-  border-right: 1px solid #c9e6f2;
-  border-top: 1px solid #c9e6f2;
-  padding-top: 2px;
-  padding-bottom: 5px;
+  color: #333;
+  padding-top: 0spx;
+  padding-bottom: 2px;
   border-radius: 7px 7px 0px 0px;
   margin-right: 20px;
   float: right;
+  padding-left: 4px;
+  padding-right: 4px;
   letter-spacing: .05em;
   font-size: 9px;
-  margin-top: 5px;
+  margin-top: -1px;
+}
+
+div.nav a#admin:hover{
+  background: #333;
+  color: snow;
 }
 
 
@@ -518,12 +522,17 @@ a.remember:hover, a.fetch:hover, a.throw:hover {
 }
 
 .footer {
-  background: #f2f9fc;
+  background: ;
+  background: radial-gradient(circle, #EAF0F2 , #f2f9fc);
   color: #444;
-  padding: 6px;
+  padding: 10px;
   padding-left: 10px;
   padding-right: 10px;  
   font-size: 12px;
+}
+
+.absolute_footer a.tooltip{
+  font-family: Calibri!important;
 }
 
 .footer .right {
@@ -531,7 +540,7 @@ a.remember:hover, a.fetch:hover, a.throw:hover {
   margin-right: 10px;
 }
 
-.footer img {
+.absolute_footer img {
   height: 15px;
   float: right;
   width: auto;
@@ -830,84 +839,6 @@ div.icon-box.small i.fa {
   font-size: 10px!important;
 }
 
-div.coursecontainer {
-  margin: 3px;
-  padding: 10px;
-  width: 98%;
-  background: #D1D1D1;
-  border-radius: 3px;
-  border: #c1c1c1 solid 1px;
-}
-
-div.coursecontainer .inner {
-  background: #e3e3e3;
-  padding: 5px;
-  color: #333;
-  border-radius: 3px;
-  border: #c1c1c1 solid 1px;
-  overflow: auto;
-}
-
-div.coursecontainer .inner .course {
-  background: #fff;
-  border: 1px solid #e4e4e4;
-  border-radius: 4px;
-  padding: 5px;
-  padding-bottom: 10px;
-  margin: 3px;
-}
-
-div.coursecontainer .inner .course .avatar {
-  float: left;
-  margin-bottom: -5px;
-  margin-right: 6px;
-}
-
-div.coursecontainer .inner .course .avatar img {
-  width: 50px;
-  height: 50px;
-  border: 3px #d8d8d8 solid;
-  border-radius: 3px;
-}
-
-div.coursecontainer .inner .course .avatar2 {
-  float: left;
-  margin-bottom: -5px;
-  margin-right: 6px;
-}
-
-div.coursecontainer .inner .course .avatar2 img {
-  width: 30px;
-  height: 30px;
-  border: 3px #d8d8d8 solid;
-  border-radius: 3px;
-}
-
-div.coursecontainer .inner .course .title {
-  font-size: 20px;
-  font-weight: bold;
-  text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.2);
-}
-
-div.coursecontainer .inner .course .title2 {
-  font-size: 16px;
-  font-weight: bold;
-  text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.2);
-}
-
-div.coursecontainer .inner .course .flag {
-  text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.2);
-}
-
-div.coursecontainer .inner .course .usertext {
-  font-size: 11px;
-  text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.2);
-}
-
-div.coursecontainer .inner .course .usertext a {
-  color: #005b7f;
-  text-decoration: none;
-}
 
 div.chooser {
   padding: 4px;
@@ -1541,6 +1472,45 @@ strong.dWord a:hover {
   font-family: Gentium;
 }
 
+.table-link{
+  font-size: 0!important;
+  display: inline-block;
+  color: black;
+  width: auto;
+  padding: 3px;
+}
+
+div.table-links-list{
+
+max-width: calc(100%);
+}
+
+div.table-links-list:hover{
+}
+div.table-links-list:hover .tooltip.table-link{
+
+}
+
+.table-link i.fa{
+  transition: font-size .3s;
+  margin-right: 4px;
+}
+
+.table-link{
+  margin: 4px;
+  font-size:0!important;
+  padding: 5px;
+}
+
+.table-link:hover i.fa{
+  color:#4A618E!important;
+}
+
+.table-link:hover span.counter{
+  background: #4A618E!important;
+  color: white;
+}
+
 .tooltip:hover {
   font-weight: bold;
   font-style: italic;
@@ -1657,6 +1627,10 @@ table.admin {
   margin: 0 auto;
   margin-bottom: 10px;
   background: #f2f2f2;
+}
+
+table.admin tr:nth-child(even) td{
+  background: #f9f9f9;
 }
 
 table.admin tr td {
@@ -2115,9 +2089,13 @@ a.red-link{
   display: inline-block!important;
   padding: 5px!important;
   border: #f04f48 dashed 1px!important;
-  border-radius: 7px!important;
+  border-radius: 7px;
   color: #f04f48!important;
   opacity: 0.5;
+}
+
+a.btAction.red-link{
+  border-radius: 0px!important;
 }
 
 a.red-link:hover{
@@ -2319,7 +2297,7 @@ img.dFlag:hover {
   padding: 2px;
   display: inline-block;
   color: #fff;
-  background-color: #5f8e67;
+  background-color: rgba(95,142,103, 0.6);
   border-color: #5f8e67;
   font-size: 10px!important;
 }
@@ -2328,15 +2306,11 @@ img.dFlag:hover {
   padding: 2px;
   display: inline-block;
   color: #fff;
-  background-color: rgba(186,65,63, 0.5);
+  background-color: rgba(186,65,63, 0.2);
   border-color: #ba413f;
   font-size: 10px!important;
 }
 
-.boolean-ban:hover{
-  background-color: rgba(186,65,63, 1);
-  cursor: pointer;
-}
 
 .boolean-check, .boolean-ban{
  width: 24px;
@@ -2611,7 +2585,11 @@ div.btCard {
 }
 
 div.btCard.admin{
-  width: 95%;
+  width: 85%;
+}
+
+div.btCard.link-table{
+  width: 70%;
 }
 
 div.btCard .pages{
@@ -2626,6 +2604,7 @@ div.btCard .pages{
 
 div.btCard .pages div{
   opacity: 0.4;
+  font-family: Raleway;
   cursor: pointer;
   display: inline-block;
   margin-left: 10px!important;
@@ -2645,6 +2624,7 @@ div.btCard input{
 .btCard select.selectPage{
   width: auto;
   padding: 0;
+  font-family: Raleway;
   -webkit-appearance: none;
     -moz-appearance: none;
    font-size: 11px;
@@ -2666,6 +2646,11 @@ div.btTitle {
   font-family: Raleway;
   background: #5E6573;
 }
+
+div.btCard.link-table div.btTitle{
+  
+}
+
 div.btCard.editing div.btTitle{
   border-radius: 7px 7px 0px 0px;
   background-color: #f2f9fc;
@@ -2743,7 +2728,7 @@ div.btButtonBar.up{
   margin-right: -30px;
 }
 
-div.btButtonBar a.btAction {
+a.btAction {
   display: inline-block;
   padding: 5px;
   background: #eee;
@@ -2757,6 +2742,10 @@ div.btButtonBar a.btAction {
   float: right;
 }
 
+table.admin a.btAction{
+  font-size: 11px;
+}
+
 a.btAction.wikiEdit{
   float: left!important;
 }
@@ -2765,17 +2754,36 @@ a.btAction.page{
   float: none!important;
 }
 
-div.btButtonBar a.btAction:hover, div.btButtonBar a.btAction.green:hover, div.btButtonBar a.btAction.blue:hover  {
+a.btAction.blue.page{
+  transition: none!important;
+  width: 24px;
+  text-align: center;
+  padding: 0;
+}
+
+a.btAction:hover, div.btButtonBar a.btAction.green:hover, div.btButtonBar a.btAction.blue:hover  {
   background: #b2dde4;
   color: #333;
   border: 1px solid #9fd5dd;
 }
-div.btButtonBar a.btAction.green {
+a.btAction.green {
   background-color: #337357;
   color: snow;
 }
-div.btButtonBar a.btAction.blue{
+a.btAction.blue{
   background-color: #515763;
+  color: snow;
+}
+
+a.btAction.blue.disabled{
+  background-color: #A9AFBC;
+  border: 1px #A9AFBC solid;
+  opacity: .2;
+  cursor: not-allowed!important;
+}
+
+a.btAction.blue.disabled:hover{
+  border: 1px #A9AFBC solid;
   color: snow;
 }
 
@@ -3042,3 +3050,89 @@ textarea.wikiEditContent{
 }
 .native:hover {}
 
+
+/* D_ADMIN
+*/ 
+
+div.d_admin_wrap{
+  display: flex;
+  margin-right: -15px;
+  margin-top: -15px;
+}
+
+div.d_admin_menu{
+  align-items: stretch;
+  max-width: 3.5%;
+  min-width: 40px;
+  box-shadow: inset 10px 0px 9px -5px rgba(0,0,0,0.5);
+  transition: width .2s ease-in, background .2s;
+  margin-left: 35px;
+  margin-top: -28px;
+  margin-bottom: -45px;
+  background: #444;
+  padding-top: 108px;
+}
+
+div.d_admin_menu.stack{
+
+}
+
+div.d_admin_menu a{
+  display: block;
+  transition: none;
+  overflow: hidden;
+  -webkit-backface-visibility: hidden;
+  width: calc(98% - 6px);
+  padding: 3px;
+  margin-bottom: 10px;
+  font-size: 15px;
+  text-align: center;
+  color: snow;
+  text-align:center;
+  line-height:30px;
+  height:30px;
+  font-size:18px;
+}
+div.d_admin_menu a.active{
+  background: #B04010;
+}
+
+a.ttip-sub.active{
+  background: #B04010;
+  color: white;
+}
+
+a.ttip-sub{
+  display: block;
+  margin: 5px;
+  margin-left: -5px;
+  margin-right: -5px;
+  padding: 5px;
+  color: black;
+}
+
+a.ttip-sub:hover{
+  color: snow;
+  background: #333;
+}
+
+div.d_admin_menu a i.fa{
+  font-size: 24px;
+}
+
+
+div.d_admin_menu:hover a{
+
+  width: calc(100% - 6px);
+}
+
+div.d_admin_menu a:hover{
+  background: white;
+  color: black;
+  text-shadow: initial;
+}
+
+
+div.d_admin{
+  width: 100%;
+}

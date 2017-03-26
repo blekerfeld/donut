@@ -74,7 +74,7 @@ class pCachedQuery implements Iterator{
 
 class pDataObject {
 
-	private $_fields = null, $table = null, $_fieldstring, $_valuestring, $_updateid, $_updatestring, $_singleId, $_paginated, $_data;
+	private $_fields = null, $_table, $_fieldstring, $_valuestring, $_updateid, $_updatestring, $_singleId, $_paginated, $_data;
 
 	public function __construct($table, $fields, $paginated = true){
 		$this->_fields = $fields;
@@ -93,7 +93,6 @@ class pDataObject {
 	}
 
 	public function getObjects($offset, $itemsperpage, $condition = ''){
-
 		$this->_data = pQuery("SELECT ".$this->_fieldstring." FROM ".$this->_table." ".$condition.(($this->_paginated) ? " LIMIT ".$offset.",".$itemsperpage : '').";");
 		return  $this->_data;
 	}
@@ -178,8 +177,9 @@ class pDataObject {
 		return $this->_data->rowCount();
 	}
 
-	public function countAll(){
-		$count = (pQuery("SELECT count(id) AS total FROM ".$this->_table." WHERE 1;"))->fetchObject();
+	public function countAll($condition = '1'){
+
+		$count = (pQuery("SELECT count(id) AS total FROM ".$this->_table." WHERE ".$condition.";"))->fetchObject();
 
 		return $count->total;
 	}
@@ -203,7 +203,10 @@ class pSet{
 	}
 
 	public function add($field){
-		$this->_fields[$field->name] = $field;
+		if(isset($field->name))
+			$this->_fields[$field->name] = $field;
+		else
+			$this->_fields[] = $field;
 	}
 
 	public function remove($field){
@@ -236,7 +239,7 @@ class pDataField{
 	public function parse($value = '', $output = ''){
 		
 		if($this->type == 'flag')
-			$output = "<img class='$this->class flagimage' src='".purl('pol://library/images/flags/'.$value.'.png')."' />";
+			$output = "<img class='$this->class flagimage' src='".(trim($value) == '' ? pUrl('pol://library/images/flags/undef.png') : pUrl('pol://library/images/flags/'.$value.'.png'))."' />";
 		
 		elseif($this->type == 'image')
 			$output = "<img class='$this->class' src='".$value."' />";
