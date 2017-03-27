@@ -92,10 +92,7 @@ class pAdminStructure{
 		}
 
 		pOut("</div></div>");
-
-		// Tooltipster time!
-		pOut("<script>$('.ttip').tooltipster({theme: 'tooltipster-noir', animation: 'grow', distance: 0, contentAsHTML: true, interactive: true});</script>");
-		
+	
 
 	}
 
@@ -139,6 +136,11 @@ class pAdminStructure{
 
 		// Time for the menu
 		$this->renderMenu();
+
+
+		// Tooltipster time!
+		pOut("<script>$('.ttip').tooltipster({theme: 'tooltipster-noir', animation: 'grow', distance: 0, contentAsHTML: true, interactive: true});
+			$('.ttip_actions').tooltipster({theme: 'tooltipster-noir', animation: 'grow', distance: 0, contentAsHTML: true, interactive: true, side: 'bottom'});</script>");
 
 		// Ending overall 
 		pOut("</div>");

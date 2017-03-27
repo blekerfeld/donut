@@ -26,6 +26,7 @@
   <title><?php global $donut;  echo $donut['page']['title']; ?></title>
   </head>
   <body class='dashboard'>
+    <div class='topstripe'></div>
     <div class="absolute_header">
       <?php echo pAbsHeader(); ?>
     </div>
