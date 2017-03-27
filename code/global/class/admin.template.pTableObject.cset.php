@@ -42,7 +42,7 @@ class pTableObject extends pAdminObject{
 			$col_count++;
 		}
 
-		pOut("<td>".ACTIONS."</td>
+		pOut("<td></td>
 			</tr></thead><tbody>");
 
 		foreach($this->_data as $data){
@@ -76,11 +76,15 @@ class pTableObject extends pAdminObject{
 			}
 
 			// The important actions and such
-			pOut("<td class='actions'>");
+			pOut("<td style='text-align: center'><a href='javascript:void();' class='btAction no-float ttip_actions' title='");
+
 			foreach($this->_actions->get() as $action){
 				if(!($action->name == 'remove' AND $data['id'] == 0))
-					pOut($action->render($data['id']));
+					pOut(str_replace("'", '"', $action->render($data['id'])));
 			}
+
+			pOut("'><i class='fa fa-ellipsis-v fa-15' style='width: 13px;text-align: center;'></i></a>");
+			
 			pOut("</td>");
 
 			pOut("</tr>");

@@ -173,9 +173,9 @@ span.tab, div.tab {
 
 .topstripe {
   width: 100%;
-  background: #606772;
-  min-height: 2px;
-  opacity: 1;
+  background: #48C7AB;
+  min-height: 0.5px;
+  opacity: 0.7;
 }
 
 .absolute_header {
@@ -954,29 +954,46 @@ table.login a.rcvr {
   font-size: 12px;
 }
 
-.notice, .noticea {
-  display: block;
-  padding: 4px;
-  color: #3a87ad;
-  width: auto;
-  display: inline-block;
-  margin: 4px;
-  margin-left: 0px;
-  margin-right: 0px;
-  margin-bottom: 6px;
+.notice{
+    display: block;
+    padding: 4px;
+    color: #3a87ad;
+    background-color: #d9edf7;
+    border: 1px solid #bce8f1;
+    margin: 4px;
+    margin-left: 0px;
+    margin-right: 0px;
+    margin-bottom: 6px;
+}
+
+.danger-notice{
+      display: block;
+    padding: 4px;
+    color: #b94a48;
+    background-color: #f2dede;
+    border: 1px solid #ebccd1;
+    margin: 4px;
+    margin-left: 0px;
+    margin-right: 0px;
+    margin-bottom: 6px;
+}
+
+.succes-notice{
+    display: block;
+    padding: 4px;
+    color: #468847;
+    background-color: #dff0d8;
+    border: 1px solid #d6e9c6;
+    margin: 4px;
+    margin-left: 0px;
+    margin-right: 0px;
+    margin-bottom: 6px;
 }
 
 .adminsection .notice, .adminsection .ajaxloadadd {
   margin: 0 auto;
 }
 
-.danger-notice {
-  color: #ba413f;
-}
-
-.succes-notice {
-  color: #5f8e67;
-}
 
 .hide {
   display: none;
@@ -1629,6 +1646,13 @@ table.admin {
   background: #f2f2f2;
 }
 
+table.admin tr td.actions{
+  text-align: center;
+  width: 5px;
+  max-width: 5px;
+  min-width: 5px;
+}
+
 table.admin tr:nth-child(even) td{
   background: #f9f9f9;
 }
@@ -2098,11 +2122,14 @@ a.btAction.red-link{
   border-radius: 0px!important;
 }
 
-a.red-link:hover{
-  opacity: 1;
-  background: none!important;
-  text-decoration: underline;
+a.ttip-sub.red-link{
+  border: none!important;
+  border-radius: 0px;
+  opacity: 0.8;
 }
+
+.red-link:hover{ opacity: 1; }
+a.ttip-sub.red-link:hover {  background: #ddd; }
 
 .red-link{
  

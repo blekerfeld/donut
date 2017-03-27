@@ -10,9 +10,9 @@
 
 $saveStrings = array(null, SAVE, SAVING, SAVED_EMPTY, SAVED_ERROR, SAVED, SAVE_LINKBACK);
 
-$action_remove = array('remove', DA_DELETE, 'fa-12 fa-times', 'btAction no-float', null, null);
+$action_remove = array('remove', DA_DELETE, 'fa-12 fa-trash', 'ttip-sub', null, null);
 
-$action_edit = array('edit', DA_EDIT, 'fa-12 fa-pencil', 'btAction no-float', null, null);
+$action_edit = array('edit', DA_EDIT, 'fa-12 fa-pencil', 'ttip-sub', null, null);
 
 
 // Data fields array('name', 'surface', 'width', 'type', show-in-table, show-in-form, required, class),
@@ -34,7 +34,7 @@ return array(
 				'section' => 'words',
 			),
 			'grammar' => array(
-				'icon' => 'fa-rocket',
+				'icon' => 'fa-university',
 				'surface' => 'Grammar',
 				'section' => 'lexcat',
 			),
@@ -150,10 +150,10 @@ return array(
 			'disable_pagination' => false,
 			'table' => 'types',
 			'datafields' => array(
-				array('name', 'Category name', '20%', 'input', true, true, true, 'small-caps medium', false),
-				array('short_name', DA_ABBR, '5%', 'input', true, true, true, 'tooltip medium em', false),
-				array('inflect_classifications', DA_SUBINFLECTIONS, '2%', 'boolean', true, true, true, '', false),
-				array('inflect_not', 'Non-inflective', '2%', 'boolean', true, true, true, '', false),
+				array('name', 'Category name', 'auto', 'input', true, true, true, 'small-caps medium', false),
+				array('short_name', DA_ABBR, 'auto', 'input', true, true, true, 'tooltip medium em', false),
+				array('inflect_classifications', DA_SUBINFLECTIONS, 'auto', 'boolean', true, true, true, '', false),
+				array('inflect_not', 'Non-inflective', 'auto', 'boolean', true, true, true, '', false),
 			),
 			'actions_item' => array(
 				'edit' => $action_edit,
