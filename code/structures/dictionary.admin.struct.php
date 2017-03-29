@@ -10,9 +10,9 @@
 
 $saveStrings = array(null, SAVE, SAVING, SAVED_EMPTY, SAVED_ERROR, SAVED, SAVE_LINKBACK);
 
-$action_remove = array('remove', DA_DELETE, 'fa-12 fa-trash', 'ttip-sub', null, null);
+$action_remove = array('remove', DA_DELETE, 'fa-trash', 'ttip-sub', null, null);
 
-$action_edit = array('edit', DA_EDIT, 'fa-12 fa-pencil', 'ttip-sub', null, null);
+$action_edit = array('edit', DA_EDIT, 'fa-pencil', 'ttip-sub', null, null);
 
 
 // Data fields array('name', 'surface', 'width', 'type', show-in-table, show-in-form, required, class),
@@ -24,47 +24,59 @@ return array(
 		),
 		'MAGIC_MENU' => array(
 			'home' => array(
-				'icon' => 'fa-home',
-				'surface' => 'Home',
+				'icon' => 'home',
+				'surface' => DA_TITLE_HOME,
 				'section' => 'home'
 			),
 			'content' => array(
-				'icon' => 'fa-book',
-				'surface' => 'Content',
+				'icon' => 'library_books',
+				'surface' => DA_TITLE_CONTENT,
 				'section' => 'words',
 			),
 			'grammar' => array(
-				'icon' => 'fa-university',
-				'surface' => 'Grammar',
+				'icon' => 'extension',
+				'surface' => DA_TITLE_GRAMMAR,
 				'section' => 'lexcat',
 			),
 			'languages' => array(
-				'icon' => 'fa-language',
-				'surface' => 'Languages',
+				'icon' => 'translate',
+				'surface' => DA_TITLE_LANGUAGES,
 				'section' => 'languages'
+			),
+			'phonology' => array(
+				'icon' => 'record_voice_over',
+				'surface' => DA_TITLE_PHONOLOGY,
+				'section' => 'phonology'
+			),
+			'ortography' => array(
+				'icon' => 'sort_by_alpha',
+				'surface' => DA_TITLE_ORTOGRAPHY,
+				'section' => 'graphemes'
 			),
 		),
 
 		'words' => array(
 			'section_key' => 'words',
 			'icon' => 'fa-font',
+			'id_as_hash' => true,
+			'hash_app' => 'lemma',
 			'menu' => 'content',
 			'type' => 'pTableObject',
-			'surface' => "Words",
+			'surface' => DA_TITLE_WORDS,
 			'condition' => false,
 			'items_per_page' => 20,
 			'disable_pagination' => false,
 			'table' => 'words',
 			'datafields' => array(
-				array('native', "Native", '40%', 'input', true, true, true, '', false),
-				array('ipa', "Ipa", '5%', 'input', true, true, false, '', false),
+				array('native', DA_WORDS_NATIVE, '40%', 'input', true, true, true, '', false),
+				array('ipa', DA_WORDS_IPA, '30%', 'input', true, true, false, '', false),
 			),
 			'actions_item' => array(
 				'edit' => $action_edit,
 				'remove' => $action_remove,
 			),
 			'actions_bar' => array(
-				'new' => array('new', DA_LANG_NEW, 'fa-plus-circle fa-12', 'btAction wikiEdit', null, null),
+				'new' => array('new', DA_WORDS_NEW_EXTERN, 'fa-plus-circle fa-12', 'btAction wikiEdit', null, null, pUrl('?addword')),
 			),
 			'save_strings' => $saveStrings,
 			'outgoing_links' => array(),
@@ -73,6 +85,9 @@ return array(
 						'table' => 'idiom_words',
 						'parent' => 'word_id',
 						'child' => 'idiom_id',
+						'fields' => array(
+								(new pDataField('keyword', DA_TABLE_LINK_KEYWORD)),
+							),
 						'show_parent' => 'idiom',
 						'show_child' => 'native',
 					),
@@ -85,7 +100,7 @@ return array(
 			'icon' => 'fa-quote-right',
 			'menu' => 'content',
 			'type' => 'pTableObject',
-			'surface' => "Examples",
+			'surface' => DA_TITLE_EXAMPLES,
 			'condition' => false,
 			'items_per_page' => 20,
 			'disable_pagination' => false,
@@ -105,15 +120,12 @@ return array(
 				'words' => array(
 					'section' => 'words', 
 					'surface' => "Words", 
-					'icon' => 'fa fa-font', 
+					'icon' => 'fa-font', 
 					'table'=> 'idiom_words', 
 					'field' => 'idiom_id'
 				),
 			),
 		),
-
-
-
 		'languages' => array(
 			'section_key' => 'languages',
 			'icon' => 'fa-language',
@@ -134,7 +146,7 @@ return array(
 				'remove' => $action_remove,
 			),
 			'actions_bar' => array(
-				'new' => array('new', DA_LANG_NEW, 'fa-plus-circle fa-12', 'btAction wikiEdit', null, null),
+				'new' => array('new', DA_LANG_NEW, 'fa-plus-circle', 'btAction wikiEdit', null, null),
 			),
 			'save_strings' => $saveStrings,
 			'outgoing_links' => array(),
@@ -167,7 +179,7 @@ return array(
 					'gramcat' => array(
 						'section' => 'gramcat', 
 						'surface' => DA_GRAMCAT_TITLE, 
-						'icon' => 'fa fa-code-fork', 
+						'icon' => 'fa-code-fork', 
 						'table'=> 'classification_apply', 
 						'field' => 'type_id'
 					)
@@ -208,7 +220,7 @@ return array(
 				'lexcat' => array(
 					'section' => 'lexcat', 
 					'surface' => DA_LEXCAT_TITLE, 
-					'icon' => 'fa fa-sitemap', 
+					'icon' => 'fa-sitemap', 
 					'table'=> 'classification_apply', 
 					'field' => 'classification_id'
 				),
@@ -256,10 +268,39 @@ return array(
 				'gramcat' => array(
 					'section' => 'gramcat', 
 					'surface' => DA_GRAMCAT_TITLE, 
-					'icon' => 'fa fa-code-fork', 
+					'icon' => 'fa-code-fork', 
 					'table'=> 'subclassification_apply', 
 					'field' => 'subclassification_id'
 				),
 			),
 		),
+
+
+		// Ortography section
+		'graphemes' => array(
+			'section_key' => 'graphemes',
+			'icon' => 'fa-hashtag',
+			'menu' => 'ortography',
+			'type' => 'pTableObject',
+			'surface' => "Graphemes",
+			'condition' => false,
+			'items_per_page' => 30,
+			'disable_pagination' => false,
+			'table' => 'graphemes',
+			'datafields' => array(
+				array('grapheme', 'Grapheme', '40%', 'input', true, true, true, '', false),
+				array('in_alphabet', 'In alphabet', '20%', 'boolean', true, true, true, 'tooltip medium em', false),
+			),
+			'actions_item' => array(
+				'edit' => $action_edit,
+				'remove' => $action_remove,
+			),
+			'actions_bar' => array(
+				array('new', 'Add category', 'fa-plus-circle fa-12', 'btAction wikiEdit', null, null),
+			),
+			'save_strings' => $saveStrings,
+			'outgoing_links' => array(
+			),
+		),
+
 	);

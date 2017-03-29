@@ -22,8 +22,10 @@
   color: #fff;
 }
 
+
 html, body {
   margin: 0;
+  box-sizing: border-box;
   height:100%;
   padding: 0;
   font-family: Calibri;
@@ -171,20 +173,13 @@ span.tab, div.tab {
 
 /* Basic layout elements*/
 
-.topstripe {
-  width: 100%;
-  background: #48C7AB;
-  min-height: 0.5px;
-  opacity: 0.7;
-}
-
 .absolute_header {
   padding: 3px;
   padding-left: 5%;
   padding-right: 5%;
   font-size: 13px;
-  background: #333;
-   border-bottom: 1px solid #222;
+  background: #000;
+  border-bottom: 1px solid #222;
   color: snow;
   min-height: 15px;
 }
@@ -199,55 +194,42 @@ span.tab, div.tab {
   color: orange;
 }
 
-
-#pageload {
-  color: #c4c4c4;
-  font-size: 10px;
-  display: none;
-}
-
-body.loading #pageload{
-  display: inline-block;
-  margin-left: 10px;
-}
-
 div.logotop{
-  margin-right: 5%;
-  margin-left: 5%;
-  font-family: Lato;
-  padding: 10px;
-  font-size: 20px;
-  padding-left: 0px;
-  padding-right: 0px;
-  padding-bottom: 15px;
-  color: #2E364C;
-  cursor: pointer;
+  font-size: 13px;
+  height: 100%;
+  display: inline-block;
+  margin-top: 7px;
+  float: right;
 }
 
-div.logotop a {
+a.logotop {
   padding-bottom: 2px;
-    color: #2E364C;
+  color: snow;
+    font-family: Lato;
+    font-size: 26px;
   border-bottom: 3px double rgba(46,54,76, 0.1);
 }
 
-div.logotop a:hover{
+a.logotop img{
+  width: 18px;
+  height: auto;
+}
+
+a.logotop:hover{
   border-bottom: 1px dotted #ccc;
+  color: snow;
 }
 
 div.outerwrap {
 
-  background: rgba(220, 220, 220, 0.3);
-  padding: 10px;
-  padding-left: 0px;
-  padding-right: 0px; 
-
+  background: rgba(220, 220, 220, 0.3);.
 }
 
 .ulWrap {
   border: 1px solid rgba(201,230,242, 0.5); 
-   box-shadow: 0px 1px 3px rgba(100, 100, 100, 0.2);
+  border-top: none;
+  box-shadow: 0px 1px 3px rgba(100, 100, 100, 0.05);
   padding: 0px!important;
-
 }
 
 
@@ -286,7 +268,8 @@ div.outerwrap {
   background-position: 10% 10%;
   background: rgba(254,254,254, 1);
   height: auto;
-  padding-bottom: 8px;
+  padding-bottom: 25px;
+  border-bottom: 2px solid #ccc;
 }
 
 .inner-page{
@@ -308,10 +291,12 @@ div.outerwrap {
   margin-bottom: 50px;
   margin-left: 5%;
   margin-right: 5%;
-  margin-top: 6px;
+  margin-top: 20px;
   padding: 3px;
   padding-left: 2px;
-  opacity: 1;
+  padding-top: 10px;
+  border-top: 1px solid #d2d4d7;
+  opacity: 0.7;
   font-size: 8.5px;
   color: #333;
   text-decoration: none;
@@ -892,7 +877,7 @@ table.noshow td.content {
   display: block;
   padding-top: 10px;
   padding: 0px;
-  width: calc(80.8% - 45px);
+  width: 80.8%;
   float: right;  
   position: static;
 }
@@ -958,8 +943,6 @@ table.login a.rcvr {
     display: block;
     padding: 4px;
     color: #3a87ad;
-    background-color: #d9edf7;
-    border: 1px solid #bce8f1;
     margin: 4px;
     margin-left: 0px;
     margin-right: 0px;
@@ -967,11 +950,9 @@ table.login a.rcvr {
 }
 
 .danger-notice{
-      display: block;
+    display: block;
     padding: 4px;
     color: #b94a48;
-    background-color: #f2dede;
-    border: 1px solid #ebccd1;
     margin: 4px;
     margin-left: 0px;
     margin-right: 0px;
@@ -982,8 +963,6 @@ table.login a.rcvr {
     display: block;
     padding: 4px;
     color: #468847;
-    background-color: #dff0d8;
-    border: 1px solid #d6e9c6;
     margin: 4px;
     margin-left: 0px;
     margin-right: 0px;
@@ -1004,7 +983,7 @@ input#wordsearch, input#filter, input#searchfilter {
   padding: 9px;
   font-size: 15px;
   text-decoration: none;
-  width: calc(60% - 18px);
+  width: 60% - 18px;
   font-family: Gentium;
   font-style: italic;
   color: rgb(150, 150, 150);
@@ -1020,7 +999,7 @@ a.button.search{
   padding: 11PX;
   margin-top: 1px;
   margin-left: 2px;
-  width: calc(29% - 18px);;
+  width: 29%;
   transition: background .3s, color .1s;
 }
 
@@ -2885,7 +2864,7 @@ a.wdTopLink, a.wdTopLink i.fa {
 .wdComments .children {
   margin-left: 2%;
   padding-left: 20px;
-  width: calc(100% - 3% - 20px);
+  width: 100%;
   border-left: dashed 1px #c9c9c9;
 }
 .wdComments .children.bottom {}
@@ -2961,7 +2940,7 @@ a.wdTopLink, a.wdTopLink i.fa {
 
 .wikiContent{
   float: right;
-  width: calc(80% - 45px);
+  width: 80% - 45px;
   padding-left: 40px;
 }
 
@@ -3084,7 +3063,7 @@ textarea.wikiEditContent{
 div.d_admin_wrap{
   display: flex;
   margin-right: -15px;
-  margin-top: -15px;
+  margin-top: -16px;
 }
 
 div.d_admin_menu{
@@ -3095,8 +3074,8 @@ div.d_admin_menu{
   transition: width .2s ease-in, background .2s;
   margin-left: 35px;
   margin-top: -28px;
-  margin-bottom: -45px;
-  background: #444;
+  margin-bottom: -25px;
+  background: #333;
   padding-top: 108px;
 }
 
@@ -3109,7 +3088,8 @@ div.d_admin_menu a{
   transition: none;
   overflow: hidden;
   -webkit-backface-visibility: hidden;
-  width: calc(98% - 6px);
+  
+  width: 100% - 6px;
   padding: 3px;
   margin-bottom: 10px;
   font-size: 15px;
@@ -3145,12 +3125,6 @@ a.ttip-sub:hover{
 
 div.d_admin_menu a i.fa{
   font-size: 24px;
-}
-
-
-div.d_admin_menu:hover a{
-
-  width: calc(100% - 6px);
 }
 
 div.d_admin_menu a:hover{

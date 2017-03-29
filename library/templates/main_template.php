@@ -3,20 +3,20 @@
   <head>
     <link href="library/assets/css/index.css" rel="stylesheet">
     <?php echo (pCheckMobile() ? '<link href="library/assets/css/mobile.css" rel="stylesheet">' : '' ); ?>
-    <link rel="shortcut icon" href="library/images/static/donutico.png">
+    <link rel="shortcut icon" href="library/images/static/favico.png">
     <link rel="stylesheet" href="library/assets/css/vendors/font-awesome.css">
     <link rel="stylesheet" href="library/assets/css/vendors/tooltipster.css">
-    <link rel="stylesheet" href="library/assets/css/vendors/tooltipster-noir.css">
     <link rel="stylesheet" href="library/assets/css/vendors/jquery.tagsinput.css">
-    <link rel="stylesheet" href="library/assets/css/vendors/jquery.datatables.css">
+    <link rel="stylesheet" href="library/assets/css/vendors/pace.css">
     <link rel="stylesheet" href="library/assets/css/vendors/jquery.select2.css">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/simplemde/latest/simplemde.min.css">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons"
+      rel="stylesheet">
     <link href='http://fonts.googleapis.com/css?family=Slabo+27px' rel='stylesheet' type='text/css'>
     <script src="https://cdn.jsdelivr.net/simplemde/latest/simplemde.min.js"></script>
     <script src="library/assets/js/vendors/jquery.js"></script>
-    <script src="library/assets/js/vendors/jquery.ddslick.js"></script>
+    <script src="library/assets/js/vendors/pace.min.js"></script>
     <script src="library/assets/js/vendors/jquery.tooltip.js"></script>
-    <script src="library/assets/js/vendors/jquery.datatables.js"></script>
     <script src="library/assets/js/vendors/jquery.playsound.js"></script>
     <script src="library/assets/js/vendors/jquery.pulsate.js"></script>
     <script src="library/assets/js/vendors/jquery.tagsinput.js"></script>
@@ -26,12 +26,14 @@
   <title><?php global $donut;  echo $donut['page']['title']; ?></title>
   </head>
   <body class='dashboard'>
-    <div class='topstripe'></div>
     <div class="absolute_header">
-      <?php echo pAbsHeader(); ?>
-    </div>
-    <div class="logotop">
-        <a href="<?php echo pUrl("?home"); ?>"><?php echo pMarkDownParse(CONFIG_LOGO_TITLE); ?></a><span id="pageload">  <i class='fa fa-12 fa-spinner fa-spin'></i></span>
+      <div class="logotop">
+          <?php echo pAbsHeader(); ?>
+          <?php if(!pLogged()){ echo '<a href="'.pUrl('?login').'">'.MMENU_LOGIN.'</a>'; } ?>
+      </div>
+      <a class="logotop" href="<?php echo pUrl("?home"); ?>">
+      <img src='library/images/static/donut_white.png' /> 
+      <?php echo pMarkDownParse(CONFIG_LOGO_TITLE); ?></a> 
     </div>
     <div class="outerwrap">
       <div class="fill_gaps">
@@ -53,17 +55,7 @@
                   <?php global $donut; echo $donut['page']['content_final']; ?>
                 </div>
               </div>
-              <?php if(!isset($_REQUEST['wap']))
-              { ?>
           </div>
-          <div class='footer'>
-            <div class='inner_footer'>
-              <?php if(!pLogged()){ echo '<a href="'.pUrl('?login').'">'.MMENU_LOGIN.'</a> | '; } ?> <a href=''>About us</a> | <a href=''>Terms of use</a> | <a href=''>Contact</a>  
-            </div>  
-          </div>
-        <?php
-        }
-        ?>
         </div>
       </div>
     </div>

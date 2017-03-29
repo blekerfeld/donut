@@ -31,7 +31,13 @@ class pAdminParser{
 
 
 	public function setCondition($condition){
-		$this->_adminObject->setCondition($condition);
+		if($this->_adminObject != null)
+			$this->_adminObject->setCondition($condition);
+	}
+
+	public function setOrder($order){
+		if($this->_adminObject != null)
+			$this->_adminObject->setOrder($order);
 	}
 
 	public function compile(){
@@ -49,18 +55,28 @@ class pAdminParser{
 
 		// Creating the actions per item set
 		$this->_actions = new pSet;
-		foreach($this->_data['actions_item'] as $action)
-			$this->_actions->add(new pAction($action[0], $action[1], $action[2], $action[3], $action[4], $action[5], $this->_section, $this->_app));
+		foreach($this->_data['actions_item'] as $action){
+			$pAction = new pAction($action[0], $action[1], $action[2], $action[3], $action[4], $action[5], $this->_section, $this->_app);
+			if(isset($action[6]))
+				$pAction->setOverride($action[6]);
+			$this->_actions->add($pAction);
+		}
 
 		// Creating the actions per item set
 		$this->_actionbar = new pSet;
-		foreach($this->_data['actions_bar'] as $action)
-			$this->_actionbar->add(new pAction($action[0], $action[1], $action[2], $action[3], $action[4], $action[5], $this->_section, $this->_app));
+		foreach($this->_data['actions_bar'] as $action){
+			$pAction = new pAction($action[0], $action[1], $action[2], $action[3], $action[4], $action[5], $this->_section, $this->_app);
+			if(isset($action[6]))
+				$pAction->setOverride($action[6]);
+			$this->_actionbar->add($pAction);
+		}
 
 		// Compiling the parsing data into an tableObject
 		switch ($this->_data['type']) {
 			case 'pTableObject':
 				$this->_adminObject = new pTableObject($this->structure, $this->_data['icon'], $this->_data['surface'], $this->_data['table'], $this->_data['items_per_page'], $this->_fields, $this->_actions, $this->_actionbar, $this->_paginated, $this->_section, $this->_app);
+				$this->setCondition((isset($this->_data['condition']) ? $this->_data['condition'] : ''));
+				$this->setOrder((isset($this->_data['order']) ? $this->_data['order'] : '1'));
 				break;
 			
 			default:
@@ -71,6 +87,8 @@ class pAdminParser{
 		// Do we need to add links?
 		foreach($this->_data['outgoing_links'] as $link)
 			$this->_adminObject->addLink($link);
+
+
 		
 	}
 
@@ -102,11 +120,16 @@ class pAdminParser{
 
 				// The needed data fields
 				$dfs = new pSet;
-				$dfs->add(new pDataField($this->_data['incoming_links'][$linked]['child'], 'Child', '40%', 'select', true, true, true, '', false));
-				$dfs->add(new pDataField($this->_data['incoming_links'][$linked]['parent'], 'PARENT_NO_SHOW', '40%', 'select', false, false, false, '', false));
+
+				$dfs->add(new pDataField($this->_data['incoming_links'][$linked]['child'], 'Child', '30%', 'select', true, true, true, '', false));
+				if(isset($this->_data['incoming_links'][$linked]['fields']) and is_array($this->_data['incoming_links'][$linked]['fields']))
+					foreach($this->_data['incoming_links'][$linked]['fields'] as $field)
+						$dfs->add($field);
+				$dfs->add(new pDataField($this->_data['incoming_links'][$linked]['parent'], DA_TABLE_LINKS_PARENT, '', 'select', false, false, false, '', false));
 
 				// The needed actions
 				$actions = new pSet;
+
 				$actions->add(new pAction('remove-link', DA_DELETE_LINK, 'fa-12 fa-times', 'actionbutton', null, null, $this->_section, $this->_app));
 				$action_bar = new pSet;
 				$action_bar->add(new pAction('new-link', DA_TABLE_NEW_LINK, 'fa-12 fa-plus-circle', 'btAction float-left blue', null, null, $this->_section, $this->_app));
@@ -135,7 +158,7 @@ class pAdminParser{
 					$action = new pMagicActionForm('new-link', $this->_data['incoming_links'][$linked]['table'], $dfs, $this->_data['save_strings'], $this->_app, $this->_section, $linkTableObject);
 
 					$action->compile();
-					$action->newLinkPrepare($guests, $this->_data['incoming_links'][$linked]['show_parent'], $this->_data['incoming_links'][$linked]['show_child']);
+					$action->newLinkPrepare($guests, $this->_data['incoming_links'][$linked]['show_parent'], $this->_data['incoming_links'][$linked]['show_child'], isset($this->_data['incoming_links'][$linked]['fields']), $this->_data['incoming_links'][$linked]['fields']);
 
 					if($ajax)
 						return $action->newLinkAjax();
@@ -159,8 +182,11 @@ class pAdminParser{
 
 		}
 
+
+
 		// Removing is like very simple! 
 		elseif($name == 'remove' && $ajax){
+				$action = $this->_adminObject->getAction($name);
 			return $this->_adminObject->dataObject->remove($action->followUp, $action->followUpFields);
 		}
 
@@ -190,7 +216,7 @@ class pAdminParser{
 // ↓ Table object
 class pAdminObject{
 
-	public $_icon, $_surface, $_data, $_dfs, $dataObject, $_section, $_app, $_actions, $_actionbar, $_paginated, $_offset, $_itemsperpage, $_condition = '', $_total, $_number_of_pages, $_linked = null, $_structure;
+	public $_icon, $_surface, $_data, $_dfs, $dataObject, $_section, $_app, $_actions, $_actionbar, $_paginated, $_offset, $_itemsperpage, $_condition = '', $_total, $_number_of_pages, $_linked = null, $_structure, $_order = '1';
 
 	public function __construct($structure, $icon, $surface, $table, $itemsperpage, $dfs, $actions, $actionbar, $paginated, $section, $app = 'dictionary-admin'){
 		$this->_structure = $structure;
@@ -232,9 +258,13 @@ class pAdminObject{
 
 	public function getData($id = -1){
 		if($id == -1)
-			return $this->_data = $this->dataObject->getObjects($this->_offset, $this->_itemsperpage, $this->_condition)->fetchAll();
-		else
-			return $this->_data = $this->dataObject->getSingleObject($id)->fetchAll();
+			return $this->_data = $this->dataObject->getObjects($this->_offset, $this->_itemsperpage, $this->_condition, $this->_order)->fetchAll();
+		else{
+			if(isset($this->_structure[$this->_section]['id_as_hash']) AND $this->_structure[$this->_section]['id_as_hash'] == true AND !is_numeric($id)){
+				$id = pHashId($id, true)[0];
+			}
+			return $this->_data = $this->dataObject->getSingleObject($id, $this->_condition, $this->_order)->fetchAll();
+		}
 	}
 
 	public function data(){
@@ -243,6 +273,10 @@ class pAdminObject{
 
 	public function setCondition($condition){
 		$this->_condition = $condition;
+	}
+
+	public function setOrder($order){
+		$this->_order = $order;
 	}
 
 	public function pagePrevious(){

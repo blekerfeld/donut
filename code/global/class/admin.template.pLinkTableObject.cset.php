@@ -30,9 +30,9 @@ class pLinkTableObject extends pAdminObject{
 
 		pOut("<div class='btCard admin link-table'>
 			<div class='btTitle'>
-				<i class='fa ".$this->_icon."'></i> ".$this->_surface."
+				".(new pIcon($this->_icon, 12))." ".$this->_surface."
 			</div>
-			<div class='btButtonBar up'><a class='btAction wikiEdit' href='".pUrl("?".$this->_app."&section=".$this->_guests->_data['section_key'])."'><i class='fa fa-12 fa-arrow-left' ></i> ".BACK."</a>".$pages.$this->_actionbar->output."</div><div class='content'>
+			<div class='btButtonBar up'><a class='btAction wikiEdit' href='".pUrl("?".$this->_app."&section=".$this->_guests->_data['section_key'])."'>".(new pIcon('fa-arrow-left', 12))." ".BACK."</a>".$pages.$this->_actionbar->output."</div><div class='content'>
 			");
 
 
@@ -41,9 +41,9 @@ class pLinkTableObject extends pAdminObject{
 
 		pOut("<div class='btSource'><span class='btLanguage'>".DA_TABLE_LINKS_CHILDREN.": </span></div>");
 
-		pOut("<table class='admin' style='width:60%;float:left;'>
+		pOut("<table class='admin' style='width:75%;float:left;'>
 			<thead>
-			<tr class='title' role='row'><td style='width: 100px'><span class='xsmall'>".DA_TABLE_LINKS_CHILD_ID."</span></td>");
+			<tr class='title' role='row'><td style='width: auto;max-width: 5px;'><span class='xsmall'>".DA_TABLE_LINKS_CHILD_ID."</span></td>");
 
 		// Building the table
 		foreach ($this->_dfs->get() as $datafield) {
@@ -65,10 +65,13 @@ class pLinkTableObject extends pAdminObject{
 
 			foreach($this->_passed_data as $key => $item){
 			      if ( $item['id'] == $data[$this->_matchOn] ){
-			      	pOut("<tr class='item_".$data['id']."'><td><span class='xsmall'>".($item['id'] == 0 ? "<em><strong>".DA_DEFAULT."</em></strong>" : $item['id']) ."</span></td>");
-				      foreach($this->_dfs->get() as $datafield){
+			      	pOut("<tr class='item_".$data['id']."'><td style='width: auto;max-width: 5px;'><span class='xsmall'>".($item['id'] == 0 ? "<em><strong>".DA_DEFAULT."</em></strong>" : $item['id']) ."</span></td>");
+				      foreach($this->_dfs->get() as $key_d => $datafield){
 						if($datafield->showInTable == true)
-							pOut("<td style='width: ".$datafield->width."'>".$datafield->parse($item[$this->_show_child])."</td>");
+							if($datafield->name != $this->_guests->_data['outgoing_links'][$this->_section]['field'])
+								pOut("<td style='width: ".$datafield->width."'>".$datafield->parse($data[$datafield->name])."</td>");
+							else
+								pOut("<td style='width: ".$datafield->width."'>".$datafield->parse($item[$this->_show_child])."</td>");
 							$records++;
 				   		}
 			   		}
