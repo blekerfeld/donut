@@ -65,8 +65,8 @@ function pQuery($sql, $force_no_cache = false, $force_no_count = false){
 
 	// File infomation
 	$hash = $matches[2][0]."_".md5($sql);
-	$cache_file = pFromRoot('library/cache/queries/'.$hash.'.cache');
-	$cache_folder = pFromRoot('library/cache/queries');
+	$cache_file = pFromRoot('cache/queries/'.$hash.'.cache');
+	$cache_folder = pFromRoot('cache/queries');
 	$cache_time = CONFIG_QC_TIME;
 
 	// If we are not writable, we have to run the query without cache

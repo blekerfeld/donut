@@ -46,7 +46,17 @@ class pTableObject extends pAdminObject{
 			</tr></thead><tbody>");
 
 		foreach($this->_data as $data){
-			pOut("<tr class='item_".$data['id']."'><td><span class='xsmall'>".($data['id'] == 0 ? "<em><strong>".DA_DEFAULT."</em></strong>" : $data['id']) ."</span></td>");
+
+			$real_id = $data['id'];
+			$showID = $data['id'];
+
+			if(isset($this->_structure[$this->_section]['id_as_hash']) AND $this->_structure[$this->_section]['id_as_hash'] AND isset($this->_structure[$this->_section]['hash_app'])){
+				$showID = "<a class='medium tooltip' href='".pUrl('?'.$this->_structure[$this->_section]['hash_app'].'='.pHashId($data['id']))."'>".(new pIcon('fa-bookmark-o', 12))." ".pHashId($data['id'])."</a>";
+				$data['id'] = pHashId($data['id']);
+			}
+
+
+			pOut("<tr class='item_".$real_id ."'><td><span class='xsmall'>".($data['id'] === 0 ? "<em><strong>".DA_DEFAULT."</em></strong>" : $showID) ."</span></td>");
 
 			// Go through the data fields
 			foreach($this->_dfs->get() as $datafield){
@@ -65,7 +75,7 @@ class pTableObject extends pAdminObject{
 
 						// Counting the links
 						$dataCount = new pDataObject($link->structure[$this->_section]['outgoing_links'][$link->_data['section_key']]['table'], new pSet);
-						$counter = "<span class='counter'>".$dataCount->countAll($link->structure[$this->_section]['outgoing_links'][$link->_data['section_key']]['field'] . " = ".$data['id'])."</span>";
+							$counter = "<span class='counter'>".$dataCount->countAll($link->structure[$this->_section]['outgoing_links'][$link->_data['section_key']]['field'] . " = ".$real_id)."</span>";
 
 						$action->_surface = $counter.$action->_surface;
 
@@ -83,7 +93,7 @@ class pTableObject extends pAdminObject{
 					pOut(str_replace("'", '"', $action->render($data['id'])));
 			}
 
-			pOut("'><i class='fa fa-ellipsis-v fa-15' style='width: 13px;text-align: center;'></i></a>");
+			pOut("'>".(new pIcon('fa-chevron-down', 10))."</a>");
 			
 			pOut("</td>");
 
@@ -93,7 +103,7 @@ class pTableObject extends pAdminObject{
 		if($records == 0)
 			pOut("<tr><td colspan=".$col_count.">".DA_NO_RECORDS."</td>");
 
-		pOut("</tbody></table><script>$('.tooltip').tooltipster({theme: 'tooltipster-noir', animation: 'grow', distance: 0, contentAsHTML: true});</script>");
+		pOut("</tbody></table><script>$('.tooltip').tooltipster({theme: 'tooltipster-donut', animation: 'grow', distance: 0, contentAsHTML: true});</script>");
 
 		pOut("</div>
 			<div class='btButtonBar'>".$pages.$this->_actionbar->output."</div>

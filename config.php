@@ -56,7 +56,7 @@
 
 ##	These variables are the paths to the site root.
 	$donut['root_path'] = dirname(__FILE__);
-	$donut['absolute_path'] = "http://localhost/donut/";
+	$donut['absolute_path'] = "http://".$_SERVER['SERVER_NAME']."/donut/";
 
 ##  This function is used to encrypt passwords
 

@@ -87,6 +87,7 @@ define('DA_TABLE_LINKS_PARENT', "Parent");
 define('DA_TABLE_LINK_TITLE', "Relational table: %s");
 define('DA_TABLE_NEW_LINK', "New relation");
 define('DA_TABLE_NEW_RELATION', "New relation in ");
+define('DA_TABLE_LINK_KEYWORD', "Keyword");
 define('DA_TABLE_RELATION_EXIST', "This relation already exists.");
 define('DA_TABLE_RELATION_ADDED', "This relation is succesfully created");
 
@@ -96,3 +97,19 @@ define('DA_SUBINFLECTIONS', "Sub-inflections");
 define("DA_LEXCAT_TITLE", "Lexical categories");
 define("DA_GRAMCAT_TITLE", "Grammatical categories");
 define("DA_GRAMTAGS_TITLE", "Grammatical tags");
+
+
+// Da titles
+define("DA_TITLE_HOME", "Home");
+define("DA_TITLE_CONTENT", "Content");
+define("DA_TITLE_GRAMMAR", "Grammar");
+define("DA_TITLE_LANGUAGES", "Languages");
+define("DA_TITLE_PHONOLOGY", "Phonology");
+define("DA_TITLE_ORTOGRAPHY", "Ortography");
+define("DA_TITLE_WORDS", "Words");
+define("DA_TITLE_EXAMPLES", "Idiom and examples");
+
+// Da Words
+define("DA_WORDS_NATIVE", "Entry");
+define("DA_WORDS_IPA", "IPA transcription");
+define("DA_WORDS_NEW_EXTERN", "New word ".(new pIcon('fa-external-link', 8)));

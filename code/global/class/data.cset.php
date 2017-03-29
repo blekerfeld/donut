@@ -86,14 +86,18 @@ class pDataObject {
 		$this->_fieldstring = implode(",", $fieldString);
 	}
 
-	public function getSingleObject($id, $condition = ''){
+	public function getSingleObject($id, $condition = '', $order = '1'){
+
+		// Condition can't start with WHERE
+		$condition = pStr($condition)->replacePrefix("WHERE", ' AND ');
+
 		$this->_singleId = $id;
-		$this->_data =  pQuery("SELECT ".$this->_fieldstring." FROM ".$this->_table." WHERE id = ".$id." ".$condition." LIMIT 1");
+		$this->_data =  pQuery("SELECT ".$this->_fieldstring." FROM ".$this->_table." WHERE id = ".$id." ".$condition." ORDER BY $order LIMIT 1");
 		return  $this->_data;
 	}
 
-	public function getObjects($offset, $itemsperpage, $condition = ''){
-		$this->_data = pQuery("SELECT ".$this->_fieldstring." FROM ".$this->_table." ".$condition.(($this->_paginated) ? " LIMIT ".$offset.",".$itemsperpage : '').";");
+	public function getObjects($offset, $itemsperpage, $condition = '', $order = '1'){
+		$this->_data = pQuery("SELECT ".$this->_fieldstring." FROM ".$this->_table." ".$condition.(($this->_paginated) ? " ORDER BY $order LIMIT ".$offset.",".$itemsperpage : '').";");
 		return  $this->_data;
 	}
 
@@ -223,7 +227,7 @@ class pDataField{
 
 	public $name, $width, $surface, $type, $showInTable, $showInForm, $required, $selectionValues, $class, $disableOnNull;
 
-	public function __construct($name, $surface = '', $width= '20%', $type = '', $showTable = true, $showForm = true, $required = false, $class = '', $disableOnNull, $selection_values = null){
+	public function __construct($name, $surface = '', $width= '20%', $type = '', $showTable = true, $showForm = true, $required = false, $class = '', $disableOnNull = false, $selection_values = null){
 		$this->name = $name;
 		$this->width = $width;
 		$this->type = $type;

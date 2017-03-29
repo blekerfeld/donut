@@ -83,11 +83,13 @@ class pAdminStructure{
 			pOut("<a href='".(isset($main['section']) ? pUrl("?".$this->_app."&section=".$main['section']) : '')."' class='".(($this->checkActiveMain($key) OR (isset($_REQUEST['section'], $main['section']) AND $_REQUEST['section'] == $main['section'])) ? 'active' : '')." ttip' title='
 				<strong>".htmlspecialchars($main['surface'])."</strong>");
 
-			if(isset($main['items']))
-				foreach($main['items'] as $item)
-					pOut("<a href=\"".pUrl("?".$this->_app."&section=".$item['section_key'])."\" class=\"ttip-sub ".($this->checkActiveSub($item['section_key']) ? 'active' : '')."\"><i class=\"".$item['icon']." fa fa-12\"></i> ". htmlspecialchars($item['surface'])."</a>");
 
-			pOut("'><i class='fa ".$main['icon']."'></i></a>");
+			if(isset($main['items']))
+				foreach($main['items'] as $item){
+					pOut("<a href=\"".pUrl("?".$this->_app."&section=".$item['section_key'])."\" class=\"ttip-sub ".($this->checkActiveSub($item['section_key']) ? 'active' : '')."\">".(new pIcon($item['icon'], 12))." ". htmlspecialchars($item['surface'])."</a>");
+				}
+
+			pOut("'>".(new pIcon($main['icon'], 24))."</a>");
 
 		}
 
@@ -139,8 +141,8 @@ class pAdminStructure{
 
 
 		// Tooltipster time!
-		pOut("<script>$('.ttip').tooltipster({theme: 'tooltipster-noir', animation: 'grow', distance: 0, contentAsHTML: true, interactive: true});
-			$('.ttip_actions').tooltipster({theme: 'tooltipster-noir', animation: 'grow', distance: 0, contentAsHTML: true, interactive: true, side: 'bottom'});</script>");
+		pOut("<script>$('.ttip').tooltipster({theme: 'tooltipster-donut', animation: 'grow', distance: 0, contentAsHTML: true, interactive: true, side:'left'});
+			$('.ttip_actions').tooltipster({theme: 'tooltipster-donut', animation: 'grow', distance: 0, contentAsHTML: true, interactive: true, side: 'bottom'});</script>");
 
 		// Ending overall 
 		pOut("</div>");

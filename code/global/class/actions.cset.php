@@ -11,12 +11,18 @@
 
 class pAction{
 
-	public $_surface, $_icon, $_class, $_app, $_section;
+	public $_surface, $_icon, $_class, $_app, $_section, $_override = null;
 
 	public $name, $followUpFields, $followUp;
 
 	private function actionUrl($id, $ajax = false){
+		if($this->_override != null)
+			return $this->_override;
 		return pUrl('?'.$this->_app.'&section='.$this->_section.'&action='.$this->name.(($id != -1) ? '&id='.$id : '').(($ajax != 0) ? '&ajax': ''));
+	}
+
+	public function setOverride($override){
+		$this->_override = $override;
 	}
 
 	public function __construct($name, $surface, $icon, $class, $follow_up, $follow_up_fields, $section, $app = 'dictionary-admin'){
@@ -39,9 +45,9 @@ class pAction{
 					if (confirm(\''.DA_DELETE_SURE.'\') == true) {
 			    		$(\'.delete_load_'.$id.'\').load(\''.pUrl($this->actionUrl($id, true).($linked != null ? "&linked=".$linked : '')).'\');
 			    		$(\'.item_'.$id.'\').slideUp();
-					}"><i class="'.$this->_icon.'""></i> '.$this->_surface.'</a>';
+					}">'.(new pIcon($this->_icon, 12)).' '.$this->_surface.'</a>';
 
-		return "<a href='".pUrl($this->actionUrl($id).($linked != null ? "&linked=".$linked : ''))."' class='".$this->_class." link_".$this->name."'><i class='".$this->_icon."'></i> ".$this->_surface."</a>";
+		return "<a href='".pUrl($this->actionUrl($id).($linked != null ? "&linked=".$linked : ''))."' class='".$this->_class." link_".$this->name."'>".(new pIcon($this->_icon, 12))." ".$this->_surface."</a>";
 	}
 
 }
@@ -125,7 +131,7 @@ class pMagicField{
 
 class pMagicActionForm{
 
-	private $_action, $_fields, $_adminobject, $_data, $_name, $_edit, $_magicfields, $_table, $_strings, $_section, $_app;
+	private $_action, $_fields, $_adminobject, $_data, $_name, $_edit, $_magicfields, $_table, $_strings, $_section, $_app, $_extra_fields;
 
 	public function __construct($name, $table, $fields, $strings, $app, $section, $adminobject){
 		$this->_name = $name;
@@ -200,28 +206,50 @@ class pMagicActionForm{
 
 	}
 
-	public function newLinkPrepare($linkObject, $show_parent, $show_child){
+	public function newLinkPrepare($linkObject, $show_parent, $show_child, $doExtraFields = false, $fields = null){
 		$this->_linkObject = $linkObject->_adminObject;
 		$this->_guestObject = $linkObject;
 		$this->_show_parent = $show_parent;
 		$this->_show_child = $show_child;
+		if($doExtraFields)
+			$this->_extra_fields = $fields;
+		else
+			$this->_extra_fields = null;
 	}
 
 	public function newLinkAjax(){
 
+		$empty_error = 0;
 
-		if(!empty($_REQUEST['admin_form_child']) and is_numeric($_REQUEST['admin_form_child'])){
+		if($_REQUEST['admin_form_'.$this->_guestObject->structure[$this->_section]['incoming_links'][$this->_guestObject->_section]['parent']] == null){
+			$empty_error++;
+		}
 
+		foreach ($this->_extra_fields as $field)
+			if($field->showInForm && $field->required)
+				if(isset($_REQUEST['admin_form_'.$field->name])AND empty($_REQUEST['admin_form_'.$field->name]))
+						$empty_error++;
+
+
+		if($empty_error == 0){
 
 			// We have to check if the relation already exists
-			if($this->_adminobject->dataObject->countAll($this->_guestObject->structure[$this->_section]['incoming_links'][$this->_guestObject->_section]['child'] . " = '" . $this->_adminobject->_matchOnValue . "' AND " . $this->_guestObject->structure[$this->_section]['incoming_links'][$this->_guestObject->_section]['parent'] . " = '" . $_REQUEST['admin_form_child'] . "'")){
+			if($this->_adminobject->dataObject->countAll($this->_guestObject->structure[$this->_section]['incoming_links'][$this->_guestObject->_section]['child'] . " = '" . $this->_adminobject->_matchOnValue . "' AND " . $this->_guestObject->structure[$this->_section]['incoming_links'][$this->_guestObject->_section]['parent'] . " = '" . $_REQUEST['admin_form_'.$this->_guestObject->structure[$this->_section]['incoming_links'][$this->_guestObject->_section]['parent']] . "'")){
 
 				pOut(pNoticeBox('fa-info-circle fa-12', DA_TABLE_RELATION_EXIST.". <a href='".pUrl("?".$this->_app."&section=".$this->_section."&action=link-table&id=".$this->_linkObject->data()[0]['id']."&linked=".$this->_guestObject->_data['section_key'])."'>".$this->_strings[6]."</a>", 'notice ajaxMessage'));
 
 			}
 			else{
 				// Time to insert
-				$this->_adminobject->dataObject->prepareForInsert(array($this->_adminobject->_matchOnValue, $_REQUEST['admin_form_child']));
+					// Preparing the values
+			
+				foreach($this->_fields->get() as $field)
+					if($field->name == $this->_guestObject->structure[$this->_section]['incoming_links'][$this->_guestObject->_section]['child'])
+						$values[] = $this->_adminobject->_matchOnValue;
+					else
+						$values[] = $_REQUEST['admin_form_'.$field->name];
+
+				$this->_adminobject->dataObject->prepareForInsert($values);
 				$this->_adminobject->dataObject->insert();
 				$this->_adminobject->dataObject->getSingleObject(1);
 				pOut(pNoticeBox('fa-info-circle fa-12', DA_TABLE_RELATION_ADDED.". <a href='".pUrl("?".$this->_app."&section=".$this->_section."&action=link-table&id=".$this->_linkObject->data()[0]['id']."&linked=".$this->_guestObject->_data['section_key'])."'>".$this->_strings[6]."</a>", 'succes-notice ajaxMessage'));
@@ -239,6 +267,7 @@ class pMagicActionForm{
 	}
 
 	public function newLinkForm(){
+
 		pOut("<div class='btCard admin link-table'>");
 		pOut("<div class='btTitle'><i class='fa fa-plus-circle'></i> ".DA_TABLE_NEW_RELATION."<span class='medium'>".$this->_adminobject->_surface."</span></div>");
 
@@ -249,23 +278,45 @@ class pMagicActionForm{
 		pOut("<div class='btSource'><span class='btLanguage'>".DA_TABLE_LINKS_PARENT."</span><br />
 			<span class='btNative'>".$this->_linkObject->data()[0][$this->_show_parent]."</span></div>");
 
-		pOut("<div class='btSource'><span class='btLanguage'>".DA_TABLE_LINKS_CHILD."</span><br /><span class='btNative'><select class='field_child'>");
+		pOut("<div class='btSource'><span class='btLanguage'>".DA_TABLE_LINKS_CHILD."</span><br /><span class='btNative'><select class='field_".$this->_guestObject->structure[$this->_section]['incoming_links'][$this->_guestObject->_section]['parent']."'>");
 
 		foreach($this->_adminobject->_passed_data as $data)
 			pOut("<option value='".$data['id']."'>".$data[$this->_show_child]."</option>");
 
 		pOut("</select></span></div>");
 
+
+		// Extra fields	
+		if($this->_extra_fields != null)
+			foreach($this->_extra_fields as $field)
+				(new pMagicField($field))->render();
+
 		pOut("<div class='btButtonBar'>
 			<a class='btAction wikiEdit' href='".pUrl("?".$this->_app."&section=".$this->_section."&action=link-table&id=".$this->_linkObject->data()[0]['id']."&linked=".$this->_guestObject->_data['section_key'])."'><i class='fa fa-12 fa-arrow-left' ></i> ".BACK."</a>
 			<a class='btAction green submit-form'><i class='fa fa-12 fa-check-circle'></i> ".$this->_strings[1]."</a><br id='cl'/></div>");
 		pOut("</div>");
 
+		$loadValues = array();
+
+		foreach ($this->_fields->get() as $field){
+			if($this->_edit AND $field->disableOnNull AND $this->_data[0]['id'] == 0)
+				$loadValues[] = "'admin_form_".$field->name."': '".$this->_data[0][$field->name]."'";
+			else 
+				$loadValues[] = "'admin_form_".$field->name."': $('.field_".$field->name."').val()";
+		}
+
 		pOut("<script type='text/javascript'>
-				$('.field_child').select2();
+				".(!(isset($this->_guestObject->structure[$this->_section]['incoming_links']['disable_enter']) AND $this->_guestObject->structure[$this->_section]['incoming_links']['disable_enter'] != true) ? "$(window).keydown(function(e) {
+			    		switch (e.keyCode) {
+			       		 case 13:
+			       			 $('.submit-form').click();
+			   			 }
+			   		 return; 
+					});" : '')."
+				$('.field_".$this->_guestObject->structure[$this->_section]['incoming_links'][$this->_guestObject->_section]['parent']."').select2();
 				$('.submit-form').click(function(){
 					$('.saving').slideDown();
-					$('.ajaxSave').load('".pUrl("?".$this->_app."&section=".$this->_section."&action=new-link&id=".$this->_linkObject->data()[0]['id']."&linked=".$this->_guestObject->_data['section_key'])."&ajax', {admin_form_child: $('.field_child').val()});
+					$('.ajaxSave').load('".pUrl("?".$this->_app."&section=".$this->_section."&action=new-link&id=".$this->_linkObject->data()[0]['id']."&linked=".$this->_guestObject->_data['section_key'])."&ajax', {".implode(", ", $loadValues)."});
 				});
 			</script>");
 	}
@@ -296,6 +347,13 @@ class pMagicActionForm{
 		}
 
 		pOut("<script type='text/javascript'>
+			".(!(isset($this->_adminobject->_structure[$this->_section]['disable_enter']) AND $this->_adminobject->_structure[$this->_section]['disable_enter'] != true) ? "$(window).keydown(function(e) {
+			    		switch (e.keyCode) {
+			       		 case 13:
+			       			 $('.submit-form').click();
+			   			 }
+			   		 return; 
+					});" : '')."
 				$('.btCard select').select2();
 				$('.submit-form').click(function(){
 					$('.saving').slideDown();

@@ -106,7 +106,7 @@ pOut('
       <br id="cl"/>');
 
 	pOut("<script>  $(document).ready(function() {
-              $('.tooltip').tooltipster({theme: 'tooltipster-noir'});
+              $('.tooltip').tooltipster({});
 
           });
 		$('#wordsearch').keydown(function(e) {
