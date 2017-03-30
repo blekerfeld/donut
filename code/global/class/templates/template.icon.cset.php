@@ -27,4 +27,8 @@ class pIcon{
 		return $icon;
 	}
 	
+
+	public function circle(){
+		return "<span class='icon-circle c-".$this->_size."'><span>".$this."</span></span>";
+	}
 }

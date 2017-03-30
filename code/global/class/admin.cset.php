@@ -121,7 +121,7 @@ class pAdminParser{
 				// The needed data fields
 				$dfs = new pSet;
 
-				$dfs->add(new pDataField($this->_data['incoming_links'][$linked]['child'], 'Child', '30%', 'select', true, true, true, '', false));
+				$dfs->add(new pDataField($this->_data['incoming_links'][$linked]['child'], 'Child', '50%', 'select', true, true, true, '', false));
 				if(isset($this->_data['incoming_links'][$linked]['fields']) and is_array($this->_data['incoming_links'][$linked]['fields']))
 					foreach($this->_data['incoming_links'][$linked]['fields'] as $field)
 						$dfs->add($field);
@@ -140,8 +140,13 @@ class pAdminParser{
 
 				$linkTableObject = new pLinkTableObject($this->structure, 'fa-link',  $this->structure[$linked]['surface']."&#x205F; (&#x205F;".DA_TABLE_LINKS_PARENT."&#x205F;) &#x205F; ↔ &#x205F;".$this->_data['surface']." &#x205F;(&#x205F;".DA_TABLE_LINKS_CHILD."&#x205F;)", $this->_data['incoming_links'][$linked]['table'], 0, $dfs, $actions, $action_bar, false, $this->_section, $this->_app);
 
-				if(isset($_REQUEST['id']))
-					$linkTableObject->setCondition("WHERE ".$this->_data['incoming_links'][$linked]['child']." = ".$_REQUEST['id']);
+				if(isset($_REQUEST['id'])){
+					if(!is_numeric($_REQUEST['id']))
+						$id = pHashId($_REQUEST['id'], true)[0];
+					else
+						$id = $_REQUEST['id'];
+					$linkTableObject->setCondition("WHERE ".$this->_data['incoming_links'][$linked]['child']." = '".$id."'");
+				}
 
 				$this->_adminObject->getData();
 				$linkTableObject->getData();
@@ -158,7 +163,13 @@ class pAdminParser{
 					$action = new pMagicActionForm('new-link', $this->_data['incoming_links'][$linked]['table'], $dfs, $this->_data['save_strings'], $this->_app, $this->_section, $linkTableObject);
 
 					$action->compile();
-					$action->newLinkPrepare($guests, $this->_data['incoming_links'][$linked]['show_parent'], $this->_data['incoming_links'][$linked]['show_child'], isset($this->_data['incoming_links'][$linked]['fields']), $this->_data['incoming_links'][$linked]['fields']);
+
+					$extra_fields = null;
+					if(isset($this->_data['incoming_links'][$linked]['fields']))
+						$extra_fields = $this->_data['incoming_links'][$linked]['fields'];
+
+
+					$action->newLinkPrepare($guests, $this->_data['incoming_links'][$linked]['show_parent'], $this->_data['incoming_links'][$linked]['show_child'], isset($this->_data['incoming_links'][$linked]['fields']), $extra_fields);
 
 					if($ajax)
 						return $action->newLinkAjax();
@@ -186,7 +197,7 @@ class pAdminParser{
 
 		// Removing is like very simple! 
 		elseif($name == 'remove' && $ajax){
-				$action = $this->_adminObject->getAction($name);
+			$action = $this->_adminObject->getAction($name);
 			return $this->_adminObject->dataObject->remove($action->followUp, $action->followUpFields);
 		}
 
@@ -260,7 +271,7 @@ class pAdminObject{
 		if($id == -1)
 			return $this->_data = $this->dataObject->getObjects($this->_offset, $this->_itemsperpage, $this->_condition, $this->_order)->fetchAll();
 		else{
-			if(isset($this->_structure[$this->_section]['id_as_hash']) AND $this->_structure[$this->_section]['id_as_hash'] == true AND !is_numeric($id)){
+			if(!is_numeric($id)){
 				$id = pHashId($id, true)[0];
 			}
 			return $this->_data = $this->dataObject->getSingleObject($id, $this->_condition, $this->_order)->fetchAll();

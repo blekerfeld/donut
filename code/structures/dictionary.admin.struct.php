@@ -21,6 +21,23 @@ return array(
 		'MAGIC_META' => array(
 			'title' => DA_TITLE,
 			'icon' => 'fa-book',
+			'other_apps' => array(
+				array(
+					'app' => 'wiki-admin',
+					'icon' => 'local_library',
+					'surface' => 'Wiki settings'
+				),
+				array(
+					'app' => 'pages-admin',
+					'icon' => 'fa-files-o',
+					'surface' => 'Pages'
+				),
+				array(
+					'app' => 'general-admin',
+					'icon' => 'fa-cog',
+					'surface' => 'General settings'
+				),
+			),
 		),
 		'MAGIC_MENU' => array(
 			'home' => array(
@@ -79,7 +96,29 @@ return array(
 				'new' => array('new', DA_WORDS_NEW_EXTERN, 'fa-plus-circle fa-12', 'btAction wikiEdit', null, null, pUrl('?addword')),
 			),
 			'save_strings' => $saveStrings,
-			'outgoing_links' => array(),
+			'outgoing_links' => array(
+					'examples' => array(
+						'section' => 'examples', 
+						'surface' => "Examples", 
+						'icon' => 'fa-quote-right', 
+						'table'=> 'idiom_words', 
+						'field' => 'word_id'
+					),
+					'words' => array(
+						'section' => 'words', 
+						'surface' => "Synonyms", 
+						'icon' => 'fa-clone', 
+						'table'=> 'synonyms', 
+						'field' => 'word_id_2'),
+					// 'words' => array(
+					// 		'section' => 'words', 
+					// 		'surface' => "Antonyms", 
+					// 		'icon' => 'fa-venus-mars', 
+					// 		'table'=> 'antonyms', 
+					// 		'field' => 'word_id_2'
+					// 	),
+
+				),
 			'incoming_links' => array(
 				'examples' => array(
 						'table' => 'idiom_words',
@@ -90,7 +129,14 @@ return array(
 							),
 						'show_parent' => 'idiom',
 						'show_child' => 'native',
-					),
+				),
+				'words' => array(
+						'table' => 'synonyms',
+						'parent' => 'word_id_1',
+						'child' => 'word_id_2',
+						'show_parent' => 'native',
+						'show_child' => 'native',
+				),
 			),
 		),
 
@@ -125,6 +171,18 @@ return array(
 					'field' => 'idiom_id'
 				),
 			),
+			'incoming_links' => array(
+				'words' => array(
+						'table' => 'idiom_words',
+						'parent' => 'idiom_id',
+						'child' => 'word_id',
+						'fields' => array(
+								(new pDataField('keyword', DA_TABLE_LINK_KEYWORD)),
+							),
+						'show_parent' => 'native',
+						'show_child' => 'idiom',
+				),
+			)
 		),
 		'languages' => array(
 			'section_key' => 'languages',

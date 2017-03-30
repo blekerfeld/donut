@@ -41,9 +41,9 @@ class pLinkTableObject extends pAdminObject{
 
 		pOut("<div class='btSource'><span class='btLanguage'>".DA_TABLE_LINKS_CHILDREN.": </span></div>");
 
-		pOut("<table class='admin' style='width:75%;float:left;'>
+		pOut("<table class='admin' style='width:50%;float:left;'>
 			<thead>
-			<tr class='title' role='row'><td style='width: auto;max-width: 5px;'><span class='xsmall'>".DA_TABLE_LINKS_CHILD_ID."</span></td>");
+			<tr class='title' role='row'><td style='width: 10%;'><span class='xsmall'>".DA_TABLE_LINKS_CHILD_ID."</span></td>");
 
 		// Building the table
 		foreach ($this->_dfs->get() as $datafield) {

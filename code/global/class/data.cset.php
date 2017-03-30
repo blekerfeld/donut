@@ -88,6 +88,9 @@ class pDataObject {
 
 	public function getSingleObject($id, $condition = '', $order = '1'){
 
+		if(!is_numeric($id))
+			$id = pHashId($id, true)[0];
+
 		// Condition can't start with WHERE
 		$condition = pStr($condition)->replacePrefix("WHERE", ' AND ');
 
@@ -97,6 +100,8 @@ class pDataObject {
 	}
 
 	public function getObjects($offset, $itemsperpage, $condition = '', $order = '1'){
+
+
 		$this->_data = pQuery("SELECT ".$this->_fieldstring." FROM ".$this->_table." ".$condition.(($this->_paginated) ? " ORDER BY $order LIMIT ".$offset.",".$itemsperpage : '').";");
 		return  $this->_data;
 	}

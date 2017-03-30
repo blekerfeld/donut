@@ -86,14 +86,14 @@ class pTableObject extends pAdminObject{
 			}
 
 			// The important actions and such
-			pOut("<td style='text-align: center'><a href='javascript:void();' class='btAction no-float ttip_actions' title='");
+			pOut("<td style='text-align: center'><a href='javascript:void();' class='btAction no-float ttip_actions' data-tooltip-content='#dropdown_".$data['id']."'>".(new pIcon('fa-chevron-down', 10))."</a>");
 
+			pOut("		<div class='hide'><div id='dropdown_".$data['id']."' class=''>");
 			foreach($this->_actions->get() as $action){
 				if(!($action->name == 'remove' AND $data['id'] == 0))
-					pOut(str_replace("'", '"', $action->render($data['id'])));
+					pOut($action->render($data['id']));
 			}
-
-			pOut("'>".(new pIcon('fa-chevron-down', 10))."</a>");
+			pOut("</div></div>");
 			
 			pOut("</td>");
 
@@ -103,7 +103,7 @@ class pTableObject extends pAdminObject{
 		if($records == 0)
 			pOut("<tr><td colspan=".$col_count.">".DA_NO_RECORDS."</td>");
 
-		pOut("</tbody></table><script>$('.tooltip').tooltipster({theme: 'tooltipster-donut', animation: 'grow', distance: 0, contentAsHTML: true});</script>");
+		pOut("</tbody></table><script>$('.tooltip').tooltipster({animation: 'grow', distance: 0, contentAsHTML: true});</script>");
 
 		pOut("</div>
 			<div class='btButtonBar'>".$pages.$this->_actionbar->output."</div>

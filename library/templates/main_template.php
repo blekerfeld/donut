@@ -3,7 +3,7 @@
   <head>
     <link href="library/assets/css/index.css" rel="stylesheet">
     <?php echo (pCheckMobile() ? '<link href="library/assets/css/mobile.css" rel="stylesheet">' : '' ); ?>
-    <link rel="shortcut icon" href="library/images/static/favico.png">
+    <link rel="shortcut icon" href="library/images/static/bookmark_icon.png">
     <link rel="stylesheet" href="library/assets/css/vendors/font-awesome.css">
     <link rel="stylesheet" href="library/assets/css/vendors/tooltipster.css">
     <link rel="stylesheet" href="library/assets/css/vendors/jquery.tagsinput.css">
@@ -24,6 +24,7 @@
     <script src="library/assets/js/vendors/jquery.elastic.js"></script>
     <script src="library/assets/js/index.js"></script>
   <title><?php global $donut;  echo $donut['page']['title']; ?></title>
+  <?php global $donut;  echo $donut['page']['head']['final']; ?>
   </head>
   <body class='dashboard'>
     <div class="absolute_header">
@@ -39,7 +40,7 @@
       <div class="fill_gaps">
         <div class="ulWrap">
           <noscript>
-            <center><div class='notice danger-notice'><i class='fa fa-warning fa-12'></i> This site needs javascript to function, with javascript turned off, most of the functionality won't work!</div></center>
+            <div class='notice danger-notice'><i class='fa fa-warning fa-12'></i> This site needs javascript to function, with javascript turned off, most of the functionality won't work!</div>
           </noscript>
           <div class='ajaxOutLoad' id='main'>
             <div class='nav <?php echo (isset($_REQUEST['home']) ? 'home' : '');?>'>
