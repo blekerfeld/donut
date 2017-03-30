@@ -25,7 +25,7 @@
 	pLoadGlobalCode();
 
 	//	Rewelcome our previous-session logged in guest
-	pLogonRestore();
+	pUser::restore();
 
 	//	If we're logged in, we need to have the user to our disposal
 	if(pLogged())

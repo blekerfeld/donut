@@ -57,6 +57,7 @@ define('LE_IPA', "IPA transcription");
 
 // D_admin
 define('DA_DEFAULT', "Default");
+define('DA_SECTION_ERROR', "The section you requested is not found, the default section is loaded instead.");
 define('DA_TITLE', "Dictionary settings");
 define('DA_EDIT', "Edit item");
 define('DA_EDITING', "Editing the item -");

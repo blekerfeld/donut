@@ -26,14 +26,12 @@ elseif(ctype_alnum($_REQUEST['alphabet'])){
 else
 	pUrl('', true);
 
-
-
 $grapheme = pGetGrapheme($a_get);
 
 if($grapheme != false){
 
 	// Let's do a title
-	pOut('<div class="title"><div class="icon-box fetch">'.$grapheme->grapheme.'</div><input id="filter" style="margin-top: -7px;" placeholder="Filter" /></div><br />');
+	pOut('<div class="title"><span class="icon-circle c-16 circle-orange light"><span>'.$grapheme->grapheme.'</span></span><input id="filter" style="margin-top: -7px;" placeholder="Filter" /></div><br />');
 
 
 pOut("<a class='float-left back-mini alphabet' href='".pUrl('?home')."'><i class='fa fa-arrow-left' ></i></a><br />");
