@@ -96,6 +96,7 @@
 	function pLogonRestore()
 	{
 		global $donut;
+
 		if(isset($_COOKIE['pKeepLogged']))
 		{
 			try

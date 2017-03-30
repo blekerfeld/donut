@@ -29,12 +29,13 @@ class pAdminParser{
 
 	// Used to give the SELECT query of the dataObject a condition 
 
-
+	// Passing on
 	public function setCondition($condition){
 		if($this->_adminObject != null)
 			$this->_adminObject->setCondition($condition);
 	}
 
+	// Passing on
 	public function setOrder($order){
 		if($this->_adminObject != null)
 			$this->_adminObject->setOrder($order);
@@ -151,7 +152,7 @@ class pAdminParser{
 				$this->_adminObject->getData();
 				$linkTableObject->getData();
 
-				$linkTableObject->passData($guests, $linked,$this->_adminObject->data(), $this->_data['incoming_links'][$linked]['show_parent'], $this->_data['incoming_links'][$linked]['show_child'], $this->_data['incoming_links'][$linked]['parent'], $_REQUEST['id']);
+				$linkTableObject->passData($guests, $linked,$this->_adminObject->_data, $this->_data['incoming_links'][$linked]['show_parent'], $this->_data['incoming_links'][$linked]['show_child'], $this->_data['incoming_links'][$linked]['parent'], $_REQUEST['id']);
 
 				if($name == 'link-table')
 					return $linkTableObject->render();
@@ -269,25 +270,23 @@ class pAdminObject{
 
 	public function getData($id = -1){
 		if($id == -1)
-			return $this->_data = $this->dataObject->getObjects($this->_offset, $this->_itemsperpage, $this->_condition, $this->_order)->fetchAll();
+			return $this->_data = $this->dataObject->getObjects($this->_offset, $this->_itemsperpage)->fetchAll();
 		else{
 			if(!is_numeric($id)){
 				$id = pHashId($id, true)[0];
 			}
-			return $this->_data = $this->dataObject->getSingleObject($id, $this->_condition, $this->_order)->fetchAll();
+			return $this->_data = $this->dataObject->getSingleObject($id)->fetchAll();
 		}
 	}
 
-	public function data(){
-		return $this->_data;
-	}
-
+	// Passing on
 	public function setCondition($condition){
-		$this->_condition = $condition;
+		$this->dataObject->setCondition($condition);
 	}
 
+	// Passing on
 	public function setOrder($order){
-		$this->_order = $order;
+		$this->dataObject->setOrder($order);
 	}
 
 	public function pagePrevious(){

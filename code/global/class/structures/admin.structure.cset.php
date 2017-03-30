@@ -11,14 +11,20 @@
 class pAdminStructure extends pStructure{
 	
 
+	private $_error = null;
+
 	public function compile(){
 
 		global $donut;
 
 		if(isset($_REQUEST['section']) and array_key_exists($_REQUEST['section'], $this->_structure))
 			$this->_section = $_REQUEST['section'];
-		else
+		else{
+
+			$this->_error = pNoticeBox('fa-info-circle fa-12', DA_SECTION_ERROR, 'danger-notice');
+
 			$this->_section = $this->_default_section;
+		}
 
 		$this->_adminParser = new pAdminParser($this->_structure, $this->_structure[$this->_section]);
 		;
@@ -105,6 +111,9 @@ class pAdminStructure extends pStructure{
 		// Header time
 		pOut($this->headerDropDown());
 
+		if($this->_error != null)
+			pOut("<div class='btCard minimal admin'>".$this->_error."</div>");
+
 		// If there is an offset, we need to define that
 		if(isset($_REQUEST['offset']))
 			$this->_adminParser->setOffset($_REQUEST['offset']);
@@ -141,7 +150,13 @@ class pAdminStructure extends pStructure{
 
 			$('.ttip_actions').tooltipster({animation: 'grow', animationDuration: 150,  distance: 0, contentAsHTML: true, interactive: true, side: 'bottom', trigger: 'click'});
 
-			$('.ttip_header').tooltipster({ animation: 'grow', animationDuration: 100, distance: 0, contentAsHTML: true, interactive: true, side: 'bottom', trigger: 'click'});
+			$('div.d_admin_header_dropdown span').click(function(){
+				$('div.d_admin_header_dropdown').toggleClass('clicked');
+			});
+
+			$('.ttip_header').tooltipster({ animation: 'grow', animationDuration: 100, distance: 0, contentAsHTML: true, interactive: true, side: 'bottom', trigger: 'click', functionAfter: function(){
+					$('div.d_admin_header_dropdown').removeClass('clicked');
+			}});
 
 			</script>");
 
