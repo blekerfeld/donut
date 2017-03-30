@@ -1,7 +1,8 @@
 <?php
 
-
+$donut['phon'] = 0;
 $lang_zero = pGetLanguageZero();
+
 
 pOut('    
       <span class="title_header">'.$lang_zero->name.' Phonology</span><br /><br />
@@ -14,8 +15,8 @@ pOut('
 $ipa = pLoadIPA_C(true);
 $ipa_c_places = pQuery("SELECT * FROM ipa_c_place;");
 $ipa_c_modes = pQuery("SELECT * FROM ipa_c_mode;");
-pOut("<table class='verbs ipa' style='width: 50%!important;'>");
-pOut("<tr class='temps'><td class='filler' style='width: 20px;'><strong>Consonants</strong></td>");
+pOut("<table class='admin' style='width: 40%!important;'>");
+pOut("<tr class='title'><td class='filler' style='width: 20px;'><strong>Consonants</strong></td>");
 $places = array();
 foreach ($ipa_c_places->fetchAll() as $ipa_c_place) {
 	if(array_key_exists(1, $ipa) AND array_key_exists($ipa_c_place['id'], $ipa[1]) OR array_key_exists(2, $ipa) AND array_key_exists($ipa_c_place['id'], $ipa[2]))
@@ -27,7 +28,7 @@ pOut("</tr>");
 
 $ipa_c_articulation = pQuery("SELECT * FROM ipa_c_articulation;");
 $ipa_c_places = pQuery("SELECT * FROM ipa_c_place;");
-foreach ($ipa_c_places->fetchAll() as $ipa_c_place) {
+
 	foreach ($ipa_c_articulation->fetchAll() as $articulation) {
 
 		$e = "";
@@ -84,7 +85,7 @@ foreach ($ipa_c_places->fetchAll() as $ipa_c_place) {
 		if($count_shown != 0)
 			pOut($e);
 	}
-}
+
 
 
 pOut("</table>");
@@ -235,3 +236,5 @@ pOut("<script>
 				pOut("</tr>");
 
 				pOut("</table><br />");
+
+$donut['phon']++;

@@ -43,8 +43,8 @@
 	$donut['page']['title'] = CONFIG_SITE_TITLE;
 	$donut['page']['outofinner'] = null;
 	$donut['page']['menu'] = null;
-	$donut['page']['head'] = array();
-	$donut['page']['head']['final'] = null;
+	$donut['page']['head'] = null;
+	$donut['page']['head']['final'] = '';
 	$donut['page']['header'] = array();
 	$donut['page']['menu'] = '';
 	$donut['page']['content'] = array();
@@ -92,12 +92,20 @@ function pEndsWith($haystack, $needle)
 	{
 		global $donut;
 
+		$filenames = array();
+
 		foreach (glob($donut['root_path']."/code/global/class/*.cset.php") as $filename)
-			require $filename;
+			$filenames[] = $filename;
+
+		foreach (glob($donut['root_path']."/code/global/class/*/*.cset.php") as $filename)
+			$filenames[] = $filename;
+
 
 		foreach (glob($donut['root_path']."/code/global/function/*.functions.php") as $filename)
-			require $filename;
+			$filenames[] = $filename;
 
+		foreach($filenames as $filename)
+			require_once $filename;
 
 	}
 

@@ -1,6 +1,5 @@
-@import url(https://fonts.googleapis.com/css?family=Lora|Merriweather|Lato|Open+Sans|Raleway|Roboto);
-@import url('https://fonts.googleapis.com/css?family=Source+Sans+Pro');
-@font-face{font-family:Kollektif;src:url(vendors/fonts/kollektif_bold.ttf)}@font-face{font-family:Gentium;src:url(vendors/fonts/GenBasR.ttf)}@font-face{font-family:Gentium;src:url(vendors/fonts/GenBasB.ttf);font-weight:700}@font-face{font-family:Gentium;src:url(vendors/fonts/GenBasI.ttf);font-style:italic}
+@import url(https://fonts.googleapis.com/css?family=Libre+Franklin|Merriweather|Lato|Open+Sans|Raleway);
+@font-face{font-family:Gentium;src:url(vendors/fonts/GenBasR.ttf)}@font-face{font-family:Gentium;src:url(vendors/fonts/GenBasB.ttf);font-weight:700}@font-face{font-family:Gentium;src:url(vendors/fonts/GenBasI.ttf);font-style:italic}
 
 
 /* Basic elements */
@@ -28,9 +27,9 @@ html, body {
   box-sizing: border-box;
   height:100%;
   padding: 0;
-  font-family: Calibri;
+  font-family: Open Sans;
   background: radial-gradient(circle, #e1e1e1, #f4f4f4);
-  font-size: 100%;
+  font-size: 12px;
 }
 
 
@@ -177,7 +176,7 @@ span.tab, div.tab {
   padding: 3px;
   padding-left: 5%;
   padding-right: 5%;
-  font-size: 13px;
+  font-size: 10px;
   background: #000;
   border-bottom: 1px solid #222;
   color: snow;
@@ -195,7 +194,7 @@ span.tab, div.tab {
 }
 
 div.logotop{
-  font-size: 13px;
+  font-size: 11px;
   height: 100%;
   display: inline-block;
   margin-top: 7px;
@@ -222,7 +221,7 @@ a.logotop:hover{
 
 div.outerwrap {
 
-  background: rgba(220, 220, 220, 0.3);.
+  background: rgba(220, 220, 220, 0.3);
 }
 
 .ulWrap {
@@ -269,11 +268,10 @@ div.outerwrap {
   background: rgba(254,254,254, 1);
   height: auto;
   padding-bottom: 25px;
-  border-bottom: 2px solid #ccc;
 }
 
 .inner-page{
-    background-image: -webkit-linear-gradient(top, rgba(240,240,240, 0.3), rgba(254,254,254, 0.6) 50%);
+    background-image: -webkit-linear-gradient(top, rgba(240,240,240, 0.1), rgba(254,254,254, 0.1) 50%);
     margin: 5px;
     padding: 10px;
     margin-top: -20px;
@@ -296,6 +294,7 @@ div.outerwrap {
   padding-left: 2px;
   padding-top: 10px;
   border-top: 1px solid #d2d4d7;
+  text-shadow: 1px 2px 3px #fff, 0 0 0 #000, 1px 4px 6px #fff;
   opacity: 0.7;
   font-size: 8.5px;
   color: #333;
@@ -331,7 +330,7 @@ div.nav a {
   padding: 15px;
   padding-top: 6px;
   padding-bottom: 4px;
-  font-size: 13px;
+  font-size: 11px;
   background: rgba(240, 245, 248, 0.3);
   color: #000;
   text-decoration: none;
@@ -431,7 +430,6 @@ div.adminsubmenu a {
   padding: 4px 8px;
   border-radius: 0px;
   line-height: 20px;
-  font-family: Open Sans;
   padding-left: 8px;
   padding-right: 8px;
   font-size: 13px;
@@ -517,7 +515,7 @@ a.remember:hover, a.fetch:hover, a.throw:hover {
 }
 
 .absolute_footer a.tooltip{
-  font-family: Calibri!important;
+  font-family: Open Sans!important;
 }
 
 .footer .right {
@@ -738,10 +736,10 @@ div.userbox {
 }
 
 .tooltip.editing{
-    margin-left: 2px;
+  margin-left: 2px;
   margin-right: 2px;
-    padding: 5px;
-  font-family: Calibri!important;
+  padding: 5px;
+  font-family: initial!important;
 }
 
 .actionbutton.editing{
@@ -776,9 +774,41 @@ div.title.small {
   margin-bottom: 5px;
 }
 
-div.icon-box {
 
+span.icon-circle{
+  display: inline-block;
+  border-radius: 50%;
+  padding: 5px;
 }
+
+span.icon-circle.c-8{
+  line-height: 0px; height: 10px; width: 10px;
+}span.icon-circle.c-10{
+  line-height: 0px; height: 10px; width: 10px;
+}span.icon-circle.c-12{
+  line-height: 0px; height: 12px; width: 12px;
+}span.icon-circle.c-15{
+  line-height: 0px; height: 15px; width: 15px;
+}span.icon-circle.c-16{
+  line-height: 0px; height: 16px; width: 16px;
+}span.icon-circle.c-24{
+  line-height: 0px; height: 24px; width: 24px;
+}
+span.icon-circle.light, span.icon-circle.light i.fa{
+  color: white;
+}
+span.icon-circle.dark, span.icon-circle.dark i.fa{
+  color: white;
+}
+span.icon-circle.circle-white{
+  background: white;
+}
+span.icon-circle.circle-orange{
+  background: D85600;
+}
+
+
+
 
 .icon-box {
 
@@ -1455,7 +1485,6 @@ strong.dWord a:hover {
   font-weight: normal;
   font-size: 12px;
   color: grey;
-  font-family: Lora;
 }
 
 .dInflection strong {
@@ -1626,10 +1655,7 @@ table.admin {
 }
 
 table.admin tr td.actions{
-  text-align: center;
-  width: 5px;
-  max-width: 5px;
-  min-width: 5px;
+
 }
 
 table.admin tr:nth-child(even) td{
@@ -1874,10 +1900,8 @@ span.pDerivationTitle span.native a:hover {
 }
 
 strong.pDerivationName {
-  font-family: 'gentium';
   font-size: 13px;
   font-weight: bold;
-  font-style: italic;
 }
 
 strong.pDerivation a {
@@ -2107,6 +2131,14 @@ a.ttip-sub.red-link{
   opacity: 0.8;
 }
 
+div.ttip_inner{
+  background: white;
+  border: rgba(0,0,0,0.2) 1px solid;
+  padding: 10px;
+  min-width: 100px;
+  text-shadow: none;
+}
+
 .red-link:hover{ opacity: 1; }
 a.ttip-sub.red-link:hover {  background: #ddd; }
 
@@ -2169,7 +2201,7 @@ span.pSectionTitle.extra.sub.editing {
 .pSectionWrapper strong.label {
   font-size: 14px;
   text-transform: lowercase;
-  font-family: Calibri;
+  font-family: initial;
 }
 
 .pSectionWrapper .notice {
@@ -2213,12 +2245,10 @@ span.pSectionTitle.extra.sub.editing {
 }
 
 .pSectionWrapper ol li span.pIdiom {
-  font-family: Lora;
   font-size: 14px;
 }
 
 .pSectionWrapper ol li span span.pIdiomTranslation {
-  font-family: Lora;
   font-size: 12px;
 }
 
@@ -2567,7 +2597,6 @@ span.ipa:hover {
   /* focus style */
 }
 .count {
-  font-family: Kollektif;
   font-size: 30PX;
   border-radius: 7px;
   padding: 15px;
@@ -2582,7 +2611,7 @@ span.ipa:hover {
 
 /* BATCH TRANSLATION */
 div.btCard {
-  margin: 50px auto;
+  margin: 20px auto;
   margin-top: 10px;
   width: 70%;
   padding: 30px;
@@ -2649,7 +2678,7 @@ div.btTitle {
   padding-right: 30px;
   color: #fff;
   font-weight: bolder;
-  font-family: Raleway;
+  font-size: 14px;
   background: #5E6573;
 }
 
@@ -2681,7 +2710,7 @@ span.btLanguage {
   font-variant: small-caps;
   color: #ccc;
   font-size: 12px;
-  font-family: Calibri!important;
+  font-family: !important;
 }
 
 div.btCard.admin span.btLanguage {
@@ -2703,11 +2732,11 @@ input.btInput, textarea.btInput {
 }
 div.btSource {
   margin-bottom: 20px;
-  font-family: Merriweather;
 }
 div.btSource span.btNative strong {
   color: #68777d;
   font-size: 30px;
+  font-family: Gentium;
 }
 div.btSource a.tooltip {
   font-size: 17px;
@@ -2722,7 +2751,7 @@ div.btButtonBar {
   margin-bottom: -30px;
   padding: 10px;
 
-  background: #f4f4f4;
+  background: #f0f0f0;
   border-top: 1px solid #eee;
 }
 
@@ -2742,9 +2771,8 @@ a.btAction {
   color: #888;
   text-shadow: 0px 1px 2px rgba(50, 50, 50, 0.2);
   margin-left: 5px;
-  font-size: 13px;
+  font-size: 11px;
   cursor: pointer;
-  font-family: Raleway;
   float: right;
 }
 
@@ -3044,7 +3072,7 @@ textarea.wikiEditContent{
   width: 100%;
   min-height: 500px;
   border: none;
-  font-family: Calibri;
+  font-family: initial;
   padding: 10px;
   border-top: 1px #ccc solid;
   border-bottom: 1px #ccc solid;
@@ -3136,4 +3164,22 @@ div.d_admin_menu a:hover{
 
 div.d_admin{
   width: 100%;
+}
+
+.d_admin_header_dropdown{
+  cursor: pointer;
+  display: inline-block;
+  padding: 5px;
+  border-radius: 8px;
+  border: 1px solid transparent;
+}
+
+.d_admin_header_dropdown:hover{
+  background-image: linear-gradient(#fcfcfc, #eee);
+ border: 1px solid #d5d5d5;
+ background: #fff;
+   text-shadow: 0px 1px 2px rgba(50, 50, 50, 0.2);
+  border: 1px solid rgba(155, 155, 155, 0.1);
+    color: #444;
+
 }
