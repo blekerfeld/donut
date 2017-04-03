@@ -36,6 +36,8 @@ class pUser{
 	private function load($data){
 		self::$id = $data['id'];
 		self::$user = $data; 
+		if(!isset($_SESSION['pUserData']))
+			$_SESSION['pUserData'] = serialize($data);
 	}
 
 	public function checkPermission($minus){
@@ -45,7 +47,6 @@ class pUser{
 	public static function logIn($id){
 		$_SESSION['pUser'] = $id;
 		self::$dataObject->getSingleObject($id);
-		self::load(self::$dataObject->data()->fetchAll()[0]);
 	}
 
 	public static function logOut(){
@@ -60,9 +61,11 @@ class pUser{
 
 	public static function restore(){
 
+
 		// Creating a connection to the user table
 		if(self::$dataObject == null)
 			self::$dataObject = new pDataObject('users');
+
 
 		if(isset($_SESSION['pUser']) AND self::$id != $_SESSION['pUser']){
 			self::$dataObject->getSingleObject($_SESSION['pUser']);
@@ -80,11 +83,9 @@ class pUser{
 					self::$dataObject->setCondition("WHERE username = '{$userInfo[2]}' and password = '{$userInfo[1]}' and id = {$userInfo[0]}");
 					self::$dataObject->getSingleObject($userInfo[0]);
 
-					var_dump(self::$dataObject);
-
-					if($dataObject->data()->rowCount() == 1){
+					if(self::$dataObject->data()->rowCount() == 1){
 						if(!isset($_SESSION['pUser'])){
-							self::load($dataObject->data()->fetchAll()[0]);
+							self::load(self::$dataObject->data()->fetchAll()[0]);
 							return $_SESSION['pUser'] = $userInfo[0];
 						}
 						 return true;

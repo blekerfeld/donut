@@ -35,6 +35,8 @@ function pQuery($sql, $force_no_cache = false, $force_no_count = false){
 
 	global $donut;
 
+	//pOut("<div class='notice'>".$sql."</div>");
+
 	$dbg = debug_backtrace();
 
 	$donut['queries'][] = $sql." file: ".$dbg[0]['file'].'/'.$dbg[0]['line'];

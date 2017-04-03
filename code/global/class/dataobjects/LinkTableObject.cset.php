@@ -1,6 +1,6 @@
 <?php
 
-class pLinkTableObject extends pAdminObject{
+class pLinkTableObject extends pObject{
 
 	public $_passed_data, $_show, $_matchOn, $_matchOnValue, $_link, $_guests;
 
@@ -15,7 +15,6 @@ class pLinkTableObject extends pAdminObject{
 	}
 
 	public function render(){
-
 
 		// Generating the action bar
 		$this->_actionbar->generate($this->_matchOnValue, $this->_link);
@@ -37,7 +36,7 @@ class pLinkTableObject extends pAdminObject{
 
 
 		pOut("<div class='btSource'><span class='btLanguage'>".DA_TABLE_LINKS_PARENT.": </span><br />
-			<span class='btNative'>".$this->_guests->_adminObject->data()[0][$this->_show_parent]."</span></div>");
+			<span class='btNative'>".$this->_guests->_object->_data[0][$this->_show_parent]."</span></div>");
 
 		pOut("<div class='btSource'><span class='btLanguage'>".DA_TABLE_LINKS_CHILDREN.": </span></div>");
 
@@ -61,6 +60,7 @@ class pLinkTableObject extends pAdminObject{
 			</tr></thead><tbody>");
 
 
+
 		foreach($this->_data as $data){
 
 			foreach($this->_passed_data as $key => $item){
@@ -68,10 +68,23 @@ class pLinkTableObject extends pAdminObject{
 			      	pOut("<tr class='item_".$data['id']."'><td style='width: auto;max-width: 5px;'><span class='xsmall'>".($item['id'] == 0 ? "<em><strong>".DA_DEFAULT."</em></strong>" : $item['id']) ."</span></td>");
 				      foreach($this->_dfs->get() as $key_d => $datafield){
 						if($datafield->showInTable == true)
-							if($datafield->name != $this->_guests->_data['outgoing_links'][$this->_section]['field'])
+							if($datafield->name != $this->_guests->_data['outgoing_links'][$this->_link]['field'])
 								pOut("<td style='width: ".$datafield->width."'>".$datafield->parse($data[$datafield->name])."</td>");
-							else
-								pOut("<td style='width: ".$datafield->width."'>".$datafield->parse($item[$this->_show_child])."</td>");
+							else{
+							
+								// Simple and a little dirty support for double parenting
+								if((isset($this->_guests->structure[$this->_section]['incoming_links'][$this->_link]['double_parent']) AND $this->_guests->structure[$this->_section]['incoming_links'][$this->_link]['double_parent'] == true) AND $this->_guests->_object->_data[0][$this->_show_parent] == $item[$this->_show_child]){
+
+									// We have to get the data from another freaking data object
+
+									// Getting the other item we need
+									$this->_guests->_object->dataObject->getSingleObject($data[$this->_guests->structure[$this->_section]['incoming_links'][$this->_link]['child']]);
+
+									pOut("<td style='width: ".$datafield->width."'>".$datafield->parse($this->_guests->_object->dataObject->data()->fetchAll()[0]['id'])."</td>");
+								}
+								else
+									pOut("<td style='width: ".$datafield->width."'>".$datafield->parse($item['id'])."</td>");
+							}
 							$records++;
 				   		}
 			   		}

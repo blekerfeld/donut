@@ -5,18 +5,17 @@
     <?php echo (pCheckMobile() ? '<link href="library/assets/css/mobile.css" rel="stylesheet">' : '' ); ?>
     <link rel="shortcut icon" href="library/images/static/bookmark_icon.png">
     <link rel="stylesheet" href="library/assets/css/vendors/font-awesome.css">
+    <link rel="stylesheet" href="library/assets/css/vendors/materialdesignicons.css">
     <link rel="stylesheet" href="library/assets/css/vendors/tooltipster.css">
     <link rel="stylesheet" href="library/assets/css/vendors/jquery.tagsinput.css">
     <link rel="stylesheet" href="library/assets/css/vendors/pace.css">
     <link rel="stylesheet" href="library/assets/css/vendors/jquery.select2.css">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/simplemde/latest/simplemde.min.css">
-    <link href="https://fonts.googleapis.com/icon?family=Material+Icons"
-      rel="stylesheet">
     <link href='http://fonts.googleapis.com/css?family=Slabo+27px' rel='stylesheet' type='text/css'>
     <script src="https://cdn.jsdelivr.net/simplemde/latest/simplemde.min.js"></script>
     <script src="library/assets/js/vendors/jquery.js"></script>
     <script src="library/assets/js/vendors/pace.min.js"></script>
-    <script src="library/assets/js/vendors/jquery.tooltip.js"></script>
+    <script src="library/assets/js/vendors/jquery.tooltipster.js"></script>
     <script src="library/assets/js/vendors/jquery.playsound.js"></script>
     <script src="library/assets/js/vendors/jquery.pulsate.js"></script>
     <script src="library/assets/js/vendors/jquery.tagsinput.js"></script>
