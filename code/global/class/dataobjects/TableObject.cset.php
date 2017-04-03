@@ -1,6 +1,6 @@
 <?php
 
-class pTableObject extends pAdminObject{
+class pTableObject extends pObject{
 	// Used as last
 
 	public function render(){
@@ -70,17 +70,21 @@ class pTableObject extends pAdminObject{
 			// Links
 			if($this->_linked != null){
 				pOut("<td>");
-				foreach($this->_linked->get() as $link){
-					$action = new pAction('link-table', "&#x205F;".$link->structure[$this->_section]['outgoing_links'][$link->_data['section_key']]['surface'], $link->structure[$this->_section]['outgoing_links'][$link->_data['section_key']]['icon']." fa-10", 'small table-link', null, null, $link->_section, $link->_app);
+				foreach($this->_linked as $key => $link){
+					if(pUser::checkPermission($this->itemPermission(((isset($link->structure[$this->_section]['outgoing_links'][$key]['double_parent'])) ? $this->_section : $key), pStructure::$permission))){
+						$action = new pAction('link-table', "&#x205F;".$link->structure[$this->_section]['outgoing_links'][$key]['surface'], $link->structure[$this->_section]['outgoing_links'][$key]['icon'], 'small table-link', null, null, ((isset($link->structure[$this->_section]['outgoing_links'][$key]['double_parent'])) ? $this->_section : $key), $link->_app);
 
 						// Counting the links
-						$dataCount = new pDataObject($link->structure[$this->_section]['outgoing_links'][$link->_data['section_key']]['table'], new pSet);
-							$counter = "<span class='counter'>".$dataCount->countAll($link->structure[$this->_section]['outgoing_links'][$link->_data['section_key']]['field'] . " = ".$real_id)."</span>";
+						$dataCount = new pDataObject($link->structure[$this->_section]['outgoing_links'][$key]['table']);
+
+						$dataCount->setCondition("WHERE ((".$link->structure[$this->_section]['outgoing_links'][$key]['field']." = '".$real_id."'" . ((isset($link->structure[$this->_section]['outgoing_links'][$key]['double_parent'])) ? ") OR (". $link->structure[$this->_section]['outgoing_links'][$key]['double_parent'] . " = '".$real_id."'" : '')."))");
+
+							$counter = "<span class='counter'>".$dataCount->countAll($link->structure[$this->_section]['outgoing_links'][$key]['field'] . " = ".$real_id)."</span>";
 
 						$action->_surface = $counter.$action->_surface;
 
-						pOut("<span class='tooltip' title='<i class=\"".$link->structure[$this->_section]['outgoing_links'][$link->_data['section_key']]['icon']." fa-10\"></i> ".$link->structure[$this->_section]['outgoing_links'][$link->_data['section_key']]['surface']."'>".$action->render($data['id'], $this->_section).'</span><div class="hide">
-							<div id="tooltip_test" class="hide"><i class="fa fa-globe"></i> test</div></div>');
+						pOut("<span class='tooltip' title='".(new pIcon($link->structure[$this->_section]['outgoing_links'][$key]['icon'], 12)).$link->structure[$this->_section]['outgoing_links'][$key]['surface']."'>".$action->render($data['id'], ((isset($link->structure[$this->_section]['outgoing_links'][$key]['double_parent'])) ? $key : $this->_section)).'</span>');
+					}
 				}
 				pOut("</td>");
 			}

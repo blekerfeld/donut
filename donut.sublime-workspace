@@ -1,0 +1,1998 @@
+{
+	"auto_complete":
+	{
+		"selected_items":
+		[
+			[
+				"pDat",
+				"pDataField"
+			],
+			[
+				"selection",
+				"selectionValues"
+			],
+			[
+				"_se",
+				"_selector"
+			],
+			[
+				"shiw",
+				"show_field"
+			],
+			[
+				"sho",
+				"show_field"
+			],
+			[
+				"etym",
+				"etymology"
+			],
+			[
+				"Etyo",
+				"etymology"
+			],
+			[
+				"double",
+				"double_parent"
+			],
+			[
+				"fon",
+				"font-size"
+			],
+			[
+				"_e",
+				"_extra_fields"
+			],
+			[
+				"pUser",
+				"pUserClass"
+			],
+			[
+				"PuSER",
+				"pUserClass"
+			],
+			[
+				"Link",
+				"linked"
+			],
+			[
+				"new",
+				"newUserName"
+			],
+			[
+				"data",
+				"dataobject"
+			],
+			[
+				"_",
+				"_SESSION"
+			],
+			[
+				"dat",
+				"dataObject"
+			],
+			[
+				"font",
+				"font-family"
+			],
+			[
+				"file",
+				"filename"
+			],
+			[
+				"min",
+				"min-width"
+			],
+			[
+				"bord",
+				"border"
+			],
+			[
+				"tex",
+				"text-transform"
+			],
+			[
+				"paddin",
+				"padding-top"
+			],
+			[
+				"padding",
+				"padding-bottom"
+			],
+			[
+				"or",
+				"ortography"
+			],
+			[
+				"cla",
+				"classes"
+			],
+			[
+				"su",
+				"surface"
+			],
+			[
+				"idiom",
+				"idiom_words"
+			],
+			[
+				"section",
+				"section_key"
+			],
+			[
+				"render",
+				"renderMenu"
+			],
+			[
+				"diction",
+				"dictionary-admin"
+			],
+			[
+				"page",
+				"page_title"
+			],
+			[
+				"array_key",
+				"array_key_exists"
+			],
+			[
+				"def",
+				"default_section"
+			],
+			[
+				"tabl",
+				"table-cell"
+			],
+			[
+				"margi",
+				"margin-left"
+			],
+			[
+				"inli",
+				"inline"
+			],
+			[
+				"text",
+				"text-align"
+			],
+			[
+				"inlin",
+				"inline-block"
+			],
+			[
+				"max",
+				"max-width"
+			],
+			[
+				"margin",
+				"margin-top"
+			],
+			[
+				"is_nu",
+				"is_numeric"
+			],
+			[
+				"is_",
+				"is_numeric"
+			],
+			[
+				"classi",
+				"classification_apply"
+			],
+			[
+				"show",
+				"show_parent"
+			],
+			[
+				"link",
+				"linkObject"
+			],
+			[
+				"_mat",
+				"_matchOnValue"
+			],
+			[
+				"col",
+				"col_count"
+			],
+			[
+				"pData",
+				"pDataObject"
+			],
+			[
+				"pag",
+				"paginated"
+			],
+			[
+				"secti",
+				"section_key"
+			],
+			[
+				"_s",
+				"_structure"
+			],
+			[
+				"admin",
+				"adminParse"
+			],
+			[
+				"padd",
+				"padding"
+			],
+			[
+				"item",
+				"_itemsperpage"
+			],
+			[
+				"font-s",
+				"font-style"
+			],
+			[
+				"mar",
+				"margin-top"
+			],
+			[
+				"follo",
+				"follow_up"
+			],
+			[
+				"_ac",
+				"_actions"
+			],
+			[
+				"_fp",
+				"_followupfields"
+			],
+			[
+				"var",
+				"var_dump"
+			],
+			[
+				"mai",
+				"magicField"
+			],
+			[
+				"di",
+				"disableOnNull"
+			],
+			[
+				"ajax",
+				"ajaxMessage"
+			],
+			[
+				"empt",
+				"empty_error"
+			],
+			[
+				"load",
+				"loadValues"
+			],
+			[
+				"_updat",
+				"_updateid"
+			],
+			[
+				"TEMP",
+				"tempObject"
+			],
+			[
+				"temp",
+				"tempSet"
+			],
+			[
+				"Data",
+				"dataObject"
+			],
+			[
+				"follow_up",
+				"follow_up_field"
+			],
+			[
+				"follow",
+				"follow_up_field"
+			],
+			[
+				"_fiel",
+				"_fieldstring"
+			],
+			[
+				"sel",
+				"selection_values"
+			],
+			[
+				"con",
+				"condition"
+			],
+			[
+				"_fie",
+				"_fieldstring"
+			],
+			[
+				"_actio",
+				"_actionbar"
+			],
+			[
+				"action",
+				"actionbutton"
+			],
+			[
+				"short",
+				"short_name"
+			],
+			[
+				"it",
+				"_itemsperpage"
+			],
+			[
+				"field",
+				"fieldString"
+			],
+			[
+				"fiel",
+				"fieldString"
+			],
+			[
+				"dataFiel",
+				"dataFieldSet"
+			],
+			[
+				"_data",
+				"_dataobject"
+			],
+			[
+				"for",
+				"foreach\tforeach …"
+			],
+			[
+				"laod",
+				"loadfunction"
+			],
+			[
+				"arti",
+				"article_title"
+			],
+			[
+				"url",
+				"urlencode"
+			],
+			[
+				"borde",
+				"border-radius"
+			],
+			[
+				"border",
+				"border-radius"
+			],
+			[
+				"inl",
+				"inline-block"
+			],
+			[
+				"tr",
+				"transparent"
+			],
+			[
+				"art",
+				"article_title"
+			],
+			[
+				"article",
+				"article_name"
+			],
+			[
+				"table",
+				"table_name"
+			],
+			[
+				"dis",
+				"discuss-lemma"
+			],
+			[
+				"aja",
+				"ajaxLoad"
+			],
+			[
+				"wikiEd",
+				"wikiEditContent"
+			],
+			[
+				"artcil",
+				"article_title"
+			],
+			[
+				"ART",
+				"article_real"
+			],
+			[
+				"sp",
+				"specification"
+			],
+			[
+				"quot",
+				"quote"
+			],
+			[
+				"re",
+				"reference"
+			],
+			[
+				"imp",
+				"important"
+			],
+			[
+				"float",
+				"float-left"
+			],
+			[
+				"wikiedit",
+				"wikiEditContent"
+			],
+			[
+				"wdi",
+				"width"
+			],
+			[
+				"sear",
+				"search_item"
+			],
+			[
+				"pWiki",
+				"pWikiCurrent"
+			],
+			[
+				"user",
+				"user_id"
+			],
+			[
+				"reve",
+				"reverted"
+			],
+			[
+				"hisotry",
+				"history_item"
+			],
+			[
+				"pGet",
+				"pWikiGetArticle"
+			],
+			[
+				"revert",
+				"revert_to"
+			],
+			[
+				"history",
+				"history_item"
+			],
+			[
+				"histor",
+				"history_item"
+			],
+			[
+				"his",
+				"history_item"
+			],
+			[
+				"is",
+				"is_numeric"
+			],
+			[
+				"ari",
+				"article"
+			],
+			[
+				"WIKI_",
+				"WIKI_MENU_RANDOM"
+			],
+			[
+				"flo",
+				"float-left"
+			],
+			[
+				"sett",
+				"settings"
+			],
+			[
+				"marg",
+				"margin"
+			],
+			[
+				"list-st",
+				"list-style-position"
+			],
+			[
+				"in",
+				"initial"
+			],
+			[
+				"ar",
+				"article"
+			],
+			[
+				"articl",
+				"article_title"
+			],
+			[
+				"paddi",
+				"padding-right"
+			]
+		]
+	},
+	"buffers":
+	[
+		{
+			"file": "library/assets/js/smoothstate.js",
+			"settings":
+			{
+				"buffer_size": 175,
+				"encoding": "UTF-8",
+				"line_ending": "Windows"
+			}
+		},
+		{
+			"file": "code/global/class/forms.cset.php",
+			"settings":
+			{
+				"buffer_size": 13935,
+				"encoding": "UTF-8",
+				"line_ending": "Windows"
+			}
+		},
+		{
+			"file": "code/global/class/index.php",
+			"settings":
+			{
+				"buffer_size": 140,
+				"line_ending": "Windows"
+			}
+		},
+		{
+			"file": "index.php",
+			"settings":
+			{
+				"buffer_size": 2423,
+				"encoding": "UTF-8",
+				"line_ending": "Windows"
+			}
+		},
+		{
+			"file": "code/structures/dictionary.admin.struct.php",
+			"settings":
+			{
+				"buffer_size": 12807,
+				"encoding": "UTF-8",
+				"line_ending": "Windows"
+			}
+		},
+		{
+			"file": "library/languages/English.dictionary.php",
+			"settings":
+			{
+				"buffer_size": 4104,
+				"encoding": "UTF-8",
+				"line_ending": "Windows"
+			}
+		},
+		{
+			"file": "code/global/class/data.cset.php",
+			"settings":
+			{
+				"buffer_size": 8890,
+				"encoding": "UTF-8",
+				"line_ending": "Windows"
+			}
+		},
+		{
+			"file": "code/global/function/database.functions.php",
+			"settings":
+			{
+				"buffer_size": 5678,
+				"encoding": "UTF-8",
+				"line_ending": "Windows"
+			}
+		},
+		{
+			"file": "code/global/class/dataobjects/admin.pTableObject.cset.php",
+			"settings":
+			{
+				"buffer_size": 4542,
+				"line_ending": "Windows"
+			}
+		},
+		{
+			"file": "library/languages/English.php",
+			"settings":
+			{
+				"buffer_size": 5189,
+				"encoding": "UTF-8",
+				"line_ending": "Windows"
+			}
+		}
+	],
+	"build_system": "",
+	"build_system_choices":
+	[
+	],
+	"build_varint": "",
+	"command_palette":
+	{
+		"height": 421.0,
+		"last_filter": "Snippet: ",
+		"selected_items":
+		[
+			[
+				"Snippet: ",
+				"Snippet: COOKIE['…']"
+			],
+			[
+				"install",
+				"Package Control: Install Package"
+			],
+			[
+				"paca",
+				"Install Package Control"
+			]
+		],
+		"width": 479.0
+	},
+	"console":
+	{
+		"height": 177.0,
+		"history":
+		[
+			"cd",
+			"jja",
+			"echo",
+			"?",
+			"help"
+		]
+	},
+	"distraction_free":
+	{
+		"menu_visible": true,
+		"show_minimap": false,
+		"show_open_files": false,
+		"show_tabs": false,
+		"side_bar_visible": false,
+		"status_bar_visible": false
+	},
+	"expanded_folders":
+	[
+		"/C/xampp7/htdocs/donut",
+		"/C/xampp7/htdocs/donut/code",
+		"/C/xampp7/htdocs/donut/code/global",
+		"/C/xampp7/htdocs/donut/code/global/class",
+		"/C/xampp7/htdocs/donut/code/global/class/dataobjects",
+		"/C/xampp7/htdocs/donut/code/global/class/structures",
+		"/C/xampp7/htdocs/donut/code/global/function",
+		"/C/xampp7/htdocs/donut/code/structures"
+	],
+	"file_history":
+	[
+		"/C/xampp7/htdocs/donut/code/global/class/template.icon.cset.php",
+		"/C/xampp7/htdocs/donut/code/global/class/admin.template.pTableObject.cset.php",
+		"/C/xampp7/htdocs/donut/code/d_admin.index.php",
+		"/C/xampp7/htdocs/donut/library/assets/css/index.css",
+		"/C/xampp7/htdocs/donut/code/global/index.php",
+		"/C/xampp7/htdocs/donut/pages/test.MD",
+		"/C/xampp7/htdocs/DraiWiki/src/main/models/Article.class.php",
+		"/C/xampp7/htdocs/ouder/htdocs_old/OUD/parlato/1.0.3/include/functions.php",
+		"/C/xampp7/htdocs/ouder/htdocs_old/OUD/parlato/1.0.4 rev10/include/pbb-functions.php",
+		"/C/xampp7/htdocs/ouder/htdocs_old/OUD/parlato/1.0.4 rev10/include/pbb-classes.php",
+		"/C/xampp7/htdocs/donut/library/assets/js/vendors/DonutDictionary_bestanden/css.css",
+		"/C/xampp7/htdocs/donut/library/assets/css/vendors/pace.css",
+		"/C/xampp7/htdocs/donut/code/global/function/global.functions.php",
+		"/C/xampp7/htdocs/donut/code/login.index.php",
+		"/C/xampp7/htdocs/donut/code/global/function/login.functions.php",
+		"/C/xampp7/htdocs/donut/code/dashboard.index.php",
+		"/C/xampp7/htdocs/donut/code/global/function/menu.functions.php",
+		"/C/xampp7/htdocs/donut/code/lemma.index.php",
+		"/C/xampp7/htdocs/donut/library/assets/css/vendors/font-awesome.css",
+		"/C/xampp7/htdocs/DraiWiki/install.sql",
+		"/C/xampp7/htdocs/ouder/htdocs_old/OUD/project_mango(wearl)/wrl-config.php",
+		"/C/xampp7/htdocs/ouder/htdocs_old/OUD/vienara/xensql/ext/index.php",
+		"/C/xampp7/htdocs/ouder/htdocs_old/OUD/vienara/xensql/XenSql.php",
+		"/C/xampp7/htdocs/ouder/htdocs_old/OUD/rigoletto/proxy.php",
+		"/C/xampp7/htdocs/ouder/htdocs_old/OUD/rigoletto/index.php",
+		"/C/xampp7/htdocs/Aulis/404.php",
+		"/C/xampp7/htdocs/donut/code/global/class/actions.cset.php",
+		"/C/xampp7/htdocs/donut/code/global/class/forms.cset.php",
+		"/C/xampp7/htdocs/donut/code/structures/dictionary.admin.struct.php",
+		"/C/xampp7/htdocs/donut/code/global/function/database.functions.php",
+		"/C/xampp7/htdocs/donut/package.json",
+		"/C/xampp7/htdocs/donut/index.js",
+		"/C/xampp7/htdocs/DraiWiki/node_modules/marked/index.js",
+		"/C/xampp7/htdocs/donut/library/assets/js/vendors.js",
+		"/C/xampp7/htdocs/donut/library/assets/js/vendors/jquery.js",
+		"/C/xampp7/htdocs/DraiWiki/public/views/Template.class.php",
+		"/C/xampp7/htdocs/DraiWiki/public/views/View.class.php",
+		"/C/xampp7/htdocs/DraiWiki/public/views/templates/default/Index.template.php",
+		"/C/xampp7/htdocs/DraiWiki/src/javascript/Main.js",
+		"/C/xampp7/htdocs/DraiWiki/src/admin/auth/models/index.php",
+		"/C/xampp7/htdocs/DraiWiki/src/admin/auth/models/User.class.php",
+		"/C/xampp7/htdocs/DraiWiki/src/javascript/index.php",
+		"/C/xampp7/htdocs/DraiWiki/src/main/models/Locale.class.php",
+		"/C/xampp7/htdocs/donut/code/global/class/admin.cset.php",
+		"/C/xampp7/htdocs/donut/code/global/function/dictionary.functions.php",
+		"/C/xampp7/htdocs/donut/.bowerrc",
+		"/C/xampp7/htdocs/donut/library/assets/js/vendors/jquery.select2.js",
+		"/C/xampp7/htdocs/donut/code/admin.index.php",
+		"/C/xampp7/htdocs/donut/code/global/class/template.cset.php",
+		"/C/xampp7/htdocs/donut/code/global/class/user.cset.php",
+		"/C/xampp7/htdocs/DraiWiki/src/main/controllers/Main.class.php",
+		"/C/xampp7/htdocs/DraiWiki/src/main/models/Config.class.php",
+		"/C/xampp7/htdocs/DraiWiki/src/main/controllers/SettingsImporter.class.php",
+		"/C/xampp7/htdocs/donut/code/global/class/data.cset.php",
+		"/C/xampp7/htdocs/donut/inflective system",
+		"/C/xampp7/htdocs/donut/code/global/function/inflect.functions.php",
+		"/C/xampp7/htdocs/donut/code/global/class/structure.cset.php",
+		"/C/xampp7/htdocs/donut/code/global/class/dataobjects/admin.pTableObject.cset.php",
+		"/C/xampp7/htdocs/donut/code/global/class/structures/admin.structure.cset.php",
+		"/C/xampp7/htdocs/donut/library/assets/js/vendors/DonutDictionary_bestanden/jquery_005.js",
+		"/C/xampp7/htdocs/donut/code/phonology.index.php",
+		"/C/xampp7/htdocs/donut/library/assets/js/index.js",
+		"/C/xampp7/htdocs/donut/config.php",
+		"/C/Users/Thomas/Desktop/test_project/main.php",
+		"/C/xampp7/htdocs/donut/library/user_scripts/index.php",
+		"/C/xampp7/htdocs/testing/server.php",
+		"/C/xampp7/htdocs/donut/library/templates/main_template.php",
+		"/C/xampp7/htdocs/donut/code/global/class/templates/template.icon.cset.php",
+		"/C/xampp7/htdocs/donut/library/assets/css/vendors/materialdesignicons.css",
+		"/C/xampp7/htdocs/donut/library/assets/css/vendors/materialdesignicons.min.css",
+		"/C/xampp7/htdocs/donut/index.php",
+		"/C/xampp7/htdocs/donut/library/assets/css/vendors/tooltipster.bundle.min.css",
+		"/C/xampp7/htdocs/donut/library/assets/css/vendors/tooltipster-noir.css",
+		"/C/xampp7/htdocs/donut/library/assets/css/vendors/tooltipster.css",
+		"/C/xampp7/htdocs/ouder/htdocs_old/OUD/parlato/1.0.3/include/languages/english.php",
+		"/C/xampp7/htdocs/ouder/htdocs_old/OUD/parlato/1.0.4 rev10/error.php",
+		"/C/xampp7/htdocs/ouder/htdocs_old/OUD/parlato/1.0.5/pbb-admin/pleaseinclude.php",
+		"/C/xampp7/htdocs/ouder/htdocs_old/OUD/parlato/1.0.5/pbb-admin/template.php",
+		"/C/xampp7/htdocs/ouder/htdocs_old/OUD/parlato/1.0.5/pbb-admin/index.php",
+		"/C/xampp7/htdocs/ouder/htdocs_old/OUD/parlato/1.0.5/pbb-admin/include/galaxy/alternativeCSS.php",
+		"/C/xampp7/htdocs/ouder/htdocs_old/OUD/parlato/1.0.5/pbb-admin/include/editor/index.php",
+		"/C/xampp7/htdocs/ouder/htdocs_old/OUD/parlato/1.0.1/include/functions.php",
+		"/C/xampp7/htdocs/donut/code/alphabet.index.php",
+		"/C/xampp7/htdocs/donut/code/batch_translate.index.php",
+		"/C/xampp7/htdocs/donut/code/dictionary.index.php",
+		"/C/xampp7/htdocs/DraiWiki/public/Config.php",
+		"/C/xampp7/htdocs/donut/code/global/class/dataobjects/admin.template.pTableObject.cset.php",
+		"/C/xampp7/htdocs/donut/code/global/class/dataobjects/admin.template.pLinkTableObject.cset.php",
+		"/C/xampp7/htdocs/db/phpliteadmin.config.sample.php",
+		"/C/xampp7/htdocs/donut/.gitignore",
+		"/C/xampp7/htdocs/DraiWiki/.gitignore",
+		"/C/xampp7/htdocs/donut/vendor/autoload.php",
+		"/C/xampp7/htdocs/donut/library/assets/php/vendors/HashGenerator.php",
+		"/C/xampp7/htdocs/donut/library/assets/php/vendors/str.php",
+		"/C/xampp7/htdocs/donut/composer.json",
+		"/C/xampp7/htdocs/DraiWiki/vendor/composer/autoload_real.php",
+		"/C/xampp7/htdocs/donut/code/global/class/admin.template.pLinkTableObject.cset.php",
+		"/C/xampp7/htdocs/DraiWiki/src/main/controllers/Article.class.php",
+		"/C/Users/Thomas/AppData/Local/Temp/7zO8F14E3B8/tooltipster.bundle.js",
+		"/C/Users/Thomas/AppData/Local/Temp/7zO8F1668F8/tooltipster.main.js",
+		"/C/Users/Thomas/AppData/Local/Temp/7zO8F1871A1/tooltipster.bundle.js",
+		"/C/xampp7/htdocs/Aulis/Admin.php",
+		"/C/xampp7/htdocs/DraiWiki/src/main/models/index.php",
+		"/C/xampp7/htdocs/DraiWiki/public/Routing.php",
+		"/C/xampp7/htdocs/donut/README.md",
+		"/C/xampp7/htdocs/donut/library/assets/js/ajaxLinks.js.php",
+		"/C/xampp7/htdocs/donut/code/global/function/languages.functions.php",
+		"/C/xampp7/htdocs/donut/code/global/function/output.functions.php",
+		"/C/xampp7/htdocs/donut/library/assets/js/smoothstate.js",
+		"/C/xampp7/htdocs/donut/code/admin/admin.modes.php",
+		"/C/xampp7/htdocs/donut/library/assets/css/vendors/jquery.tagsinput.css",
+		"/C/xampp7/htdocs/donut/code/wiki.index.php",
+		"/C/xampp7/htdocs/ouder/htdocs_old/OUD/parlato/1.0.1/Settings.php",
+		"/C/xampp7/htdocs/donut/code/admin/admin.languages.php",
+		"/C/xampp7/htdocs/donut/code/functions/global.functions.php",
+		"/C/xampp7/htdocs/donut/code/lemma.edit_usage-notes.php",
+		"/C/xampp7/htdocs/donut/code/lemma.edit_basics.php",
+		"/C/xampp7/htdocs/donut/code/classes/data.cset.php",
+		"/C/xampp7/htdocs/donut/code/functions/database.functions.php",
+		"/C/xampp7/htdocs/donut/code/global/functions/database.functions.php",
+		"/C/xampp7/htdocs/donut/library/assets/css/vendors/fonts/FontAwesome.otf",
+		"/C/xampp7/htdocs/donut/code/functions/dictionary.functions.php",
+		"/C/xampp7/htdocs/donut/code/functions/grammar.functions.php",
+		"/C/Users/Thomas/Desktop/bin/mslab1.txt",
+		"/C/xampp7/htdocs/donut/code/functions/discussions.functions.php",
+		"/C/xampp7/htdocs/donut/code/d_admin.classes.php",
+		"/C/xampp7/htdocs/donut/code/admin/admin.subclassifications.php",
+		"/C/xampp7/htdocs/donut/code/functions/wiki.functions.php"
+	],
+	"find":
+	{
+		"height": 56.0
+	},
+	"find_in_files":
+	{
+		"height": 224.0,
+		"where_history":
+		[
+			"C:\\xampp7\\htdocs\\donut",
+			"C:\\xampp7\\htdocs\\draiwiki",
+			"C:\\xampp7\\htdocs\\donut",
+			"C:\\xampp\\htdocs\\donut",
+			"C:\\xampp\\htdocs\\constructory",
+			"C:\\xampp\\htdocs\\vocacat",
+			"C:\\xampp\\htdocs\\narative"
+		]
+	},
+	"find_state":
+	{
+		"case_sensitive": false,
+		"find_history":
+		[
+			"parse",
+			"render",
+			"boolean",
+			"new pmagicfield",
+			"new pDatafield",
+			"true, true, false, '', false),",
+			"pDataField",
+			"\t\n",
+			"link-table",
+			"linked",
+			"$this->_adminobject",
+			"adminObJECT",
+			"->_guests->_adminObject",
+			"->_adminObject",
+			"_Object",
+			"$this->_adminObject",
+			"AdminObjECT",
+			"pAdminObject",
+			"adminpar",
+			"record",
+			"../fonts",
+			".mdi {",
+			"icon",
+			"script",
+			"../fonts",
+			"fa-10",
+			"icon",
+			"fields",
+			"Gentium",
+			"linked",
+			"btNative",
+			"$linked",
+			"linked",
+			"$_REQUEST['linked']",
+			"incoming_links",
+			"ajax",
+			"pAdminObject",
+			"pTableObject",
+			"[$linked]['section']",
+			"addLink(",
+			"['section']",
+			"extra_fields",
+			"logout",
+			"$donut['user']",
+			"pHash",
+			"hash",
+			"circle",
+			"load(",
+			"ajax",
+			"pdatafield",
+			"new pDatAFIELD",
+			"role",
+			"function read",
+			"data()",
+			"setOrder",
+			"setCondition",
+			"btCard",
+			"gradient",
+			"box-shadow",
+			"ajax(",
+			"btNativ",
+			"CHILD",
+			"ID",
+			"offset()",
+			"offset",
+			"actionUrl",
+			"BACK",
+			"back",
+			"btCard",
+			".page",
+			"#eee",
+			"btAction",
+			"btaction",
+			"ttip",
+			"btNative",
+			"btCard",
+			"btCad",
+			"btaction",
+			"btAction",
+			"Raleway",
+			"open san",
+			"Calibri",
+			"kollektif",
+			"roboto",
+			"Lora",
+			"n slashesfoetsie",
+			"slashesfoetsie",
+			"foetsie",
+			"setCondition",
+			"getdata",
+			"setcONDITIO",
+			"getObjects",
+			"REQUEST['id']",
+			"setCondition",
+			"action",
+			"head",
+			"child",
+			"insert",
+			"newLink",
+			"prepare",
+			"idiom_id",
+			"show_parent",
+			"structure",
+			"transcription",
+			"getData(",
+			"border:",
+			"border:10px",
+			"border:",
+			"theme: 'tooltipster-donut'",
+			"tooltipster-donut",
+			"#eee",
+			"arrow",
+			"calc",
+			".page",
+			"html",
+			"tooltipster-noir",
+			"-noir",
+			"margin-top: 6px",
+			"absolute",
+			"localhost",
+			"cache",
+			"a ",
+			"icon",
+			"fa-",
+			"setCondition",
+			"condition",
+			"table.admin",
+			".notice"
+		],
+		"highlight": true,
+		"in_selection": false,
+		"preserve_case": false,
+		"regex": false,
+		"replace_history":
+		[
+			"true, true, false, '', false, null),",
+			"$this->_object",
+			"->_guests->_object",
+			"_object",
+			"$this->_Object",
+			"fonts",
+			"Merriweather",
+			"Times",
+			"#fff",
+			"poppins",
+			"initial",
+			"inherit",
+			"initial",
+			"border:1px",
+			"",
+			"rgba(155, 155, 155, 0.1)",
+			"tooltipster-donut",
+			"5C655C",
+			"'",
+			"\"",
+			"{{",
+			"}}",
+			"{{",
+			"8%",
+			"_REQUEST",
+			"right: 10%;",
+			"left: 10%;",
+			"left: 3%;",
+			"left: .02%;",
+			"left: 8%;",
+			"pUrl(\"?",
+			"pUrl('?",
+			"#2CA05A",
+			"#2CA05A;",
+			"ceebff",
+			"5069a0",
+			"ba413f",
+			"$editMode",
+			"float-left",
+			"float-right",
+			"",
+			"1582C2",
+			"$elementID",
+			"'.$element.'_id='",
+			"$section",
+			"section='.$section.'",
+			"section=\".$section.\"",
+			"section='.$section.'",
+			"&action=",
+			"='.$element_apply.'",
+			"=\".$element_apply.\"",
+			"='.$element_apply.'",
+			"element_",
+			"$exist_applyFunction",
+			"$nameFunction",
+			"$getFunctionSingular",
+			"$getFunctionPlural",
+			"$get_applyFunction",
+			"$updateFunction",
+			"$addFunction",
+			"$element.'",
+			"_'.$element",
+			"_'.$element.'",
+			"#14171e",
+			"$donut['db']->quote(pEscape",
+			"$output .=  $1\\;",
+			"$output .= $1;  ",
+			"  ",
+			"['alphabet']",
+			"$a_get",
+			"['discuss-lemma']",
+			"['lemma']",
+			"&lemma=",
+			"?discuss-lemma",
+			"?lemma",
+			"mysqli_",
+			"\".DBP.\"",
+			"\".DPB.\"",
+			"$1 \\{DBP\\}_$2",
+			"$donut",
+			"$_POST",
+			"$_GET",
+			"$_REQUEST",
+			"$_SESSION",
+			"$donut['session']",
+			"$donut['post']",
+			"$donut['get']",
+			"$donut['request']",
+			"(",
+			"library/images/f",
+			"function $1\\$donut, ",
+			"function $1aaaa",
+			"library/images/flags/",
+			"library/assets/css/vendors",
+			"library/assets/js/vendors",
+			"pEndsWith",
+			"pStartsWith",
+			"<span class=\"dots\">. . .</span>",
+			"\t<div class=\"adminsubmenu\">\n\t\t\t\t<span class=\"dots\">...</span>",
+			"fetch",
+			"791e94",
+			"68777d",
+			".mi",
+			"$donut",
+			"//",
+			"pKeepLogged",
+			"$_SESSION['pUser']",
+			"pMemberExists",
+			"pCheckAdmin",
+			"pLogged(",
+			"global $donut",
+			"$donut[",
+			"Dictionary Toolkit",
+			"Donut",
+			"donut",
+			"4b5a75",
+			"252c51",
+			"after",
+			"#474747",
+			"565656",
+			"00618a",
+			"a6755a",
+			"ff5a00",
+			"#ff5a00",
+			"#7f669d",
+			"6f47a1",
+			"671ac5",
+			"131619"
+		],
+		"reverse": false,
+		"show_context": true,
+		"use_buffer2": true,
+		"whole_word": false,
+		"wrap": true
+	},
+	"groups":
+	[
+		{
+			"selected": 1,
+			"sheets":
+			[
+				{
+					"buffer": 0,
+					"file": "library/assets/js/smoothstate.js",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 175,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								44,
+								38
+							]
+						],
+						"settings":
+						{
+							"history_list_is_closing": true,
+							"syntax": "Packages/JavaScript/JavaScript.sublime-syntax"
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 8,
+					"type": "text"
+				},
+				{
+					"buffer": 1,
+					"file": "code/global/class/forms.cset.php",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 13935,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								12257,
+								12257
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/PHP/PHP.sublime-syntax",
+							"translate_tabs_to_spaces": false
+						},
+						"translation.x": 0.0,
+						"translation.y": 756.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 1,
+					"type": "text"
+				},
+				{
+					"buffer": 2,
+					"file": "code/global/class/index.php",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 140,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								140,
+								140
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/PHP/PHP.sublime-syntax"
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 5,
+					"type": "text"
+				},
+				{
+					"buffer": 3,
+					"file": "index.php",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 2423,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								688,
+								688
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/PHP/PHP.sublime-syntax",
+							"translate_tabs_to_spaces": false
+						},
+						"translation.x": 0.0,
+						"translation.y": 224.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 4,
+					"type": "text"
+				},
+				{
+					"buffer": 4,
+					"file": "code/structures/dictionary.admin.struct.php",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 12807,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								2570,
+								2570
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/PHP/PHP.sublime-syntax",
+							"translate_tabs_to_spaces": false
+						},
+						"translation.x": 0.0,
+						"translation.y": 2156.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 6,
+					"type": "text"
+				}
+			]
+		},
+		{
+			"selected": 3,
+			"sheets":
+			[
+				{
+					"buffer": 5,
+					"file": "library/languages/English.dictionary.php",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 4104,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								3516,
+								3516
+							]
+						],
+						"settings":
+						{
+							"history_list_is_closing": true,
+							"syntax": "Packages/PHP/PHP.sublime-syntax"
+						},
+						"translation.x": 0.0,
+						"translation.y": 3147.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 7,
+					"type": "text"
+				},
+				{
+					"buffer": 6,
+					"file": "code/global/class/data.cset.php",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 8890,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								7543,
+								7543
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/PHP/PHP.sublime-syntax",
+							"translate_tabs_to_spaces": false
+						},
+						"translation.x": 0.0,
+						"translation.y": 4759.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 3,
+					"type": "text"
+				},
+				{
+					"buffer": 7,
+					"file": "code/global/function/database.functions.php",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 5678,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								1566,
+								1566
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/PHP/PHP.sublime-syntax",
+							"translate_tabs_to_spaces": false
+						},
+						"translation.x": 0.0,
+						"translation.y": 840.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 2,
+					"type": "text"
+				},
+				{
+					"buffer": 8,
+					"file": "code/global/class/dataobjects/admin.pTableObject.cset.php",
+					"semi_transient": true,
+					"settings":
+					{
+						"buffer_size": 4542,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								2135,
+								2157
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/PHP/PHP.sublime-syntax",
+							"translate_tabs_to_spaces": false
+						},
+						"translation.x": 0.0,
+						"translation.y": 3443.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 0,
+					"type": "text"
+				},
+				{
+					"buffer": 9,
+					"file": "library/languages/English.php",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 5189,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								1396,
+								1396
+							]
+						],
+						"settings":
+						{
+							"history_list_is_closing": true,
+							"syntax": "Packages/PHP/PHP.sublime-syntax"
+						},
+						"translation.x": 0.0,
+						"translation.y": 4374.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 9,
+					"type": "text"
+				}
+			]
+		}
+	],
+	"incremental_find":
+	{
+		"height": 54.0
+	},
+	"input":
+	{
+		"height": 43.0
+	},
+	"layout":
+	{
+		"cells":
+		[
+			[
+				0,
+				0,
+				1,
+				1
+			],
+			[
+				1,
+				0,
+				2,
+				1
+			]
+		],
+		"cols":
+		[
+			0.0,
+			0.590187681933,
+			1.0
+		],
+		"rows":
+		[
+			0.0,
+			1.0
+		]
+	},
+	"menu_visible": true,
+	"output.find_results":
+	{
+		"height": 0.0
+	},
+	"pinned_build_system": "",
+	"project": "donut.sublime-project",
+	"replace":
+	{
+		"height": 106.0
+	},
+	"save_all_on_build": true,
+	"select_file":
+	{
+		"height": 0.0,
+		"last_filter": "",
+		"selected_items":
+		[
+			[
+				"in",
+				"code\\global\\class\\index.php"
+			],
+			[
+				"smoo",
+				"library\\assets\\js\\smoothstate.js"
+			],
+			[
+				"smooth",
+				"library\\assets\\js\\smoothstate.js"
+			],
+			[
+				"data.",
+				"code\\global\\class\\data.cset.php"
+			],
+			[
+				"st",
+				"code\\global\\class\\structure.cset.php"
+			],
+			[
+				"d_",
+				"code\\d_admin.index.php"
+			],
+			[
+				"stru",
+				"code\\global\\class\\structure.cset.php"
+			],
+			[
+				"admin.cs",
+				"code\\global\\class\\admin.cset.php"
+			],
+			[
+				"",
+				"code\\structures\\dictionary.admin.struct.php"
+			],
+			[
+				"ma",
+				"library\\assets\\css\\vendors\\materialdesignicons.css"
+			],
+			[
+				"mat",
+				"library\\assets\\css\\vendors\\materialdesignicons.css"
+			],
+			[
+				"font",
+				"library\\assets\\css\\vendors\\font-awesome.css"
+			],
+			[
+				"m",
+				"library\\templates\\main_template.php"
+			],
+			[
+				"fon",
+				"library\\assets\\css\\vendors\\font-awesome.css"
+			],
+			[
+				"icon.",
+				"code\\global\\class\\templates\\template.icon.cset.php"
+			],
+			[
+				"mian",
+				"library\\templates\\main_template.php"
+			],
+			[
+				"mai",
+				"library\\templates\\main_template.php"
+			],
+			[
+				"actions",
+				"code\\global\\class\\actions.cset.php"
+			],
+			[
+				"data",
+				"code\\global\\class\\data.cset.php"
+			],
+			[
+				"index.css",
+				"library\\assets\\css\\index.css"
+			],
+			[
+				"froms.",
+				"code\\global\\class\\forms.cset.php"
+			],
+			[
+				"user",
+				"code\\global\\class\\user.cset.php"
+			],
+			[
+				"da",
+				"code\\global\\class\\data.cset.php"
+			],
+			[
+				"dic",
+				"code\\global\\function\\dictionary.functions.php"
+			],
+			[
+				"di",
+				"code\\global\\function\\dictionary.functions.php"
+			],
+			[
+				"data.c",
+				"code\\global\\class\\data.cset.php"
+			],
+			[
+				"form",
+				"code\\global\\class\\forms.cset.php"
+			],
+			[
+				"for",
+				"code\\global\\class\\forms.cset.php"
+			],
+			[
+				"admi",
+				"code\\admin.index.php"
+			],
+			[
+				"forms",
+				"code\\global\\class\\forms.cset.php"
+			],
+			[
+				"adm",
+				"code\\admin.index.php"
+			],
+			[
+				"admin.c",
+				"code\\global\\class\\admin.cset.php"
+			],
+			[
+				"mi",
+				"library\\templates\\main_template.php"
+			],
+			[
+				"stuct.p",
+				"code\\structures\\dictionary.admin.struct.php"
+			],
+			[
+				"main",
+				"library\\templates\\main_template.php"
+			],
+			[
+				"com",
+				"composer.json"
+			],
+			[
+				"pa",
+				"C:\\xampp7\\htdocs\\DraiWiki\\package.json"
+			],
+			[
+				"use",
+				"code\\global\\class\\user.cset.php"
+			],
+			[
+				"user.cs",
+				"code\\global\\class\\user.cset.php"
+			],
+			[
+				"dah",
+				"code\\dashboard.index.php"
+			],
+			[
+				"bat",
+				"code\\batch_translate.index.php"
+			],
+			[
+				"login",
+				"code\\global\\function\\login.functions.php"
+			],
+			[
+				"lo",
+				"code\\global\\function\\login.functions.php"
+			],
+			[
+				"conf",
+				"config.php"
+			],
+			[
+				"alp",
+				"code\\alphabet.index.php"
+			],
+			[
+				"ind",
+				"library\\assets\\css\\index.css"
+			],
+			[
+				"user.",
+				"code\\global\\class\\user.cset.php"
+			],
+			[
+				"das",
+				"code\\dashboard.index.php"
+			],
+			[
+				"user.c",
+				"code\\global\\class\\user.cset.php"
+			],
+			[
+				"logi",
+				"code\\global\\function\\login.functions.php"
+			],
+			[
+				"tool",
+				"library\\assets\\css\\vendors\\tooltipster.css"
+			],
+			[
+				"admin.str",
+				"code\\global\\class\\structures\\admin.structure.cset.php"
+			],
+			[
+				"con",
+				"config.php"
+			],
+			[
+				"icon",
+				"code\\global\\class\\template.icon.cset.php"
+			],
+			[
+				"pbb",
+				"C:\\xampp7\\htdocs\\ouder\\htdocs_old\\OUD\\parlato\\1.0.4 rev10\\include\\pbb-functions.php"
+			],
+			[
+				"act",
+				"code\\global\\class\\actions.cset.php"
+			],
+			[
+				"d_a",
+				"code\\d_admin.index.php"
+			],
+			[
+				"ac",
+				"code\\global\\class\\actions.cset.php"
+			],
+			[
+				"acti",
+				"code\\global\\class\\actions.cset.php"
+			],
+			[
+				"log",
+				"code\\login.index.php"
+			],
+			[
+				"dat",
+				"code\\global\\class\\data.cset.php"
+			],
+			[
+				"d",
+				"code\\d_admin.index.php"
+			],
+			[
+				"lemma",
+				"code\\lemma.index.php"
+			],
+			[
+				"lemm",
+				"code\\lemma.index.php"
+			],
+			[
+				"too",
+				"library\\assets\\css\\vendors\\tooltipster.css"
+			],
+			[
+				"css.css",
+				"library\\assets\\js\\vendors\\DonutDictionary_bestanden\\css.css"
+			],
+			[
+				"css.ss",
+				"library\\assets\\js\\vendors\\DonutDictionary_bestanden\\css.css"
+			],
+			[
+				"noir",
+				"library\\assets\\css\\vendors\\tooltipster-noir.css"
+			],
+			[
+				"pac",
+				"library\\assets\\css\\vendors\\pace.css"
+			],
+			[
+				"p",
+				"library\\assets\\css\\vendors\\pace.css"
+			],
+			[
+				"men",
+				"code\\global\\function\\menu.functions.php"
+			],
+			[
+				"pace",
+				"library\\assets\\css\\vendors\\pace.css"
+			],
+			[
+				"inde",
+				"library\\user_scripts\\index.php"
+			],
+			[
+				"glob",
+				"code\\global\\function\\global.functions.php"
+			],
+			[
+				"min",
+				"library\\templates\\main_template.php"
+			],
+			[
+				"struct",
+				"code\\global\\class\\structure.cset.php"
+			],
+			[
+				"s",
+				"code\\global\\class\\structure.cset.php"
+			],
+			[
+				"str",
+				"code\\global\\class\\structure.cset.php"
+			],
+			[
+				"admin.",
+				"code\\global\\class\\admin.cset.php"
+			],
+			[
+				"infle",
+				"code\\global\\function\\inflect.functions.php"
+			],
+			[
+				"inflecti",
+				"inflective system"
+			],
+			[
+				"i",
+				"library\\assets\\css\\index.css"
+			],
+			[
+				"menu",
+				"code\\global\\function\\menu.functions.php"
+			],
+			[
+				"stcu",
+				"code\\global\\class\\structure.cset.php"
+			],
+			[
+				"index.",
+				"library\\assets\\css\\index.css"
+			],
+			[
+				"to",
+				"library\\assets\\css\\vendors\\tooltipster.css"
+			],
+			[
+				"sm",
+				"library\\assets\\js\\smoothstate.js"
+			],
+			[
+				"index.js",
+				"library\\assets\\js\\index.js"
+			],
+			[
+				"smo",
+				"library\\assets\\js\\smoothstate.js"
+			],
+			[
+				"ajaxli",
+				"library\\assets\\js\\ajaxLinks.js.php"
+			],
+			[
+				".css",
+				"library\\assets\\css\\vendors\\tooltipster-noir.css"
+			],
+			[
+				"adin.cs",
+				"code\\global\\class\\admin.cset.php"
+			],
+			[
+				"action",
+				"code\\global\\class\\actions.cset.php"
+			],
+			[
+				"actio",
+				"code\\global\\class\\actions.cset.php"
+			],
+			[
+				"index",
+				"library\\assets\\css\\index.css"
+			],
+			[
+				"mode",
+				"code\\admin\\admin.modes.php"
+			],
+			[
+				"d_ad",
+				"code\\d_admin.index.php"
+			],
+			[
+				"admin",
+				"code\\admin.index.php"
+			],
+			[
+				"struc",
+				"code\\structures\\dictionary.admin.struct.php"
+			],
+			[
+				"admin.index",
+				"code\\d_admin.index.php"
+			],
+			[
+				"structure.cs",
+				"code\\structures\\dictionary.admin.struct.php"
+			],
+			[
+				"d_adm",
+				"code\\d_admin.index.php"
+			],
+			[
+				"wiki",
+				"code\\wiki.index.php"
+			],
+			[
+				"engl",
+				"library\\languages\\English.php"
+			],
+			[
+				"globa",
+				"code\\global\\function\\global.functions.php"
+			],
+			[
+				"glo",
+				"code\\global\\function\\global.functions.php"
+			],
+			[
+				"ad",
+				"code\\admin.index.php"
+			],
+			[
+				"en",
+				"library\\languages\\English.php"
+			],
+			[
+				"bta",
+				"code\\batch_translate.index.php"
+			],
+			[
+				"diction",
+				"code\\structures\\dictionary.admin.struct.php"
+			],
+			[
+				"infl",
+				"code\\global\\function\\inflect.functions.php"
+			],
+			[
+				"lang",
+				"code\\admin\\admin.languages.php"
+			],
+			[
+				"languages.",
+				"code\\admin\\admin.languages.php"
+			],
+			[
+				"global",
+				"code\\global\\function\\global.functions.php"
+			],
+			[
+				"index.php",
+				"index.php"
+			],
+			[
+				"outp",
+				"code\\global\\function\\output.functions.php"
+			],
+			[
+				"mod",
+				"code\\admin\\admin.modes.php"
+			],
+			[
+				"confi",
+				"config.php"
+			],
+			[
+				"clas",
+				"code\\d_admin.classes.php"
+			],
+			[
+				"config",
+				"config.php"
+			],
+			[
+				"offset",
+				"library\\assets\\css\\vendors\\fonts\\FontAwesome.otf"
+			],
+			[
+				"gramm",
+				"code\\functions\\grammar.functions.php"
+			],
+			[
+				"ba",
+				"code\\batch_translate.index.php"
+			],
+			[
+				"edit",
+				"code\\lemma.edit_basics.php"
+			],
+			[
+				"gra",
+				"code\\functions\\grammar.functions.php"
+			],
+			[
+				"dis",
+				"code\\functions\\discussions.functions.php"
+			],
+			[
+				"lem",
+				"code\\lemma.index.php"
+			],
+			[
+				"edit_u",
+				"code\\lemma.edit_usage-notes.php"
+			]
+		],
+		"width": 0.0
+	},
+	"select_project":
+	{
+		"height": 0.0,
+		"last_filter": "",
+		"selected_items":
+		[
+		],
+		"width": 0.0
+	},
+	"select_symbol":
+	{
+		"height": 0.0,
+		"last_filter": "",
+		"selected_items":
+		[
+		],
+		"width": 0.0
+	},
+	"selected_group": 1,
+	"settings":
+	{
+	},
+	"show_minimap": true,
+	"show_open_files": false,
+	"show_tabs": true,
+	"side_bar_visible": true,
+	"side_bar_width": 290.0,
+	"status_bar_visible": true,
+	"template_settings":
+	{
+	}
+}

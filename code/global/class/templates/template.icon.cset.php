@@ -22,7 +22,7 @@ class pIcon{
 		if(pStartsWith($this->_icon, 'fa-'))
 			$icon = "<i class=\"fa ".$this->_icon." ".$this->_classes." fa-".$this->_size."\"></i>";
 		else
-			$icon = "<i class=\"material-icons ".$this->_classes."\" style=\"font-size: ".$this->_size."px\">".$this->_icon."</i>";
+			$icon = "<i class=\"mdi mdi-".$this->_icon." ".$this->_classes."\" style=\"font-size: ".$this->_size."px\"></i>";
 
 		return $icon;
 	}

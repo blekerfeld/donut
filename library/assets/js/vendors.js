@@ -1,0 +1,11 @@
+require('vendors/jquery.js');
+require('vendors/jquery.elastic.js');
+require('vendors/jquery.pace.js');
+require('vendors/jquery.smoothstate.js');
+require('vendors/jquery.select2.js');
+require('vendors/jquery.tagsinput.js');
+require('vendors/jquery.tooltipster.js');
+require('vendors/jquery.playsound.js');
+require('vendors/jquery.pulsate.js');
+require('vendors/jquery.pulsate.js');
+require('smoothstate.js');

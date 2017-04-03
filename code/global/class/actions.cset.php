@@ -26,7 +26,7 @@ class pAction{
 		$this->_override = $override;
 	}
 
-	public function __construct($name, $surface, $icon, $class, $follow_up, $follow_up_fields, $section, $app = 'dictionary-admin'){
+	public function __construct($name, $surface, $icon, $class, $follow_up, $follow_up_fields, $section, $app = 'dictionary-admin', $override = null){
 		$this->name = $name;
 		$this->_surface = $surface;
 		$this->_icon = $icon;
@@ -35,6 +35,7 @@ class pAction{
 		$this->_section = $section;
 		$this->followUp = $follow_up;
 		$this->followUpFields = $follow_up_fields;
+		$this->_override = $override;
 	}
 
 	public function render($id = -1, $linked = null){

@@ -17,6 +17,7 @@ class pAdminStructure extends pStructure{
 
 		global $donut;
 
+		// If the user requests a section and if it extist
 		if(isset($_REQUEST['section']) and array_key_exists($_REQUEST['section'], $this->_structure))
 			$this->_section = $_REQUEST['section'];
 		else{
@@ -26,7 +27,8 @@ class pAdminStructure extends pStructure{
 			$this->_section = $this->_default_section;
 		}
 
-		$this->_adminParser = new pAdminParser($this->_structure, $this->_structure[$this->_section]);
+
+		$this->_adminParser = new pStructureParser($this->_structure, $this->_structure[$this->_section], $this->_app, $this->_permission);
 		;
 
 		$this->_adminParser->compile();
@@ -38,7 +40,7 @@ class pAdminStructure extends pStructure{
 	public function prepareMenu(){
 		// We don't accept double items
 		foreach($this->_structure as $item)
-			if(isset($item['menu']))
+			if(isset($item['menu']) && pUser::checkPermission($this->itemPermission($item['section_key'])))
 				$this->_menu[$item['menu']]['items'][] = $item;
 	}
 
@@ -59,26 +61,35 @@ class pAdminStructure extends pStructure{
 	public function renderMenu(){
 
 		// Starting the menu
-		pOut("<div class='d_admin_menu'>
-				<div class='stack'>");
+		$output = "<div class='d_admin_menu'>
+				<div class='stack'>";
+
+		$items = 0;
 
 		foreach($this->_menu as $key => $main){
+			// Permission check
+			if(pUser::checkPermission($this->itemPermission($main['section'])) OR isset($main['items'])){
+				$output .= "<a href='".(isset($main['section']) ? pUrl("?".$this->_app."&section=".$main['section']) : '')."' class='".(($this->checkActiveMain($key) OR (isset($_REQUEST['section'], $main['section']) AND $_REQUEST['section'] == $main['section'])) ? 'active' : '')." ttip' title='
+					<strong>".htmlspecialchars($main['surface'])."</strong>";
 
-			pOut("<a href='".(isset($main['section']) ? pUrl("?".$this->_app."&section=".$main['section']) : '')."' class='".(($this->checkActiveMain($key) OR (isset($_REQUEST['section'], $main['section']) AND $_REQUEST['section'] == $main['section'])) ? 'active' : '')." ttip' title='
-				<strong>".htmlspecialchars($main['surface'])."</strong>");
+				if(isset($main['items']))
+					foreach($main['items'] as $item){
+						$output .= "<a href=\"".pUrl("?".$this->_app."&section=".$item['section_key'])."\" class=\"ttip-sub ".($this->checkActiveSub($item['section_key']) ? 'active' : '')."\">".(new pIcon($item['icon'], 12))." ". htmlspecialchars($item['surface'])."</a>";
+					}
 
+				$items++;
 
-			if(isset($main['items']))
-				foreach($main['items'] as $item){
-					pOut("<a href=\"".pUrl("?".$this->_app."&section=".$item['section_key'])."\" class=\"ttip-sub ".($this->checkActiveSub($item['section_key']) ? 'active' : '')."\">".(new pIcon($item['icon'], 12))." ". htmlspecialchars($item['surface'])."</a>");
-				}
-
-			pOut("'>".(new pIcon($main['icon'], 24))."</a>");
+				$output .= "'>".(new pIcon($main['icon'], 24))."</a>";
+		}
 
 		}
 
-		pOut("</div></div>");
-	
+		$output .= "</div></div>";
+		
+		if($items == 0)
+			return false;
+
+		return pOut($output);
 
 	}
 
@@ -99,8 +110,10 @@ class pAdminStructure extends pStructure{
 
 	public function render(){
 
+		// The asynchronous j.a.x. gets to skip a bit 
 		if(isset($_REQUEST['ajax']))
 			goto ajax;
+
 
 		// Preparing the menu
 		$this->prepareMenu();

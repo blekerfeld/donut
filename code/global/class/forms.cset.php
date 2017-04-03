@@ -10,7 +10,7 @@
 
 class pMagicField{
 
-	private $_field, $_class, $_value, $_select, $_is_null;
+	private $_field, $_class, $_value, $_select, $_is_null, $_selector;
 
 	public $name;
 
@@ -29,9 +29,6 @@ class pMagicField{
 			return $this->_value;
 	}
 	
-	private function prepareSelect(){
-
-	}
 
 	public function render(){
 
@@ -43,42 +40,141 @@ class pMagicField{
 		if($this->_field->required == true)
 			pOut("<span class='xsmall' style='color: darkred;opacity: .3;'>*</span>");
 		pOut("<br />");
-		// input
+		pOut("<span class='btNative'>");
 		switch ($this->_field->type) {
 			case 'textarea':
-				pOut("<td><textarea name='".$this->_field->name."' class=field_'".$this->_field->name." ".$this->_field->class."'>".$this->_field->_value."</td>");
+				pOut("<textarea name='".$this->_field->name."' class=field_'".$this->_field->name." ".$this->_field->class."'>".$this->_field->_value."</textarea>");
 				break;
 
 			case 'boolean':
-				pOut("<span class='btNative'><select name='".$this->name."'' class='field_".$this->name." ".$this->_field->class."'><option value='1' ".($this->value() == 1 ? 'selected' : '').">".DL_ENABLED."</option><option value='0' ".($this->value() == 0 ? 'selected' : '').">".DL_DISABLED."</option></select></span>");
+				pOut("<select name='".$this->name."'' class='field_".$this->name." ".$this->_field->class."'><option value='1' ".($this->value() == 1 ? 'selected' : '').">".DL_ENABLED."</option><option value='0' ".($this->value() == 0 ? 'selected' : '').">".DL_DISABLED."</option></select></span>");
+				break;
+
+			case 'select':
+				$this->_field->selectionValues->setValue($this->_value);
+				pOut("<select name='".$this->name."'' class='field_".$this->name." ".$this->_field->class."'>".$this->_field->selectionValues->render()."</select></span>");
 				break;
 			
 			default:
-				pOut("<span class='btNative'><input name='".$this->_field->name."' class='btInput nWord small normal-font field_".$this->name." ".$this->_class."' value='".$this->_value."' /></span>");
+				pOut("<input name='".$this->_field->name."' class='btInput nWord small normal-font field_".$this->name." ".$this->_class."' value='".$this->_value."' />");
 				break;
 		}
-		pOut("</div>");
+		pOut("</span></div>");
 	}
 
 }
 
+
+class pSelector{
+
+	private $_data = NULL, $_showField = null, $_useTable = false, $_interactive, $_overrideSection;
+
+	public $object, $value;
+
+	public function __construct($data, $value = null, $show_field = NULL, $interactive = true, $override_section = null, $condition = NULL){
+		
+		$this->_data = $data;
+		$this->value = $value;
+		$this->_interactive = $interactive;
+		$this->_overrideSection = $override_section;
+
+		// In case the table name does not match the linked section, which is mostly! :)
+		if($override_section == null && !is_array($data))
+			$this->_overrideSection = $data;
+		elseif($override_section == null)
+			$this->_overrideSection = $override_section;
+
+		// If it is not an array we need to do things with tables
+		if(!is_array($data)){
+
+			// There MUST be a field to be shown
+			if($show_field == NULL)
+				return false;
+
+			$this->_useTable = true;
+			$dfs = new pSet;
+			$dfs->add(new pDataField($show_field));
+
+			$this->_showField = $show_field; 
+			$this->object = new pDataObject($data, $dfs);
+		}
+	}
+
+	public function setValue($value){
+		$this->value = $value;
+	}
+
+	// Returns all the <option> elements that are needed
+	public function render(){
+
+		// Fetching the data that we need
+		$this->object->getObjects();
+
+		$output = '';
+
+		// If it is not an array we need to do things with tables
+		if(is_array($this->_data))
+			foreach($this->_data as $value => $name)
+				$output .= '<option value="'.$value.'" '.($this->value == $value ? 'selected' : '').'>'.$name.'</option>';
+		else{
+			// Now we have to do things
+			foreach($this->object->data()->fetchAll() as $option)
+				$output .= '<option value="'.$option['id'].'" '.($this->value == $option['id'] ? 'selected' : '').'>'.$option[$this->_showField].'</option>';
+
+		}
+
+		return $output;
+	}
+
+	public function renderText(){
+
+		$output = '';
+
+		if($this->value == null)
+			return false;
+
+		// Getting the single item that we need, no more no less
+
+		$key = $this->value."_".$this->_showField;
+
+		if($this->_interactive && $this->_useTable)
+			$output .= "<a href='".pUrl("?".pStructureParser::$stApp."&section=".$this->_overrideSection."&action=edit&id=".$this->value."&returnto=".pStructureParser::$stSection)."' class='tooltip'>";
+
+		if(array_key_exists($key, pDataField::stack()))
+			$output .= pDataField::stack()[$key];
+		else{	
+			$this->object->getSingleObject($this->value);
+			pDataField::addToStack($key, ($this->object->data()->fetchAll()[0])[$this->_showField]);
+			$output .= ($this->object->data()->fetchAll()[0])[$this->_showField];
+		}
+
+		if($this->_interactive && $this->_useTable)
+			$output .= "</a>";
+
+		return $output;
+
+	}
+
+}
+
+
 class pMagicActionForm{
 
-	private $_action, $_fields, $_adminobject, $_data, $_name, $_edit, $_magicfields, $_table, $_strings, $_section, $_app, $_extra_fields;
+	private $_action, $_fields, $_adminobject, $_data, $_name, $_edit, $_magicfields, $_table, $_strings, $_section, $_app, $_extra_fields, $_linked;
 
-	public function __construct($name, $table, $fields, $strings, $app, $section, $adminobject){
+	public function __construct($name, $table, $fields, $strings, $app, $section, $object){
 		$this->_name = $name;
 		$this->_fields = $fields;
 		$this->_table = $table;
 		$this->_app = $app;
-		$this->_adminobject = $adminobject;
-		$this->_action = $this->_adminobject->getAction($name);
+		$this->_object = $object;
+		$this->_action = $this->_object->getAction($name);
 		$this->_edit = ($this->_name == 'edit');
 		$this->_section = $section;
 		$this->_strings = $strings;
 		$this->_magicfields = new pSet;
 		if($this->_edit)
-			$this->_data = $this->_adminobject->data();
+			$this->_data = $this->_object->_data;
 		else
 			$this->_data = array();
 		$this->_name = ($this->_edit ? 'edit' : 'new');
@@ -115,16 +211,21 @@ class pMagicActionForm{
 
 				// Editing
 				if($this->_edit){
-					$this->_adminobject->dataObject->prepareForUpdate($values);
-					$this->_adminobject->dataObject->update();
+					$this->_object->dataObject->prepareForUpdate($values);
+					$this->_object->dataObject->update();
 				}
 				//Adding
 				else{
-					$this->_adminobject->dataObject->prepareForInsert($values);
-					$this->_adminobject->dataObject->insert();
+					$this->_object->dataObject->prepareForInsert($values);
+					$this->_object->dataObject->insert();
 				}
 
 				pOut(pNoticeBox('fa-check fa-12', $this->_strings[5].". <a href='".pUrl("?".$this->_app."&section=".$this->_section. (isset($_REQUEST['position']) ? "&offset=".$_REQUEST['position'] : ""))."'>".$this->_strings[6]."</a>", 'succes-notice ajaxMessage'));
+
+				// If this is not a edit action, we need to reload the form
+				pOut("<script type='text/javascript'>
+					$('#adminForm').trigger('reset');
+				</script>");
 
 			} catch (Exception $e) {
 				pOut(pNoticeBox('fa-warning fa-12', $this->_strings[4], 'danger-notice ajaxMessage'));
@@ -149,9 +250,14 @@ class pMagicActionForm{
 		// That is where the ajax magic happens:
 		pOut("<div class='ajaxSave'></div>");
 
-		foreach($this->_magicfields->get() as $magicField){
-			$magicField->render();
-		}
+		pOut("<form id='adminForm'>");
+
+			foreach($this->_magicfields->get() as $magicField){
+				$magicField->render();
+			}
+
+		pOut("</form>");
+
 		pOut("<div class='btButtonBar'>
 			<a class='btAction wikiEdit' href='".pUrl("?".$this->_app."&section=".$this->_section.(isset($_REQUEST['position']) ? "&offset=".$_REQUEST['position'] : ""))."'><i class='fa fa-12 fa-arrow-left' ></i> ".BACK."</a>
 			<a class='btAction green submit-form'><i class='fa fa-12 fa-check-circle'></i> ".$this->_strings[1]."</a><br id='cl'/></div>");
@@ -166,7 +272,7 @@ class pMagicActionForm{
 		}
 
 		pOut("<script type='text/javascript'>
-			".(!(isset($this->_adminobject->_structure[$this->_section]['disable_enter']) AND $this->_adminobject->_structure[$this->_section]['disable_enter'] != true) ? "$(window).keydown(function(e) {
+			".(!(isset($this->_object->_structure[$this->_section]['disable_enter']) AND $this->_object->_structure[$this->_section]['disable_enter'] != true) ? "$(window).keydown(function(e) {
 			    		switch (e.keyCode) {
 			       		 case 13:
 			       			 $('.submit-form').click();
@@ -184,8 +290,10 @@ class pMagicActionForm{
 	}
 
 
-	public function newLinkPrepare($linkObject, $show_parent, $show_child, $doExtraFields = false, $fields = null){
-		$this->_linkObject = $linkObject->_adminObject;
+	public function newLinkPrepare($linked, $linkObject, $show_parent, $show_child, $doExtraFields = false, $fields = null){
+
+		$this->_linked = $linked;
+		$this->_linkObject = $linkObject->_object;
 		$this->_guestObject = $linkObject;
 		$this->_show_parent = $show_parent;
 		$this->_show_child = $show_child;
@@ -199,22 +307,23 @@ class pMagicActionForm{
 
 		$empty_error = 0;
 
-		if($_REQUEST['admin_form_'.$this->_guestObject->structure[$this->_section]['incoming_links'][$this->_guestObject->_section]['parent']] == null){
+		if($_REQUEST['admin_form_'.$this->_guestObject->structure[$this->_section]['incoming_links'][$this->_linked]['parent']] == null){
 			$empty_error++;
 		}
 
-		foreach ($this->_extra_fields as $field)
-			if($field->showInForm && $field->required)
-				if(isset($_REQUEST['admin_form_'.$field->name])AND empty($_REQUEST['admin_form_'.$field->name]))
+		if(isset($this->_extra_fields))
+			foreach ($this->_extra_fields as $field)
+				if($field->showInForm && $field->required)
+					if(isset($_REQUEST['admin_form_'.$field->name])AND empty($_REQUEST['admin_form_'.$field->name]))
 						$empty_error++;
 
 
 		if($empty_error == 0){
 
 			// We have to check if the relation already exists
-			if($this->_adminobject->dataObject->countAll($this->_guestObject->structure[$this->_section]['incoming_links'][$this->_guestObject->_section]['child'] . " = '" . $this->_adminobject->_matchOnValue . "' AND " . $this->_guestObject->structure[$this->_section]['incoming_links'][$this->_guestObject->_section]['parent'] . " = '" . $_REQUEST['admin_form_'.$this->_guestObject->structure[$this->_section]['incoming_links'][$this->_guestObject->_section]['parent']] . "'")){
+			if($this->_object->dataObject->countAll($this->_guestObject->structure[$this->_section]['incoming_links'][$this->_linked]['child'] . " = '" . $this->_object->_matchOnValue . "' AND " . $this->_guestObject->structure[$this->_section]['incoming_links'][$this->_linked]['parent'] . " = '" . $_REQUEST['admin_form_'.$this->_guestObject->structure[$this->_section]['incoming_links'][$this->_linked]['parent']] . "'")){
 
-				pOut(pNoticeBox('fa-info-circle fa-12', DA_TABLE_RELATION_EXIST.". <a href='".pUrl("?".$this->_app."&section=".$this->_section."&action=link-table&id=".$this->_linkObject->data()[0]['id']."&linked=".$this->_guestObject->_data['section_key'])."'>".$this->_strings[6]."</a>", 'notice ajaxMessage'));
+				pOut(pNoticeBox('fa-info-circle fa-12', DA_TABLE_RELATION_EXIST.". <a href='".pUrl("?".$this->_app."&section=".$this->_section."&action=link-table&id=".$this->_linkObject->_data[0]['id']."&linked=".$this->_linked)."'>".$this->_strings[6]."</a>", 'notice ajaxMessage'));
 
 			}
 			else{
@@ -222,15 +331,15 @@ class pMagicActionForm{
 					// Preparing the values
 			
 				foreach($this->_fields->get() as $field)
-					if($field->name == $this->_guestObject->structure[$this->_section]['incoming_links'][$this->_guestObject->_section]['child'])
-						$values[] = $this->_adminobject->_matchOnValue;
+					if($field->name == $this->_guestObject->structure[$this->_section]['incoming_links'][$this->_linked]['child'])
+						$values[] = $this->_object->_matchOnValue;
 					else
 						$values[] = $_REQUEST['admin_form_'.$field->name];
 
-				$this->_adminobject->dataObject->prepareForInsert($values);
-				$this->_adminobject->dataObject->insert();
-				$this->_adminobject->dataObject->getSingleObject(1);
-				pOut(pNoticeBox('fa-info-circle fa-12', DA_TABLE_RELATION_ADDED.". <a href='".pUrl("?".$this->_app."&section=".$this->_section."&action=link-table&id=".$this->_linkObject->data()[0]['id']."&linked=".$this->_guestObject->_data['section_key'])."'>".$this->_strings[6]."</a>", 'succes-notice ajaxMessage'));
+				$this->_object->dataObject->prepareForInsert($values);
+				$this->_object->dataObject->insert();
+				$this->_object->dataObject->getSingleObject(1);
+				pOut(pNoticeBox('fa-info-circle fa-12', DA_TABLE_RELATION_ADDED.". <a href='".pUrl("?".$this->_app."&section=".$this->_section."&action=link-table&id=".$this->_linkObject->data()[0]['id']."&linked=".$this->_linked)."'>".$this->_strings[6]."</a>", 'succes-notice ajaxMessage'));
 			}
 		}
 		else
@@ -247,19 +356,18 @@ class pMagicActionForm{
 	public function newLinkForm(){
 
 		pOut("<div class='btCard admin link-table'>");
-		pOut("<div class='btTitle'><i class='fa fa-plus-circle'></i> ".DA_TABLE_NEW_RELATION."<span class='medium'>".$this->_adminobject->_surface."</span></div>");
+		pOut("<div class='btTitle'><i class='fa fa-plus-circle'></i> ".DA_TABLE_NEW_RELATION."<span class='medium'>".$this->_object->_surface."</span></div>");
 
 		pOut(pNoticeBox('fa-spinner fa-spin fa-12', $this->_strings[2], 'notice saving hide'));
 
 		// That is where the ajax magic happens:
 		pOut("<div class='ajaxSave'></div>");
 		pOut("<div class='btSource'><span class='btLanguage'>".DA_TABLE_LINKS_PARENT."</span><br />
-			<span class='btNative'>".$this->_linkObject->data()[0][$this->_show_parent]."</span></div>");
+			<span class='btNative'>".$this->_linkObject->_data[0][$this->_show_parent]."</span></div>");
 
-		pOut("<div class='btSource'><span class='btLanguage'>".DA_TABLE_LINKS_CHILD."</span><br /><span class='btNative'><select class='field_".$this->_guestObject->structure[$this->_section]['incoming_links'][$this->_guestObject->_section]['parent']."'>");
+		pOut("<div class='btSource'><span class='btLanguage'>".DA_TABLE_LINKS_CHILD."</span><br /><span class='btNative'><select class='field_".$this->_guestObject->structure[$this->_section]['incoming_links'][$this->_linked]['parent']."'>");
 
-		foreach($this->_adminobject->_passed_data as $data)
-			pOut("<option value='".$data['id']."'>".$data[$this->_show_child]."</option>");
+		pOut($this->_fields->get()[$this->_guestObject->structure[$this->_section]['incoming_links'][$this->_linked]['child']]->selectionValues->render());
 
 		pOut("</select></span></div>");
 
@@ -270,7 +378,7 @@ class pMagicActionForm{
 				(new pMagicField($field))->render();
 
 		pOut("<div class='btButtonBar'>
-			<a class='btAction wikiEdit' href='".pUrl("?".$this->_app."&section=".$this->_section."&action=link-table&id=".$this->_linkObject->data()[0]['id']."&linked=".$this->_guestObject->_data['section_key'])."'><i class='fa fa-12 fa-arrow-left' ></i> ".BACK."</a>
+			<a class='btAction wikiEdit' href='".pUrl("?".$this->_app."&section=".$this->_section."&action=link-table&id=".$this->_linkObject->_data[0]['id']."&linked=".$this->_linked)."'><i class='fa fa-12 fa-arrow-left' ></i> ".BACK."</a>
 			<a class='btAction green submit-form'><i class='fa fa-12 fa-check-circle'></i> ".$this->_strings[1]."</a><br id='cl'/></div>");
 		pOut("</div>");
 
@@ -291,10 +399,10 @@ class pMagicActionForm{
 			   			 }
 			   		 return; 
 					});" : '')."
-				$('.field_".$this->_guestObject->structure[$this->_section]['incoming_links'][$this->_guestObject->_section]['parent']."').select2();
+				$('.field_".$this->_guestObject->structure[$this->_section]['incoming_links'][$this->_linked]['parent']."').select2();
 				$('.submit-form').click(function(){
 					$('.saving').slideDown();
-					$('.ajaxSave').load('".pUrl("?".$this->_app."&section=".$this->_section."&action=new-link&id=".$this->_linkObject->data()[0]['id']."&linked=".$this->_guestObject->_data['section_key'])."&ajax', {".implode(", ", $loadValues)."});
+					$('.ajaxSave').load('".pUrl("?".$this->_app."&section=".$this->_section."&action=new-link&id=".$this->_linkObject->_data[0]['id']."&linked=".$this->_linked)."&ajax', {".implode(", ", $loadValues)."});
 				});
 			</script>");
 	}

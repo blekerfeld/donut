@@ -2738,9 +2738,15 @@ input.btInput, textarea.btInput {
 div.btSource {
   margin-bottom: 20px;
 }
+
+div.btSource span.btNative {
+  font-family:Merriweather;
+  color: #444;
+  font-size: 25px;
+  font-weight: bold;
+}
+
 div.btSource span.btNative strong {
-  color: #68777d;
-  font-size: 30px;
   font-family: Gentium;
 }
 div.btSource a.tooltip {

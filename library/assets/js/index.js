@@ -1,3 +1,6 @@
+require('vendors.js');
+
+
 $(document).ready(function(){
 
 $('.tooltip').tooltipster({theme: 'tooltipster-donut'});

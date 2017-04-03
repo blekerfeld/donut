@@ -9,9 +9,6 @@
 	//	++	File: d_admin.index.php
 
 	
-	if(!pLogged() OR !pCheckAdmin())
-		die(pUrl('', true));
-
 	$pStructure = new pAdminStructure('dictionary', 'admin', 'dictionary-admin', 'lexcat', 'Admin Panel');
 
 	$pStructure->load();
@@ -19,6 +16,3 @@
 	$pStructure->render();
 
 	return;
-
-
-
