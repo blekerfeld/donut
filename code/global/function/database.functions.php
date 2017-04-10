@@ -3,7 +3,7 @@
 	//	Dictionary Toolkit
 	// 		Version a.1
 	//		Written by Thomas de Roo
-	//		Licensed under GNUv3
+	//		Licensed under MIT
 
 	//	++	File: database.functions.php
 
@@ -35,7 +35,7 @@ function pQuery($sql, $force_no_cache = false, $force_no_count = false){
 
 	global $donut;
 
-	//pOut("<div class='notice'>".$sql."</div>");
+	//echo ("<div class='notice'>".$sql."</div>");
 
 	$dbg = debug_backtrace();
 

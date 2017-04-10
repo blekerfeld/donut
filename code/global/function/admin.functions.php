@@ -3,7 +3,7 @@
 	//	Dictionary Toolkit
 	// 		Version a.1
 	//		Written by Thomas de Roo
-	//		Licensed under GNUv3
+	//		Licensed under MIT
 
 	//	++	File: admin.functions.php
 

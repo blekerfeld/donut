@@ -4,11 +4,11 @@
 	//	Dictionary Toolkit
 	// 		Version a.1
 	//		Written by Thomas de Roo
-	//		Licensed under GNUv3
+	//		Licensed under MIT
 
-	//	++	File: template.icon.cset.php
+	//	++	File: icon.cset.php
 
-class pIcon{
+class pIcon extends pSnippit{
 
 	private $_icon, $_size, $_classes;
 

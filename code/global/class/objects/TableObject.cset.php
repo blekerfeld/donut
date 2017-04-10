@@ -1,5 +1,13 @@
 <?php
 
+	// 	Donut 				🍩 
+	//	Dictionary Toolkit
+	// 		Version a.1
+	//		Written by Thomas de Roo
+	//		Licensed under MIT
+
+	//	++	File: TableObject.cset.php
+
 class pTableObject extends pObject{
 	// Used as last
 
@@ -50,13 +58,13 @@ class pTableObject extends pObject{
 			$real_id = $data['id'];
 			$showID = $data['id'];
 
-			if(isset($this->_structure[$this->_section]['id_as_hash']) AND $this->_structure[$this->_section]['id_as_hash'] AND isset($this->_structure[$this->_section]['hash_app'])){
-				$showID = "<a class='medium tooltip' href='".pUrl('?'.$this->_structure[$this->_section]['hash_app'].'='.pHashId($data['id']))."'>".(new pIcon('fa-bookmark-o', 12))." ".pHashId($data['id'])."</a>";
+			if(isset($this->_activeSection['id_as_hash']) AND $this->_activeSection['id_as_hash'] AND isset($this->_activeSection['hash_app'])){
+				$showID = "<a class='medium tooltip' href='".pUrl('?'.$this->_activeSection['hash_app'].'='.pHashId($data['id']))."'>".(new pIcon('fa-bookmark-o', 12))." ".pHashId($data['id'])."</a>";
 				$data['id'] = pHashId($data['id']);
 			}
 
 
-			pOut("<tr class='item_".$real_id ."'><td><span class='xsmall'>".($data['id'] === 0 ? "<em><strong>".DA_DEFAULT."</em></strong>" : $showID) ."</span></td>");
+			pOut("<tr class='item_".$real_id ."'><td><span class='xsmall'>".($real_id == 0 ? "<em><strong>".DA_DEFAULT."</em></strong>" : $showID) ."</span></td>");
 
 			// Go through the data fields
 			foreach($this->_dfs->get() as $datafield){

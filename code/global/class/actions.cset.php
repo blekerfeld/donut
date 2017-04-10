@@ -4,7 +4,7 @@
 	//	Dictionary Toolkit
 	// 		Version a.1
 	//		Written by Thomas de Roo
-	//		Licensed under GNUv3
+	//		Licensed under MIT
 
 	//	++	File: actions.cset.php
 
@@ -19,7 +19,7 @@ class pAction{
 
 		if($this->_override != null)
 			return $this->_override;
-		return pUrl('?'.$this->_app.'&section='.$this->_section.'&action='.$this->name.(($id != -1) ? '&id='.$id : '').(($ajax != 0) ? '&ajax': '').(isset($_REQUEST['offset']) ? "&position=".$_REQUEST['offset'] : ""));
+		return pUrl('?'.$this->_app.'/'.$this->_section.'/'.$this->name.(($id != -1) ? '/'.$id : '').(($ajax != 0) ? '/ajax': '').(isset(pAdress::arg()['offset']) ? "/position/".pAdress::arg()['offset'] : ""));
 	}
 
 	public function setOverride($override){
@@ -45,13 +45,13 @@ class pAction{
 			return '<span class="delete_load_'.$id.'"></span>
 			<a class="'.$this->_class." link_".$this->name.' red-link" href="javascript:void(0);" onClick="
 					if(confirm(\''.htmlspecialchars(DA_DELETE_SURE).'\') == true) {
-			    		$(\'.delete_load_'.$id.'\').load(\''.pUrl($this->actionUrl($id, true).($linked != null ? "&linked=".$linked : '')).'\');
+			    		$(\'.delete_load_'.$id.'\').load(\''.pUrl($this->actionUrl($id, true).($linked != null ? "/".$linked : '')).'\');
 			    		$(\'.item_'.$id.'\').slideUp(function(){
 			    				location.reload();
 			    		});
 					}">'.(new pIcon($this->_icon, 12)).' '.$this->_surface.'</a>';
 
-		return "<a href='".pUrl($this->actionUrl($id).($linked != null ? "&linked=".$linked : ''))."' class='".$this->_class." link_".$this->name."'>".(new pIcon($this->_icon, 12))." ".$this->_surface."</a>";
+		return "<a href='".pUrl($this->actionUrl($id).($linked != null ? "/".$linked : ''))."' class='".$this->_class." link_".$this->name."'>".(new pIcon($this->_icon, 12))." ".$this->_surface."</a>";
 	}
 
 }

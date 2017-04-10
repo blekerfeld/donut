@@ -4,7 +4,7 @@
 	//	Dictionary Toolkit
 	// 		Version a.1
 	//		Written by Thomas de Roo
-	//		Licensed under GNUv3
+	//		Licensed under MIT
 
 	//	++	File: forms.cset.php
 
@@ -52,7 +52,13 @@ class pMagicField{
 
 			case 'select':
 				$this->_field->selectionValues->setValue($this->_value);
-				pOut("<select name='".$this->name."'' class='field_".$this->name." ".$this->_field->class."'>".$this->_field->selectionValues->render()."</select></span>");
+				
+				// If the field is not required, we need to show an optional item
+				$optional = '';
+				if($this->_field->required == false)
+					$optional = "<option value='' ".($this->value() == '' ? 'selected' : '')."><em>(".DA_OPTIONAL.")</em></option>";
+				
+				pOut("<select name='".$this->name."'' class='field_".$this->name." ".$this->_field->class."'>".$optional.$this->_field->selectionValues->render()."</select></span>");
 				break;
 			
 			default:
@@ -69,7 +75,7 @@ class pSelector{
 
 	private $_data = NULL, $_showField = null, $_useTable = false, $_interactive, $_overrideSection;
 
-	public $object, $value;
+	public $dataObject, $value;
 
 	public function __construct($data, $value = null, $show_field = NULL, $interactive = true, $override_section = null, $condition = NULL){
 		
@@ -96,7 +102,7 @@ class pSelector{
 			$dfs->add(new pDataField($show_field));
 
 			$this->_showField = $show_field; 
-			$this->object = new pDataObject($data, $dfs);
+			$this->dataObject = new pDataObject($data, $dfs);
 		}
 	}
 
@@ -108,7 +114,7 @@ class pSelector{
 	public function render(){
 
 		// Fetching the data that we need
-		$this->object->getObjects();
+		$this->dataObject->getObjects();
 
 		$output = '';
 
@@ -118,7 +124,7 @@ class pSelector{
 				$output .= '<option value="'.$value.'" '.($this->value == $value ? 'selected' : '').'>'.$name.'</option>';
 		else{
 			// Now we have to do things
-			foreach($this->object->data()->fetchAll() as $option)
+			foreach($this->dataObject->data()->fetchAll() as $option)
 				$output .= '<option value="'.$option['id'].'" '.($this->value == $option['id'] ? 'selected' : '').'>'.$option[$this->_showField].'</option>';
 
 		}
@@ -133,19 +139,30 @@ class pSelector{
 		if($this->value == null)
 			return false;
 
+
+
+		if(is_array($this->_data))
+			return $this->_data[$this->value];
+		
 		// Getting the single item that we need, no more no less
 
-		$key = $this->value."_".$this->_showField;
+		$key = $this->value."_".$this->_showField."_".$this->_data;
 
-		if($this->_interactive && $this->_useTable)
-			$output .= "<a href='".pUrl("?".pStructureParser::$stApp."&section=".$this->_overrideSection."&action=edit&id=".$this->value."&returnto=".pStructureParser::$stSection)."' class='tooltip'>";
+		if($this->_interactive && $this->_useTable){
+			$_SESSION['pJSBack'] = true;
+			$output .= "<a href='".pUrl("?".pParser::$stApp."&".$this->_overrideSection."&edit&id=".$this->value)."' class='tooltip'>";
+		}
 
 		if(array_key_exists($key, pDataField::stack()))
 			$output .= pDataField::stack()[$key];
 		else{	
-			$this->object->getSingleObject($this->value);
-			pDataField::addToStack($key, ($this->object->data()->fetchAll()[0])[$this->_showField]);
-			$output .= ($this->object->data()->fetchAll()[0])[$this->_showField];
+			$this->dataObject->getSingleObject($this->value);
+			if($this->dataObject->count() != 0){
+				pDataField::addToStack($key, ($this->dataObject->data()->fetchAll()[0])[$this->_showField]);
+				$output .= ($this->dataObject->data()->fetchAll()[0])[$this->_showField];
+			}
+			else
+				$output .= '';
 		}
 
 		if($this->_interactive && $this->_useTable)
@@ -220,7 +237,7 @@ class pMagicActionForm{
 					$this->_object->dataObject->insert();
 				}
 
-				pOut(pNoticeBox('fa-check fa-12', $this->_strings[5].". <a href='".pUrl("?".$this->_app."&section=".$this->_section. (isset($_REQUEST['position']) ? "&offset=".$_REQUEST['position'] : ""))."'>".$this->_strings[6]."</a>", 'succes-notice ajaxMessage'));
+				pOut(pNoticeBox('fa-check fa-12', $this->_strings[5].". <a href='".pUrl("?".$this->_app."&".$this->_section. (isset($_REQUEST['position']) ? "&offset=".$_REQUEST['position'] : ""))."'>".$this->_strings[6]."</a>", 'succes-notice ajaxMessage'));
 
 				// If this is not a edit action, we need to reload the form
 				pOut("<script type='text/javascript'>
@@ -258,8 +275,15 @@ class pMagicActionForm{
 
 		pOut("</form>");
 
+		if(isset($_SESSION['pJSBack']) && $_SESSION['pJSBack'] == true){
+			$hrefBack = "javascript:window.history.back();";
+			$_SESSION['pJSBack'] = false;
+		}
+		else
+			$hrefBack = pUrl("?".$this->_app."&".$this->_section.(isset($_REQUEST['position']) ? "&offset=".$_REQUEST['position'] : ""));
+
 		pOut("<div class='btButtonBar'>
-			<a class='btAction wikiEdit' href='".pUrl("?".$this->_app."&section=".$this->_section.(isset($_REQUEST['position']) ? "&offset=".$_REQUEST['position'] : ""))."'><i class='fa fa-12 fa-arrow-left' ></i> ".BACK."</a>
+			<a class='btAction wikiEdit' href='".$hrefBack."'><i class='fa fa-12 fa-arrow-left' ></i> ".BACK."</a>
 			<a class='btAction green submit-form'><i class='fa fa-12 fa-check-circle'></i> ".$this->_strings[1]."</a><br id='cl'/></div>");
 		pOut("</div>");
 		$loadValues = array();
@@ -282,7 +306,7 @@ class pMagicActionForm{
 				$('.btCard select').select2();
 				$('.submit-form').click(function(){
 					$('.saving').slideDown();
-					$('.ajaxSave').load('".pUrl("?".$this->_app."&section=".$this->_section."&action=".$this->_name.(($this->_edit) ? '&id='.$this->_data[0]['id'] : '')."&ajax")."', {
+					$('.ajaxSave').load('".pUrl("?".$this->_app."&".$this->_section."&".$this->_name.(($this->_edit) ? '&id='.$this->_data[0]['id'] : '')."&ajax")."', {
 						".implode(", ", $loadValues)."
 					});
 				});
@@ -323,7 +347,7 @@ class pMagicActionForm{
 			// We have to check if the relation already exists
 			if($this->_object->dataObject->countAll($this->_guestObject->structure[$this->_section]['incoming_links'][$this->_linked]['child'] . " = '" . $this->_object->_matchOnValue . "' AND " . $this->_guestObject->structure[$this->_section]['incoming_links'][$this->_linked]['parent'] . " = '" . $_REQUEST['admin_form_'.$this->_guestObject->structure[$this->_section]['incoming_links'][$this->_linked]['parent']] . "'")){
 
-				pOut(pNoticeBox('fa-info-circle fa-12', DA_TABLE_RELATION_EXIST.". <a href='".pUrl("?".$this->_app."&section=".$this->_section."&action=link-table&id=".$this->_linkObject->_data[0]['id']."&linked=".$this->_linked)."'>".$this->_strings[6]."</a>", 'notice ajaxMessage'));
+				pOut(pNoticeBox('fa-info-circle fa-12', DA_TABLE_RELATION_EXIST.". <a href='".pUrl("?".$this->_app."&".$this->_section."&link-table&id=".$this->_linkObject->_data[0]['id']."&linked=".$this->_linked)."'>".$this->_strings[6]."</a>", 'notice ajaxMessage'));
 
 			}
 			else{
@@ -339,7 +363,7 @@ class pMagicActionForm{
 				$this->_object->dataObject->prepareForInsert($values);
 				$this->_object->dataObject->insert();
 				$this->_object->dataObject->getSingleObject(1);
-				pOut(pNoticeBox('fa-info-circle fa-12', DA_TABLE_RELATION_ADDED.". <a href='".pUrl("?".$this->_app."&section=".$this->_section."&action=link-table&id=".$this->_linkObject->data()[0]['id']."&linked=".$this->_linked)."'>".$this->_strings[6]."</a>", 'succes-notice ajaxMessage'));
+				pOut(pNoticeBox('fa-info-circle fa-12', DA_TABLE_RELATION_ADDED.". <a href='".pUrl("?".$this->_app."&".$this->_section."&link-table&id=".$this->_linkObject->data()[0]['id']."&linked=".$this->_linked)."'>".$this->_strings[6]."</a>", 'succes-notice ajaxMessage'));
 			}
 		}
 		else
@@ -378,7 +402,7 @@ class pMagicActionForm{
 				(new pMagicField($field))->render();
 
 		pOut("<div class='btButtonBar'>
-			<a class='btAction wikiEdit' href='".pUrl("?".$this->_app."&section=".$this->_section."&action=link-table&id=".$this->_linkObject->_data[0]['id']."&linked=".$this->_linked)."'><i class='fa fa-12 fa-arrow-left' ></i> ".BACK."</a>
+			<a class='btAction wikiEdit' href='".pUrl("?".$this->_app."&".$this->_section."&link-table&id=".$this->_linkObject->_data[0]['id']."&linked=".$this->_linked)."'><i class='fa fa-12 fa-arrow-left' ></i> ".BACK."</a>
 			<a class='btAction green submit-form'><i class='fa fa-12 fa-check-circle'></i> ".$this->_strings[1]."</a><br id='cl'/></div>");
 		pOut("</div>");
 
@@ -402,7 +426,7 @@ class pMagicActionForm{
 				$('.field_".$this->_guestObject->structure[$this->_section]['incoming_links'][$this->_linked]['parent']."').select2();
 				$('.submit-form').click(function(){
 					$('.saving').slideDown();
-					$('.ajaxSave').load('".pUrl("?".$this->_app."&section=".$this->_section."&action=new-link&id=".$this->_linkObject->_data[0]['id']."&linked=".$this->_linked)."&ajax', {".implode(", ", $loadValues)."});
+					$('.ajaxSave').load('".pUrl("?".$this->_app."&".$this->_section."&new-link&id=".$this->_linkObject->_data[0]['id']."&linked=".$this->_linked)."&ajax', {".implode(", ", $loadValues)."});
 				});
 			</script>");
 	}

@@ -4,7 +4,7 @@
 	//	Dictionary Toolkit
 	// 		Version a.1
 	//		Written by Thomas de Roo
-	//		Licensed under GNUv3
+	//		Licensed under MIT
 
 	//	++	File: config.php
 
@@ -35,7 +35,7 @@
 
 	//	Global array
 	$donut = array();
-	$donut['rewrite'] = false;
+	$donut['rewrite'] = true;
 	$donut['is_beta'] = true;
 	$donut['file'] = 'index.php';
 	$donut['settings'] =array();

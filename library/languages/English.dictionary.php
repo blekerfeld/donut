@@ -56,6 +56,7 @@ define('LE_IPA', "IPA transcription");
 
 
 // D_admin
+define('DA_OPTIONAL', "optional");
 define('DA_DEFAULT', "Default");
 define('DA_PERMISSION_ERROR', "You don't currently have permission to access this section.");
 define('DA_SECTION_ERROR', "The section you requested is not found, the default section is loaded instead.");
@@ -98,7 +99,9 @@ define('DA_SUBINFLECTIONS', "Sub-inflections");
 
 define("DA_LEXCAT_TITLE", "Lexical categories");
 define("DA_LEXCAT", "Lexical category");
+define("DA_GRAMCAT", "Grammatical category");
 define("DA_GRAMCAT_TITLE", "Grammatical categories");
+define("DA_GRAMTAG", "Grammatical tag");
 define("DA_GRAMTAGS_TITLE", "Grammatical tags");
 
 

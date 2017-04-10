@@ -65,6 +65,13 @@ p{
   font-style: italic;
 }
 
+.xxxsmall, .xxxsmall i.fa {
+  font-size: 6px!important;
+}
+
+.xxsmall, .xxsmall i.fa {
+  font-size: 7px!important;
+}
 
 .xsmall, .xsmall i.fa {
   font-size: 9px!important;
@@ -2620,7 +2627,7 @@ div.btCard {
 }
 
 div.btCard.admin{
-  width: 85%;
+  width: 95%;
 }
 
 div.btCard.admin.minimal{

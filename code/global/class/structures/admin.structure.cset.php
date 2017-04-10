@@ -4,7 +4,7 @@
 	//	Dictionary Toolkit
 	// 		Version a.1
 	//		Written by Thomas de Roo
-	//		Licensed under GNUv3
+	//		Licensed under MIT
 
 	//	++	File: admin.structure.cset.php
 
@@ -18,8 +18,8 @@ class pAdminStructure extends pStructure{
 		global $donut;
 
 		// If the user requests a section and if it extist
-		if(isset($_REQUEST['section']) and array_key_exists($_REQUEST['section'], $this->_structure))
-			$this->_section = $_REQUEST['section'];
+		if(isset(pAdress::arg()['section']) AND array_key_exists(pAdress::arg()['section'], $this->_structure))
+			$this->_section = pAdress::arg()['section'];
 		else{
 
 			$this->_error = pNoticeBox('fa-info-circle fa-12', DA_SECTION_ERROR, 'danger-notice');
@@ -28,10 +28,10 @@ class pAdminStructure extends pStructure{
 		}
 
 
-		$this->_adminParser = new pStructureParser($this->_structure, $this->_structure[$this->_section], $this->_app, $this->_permission);
+		$this->_parser = new pParser($this->_structure, $this->_structure[$this->_section], $this->_app, $this->_permission);
 		;
 
-		$this->_adminParser->compile();
+		$this->_parser->compile();
 
 		$donut['page']['title'] = $this->_page_title;
 	}
@@ -47,13 +47,13 @@ class pAdminStructure extends pStructure{
 	private function checkActiveMain($name){
 		if(isset($this->_menu[$name]['items']))
 			foreach($this->_menu[$name]['items'] as $item)
-				if(isset($_REQUEST['section']) && $_REQUEST['section'] == $item['section_key'])
+				if(isset(pAdress::arg()['section']) && pAdress::arg()['section'] == $item['section_key'])
 					return true;
 	}
 
 	private function checkActiveSub($name){
 
-		if(isset($_REQUEST['section']) && $_REQUEST['section'] == $name)
+		if(isset(pAdress::arg()['section']) && pAdress::arg()['section'] == $name)
 			return true;
 
 	}
@@ -69,12 +69,12 @@ class pAdminStructure extends pStructure{
 		foreach($this->_menu as $key => $main){
 			// Permission check
 			if(pUser::checkPermission($this->itemPermission($main['section'])) OR isset($main['items'])){
-				$output .= "<a href='".(isset($main['section']) ? pUrl("?".$this->_app."&section=".$main['section']) : '')."' class='".(($this->checkActiveMain($key) OR (isset($_REQUEST['section'], $main['section']) AND $_REQUEST['section'] == $main['section'])) ? 'active' : '')." ttip' title='
+				$output .= "<a href='".(isset($main['section']) ? pUrl("?".$this->_app."/".$main['section']) : '')."' class='".(($this->checkActiveMain($key) OR (isset(pAdress::arg()['section'], $main['section']) AND pAdress::arg()['section'] == $main['section'])) ? 'active' : '')." ttip' title='
 					<strong>".htmlspecialchars($main['surface'])."</strong>";
 
 				if(isset($main['items']))
 					foreach($main['items'] as $item){
-						$output .= "<a href=\"".pUrl("?".$this->_app."&section=".$item['section_key'])."\" class=\"ttip-sub ".($this->checkActiveSub($item['section_key']) ? 'active' : '')."\">".(new pIcon($item['icon'], 12))." ". htmlspecialchars($item['surface'])."</a>";
+						$output .= "<a href=\"".pUrl("?".$this->_app."/".$item['section_key'])."\" class=\"ttip-sub ".($this->checkActiveSub($item['section_key']) ? 'active' : '')."\">".(new pIcon($item['icon'], 12))." ". htmlspecialchars($item['surface'])."</a>";
 					}
 
 				$items++;
@@ -111,9 +111,8 @@ class pAdminStructure extends pStructure{
 	public function render(){
 
 		// The asynchronous j.a.x. gets to skip a bit 
-		if(isset($_REQUEST['ajax']))
-			goto ajax;
-
+		if(isset(pAdress::arg()['ajax']))
+			goto ajaxSkipOutput;
 
 		// Preparing the menu
 		$this->prepareMenu();
@@ -128,24 +127,28 @@ class pAdminStructure extends pStructure{
 			pOut("<div class='btCard minimal admin'>".$this->_error."</div>");
 
 		// If there is an offset, we need to define that
-		if(isset($_REQUEST['offset']))
-			$this->_adminParser->setOffset($_REQUEST['offset']);
+		if(isset(pAdress::arg()['offset']))
+			$this->_parser->setOffset(pAdress::arg()['offset']);
 
-		ajax:
-		if(isset($_REQUEST['action'])){
+		ajaxSkipOutput:
+		// Let's look for an action, that can not be an id! :D
+		if(isset(pAdress::arg()['action'])){
 
-			if(isset($_REQUEST['id']) AND !in_array($_REQUEST['action'], array('link-table')))
-				$this->_adminParser->runData((is_numeric($_REQUEST['id']) ?  $_REQUEST['id'] : pHashId($_REQUEST['id'], true)[0]));
+			if(isset(pAdress::arg()['id']) AND !in_array(pAdress::arg()['action'], array('link-table')))
+				$this->_parser->runData((is_numeric(pAdress::arg()['id']) ?  pAdress::arg()['id'] : pHashId(pAdress::arg()['id'], true)[0]));
 
-			$this->_adminParser->action($_REQUEST['action'], (boolean)isset($_REQUEST['ajax']), ((isset($_REQUEST['linked']) ? $_REQUEST['linked'] : null)));
-			if(isset($_REQUEST['ajax']))
+			$this->_parser->action(pAdress::arg()['action'], (boolean)isset(pAdress::arg()['ajax']), ((isset(pAdress::arg()['linked']) ? pAdress::arg()['linked'] : null)));
+			if(isset(pAdress::arg()['ajax']))
 				return true;
 		}
 		else{
+			if(isset(pAdress::arg()['id']))
+				$this->_parser->runData(is_numeric(pAdress::arg()['id']) ?  pAdress::arg()['id'] : pHashId(pAdress::arg()['id'], true)[0]);
+			else
+				$this->_parser->runData();
 
-			$this->_adminParser->runData();
-			$this->_adminParser->render();
-			if(isset($_REQUEST['ajax']))
+			$this->_parser->render();
+			if(isset(pAdress::arg()['ajax']))
 				return true;
 		}
 
