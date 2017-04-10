@@ -4,16 +4,16 @@
 	//	Dictionary Toolkit
 	// 		Version a.1
 	//		Written by Thomas de Roo
-	//		Licensed under GNUv3
+	//		Licensed under MIT
 
-	//	++	File: admin.cset.php
+	//	++	File: object.cset.php
 
 
 
 // ↓ Object
 class pObject{
 
-	public $_icon, $_surface, $_data, $_dfs, $dataObject, $_section, $_app, $_actions, $_actionbar, $_paginated, $_offset, $_itemsperpage, $_condition = '', $_total, $_number_of_pages, $_linked = null, $_structure, $_order = '1';
+	public $_icon, $_surface, $_data, $_dfs, $dataObject, $_section, $_app, $_actions, $_actionbar, $_paginated, $_offset, $_itemsperpage, $_condition = '', $_total, $_number_of_pages, $_linked = null, $_structure, $_order = '1', $id, $_activeSection;
 
 	public function __construct($structure, $icon, $surface, $table, $itemsperpage, $dfs, $actions, $actionbar, $paginated, $section, $app = 'dictionary-admin'){
 		$this->_structure = $structure;
@@ -33,17 +33,18 @@ class pObject{
 
 		$this->_section = $section;
 		$this->_app = $app;
+
+		$this->_activeSection = $this->_structure[$this->_section];
 	} 
 
 
 	public function addLink($section, $key){
 		if($this->_linked == null)
 			$this->_linked = array();
-		$this->_linked[$key] = (new pStructureParser($this->_structure, $this->_structure[$section['section']], $this->_app));
+		$this->_linked[$key] = (new pParser($this->_structure, $this->_structure[$section['section']], $this->_app));
 	}
 
 	public function getAction($name){
-
 
 		if(isset($this->_actions->get()[$name]))
 			return $this->_actions->get()[$name];
@@ -54,12 +55,13 @@ class pObject{
 	// This one lets the dataobject work! 
 
 	public function getData($id = -1){
-		if($id == -1)
+		if($id == -1){
 			return $this->_data = $this->dataObject->getObjects($this->_offset, $this->_itemsperpage)->fetchAll();
+		}
 		else{
-			if(!is_numeric($id)){
+			if(!is_numeric($id))
 				$id = pHashId($id, true)[0];
-			}
+			$this->id = $id;
 			return $this->_data = $this->dataObject->getSingleObject($id)->fetchAll();
 		}
 	}
@@ -76,12 +78,12 @@ class pObject{
 
 	public function pagePrevious(){
 		if($this->_offset >= $this->_itemsperpage)
-			return "<a href='".pUrl("?".$this->_app . "&section=". $this->_section . '&offset='.($this->_offset - $this->_itemsperpage))."' class='btAction page blue small'><i class='fa fa-8 fa-arrow-left'></i></a>";
+			return "<a href='".pUrl("?".$this->_app . "&". $this->_section . '&offset='.($this->_offset - $this->_itemsperpage))."' class='btAction page blue small'><i class='fa fa-8 fa-arrow-left'></i></a>";
 	}
 
 	public function pageNext(){
 		if($this->_total > ($this->_offset + $this->_itemsperpage))
-			return "<a href='".pUrl("?".$this->_app . "&section=". $this->_section . '&offset='.($this->_offset + $this->_itemsperpage))."' class='btAction page blue small'><i class='fa fa-8 fa-arrow-right' style='font-size: 12px!important;'></i></a> ";
+			return "<a href='".pUrl("?".$this->_app . "&". $this->_section . '&offset='.($this->_offset + $this->_itemsperpage))."' class='btAction page blue small'><i class='fa fa-8 fa-arrow-right' style='font-size: 12px!important;'></i></a> ";
 	}
 
 	public function changePagination($value){
@@ -95,7 +97,7 @@ class pObject{
 
 		$current_page_number  = 1;
 
-		$select_page = "<select class='selectPage' onChange='window.location = \"".pUrl("?".$this->_app . "&section=". $this->_section . '&offset=')."\" + $(this).val();'>";
+		$select_page = "<select class='selectPage' onChange='window.location = \"".pUrl("?".$this->_app . "&". $this->_section . '&offset=')."\" + $(this).val();'>";
 
 			while($number_of_pages > 0){
 				$calculated_offset = (($current_page_number * $this->_itemsperpage) - $this->_itemsperpage);

@@ -4,7 +4,7 @@
 	//	Dictionary Toolkit
 	// 		Version a.1
 	//		Written by Thomas de Roo
-	//		Licensed under GNUv3
+	//		Licensed under MIT
 
 	//	++	File: index.php
 
@@ -24,8 +24,42 @@
 	//	Let's load ALL the global code (functions and classes)
 	pLoadGlobalCode();
 
+
+	//	We need to get the language loaded
+	pLoadLanguage('English');
+
 	//	Rewelcome our previous-session logged in guest
 	pUser::restore();
+
+	if(isset($_REQUEST['old']))
+		goto Old;
+
+	/*
+	
+		Welcome to the new dispatcher! :D
+
+	*/ 
+
+	//	Calling dispatch!
+	$dispatcher = new pDispatch($_SERVER['QUERY_STRING']);
+	$dispatcher->compile();
+	
+	$dispatcher->structureObject->render();
+
+	// Defining the menu, intial state
+	$donut['page']['menu'] = pMenu();
+
+	//	Starting with content output
+	$donut['page']['header_final'] = "";
+	$donut['page']['content_final'] = "";
+
+	//	Putting the header sections into the donut.
+	foreach($donut['page']['header'] as $output_section)
+		$donut['page']['header_final'] .= "$output_section \n";
+
+	//	Putting the page sections into the donut.
+	foreach($donut['page']['content'] as $outputsection)
+		$donut['page']['content_final'] .= "$outputsection \n";
 
 	//	If we're logged in, we need to have the user to our disposal
 	if(pLogged())
@@ -33,8 +67,15 @@
 	else
 		$donut['user'] = null;
 
-	//	We need to get the language loaded
-	pLoadLanguage('English');
+
+
+	//	The template is loaded, that's the begining of the end.
+	require pFromRoot("library/templates/main_template.php");
+
+	Old:
+
+	if(!isset($_REQUEST['old']))
+		die();
 
 	// We are in beta!
 	$donut['is_beta'] = true;
@@ -45,6 +86,13 @@
 
 	// Defining the menu, intial state
 	$donut['page']['menu'] = pMenu();
+
+		//	If we're logged in, we need to have the user to our disposal
+	if(pLogged())
+		$donut['user'] = pGetUser();
+	else
+		$donut['user'] = null;
+
 
 	// Going through the apps, looking for answers...
 	while($app = $apps->fetchObject()){

@@ -1,5 +1,13 @@
 <?php
 
+	// 	Donut 				🍩 
+	//	Dictionary Toolkit
+	// 		Version a.1
+	//		Written by Thomas de Roo
+	//		Licensed under MIT
+
+	//	++	File: LinkTableObject.cset.php
+
 class pLinkTableObject extends pObject{
 
 	public $_passed_data, $_show, $_matchOn, $_matchOnValue, $_link, $_guests;
@@ -31,7 +39,7 @@ class pLinkTableObject extends pObject{
 			<div class='btTitle'>
 				".(new pIcon($this->_icon, 12))." ".$this->_surface."
 			</div>
-			<div class='btButtonBar up'><a class='btAction wikiEdit' href='".pUrl("?".$this->_app."&section=".$this->_guests->_data['section_key'])."'>".(new pIcon('fa-arrow-left', 12))." ".BACK."</a>".$pages.$this->_actionbar->output."</div><div class='content'>
+			<div class='btButtonBar up'><a class='btAction wikiEdit' href='".pUrl("?".$this->_app."&".$this->_guests->_data['section_key'])."'>".(new pIcon('fa-arrow-left', 12))." ".BACK."</a>".$pages.$this->_actionbar->output."</div><div class='content'>
 			");
 
 
@@ -66,9 +74,10 @@ class pLinkTableObject extends pObject{
 			foreach($this->_passed_data as $key => $item){
 			      if ( $item['id'] == $data[$this->_matchOn] ){
 			      	pOut("<tr class='item_".$data['id']."'><td style='width: auto;max-width: 5px;'><span class='xsmall'>".($item['id'] == 0 ? "<em><strong>".DA_DEFAULT."</em></strong>" : $item['id']) ."</span></td>");
+
 				      foreach($this->_dfs->get() as $key_d => $datafield){
 						if($datafield->showInTable == true)
-							if($datafield->name != $this->_guests->_data['outgoing_links'][$this->_link]['field'])
+							if($datafield->name != $this->_guests->_data['outgoing_links'][pAdress::arg()['linked']]['field'])
 								pOut("<td style='width: ".$datafield->width."'>".$datafield->parse($data[$datafield->name])."</td>");
 							else{
 							
@@ -109,7 +118,7 @@ class pLinkTableObject extends pObject{
 
 		pOut("</div>
 			<div class='btButtonBar'>
-			<a class='btAction wikiEdit' href='".pUrl("?".$this->_app."&section=".$this->_guests->_data['section_key'])."'><i class='fa fa-12 fa-arrow-left' ></i> ".BACK."</a>
+			<a class='btAction wikiEdit' href='".pUrl("?".$this->_app."&".$this->_guests->_data['section_key'])."'><i class='fa fa-12 fa-arrow-left' ></i> ".BACK."</a>
 			".$pages.$this->_actionbar->output."</div>
 		</div>");
 		}

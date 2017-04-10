@@ -4,13 +4,13 @@
 	//	Dictionary Toolkit
 	// 		Version a.1
 	//		Written by Thomas de Roo
-	//		Licensed under GNUv3
+	//		Licensed under MIT
 
 	//	++	File: dataobject.cset.php
 
 class pDataObject {
 
-	private $_fields = null, $_table, $_fieldstring, $_valuestring, $_updateid, $_updatestring, $_singleId, $_paginated, $_data, $_condition, $_order = '1';
+	public $_fields = null, $_table, $_fieldstring, $_valuestring, $_updateid, $_updatestring, $_singleId, $_paginated, $_data, $_condition, $_order = '1';
 
 	public function __construct($table, $fields = null, $paginated = false){
 		$this->_fields = $fields;
