@@ -10,15 +10,21 @@
 
 class pEntrySection extends pSnippit{
 
-	private $_title, $_content, $_forceNoContent, $_informationElements = array();
+	private $_title, $_content, $_forceNoContent, $_informationElements = array(), $_icon;
 
-	public function __construct($title, $content, $extra = true,  $forceNoContent = false){
+	public function __construct($title, $content, $icon = null, $extra = true,  $forceNoContent = false, $sub = false){
 		$this->_title = $title;
+		$this->_icon = $icon;
 		if($extra)
 			$this->_extraClass = 'extra';
 		else
 			$this->_extraClass = 'first';
+
+		if($sub)
+			$this->_extraClass .= ' sub';
+
 		$this->_forceNoContent = $forceNoContent;
+		$this->_content = $content;
 	}
 
 	public function addInformationElement($information, $class ='', $link = null){
@@ -36,13 +42,22 @@ class pEntrySection extends pSnippit{
 	}
 
 	public function __toString(){
-		$output = "<span class='pSectionTitle $this->_extraClass'>$this->_title</span>";
+		$output = "<span class='pSectionTitle $this->_extraClass'>";
+
+		if($this->_icon != null)
+			$output .= new pIcon($this->_icon, 10)." ";
+
+		$output .= $this->_title."<br />";
 
 		foreach($this->_informationElements as $informationElement)
-			$output .= $informationElement;
+			$output .= "<em class='info'><span class='tooltip'>".$informationElement."</span></em> ";
+
+		$output .= "</span>";
 
 		if(!$this->_forceNoContent)
 			$output .= "<div class='pSectionWrapper'>$this->_content</div>";
+		else
+			$output .= $this->_content;
 
 		return $output;
 	}

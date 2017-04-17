@@ -14,7 +14,7 @@
     <link href='http://fonts.googleapis.com/css?family=Slabo+27px' rel='stylesheet' type='text/css'>
     <script src="https://cdn.jsdelivr.net/simplemde/latest/simplemde.min.js"></script>
     <script src="<?php echo pUrl('library/assets/js/vendors/jquery.js'); ?>"></script>
-    <script src="<?php echo pUrl('library/assets/js/vendors/pace.min.js'); ?>"></script>
+    <script src="<?php echo pUrl('library/assets/js/vendors/jquery.pace.js'); ?>"></script>
     <script src="<?php echo pUrl('library/assets/js/vendors/jquery.tooltipster.js'); ?>"></script>
     <script src="<?php echo pUrl('library/assets/js/vendors/jquery.playsound.js'); ?>"></script>
     <script src="<?php echo pUrl('library/assets/js/vendors/jquery.pulsate.js'); ?>"></script>

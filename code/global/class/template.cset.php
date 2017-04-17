@@ -19,16 +19,24 @@ class pTemplate{
 
 	}
 
-	public function render(){
-		
+	public function parseSubEntries($subEntries){
+		$output = '';
+		foreach($subEntries->get() as $subentry){
+			$function = ($subentry->templateFunction);
+			if(count($subentry->data()) != 0)
+				$output .= $this->$function($subentry->data(), $subentry->icon);
+		}
+		return $output;
+	}
+
+	// For debug purposes only
+	public function varDump($data, $icon){
+		var_dump($data);
 	}
 
 }
 
 class pEntryTemplate extends pTemplate{
 
-	public function dataObject(){
-
-	}
 
 }

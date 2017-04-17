@@ -25,9 +25,15 @@ class pEntryObject extends pObject{
 		$this->_meta = $this->_activeSection['entry_meta'];
 	}
 
+	public function catchAction($action){
+		pOut($action);
+	}
+
 	public function render(){
 
-		var_dump($_SERVER['REQUEST_URI']);
+		$this->_actionbar->generate();
+
+		pOut($this->_actionbar->output);
 
 		// Shortcut to the data
 		$data = $this->dataObject->data()->fetchAll()[0];
@@ -35,11 +41,21 @@ class pEntryObject extends pObject{
 		// Passing the data on to the template
 		$this->_template = new $this->_activeSection['template']($data, $this->_activeSection);
 
+		// We might pass this job to an object if that is specified in the metadat
+		if(isset($this->_meta['parseAsObject']) AND class_exists($this->_meta['parseAsObject'])){
+			$object = new $this->_meta['parseAsObject']($this->dataObject);
+			$object->setTemplate($this->_template);
+			if(isset($this->_activeSection['subobjects'])){
+				$object->fillSubEntries($this->_activeSection['subobjects']);
+			}
+			return $object->renderEntry();
+		}
+
 		// The title section
 		pOut($this->_template->title($data[$this->_meta['title_field']]));
 
 		foreach($this->_activeSection['subobjects'] as $subObject){
-			$subObject->setValue($this->id);
+			$subObject->setID($this->id);
 			$subObject->compile();
 		}
 

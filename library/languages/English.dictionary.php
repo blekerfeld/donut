@@ -23,9 +23,13 @@ define('DICT_MATCHES', 'Your query yielded %s results.');
 define('LEMMA_ERROR', "The requested lemma doesn't exist, please look for errors in the URL.");
 define("LEMMA_INFLECTIONS", "Inflections");
 define("LEMMA_TRANSLATIONS", 'Meaning and translations');
+define("LEMMA_TRANSLATION_INTO", 'Translation into %s');
+define("LEMMA_TRANSLATION_ADDED", 'Created by %s on %s');
 define("LEMMA_TRANSLATIONS_INTO", 'Translations into %s');
 define("LEMMA_TRANSLATIONS_MEANINGS", 'Other meanings/alternate forms in %s');
 define("LEMMA_USAGE_NOTES", "Usage notes");
+define("LEMMA_ANTONYMS", "Antonyms");
+define("LEMMA_SYNONYMS", "Synonyms");
 
 // Lemma edit
 define('LEMMA_EDIT', "Edit lemma");
@@ -53,6 +57,10 @@ define('LE_BASICS_TAGS', "Tag:");
 
 define('LE_IPA_TITLE', "Edit IPA transcription");
 define('LE_IPA', "IPA transcription");
+
+
+// Entry
+define('ENTRY_NOT_FOUND', "The entry you requested is not found.");
 
 
 // D_admin

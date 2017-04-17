@@ -28,6 +28,10 @@ class pObject{
 		$this->_offset = 0;
 		$this->_itemsperpage = $itemsperpage;
 
+		// If there are none data fields specified, we need to get all.
+		if(empty($this->_dfs->get()))
+			$this->_dfs = null;
+
 		$this->dataObject = new pDataObject($table, $this->_dfs, $this->_paginated);
 		$this->_total = $this->dataObject->countAll();
 
@@ -50,6 +54,10 @@ class pObject{
 			return $this->_actions->get()[$name];
 		else
 			$this->_actionbar->get()[$name];
+	}
+
+	public function catchAction($action){
+		// The different objects might handle this differently
 	}
 
 	// This one lets the dataobject work! 
@@ -78,12 +86,12 @@ class pObject{
 
 	public function pagePrevious(){
 		if($this->_offset >= $this->_itemsperpage)
-			return "<a href='".pUrl("?".$this->_app . "&". $this->_section . '&offset='.($this->_offset - $this->_itemsperpage))."' class='btAction page blue small'><i class='fa fa-8 fa-arrow-left'></i></a>";
+			return "<a href='".pUrl("?".$this->_app . "/". $this->_section . '/offset/'.($this->_offset - $this->_itemsperpage))."' class='btAction page blue small'><i class='fa fa-8 fa-arrow-left'></i></a>";
 	}
 
 	public function pageNext(){
 		if($this->_total > ($this->_offset + $this->_itemsperpage))
-			return "<a href='".pUrl("?".$this->_app . "&". $this->_section . '&offset='.($this->_offset + $this->_itemsperpage))."' class='btAction page blue small'><i class='fa fa-8 fa-arrow-right' style='font-size: 12px!important;'></i></a> ";
+			return "<a href='".pUrl("?".$this->_app . "/". $this->_section . '/offset/'.($this->_offset + $this->_itemsperpage))."' class='btAction page blue small'><i class='fa fa-8 fa-arrow-right' style='font-size: 12px!important;'></i></a> ";
 	}
 
 	public function changePagination($value){

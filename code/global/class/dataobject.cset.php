@@ -12,11 +12,13 @@ class pDataObject {
 
 	public $_fields = null, $_table, $_fieldstring, $_valuestring, $_updateid, $_updatestring, $_singleId, $_paginated, $_data, $_condition, $_order = '1';
 
-	public function __construct($table, $fields = null, $paginated = false){
+	public function __construct($table, $fields = null, $paginated = false, $shortcutToSingleID = null){
 		$this->_fields = $fields;
 		$this->_table = $table;
 		$this->_paginated = $paginated;
 		$this->generateFieldString();
+		if($shortcutToSingleID != null)
+			$this->getSingleObject($shortcutToSingleID);
 	}
 
 	public function generateFieldString(){
@@ -197,6 +199,14 @@ class pDataObject {
 
 	public function changePagination($value){
 		$this->_paginated = $value;
+	}
+
+	public function overrideSelectSQL($sql){
+		$this->_newSQL = $sql;
+	}
+
+	public function join($table, $field){
+		$this->_joined[] = array('table' => $table, 'field' => $field);
 	}
 
 }

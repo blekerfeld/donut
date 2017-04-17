@@ -1,6 +1,10 @@
 <?php
 
 function pMarkDownParse($text){
+	return pMarkDown($text);
+}
+
+function pMarkDown($text){
 	
 	// We need to require the parsedown files, but only once.
 	require_once pFromRoot('library/assets/php/vendors/parsedown.require.php');

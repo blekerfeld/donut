@@ -8,10 +8,8 @@
 
 	//	++	File: admin.structure.cset.php
 
-class pAdminStructure extends pStructure{
+class pSearchStructure extends pStructure{
 	
-
-	private $_error = null;
 
 	public function compile(){
 
@@ -58,73 +56,11 @@ class pAdminStructure extends pStructure{
 
 	}
 
-	public function renderMenu(){
-
-		// Starting the menu
-		$output = "<div class='d_admin_menu'>
-				<div class='stack'>";
-
-		$items = 0;
-
-		foreach($this->_menu as $key => $main){
-			// Permission check
-			if(pUser::checkPermission($this->itemPermission($main['section'])) OR isset($main['items'])){
-				$output .= "<a href='".(isset($main['section']) ? pUrl("?".$this->_app."/".$main['section']) : '')."' class='".(($this->checkActiveMain($key) OR (isset(pAdress::arg()['section'], $main['section']) AND pAdress::arg()['section'] == $main['section'])) ? 'active' : '')." ttip' title='
-					<strong>".htmlspecialchars($main['surface'])."</strong>";
-
-				if(isset($main['items']))
-					foreach($main['items'] as $item){
-						$output .= "<a href=\"".pUrl("?".$this->_app."/".$item['section_key'])."\" class=\"ttip-sub ".($this->checkActiveSub($item['section_key']) ? 'active' : '')."\">".(new pIcon($item['icon'], 12))." ". htmlspecialchars($item['surface'])."</a>";
-					}
-
-				$items++;
-
-				$output .= "'>".(new pIcon($main['icon'], 24))."</a>";
-		}
-
-		}
-
-		$output .= "</div></div>";
-		
-		if($items == 0)
-			return false;
-
-		return pOut($output);
-
-	}
-
-	private function headerDropDown(){
-
-		$output = "<div class=' header dictionary home wiki' ><div class='title_header d_admin_header_dropdown' ><span class='ttip_header' data-tooltip-content='#dropdown_header'>".(new pIcon($this->_meta['icon'], 24))->circle()." ".$this->_meta['title']."</span> ".(new pIcon('fa-chevron-down', 12))." </div></div>
-
-			<div class='hide'><div id='dropdown_header' class=''>
-			<a href='".pUrl("?".$this->_app)."' class='ttip-sub active'>".(new pIcon($this->_meta['icon'], 10))." ".$this->_meta['title']."</a>";
-
-		foreach($this->_meta['other_apps'] as $app)
-			$output .= "<a href='".pUrl("?".$app['app'])."' class='ttip-sub'>".(new pIcon($app['icon'], 10))." ".$app['surface']."</a>";
-
-		$output .= "	</div></div>";
-
-		return $output;
-	}
 
 	public function render(){
 
-		// The asynchronous j.a.x. gets to skip a bit 
-		if(isset(pAdress::arg()['ajax']))
-			goto ajaxSkipOutput;
-
-		// Preparing the menu
-		$this->prepareMenu();
-
 		// Starting with the wrapper
-		pOut("<div class='d_admin_wrap'><div class='d_admin'>");
-
-		// Header time
-		pOut($this->headerDropDown());
-
-		if($this->_error != null)
-			pOut("<div class='btCard minimal admin'>".$this->_error."</div>");
+		pOut("<div class='home-margin'>");
 
 		// If there is an offset, we need to define that
 		if(isset(pAdress::arg()['offset']))
@@ -155,10 +91,6 @@ class pAdminStructure extends pStructure{
 		// Ending content
 		pOut("</div>");
 
-		// Time for the menu
-		$this->renderMenu();
-
-
 		// Tooltipster time!
 		pOut("<script type='text/javascript'>
 
@@ -175,9 +107,6 @@ class pAdminStructure extends pStructure{
 			}});
 
 			</script>");
-
-		// Ending overall 
-		pOut("</div>");
 
 	}
 

@@ -1069,7 +1069,8 @@ a.button.search:hover{
 .header.dictionary{
 
   transition: all .3s;
-  background: rgba(240,247,250, 0.6);
+  background: rgba(240,247,250, 0.3);
+  box-shadow: 0 4px 10px 0px rgba(190,197,200, 0.2);
   padding: 60px;
   padding-bottom: 0px!important;
   padding-top: 10px;
@@ -1310,6 +1311,15 @@ strong.dWord a:hover {
   font-family: Gentium;
 }
 
+em.dSpec{
+  font-family: Arial;
+  font-size: 10px;
+}
+
+span.translation.tooltip a{
+  color: #333;
+}
+
 .dWordWrapper .tooltip:hover {
   font-style: normal;
 }
@@ -1339,9 +1349,11 @@ strong.dWord a:hover {
   color: #333;
 }
 
-.dWordWrapper ol span p.desc {
+.pSectionWrapper div.desc {
   margin: 0px;
-  font-size: 80%;
+  font-size: 11px;
+  padding: 4px;
+  margin-top: 2px;
   background: rgba(140, 140, 140, 0.1);
   width: auto;
   display: inline-block;
@@ -1989,13 +2001,9 @@ a.lemma-code i.fa {
 
 .pSectionWrapper {
   margin-bottom: 10px;
-  background-color: rgba(255,255,255,0.7);
-  border: 1px solid #ddd;
-  border-top: none;
   padding: 10px;
-  border-bottom-right-radius: 7px;
-  border-bottom-left-radius: 7px;
-  box-shadow: 0 4px 10px 0px rgba(0, 0, 0, 0.02)
+  box-shadow: 0 4px 10px 0px rgba(0, 0, 0, 0.05);
+  border-radius: 10px 10px 0px 0px;
 }
 
 .pSectionWrapper.editing {
@@ -2052,15 +2060,13 @@ span.pCognates strong {
 
 span.pSectionTitle {
   font-size: 29px;
-  box-shadow: 0 4px 10px 0px rgba(0, 0, 0, 0.02);
-  background-color: #f2f9fc;
-  border: 1px solid #c9e6f2;
+  border-bottom: 1px solid rgba(94,101,115, 0.2);
+  margin-bottom: 4px;
   color: #68777d;
   display: block;
-  border-top-right-radius: 7px;
-  border-top-left-radius: 7px;
   padding: 10px;
   padding-top: 0px;
+  box-shadow: 0 4px 10px 0px rgba(0, 0, 0, 0.02);
   padding-bottom: 0px;
 }
 
@@ -2187,14 +2193,13 @@ span.pSectionTitle.extra.closed {
 .pSectionTitle.extra.sub {
   margin-top: 0px;
   box-shadow: none;
-  background: #f9f9f9;
-  border: none;
+  border-bottom: #e9e9e9 1px dotted; 
   padding: 5px;
   padding-left: 10px;
   padding-right: 10px;
-  margin: -10px;
-  width: 100%;
-  margin-bottom: 5px;
+  margin: -6px;
+  margin-top: 0px;
+  margin-bottom: 0px;
   font-size: 12px;
   border-radius: 0px!important;
 }
@@ -2285,56 +2290,51 @@ img.dFlag:hover {
 
 .pSectionWrapper a.synonym, .pSectionWrapper a.antonym {
   display: inline-block;
-  padding: 4px 8px;
+  padding: 1px;
+  padding-bottom: 3px;
+  margin-right: 10px;
   border-radius: 3px;
   font-weight: bold;
   line-height: 20px;
   color: #6E767A;
   text-align: center;
-  background-color: #999;
+  border-bottom: 13px solid transparent;
   font-family: Trebuchet MS;
   font-size: 11px;
 }
 
 .pSectionWrapper a.synonym.score-25 {
-  background: rgba(200, 220, 230, 0.5);
+  border-color: rgba(200, 220, 230, 0.3);
 }
 
 .pSectionWrapper a.synonym.score-50 {
-  background: rgba(200, 220, 230, 0.75);
+  border-color: rgba(200, 220, 230, 0.6);
 }
 
 .pSectionWrapper a.synonym.score-100 {
-  background: rgba(200, 220, 230, 1);
+  border-color: rgba(200, 220, 230, 1);
 }
 
-.pSectionWrapper a.synonym:hover {
+.pSectionWrapper a.synonym:hover, .pSectionWrapper a.antonym:hover {
   text-decoration: underline;
-  ;
+  background: rgba(200, 220, 230, 0.2);
 }
 
 .pSectionWrapper a.antonym {
-  color: #fff;
+
 }
 
 .pSectionWrapper a.antonym.score-25 {
-  background: rgba(135, 125, 150, 0.5);
+  border-color: rgba(135, 125, 150, 0.3);
 }
 
 .pSectionWrapper a.antonym.score-50 {
-  background: rgba(135, 125, 150, 0.75);
+  border-color: rgba(135, 125, 150, 0.6);
 }
 
 .pSectionWrapper a.antonym.score-100 {
-  background: rgba(135, 125, 150, 1);
+  border-color: rgba(135, 125, 150, 1);
 }
-
-.pSectionWrapper a.antonym:hover {
-  text-decoration: underline;
-  ;
-}
-
-
 
 .language-status-check, .boolean-check {
   padding: 2px;

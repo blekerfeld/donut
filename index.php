@@ -24,12 +24,14 @@
 	//	Let's load ALL the global code (functions and classes)
 	pLoadGlobalCode();
 
-
 	//	We need to get the language loaded
 	pLoadLanguage('English');
 
 	//	Rewelcome our previous-session logged in guest
 	pUser::restore();
+
+	// Let's pack the $_POST superglobal inside pAdress
+	pAdress::post($_POST);
 
 	if(isset($_REQUEST['old']))
 		goto Old;
@@ -39,6 +41,9 @@
 		Welcome to the new dispatcher! :D
 
 	*/ 
+
+	if($_SERVER['QUERY_STRING'] == '')
+		pUrl('?home', true);
 
 	//	Calling dispatch!
 	$dispatcher = new pDispatch($_SERVER['QUERY_STRING']);
@@ -70,7 +75,10 @@
 
 
 	//	The template is loaded, that's the begining of the end.
-	require pFromRoot("library/templates/main_template.php");
+	if(!isset(pAdress::arg()['ajax']))
+		require pFromRoot("library/templates/main_template.php");
+	else
+		echo $donut['page']['content_final'];
 
 	Old:
 

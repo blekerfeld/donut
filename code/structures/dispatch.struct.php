@@ -21,15 +21,20 @@ return array(
 		),
 	),
 	'entry' => array(
-		'override_structure_type' => 'pAdminStructure',
 		'page_title' => 'Admin panel',
-		'default_section' => 'lexcat',
+		'default_section' => 'lemma',
 		'arguments' => array(
-			0 => 'section',
-			1 => 'action',
-			2 => 'id',
-			3 => 'linked',
+			1 => 'id',
+			2 => 'action',
 		),
 	),		
+	'search' => array(
+		'page_title' => 'Search',
+		'default_section' => 'search',
+		'arguments' => array(
+			0 => 'section',
+			1 => 'query',
+		),
+	),	
 
 );

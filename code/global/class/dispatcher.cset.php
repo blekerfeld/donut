@@ -13,7 +13,7 @@
 
 class pDispatch {
 
-	private $_dispatchData, $_magicArguments = array('offset', 'ajax');
+	private $_dispatchData, $_magicArguments = array('offset', 'ajax', 'return');
 	public $query, $structureObject;
 
 
@@ -26,8 +26,8 @@ class pDispatch {
 	public function compile(){
 		// This will be filled with compiled arguments
 		$arguments = array();
-
 		$urlArguments = explode("/", $this->query);
+		$templateArguments = $this->_dispatchData[$urlArguments[0]]['arguments'];
 
 		// The first argument decides which structure to use.
 		$structureName = explode('-', $urlArguments[0]);
@@ -46,8 +46,9 @@ class pDispatch {
 		if(isset($this->_dispatchData[$urlArguments[0]]['override_structure_type']))
 			$structureType = $this->_dispatchData[$urlArguments[0]]['override_structure_type'];
 
+
 		if(!class_exists($structureType))
-			return die("ABORT MISSION.");
+			return die("ABORT MISSION. CLASS $structureType DOES NOT EXIST.");
 
 		$this->structureObject = new $structureType($structureName[0], (isset($structureName[1]) ? $structureName[1] : ''), $urlArguments[0], $this->_dispatchData[$urlArguments[0]]['default_section'], $this->_dispatchData[$urlArguments[0]]['page_title']);
 
@@ -58,16 +59,54 @@ class pDispatch {
 
 			$keyOffset = array_search('offset', $urlArguments) + 1;
 
-			$arguments['offset'] = $urlArguments[array_search('offset', $urlArguments) + 1];
+			$arguments['offset'] = $urlArguments[$keyOffset];
 
 			// Unsetting this
 			unset($urlArguments[$keyOffset]);
 			unset($urlArguments[$keyOffset - 1]);
 		}
+		if(in_array('return', $urlArguments)){
+			// This means the next is the offset
+
+			$keyReturn = array_search('return', $urlArguments) + 1;
+
+			$arguments['return'] = $urlArguments[$keyReturn];
+
+			// Unsetting this
+			unset($urlArguments[$keyReturn]);
+			unset($urlArguments[$keyReturn - 1]);
+		}
+		if(in_array('ajax', $urlArguments)){
+			$arguments['ajax'] = true;
+			$keyAjax = array_search('ajax', $urlArguments);
+			unset($urlArguments[$keyAjax]);
+		}
+
+		//A section can be optional
+		if(!in_array('section', $templateArguments) AND (count($urlArguments) == count($templateArguments) + 1)){
+			$arguments['section'] = $urlArguments[1];
+			unset($urlArguments[1]);
+		}
+		// If no section is given, we need to correct something
+		elseif(!in_array('section', $templateArguments) AND (count($urlArguments)  != count($templateArguments) + 1)){
+
+			$templateArgumentsNew = array();
+			foreach($templateArguments as $key => $value)
+				$templateArgumentsNew[$key - 1] = $value;
+			$templateArguments = $templateArgumentsNew;
+		}
+
+
+		// The default action has to empty
+		if(in_array('action', $templateArguments) and !isset($urlArguments[array_search('action', $templateArguments)])){
+			$urlArguments[array_search('action', $templateArguments)] = '';
+			unset($templateArguments[array_search('action', $templateArguments)]);
+			$arguments['action'] = '';
+		}
 
 		// Now it's time to go through the arguments!
 		$countArguments = 0;
-		foreach($this->_dispatchData[$urlArguments[0]]['arguments'] as $key => $templateArgument)
+		foreach($templateArguments as $key => $templateArgument)
 			// The previous key can't be the offset, or the section for this to work
 			if(isset($urlArguments[$key + 1]))
 				$arguments[$templateArgument] = $urlArguments[$key + 1];
@@ -78,27 +117,6 @@ class pDispatch {
 
 		$this->structureObject->load();
 		$this->structureObject->compile();
-	}
-
-}
-
-
-// For jQuery style fetching of the url information! :)
-// like this: pAdress::arg()['id'];
-class pAdress{
-
-	static $queryString, $arguments;
-
-	public static function arg($set = null){
-		if($set != null)
-			return self::$arguments = $set;
-		return self::$arguments;
-	}
-
-	public static function queryString($set = null){
-		if($set != null)
-			return self::$queryString = $set;
-		return self::$queryString;
 	}
 
 }
