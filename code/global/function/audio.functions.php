@@ -40,7 +40,7 @@ function pGetAudioPlayers($id, $idiom = false){
 	if($audiofiles->rowCount() == 0)
 		return false; 
 
-	$extra = pHashId(rand(3,8));
+	$extra = pHashId(rand(3,8).$id);
 
 	if(!$idiom){
 		$return = '<ol>';

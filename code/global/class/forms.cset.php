@@ -150,7 +150,7 @@ class pSelector{
 
 		if($this->_interactive && $this->_useTable){
 			$_SESSION['pJSBack'] = true;
-			$output .= "<a href='".pUrl("?".pParser::$stApp."&".$this->_overrideSection."&edit&id=".$this->value)."' class='tooltip'>";
+			$output .= "<a href='".pUrl("?".pParser::$stApp."/".$this->_overrideSection."/edit/".$this->value)."' class='tooltip'>";
 		}
 
 		if(array_key_exists($key, pDataField::stack()))
@@ -306,7 +306,7 @@ class pMagicActionForm{
 				$('.btCard select').select2();
 				$('.submit-form').click(function(){
 					$('.saving').slideDown();
-					$('.ajaxSave').load('".pUrl("?".$this->_app."&".$this->_section."&".$this->_name.(($this->_edit) ? '&id='.$this->_data[0]['id'] : '')."&ajax")."', {
+					$('.ajaxSave').load('".pUrl("?".$this->_app."/".$this->_section."/".$this->_name.(($this->_edit) ? '/'.$this->_data[0]['id'] : '')."/ajax")."', {
 						".implode(", ", $loadValues)."
 					});
 				});
@@ -426,7 +426,7 @@ class pMagicActionForm{
 				$('.field_".$this->_guestObject->structure[$this->_section]['incoming_links'][$this->_linked]['parent']."').select2();
 				$('.submit-form').click(function(){
 					$('.saving').slideDown();
-					$('.ajaxSave').load('".pUrl("?".$this->_app."&".$this->_section."&new-link&id=".$this->_linkObject->_data[0]['id']."&linked=".$this->_linked)."&ajax', {".implode(", ", $loadValues)."});
+					$('.ajaxSave').load('".pUrl("?".$this->_app."/".$this->_section."/new-link/".$this->_linkObject->_data[0]['id']."/linked=".$this->_linked)."/ajax', {".implode(", ", $loadValues)."});
 				});
 			</script>");
 	}

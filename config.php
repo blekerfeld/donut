@@ -150,12 +150,19 @@ function pEndsWith($haystack, $needle)
 	require $donut['root_path'].'/library/assets/php/vendors/HashGenerator.php';
 	require $donut['root_path'].'/library/assets/php/vendors/Hashids.php';
 	
-	$donut['hashid'] = new Hashids\Hashids("pol0.1");
+	$donut['hashid'] = new Hashids\Hashids("yeastIsACoreIngredientOfDoughnuts");
 
 	function pHashId($hash, $decode = false){
 		global $donut;
-		if($decode)
-			return $donut['hashid']->decode($hash);
+		if($decode){
+			$return = $donut['hashid']->decode($hash);
+			if(isset($return[0]))
+				$return[0] = $return[0];
+			else
+				$return[0] = 0;
+
+			return $return;
+		}
 		return $donut['hashid']->encode($hash); 
 	}
 

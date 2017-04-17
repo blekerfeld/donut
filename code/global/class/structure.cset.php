@@ -49,7 +49,8 @@ abstract class pStructure{
 				$this->_structure = require_once pFromRoot("code/structures/".$this->_name.".struct.php");
 
 			$this->_meta = $this->_structure['MAGIC_META'];
-			$this->_menu = $this->_structure['MAGIC_MENU'];
+			if(isset($this->_structure['MAGIC_MENU']))
+				$this->_menu = $this->_structure['MAGIC_MENU'];
 			unset($this->_structure['MAGIC_META']);
 			unset($this->_structure['MAGIC_MENU']);
 

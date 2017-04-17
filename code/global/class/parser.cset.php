@@ -112,6 +112,11 @@ class pParser{
 			return pOut("<div class='btCard minimal admin'>".pNoticeBox('fa-info-circle fa-12', DA_PERMISSION_ERROR, 'danger-notice')."</div>");
 	}
 
+	public function passOnAction($action){
+		if(pUser::checkPermission($this->_permission))
+			return $this->_object->catchAction($action);
+	}
+
 	// Allias function
 	public function setOffset($offset){
 		$this->_object->setOffset($offset);
@@ -156,8 +161,8 @@ class pParser{
 
 				$guests->compile();
 
-				if(isset($_REQUEST['id']))
-					$guests->runData($_REQUEST['id']);
+				if(isset(pAdress::arg()['id']))
+					$guests->runData(pAdress::arg()['id']);
 
 				$linkTableObject = new pLinkTableObject($this->structure, 'fa-link',  $this->structure[$this->_data['incoming_links'][$linked]['section']]['surface']."&#x205F; (&#x205F;".DA_TABLE_LINKS_PARENT."&#x205F;) &#x205F; ↔ &#x205F;".$this->_data['surface']." &#x205F;(&#x205F;".DA_TABLE_LINKS_CHILD."&#x205F;)", $this->_data['incoming_links'][$linked]['table'], 0, $dfs, $actions, $action_bar, false, $this->_section, $this->_app);
 

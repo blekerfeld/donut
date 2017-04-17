@@ -330,7 +330,7 @@ function pSearchScript($extra = ''){
 	      		$("#pageload").show();
 	      		$(".ajaxload").slideUp();
 	      		$(".drop").hide();
-		      		$(".ajaxload").load("'.pUrl('?getword&ajax'.$extra).'", {"word": $("#wordsearch").val(), "dict": $("#dictionary").val(), "wholeword":  $("#wholeword").is(":checked")}, function(){$(".ajaxload").slideDown(function(){
+		      		$(".ajaxload").load("'.pUrl('?getword&old&ajax'.$extra).'", {"word": $("#wordsearch").val(), "dict": $("#dictionary").val(), "wholeword":  $("#wholeword").is(":checked")}, function(){$(".ajaxload").slideDown(function(){
 		      								 $("#pageload").delay(100).hide(400);
 		      								 $("#loading").slideUp(400);
 		      		})}, function(){
