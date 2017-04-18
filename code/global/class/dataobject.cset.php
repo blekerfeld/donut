@@ -10,7 +10,7 @@
 
 class pDataObject {
 
-	public $_fields = null, $_table, $_fieldstring, $_valuestring, $_updateid, $_updatestring, $_singleId, $_paginated, $_data, $_condition, $_order = '1';
+	public $_fields = null, $_table, $_fieldstring, $_valuestring, $_updateid, $_updatestring, $_singleId, $_paginated, $_data, $_condition, $_order = '1', $_limit = null;
 
 	public function __construct($table, $fields = null, $paginated = false, $shortcutToSingleID = null){
 		$this->_fields = $fields;
@@ -41,6 +41,10 @@ class pDataObject {
 	// Might have been through 3 functions already, but yeah, it is how it is.
 	public function setCondition($condition){
 		$this->_condition = $condition;
+	}
+
+	public function setLimit($limit){
+		$this->_limit = $limit;
 	}
 
 	public function setOrder($order){
@@ -80,7 +84,7 @@ class pDataObject {
 		else
 			$fieldString = $this->_fieldstring;
 
-		$this->_data = pQuery("SELECT ".$fieldString." FROM ".$this->_table." ".$this->_condition.(($this->_paginated) ? " ORDER BY $this->_order LIMIT ".$offset.",".$itemsperpage : '').";");
+		$this->_data = pQuery("SELECT ".$fieldString." FROM ".$this->_table." ".$this->_condition.(($this->_paginated) ? " ORDER BY $this->_order LIMIT ".$offset.",".$itemsperpage : " ORDER BY $this->_order ".($this->_limit != null ? ' LIMIT '.$this->_limit : '')).";");
 
 		return  $this->_data;
 	}

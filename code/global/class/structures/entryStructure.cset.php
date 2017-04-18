@@ -58,10 +58,10 @@ class pEntryStructure extends pStructure{
 
 	public function render(){
 
-		pDictionaryHeader();
+		pOut(new pSearchBox);
 
 		// Starting with the wrapper
-		pOut("<div class='home-margin'>");
+		pOut("<div class='pEntry'><div class='home-margin'>");
 
 		// If there is an offset, we need to define that
 		if(isset(pAdress::arg()['offset']))
@@ -94,7 +94,7 @@ class pEntryStructure extends pStructure{
 		SkipError:
 
 		// Ending content
-		pOut("</div>");
+		pOut("</div></div>");
 
 		// Tooltipster time!
 		pOut("<script type='text/javascript'>

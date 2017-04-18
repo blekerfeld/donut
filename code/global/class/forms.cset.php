@@ -237,9 +237,10 @@ class pMagicActionForm{
 					$this->_object->dataObject->insert();
 				}
 
-				pOut(pNoticeBox('fa-check fa-12', $this->_strings[5].". <a href='".pUrl("?".$this->_app."&".$this->_section. (isset($_REQUEST['position']) ? "&offset=".$_REQUEST['position'] : ""))."'>".$this->_strings[6]."</a>", 'succes-notice ajaxMessage'));
+				pOut(pNoticeBox('fa-check fa-12', $this->_strings[5].". <a href='".pUrl("?".$this->_app."/".$this->_section. (isset($_REQUEST['position']) ? "/offset/".$_REQUEST['position'] : ""))."'>".$this->_strings[6]."</a>", 'succes-notice ajaxMessage'));
 
 				// If this is not a edit action, we need to reload the form
+				if(!$this->_edit)
 				pOut("<script type='text/javascript'>
 					$('#adminForm').trigger('reset');
 				</script>");

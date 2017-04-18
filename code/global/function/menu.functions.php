@@ -37,5 +37,5 @@
 	function pAbsHeader(){
 		global $donut; 
 		if(pLogged())
-			return MMENU_LOGGEDIN.($donut['user']->longname != '' ? $donut['user']->longname : $donut['user']->username)." (<a href='".pUrl('?logout')."'>".MMENU_LOGOUT."</a>) – <em class='small'>".MMENU_EDITORLANG."<span class='editorlangname'>".pLanguageName(pEditorLanguage($_SESSION['pUser']))."</span> (<a href='".pUrl('?editorlanguage')."'>".MMENU_EDITORLANGCHANGE."</a>)</em>";
+			return MMENU_LOGGEDIN.($donut['user']->longname != '' ? $donut['user']->longname : $donut['user']->username)." (<a href='".pUrl('?logout')."'>".MMENU_LOGOUT."</a>) – <em>".MMENU_EDITORLANG."<span class='editorlangname'>".pLanguageName(pEditorLanguage($_SESSION['pUser']))."</span> (<a href='".pUrl('?editorlanguage')."'>".MMENU_EDITORLANGCHANGE."</a>)</em>";
 	}

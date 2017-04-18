@@ -12,7 +12,7 @@
 // like this: pAdress::arg()['id'];
 class pAdress{
 
-	static $queryString, $arguments, $post;
+	static $queryString, $arguments, $post, $session;
 
 	public static function arg($set = null){
 		if($set != null)
@@ -24,6 +24,16 @@ class pAdress{
 		if($set != null)
 			return self::$post = $set;
 		return self::$post;
+	}
+
+	public static function session($set = null, $value = null){
+		if($value != null){
+			$_SESSION[$set] = $value;
+			return self::$session[$set] = $value;
+		}
+		if($set != null)
+			return self::$session = $set;
+		return self::$session;
 	}
 
 	public static function queryString($set = null){
