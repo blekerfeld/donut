@@ -1,4 +1,4 @@
-@import url(https://fonts.googleapis.com/css?family=Libre+Franklin|Merriweather|Lato|Open+Sans|Raleway);
+@import url(https://fonts.googleapis.com/css?family=Libre+Franklin|Rubik+Mono+One|Merriweather|Lato|Open+Sans|Raleway);
 @font-face{font-family:Gentium;src:url(vendors/fonts/GenBasR.ttf)}@font-face{font-family:Gentium;src:url(vendors/fonts/GenBasB.ttf);font-weight:700}@font-face{font-family:Gentium;src:url(vendors/fonts/GenBasI.ttf);font-style:italic}
 
 
@@ -181,27 +181,28 @@ span.tab, div.tab {
 
 .absolute_header {
   padding: 3px;
-  padding-left: 5%;
-  padding-right: 5%;
-  font-size: 10px;
-  background: #000;
-  border-bottom: 1px solid #222;
-  color: snow;
-  min-height: 15px;
+  margin-left: 20px;
+  margin-right: 20px;
+  font-family: Libre Franklin;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  padding-left: 2px;
+  padding-bottom: 10px;
+  border-bottom: 3px double rgba(50,60,80,0.3);
+  color: #333;
+  text-decoration: none;
 }
 
 .absolute_header a{
-  color: #fff;
+  color: #313C51;
 }
-
-
 
 .absolute_header a:hover, html.pAdmin .absolute_header a:hover {
   color: orange;
 }
 
 div.logotop{
-  font-size: 11px;
+  font-size: 8px!important;
   height: 100%;
   display: inline-block;
   margin-top: 7px;
@@ -210,10 +211,9 @@ div.logotop{
 
 a.logotop {
   padding-bottom: 2px;
-  color: snow;
-    font-family: Lato;
-    font-size: 26px;
-  border-bottom: 3px double rgba(46,54,76, 0.1);
+  color: rgba(50,60,80,0.7);
+  font-family: Rubik Mono One;
+  font-size: 22px;
 }
 
 a.logotop img{
@@ -223,16 +223,40 @@ a.logotop img{
 
 a.logotop:hover{
   border-bottom: 1px dotted #ccc;
-  color: snow;
+  color: #111;
+}
+
+
+div.hStripe{
+    background: #607193;
+    min-height: 10px;
+    margin-left: 7%;
+    margin-right: 7%;
+    box-shadow: 0px 1px 3px rgba(100, 100, 100, 0.05);
+}
+
+div.hStripe.min{
+  min-height: 3px;
+}
+
+div.top_area{
+    background: radial-gradient(circle, #f1f1f1, #f4f4f4);
+    box-shadow: 0px 1px 3px rgba(100, 100, 100, 0.05);
+    margin-left: 7%;
+    margin-right: 7%;
+    padding-top: 20px;
+    padding-bottom: 20px;
+    border-left: 1px solid rgba(167,177,198,0.4);
+    border-right: 1px solid rgba(167,177,198,0.4);
 }
 
 div.outerwrap {
 
-  background: rgba(220, 220, 220, 0.3);
 }
 
 .ulWrap {
-  border: 1px solid rgba(201,230,242, 0.5); 
+  border-top: none;
+  border: 1px rgba(167,177,198,0.4) solid;
   border-top: none;
   box-shadow: 0px 1px 3px rgba(100, 100, 100, 0.05);
   padding: 0px!important;
@@ -241,8 +265,8 @@ div.outerwrap {
 
 .fill_gaps{
   background: #eee;
-  margin-right: 5%;
-  margin-left: 5%;
+  margin-right: 7%;
+  margin-left: 7%;
 
 }
 
@@ -270,11 +294,10 @@ div.outerwrap {
 .page {
   padding: 0px;
   padding-top: 25px;
-  padding-bottom: 20px;
   background-position: 10% 10%;
   background: rgba(254,254,254, 1);
   height: auto;
-  padding-bottom: 25px;
+  padding-bottom: 20px;
 }
 
 .inner-page{
@@ -287,15 +310,20 @@ div.outerwrap {
 }
 
 .home-margin{
-  width: 88%;
+  width: 75%;
   margin: 0 auto;
+  padding-bottom: 20px;
+}
 
+.home-margin.no-padding-bottom{
+  padding-bottom: 0px;
 }
 
 .absolute_footer {
+  background: -webkit-linear-gradient(top, rgba(240,240,240, 0.05), rgba(254,254,254, 0.05) 50%);;
   margin-bottom: 50px;
-  margin-left: 5%;
-  margin-right: 5%;
+  margin-left: 11%;
+  margin-right: 11%;
   margin-top: 20px;
   padding: 3px;
   padding-left: 2px;
@@ -307,8 +335,9 @@ div.outerwrap {
   color: #333;
   text-decoration: none;
   text-transform: uppercase;
-  letter-spacing: .1em;
+  letter-spacing: .2em;
   white-space: normal;
+    font-family: Libre Franklin;
   font-weight: 500;
 }
 
@@ -325,7 +354,11 @@ div.nav {
   background-color: #5E6573; 
   background: radial-gradient(circle, #f4f4f4, #f9f9f9);
   padding-top: 4px;
+  border-bottom: 1px #e7e7e7 solid;
+  border-top: 1px #e7e7e7 solid;
   padding-bottom: 4px;
+  padding-left:10px;
+  padding-right:10px;
   clear: both;
   color: #000;
   width: 100%;
@@ -703,9 +736,12 @@ div.userbox {
 
 .actionbutton{
   border-radius: 6px;
-  padding: 5px;
-  background-image: linear-gradient(#fcfcfc, #eee);
-  border: 1px solid #d5d5d5;
+  background: #eee;
+  padding: 3px;
+  background: #eee;
+  border: 1px solid rgba(155, 155, 155, 0.1);
+  color: #888;
+  text-shadow: 0px 1px 2px rgba(50, 50, 50, 0.2);
   text-decoration: none;
   color: #333;
   font-size: 12px;
@@ -1012,7 +1048,7 @@ table.login a.rcvr {
 
 
 .hide {
-  display: none;
+  display: none!important;
 }
 
 
@@ -1021,6 +1057,7 @@ input#wordsearch, input#filter, input#searchfilter {
   font-size: 15px;
   text-decoration: none;
   width: 60% - 18px;
+  min-width: 100px;
   font-family: Gentium;
   font-style: italic;
   color: rgb(150, 150, 150);
@@ -1030,8 +1067,8 @@ input#wordsearch, input#filter, input#searchfilter {
 a.button.search{
   display: inline-block;
   float: right;
-  background: #D85600;
-  border: 3px double #B63400;
+  background: #607193;
+  border: 1px solid #4B5872;
   text-align: center;
   padding: 11PX;
   margin-top: 1px;
@@ -1041,7 +1078,34 @@ a.button.search{
 }
 
 a.button.search:hover{
-  background: #BA603A;
+  background: #737F96;
+  color: snow;
+}
+
+
+div.hSearchResults{
+  transition: max-height .3s;
+  width: 100%;
+  height: 0px auto;
+  margin-bottom: -20px;
+  transition: transform 3s ease;
+  transform: translateY(1px);
+}
+
+div.hSearchResult{
+}
+
+div.hSearch .load-hide{
+  margin-top: 15px;
+  margin-right: 20px;
+  display: none;
+  float: right;
+  position: relative;
+}
+
+
+.hWrap{
+  padding-bottom: 10px;
 }
 
 .hSearch{
@@ -1051,6 +1115,7 @@ a.button.search:hover{
   background: white;
   color: rgb(150, 150, 150);
   border: rgba(150, 150, 150, 0.2) 1px solid;
+  margin-bottom: 10px;
 }
 
 .hSearch input#wordsearch{
@@ -1059,7 +1124,8 @@ a.button.search:hover{
   margin-top: 1px;
   padding: 9px;
   margin-left: 3px;
-  width: 70%;
+  width: calc(60% - 100px);
+  min-width: 300px;
   margin-top: 0px;
   float: left;
   font-size: 16px;
@@ -1071,12 +1137,16 @@ a.button.search:hover{
   transition: all .3s;
   background: rgba(240,247,250, 0.3);
   box-shadow: 0 4px 10px 0px rgba(190,197,200, 0.2);
-  padding: 60px;
+  padding: 10px;
   padding-bottom: 0px!important;
   padding-top: 10px;
   border: none;
   margin-bottom: 25px;
   position: relative;
+}
+
+.header.dictionary:hover{
+  opacity: 1;
 }
 
 .header.dictionary img.logo, .header.dictionary.home-search img.logo-2{
@@ -1133,6 +1203,8 @@ a.button.search:hover{
 .header.dictionary.home.wiki{
   padding: 20px!important;
   margin-bottom: 10px;
+  opacity: 1;
+  box-shadow: none;
 }
 
 
@@ -1161,7 +1233,8 @@ a.button.search:hover{
 
 
 .hSearch .button.search{
-  width: 10%;
+  width: 8%;
+  min-width: 100px;
   margin-top: 0px;
   padding: 9px;
   padding-top: 8px;
@@ -1283,6 +1356,12 @@ strong.dWord a:hover {
 
 #dictionary {
   padding: 2px;
+}
+
+.dWordTable{
+  width: 70%;
+  margin: 20px;
+  font-size: 12px;
 }
 
 .dWordWrapper {
@@ -1511,7 +1590,6 @@ span.translation.tooltip a{
 }
 
 .tooltip {
-  cursor: pointer;
   border-bottom: dotted 1px lightgray;
   font-family: Gentium;
 }
@@ -1961,13 +2039,16 @@ img.pImage:hover {
 }
 
 strong.pWord a {
-  color: #000!important;
+  color: #353e51!important;
+  display: inline-block;
   transition: color .4s;
   padding-bottom: 0px;
+  border-bottom: 1px dotted #eee;
 }
 
 strong.pWord a:hover {
-  color: #D26232!important;
+  color: #000!important;
+  border-bottom: solid 1px #ddd;
 }
 
 #tab {
@@ -2062,7 +2143,7 @@ span.pSectionTitle {
   font-size: 29px;
   border-bottom: 1px solid rgba(94,101,115, 0.2);
   margin-bottom: 4px;
-  color: #68777d;
+  color: #939DAD;
   display: block;
   padding: 10px;
   padding-top: 0px;
@@ -2078,8 +2159,6 @@ span.pSectionTitle.first {
   background-color: transparent;
   border: none!important;
   clear: both;
-  margin-top: -20px!important;
-  margin-bottom: -10px;
   line-height: .9;
   padding-left: 0px;
   padding-bottom: 20px;
@@ -2092,11 +2171,13 @@ span.pSectionTitle em.info {
 
 span.pSectionTitle.extra {
   font-weight: 700;
+  opacity: .8;
+  color: #444;
   text-transform: uppercase;
-  letter-spacing: .1em;
+  letter-spacing: 2px;
   white-space: normal;
   line-height: normal;
-  font-size: 13px;
+  font-size: 12px;
   padding-left: 10px;
   padding-right: 10px;
   padding-bottom: 5px;
@@ -2193,6 +2274,7 @@ span.pSectionTitle.extra.closed {
 .pSectionTitle.extra.sub {
   margin-top: 0px;
   box-shadow: none;
+  font-size: 10px;
   border-bottom: #e9e9e9 1px dotted; 
   padding: 5px;
   padding-left: 10px;
@@ -2200,8 +2282,15 @@ span.pSectionTitle.extra.closed {
   margin: -6px;
   margin-top: 0px;
   margin-bottom: 0px;
-  font-size: 12px;
+  letter-spacing: 0.5px;
+  color: #666;
+  font-size: 11px;
   border-radius: 0px!important;
+}
+
+.pSectionTitle.extra.sub img.flagimage{
+  height: 9px;
+  width: auto;
 }
 
 span.pSectionTitle.extra.sub.editing {
@@ -2257,25 +2346,34 @@ span.pSectionTitle.extra.sub.editing {
 }
 
 .pSectionWrapper ol li span.pIdiom {
-  font-size: 14px;
+  font-size: 18px;
+  font-family: gentium;
 }
 
-.pSectionWrapper ol li span span.pIdiomTranslation {
-  font-size: 12px;
+.pSectionWrapper ol li span.pIdiomTranslation {
+  font-size: 11px;
+  font-family: Trebuchet MS;
 }
 
-.pSectionWrapper ol li span span.pIdiomTranslation em {
+.pSectionWrapper ol li em {
   font-size: 11px;
   font-family: Gentium;
 }
 
-.pSectionWrapper ol li span span.pIdiomHighlight {
-  margin: 0px;
-  font-size: 110%;
-  background: rgba(140, 140, 140, 0.1);
-  width: auto;
-  font-weight: bold;
-  display: inline-block;
+.pSectionWrapper ol li span span.pIdiomHighlight{
+  cursor: pointer;
+  font-weight: bolder;
+    font-size: 22px;
+}
+
+.pSectionWrapper ol li span.pIdiom:hover{
+  font-style: italic;
+  border-bottom: 1px dotted #333;
+}
+
+
+.pSectionWrapper ol li span:hover span.pIdiomHighlight {
+    background: yellow;
 }
 
 img.pFlag {
@@ -3115,13 +3213,13 @@ div.d_admin_wrap{
 div.d_admin_menu{
   align-items: stretch;
   max-width: 3.5%;
-  min-width: 40px;
-  box-shadow: inset 10px 0px 9px -5px rgba(0,0,0,0.5);
+  min-width: 40px;  
   transition: width .2s ease-in, background .2s;
+  border-left: 1px solid #40454F;
   margin-left: 35px;
-  margin-top: -28px;
+  margin-top: -26px;
   margin-bottom: -25px;
-  background: #333;
+  background: #5E6573;
   padding-top: 108px;
 }
 

@@ -10,7 +10,7 @@
 
 class pLanguage{
 
-	public $id, $data, $dataObject;
+	public $id, $data, $dataObject; 
 
 
 	// This would work only with 'new pLanguage'
@@ -30,7 +30,25 @@ class pLanguage{
 				die("Could not fetch language");
 		}
 		$this->load($this->dataObject->data()->fetchAll()[0]);
-		
+	}
+
+	// Makes it possible to do pLanguage::dictionarySelector($class);
+	public static function dictionarySelector($class){
+
+		$data = (new pDataObject('languages'))->getObjects()->fetchAll();
+
+		$select = '<select class="'.$class.'">';
+
+		$lang_zero = $data[0];
+
+		foreach($data as $key => $language)
+			if($key > 0)
+				$select .= '<option value="'.$language['locale'].'-'.$lang_zero['locale'].'" '.((isset(pAdress::session()['searchLanguage']) AND (pAdress::session()['searchLanguage'] == $language['locale'].'-'.$lang_zero['locale'])) ? ' selected ' : '').'>'.($language['locale'] != '' ? $language['locale'] : $language['name']).' - '.($lang_zero['locale'] != '' ? $lang_zero['locale'] : $lang_zero['name']).'      　&MediumSpace;</option><option value="'.$lang_zero['locale'].'-'.$language['locale'].'" '.((isset(pAdress::session()['searchLanguage']) AND (pAdress::session()['searchLanguage'] == $lang_zero['locale'].'-'.$language['locale'])) ? ' selected ' : '').'>'.($lang_zero['locale'] != '' ? $lang_zero['locale'] : $lang_zero['name']).' - '.($language['locale'] != '' ? $language['locale'] : $language['name']).'      　&MediumSpace;</option>';
+
+	    
+	  	return $select . '</select><script type="text/javascript">$(".'.$class.'").select2({
+			  placeholder: ""
+			});</script>';
 	}
 
 	private function load($data){

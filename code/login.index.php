@@ -97,7 +97,7 @@
 					$('#busy').fadeIn();
 					$('#empty').hide();
 					$('.tbllogin').hide();
-					$('.loginload').load('".pUrl('?login&ajax')."', {'username': $('#username').val(),  'password': $('#password').val()})
+					$('.loginload').load('".pUrl('?login&ajax&old')."', {'username': $('#username').val(),  'password': $('#password').val()})
 				});
 			</script>");
 }

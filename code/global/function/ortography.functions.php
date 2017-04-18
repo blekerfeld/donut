@@ -439,7 +439,6 @@
 		  	$original_word = $word['translation'];
 
 		  // Before we split the words, we need to loop through the array to sort it
-
 		  $alphabet_copy = $alphabet;
 		  $filter = array();
 		  usort($alphabet_copy, function($a, $b) {

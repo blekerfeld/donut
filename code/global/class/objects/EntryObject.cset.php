@@ -26,7 +26,12 @@ class pEntryObject extends pObject{
 	}
 
 	public function catchAction($action){
-		pOut($action);
+
+		if($action = 'resetTranslations'){
+			unset($_SESSION['returnLanguage']);
+			pUrl('?entry/'.pAdress::arg()['id'], true);
+		}
+
 	}
 
 	public function render(){

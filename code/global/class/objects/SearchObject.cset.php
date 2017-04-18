@@ -25,6 +25,15 @@ class pSearchObject extends pObject{
 		$this->_meta = $this->_activeSection['entry_meta'];
 	}
 
+	private function parseSearchResults($results, $searchlang){
+		if($searchlang->read('id') == 0)
+			return $results->renderSearchResult();
+		else
+			foreach($results as $lemma)
+				$lemma->renderSearchResult();
+		return true;
+	}
+
 	public function render(){
 
 		$languageQuery = explode('-', pAdress::arg()['section']);
@@ -41,7 +50,39 @@ class pSearchObject extends pObject{
 			$returnlang = new pLanguage(0);
 
 
-		foreach((new pLemmaDataObject)->search($searchlang->id, $returnlang->id, pAdress::arg()['query'], false) as $lemma)
-			var_dump($lemma);
+		// Let's save the return lang inside a session
+
+		pAdress::session('searchLanguage', $searchlang->read('locale').'-'.$returnlang->read('locale'));
+		pAdress::session('returnLanguage', ($searchlang->read('id') == '0') ? $returnlang->read('id') : $searchlang->read('id'));
+
+		// The query could have come here by post or by arguments, post has priority
+		$query = (isset(pAdress::post()['query'])) ? pAdress::post()['query'] : ((isset(pAdress::arg()['query'])) ? (isset(pAdress::arg()['query'])) : ''); 
+		$wholeword = (isset(pAdress::post()['exactMatch'])) ? (pAdress::post()['exactMatch'] == 'true') : ((isset(pAdress::arg()['exactMatch'])) ? (pAdress::arg()['exactMatch'] == 'true') : ''); 
+
+		pAdress::session('searchQuery', $query);
+		pAdress::session('exactMatch', $wholeword);
+
+
+		$lemmaObject = new pLemmaDataObject;
+
+		// Max results of 50 with ajax
+		if(isset(pAdress::arg()['ajax']))
+			$lemmaObject->setLimit(30);
+
+		$fetchSearch = $lemmaObject->search($searchlang->id, $returnlang->id, $query, $wholeword);
+
+		// If not ajax we need to fancy up a bit here TODO
+
+		ajaxSkip:
+			if(count($fetchSearch) == 0)
+				pOut("<div class='danger-notice small'>".(new pIcon('fa-warning', 12))." ".DICT_NO_HITS."</div>");
+
+			pOut("<table class='dWordTable'>");
+			foreach($fetchSearch as $lemma)
+				$this->parseSearchResults($lemma, $searchlang);
+			pOut('</table>');
+
+			if(isset(pAdress::arg()['ajax']))
+				return true;
 	}
 }

@@ -112,6 +112,7 @@ class pParser{
 			return pOut("<div class='btCard minimal admin'>".pNoticeBox('fa-info-circle fa-12', DA_PERMISSION_ERROR, 'danger-notice')."</div>");
 	}
 
+	// Passes on the action to the object
 	public function passOnAction($action){
 		if(pUser::checkPermission($this->_permission))
 			return $this->_object->catchAction($action);

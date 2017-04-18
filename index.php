@@ -1,5 +1,4 @@
 <?php
-
 	// 	Donut 				🍩 
 	//	Dictionary Toolkit
 	// 		Version a.1
@@ -30,7 +29,8 @@
 	//	Rewelcome our previous-session logged in guest
 	pUser::restore();
 
-	// Let's pack the $_POST superglobal inside pAdress
+	// Let's pack some superglobal inside pAdress
+	pAdress::session($_SESSION);
 	pAdress::post($_POST);
 
 	if(isset($_REQUEST['old']))

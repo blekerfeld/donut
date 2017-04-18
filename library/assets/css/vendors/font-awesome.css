@@ -17,7 +17,7 @@
   font-style: normal;
   font-weight: normal;
   line-height: 1;
-  font-size: 16px;
+  font-size: 16px!important;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
@@ -28,7 +28,7 @@
   font-style: normal;
   font-weight: normal;
   line-height: 1;
-  font-size: 15px;
+  font-size: 15px!important;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
@@ -39,7 +39,7 @@
   font-style: normal;
   font-weight: normal;
   line-height: 1;
-  font-size: 12px;
+  font-size: 12px!important;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }

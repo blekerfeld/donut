@@ -27,7 +27,25 @@ class pLemmaTemplate extends pEntryTemplate{
 			$content .= "</ol>";
 			$overAllContent .= new pEntrySection($title, $content, '', true, true, true);
 		}
-		return new pEntrySection(LEMMA_TRANSLATIONS, $overAllContent);
+
+		// If there is a session that restricts the shown languages, offer a link that is able cancel that restriction
+		$showAll = ((isset(pAdress::session()['returnLanguage'])) ? '<a class="xsmall float-right" href="'.pUrl("?entry/".$this->_data['id']."/resetTranslations/").'">'.LEMMA_TRANSLATIONS_RESET.'</a>' : '');
+
+		return new pEntrySection($showAll.(new pIcon('fa-language', 12))." ".LEMMA_TRANSLATIONS, $overAllContent);
+	}
+
+
+	public function parseExamples($examples){
+
+		//return var_dump($examples);
+
+		$overAllContent = "<ol>";
+		// Going through the languages
+
+		foreach($examples as $example)
+			$overAllContent .= $example->parseListItem();
+
+		return new pEntrySection((new pIcon('fa-quote-right', 12))." ".LEMMA_EXAMPLES, $overAllContent."</ol>");
 	}
 
 	// Requires the type, class and subclass
@@ -43,7 +61,7 @@ class pLemmaTemplate extends pEntryTemplate{
 		if($subclass != null)
 			$titleSection->addInformationElement($subclass['name']);
 
-		return $titleSection;
+		return $titleSection."<br /><br />";
 
 	}
 

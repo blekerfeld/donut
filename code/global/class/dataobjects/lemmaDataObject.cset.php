@@ -25,6 +25,8 @@ class pLemmaDataObject extends pDataObject{
 	public function search($searchlang, $returnlang, $search, $wholeword)
 	{
 
+		$limit = ($this->_limit != null ? "LIMIT ".$this->_limit : '');
+
 		$results = array();
 
 		$search = str_replace('\\', "\\\\", $search);
@@ -37,24 +39,50 @@ class pLemmaDataObject extends pDataObject{
 			$ww = "LIKE \"%".trim(pEscape($search))."%\"";
 	
 		if($searchlang == 0)
-			$q = "SELECT * FROM (SELECT DISTINCT id AS word_id, 0 AS is_inflection, 0 as inflection FROM words WHERE native ".$ww." OR native LIKE '".pEscape($search)."'  ORDER BY INSTR('".pEscape(trim($search))."', words.native) DESC) AS a UNION ALL SELECT * FROM (SELECT DISTINCT word_id, 1 AS is_inflection, inflection FROM inflection_cache WHERE inflection ".$ww." OR inflection LIKE '".pEscape($search)."' ORDER BY INSTR('".pEscape(trim($search))."', inflection) DESC) as b UNION ALL SELECT * FROM (SELECT DISTINCT irregular_word_id AS word_id, 1 AS is_inflection, irregular_override AS inflection FROM inflections WHERE irregular_override ".$ww." ORDER BY INSTR('".pEscape(trim($search))."', irregular_override) DESC) AS c";	
+			$q = "SELECT * FROM (SELECT DISTINCT id AS word_id, 0 AS is_inflection, 0 as inflection FROM words WHERE native ".$ww." OR native = '".pEscape($search)."'  ORDER BY CASE
+    						WHEN words.native = '".pEscape(trim($search))."' THEN 1
+    						WHEN words.native LIKE '".pEscape(trim($search))."%' THEN 2
+    						WHEN words.native LIKE '%".pEscape(trim($search))."' THEN 3
+    						ELSE 4
+						END DESC) AS a UNION ALL SELECT * FROM (SELECT DISTINCT word_id, 1 AS is_inflection, inflection FROM inflection_cache WHERE inflection ".$ww." OR inflection LIKE '".pEscape($search)."' ORDER BY INSTR('".pEscape(trim($search))."', inflection) DESC) as b UNION ALL SELECT * FROM (SELECT DISTINCT irregular_word_id AS word_id, 1 AS is_inflection, irregular_override AS inflection FROM inflections WHERE irregular_override ".$ww." ORDER BY INSTR('".pEscape(trim($search))."', irregular_override) DESC) AS c ".$limit;	
 		else
-			$q = "SELECT * FROM (SELECT DISTINCT translation_words.word_id, 0 AS is_inflection, 0 AS is_alternative, 0 AS inflection, 0 AS trans_id
+			$q = "SELECT * FROM (SELECT DISTINCT translation_words.word_id, 0 AS is_inflection, 0 AS is_alternative, 0 AS inflection, translations.id AS trans_id, translations.translation AS translation
 					FROM words 
 					INNER JOIN translation_words ON translation_words.word_id=words.id 
 					INNER JOIN translations ON translations.id=translation_words.translation_id
 					WHERE translations.translation ".$ww." AND translations.language_id = '".$searchlang."' ORDER BY INSTR('".pEscape(trim($search))."', translations.translation) DESC) AS a UNION ALL
-					SELECT * FROM (SELECT DISTINCT word_id, 0 AS is_inflection, 1 AS is_alternative, alternative, translation_alternatives.translation_id AS trans_id FROM translation_words INNER JOIN translations ON translations.id = translation_words.translation_id INNER JOIN translation_alternatives WHERE translation_alternatives.alternative ".$ww." AND translation_words.translation_id = translation_alternatives.translation_id AND translations.language_id = '".$searchlang."' ORDER BY INSTR('".pEscape(trim($search))."', translations.translation) DESC) AS b;";
+					SELECT * FROM (SELECT DISTINCT word_id, 0 AS is_inflection, 1 AS is_alternative, alternative, translation_alternatives.translation_id AS trans_id, translations.translation AS translation FROM translation_words INNER JOIN translations ON translations.id = translation_words.translation_id INNER JOIN translation_alternatives WHERE translation_alternatives.alternative ".$ww." AND translation_words.translation_id = translation_alternatives.translation_id AND translations.language_id = '".$searchlang."' ORDER BY 
+						CASE
+    						WHEN translations.translation LIKE '".pEscape(trim($search))."' THEN 1
+    						WHEN translations.translation LIKE '".pEscape(trim($search))."%' THEN 2
+    						WHEN translations.translation LIKE '%".pEscape(trim($search))."' THEN 3
+    						ELSE 4
+						END DESC, INSTR('".pEscape(trim($search))."', translations.translation) DESC) AS b ".$limit; 
 
         $fetch = pQuery($q);
+
+        $noDoubles = array();
 
  		if($fetch->rowCount() != 0)
 			while($fetched = $fetch->fetchObject()){
 				$lemmaResult = new pLemma($fetched->word_id, 'words');
-				$lemmaResult->bindTranslations(($searchlang == 0) ? $returnlang : $searchlang);
-				$results[] = $lemmaResult;
-			}
+				if(isset($fetched->translation)){
+					if(!array_key_exists($fetched->translation, $noDoubles)){
+						$lemmaResult->setHitTranslation($fetched->translation);
+						$noDoubles[$fetched->translation] = true;
+					}
+					else{
+						$lemmaResult->setHitTranslation(true);
+					}
+				}
+				$lemmaResult->bindAll(($searchlang == 0) ? $returnlang : $searchlang);
 
+				if(!array_key_exists($fetched->word_id, $results) AND $searchlang == 0)
+					$results[$fetched->word_id] = $lemmaResult;
+				if($searchlang != 0 AND !isset($results[$fetched->trans_id]))
+					if(!isset($results[$fetched->translation][$fetched->word_id]))
+						$results[$fetched->translation][$fetched->word_id] = $lemmaResult;
+			}
 
 		return $results;	
 	}
@@ -90,7 +118,7 @@ class pLemmaDataObject extends pDataObject{
 		$results = array();
 
 
-		$fetch = pQuery("SELECT words.id AS word_id, idioms.id AS id, idioms.idiom, idiom_words.keyword FROM words JOIN idiom_words ON idiom_words.word_id = words.id JOIN idioms ON idioms.id = idiom_words.idiom_id  WHERE words.id = ".$this->_lemma['id'].";");
+		$fetch = pQuery("SELECT words.id AS word_id, idioms.id AS id, idioms.idiom, idiom_words.keyword, idioms.created_on, idioms.user_id FROM words JOIN idiom_words ON idiom_words.word_id = words.id JOIN idioms ON idioms.id = idiom_words.idiom_id  WHERE words.id = ".$this->_lemma['id'].";");
 
 		foreach($fetch->fetchAll() as $fetched){
 			$idiomResult = new pIdiom($fetched, 'idioms');

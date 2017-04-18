@@ -3,7 +3,7 @@
   <head>
     <link href="<?php echo pUrl('library/assets/css/main.css'); ?>" rel="stylesheet">
     <?php echo (pCheckMobile() ? '<link href="library/assets/css/mobile.css" rel="stylesheet">' : '' ); ?>
-    <link rel="shortcut icon" href="<?php echo pUrl('library/images/static/bookmark_icon.png'); ?>">
+    <link rel="shortcut icon" href="<?php echo pUrl('library/images/static/favicon.png'); ?>">
     <link rel="stylesheet" href="<?php echo pUrl('library/assets/css/vendors/font-awesome.css'); ?>">
     <link rel="stylesheet" href="<?php echo pUrl('library/assets/css/vendors/materialdesignicons.css'); ?>">
     <link rel="stylesheet" href="<?php echo pUrl('library/assets/css/vendors/tooltipster.css'); ?>">
@@ -17,6 +17,7 @@
     <script src="<?php echo pUrl('library/assets/js/vendors/jquery.pace.js'); ?>"></script>
     <script src="<?php echo pUrl('library/assets/js/vendors/jquery.tooltipster.js'); ?>"></script>
     <script src="<?php echo pUrl('library/assets/js/vendors/jquery.playsound.js'); ?>"></script>
+    <script src="<?php echo pUrl('library/assets/js/vendors/jquery.typewatch.js'); ?>"></script>
     <script src="<?php echo pUrl('library/assets/js/vendors/jquery.pulsate.js'); ?>"></script>
     <script src="<?php echo pUrl('library/assets/js/vendors/jquery.tagsinput.js'); ?>"></script>
     <script src="<?php echo pUrl('library/assets/js/vendors/jquery.select2.js'); ?>"></script>
@@ -26,14 +27,16 @@
   <?php global $donut;  echo $donut['page']['head']['final']; ?>
   </head>
   <body class='dashboard'>
-    <div class="absolute_header">
-      <div class="logotop">
-          <?php echo pAbsHeader(); ?>
-          <?php if(!pLogged()){ echo '<a href="'.pUrl('?login').'">'.MMENU_LOGIN.'</a>'; } ?>
+    <div class='hStripe'></div>
+    <div class="top_area">
+      <div class="absolute_header">
+        <div class="logotop">
+            <?php echo pAbsHeader(); ?>
+            <?php if(!pLogged()){ echo '<a href="'.pUrl('?login').'">'.MMENU_LOGIN.'</a>'; } ?>
+        </div>
+        <a class="logotop" href="<?php echo pUrl("?home"); ?>">
+        <?php echo pMarkDownParse(CONFIG_LOGO_TITLE); ?></a> 
       </div>
-      <a class="logotop" href="<?php echo pUrl("?home"); ?>">
-      <img src='<?php echo pUrl('library/images/static/donut_white.png'); ?>' /> 
-      <?php echo pMarkDownParse(CONFIG_LOGO_TITLE); ?></a> 
     </div>
     <div class="outerwrap">
       <div class="fill_gaps">

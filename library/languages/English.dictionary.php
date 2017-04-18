@@ -16,17 +16,23 @@
 define('DICT_TITLE', 'Dictionary');
 define('DICT_READMORE', 'Go to lemma');
 define('DICT_SEARCH', 'Search');
+define('DICT_KEYWORD', 'Keyword');
+define('DICT_EXACT_MATCH', 'exact match');
 define('DICT_MATCH', 'Your query yielded %s result.');
+define('DICT_NO_HITS', 'Your query yielded no results.');
 define('DICT_MATCHES', 'Your query yielded %s results.');
 
 // Lemma information
 define('LEMMA_ERROR', "The requested lemma doesn't exist, please look for errors in the URL.");
 define("LEMMA_INFLECTIONS", "Inflections");
 define("LEMMA_TRANSLATIONS", 'Meaning and translations');
+define("LEMMA_EXAMPLES", 'Examples and idiom');
+define("LEMMA_EXAMPLE", 'Example/idiom');
 define("LEMMA_TRANSLATION_INTO", 'Translation into %s');
 define("LEMMA_TRANSLATION_ADDED", 'Created by %s on %s');
 define("LEMMA_TRANSLATIONS_INTO", 'Translations into %s');
 define("LEMMA_TRANSLATIONS_MEANINGS", 'Other meanings/alternate forms in %s');
+define("LEMMA_TRANSLATIONS_RESET", 'Show all languages');
 define("LEMMA_USAGE_NOTES", "Usage notes");
 define("LEMMA_ANTONYMS", "Antonyms");
 define("LEMMA_SYNONYMS", "Synonyms");
