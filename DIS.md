@@ -44,6 +44,11 @@ The stem forming rules allow for negative condition, which means nothing more th
 
 Prefixes and suffixes are placed before and after the stem at their respective possitions. Multiple affixes are allowed, separated by a `; semicolon`. The advantage of having them seperated is that the phonological rules can be more exact that way. 
 
+For example, the swedish word *flickorna* (flick-or-na) from *flicka*, will have the following rule:
+```
+[-a-!a]or;na
+```
+
 Each affix is added to the word with a seperator: `{` for prefixes and `+` for suffixes. These seperators can be used in the phonogical rules to match on. That is really handy when a phonological rule only applies when there is a certain ending, that way it is easy for the two level compiler to know whether a morpheme-boundary is present.
 
 
@@ -59,7 +64,7 @@ Sadly the two level compiler does not yet allow for infixes, if you have any sug
 
 Uppercase letters can be used as variables that later can be changed by the phonological rules. The two level compiler automatically outputs in lowercase on the surface. The past participle example uses an uppercase **D** as a variable, that is changed to either **d** or **t** depending on the phonological context. 
 
-If a certain letter is not used as a variable in a phonological rule, it can be used to avoid changes by phonological rules, most of the time the lexical form of some words may need such a letter. In Dutch, for example, all *e*'s are doubled in ceratin phonological context (lezen -> lees), if this needs to be avoided (i.e. in **schilderen* -> *schilderde* **not** *schildeerde*), the lexical form can be `schildEren`, that way that E does not get affected.
+If a certain letter is not used as a variable in a phonological rule, it can be used to avoid changes by phonological rules, most of the time the lexical form of some words may need such a letter. In Dutch, for example, all *e*'s are doubled in certain phonological context (lezen -> lees), if this needs to be avoided (i.e. in **schilderen* -> *schilderde* **not** *schildeerde*), the lexical form can be `schildEren`, that way that E does not get affected.
 
 Future versions of DIS might have a different notation for variables, for example something like `&d`.
 
