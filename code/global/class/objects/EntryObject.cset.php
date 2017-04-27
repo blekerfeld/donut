@@ -25,9 +25,12 @@ class pEntryObject extends pObject{
 		$this->_meta = $this->_activeSection['entry_meta'];
 	}
 
+
+	// This is the internal dispatcher for action of an entry
 	public function catchAction($action){
 
-		if($action = 'resetTranslations'){
+		// reset translations
+		if($action == 'resetTranslations'){
 			unset($_SESSION['returnLanguage']);
 			pUrl('?entry/'.pAdress::arg()['id'], true);
 		}

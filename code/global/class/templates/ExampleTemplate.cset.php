@@ -29,9 +29,16 @@ class pExampleTemplate extends pEntryTemplate{
 		if(!is_array($lemmas))
 			return false;
 
-		foreach($lemmas as $lemma){
-			pOut($lemma->renderSimpleLink());
-		}
+		$content = "<ol>";
+		
+		$title = LEMMA_EXAMPLE;
+		
+		foreach($lemmas as $lemma)
+			$content .= $lemma->parseListItem();
+		
+		$content .= "</ol>";
+
+		return pOut(new pEntrySection($title, $content));
 
 
 	}

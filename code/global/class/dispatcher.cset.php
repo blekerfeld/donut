@@ -27,7 +27,8 @@ class pDispatch {
 		// This will be filled with compiled arguments
 		$arguments = array();
 		$urlArguments = explode("/", $this->query);
-		$templateArguments = $this->_dispatchData[$urlArguments[0]]['arguments'];
+		if(isset($urlArguments[0]) AND isset($this->_dispatchData[$urlArguments[0]]))
+			$templateArguments = $this->_dispatchData[$urlArguments[0]]['arguments'];
 
 		// The first argument decides which structure to use.
 		$structureName = explode('-', $urlArguments[0]);
@@ -65,6 +66,36 @@ class pDispatch {
 			unset($urlArguments[$keyOffset]);
 			unset($urlArguments[$keyOffset - 1]);
 		}
+		if(in_array('position', $urlArguments)){
+			// This means the next is the offset
+
+			$keyPos = array_search('position', $urlArguments) + 1;
+
+			$arguments['position'] = $urlArguments[$keyPos];
+
+			// Unsetting this
+			unset($urlArguments[$keyPos]);
+			unset($urlArguments[$keyPos - 1]);
+		}
+
+		if(in_array('search', $urlArguments)){
+			// This means the next is the offset
+
+			if(isset($urlArguments[array_search('search', $urlArguments) - 1]) AND $urlArguments[array_search('search', $urlArguments) - 1] == 'entry'){
+				$keySearch = array_search('search', $urlArguments) + 2;
+				$keyDict = array_search('search', $urlArguments) + 1;
+
+				$arguments['query'] = $urlArguments[$keySearch];
+				$arguments['dictionary'] = $urlArguments[$keyDict];
+
+				// Unsetting this
+				unset($urlArguments[$keySearch]);
+				unset($urlArguments[$keyDict]);
+				unset($urlArguments[$keySearch - 2]);
+
+			}
+		}
+
 		if(in_array('return', $urlArguments)){
 			// This means the next is the offset
 

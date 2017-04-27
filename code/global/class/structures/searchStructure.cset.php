@@ -42,6 +42,11 @@ class pSearchStructure extends pStructure{
 		$this->_parser->render();
 		pOut("</div>");
 
+		pOut("<script type='text/javascript'>
+
+			$('.tooltip').tooltipster({animation: 'grow', animationDuration: 150,  distance: 0, contentAsHTML: true, interactive: true, side: 'bottom'});
+			</script>");
+
 	}
 
 }

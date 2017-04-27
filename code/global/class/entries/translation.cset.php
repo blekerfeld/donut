@@ -32,8 +32,11 @@ class pTranslation extends pEntry{
 	// This function is called to render the translation as an entry
 	public function renderEntry(){
 		global $donut;
+
 		// Setting the page title
 		$donut['page']['title'] = $this->_entry['translation']." - ".CONFIG_SITE_TITLE;
+
+		$backHref = null;
 
 		// If there is someplace to return to, we better do that.
 		if(isset(pAdress::arg()['return'])){
@@ -41,16 +44,19 @@ class pTranslation extends pEntry{
 			$backHref = pUrl('?entry/'.($returnTo[0] == '' ? '' : $returnTo[0].'/').$returnTo[1]);
 		}
 
-		pOut($this->_template->title((new pDataField(null, null, null, 'flag'))->parse($this->_language->read('flag'))));
+
+		pOut($this->_template->title((new pDataField(null, null, null, 'flag'))->parse($this->_language->read('flag')), $backHref));
 
 		// Let's render all the lemma's
 		$this->bindLemma();
 
+		if($this->_entry['description'] != '')
+			$this->_template->renderDesc($this->_entry['description']);
+
 		$this->_template->renderLemmas($this->_lemmas->get());
-	
-		if(isset($backHref))
-			pOut("<br /><br /><a href='".$backHref."' class='actionbutton'>".(new pIcon('fa-arrow-left',12))." ".BACK."</a>");
 		
+		pOut("<span class='xsmall'>".$this->_template->renderInfo()."</span>");
+
 	}
 
 	public function bindLemma($lemma_id = null){

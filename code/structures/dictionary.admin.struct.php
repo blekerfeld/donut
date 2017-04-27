@@ -78,7 +78,7 @@ return array(
 			'permission' => -1,
 			'icon' => 'fa-font',
 			'id_as_hash' => true,
-			'hash_app' => 'lemma',
+			'hash_app' => 'entry',
 			'menu' => 'content',
 			'type' => 'pTableObject',
 			'surface' => DA_TITLE_WORDS,
@@ -98,7 +98,8 @@ return array(
 				'remove' => $action_remove,
 			),
 			'actions_bar' => array(
-				'new' => array('new', DA_WORDS_NEW_EXTERN, 'fa-plus-circle fa-12', 'btAction wikiEdit', null, null, pUrl('?addword')),
+				'new' => array('new', DA_WORDS_NEW_EXTERN, 'fa-plus-circle fa-12', 'btAction wikiEdit', null, null, 
+				),
 			),
 			'save_strings' => $saveStrings,
 			'outgoing_links' => array(
@@ -133,6 +134,13 @@ return array(
 					 		'field' => 'word_id_2',
 					 		'double_parent' => 'word_id_1'
 					 ),
+					'translations' => array(
+						'section' => 'translations', 
+						'surface' => "Translations", 
+						'icon' => 'fa-language', 
+						'table'=> 'translation_words', 
+						'field' => 'word_id'
+					),
 				),
 			'incoming_links' => array(
 				'examples' => array(
@@ -144,6 +152,17 @@ return array(
 								(new pDataField('keyword', DA_TABLE_LINK_KEYWORD)),
 							),
 						'show_parent' => 'idiom',
+						'show_child' => 'native',
+				),
+				'translations' => array(
+						'section' => 'translations',
+						'table' => 'translation_words',
+						'parent' => 'word_id',
+						'child' => 'translation_id',
+						'fields' => array(
+								(new pDataField('specification', DA_TABLE_LINK_SPECIFICATION)),
+							),
+						'show_parent' => 'translation',
 						'show_child' => 'native',
 				),
 				'etymo' => array(
@@ -190,6 +209,54 @@ return array(
 			),
 		),
 
+		'translations' => array(
+			'section_key' => 'translations',
+			'permission' => -1,
+			'icon' => 'fa-globe',
+			'id_as_hash' => true,
+			'hash_app' => 'entry/translation',
+			'menu' => 'content',
+			'type' => 'pTableObject',
+			'surface' => DA_TRANSLATIONS,
+			'condition' => false,
+			'items_per_page' => 20,
+			'disable_pagination' => false,
+			'table' => 'translations',
+			'datafields' => array(
+				new pDataField('translation', DA_TRANSLATION, '67%', 'input', true, true, true),
+				new pDataField('language_id', DA_LANG_1, '10%', 'select', true, true, true, 'small-caps', false, new pSelector('languages', null, 'name', true, 'languages')),
+			),
+			'actions_item' => array(
+				'edit' => $action_edit,
+				'remove' => $action_remove,
+			),
+			'actions_bar' => array(
+				'new' => array('new', "New translations", 'fa-plus-circle fa-12', 'btAction wikiEdit', null, null, null),
+			),
+			'save_strings' => $saveStrings,
+			'outgoing_links' => array(
+					'words' => array(
+					 		'section' => 'words', 
+					 		'surface' => "Words", 
+					 		'icon' => 'fa-font', 
+					 		'table'=> 'translation_words', 
+					 		'field' => 'translation_id'
+					 ),
+				),
+			'incoming_links' => array(
+				'words' => array(
+						'section' => 'words',
+						'table' => 'translation_words',
+						'parent' => 'translation_id',
+						'child' => 'word_id',
+						'fields' => array(
+								(new pDataField('specification', DA_TABLE_LINK_SPECIFICATION)),
+							),
+						'show_parent' => 'native',
+						'show_child' => 'translation',
+				),
+			),
+		),
 
 		'etymo' => array(
 			'section_key' => 'etymo',

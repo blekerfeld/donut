@@ -29,9 +29,42 @@
 	//	Rewelcome our previous-session logged in guest
 	pUser::restore();
 
-	// Let's pack some superglobal inside pAdress
+	// Let's pack some superglobals inside pAdress
 	pAdress::session($_SESSION);
 	pAdress::post($_POST);
+
+	$rules = array("CON.VOW_CON_+.VOW=>%%", "CON_[aeou]_CON.+.[DT]=>%%", "[x,k,f,s,c,h,p].+_D_=>t", "[^x,k,f,s,c,h,p].+_D_=>d", "_z_+=>s", "CON.VOW.CON_[b]_%.+=>");
+
+	$twolc = new pTwolc($rules);
+
+	$twolc->compile();
+
+	echo $twolc->feed('kat+en')->toSurface()."<br />";
+
+	$voltooidDeelwoord = new pInflection("ge-!ver-!be[-en]D");
+
+	// Rule variables: E -> e that doesn't need to be corrected, D -> becomes d or t by phonological rules
+
+	echo $twolc->feed((new pInflection("[-en]T"))->inflect("lezen"))->toSurface()."<br />";
+	echo $twolc->feed((new pInflection("[-en]T"))->inflect("hebben"))->toSurface()."<br />";
+	echo $twolc->feed((new pInflection("[-en]De"))->inflect("werken"))->toSurface()."<br />";
+	echo $twolc->feed((new pInflection("[-en]De"))->inflect("delen"))->toSurface()."<br />";
+	echo $twolc->feed((new pInflection("[-en]De"))->inflect("fotograferen"))->toSurface()."<br />";
+	echo $twolc->feed((new pInflection("[-en]De"))->inflect("schildEren"))->toSurface()."<br />";
+	echo $twolc->feed($voltooidDeelwoord->inflect("verhuizen"))->toSurface()."<br />";
+	echo $twolc->feed($voltooidDeelwoord->inflect("duwen"))->toSurface()."<br />";
+	echo $twolc->feed($voltooidDeelwoord->inflect("maken"))->toSurface()."<br />";
+	echo $twolc->feed($voltooidDeelwoord->inflect("bewonen"))->toSurface()."<br />";
+
+
+	//!$x; remove x from end
+	//!^x; remove x from start
+	//?$x; add x to end
+	//?^x; add x to start
+
+	// maken -> gemaakt
+	// maken!$en;?^ge;?$t; 
+	// <ge>[-en]<t>
 
 	if(isset($_REQUEST['old']))
 		goto Old;

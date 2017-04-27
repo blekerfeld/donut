@@ -52,7 +52,8 @@
 	$donut['db_prefix'] = "";
 	$donut['session_auth'] = md5("kjj8f99e9iwj32ikm8391pok389iokn");
 
-
+mb_internal_encoding("UTF-8");
+mb_regex_encoding("UTF-8");
 
 ##	These variables are the paths to the site root.
 	$donut['root_path'] = dirname(__FILE__);

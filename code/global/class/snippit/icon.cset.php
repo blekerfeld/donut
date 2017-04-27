@@ -28,7 +28,7 @@ class pIcon extends pSnippit{
 	}
 	
 
-	public function circle(){
-		return "<span class='icon-circle c-".$this->_size."'><span>".$this."</span></span>";
+	public function circle($color){
+		return "<span class='icon-circle c-".$this->_size." ".$color."'><span>".$this."</span></span>";
 	}
 }

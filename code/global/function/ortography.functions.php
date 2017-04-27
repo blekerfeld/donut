@@ -11,7 +11,7 @@
 	function pGetAlphabet()
 	{
 		global $donut;
-		$alphabet = pQuery("SELECT * FROM graphemes WHERE in_alphabet = 1 ORDER by graphemes.order");
+		$alphabet = pQuery("SELECT * FROM graphemes WHERE in_alphabet = 1 ORDER by graphemes.sorter");
 		return $alphabet;
 	}
 

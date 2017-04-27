@@ -95,7 +95,7 @@ class pAdminStructure extends pStructure{
 
 	private function headerDropDown(){
 
-		$output = "<div class=' header dictionary home wiki' ><div class='title_header d_admin_header_dropdown' ><span class='ttip_header' data-tooltip-content='#dropdown_header'>".(new pIcon($this->_meta['icon'], 24))->circle()." ".$this->_meta['title']."</span> ".(new pIcon('fa-chevron-down', 12))." </div></div>
+		$output = "<div class=' header dictionary home wiki' ><div class='title_header d_admin_header_dropdown' ><span class='ttip_header' data-tooltip-content='#dropdown_header'>".(new pIcon($this->_meta['icon'], 24))." ".$this->_meta['title']."</span> ".(new pIcon('fa-chevron-down', 12))." </div></div>
 
 			<div class='hide'><div id='dropdown_header' class=''>
 			<a href='".pUrl("?".$this->_app)."' class='ttip-sub active'>".(new pIcon($this->_meta['icon'], 10))." ".$this->_meta['title']."</a>";

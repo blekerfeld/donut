@@ -10,10 +10,9 @@
 
 
 // This represents a word
-
 class pLemma extends pEntry{
 
-	private $_translations, $_examples, $__lemmaDataObject, $_type, $_class, $_subclass, $_isInflection, $_hitTranslation = null;
+	private $_translations, $_examples, $__lemmaDataObject, $_type, $_class, $_subclass, $_isInflection, $_hitTranslation = null, $_query;
 
 	public $word;
 
@@ -70,9 +69,6 @@ class pLemma extends pEntry{
 		
 		global $donut;
 
-		// For search results
-		pOut("<div class='searchResults'></div>");
-		
 		// Setting the page title
 		$donut['page']['title'] = $this->_entry['native']." - ".CONFIG_SITE_TITLE;
 
@@ -92,15 +88,44 @@ class pLemma extends pEntry{
 
 		// Let's throw the subentries through their template
 		pOut($this->_template->parseSubEntries($this->_subEntries));
+	}
 
+	// This function will generate an infostring
+	private function generateInfoString(){
+		$output = "<a href='javascript:void(0);' class='tooltip' title='".$this->_type['name']."'>".$this->_type['short_name']."</a> <a href='javascript:void(0);' class='tooltip' title='".$this->_class['name']."'>".$this->_class['short_name']."</a>";
+		if($this->_subclass != null)
+			$output .= "<a href='javascript:void(0);' class='tooltip' title='".$this->_subclass['name']."'>".$this->_subclass['short_name']."</a>";
+		return $output;
+	}
+
+	// This function will make it able to highlight the searchterm
+	public function setSearchQuery($query){
+		$this->_query = $query;
 	}
 
 	// This function is called by the search object onto the found lemmas, to print a pretty preview :)
-	public function renderSearchResult(){
-		if(!($this->_hitTranslation == null OR $this->_hitTranslation === true))
-			pOut("<tr class='hSearchResultTitle'><td>".$this->_hitTranslation . "</td></tr>");
+	public function renderSearchResult($searchlang = 0){
+
+		$this->_template = new pLemmaTemplate($this->_entry, null);
+
+		if(!($this->_hitTranslation == null))
+			$hitTranslation = '<em class="dHitTranslation">'.pHighlight($this->_query, $this->_hitTranslation, '<strong class="dQueryHighlight">', '</strong>').'</em> · ';
+		else
+			$hitTranslation = '';
+
+		if($searchlang == 0)
+			$linkToWord = pHighlight($this->_query, $this->renderSimpleLink(), '<strong class="dQueryHighlight">','</strong>');
+		else
+			$linkToWord = $this->renderSimpleLink();
+
 		pOut("<tr class='hSearchResult'>");
-		pOut('<td><div class="dWordWrapper"><strong class="dWord">'.$this->renderSimpleLink()."</div></td></tr>");
+		pOut('<td><div class="dWordWrapper">'.$hitTranslation.'<strong class="dWord">'.$linkToWord."</strong><span class='dType'> · ".$this->generateInfoString()."</span> <br />".$this->_template->parseTranslations($this->_translations, true)."</div></td></tr>");
+	}
+
+
+	public function parseListItem(){
+		return "<li><span><span class='lemma lemma_".$this->_entry['id']." tooltip'><strong class='dWordTranslation'><a href='".pUrl('?entry/'.$this->_entry['id'])."'>".$this->_entry['native']."</a></strong></span><span class='dType'>
+				".$this->generateInfoString()."</span></span></li>";
 	}
 
 	// This will bind both translations and examples to the lemma

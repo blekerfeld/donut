@@ -59,7 +59,7 @@ class pTableObject extends pObject{
 			$showID = $data['id'];
 
 			if(isset($this->_activeSection['id_as_hash']) AND $this->_activeSection['id_as_hash'] AND isset($this->_activeSection['hash_app'])){
-				$showID = "<a class='medium tooltip' href='".pUrl('?'.$this->_activeSection['hash_app'].'='.pHashId($data['id']))."'>".(new pIcon('fa-bookmark-o', 12))." ".pHashId($data['id'])."</a>";
+				$showID = "<a class='medium tooltip' href='".pUrl('?'.$this->_activeSection['hash_app'].'/'.pHashId($data['id']))."'>".(new pIcon('fa-bookmark-o', 12))." ".pHashId($data['id'])."</a>";
 				$data['id'] = pHashId($data['id']);
 			}
 
@@ -87,6 +87,9 @@ class pTableObject extends pObject{
 
 						$dataCount->setCondition("WHERE ((".$link->structure[$this->_section]['outgoing_links'][$key]['field']." = '".$real_id."'" . ((isset($link->structure[$this->_section]['outgoing_links'][$key]['double_parent'])) ? ") OR (". $link->structure[$this->_section]['outgoing_links'][$key]['double_parent'] . " = '".$real_id."'" : '')."))");
 
+
+
+
 							$counter = "<span class='counter'>".$dataCount->countAll($link->structure[$this->_section]['outgoing_links'][$key]['field'] . " = ".$real_id)."</span>";
 
 						$action->_surface = $counter.$action->_surface;
@@ -101,8 +104,11 @@ class pTableObject extends pObject{
 			pOut("<td style='text-align: center'><a href='javascript:void();' class='btAction no-float ttip_actions' data-tooltip-content='#dropdown_".$data['id']."'>".(new pIcon('fa-chevron-down', 10))."</a>");
 
 			pOut("		<div class='hide'><div id='dropdown_".$data['id']."' class=''>");
+
+
+
 			foreach($this->_actions->get() as $action){
-				if(!($action->name == 'remove' AND $data['id'] == 0))
+				if(!($action->name == 'remove' AND $real_id == 0))
 					pOut($action->render($data['id']));
 			}
 			pOut("</div></div>");

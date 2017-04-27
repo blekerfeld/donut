@@ -281,7 +281,7 @@ class pMagicActionForm{
 			$_SESSION['pJSBack'] = false;
 		}
 		else
-			$hrefBack = pUrl("?".$this->_app."&".$this->_section.(isset($_REQUEST['position']) ? "&offset=".$_REQUEST['position'] : ""));
+			$hrefBack = pUrl("?".$this->_app."/".$this->_section.(isset($_REQUEST['position']) ? "/offset/".$_REQUEST['position'] : ""));
 
 		pOut("<div class='btButtonBar'>
 			<a class='btAction wikiEdit' href='".$hrefBack."'><i class='fa fa-12 fa-arrow-left' ></i> ".BACK."</a>
@@ -403,7 +403,7 @@ class pMagicActionForm{
 				(new pMagicField($field))->render();
 
 		pOut("<div class='btButtonBar'>
-			<a class='btAction wikiEdit' href='".pUrl("?".$this->_app."&".$this->_section."&link-table&id=".$this->_linkObject->_data[0]['id']."&linked=".$this->_linked)."'><i class='fa fa-12 fa-arrow-left' ></i> ".BACK."</a>
+			<a class='btAction wikiEdit' href='".pUrl("?".$this->_app."/".$this->_section."/link-table/".$this->_linkObject->_data[0]['id']."/".$this->_linked)."'><i class='fa fa-12 fa-arrow-left' ></i> ".BACK."</a>
 			<a class='btAction green submit-form'><i class='fa fa-12 fa-check-circle'></i> ".$this->_strings[1]."</a><br id='cl'/></div>");
 		pOut("</div>");
 
@@ -427,7 +427,7 @@ class pMagicActionForm{
 				$('.field_".$this->_guestObject->structure[$this->_section]['incoming_links'][$this->_linked]['parent']."').select2();
 				$('.submit-form').click(function(){
 					$('.saving').slideDown();
-					$('.ajaxSave').load('".pUrl("?".$this->_app."/".$this->_section."/new-link/".$this->_linkObject->_data[0]['id']."/linked=".$this->_linked)."/ajax', {".implode(", ", $loadValues)."});
+					$('.ajaxSave').load('".pUrl("?".$this->_app."/".$this->_section."/new-link/".$this->_linkObject->_data[0]['id']."/".$this->_linked)."/ajax', {".implode(", ", $loadValues)."});
 				});
 			</script>");
 	}

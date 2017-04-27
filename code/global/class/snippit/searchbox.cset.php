@@ -45,12 +45,30 @@ class pSearchBox extends pSnippit{
 		// Time for the fancy script
 		$output .= "<script type='text/javascript'>
 
+		orgTitle = '';
+
+		"; 
+
+		if(isset(pAdress::arg()['query']) AND isset(pAdress::arg()['dictionary']))
+			$output .= "
+				$(document).ready(function(){
+					orgTitle = document.title;
+					$('.word-search').val('".pAdress::arg()['query']."');
+					$('.dictionary-selector').val('".strtoupper(pAdress::arg()['dictionary'])."');
+		      		$('.pEntry').slideUp();
+      				$('.searchLoad').slideDown();
+      				search();
+				});";
+
+		$output .= "
 		var options = {
 		    callback: function (value) {
 
 		    if($('.word-search').val() == ''){
+		    	window.history.pushState('string', '', '".pUrl("?".pAdress::queryString())."');
 				$('.searchLoad').slideUp();
 				$('.pEntry').slideDown();
+				document.title = orgTitle;
 				searchLock = '';
 				// We are not sending empty queries
       		}else{
@@ -75,13 +93,14 @@ class pSearchBox extends pSnippit{
 			$('.load-hide').show();
 			lock = $('.word-search').val();
 			if(bypass === true || $('.word-search').val().length > 0){
-				//$('#loading').slideDown();
-				oldHeight = $('.searchLoad').height();
 				$('.header.dictionary').removeClass('home').addClass('home-search');
       			$('.searchLoad').load('".pUrl('?search/')."' + $('.dictionary-selector').val() + '/ajax/', {'query': $('.word-search').val(), 'exactMatch': $('.checkbox-wholeword').is(':checked')}, function(e){
-
+      					if($('.word-search').val() != ''){
+      						window.history.pushState('string', '', '".pUrl("?entry/search/")."' + $('.dictionary-selector').val().toLowerCase() + '/' + $('.word-search').val());
+      					}
       					html = e;
       					$('.load-hide').hide();
+      					document.title = $('.word-search').val() + ' - Searching';
       			});
       		}
 		}
