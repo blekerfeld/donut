@@ -181,16 +181,18 @@ span.tab, div.tab {
 
 .absolute_header {
   padding: 3px;
-  margin-left: 20px;
-  margin-right: 20px;
   font-family: Libre Franklin;
   text-transform: uppercase;
   letter-spacing: 1px;
   padding-left: 2px;
   padding-bottom: 10px;
-  border-bottom: 3px double rgba(50,60,80,0.3);
+  border-bottom: 3px double rgba(41,85,152,0.2);
   color: #333;
   text-decoration: none;
+  margin-left: 7%;
+    margin-right: 7%;
+        padding-top: 20px;
+    padding-bottom: 10px;
 }
 
 .absolute_header a{
@@ -211,8 +213,9 @@ div.logotop{
 
 a.logotop {
   padding-bottom: 2px;
-  color: rgba(50,60,80,0.7);
-  font-family: Rubik Mono One;
+  color: #222;
+  font-family: Merriweather;
+  font-weight: bold;
   font-size: 22px;
 }
 
@@ -228,10 +231,7 @@ a.logotop:hover{
 
 
 div.hStripe{
-    background: #607193;
-    min-height: 10px;
-    margin-left: 7%;
-    margin-right: 7%;
+    border-bottom: 5px solid #3A3B5B;
     box-shadow: 0px 1px 3px rgba(100, 100, 100, 0.05);
 }
 
@@ -242,12 +242,9 @@ div.hStripe.min{
 div.top_area{
     background: radial-gradient(circle, #f1f1f1, #f4f4f4);
     box-shadow: 0px 1px 3px rgba(100, 100, 100, 0.05);
-    margin-left: 7%;
-    margin-right: 7%;
-    padding-top: 20px;
-    padding-bottom: 20px;
-    border-left: 1px solid rgba(167,177,198,0.4);
-    border-right: 1px solid rgba(167,177,198,0.4);
+    border-left: 1px #E7E7E7 solid;
+    border-right: 1px #E7E7E7 solid;
+    padding-bottom: 5px;
 }
 
 div.outerwrap {
@@ -255,22 +252,22 @@ div.outerwrap {
 }
 
 .ulWrap {
-  border-top: none;
-  border: 1px rgba(167,177,198,0.4) solid;
-  border-top: none;
   box-shadow: 0px 1px 3px rgba(100, 100, 100, 0.05);
-  padding: 0px!important;
+  padding: 0px;
+  border-top: none;
+  border: 1px #E7E7E7 solid;
+  border-top: none;
+  margin-right: 7%;
+  margin-left: 7%;
 }
 
 
 .fill_gaps{
-  background: #eee;
-  margin-right: 7%;
-  margin-left: 7%;
 
 }
 
 .header {
+
   padding: 20px;
   padding-top: 15px;
   padding-bottom: 0px;
@@ -821,7 +818,8 @@ div.title.small {
 span.icon-circle{
   display: inline-block;
   border-radius: 50%;
-  padding: 5px;
+  padding: 12px;
+  background: red;
 }
 
 span.icon-circle.c-8{
@@ -846,7 +844,7 @@ span.icon-circle.dark, span.icon-circle.dark i.fa{
 span.icon-circle.circle-white{
   background: white;
 }
-span.icon-circle.circle-orange{
+span.icon-circle.c-orange{
   background: #D85600;
 }
 
@@ -1328,9 +1326,19 @@ img.dFlag:hover {
 }
 
 strong.dWord {
-  font-size: 19px;
+  font-size: 17px;
   cursor: pointer;
   font-family: Merriweather;
+}
+
+strong.dWordTranslation a{
+  font-size: 17px;
+  color: #444;
+  font-family: Gentium;
+}
+
+strong.dWordTranslation a:hover{
+  border-bottom: 1px dotted #555;
 }
 
 .moveResults strong.dWord {
@@ -1343,8 +1351,21 @@ strong.dWord a {
   color: #393d47;
 }
 
+.dHitTranslation{
+  font-family: Libre Franklin;
+  font-style: normal;
+  font-size: 12px;
+  color: #a0a0a0;
+}
+
+.dQueryHighlight{
+  border: none;
+  border-radius: 2px;
+  border-bottom: 4px solid #d9d2d9;
+}
+
 strong.dWord a:hover {
-  color: #D85338;
+  color: #D84440;
   text-decoration: underline;
 }
 
@@ -1386,8 +1407,11 @@ strong.dWord a:hover {
 }
 
 
-.dType .tooltip {
+.dType a.tooltip {
   font-family: Gentium;
+  font-style: italic;
+  font-size: 12px;
+  color: #a0a0a0;
 }
 
 em.dSpec{
@@ -1409,7 +1433,6 @@ span.translation.tooltip a{
   margin-left: 20px;
   margin-bottom: 0px;
   padding: 0px;
-  font-weight: bolder;
   font-size: 10px;
   vertical-align: top;
   color: #34392A;
@@ -1428,85 +1451,18 @@ span.translation.tooltip a{
   color: #333;
 }
 
-.pSectionWrapper div.desc {
+.pSectionWrapper div.desc, ol div.desc {
   margin: 0px;
-  font-size: 11px;
-  padding: 4px;
+  font-size: 10px;
+  font-weight: normal;
+  font-family: open sans;
+  padding: 1px;
   margin-top: 2px;
   background: rgba(140, 140, 140, 0.1);
   width: auto;
   display: inline-block;
 }
 
-.moveResults:empty{
-  border:none;
-  margin-top: -10px;
-}
-
-.moveResults{
-  background: #fff;
-  margin-bottom: -20px;
-  margin-top: -20px;
-}
-
-
-.moveResults .dWordWrapper:before{
-  content: "";
-}
-.moveResults .dWordWrapper {
-
-  margin: 0px;
-  border: none;
-  margin: -2px;
-  margin-bottom: 10px;
-  background: transparent;
-  padding: 10px;
-}
-
-.moveResults .dWordWrapper .tooltip, .wordLink.tooltip {
-  font-family: Gentium;
-}
-
-.moveResults .dWordWrapper ol, ol.inline {
-  padding: 0px;
-  margin: 0px;
-  margin-left: 10px;
-  font-weight: bolder;
-  font-size: 8px;
-  vertical-align: top;
-  color: #34392A;
-  display: inline;
-  list-style: none;
-  background: rgba(140, 140, 140, 0.1);
-}
-
-.moveResults .dWordWrapper ol li, ol.inline li {
-  display: inline;
-  list-style: none;
-}
-
-.moveResults .dWordWrapper ol li:after, ol.inline li:after {
-  content: ", ";
-}
-
-.moveResults .dWordWrapper ol li:last-child:after, ol.inline li:last-child:after {
-  content: "";
-}
-
-.dWordWrapper ol span {
-  font-size: 16px;
-  vertical-align: baseline;
-  font-weight: normal;
-  color: #333;
-}
-
-.dWordWrapper ol span p.desc {
-  margin: 0px;
-  font-size: 80%;
-  background: rgba(140, 140, 140, 0.1);
-  width: auto;
-  display: inline-block;
-}
 
 .dialogedit {
   position: relative;
@@ -1566,10 +1522,6 @@ span.translation.tooltip a{
 }
 
 .dType {
-  font-size: 11px;
-}
-
-.dGender {
   font-size: 11px;
 }
 

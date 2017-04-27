@@ -12,9 +12,13 @@
 
 class pLemmaTemplate extends pEntryTemplate{
 
-	public function parseTranslations($translations){
+	public function parseTranslations($translations, $justList = false){
 		$overAllContent = "";
 		// Going through the languages
+
+		if(empty($translations))
+			return false;
+
 		foreach($translations as $key => $languageArray){
 			$language = new pLanguage($key);
 			if($key == 0)
@@ -30,6 +34,9 @@ class pLemmaTemplate extends pEntryTemplate{
 
 		// If there is a session that restricts the shown languages, offer a link that is able cancel that restriction
 		$showAll = ((isset(pAdress::session()['returnLanguage'])) ? '<a class="xsmall float-right" href="'.pUrl("?entry/".$this->_data['id']."/resetTranslations/").'">'.LEMMA_TRANSLATIONS_RESET.'</a>' : '');
+
+		if($justList)
+				return $content;
 
 		return new pEntrySection($showAll.(new pIcon('fa-language', 12))." ".LEMMA_TRANSLATIONS, $overAllContent);
 	}

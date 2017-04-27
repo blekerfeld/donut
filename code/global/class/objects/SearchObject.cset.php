@@ -25,12 +25,16 @@ class pSearchObject extends pObject{
 		$this->_meta = $this->_activeSection['entry_meta'];
 	}
 
-	private function parseSearchResults($results, $searchlang){
-		if($searchlang->read('id') == 0)
-			return $results->renderSearchResult();
+	private function parseSearchResults($query, $results, $searchlang){
+		if($searchlang->read('id') == 0){
+			$results->setSearchQuery($query);
+			return $results->renderSearchResult(0);
+		}
 		else
-			foreach($results as $lemma)
-				$lemma->renderSearchResult();
+			foreach($results as $lemma){
+				$lemma->setSearchQuery($query);
+				$lemma->renderSearchResult($searchlang->read("id"));
+			}
 		return true;
 	}
 
@@ -65,9 +69,6 @@ class pSearchObject extends pObject{
 
 		$lemmaObject = new pLemmaDataObject;
 
-		// Max results of 50 with ajax
-		if(isset(pAdress::arg()['ajax']))
-			$lemmaObject->setLimit(30);
 
 		$fetchSearch = $lemmaObject->search($searchlang->id, $returnlang->id, $query, $wholeword);
 
@@ -79,7 +80,7 @@ class pSearchObject extends pObject{
 
 			pOut("<table class='dWordTable'>");
 			foreach($fetchSearch as $lemma)
-				$this->parseSearchResults($lemma, $searchlang);
+				$this->parseSearchResults($query, $lemma, $searchlang);
 			pOut('</table>');
 
 			if(isset(pAdress::arg()['ajax']))

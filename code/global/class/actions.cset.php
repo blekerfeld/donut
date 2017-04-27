@@ -15,11 +15,11 @@ class pAction{
 
 	public $name, $followUpFields, $followUp;
 
-	private function actionUrl($id, $ajax = false){
+	private function actionUrl($id, $ajax = false, $linked = false){
 
 		if($this->_override != null)
 			return $this->_override;
-		return pUrl('?'.$this->_app.'/'.$this->_section.'/'.$this->name.(($id != -1) ? '/'.$id : '').(($ajax != 0) ? '/ajax': '').(isset(pAdress::arg()['offset']) ? "/position/".pAdress::arg()['offset'] : ""));
+		return pUrl('?'.$this->_app.'/'.$this->_section.'/'.$this->name.(($id != -1) ? '/'.$id : '').($linked != false ? '/'.$linked.'/' : '').(($ajax != 0) ? '/ajax': '').(isset(pAdress::arg()['offset']) ? "/position/".pAdress::arg()['offset'] : ""));
 	}
 
 	public function setOverride($override){
@@ -51,7 +51,7 @@ class pAction{
 			    		});
 					}">'.(new pIcon($this->_icon, 12)).' '.$this->_surface.'</a>';
 
-		return "<a href='".pUrl($this->actionUrl($id).($linked != null ? "/".$linked : ''))."' class='".$this->_class." link_".$this->name."'>".(new pIcon($this->_icon, 12))." ".$this->_surface."</a>";
+		return "<a href='".pUrl($this->actionUrl($id, false, ($linked != null ? $linked : false)))."' class='".$this->_class." link_".$this->name."'>".(new pIcon($this->_icon, 12))." ".$this->_surface."</a>";
 	}
 
 }

@@ -168,20 +168,20 @@ class pParser{
 				$linkTableObject = new pLinkTableObject($this->structure, 'fa-link',  $this->structure[$this->_data['incoming_links'][$linked]['section']]['surface']."&#x205F; (&#x205F;".DA_TABLE_LINKS_PARENT."&#x205F;) &#x205F; ↔ &#x205F;".$this->_data['surface']." &#x205F;(&#x205F;".DA_TABLE_LINKS_CHILD."&#x205F;)", $this->_data['incoming_links'][$linked]['table'], 0, $dfs, $actions, $action_bar, false, $this->_section, $this->_app);
 
 
-				if(isset($_REQUEST['id'])){
-					if(!is_numeric($_REQUEST['id']))
-						$id = pHashId($_REQUEST['id'], true)[0];
+				if(isset(pAdress::arg()['id'])){
+					if(!is_numeric(pAdress::arg()['id']))
+						$id = pHashId(pAdress::arg()['id'], true)[0];
 					else
-						$id = $_REQUEST['id'];
+						$id = pAdress::arg()['id'];
 
 					// The condition allows for up to two parents
 					$linkTableObject->setCondition("WHERE ((".$this->_data['incoming_links'][$linked]['child']." = '".$id."'" . (
 						(isset($this->_data['incoming_links'][$linked]['double_parent']) && $this->_data['incoming_links'][$linked]['double_parent'] == true) ? ") OR (". $this->_data['incoming_links'][$linked]['parent'] . " = '".$id."'" : '')."))");
+
 				}
 
 				$this->_object->getData();
 				$linkTableObject->getData();
-
 				// Passing some very useful information to the linking table
 				$linkTableObject->passData($guests, $linked,$this->_object->_data, $this->_data['incoming_links'][$linked]['show_parent'], $this->_data['incoming_links'][$linked]['show_child'], $this->_data['incoming_links'][$linked]['parent'], pAdress::arg()['id']);
 

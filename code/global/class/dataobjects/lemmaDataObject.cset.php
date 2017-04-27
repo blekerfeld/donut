@@ -67,13 +67,7 @@ class pLemmaDataObject extends pDataObject{
 			while($fetched = $fetch->fetchObject()){
 				$lemmaResult = new pLemma($fetched->word_id, 'words');
 				if(isset($fetched->translation)){
-					if(!array_key_exists($fetched->translation, $noDoubles)){
-						$lemmaResult->setHitTranslation($fetched->translation);
-						$noDoubles[$fetched->translation] = true;
-					}
-					else{
-						$lemmaResult->setHitTranslation(true);
-					}
+					$lemmaResult->setHitTranslation($fetched->translation);
 				}
 				$lemmaResult->bindAll(($searchlang == 0) ? $returnlang : $searchlang);
 

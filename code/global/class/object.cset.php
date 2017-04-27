@@ -105,7 +105,7 @@ class pObject{
 
 		$current_page_number  = 1;
 
-		$select_page = "<select class='selectPage' onChange='window.location = \"".pUrl("?".$this->_app . "&". $this->_section . '&offset=')."\" + $(this).val();'>";
+		$select_page = "<select class='selectPage' onChange='window.location = \"".pUrl("?".$this->_app . "/". $this->_section . '/offset/')."\" + $(this).val();'>";
 
 			while($number_of_pages > 0){
 				$calculated_offset = (($current_page_number * $this->_itemsperpage) - $this->_itemsperpage);

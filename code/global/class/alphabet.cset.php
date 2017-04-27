@@ -1,5 +1,5 @@
 <?php
-
+	
 	// 	Donut 				🍩 
 	//	Dictionary Toolkit
 	// 		Version a.1
@@ -10,7 +10,7 @@
 
 class pAlphabet{
 
-	private static $dataObject, $_graphemes, $order, $_init = false;
+	private static $dataObject, $dataObjectGroups, $_graphemes, $order, $_init = false, $_groups = array();
 
 
 	// This will print a freaking alphabet bar via pOut(new pAlphabet);
@@ -36,6 +36,7 @@ class pAlphabet{
 
 		// Let's get our alphabet
 		self::$dataObject = new pDataObject('graphemes');
+		self::$dataObjectGroups = new pDataObject('graphemes_groups');
 		self::$dataObject->setCondition(" WHERE in_alphabet = 1");
 		self::$dataObject->setOrder(" sorter ASC ");
 		self::$dataObject->getObjects();
@@ -157,4 +158,45 @@ class pAlphabet{
 
 		return $words_array;
 	}
+
+
+	public function getGroups($groupstring){
+
+		if(isset(self::$_groups[$groupstring]))
+			return self::$_groups[$groupstring];
+
+		// The alphabet needs to be loaded first
+		if(!self::$_init)
+			self::init();
+
+		$output = array();
+		
+		self::$dataObjectGroups->setCondition(" WHERE groupstring = '".$groupstring."' ");
+		
+		foreach(self::$dataObjectGroups->getObjects()->fetchAll() as $grapheme)
+			$output[] = $grapheme['grapheme'];
+		
+		self::$_groups[$groupstring]  = $output;
+
+		return $output;
+	}
+
+	public function getGroupsAsString($groupstring){
+
+		// The alphabet needs to be loaded first
+		if(!self::$_init)
+			self::init();
+
+		// First we need to get the group
+		$group = self::getGroups($groupstring);
+
+		$string = '';
+
+		foreach($group as $letter)
+			$string .= $letter;
+
+		return $string;
+
+	}
+
 }

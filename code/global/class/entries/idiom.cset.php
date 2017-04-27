@@ -37,6 +37,7 @@ class pIdiom extends pEntry{
 
 		// Let's render all the lemma's
 		$this->bindLemma();
+		$this->_template->renderLemmas($this->_lemmas->get());
 
 	
 		if(isset($backHref))
@@ -57,7 +58,11 @@ class pIdiom extends pEntry{
 		}	else{
 			$linkTable->setCondition(" WHERE idiom_id = '".$this->_id."' ");
 			$linkTable->getObjects();
-			$this->_lemmas =  $linkTable->data()->fetchAll();
+			$this->_lemmas = new pSet;
+
+			if($linkTable->data()->rowCount() != 0)
+				foreach($linkTable->data()->fetchAll() as $lemma)
+					$this->_lemmas->add(new pLemma($lemma['word_id'], 'words'));
 		}
 		
 	}
@@ -87,11 +92,6 @@ class pIdiom extends pEntry{
 		}
 
 		return $output."</li>";
-	}
-
-	public function parseDescription(){
-		if($this->_entry['description'] != '')
-			return "<div class='desc'>".pMarkdown($this->_entry['description'])."</div>";
 	}
 
 }
