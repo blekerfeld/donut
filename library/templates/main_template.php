@@ -2,6 +2,7 @@
 <html>
   <head>
     <link href="<?php echo pUrl('library/assets/css/main.css'); ?>" rel="stylesheet">
+    <link href="<?php echo pUrl('library/assets/css/markdown.css'); ?>" rel="stylesheet">
     <?php echo (pCheckMobile() ? '<link href="library/assets/css/mobile.css" rel="stylesheet">' : '' ); ?>
     <link rel="shortcut icon" href="<?php echo pUrl('library/images/static/favicon.png'); ?>">
     <link rel="stylesheet" href="<?php echo pUrl('library/assets/css/vendors/font-awesome.css'); ?>">

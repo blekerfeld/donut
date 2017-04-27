@@ -4,7 +4,7 @@ function pMarkDownParse($text){
 	return pMarkDown($text);
 }
 
-function pMarkDown($text){
+function pMarkDown($text, $block = true){
 	
 	// We need to require the parsedown files, but only once.
 	require_once pFromRoot('library/assets/php/vendors/parsedown.require.php');
@@ -12,7 +12,7 @@ function pMarkDown($text){
 
 	$parse = new ParsedownExtra;
 
-	return pWordLinks($parse->text($text));
+	return "<div class='markdown-body ".($block ? '' : 'inline-block')."'>".$parse->text($text)."</div>";
 }
 
 

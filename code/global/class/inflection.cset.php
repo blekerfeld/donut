@@ -61,18 +61,17 @@ class pInflection{
 
 	protected function addBefore($what, $string){
 
-		$whatExploded = explode('-!', $what);
+		$whatExploded = explode('-', $what);
 		$prefix = $whatExploded[0];
-
 		unset($whatExploded[0]);
-
 		$check = false;
 
 		// Let's check if there are negative overrides
 		if(count($whatExploded) > 1){
-			foreach($whatExploded as $key => $negOver){
-				if(pStartsWith($string, $negOver))
-					$check = true;
+			foreach($whatExploded as $negOver){
+				$check = $this->look($string, $negOver);
+				if($check == true)
+					break;
 			}
 		}
 
@@ -83,12 +82,51 @@ class pInflection{
 
 	}
 
+	protected function look($string, $negOver){
+
+		$check = 0;
+
+		// Negative mode
+		if(pStartsWith($negOver, '!'))
+			if(pStartsWith(substr($negOver, 1), '^'))
+				if(pStartsWith($string, substr($negOver, 2)))
+					$check = true;
+			elseif(pStartsWith(substr($negOver, 1), '$'))
+				if(pEndsWith($string, substr($negOver, 2)))
+					$check = true;
+
+		else
+			if(pStartsWith(substr($negOver, 1), '^'))
+				if(pStartsWith($string, substr($negOver, 2)))
+					$check = false;
+			elseif(pStartsWith(substr($negOver, 1), '$'))
+				if(pEndsWith($string, substr($negOver, 2)))
+					$check = false;
+
+		return $check;
+
+	}
+
 	protected function addAfter($what, $string){
 
-		// Let's check if there are negative overrides
-		
+		$whatExploded = explode('-', $what);
+		$suffix = $whatExploded[0];
+		unset($whatExploded[0]);
+		$check = false;
 
-		return $string.'+'.$what;
+		// Let's check if there are negative overrides
+		if(count($whatExploded) > 1){
+			foreach($whatExploded as $negOver){
+				$check = $this->look($string, $negOver);
+				if($check == true)
+					break;
+			}
+		}
+
+		if($check)
+			return $string;
+
+		return $string.'+'.$suffix;
 
 	}
 
