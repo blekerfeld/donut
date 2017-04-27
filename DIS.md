@@ -46,7 +46,7 @@ Prefixes and suffixes are placed before and after the stem at their respective p
 
 For example, the swedish word *flickorna* (flick-or-na) from *flicka*, will have the following rule:
 ```
-[-a-!a]or;na
+[-a]or;na
 ```
 
 Each affix is added to the word with a seperator: `{` for prefixes and `+` for suffixes. These seperators can be used in the phonogical rules to match on. That is really handy when a phonological rule only applies when there is a certain ending, that way it is easy for the two level compiler to know whether a morpheme-boundary is present.
