@@ -103,12 +103,12 @@ class pTwolc{
 
 
 
-			if($char == '^'){
+			if($char == '<:'){
 				$parsedContext[$count] = '\A'; 
 			}elseif($char == '$'){
 				$parsedContext[] = '\z'; 
 			}
-			elseif($char == '%'){
+			elseif($char == ':>'){
 				$parseContext[] = '$1';
 			}
 			// literal occurances 'at'

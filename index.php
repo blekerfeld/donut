@@ -45,6 +45,10 @@
 
 	// Rule variables: E -> e that doesn't need to be corrected, D -> becomes d or t by phonological rules
 
+	foreach ($variable as $key => $value) {
+		# code...
+	}
+
 	echo $twolc->feed((new pInflection("[-en]T"))->inflect("lezen"))->toSurface()."<br />";
 	echo $twolc->feed((new pInflection("[-en]T"))->inflect("hebben"))->toSurface()."<br />";
 	echo $twolc->feed((new pInflection("[-en]De"))->inflect("werken"))->toSurface()."<br />";
