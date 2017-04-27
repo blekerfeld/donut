@@ -52,8 +52,8 @@
 	$donut['db_prefix'] = "";
 	$donut['session_auth'] = md5("kjj8f99e9iwj32ikm8391pok389iokn");
 
-mb_internal_encoding("UTF-8");
-mb_regex_encoding("UTF-8");
+	mb_internal_encoding("UTF-8");
+	mb_regex_encoding("UTF-8");
 
 ##	These variables are the paths to the site root.
 	$donut['root_path'] = dirname(__FILE__);
@@ -87,6 +87,16 @@ function pEndsWith($haystack, $needle)
 {
     return $needle === "" || substr($haystack, -strlen($needle)) === $needle;
 }
+
+function mbStringToArray ($string) {
+    $strlen = mb_strlen($string);
+    while ($strlen) {
+        $array[] = mb_substr($string,0,1,"UTF-8");
+        $string = mb_substr($string,1,$strlen,"UTF-8");
+        $strlen = mb_strlen($string);
+    }
+    return $array;
+} 
 	
 ##	This function is used to load all the other functions and needed classes
 	function pLoadGlobalCode()

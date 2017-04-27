@@ -80,6 +80,8 @@ class pTwolc{
 		// UTF-8 support enabled
 		$regex .= '/u';
 
+		var_dump($regex);
+
 		$this->_pending[] = array('pattern' => $regex, 'replace' => $this->parseReplace($rule['replace']));
 		
 	}
@@ -102,7 +104,6 @@ class pTwolc{
 		foreach($splitContext as $char){
 
 
-
 			if($char == '<:'){
 				$parsedContext[$count] = '\A'; 
 			}elseif($char == '$'){
@@ -110,6 +111,17 @@ class pTwolc{
 			}
 			elseif($char == ':>'){
 				$parseContext[] = '$1';
+			}
+
+			// Variables
+			elseif (pStartsWith($char, '&')) {
+				$char = substr($char, 1);
+				$explode = explode(',', $char);
+				$output = '(?:';
+				$matches = array();
+				foreach (explode(',', $char) as $var)
+					$matches[] = $var;
+				$parsedContext[$count] = "[&]{1}".$output.implode('|', $matches).")";
 			}
 			// literal occurances 'at'
 			elseif(pStartsWith($char, '\'') AND pEndsWith($char, '\'')){
@@ -167,7 +179,7 @@ class pTwolcString{
 
 	public function toSurface(){
 		//return $this->_string;
-		return strtolower(str_replace(array('0', '+', '{'), '', $this->_string));
+		return strtolower(str_replace(array('0', '+', '{', '::', '&', '#'), '', $this->_string));
 	}
 
 }

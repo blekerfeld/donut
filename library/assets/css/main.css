@@ -1380,7 +1380,7 @@ strong.dWord a:hover {
 }
 
 .dWordTable{
-  width: 70%;
+  width: 100%;
   margin: 20px;
   font-size: 12px;
 }
@@ -1393,7 +1393,8 @@ strong.dWord a:hover {
 }
 
 .dWordWrapper:hover {
-  background: rgba(200, 200, 200, 0.05)!important;
+  background: linear-gradient(to bottom, rgba(200,200,200,0.05), rgba(200,200,200,0.06));  /* Chrome 10-25, Safari 5.1-6 */
+
 }
 
 .dWordWrapper a.tooltip, .wordLink.tooltip {

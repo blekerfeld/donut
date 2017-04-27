@@ -33,7 +33,16 @@
 	pAdress::session($_SESSION);
 	pAdress::post($_POST);
 
-	$rules = array("CON.VOW_CON_+.VOW=>%%", "CON_[aeou]_CON.+.[DT]=>%%", "[x,k,f,s,c,h,p].+_D_=>t", "[^x,k,f,s,c,h,p].+_D_=>d", "_z_+=>s", "CON.VOW.CON_[b]_%.+=>");
+
+	// Temporary markdown wrapper
+	if(isset($_GET['md'])){
+		$md = pMarkdown(file_get_contents(pFromRoot($_GET['md'].".md")). true);
+		pOut("<br /><div class='home-margin'>".$md."</div>");
+		goto template;
+	}
+
+
+	$rules = array("CON.VOW_CON_+.VOW=>%%", "CON_[aeou]_CON.+.&T,D=>%%", "[x,k,f,s,c,h,p].+_&D_=>t", "[^x,k,f,s,c,h,p].+_&D_=>d", "_z_+=>s", "CON.VOW.CON_[b]_.+.&T=>0");
 
 	$twolc = new pTwolc($rules);
 
@@ -41,24 +50,21 @@
 
 	echo $twolc->feed('kat+en')->toSurface()."<br />";
 
-	$voltooidDeelwoord = new pInflection("ge-!ver-!be[-en]D");
+	$voltooidDeelwoord = new pInflection("ge-!^ver-!^be[-en]&D");
 
 	// Rule variables: E -> e that doesn't need to be corrected, D -> becomes d or t by phonological rules
 
-	foreach ($variable as $key => $value) {
-		# code...
-	}
-
-	echo $twolc->feed((new pInflection("[-en]T"))->inflect("lezen"))->toSurface()."<br />";
-	echo $twolc->feed((new pInflection("[-en]T"))->inflect("hebben"))->toSurface()."<br />";
-	echo $twolc->feed((new pInflection("[-en]De"))->inflect("werken"))->toSurface()."<br />";
-	echo $twolc->feed((new pInflection("[-en]De"))->inflect("delen"))->toSurface()."<br />";
-	echo $twolc->feed((new pInflection("[-en]De"))->inflect("fotograferen"))->toSurface()."<br />";
-	echo $twolc->feed((new pInflection("[-en]De"))->inflect("schildEren"))->toSurface()."<br />";
+	echo $twolc->feed((new pInflection("[-en]&T"))->inflect("lezen"))->toSurface()."<br />";
+	echo $twolc->feed((new pInflection("[-en;]&T"))->inflect("hebben"))->toSurface()."<br />";
+	echo $twolc->feed((new pInflection("[-en]&De"))->inflect("werken"))->toSurface()."<br />";
+	echo $twolc->feed((new pInflection("[-en]&De"))->inflect("delen"))->toSurface()."<br />";
+	echo $twolc->feed((new pInflection("[-en]&De"))->inflect("fotograferen"))->toSurface()."<br />";
+	echo $twolc->feed((new pInflection("[-en]&De"))->inflect("schildEren"))->toSurface()."<br />";
 	echo $twolc->feed($voltooidDeelwoord->inflect("verhuizen"))->toSurface()."<br />";
 	echo $twolc->feed($voltooidDeelwoord->inflect("duwen"))->toSurface()."<br />";
 	echo $twolc->feed($voltooidDeelwoord->inflect("maken"))->toSurface()."<br />";
 	echo $twolc->feed($voltooidDeelwoord->inflect("bewonen"))->toSurface()."<br />";
+	echo $twolc->feed($voltooidDeelwoord->inflect("gooien"))->toSurface()."<br />";
 
 
 	//!$x; remove x from end
@@ -88,6 +94,8 @@
 	
 	$dispatcher->structureObject->render();
 
+	template:
+
 	// Defining the menu, intial state
 	$donut['page']['menu'] = pMenu();
 
@@ -108,8 +116,6 @@
 		$donut['user'] = pGetUser();
 	else
 		$donut['user'] = null;
-
-
 
 	//	The template is loaded, that's the begining of the end.
 	if(!isset(pAdress::arg()['ajax']))
