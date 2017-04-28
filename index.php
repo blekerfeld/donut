@@ -45,9 +45,22 @@
 
 	$rules = array("CON.VOW_CON_+.VOW=>%%", "CON_[aeou]_CON.+.&T,D=>%%", "CON_&A,E,O,U_CON.+.&T,D=>%%", "[x,k,f,s,c,h,p].+_&D_=>t", "_z_+=>s", "CON.VOW.CON_[b]_+.&T=>0", "_z_:>=>s");
 
+	$rules2 = array(
+		"<:_o_CON.VOW=>oʊ", "CON_o_CON.VOW=>oʊ", "_o.o_=>oʊ",
+		"<:_o_CON.CON=>ɔ", "CON_o_CON.CON=>ɔ", "CON_o_CON.:>=>ɔ",
+		"<:_a_CON.VOW=>a:", "CON_a_CON.VOW=>a:", "_a.a_=>a:",
+		"<:_a_CON.CON=>ɑ", "CON_a_CON.CON=>ɑ", "CON_a_CON.:>=>ɑ",
+		"_s.c.h_=>sχ",
+		"_n.g_=>ŋ",
+		);
+
 	$twolc = new pTwolc($rules);
+	$twolc2 = new pTwolc($rules2);
 
 	$twolc->compile();
+	$twolc2->compile();
+
+	echo $twolc2->feed("school schol kat koning")->toSurface()."<br />";
 
 	echo $twolc->feed('kat+en')->toSurface()."<br />";
 
