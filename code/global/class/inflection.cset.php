@@ -34,6 +34,21 @@ class pInflection{
 		// Forming the stem
 		foreach($this->_formStem as $action){
 
+			// $exploded = explode('-', $action);
+			// $action = $exploded[0];
+			// unset($exploded[0]);	
+			// $check = false;		
+
+			// foreach ($exploded as $negOver) {
+			// 	$check = $this->look($negOver, $stem);
+			// 	if($check == true)
+			// 		break;
+			// }
+
+			// if($check){
+			// 	$stem = $stem;
+			// 	break;
+			// }
 
 			if(pStartsWith($action, '+^'))
 				$stem = substr($action, 2) . $stem;
@@ -41,9 +56,16 @@ class pInflection{
 				$stem = $stem . '++' . substr($action, 1);
 			elseif(pStartsWith($action, '-^') AND pStartsWith($stem, substr($action, 2)))
 				$stem = substr($stem, strlen(substr($action, 2)));
-			elseif(pStartsWith($action, '-'))
+			elseif(pStartsWith($action, '-')){
 				$stem = pStr($stem)->replaceSuffix(substr($action, 1), '');
-
+				$stem = $stem->__toString();
+			}
+			// Base modification
+			elseif(pStartsWith($action, '&')){
+				$value = explode('=>', $action)[1];
+				$name = explode('=>', $action)[0];
+				$stem = str_replace($name, $value, $stem);
+			}
 		}
 
 		$word = $stem;
@@ -96,10 +118,10 @@ class pInflection{
 					$check = true;
 
 		else
-			if(pStartsWith(substr($negOver, 1), '^'))
+			if(pStartsWith($negOver, '^'))
 				if(pStartsWith($string, substr($negOver, 2)))
 					$check = false;
-			elseif(pStartsWith(substr($negOver, 1), '$'))
+			elseif(pStartsWith($negOver, '$'))
 				if(pEndsWith($string, substr($negOver, 2)))
 					$check = false;
 

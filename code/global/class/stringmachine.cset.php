@@ -106,10 +106,10 @@ class pTwolc{
 
 			if($char == '<:'){
 				$parsedContext[$count] = '\A'; 
-			}elseif($char == '$'){
+			}elseif($char == ':>'){
 				$parsedContext[] = '\z'; 
 			}
-			elseif($char == ':>'){
+			elseif($char == '%'){
 				$parseContext[] = '$1';
 			}
 

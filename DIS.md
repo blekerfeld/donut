@@ -29,11 +29,15 @@ The example is the inflection rule for a regular past participle in Dutch, it ac
 
 ##### Stem
 
-The regular verb stem in Dutch is formed just by taking the infinitve ending *-en* away. The rules for forming the stem are placed inside `[square brackets]`. There can be multiple stem rules, separeated by a `; semicolon`. There are two operators allowed inside the stem brackets:
+The regular verb stem in Dutch is formed just by taking the infinitve ending *-en* away. The rules for forming the stem are placed inside `[square brackets]`. There can be multiple stem rules, separeated by a `; semicolon`. There are three operators allowed inside the stem brackets:
 
 * `+` adds something to the input word.
 * `-` removes something from the input word.
+* `=` sets a variable (`&X=y`)
 
+###### Lexical form
+
+By default the word itself is used as base for the stem, but in the lexical entry an alternative form with variables might be provided, these variables can be used by the stem rules to change a vowel in a certain inflection for example (like the Dutch past form *las* from *lezen*). The lexical form would look like this: `l&Ezen` and the past inflection rule like this `[-en;&E=a]`.
 
 ###### Conditions
 
@@ -79,11 +83,15 @@ Uppercase letters can also be used to attract alternative phonological rules. In
 
 ##### Variables
 
-The inflection might generate a variable the can later bechanged by the phonological rules. The past participle example uses a variable **&D** as a variable, that is changed to either **d** or **t** depending on the phonological context. 
+The lexical form of a 
+
+The inflection might also generate a variable the can later bechanged by the phonological rules. The past participle example uses a variable **&D** as a variable, that is changed to either **d** or **t** depending on the phonological context. 
 
 Variables have the following form `&name`. The prefered name for a variable is one of its surfaces forms in uppercase, `&D` for example, but names are not limited to only one character. 
 
-If a phonological rule does not use a variable, it will be rendered to the surface as its name!
+If a phonological rule does not use a variable, it will be rendered to the surface as its name! Because of that it can be wise to name it after an uppercase surface form, that way you only need a rule to change it to an alternative surface form.
+
+Variables can exist in the lexical form for the inflection to change and in the inflected form for the phonological rules to change.
 
 ### Phonological syntax
 
@@ -167,7 +175,8 @@ The internal syntax is converted to lowercase and all special syntax (`+`, `#`, 
 | `[-foo-$x]`      | Remove *-foo* only when the word ends with *x*;      |
 | `[-foo-!^x]`      | Remove *-foo* only when the word does not start with *x*;      |
 | `[-foo-!$x]`      | Remove *-foo* only when the word does not end with *x*;      |
-| `&X`      | Defining a variable in the inflection.      |
+| `[&X=y]`      | Change variable *&X* to *y* in the stem. (**base modification**)      |
+| `&X`      | Defining a variable in the inflection or lexical form.      |
 | `_x_=>y`      | A minimal phonological rule, without any contexts. This changes all *x*'s to *y*'s     |
 | `y.z_x_.y.z=>y`      | Changes *x* to *y* when it is placed with a *y* and a *z* at the left side **and** the same on the right side  |
 | `y.z_x_.y.z=>y`      | Changes *x* to *y* when it is placed with a *y* and a *z* at the left side **and** the same on the right side  |

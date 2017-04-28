@@ -36,13 +36,14 @@
 
 	// Temporary markdown wrapper
 	if(isset($_GET['md'])){
-		$md = pMarkdown(file_get_contents(pFromRoot($_GET['md'].".md")). true);
+		$md = pMarkdown(file_get_contents(pFromRoot($_GET['md'].".md")), true);
 		pOut("<br /><div class='home-margin'>".$md."</div>");
 		goto template;
 	}
 
+	// l&Ezen [-en;&E=a]
 
-	$rules = array("CON.VOW_CON_+.VOW=>%%", "CON_[aeou]_CON.+.&T,D=>%%", "[x,k,f,s,c,h,p].+_&D_=>t", "[^x,k,f,s,c,h,p].+_&D_=>d", "_z_+=>s", "CON.VOW.CON_[b]_.+.&T=>0");
+	$rules = array("CON.VOW_CON_+.VOW=>%%", "CON_[aeou]_CON.+.&T,D=>%%", "CON_&A,E,O,U_CON.+.&T,D=>%%", "[x,k,f,s,c,h,p].+_&D_=>t", "_z_+=>s", "CON.VOW.CON_[b]_+.&T=>0", "_z_:>=>s");
 
 	$twolc = new pTwolc($rules);
 
@@ -54,12 +55,15 @@
 
 	// Rule variables: E -> e that doesn't need to be corrected, D -> becomes d or t by phonological rules
 
-	echo $twolc->feed((new pInflection("[-en]&T"))->inflect("lezen"))->toSurface()."<br />";
+	echo $twolc->feed((new pInflection("[-en]&T"))->inflect("l&Ezen"))->toSurface()."<br />";
+	echo $twolc->feed((new pInflection("[-en;&E=>a]"))->inflect("l&Ezen"))->toSurface()."<br />";
 	echo $twolc->feed((new pInflection("[-en;]&T"))->inflect("hebben"))->toSurface()."<br />";
 	echo $twolc->feed((new pInflection("[-en]&De"))->inflect("werken"))->toSurface()."<br />";
 	echo $twolc->feed((new pInflection("[-en]&De"))->inflect("delen"))->toSurface()."<br />";
 	echo $twolc->feed((new pInflection("[-en]&De"))->inflect("fotograferen"))->toSurface()."<br />";
 	echo $twolc->feed((new pInflection("[-en]&De"))->inflect("schildEren"))->toSurface()."<br />";
+	echo $twolc->feed((new pInflection("[-a]ą-\$a"))->inflect("kobieta"))->toSurface()."<br />";
+	echo $twolc->feed((new pInflection("[]mi-\$a"))->inflect("kobieta"))->toSurface()."<br />";
 	echo $twolc->feed($voltooidDeelwoord->inflect("verhuizen"))->toSurface()."<br />";
 	echo $twolc->feed($voltooidDeelwoord->inflect("duwen"))->toSurface()."<br />";
 	echo $twolc->feed($voltooidDeelwoord->inflect("maken"))->toSurface()."<br />";
