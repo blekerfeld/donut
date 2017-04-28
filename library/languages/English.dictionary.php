@@ -136,6 +136,7 @@ define("DA_TITLE_EXAMPLES", "Idiom and examples");
 
 // Da Words
 define("DA_WORDS_NATIVE", "Entry");
+define("DA_WORDS_LEXICAL", "Lexical form for inflection");
 define("DA_WORDS_IPA", "IPA transcription");
 define("DA_WORDS_NEW_EXTERN", "New word ".(new pIcon('fa-external-link', 8)));
 

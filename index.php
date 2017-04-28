@@ -41,50 +41,54 @@
 		goto template;
 	}
 
-	// l&Ezen [-en;&E=a]
+	// // l&Ezen [-en;&E=a]
 
-	$rules = array("CON.VOW_CON_+.VOW=>%%", "CON_[aeou]_CON.+.&T,D=>%%", "CON_&A,E,O,U_CON.+.&T,D=>%%", "[x,k,f,s,c,h,p].+_&D_=>t", "_z_+=>s", "CON.VOW.CON_[b]_+.&T=>0", "_z_:>=>s");
+	// $rules = array("CON.VOW_CON_+.VOW=>%%", "CON_[aeou]_CON.+.&T,D=>%%", "CON_&A,E,O,U_CON.+.&T,D=>%%", "[x,k,f,s,c,h,p].+_&D_=>t", "_z_+=>s", "CON.VOW.CON_[b]_+.&T=>0", "_z_:>=>s");
 
-	$rules2 = array(
-		"<:_o_CON.VOW=>oʊ", "CON_o_CON.VOW=>oʊ", "_o.o_=>oʊ",
-		"<:_o_CON.CON=>ɔ", "CON_o_CON.CON=>ɔ", "CON_o_CON.:>=>ɔ",
-		"<:_a_CON.VOW=>a:", "CON_a_CON.VOW=>a:", "_a.a_=>a:",
-		"<:_a_CON.CON=>ɑ", "CON_a_CON.CON=>ɑ", "CON_a_CON.:>=>ɑ",
-		"_s.c.h_=>sχ",
-		"_n.g_=>ŋ",
-		);
+	// $rules2 = array(
+	// 	"<:_o_CON.VOW=>oʊ", "CON_o_CON.VOW=>oʊ", "_o.o_=>oʊ",
+	// 	"<:_o_CON.CON=>ɔ", "CON_o_CON.CON=>ɔ", "CON_o_CON.:>=>ɔ",
+	// 	"<:_a_CON.VOW=>a:", "CON_a_CON.VOW=>a:", "_a.a_=>a:",
+	// 	"<:_a_CON.CON=>ɑ", "CON_a_CON.CON=>ɑ", "CON_a_CON.:>=>ɑ",
+	// 	"_s.c.h_=>sχ",
+	// 	"_n.g_=>ŋ",
+	// 	"_o.e_=>u",
+	// 	"_i.e_=>i:",
+	// 	"_u.i_=>œy̯:",
+	// 	"_[:].[:]_=> · "
+	// 	);
 
-	$twolc = new pTwolc($rules);
-	$twolc2 = new pTwolc($rules2);
+	// $twolc = new pTwolc($rules);
+	// $twolc2 = new pTwolc($rules2);
 
-	$twolc->compile();
-	$twolc2->compile();
+	// $twolc->compile();
+	// $twolc2->compile();
 
-	echo $twolc2->feed("school schol kat koning")->toSurface()."<br />";
+	// echo $twolc2->feed("school schol kat koning+s::huis")->toSurface()."<br />";
 
-	echo $twolc->feed('kat+en')->toSurface()."<br />";
+	// echo $twolc->feed('kat+en')->toSurface()."<br />";
 
-	$voltooidDeelwoord = new pInflection("ge-!^ver-!^be[-en]&D");
+	// $voltooidDeelwoord = new pInflection("ge-!^ver-!^be[-en]&D");
 
-	// Rule variables: E -> e that doesn't need to be corrected, D -> becomes d or t by phonological rules
+	// // Rule variables: E -> e that doesn't need to be corrected, D -> becomes d or t by phonological rules
 
-	echo $twolc->feed((new pInflection("[-en]&T"))->inflect("l&Ezen"))->toSurface()."<br />";
-	echo $twolc->feed((new pInflection("[-en;&E=>a]"))->inflect("l&Ezen"))->toSurface()."<br />";
-	echo $twolc->feed((new pInflection("[-en;]&T"))->inflect("hebben"))->toSurface()."<br />";
-	echo $twolc->feed((new pInflection("[-en]&De"))->inflect("werken"))->toSurface()."<br />";
-	echo $twolc->feed((new pInflection("[-en]&De"))->inflect("delen"))->toSurface()."<br />";
-	echo $twolc->feed((new pInflection("[-en]&De"))->inflect("fotograferen"))->toSurface()."<br />";
-	echo $twolc->feed((new pInflection("[-en]&De"))->inflect("schildEren"))->toSurface()."<br />";
-	echo $twolc->feed((new pInflection("[-a]ą-\$a"))->inflect("kobieta"))->toSurface()."<br />";
-	echo $twolc->feed((new pInflection("[]mi-\$a"))->inflect("kobieta"))->toSurface()."<br />";
-	echo $twolc->feed($voltooidDeelwoord->inflect("verhuizen"))->toSurface()."<br />";
-	echo $twolc->feed($voltooidDeelwoord->inflect("duwen"))->toSurface()."<br />";
-	echo $twolc->feed($voltooidDeelwoord->inflect("maken"))->toSurface()."<br />";
-	echo $twolc->feed($voltooidDeelwoord->inflect("bewonen"))->toSurface()."<br />";
-	echo $twolc->feed($voltooidDeelwoord->inflect("gooien"))->toSurface()."<br />";
+	// echo $twolc->feed((new pInflection("[-en]&T"))->inflect("l&Ezen"))->toSurface()."<br />";
+	// echo $twolc->feed((new pInflection("[-en;&E=>a]"))->inflect("l&Ezen"))->toSurface()."<br />";
+	// echo $twolc->feed((new pInflection("[-en;]&T"))->inflect("hebben"))->toSurface()."<br />";
+	// echo $twolc->feed((new pInflection("[-en]&De"))->inflect("werken"))->toSurface()."<br />";
+	// echo $twolc->feed((new pInflection("[-en]&De"))->inflect("delen"))->toSurface()."<br />";
+	// echo $twolc->feed((new pInflection("[-en]&De"))->inflect("fotograferen"))->toSurface()."<br />";
+	// echo $twolc->feed((new pInflection("[-en]&De"))->inflect("schildEren"))->toSurface()."<br />";
+	// echo $twolc->feed((new pInflection("[-a]ą-\$a"))->inflect("kobieta"))->toSurface()."<br />";
+	// echo $twolc->feed((new pInflection("[]mi-\$a"))->inflect("kobieta"))->toSurface()."<br />";
+	// echo $twolc->feed($voltooidDeelwoord->inflect("verhuizen"))->toSurface()."<br />";
+	// echo $twolc->feed($voltooidDeelwoord->inflect("duwen"))->toSurface()."<br />";
+	// echo $twolc->feed($voltooidDeelwoord->inflect("maken"))->toSurface()."<br />";
+	// echo $twolc->feed($voltooidDeelwoord->inflect("bewonen"))->toSurface()."<br />";
+	// echo $twolc->feed($voltooidDeelwoord->inflect("gooien"))->toSurface()."<br />";
 
 
-	//!$x; remove x from end
+	// //!$x; remove x from end
 	//!^x; remove x from start
 	//?$x; add x to end
 	//?^x; add x to start
