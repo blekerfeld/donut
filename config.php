@@ -105,14 +105,14 @@ function mbStringToArray ($string) {
 
 		$filenames = array();
 
-		foreach (glob($donut['root_path']."/code/global/class/*.cset.php") as $filename)
+		foreach (glob($donut['root_path']."/code/classes/*.cset.php") as $filename)
 			$filenames[] = $filename;
 
-		foreach (glob($donut['root_path']."/code/global/class/*/*.cset.php") as $filename)
+		foreach (glob($donut['root_path']."/code/classes/*/*.cset.php") as $filename)
 			$filenames[] = $filename;
 
 
-		foreach (glob($donut['root_path']."/code/global/function/*.functions.php") as $filename)
+		foreach (glob($donut['root_path']."/code/functions/*.functions.php") as $filename)
 			$filenames[] = $filename;
 
 		foreach($filenames as $filename)

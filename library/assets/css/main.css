@@ -32,11 +32,6 @@ html, body {
   font-size: 12px;
 }
 
-
-div {
-  transition: none;
-}
-
 a {
   text-decoration: none;
   color: #005b7f;
@@ -2339,7 +2334,7 @@ img.dFlag:hover {
   opacity: 1;
 }
 
-.pSectionWrapper a.synonym, .pSectionWrapper a.antonym {
+.pSectionWrapper a.synonym, .pSectionWrapper a.antonym, .pSectionWrapper a.homophone {
   display: inline-block;
   padding: 1px;
   padding-bottom: 3px;
@@ -2366,7 +2361,19 @@ img.dFlag:hover {
   border-color: rgba(200, 220, 230, 1);
 }
 
-.pSectionWrapper a.synonym:hover, .pSectionWrapper a.antonym:hover {
+.pSectionWrapper a.homophone.score-25 {
+  border-color: rgba(226, 186, 200, 0.3);
+}
+
+.pSectionWrapper a.homophone.score-50 {
+  border-color: rgba(226, 186, 200, 0.6);
+}
+
+.pSectionWrapper a.homophone.score-100 {
+  border-color: rgba(226, 186, 200, 1);
+}
+
+.pSectionWrapper a.synonym:hover, .pSectionWrapper a.antonym:hover, .pSectionWrapper a.homohone:hover {
   text-decoration: underline;
   background: rgba(200, 220, 230, 0.2);
 }

@@ -38,6 +38,7 @@ define("LEMMA_TRANSLATIONS_RESET", 'Show all translations');
 define("LEMMA_USAGE_NOTES", "Usage notes");
 define("LEMMA_ANTONYMS", "Antonyms");
 define("LEMMA_SYNONYMS", "Synonyms");
+define("LEMMA_HOMOPHONES", "Homophones");
 
 // Lemma edit
 define('LEMMA_EDIT', "Edit lemma");

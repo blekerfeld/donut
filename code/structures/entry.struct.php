@@ -54,7 +54,7 @@ return array(
 				new pEntryDataObject('usage_notes', 'word_id', 'fa-info', false, null, 'usageNotes'),
 				new pEntryDataObject('synonyms', array('word_id_1', 'word_id_2'), 'fa-clone', false, null, 'synonyms'),
 				new pEntryDataObject('antonyms', array('word_id_1', 'word_id_2'), 'fa-venus-mars', false, null, 'antonyms'),
-				new pEntryDataObject('homophones', array('word_id_1', 'word_id_2'), 'fa-venus-mars', false, null, 'varDump'),
+				new pEntryDataObject('homophones', array('word_id_1', 'word_id_2'), 'fa-microphone', false, null, 'homophones'),
 			),
 		),
 
