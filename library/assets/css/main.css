@@ -1696,7 +1696,6 @@ table.admin {
   width: 100%;
   margin: 0 auto;
   margin-bottom: 10px;
-  background: #f2f2f2;
 }
 
 table.admin tr td.actions{
@@ -1710,6 +1709,27 @@ table.admin tr:nth-child(even) td{
 table.admin tr td {
   background: #f3f3f3;
   padding: 6px;
+  border-right: #ddd 1px dotted;
+}
+
+table.admin tr td:first-child {
+  background: #f3f3f3;
+  padding: 6px;
+  border-left: #ddd 1px dotted;
+}
+
+table.admin tr:last-child td {
+  background: #f3f3f3;
+  padding: 6px;
+  border-bottom: #ddd 1px dotted;
+}
+
+table.admin tr:last-child td:first-child{
+border-radius: 0px 0px 0px 10px;
+}
+
+table.admin tr:last-child td:last-child{
+  border-radius: 0px 0px 10px 0px;
 }
 
 table.admin.editing {
@@ -1779,9 +1799,28 @@ table.admin.addword tr td strong.title {
 table.admin.addword tr td.center {}
 
 table.admin tr.title td {
-  background-color: #383838;
-  color: white;
+  background: #5E6573;
+  color: snow;
+  font-size: 11px;
   font-weight: bolder;
+  border-top: 1px dotted #0D0E11;
+  border-bottom: 1px dotted #0D0E11;
+  border-right: 1px dotted #0D0E11;;
+  font-family: Trebuchet MS;
+}
+
+table.admin tr.title td i.fa{
+  font-size: 10px!important;
+}
+
+table.admin tr.title td:first-child{
+  border-radius: 10px 0px 0px 0px;
+  border-left: 1px dotted #0D0E11;
+}
+
+table.admin tr.title td:last-child{
+  border-radius: 0px 10px 0px 0px;
+  border-right: 1px dotted #0D0E11;
 }
 
 table.admin.addword tr.title td {
@@ -3179,7 +3218,7 @@ div.d_admin_menu{
   margin-left: 35px;
   margin-top: -26px;
   margin-bottom: -25px;
-  background: #5E6573;
+  background: #3A3B5B;
   padding-top: 108px;
 }
 
@@ -3205,7 +3244,7 @@ div.d_admin_menu a{
   font-size:18px;
 }
 div.d_admin_menu a.active{
-  background: #B04010;
+  background: #6E6F87;
 }
 
 a.ttip-sub.active{

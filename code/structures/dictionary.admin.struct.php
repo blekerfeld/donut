@@ -88,9 +88,10 @@ return array(
 			'table' => 'words',
 			'datafields' => array(
 				new pDataField('native', DA_WORDS_NATIVE, '15%', 'input', true, true, true),
-				new pDataField('ipa', DA_WORDS_IPA, '10%', 'input'),
+				new pDataField('lexical_form', DA_WORDS_LEXICAL, '10%', 'input', true, true, false),
+				new pDataField('ipa', DA_WORDS_IPA, '5%', 'input', true, true, true, 'small'),
 				new pDataField('type_id', DA_LEXCAT, '10%', 'select', true, true, true, 'small-caps', false, new pSelector('types', null, 'name', true, 'lexcat')),
-				new pDataField('classification_id', DA_GRAMCAT, '15%', 'select', true, true, true, 'small-caps', false, new pSelector('classifications', null, 'name', true, 'gramcat')),
+				new pDataField('classification_id', DA_GRAMCAT, '10%', 'select', true, true, true, 'small-caps xxxsmall', false, new pSelector('classifications', null, 'name', true, 'gramcat')),
 				new pDataField('subclassification_id', DA_GRAMTAG, '10%', 'select', true, true, false, 'small-caps', false, new pSelector('subclassifications', null, 'name', true, 'gramtags')),
 			),
 			'actions_item' => array(

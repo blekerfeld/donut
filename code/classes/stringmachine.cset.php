@@ -106,13 +106,19 @@ class pTwolc{
 
 			if($char == '<:'){
 				$parsedContext[$count] = '\A'; 
+				continue;
 			}elseif($char == ':>'){
-				$parsedContext[] = '\z'; 
+				$parseContext[$count] = '\z'; 
+				continue;
 			}
 			elseif($char == '%'){
-				$parseContext[] = '$1';
+				$parseContext[$count] = '$1';
+				continue;
 			}
-
+			elseif($char == ':'){
+				$parseContext[$count] = '[:]{1}';
+				continue;
+			}
 			// Variables
 			elseif (pStartsWith($char, '&')) {
 				$char = substr($char, 1);
