@@ -47,7 +47,7 @@ class pMagicField{
 				break;
 
 			case 'boolean':
-				pOut("<select name='".$this->name."'' class='field_".$this->name." ".$this->_field->class."'><option value='1' ".($this->value() == 1 ? 'selected' : '').">".DL_ENABLED."</option><option value='0' ".($this->value() == 0 ? 'selected' : '').">".DL_DISABLED."</option></select></span>");
+				pOut("<select name='".$this->name."' class='field_".$this->name." ".$this->_field->class."'><option value='1' ".($this->value() == 1 ? 'selected' : '').">".DL_ENABLED."</option><option value='0' ".($this->value() == 0 ? 'selected' : '').">".DL_DISABLED."</option></select></span>");
 				break;
 
 			case 'select':
@@ -138,8 +138,6 @@ class pSelector{
 
 		if($this->value == null)
 			return false;
-
-
 
 		if(is_array($this->_data))
 			return $this->_data[$this->value];

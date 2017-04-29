@@ -19,6 +19,16 @@
 		else
 			return $donut['page']['content'][] = $content;
 	}
+
+	function pConsole($x){
+		return pOut("<span class='line'>$x</span>");
+	}
+
+	function pVarDump($var){
+		ob_start();
+		var_dump($var);
+		return ob_get_clean();
+	}
 	
 	// This function wraps tags around a keyword to highlight it.
 	function pHighlight($needle, $haystack, $before, $after){

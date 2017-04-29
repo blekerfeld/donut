@@ -34,8 +34,21 @@ class pDispatch {
 		$structureName = explode('-', $urlArguments[0]);
 
 		// We can only create a structure if we have the necessary data!
-		if(!isset($this->_dispatchData[$urlArguments[0]]))
-			return die("ILLEGAL SECTION REQUESTED, ABORT MISSION.");
+		if(!isset($this->_dispatchData[$urlArguments[0]])){
+			if(file_exists(pFromRoot("static/".$urlArguments[0].".md")))
+				pOut("<br /><div class='home-margin'>".pMarkdown(file_get_contents(pFromRoot("static/".$urlArguments[0].".md")), true)."</div>");
+			// DEBUG MODE ONLY
+			elseif($urlArguments[0] == 'debug' AND file_exists(pFromRoot("debug.php"))){
+				pOut("<div class='home-margin'>");
+				require pFromRoot("debug.php");
+				pOut("</div>");
+			}
+			elseif($urlArguments[0] == 'README' AND file_exists(pFromRoot("README.md")))
+				pOut("<br /><div class='home-margin'>".pMarkdown(file_get_contents(pFromRoot("README.md")), true)."</div>");
+			else
+				$this->do404();
+			return false;
+		}
 
 		// Generating the structure class name;
 		if(isset($structureName[1]))
@@ -48,8 +61,10 @@ class pDispatch {
 			$structureType = $this->_dispatchData[$urlArguments[0]]['override_structure_type'];
 
 
-		if(!class_exists($structureType))
-			return die("ABORT MISSION. CLASS $structureType DOES NOT EXIST.");
+		if(!class_exists($structureType)){
+			$this->do404("<br /> `CLASS $structureType DOES NOT EXIST.`");
+			return false;
+		}
 
 		$this->structureObject = new $structureType($structureName[0], (isset($structureName[1]) ? $structureName[1] : ''), $urlArguments[0], $this->_dispatchData[$urlArguments[0]]['default_section'], $this->_dispatchData[$urlArguments[0]]['page_title']);
 
@@ -115,7 +130,7 @@ class pDispatch {
 
 		//A section can be optional
 		if(!in_array('section', $templateArguments) AND (count($urlArguments) == count($templateArguments) + 1)){
-			$arguments['section'] = $urlArguments[1];
+			@$arguments['section'] = $urlArguments[1];
 			unset($urlArguments[1]);
 		}
 		// If no section is given, we need to correct something
@@ -148,6 +163,13 @@ class pDispatch {
 
 		$this->structureObject->load();
 		$this->structureObject->compile();
+
+		return true;
+	}
+
+	protected function do404($extra = ''){
+		pOut("<div class='home-margin'>".pMarkdown("## ".(new pIcon('fa-warning', 12))." ".ERROR_404_TITLE."\n".
+				ERROR_404_MESSAGE."\n".$extra)."</div>");
 	}
 
 }

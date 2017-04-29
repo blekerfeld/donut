@@ -12,7 +12,7 @@ class pTemplate{
 
 	public $_data, $activeStructure;
 
-	public function __construct($data, $activeStructure){
+	public function __construct($data = null, $activeStructure = null){
 
 		$this->_data = $data;
 		$this->activeStructure = $activeStructure;

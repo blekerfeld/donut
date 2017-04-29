@@ -26,10 +26,10 @@ class pSearchBox extends pSnippit{
 
 	public function __toString(){
 
-		$output = '<div class="header dictionary '.($this->_home ? 'home' : '').'">
-			<span class="float-right" style="padding-right: 24px;important;display: block;">
+		$output = '<div class="hMobile"><div class="header dictionary '.($this->_home ? 'home' : '').'">
+			<span class="float-right" style="padding-right: 24px;important;display: block;"><span class="wholewordWrap">
 			<input id="wholeword" class="checkbox-wholeword xsmall" name="wholeword" type="checkbox" '.((isset(pAdress::session()['exactMatch']) AND pAdress::session()['exactMatch'] == false) ? '' : 'selected').'>
-        	<label for="wholeword"class="checkbox-wholeword-label small">'.DICT_EXACT_MATCH.'</label>  
+        	<label for="wholeword"class="checkbox-wholeword-label small">'.DICT_EXACT_MATCH.'</label></span>
 			</span>';
 
 		$output .= new pAlphabet;
@@ -37,6 +37,7 @@ class pSearchBox extends pSnippit{
 		$output .= '<div class="hWrap"><div class="hSearch">'.pLanguage::dictionarySelector('dictionary-selector').'
 				<input type="text" id="wordsearch" class="big word-search" placeholder="'.DICT_KEYWORD.'" value="'.$this->_value.'"/><a class="button search  remember search-button float-right" id="searchb" href="javascript:void(0);">' . (new pIcon('fa-search', 12)) . ' '. DICT_SEARCH.'</a>'.new pIcon('fa-spinner fa-spin load-hide', 12).'
 			<br id="cl" /></div></div>
+			</div>
 			</div>
 			<div class="hSearchResults">
 				<div class="searchLoad"></div>
@@ -68,6 +69,12 @@ class pSearchBox extends pSnippit{
 		    	window.history.pushState('string', '', '".pUrl("?".pAdress::queryString())."');
 				$('.searchLoad').slideUp();
 				$('.pEntry').slideDown();
+				";
+
+		if($this->_home)
+			$output .= "$('.header.dictionary').addClass('home')";
+
+		$output .= "
 				document.title = orgTitle;
 				searchLock = '';
 				// We are not sending empty queries
@@ -80,16 +87,28 @@ class pSearchBox extends pSnippit{
 		    },
 		    wait: 100,
 		    highlight: true,
-		    allowSubmit: true,
+			    allowSubmit: true,
 		    captureLength: 2
 		}
 
+		var options2 = {
+		    callback: function (value) {
+		    	$('.word-search').blur();
+		    },
+		    wait: 2000,
+		    highlight: true,
+		    allowSubmit: true,
+		    captureLength: 3
+		}
+
 		$('.word-search').typeWatch( options );
+		$('.word-search').typeWatch( options2 );
 
 		lock = '';
 		html = '';
 
 		function search(bypass){
+			window.scrollTo(0, 0);
 			$('.load-hide').show();
 			lock = $('.word-search').val();
 			if(bypass === true || $('.word-search').val().length > 0){
@@ -129,7 +148,25 @@ class pSearchBox extends pSnippit{
 
 		$('.dictionary-selector').on('change', function(e) {
           search();
-        })
+        });
+
+
+        $(document).ready(function(){
+ 
+   			 $(window).scroll(function(){
+   			 	pos = $('.header.dictionary').position();
+        		scrollPos = $('.header.dictionary').outerHeight() + pos.top - 20;
+        		if($(window).scrollTop() > scrollPos){
+        			$('.hMobile').addClass('fixed');
+        			$('.ulWrap').addClass('fixed');
+        		}
+		    	else{
+		    		$('.hMobile').removeClass('fixed');
+		    		$('.ulWrap').removeClass('fixed');
+		    	}
+			});
+		});
+
 
 
 		</script>";

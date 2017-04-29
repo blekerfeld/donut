@@ -87,7 +87,7 @@ class pTranslation extends pEntry{
 
 	public function parseDescription(){
 		if($this->_entry['description'] != '')
-			return "<div class='desc'>".pMarkdown($this->_entry['description'])."</div>";
+			return "<div class='desc'>".pMarkdown($this->_entry['description'], false)."</div>";
 	}
 
 }

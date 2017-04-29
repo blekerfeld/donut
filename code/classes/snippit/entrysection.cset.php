@@ -47,7 +47,8 @@ class pEntrySection extends pSnippit{
 		if($this->_icon != null)
 			$output .= new pIcon($this->_icon, 10)." ";
 
-		$output .= $this->_title."<br />";
+		if($this->_title != '')
+			$output .= $this->_title."<br />";
 
 		foreach($this->_informationElements as $informationElement)
 			$output .= "<em class='info'><span class='tooltip'>".$informationElement."</span></em> ";

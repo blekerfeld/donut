@@ -5,223 +5,73 @@ SET time_zone = '+00:00';
 SET foreign_key_checks = 0;
 SET sql_mode = 'NO_AUTO_VALUE_ON_ZERO';
 
-DROP TABLE IF EXISTS `antonyms`;
-CREATE TABLE `antonyms` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `word_id_1` int(11) NOT NULL,
-  `word_id_2` int(11) NOT NULL,
-  `score` int(11) NOT NULL,
-  PRIMARY KEY (`id`),
-  KEY `word_id_1` (`word_id_1`),
-  KEY `word_id_2` (`word_id_2`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
-
 INSERT INTO `antonyms` (`id`, `word_id_1`, `word_id_2`, `score`) VALUES
 (1, 1,  9,  100),
 (2, 1,  28, 50),
 (3, 78, 25, 0),
 (4, 17, 68, 100);
 
-DROP TABLE IF EXISTS `apps`;
-CREATE TABLE `apps` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `app` varchar(255) CHARACTER SET latin1 NOT NULL,
-  `getter` varchar(255) CHARACTER SET latin1 NOT NULL,
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
-
-INSERT INTO `apps` (`id`, `app`, `getter`) VALUES
-(1, 'home', 'home'),
-(2, 'dictionary', 'dictionary'),
-(3, 'dictionary', 'getword'),
-(4, 'login',  'login'),
-(7, 'lemma',  'lemma'),
-(11,  'login',  'logout'),
-(12,  'delete', 'deleteword'),
-(13,  'flag', 'flag'),
-(19,  'wap',  'wap'),
-(20,  'admin',  'admin'),
-(22,  'search', 'search'),
-(25,  'alphabet', 'alphabet'),
-(26,  'generate', 'generate'),
-(27,  'addword',  'addword'),
-(28,  'editorlanguage', 'editorlanguage'),
-(29,  'phonology',  'phonology'),
-(30,  'batch_translate',  'batch_translate'),
-(31,  'batch_translate',  'translate'),
-(32,  'lemma',  'discuss-lemma'),
-(33,  'lemma',  'edit-lemma'),
-(34,  'profile',  'profile'),
-(35,  'dashboard',  'dashboard'),
-(36,  'wiki', 'wiki');
-
 SET NAMES utf8mb4;
-
-DROP TABLE IF EXISTS `audio_idiom`;
-CREATE TABLE `audio_idiom` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `idiom_id` int(11) NOT NULL,
-  `audio_file` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `description` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  PRIMARY KEY (`id`),
-  KEY `idiom_id` (`idiom_id`),
-  KEY `description` (`description`(191)),
-  CONSTRAINT `audio_idiom_ibfk_1` FOREIGN KEY (`idiom_id`) REFERENCES `idioms` (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 INSERT INTO `audio_idiom` (`id`, `idiom_id`, `audio_file`, `description`) VALUES
 (1, 2,  'https://pkaudio.herokuapp.com/nl-nl/Als kat en hond leven',  ''),
 (2, 3,  'https://pkaudio.herokuapp.com/nl-nl/De kat uit de boom kijken',  ''),
 (3, 4,  'https://pkaudio.herokuapp.com/nl-nl/Een kat in de zak kopen',  '');
 
-DROP TABLE IF EXISTS `audio_words`;
-CREATE TABLE `audio_words` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `word_id` int(11) NOT NULL,
-  `audio_file` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `description` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  PRIMARY KEY (`id`),
-  KEY `word_id` (`word_id`),
-  KEY `description` (`description`(191)),
-  CONSTRAINT `audio_words_ibfk_1` FOREIGN KEY (`word_id`) REFERENCES `words` (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
-
 INSERT INTO `audio_words` (`id`, `word_id`, `audio_file`, `description`) VALUES
 (2, 17, 'kat.ogg',  'The Netherlands'),
 (3, 1,  'https://pkaudio.herokuapp.com/nl-nl/man',  'nl-nl');
-
-DROP TABLE IF EXISTS `aux_conditions`;
-CREATE TABLE `aux_conditions` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `aux_id` int(11) NOT NULL,
-  `aux_placement` int(11) NOT NULL,
-  `submode_group_id` int(11) NOT NULL,
-  PRIMARY KEY (`id`),
-  KEY `aux_id` (`aux_id`),
-  KEY `submode_group_id` (`submode_group_id`),
-  CONSTRAINT `aux_conditions_ibfk_1` FOREIGN KEY (`aux_id`) REFERENCES `words` (`id`),
-  CONSTRAINT `aux_conditions_ibfk_3` FOREIGN KEY (`submode_group_id`) REFERENCES `submode_groups` (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 INSERT INTO `aux_conditions` (`id`, `aux_id`, `aux_placement`, `submode_group_id`) VALUES
 (1, 5,  0,  10),
 (2, 2,  0,  2);
 
-DROP TABLE IF EXISTS `classifications`;
-CREATE TABLE `classifications` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `name` varchar(255) NOT NULL,
-  `short_name` varchar(255) NOT NULL,
-  `native_hidden_entry` int(11) NOT NULL,
-  `native_hidden_entry_short` int(11) NOT NULL,
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
-
 INSERT INTO `classifications` (`id`, `name`, `short_name`, `native_hidden_entry`, `native_hidden_entry_short`) VALUES
-(1, 'masculine',  'm',  0,  0),
-(2, 'feminine', 'f',  0,  0),
+(1, 'masculine',  'm.', 0,  0),
+(2, 'feminine', 'f.', 0,  0),
 (3, 'neuter', 'nt.',  0,  0),
 (4, 'indefinite', 'indef.', 0,  0),
 (5, 'Regular verb', 'rg.',  0,  0),
-(6, 'Irregular verb', 'ir. v.', 0,  0),
-(7, 'definite', 'def.', 0,  0),
+(6, 'masculine',  'ir. v.', 0,  0),
+(7, 'masculine',  'def.', 0,  0),
 (8, 'First person', '1',  0,  0),
-(9, 'Second person',  '2',  0,  0),
-(10,  'Third person masculine', '3 m.', 0,  0),
-(11,  'Third person feminine',  '3 f.', 0,  0),
-(12,  'Third person neuter',  '3 n.', 0,  0),
-(13,  'common gender',  'cg.',  0,  0);
-
-DROP TABLE IF EXISTS `classification_apply`;
-CREATE TABLE `classification_apply` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `classification_id` int(11) NOT NULL,
-  `type_id` int(11) NOT NULL,
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+(9, 'masculine',  '2',  0,  0),
+(10,  'masculine',  '3 m.', 0,  0),
+(11,  'masculine',  '3 f.', 0,  0),
+(12,  'masculine',  '3 n.', 0,  0),
+(13,  'masculine',  'cg.',  0,  0);
 
 INSERT INTO `classification_apply` (`id`, `classification_id`, `type_id`) VALUES
-(1, 1,  1),
-(3, 2,  1),
-(5, 3,  1),
-(7, 10, 4),
-(9, 5,  2),
-(10,  6,  2),
-(13,  4,  10),
-(14,  7,  10),
-(15,  1,  4),
-(16,  1,  10),
-(17,  3,  4),
-(18,  8,  4),
-(19,  9,  4),
-(20,  11, 4),
-(21,  12, 4),
-(22,  13, 5),
-(23,  3,  5);
-
-DROP TABLE IF EXISTS `config`;
-CREATE TABLE `config` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `SETTING_NAME` text COLLATE utf8mb4_unicode_ci NOT NULL,
-  `SETTING_VALUE` text COLLATE utf8mb4_unicode_ci NOT NULL,
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+(25,  1,  1),
+(26,  1,  4),
+(27,  1,  10),
+(28,  1,  11),
+(41,  2,  1),
+(42,  3,  1),
+(46,  2,  11),
+(47,  3,  4);
 
 INSERT INTO `config` (`id`, `SETTING_NAME`, `SETTING_VALUE`) VALUES
-(1, 'ENABLE_QUERY_CACHING', '0'),
+(1, 'ENABLE_QUERY_CACHING', '1'),
 (2, 'QC_TIME',  '100000'),
-(3, 'SITE_TITLE', 'ED by donut'),
-(4, 'LOGO_TITLE', 'Example Dictionary <span class=\'xsmall\'>*by donut*</span>'),
-(5, 'HOMEPAGE', 'wiki'),
+(3, 'SITE_TITLE', 'Donut Example Dictionary'),
+(4, 'LOGO_TITLE', 'donut */ example*'),
+(5, 'HOMEPAGE', 'home'),
 (6, 'WIKI_ENABLE_HISTORY',  '1'),
 (7, 'WIKI_HISTORY_ONLY_LOGGED', '0'),
 (8, 'WIKI_ALLOW_GUEST_EDITING', '1'),
 (9, 'WIKI_ALLOW_DISCUSSION_GUEST',  '0'),
-(10,  'WIKI_ENABLE_DISCUSSION', '1');
-
-DROP TABLE IF EXISTS `derivations`;
-CREATE TABLE `derivations` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `name` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
-  `short_name` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+(10,  'WIKI_ENABLE_DISCUSSION', '1'),
+(11,  'HOME_TEXT',  '*Welcome to this dictionary*\r\n\r\n\r\nLorem ipsum dolor sit amet, consectetur adipiscing elit. Vestibulum mauris turpis, feugiat non nulla vel, iaculis tincidunt erat. Aenean ac euismod mi. Nullam feugiat felis sed venenatis laoreet. Vestibulum sodales nisl vitae ex dignissim maximus. Nam hendrerit sed dolor et convallis. Phasellus nec ipsum eget eros porttitor accumsan. Duis pretium malesuada dui, vitae lobortis dolor faucibus sit amet. Donec interdum, turpis id pretium interdum, ante eros sagittis elit, vel aliquam elit est vel ex. Nullam nulla risus, fringilla ac posuere ut, convallis pretium magna. Fusce pellentesque quis erat vel dignissim. Curabitur in augue vel nisi laoreet placerat. Phasellus dapibus augue sed ex interdum, vulputate tristique nunc congue. Aenean efficitur sapien at libero tempor efficitur. Pellentesque facilisis posuere leo at elementum. Donec ac lectus nec lorem consequat dictum. Nulla facilisi. '),
+(12,  'SITE_DESC',  '');
 
 INSERT INTO `derivations` (`id`, `name`, `short_name`) VALUES
 (1, 'diminutive', 'dim.'),
 (2, 'pronoun',  'pn.');
 
-DROP TABLE IF EXISTS `descriptions`;
-CREATE TABLE `descriptions` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `translation_id` int(11) NOT NULL,
-  `content` text NOT NULL,
-  PRIMARY KEY (`id`),
-  KEY `translation_id` (`translation_id`),
-  CONSTRAINT `descriptions_ibfk_1` FOREIGN KEY (`translation_id`) REFERENCES `translations` (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
-
 INSERT INTO `descriptions` (`id`, `translation_id`, `content`) VALUES
 (1, 1,  'A (adult) living being of the male gender'),
 (4, 54, '\'we\' is the unstressed form');
-
-DROP TABLE IF EXISTS `discussions`;
-CREATE TABLE `discussions` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `word_id` int(11) NOT NULL,
-  `parent_discussion` int(11) NOT NULL,
-  `user_id` int(11) NOT NULL,
-  `points` int(11) NOT NULL,
-  `content` text CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL,
-  `table_name` varchar(255) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL,
-  `post_date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  `last_update` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00' ON UPDATE CURRENT_TIMESTAMP,
-  PRIMARY KEY (`id`),
-  KEY `word_id` (`word_id`),
-  KEY `user_id` (`user_id`),
-  CONSTRAINT `discussions_ibfk_1` FOREIGN KEY (`word_id`) REFERENCES `words` (`id`),
-  CONSTRAINT `discussions_ibfk_2` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 INSERT INTO `discussions` (`id`, `word_id`, `parent_discussion`, `user_id`, `points`, `content`, `table_name`, `post_date`, `last_update`) VALUES
 (4, 1,  3,  2,  0,  'Jaweljawel!',  '', '2017-01-23 02:00:59',  '0000-00-00 00:00:00'),
@@ -277,38 +127,51 @@ INSERT INTO `discussions` (`id`, `word_id`, `parent_discussion`, `user_id`, `poi
 (109, 1,  100,  3,  1,  'hoi',  'discussions',  '2017-02-26 00:46:36',  '0000-00-00 00:00:00'),
 (110, 1,  100,  3,  1,  '', 'discussions',  '2017-02-26 00:46:45',  '0000-00-00 00:00:00'),
 (111, 1,  100,  3,  1,  'hoi',  'discussions',  '2017-02-26 00:46:54',  '0000-00-00 00:00:00'),
-(117, 1,  0,  3,  1,  'HOI',  'wiki', '2017-02-26 01:00:45',  '0000-00-00 00:00:00');
-
-DROP TABLE IF EXISTS `etymology`;
-CREATE TABLE `etymology` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `word_id` int(11) NOT NULL,
-  `cognates_translations` varchar(255) NOT NULL COMMENT 'format: 1,3,5,90',
-  `cognates_native` varchar(255) NOT NULL COMMENT 'format: 1,3,5,90',
-  `desc` text NOT NULL,
-  `first_attestation` varchar(255) NOT NULL,
-  PRIMARY KEY (`id`),
-  KEY `word_id` (`word_id`),
-  CONSTRAINT `etymology_ibfk_1` FOREIGN KEY (`word_id`) REFERENCES `words` (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+(112, 28, 0,  3,  1,  '[[28]]', 'wiki', '2017-03-20 18:57:27',  '0000-00-00 00:00:00'),
+(113, 28, 0,  3,  1,  '[[28]]', 'wiki', '2017-03-20 18:57:31',  '0000-00-00 00:00:00'),
+(114, 28, 0,  3,  1,  '[[28]]  hoi\n',  'wiki', '2017-03-20 18:57:35',  '0000-00-00 00:00:00'),
+(115, 28, 0,  3,  1,  '[[28]]  hoi\n',  'wiki', '2017-03-20 18:57:35',  '0000-00-00 00:00:00'),
+(116, 28, 0,  3,  1,  '[[28]]  hoi\n',  'wiki', '2017-03-20 18:57:35',  '0000-00-00 00:00:00'),
+(117, 28, 0,  3,  1,  '[[28]]  hoi\n',  'wiki', '2017-03-20 18:57:36',  '0000-00-00 00:00:00'),
+(118, 28, 0,  3,  1,  '[[28]]  hoi\n',  'wiki', '2017-03-20 18:57:36',  '0000-00-00 00:00:00'),
+(119, 28, 0,  3,  1,  '[[28]]  hoi\n',  'wiki', '2017-03-20 18:57:38',  '0000-00-00 00:00:00'),
+(120, 28, 0,  3,  1,  '[[28]]  hoi\n',  'wiki', '2017-03-20 18:57:39',  '0000-00-00 00:00:00'),
+(121, 28, 0,  3,  1,  '[[28]]  hoi\n',  'wiki', '2017-03-20 18:57:40',  '0000-00-00 00:00:00'),
+(122, 28, 0,  3,  1,  '[[28]]  hoi\n',  'wiki', '2017-03-20 18:57:42',  '0000-00-00 00:00:00'),
+(123, 28, 0,  3,  1,  '[[28]]  hoi\n',  'wiki', '2017-03-20 18:57:42',  '0000-00-00 00:00:00'),
+(124, 28, 0,  3,  1,  '[[28]]  hoi\n',  'wiki', '2017-03-20 18:58:09',  '0000-00-00 00:00:00'),
+(125, 28, 0,  3,  1,  'hoi\n',  'wiki', '2017-03-20 18:58:12',  '0000-00-00 00:00:00'),
+(126, 28, 0,  3,  1,  'hoi\n',  'wiki', '2017-03-20 18:58:12',  '0000-00-00 00:00:00'),
+(127, 28, 0,  3,  1,  'hoi\n',  'wiki', '2017-03-20 18:58:12',  '0000-00-00 00:00:00'),
+(136, 1,  0,  3,  1,  'man',  'wiki', '2017-03-20 18:59:19',  '0000-00-00 00:00:00'),
+(138, 1,  0,  3,  1,  '[[1]]',  'wiki', '2017-03-20 19:03:36',  '0000-00-00 00:00:00'),
+(139, 1,  136,  1,  1,  'reply',  'wiki', '2017-03-27 20:53:21',  '0000-00-00 00:00:00'),
+(140, 1,  136,  1,  1,  'reply',  'wiki', '2017-03-27 20:53:25',  '0000-00-00 00:00:00'),
+(141, 1,  136,  1,  1,  'reply',  'wiki', '2017-03-27 20:53:27',  '0000-00-00 00:00:00'),
+(142, 1,  136,  1,  1,  'reply',  'wiki', '2017-03-27 20:53:27',  '0000-00-00 00:00:00'),
+(143, 1,  136,  1,  1,  'reply',  'wiki', '2017-03-27 20:53:27',  '0000-00-00 00:00:00'),
+(144, 1,  136,  1,  1,  'reply',  'wiki', '2017-03-27 20:53:27',  '0000-00-00 00:00:00'),
+(145, 1,  136,  1,  1,  'reply',  'wiki', '2017-03-27 20:53:28',  '0000-00-00 00:00:00'),
+(146, 1,  136,  1,  1,  'reply',  'wiki', '2017-03-27 20:53:28',  '0000-00-00 00:00:00'),
+(147, 1,  136,  1,  1,  'reply',  'wiki', '2017-03-27 20:53:28',  '0000-00-00 00:00:00'),
+(148, 1,  136,  1,  1,  'reply',  'wiki', '2017-03-27 20:53:28',  '0000-00-00 00:00:00'),
+(149, 1,  136,  1,  1,  'reply',  'wiki', '2017-03-27 20:53:28',  '0000-00-00 00:00:00'),
+(150, 1,  136,  1,  1,  'reply',  'wiki', '2017-03-27 20:53:28',  '0000-00-00 00:00:00'),
+(151, 1,  136,  1,  1,  'reply',  'wiki', '2017-03-27 20:53:28',  '0000-00-00 00:00:00'),
+(152, 1,  136,  1,  1,  'reply',  'wiki', '2017-03-27 20:53:30',  '0000-00-00 00:00:00'),
+(153, 1,  136,  1,  1,  'reply',  'wiki', '2017-03-27 20:53:30',  '0000-00-00 00:00:00'),
+(154, 1,  136,  1,  1,  'reply',  'wiki', '2017-03-27 20:53:31',  '0000-00-00 00:00:00'),
+(155, 1,  136,  1,  1,  'reply',  'wiki', '2017-03-27 20:53:31',  '0000-00-00 00:00:00'),
+(156, 1,  136,  1,  1,  'reply',  'wiki', '2017-03-27 20:53:43',  '0000-00-00 00:00:00'),
+(157, 1,  136,  1,  1,  'reply',  'wiki', '2017-03-27 20:53:45',  '0000-00-00 00:00:00');
 
 INSERT INTO `etymology` (`id`, `word_id`, `cognates_translations`, `cognates_native`, `desc`, `first_attestation`) VALUES
 (1, 1,  '1',  '', 'From Old Dutch man, from Proto-Germanic *mann-, probably ultimately from Proto-Indo-European *man-.',  '900-1000 AD.'),
 (3, 17, '23', '23', 'Herkomst onbekend. Verwant met [[kater]].',  '1162');
 
-DROP TABLE IF EXISTS `graphemes`;
-CREATE TABLE `graphemes` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `grapheme` varchar(255) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL,
-  `in_alphabet` int(11) NOT NULL DEFAULT '1',
-  `groupstring` varchar(3) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL DEFAULT 'CON',
-  `ipa` varchar(8) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL,
-  `quality` varchar(8) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL,
-  `order` int(11) NOT NULL,
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
-INSERT INTO `graphemes` (`id`, `grapheme`, `in_alphabet`, `groupstring`, `ipa`, `quality`, `order`) VALUES
+
+INSERT INTO `graphemes` (`id`, `grapheme`, `in_alphabet`, `groupstring`, `ipa`, `quality`, `sorter`) VALUES
 (12,  'a',  1,  'VOW',  '', '', 1),
 (13,  'b',  1,  'CON',  '', '', 2),
 (14,  'c',  1,  'CON',  '', '', 3),
@@ -334,64 +197,48 @@ INSERT INTO `graphemes` (`id`, `grapheme`, `in_alphabet`, `groupstring`, `ipa`, 
 (34,  'w',  1,  'CON',  '', '', 23),
 (35,  'x',  1,  'CON',  '', '', 24),
 (36,  'y',  1,  'VOW',  '', '', 26),
-(37,  'z',  1,  'CON',  '', '', 27),
-(38,  'ij', 1,  'VOW',  'p_20', '', 25),
-(39,  'ui', 0,  'VOW',  'p_21', '', 0);
+(37,  'z',  1,  'CON',  '', '', 27);
 
-DROP TABLE IF EXISTS `graphemes_ipa_c`;
-CREATE TABLE `graphemes_ipa_c` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `grapheme_id` int(11) NOT NULL,
-  `ipa_c_id` int(11) NOT NULL,
-  PRIMARY KEY (`id`),
-  KEY `grapheme_id` (`grapheme_id`),
-  KEY `ipa_c_id` (`ipa_c_id`),
-  CONSTRAINT `graphemes_ipa_c_ibfk_1` FOREIGN KEY (`grapheme_id`) REFERENCES `graphemes` (`id`),
-  CONSTRAINT `graphemes_ipa_c_ibfk_2` FOREIGN KEY (`ipa_c_id`) REFERENCES `ipa_c` (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+INSERT INTO `graphemes_groups` (`id`, `grapheme`, `groupstring`) VALUES
+(79,  'a',  'VOW'),
+(80,  'b',  'CON'),
+(81,  'c',  'CON'),
+(82,  'd',  'CON'),
+(83,  'e',  'VOW'),
+(84,  'f',  'CON'),
+(85,  'g',  'CON'),
+(86,  'h',  'CON'),
+(87,  'i',  'VOW'),
+(88,  'j',  'VOW'),
+(89,  'k',  'CON'),
+(90,  'l',  'CON'),
+(91,  'm',  'CON'),
+(92,  'n',  'CON'),
+(93,  'o',  'VOW'),
+(94,  'p',  'CON'),
+(95,  'q',  'CON'),
+(96,  'r',  'CON'),
+(97,  's',  'CON'),
+(98,  't',  'CON'),
+(99,  'u',  'VOW'),
+(100, 'v',  'CON'),
+(101, 'w',  'CON'),
+(102, 'x',  'CON'),
+(103, 'y',  'VOW'),
+(104, 'z',  'CON');
 
 INSERT INTO `graphemes_ipa_c` (`id`, `grapheme_id`, `ipa_c_id`) VALUES
 (1, 24, 2);
 
-DROP TABLE IF EXISTS `graphemes_ipa_v`;
-CREATE TABLE `graphemes_ipa_v` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `grapheme_id` int(11) NOT NULL,
-  `ipa_v_id` int(11) NOT NULL,
-  PRIMARY KEY (`id`),
-  KEY `grapheme_id` (`grapheme_id`),
-  KEY `ipa_v_id` (`ipa_v_id`),
-  CONSTRAINT `graphemes_ipa_v_ibfk_1` FOREIGN KEY (`grapheme_id`) REFERENCES `graphemes` (`id`),
-  CONSTRAINT `graphemes_ipa_v_ibfk_2` FOREIGN KEY (`ipa_v_id`) REFERENCES `ipa_v` (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
+INSERT INTO `homophones` (`id`, `word_id_1`, `word_id_2`, `score`) VALUES
+(1, 1,  2,  100);
 
-DROP TABLE IF EXISTS `idioms`;
-CREATE TABLE `idioms` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `idiom` text CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL,
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
-
-INSERT INTO `idioms` (`id`, `idiom`) VALUES
-(1, 'man en vrouw'),
-(2, 'Als kat en hond leven'),
-(3, 'De kat uit de boom kijken'),
-(4, 'Een kat in de zak kopen');
-
-DROP TABLE IF EXISTS `idiom_translations`;
-CREATE TABLE `idiom_translations` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `idiom_id` int(11) NOT NULL,
-  `language_id` int(11) NOT NULL,
-  `translation` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `specification` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  PRIMARY KEY (`id`),
-  KEY `idiom_id` (`idiom_id`),
-  KEY `language_id` (`language_id`),
-  CONSTRAINT `idiom_translations_ibfk_1` FOREIGN KEY (`idiom_id`) REFERENCES `idioms` (`id`),
-  CONSTRAINT `idiom_translations_ibfk_2` FOREIGN KEY (`language_id`) REFERENCES `languages` (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+INSERT INTO `idioms` (`id`, `idiom`, `user_id`, `created_on`) VALUES
+(1, 'man en vrouw', 1,  '2017-04-17 10:12:53'),
+(2, 'Als kat en hond leven',  1,  '2017-04-17 10:12:53'),
+(3, 'De kat uit de boom kijken',  1,  '2017-04-17 10:12:53'),
+(4, 'Een kat in de zak kopen.', 1,  '2017-04-17 10:12:53');
 
 INSERT INTO `idiom_translations` (`id`, `idiom_id`, `language_id`, `translation`, `specification`) VALUES
 (1, 1,  1,  'husband and wife', ''),
@@ -399,54 +246,12 @@ INSERT INTO `idiom_translations` (`id`, `idiom_id`, `language_id`, `translation`
 (4, 2,  1,  'To live like cat and dog / fight a lot', ''),
 (5, 4,  1,  'buying a pig in a poke', '');
 
-DROP TABLE IF EXISTS `idiom_words`;
-CREATE TABLE `idiom_words` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `idiom_id` int(11) NOT NULL,
-  `word_id` int(11) NOT NULL,
-  `keyword` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  PRIMARY KEY (`id`),
-  KEY `word_id` (`word_id`),
-  KEY `idiom_id` (`idiom_id`),
-  CONSTRAINT `idiom_words_ibfk_3` FOREIGN KEY (`word_id`) REFERENCES `words` (`id`),
-  CONSTRAINT `idiom_words_ibfk_4` FOREIGN KEY (`idiom_id`) REFERENCES `idioms` (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
-
 INSERT INTO `idiom_words` (`id`, `idiom_id`, `word_id`, `keyword`) VALUES
 (5, 1,  1,  'man'),
 (6, 2,  17, 'kat'),
 (8, 3,  17, 'kat'),
-(9, 4,  17, 'kat');
-
-DROP TABLE IF EXISTS `inflections`;
-CREATE TABLE `inflections` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `applies_submode_group` int(11) NOT NULL,
-  `submode_group_id` int(11) NOT NULL,
-  `irregular` int(11) NOT NULL,
-  `irregular_word_id` int(11) NOT NULL,
-  `irregular_override` varchar(255) NOT NULL,
-  `type_id` int(11) NOT NULL,
-  `classification_id` int(11) NOT NULL,
-  `subclassification_id` int(11) NOT NULL,
-  `number_id` int(11) NOT NULL,
-  `mode_id` int(11) NOT NULL,
-  `submode_id` int(11) NOT NULL,
-  `prefix` varchar(255) NOT NULL,
-  `suffix` varchar(255) NOT NULL,
-  `change_frome` varchar(255) NOT NULL,
-  `change_to` varchar(255) NOT NULL,
-  `trim_begin` varchar(255) NOT NULL,
-  `trim_end` varchar(255) NOT NULL,
-  PRIMARY KEY (`id`),
-  KEY `submode_group_id` (`submode_group_id`),
-  KEY `number_id` (`number_id`),
-  KEY `mode_id` (`mode_id`),
-  KEY `submode_id` (`submode_id`),
-  KEY `classification_id` (`classification_id`),
-  KEY `type_id` (`type_id`),
-  KEY `irregular_word_id` (`irregular_word_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+(9, 4,  17, 'kat'),
+(32,  1,  9,  'vrouw');
 
 INSERT INTO `inflections` (`id`, `applies_submode_group`, `submode_group_id`, `irregular`, `irregular_word_id`, `irregular_override`, `type_id`, `classification_id`, `subclassification_id`, `number_id`, `mode_id`, `submode_id`, `prefix`, `suffix`, `change_frome`, `change_to`, `trim_begin`, `trim_end`) VALUES
 (5, 1,  4,  0,  0,  '', 2,  0,  0,  0,  0,  0,  '', 'en', '', '', '', 'en'),
@@ -516,29 +321,8 @@ INSERT INTO `inflections` (`id`, `applies_submode_group`, `submode_group_id`, `i
 (83,  1,  8,  1,  79, 'waren',  2,  0,  0,  0,  0,  0,  '', '', '', '', '', ''),
 (84,  1,  11, 1,  79, 'geweest',  2,  0,  0,  0,  0,  0,  '', '', '', '', '', '');
 
-DROP TABLE IF EXISTS `inflections_exclude_from_table`;
-CREATE TABLE `inflections_exclude_from_table` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `exclude_table` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `from_table` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `exclude_id` int(11) NOT NULL,
-  `from_id` int(11) NOT NULL,
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
-
 INSERT INTO `inflections_exclude_from_table` (`id`, `exclude_table`, `from_table`, `exclude_id`, `from_id`) VALUES
 (2, 'numbers',  'modes',  10, 26);
-
-DROP TABLE IF EXISTS `inflection_cache`;
-CREATE TABLE `inflection_cache` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `inflection` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `word_id` int(11) NOT NULL,
-  `inflection_hash` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  PRIMARY KEY (`id`),
-  KEY `word_id` (`word_id`),
-  CONSTRAINT `inflection_cache_ibfk_1` FOREIGN KEY (`word_id`) REFERENCES `words` (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 INSERT INTO `inflection_cache` (`id`, `inflection`, `word_id`, `inflection_hash`) VALUES
 (549, 'leuke',  69, 'bbbf8fb3a8cdbd052fa5ce60516f9fac'),
@@ -557,71 +341,26 @@ INSERT INTO `inflection_cache` (`id`, `inflection`, `word_id`, `inflection_hash`
 (568, 'jonge',  82, 'f9dfc45f94459e25cec1177959d980ca'),
 (571, 'jongere',  82, 'aea48f06c8b4ede4347036903a90d1f4'),
 (574, 'jongste',  82, '98ef73dcb4b6f5916ad105a42adf8001'),
-(589, 'test', 88, '8bf73c1e802b8e2a11e970c171f7cb6f'),
-(590, 'testt',  88, '07faa339cbdf6c2f5d86aba01f6b37e2'),
-(591, 'testte', 88, 'ec721811e61b2ea5fa515964ceb95067'),
-(592, 'testten',  88, '7839a539755e35dc00b94115f3402515'),
-(593, 'getestt',  88, 'd4d21c00f71ddb8db3bc9dceb9e54b15'),
 (599, 'goede',  29, 'bbbf8fb3a8cdbd052fa5ce60516f9fac'),
 (602, 'betere', 29, '31f43dcc0353f362d0ab49b1beb2c7f9'),
 (605, 'beste',  29, '8c3ff81f1e5941a1889ee15850fea0b6'),
 (606, 'beter',  29, '08a4948d772d85f5f936f2d66445d46c'),
 (607, 'best', 29, 'dddd3245725628985e28c1044dd94bbf'),
-(608, 'jonger', 82, '4cd6edb84f9657e55a1f922766f8ef58'),
-(609, 'jongst', 82, '747230e27465321b64d246c67142c0ff'),
 (610, 'winn', 15, '8bf73c1e802b8e2a11e970c171f7cb6f'),
 (611, 'winnt',  15, '07faa339cbdf6c2f5d86aba01f6b37e2'),
 (612, 'winnte', 15, 'ec721811e61b2ea5fa515964ceb95067'),
 (613, 'winnten',  15, '7839a539755e35dc00b94115f3402515'),
 (614, 'gewinnt',  15, 'd4d21c00f71ddb8db3bc9dceb9e54b15'),
 (615, 'leuker', 69, '08a4948d772d85f5f936f2d66445d46c'),
-(616, 'leukst', 69, 'dddd3245725628985e28c1044dd94bbf');
-
-DROP TABLE IF EXISTS `inflection_scripts`;
-CREATE TABLE `inflection_scripts` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `name` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `execute_prior_to_inflection` int(11) NOT NULL DEFAULT '0',
-  `execute_always` int(11) NOT NULL,
-  `weight` int(11) NOT NULL,
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+(616, 'leukst', 69, 'dddd3245725628985e28c1044dd94bbf'),
+(625, 'jonger', 82, '4cd6edb84f9657e55a1f922766f8ef58'),
+(626, 'jongst', 82, '747230e27465321b64d246c67142c0ff');
 
 INSERT INTO `inflection_scripts` (`id`, `name`, `execute_prior_to_inflection`, `execute_always`, `weight`) VALUES
 (1, 'sample', 1,  0,  0);
 
-DROP TABLE IF EXISTS `inflection_script_submode_groups`;
-CREATE TABLE `inflection_script_submode_groups` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `script_id` int(11) NOT NULL,
-  `submode_group_id` int(11) NOT NULL,
-  PRIMARY KEY (`id`),
-  KEY `script_id` (`script_id`),
-  KEY `submode_group_id` (`submode_group_id`),
-  CONSTRAINT `inflection_script_submode_groups_ibfk_1` FOREIGN KEY (`script_id`) REFERENCES `inflection_scripts` (`id`),
-  CONSTRAINT `inflection_script_submode_groups_ibfk_2` FOREIGN KEY (`submode_group_id`) REFERENCES `submode_groups` (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
-
 INSERT INTO `inflection_script_submode_groups` (`id`, `script_id`, `submode_group_id`) VALUES
 (1, 1,  18);
-
-DROP TABLE IF EXISTS `ipa_c`;
-CREATE TABLE `ipa_c` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `c_mode_id` int(11) NOT NULL,
-  `c_place_id` int(11) NOT NULL,
-  `c_articulation_id` int(11) NOT NULL,
-  `is_copy` int(11) NOT NULL DEFAULT '0',
-  `symbol` varchar(255) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL,
-  `active` int(11) NOT NULL,
-  PRIMARY KEY (`id`),
-  KEY `c_mode_id` (`c_mode_id`),
-  KEY `c_place_id` (`c_place_id`),
-  KEY `c_articulation_id` (`c_articulation_id`),
-  CONSTRAINT `ipa_c_ibfk_1` FOREIGN KEY (`c_mode_id`) REFERENCES `ipa_c_mode` (`id`),
-  CONSTRAINT `ipa_c_ibfk_2` FOREIGN KEY (`c_place_id`) REFERENCES `ipa_c_place` (`id`),
-  CONSTRAINT `ipa_c_ibfk_3` FOREIGN KEY (`c_articulation_id`) REFERENCES `ipa_c_articulation` (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 INSERT INTO `ipa_c` (`id`, `c_mode_id`, `c_place_id`, `c_articulation_id`, `is_copy`, `symbol`, `active`) VALUES
 (1, 1,  1,  1,  0,  'm̥', 0),
@@ -741,13 +480,6 @@ INSERT INTO `ipa_c` (`id`, `c_mode_id`, `c_place_id`, `c_articulation_id`, `is_c
 (125, 2,  10, 12, 0,  'ɠ',  0),
 (126, 2,  13, 12, 0,  'ʛ',  0);
 
-DROP TABLE IF EXISTS `ipa_c_articulation`;
-CREATE TABLE `ipa_c_articulation` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `name` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
-
 INSERT INTO `ipa_c_articulation` (`id`, `name`) VALUES
 (1, 'Nasal'),
 (2, 'Plosive'),
@@ -762,23 +494,9 @@ INSERT INTO `ipa_c_articulation` (`id`, `name`) VALUES
 (11,  'Click'),
 (12,  'Implosive');
 
-DROP TABLE IF EXISTS `ipa_c_mode`;
-CREATE TABLE `ipa_c_mode` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `name` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
-
 INSERT INTO `ipa_c_mode` (`id`, `name`) VALUES
 (1, 'Voiceless'),
 (2, 'Voiced');
-
-DROP TABLE IF EXISTS `ipa_c_place`;
-CREATE TABLE `ipa_c_place` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `name` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 INSERT INTO `ipa_c_place` (`id`, `name`) VALUES
 (1, 'Bilabial'),
@@ -797,26 +515,9 @@ INSERT INTO `ipa_c_place` (`id`, `name`) VALUES
 (14,  'Glottal'),
 (15,  'Other');
 
-DROP TABLE IF EXISTS `ipa_polyphthongs`;
-CREATE TABLE `ipa_polyphthongs` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `combination` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
-
 INSERT INTO `ipa_polyphthongs` (`id`, `combination`) VALUES
 (20,  'v_22,v_2'),
 (21,  'v_23,v_3');
-
-DROP TABLE IF EXISTS `ipa_regex`;
-CREATE TABLE `ipa_regex` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `sort` int(11) NOT NULL,
-  `search` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
-  `replace` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
-  `examples` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 INSERT INTO `ipa_regex` (`id`, `sort`, `search`, `replace`, `examples`) VALUES
 (2, 1,  '^sch', 'sχ', ''),
@@ -832,24 +533,6 @@ INSERT INTO `ipa_regex` (`id`, `sort`, `search`, `replace`, `examples`) VALUES
 (12,  0,  '(?<!i)[i](?=[-CON-]{2}|[-CON-]\\b)', 'v_8',  ''),
 (13,  0,  '[n][g]', 'c_9',  'koni[ng]'),
 (14,  -4, 'ui', 'œy̯',  'h[ui]s');
-
-DROP TABLE IF EXISTS `ipa_v`;
-CREATE TABLE `ipa_v` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `v_mode_id` int(11) NOT NULL,
-  `v_place_id` int(11) NOT NULL,
-  `v_articulation_id` int(11) NOT NULL,
-  `is_copy` int(11) NOT NULL DEFAULT '0',
-  `symbol` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `active` int(11) NOT NULL,
-  PRIMARY KEY (`id`),
-  KEY `v_mode_id` (`v_mode_id`),
-  KEY `v_place_id` (`v_place_id`),
-  KEY `v_articulation_id` (`v_articulation_id`),
-  CONSTRAINT `ipa_v_ibfk_1` FOREIGN KEY (`v_mode_id`) REFERENCES `ipa_v_mode` (`id`),
-  CONSTRAINT `ipa_v_ibfk_2` FOREIGN KEY (`v_place_id`) REFERENCES `ipa_v_place` (`id`),
-  CONSTRAINT `ipa_v_ibfk_3` FOREIGN KEY (`v_articulation_id`) REFERENCES `ipa_v_articulation` (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 INSERT INTO `ipa_v` (`id`, `v_mode_id`, `v_place_id`, `v_articulation_id`, `is_copy`, `symbol`, `active`) VALUES
 (2, 1,  1,  1,  0,  'i',  1),
@@ -887,13 +570,6 @@ INSERT INTO `ipa_v` (`id`, `v_mode_id`, `v_place_id`, `v_articulation_id`, `is_c
 (34,  2,  5,  7,  0,  'ɒ',  0),
 (35,  1,  1,  5,  1,  'ɛ:', 1);
 
-DROP TABLE IF EXISTS `ipa_v_articulation`;
-CREATE TABLE `ipa_v_articulation` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `name` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
-
 INSERT INTO `ipa_v_articulation` (`id`, `name`) VALUES
 (1, 'Close'),
 (2, 'Near-close'),
@@ -903,23 +579,9 @@ INSERT INTO `ipa_v_articulation` (`id`, `name`) VALUES
 (6, 'Near-open'),
 (7, 'Open');
 
-DROP TABLE IF EXISTS `ipa_v_mode`;
-CREATE TABLE `ipa_v_mode` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `name` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
-
 INSERT INTO `ipa_v_mode` (`id`, `name`) VALUES
 (1, 'Rounded'),
 (2, 'Unrounded');
-
-DROP TABLE IF EXISTS `ipa_v_place`;
-CREATE TABLE `ipa_v_place` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `name` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 INSERT INTO `ipa_v_place` (`id`, `name`) VALUES
 (1, 'Front'),
@@ -928,33 +590,14 @@ INSERT INTO `ipa_v_place` (`id`, `name`) VALUES
 (4, 'Near-back'),
 (5, 'Back');
 
-DROP TABLE IF EXISTS `languages`;
-CREATE TABLE `languages` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `name` varchar(255) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL,
-  `hidden_native_entry` int(11) NOT NULL,
-  `flag` varchar(255) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL,
-  `activated` int(11) NOT NULL,
-  `locale` varchar(8) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL,
-  `alphabet` varchar(255) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL,
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
-
 INSERT INTO `languages` (`id`, `name`, `hidden_native_entry`, `flag`, `activated`, `locale`, `alphabet`) VALUES
-(0, 'Dutch',  0,  'nld',  1,  'nl-NL',  ''),
-(1, 'English',  0,  'eng',  1,  'en-GB',  ''),
-(8, 'Polish', 0,  'pl', 1,  '', ''),
-(10,  'Swedish',  0,  'se', 1,  '', '');
+(0, 'Dutch',  0,  'nl', 1,  'NL', ''),
+(1, 'English',  0,  'gb', 1,  'EN', ''),
+(8, 'Polish', 0,  'pl', 1,  'PL', ''),
+(10,  'Swedish',  0,  'se', 1,  'SV', ''),
+(11,  'Hungarian',  0,  'hu', 1,  'HU', '');
 
-DROP TABLE IF EXISTS `modes`;
-CREATE TABLE `modes` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `name` varchar(255) NOT NULL,
-  `short_name` varchar(255) NOT NULL,
-  `hidden_native_entry` int(11) NOT NULL,
-  `mode_type_id` int(11) NOT NULL,
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
 
 INSERT INTO `modes` (`id`, `name`, `short_name`, `hidden_native_entry`, `mode_type_id`) VALUES
 (1, 'subject form', 'nom',  0,  2),
@@ -967,19 +610,6 @@ INSERT INTO `modes` (`id`, `name`, `short_name`, `hidden_native_entry`, `mode_ty
 (24,  'Singular', 'sg', 0,  3),
 (25,  'Plural', 'pl.',  0,  3),
 (26,  'Partative',  'part', 0,  4);
-
-DROP TABLE IF EXISTS `mode_apply`;
-CREATE TABLE `mode_apply` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `mode_id` int(11) NOT NULL,
-  `type_id` int(11) NOT NULL,
-  `ignore_submodes` int(11) NOT NULL,
-  PRIMARY KEY (`id`),
-  KEY `mode_id` (`mode_id`),
-  KEY `type_id` (`type_id`),
-  CONSTRAINT `mode_apply_ibfk_1` FOREIGN KEY (`mode_id`) REFERENCES `modes` (`id`) ON DELETE CASCADE,
-  CONSTRAINT `mode_apply_ibfk_2` FOREIGN KEY (`type_id`) REFERENCES `types` (`id`) ON DELETE CASCADE
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 INSERT INTO `mode_apply` (`id`, `mode_id`, `type_id`, `ignore_submodes`) VALUES
 (1, 1,  1,  0),
@@ -997,13 +627,6 @@ INSERT INTO `mode_apply` (`id`, `mode_id`, `type_id`, `ignore_submodes`) VALUES
 (16,  25, 5,  0),
 (17,  26, 5,  0);
 
-DROP TABLE IF EXISTS `mode_types`;
-CREATE TABLE `mode_types` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `name` varchar(255) NOT NULL,
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
-
 INSERT INTO `mode_types` (`id`, `name`) VALUES
 (1, 'verbal'),
 (2, 'noun case'),
@@ -1011,15 +634,13 @@ INSERT INTO `mode_types` (`id`, `name`) VALUES
 (4, 'single conjugation type'),
 (5, 'noun mode');
 
-DROP TABLE IF EXISTS `numbers`;
-CREATE TABLE `numbers` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `name` varchar(255) NOT NULL,
-  `short_name` varchar(255) NOT NULL,
-  `hidden_native_entry` varchar(255) NOT NULL,
-  `hidden_native_entry_short` int(11) NOT NULL,
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+
+
+
+
+
+
 
 INSERT INTO `numbers` (`id`, `name`, `short_name`, `hidden_native_entry`, `hidden_native_entry_short`) VALUES
 (1, 'singular', 'sg.',  '0',  0),
@@ -1027,18 +648,6 @@ INSERT INTO `numbers` (`id`, `name`, `short_name`, `hidden_native_entry`, `hidde
 (8, 'positive', 'bf.',  '0',  0),
 (9, 'comperative',  'comp.',  '0',  0),
 (10,  'superlative',  '0',  '0',  0);
-
-DROP TABLE IF EXISTS `number_apply`;
-CREATE TABLE `number_apply` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `number_id` int(11) NOT NULL,
-  `mode_type_id` int(11) NOT NULL,
-  PRIMARY KEY (`id`),
-  KEY `number_id` (`number_id`),
-  KEY `type_id` (`mode_type_id`),
-  CONSTRAINT `number_apply_ibfk_1` FOREIGN KEY (`number_id`) REFERENCES `numbers` (`id`) ON DELETE CASCADE,
-  CONSTRAINT `number_apply_ibfk_2` FOREIGN KEY (`mode_type_id`) REFERENCES `mode_types` (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 INSERT INTO `number_apply` (`id`, `number_id`, `mode_type_id`) VALUES
 (25,  1,  2),
@@ -1050,25 +659,9 @@ INSERT INTO `number_apply` (`id`, `number_id`, `mode_type_id`) VALUES
 (33,  1,  4),
 (34,  3,  4);
 
-DROP TABLE IF EXISTS `preview_inflections`;
-CREATE TABLE `preview_inflections` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `name` varchar(255) NOT NULL,
-  `type_id` int(11) NOT NULL,
-  `number_id` int(11) NOT NULL,
-  `mode_id` int(11) NOT NULL,
-  `submode_id` int(255) NOT NULL,
-  `no_aux` int(11) NOT NULL,
-  PRIMARY KEY (`id`),
-  KEY `type_id` (`type_id`),
-  KEY `number_id` (`number_id`),
-  KEY `mode_id` (`mode_id`),
-  KEY `submode_id` (`submode_id`),
-  CONSTRAINT `preview_inflections_ibfk_1` FOREIGN KEY (`type_id`) REFERENCES `types` (`id`),
-  CONSTRAINT `preview_inflections_ibfk_2` FOREIGN KEY (`number_id`) REFERENCES `numbers` (`id`),
-  CONSTRAINT `preview_inflections_ibfk_3` FOREIGN KEY (`mode_id`) REFERENCES `modes` (`id`),
-  CONSTRAINT `preview_inflections_ibfk_4` FOREIGN KEY (`submode_id`) REFERENCES `submodes` (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+INSERT INTO `phonology_contexts` (`id`, `name`, `rule`, `sorter`) VALUES
+(1, 'Consant gemination #1',  'CON.VOW_CON_+.VOW=>%%',  1);
+
 
 INSERT INTO `preview_inflections` (`id`, `name`, `type_id`, `number_id`, `mode_id`, `submode_id`, `no_aux`) VALUES
 (1, 'indef.', 1,  1,  1,  1,  0),
@@ -1077,51 +670,12 @@ INSERT INTO `preview_inflections` (`id`, `name`, `type_id`, `number_id`, `mode_i
 (4, 'pst.', 2,  1,  8,  5,  0),
 (5, 'obj.', 4,  1,  6,  9,  0);
 
-DROP TABLE IF EXISTS `settings_boolean`;
-CREATE TABLE `settings_boolean` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `name` varchar(255) NOT NULL,
-  `value` int(11) NOT NULL,
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
-
 INSERT INTO `settings_boolean` (`id`, `name`, `value`) VALUES
 (1, 'prodrop',  0);
-
-DROP TABLE IF EXISTS `stems`;
-CREATE TABLE `stems` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `word_id` int(11) NOT NULL,
-  `applies_submode_group` int(11) NOT NULL,
-  `submode_group_id` int(11) NOT NULL,
-  `classification_id` int(11) NOT NULL,
-  `subclassification_id` int(11) NOT NULL,
-  `mode_id` int(11) NOT NULL,
-  `submode_id` int(255) NOT NULL,
-  `number_id` int(11) NOT NULL,
-  `stem_override` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  PRIMARY KEY (`id`),
-  KEY `word_id` (`word_id`),
-  KEY `classification_id` (`classification_id`),
-  KEY `subclassification_id` (`subclassification_id`),
-  KEY `mode_id` (`mode_id`),
-  KEY `submode_id` (`submode_id`),
-  KEY `number_id` (`number_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 INSERT INTO `stems` (`id`, `word_id`, `applies_submode_group`, `submode_group_id`, `classification_id`, `subclassification_id`, `mode_id`, `submode_id`, `number_id`, `stem_override`) VALUES
 (2, 29, 1,  18, 0,  0,  0,  0,  0,  'bet'),
 (3, 29, 1,  19, 0,  0,  0,  0,  0,  'be');
-
-DROP TABLE IF EXISTS `subclassifications`;
-CREATE TABLE `subclassifications` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `name` varchar(255) NOT NULL,
-  `short_name` varchar(255) NOT NULL,
-  `native_hidden_entry` int(11) NOT NULL,
-  `native_hidden_entry_short` int(11) NOT NULL,
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 INSERT INTO `subclassifications` (`id`, `name`, `short_name`, `native_hidden_entry`, `native_hidden_entry_short`) VALUES
 (1, 'Class 1 verb', 'cl. 1',  0,  0),
@@ -1129,18 +683,6 @@ INSERT INTO `subclassifications` (`id`, `name`, `short_name`, `native_hidden_ent
 (3, 'Plural', 'pl.',  0,  0),
 (4, 'synthetical superlative',  'synthetical superlative',  0,  0),
 (5, 'compund superlative',  'adj-cs.',  0,  0);
-
-DROP TABLE IF EXISTS `subclassification_apply`;
-CREATE TABLE `subclassification_apply` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `subclassification_id` int(11) NOT NULL,
-  `classification_id` int(11) NOT NULL,
-  PRIMARY KEY (`id`),
-  KEY `subclassification_id` (`subclassification_id`),
-  KEY `classification_id` (`classification_id`),
-  CONSTRAINT `subclassification_apply_ibfk_1` FOREIGN KEY (`subclassification_id`) REFERENCES `subclassifications` (`id`),
-  CONSTRAINT `subclassification_apply_ibfk_2` FOREIGN KEY (`classification_id`) REFERENCES `classifications` (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 INSERT INTO `subclassification_apply` (`id`, `subclassification_id`, `classification_id`) VALUES
 (2, 1,  5),
@@ -1159,18 +701,6 @@ INSERT INTO `subclassification_apply` (`id`, `subclassification_id`, `classifica
 (15,  5,  13),
 (16,  5,  3);
 
-DROP TABLE IF EXISTS `submodes`;
-CREATE TABLE `submodes` (
-  `id` int(255) NOT NULL AUTO_INCREMENT,
-  `name` varchar(255) NOT NULL,
-  `short_name` varchar(255) NOT NULL,
-  `hidden_native_entry` varchar(255) NOT NULL,
-  `mode_type_id` int(11) NOT NULL,
-  PRIMARY KEY (`id`),
-  KEY `mode_type_id` (`mode_type_id`),
-  CONSTRAINT `submodes_ibfk_1` FOREIGN KEY (`mode_type_id`) REFERENCES `mode_types` (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
-
 INSERT INTO `submodes` (`id`, `name`, `short_name`, `hidden_native_entry`, `mode_type_id`) VALUES
 (1, 'indefinite', 'indef',  '0',  2),
 (2, 'definite', 'def',  '0',  2),
@@ -1182,18 +712,6 @@ INSERT INTO `submodes` (`id`, `name`, `short_name`, `hidden_native_entry`, `mode
 (8, 'conjugation',  'sg conj p',  ' ',  4),
 (9, 'conjugation',  'sg pn',  '0',  4);
 
-DROP TABLE IF EXISTS `submode_apply`;
-CREATE TABLE `submode_apply` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `submode_id` int(11) NOT NULL,
-  `mode_type_id` int(11) NOT NULL,
-  PRIMARY KEY (`id`),
-  KEY `type_id` (`mode_type_id`),
-  KEY `submode_id` (`submode_id`),
-  CONSTRAINT `submode_apply_ibfk_2` FOREIGN KEY (`submode_id`) REFERENCES `submodes` (`id`) ON DELETE CASCADE,
-  CONSTRAINT `submode_apply_ibfk_3` FOREIGN KEY (`mode_type_id`) REFERENCES `mode_types` (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
-
 INSERT INTO `submode_apply` (`id`, `submode_id`, `mode_type_id`) VALUES
 (20,  1,  2),
 (21,  3,  3),
@@ -1202,14 +720,6 @@ INSERT INTO `submode_apply` (`id`, `submode_id`, `mode_type_id`) VALUES
 (24,  5,  1),
 (25,  6,  1),
 (26,  7,  1);
-
-DROP TABLE IF EXISTS `submode_groups`;
-CREATE TABLE `submode_groups` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `name` varchar(255) NOT NULL,
-  `type_id` int(11) NOT NULL,
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 INSERT INTO `submode_groups` (`id`, `name`, `type_id`) VALUES
 (1, 'Verb - plural persons, perfect', 2),
@@ -1231,29 +741,6 @@ INSERT INTO `submode_groups` (`id`, `name`, `type_id`) VALUES
 (17,  'adj. base with e', 5),
 (18,  'adj. comparative sg and pl', 5),
 (19,  'adj. superlative sg and pl', 5);
-
-DROP TABLE IF EXISTS `submode_group_members`;
-CREATE TABLE `submode_group_members` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `submode_group_id` int(11) NOT NULL,
-  `submode_id` int(11) NOT NULL,
-  `type_id` int(11) NOT NULL,
-  `number_id` int(11) NOT NULL,
-  `classification_id` int(11) NOT NULL,
-  `mode_id` int(11) NOT NULL,
-  `aux_mode_id` int(11) NOT NULL,
-  PRIMARY KEY (`id`),
-  KEY `submode_group_id` (`submode_group_id`),
-  KEY `number_id` (`number_id`),
-  KEY `submode_id` (`submode_id`),
-  KEY `classification_id` (`classification_id`),
-  KEY `mode_id` (`mode_id`),
-  CONSTRAINT `submode_group_members_ibfk_4` FOREIGN KEY (`submode_group_id`) REFERENCES `submode_groups` (`id`) ON DELETE CASCADE,
-  CONSTRAINT `submode_group_members_ibfk_5` FOREIGN KEY (`number_id`) REFERENCES `numbers` (`id`) ON DELETE CASCADE,
-  CONSTRAINT `submode_group_members_ibfk_6` FOREIGN KEY (`submode_id`) REFERENCES `submodes` (`id`) ON DELETE CASCADE,
-  CONSTRAINT `submode_group_members_ibfk_7` FOREIGN KEY (`classification_id`) REFERENCES `classifications` (`id`),
-  CONSTRAINT `submode_group_members_ibfk_8` FOREIGN KEY (`mode_id`) REFERENCES `modes` (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 INSERT INTO `submode_group_members` (`id`, `submode_group_id`, `submode_id`, `type_id`, `number_id`, `classification_id`, `mode_id`, `aux_mode_id`) VALUES
 (1, 2,  1,  0,  1,  1,  1,  1),
@@ -1334,19 +821,6 @@ INSERT INTO `submode_group_members` (`id`, `submode_group_id`, `submode_id`, `ty
 (93,  19, 4,  5,  10, 3,  25, 25),
 (94,  14, 1,  1,  1,  2,  1,  1);
 
-DROP TABLE IF EXISTS `submode_native_numbers`;
-CREATE TABLE `submode_native_numbers` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `native` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `submode_id` int(255) NOT NULL,
-  `number_id` int(11) NOT NULL,
-  PRIMARY KEY (`id`),
-  KEY `submode_id` (`submode_id`),
-  KEY `number_id` (`number_id`),
-  CONSTRAINT `submode_native_numbers_ibfk_1` FOREIGN KEY (`submode_id`) REFERENCES `submodes` (`id`),
-  CONSTRAINT `submode_native_numbers_ibfk_2` FOREIGN KEY (`number_id`) REFERENCES `numbers` (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
-
 INSERT INTO `submode_native_numbers` (`id`, `native`, `submode_id`, `number_id`) VALUES
 (1, 'DV', 5,  1),
 (2, 'pP', 6,  1),
@@ -1355,19 +829,6 @@ INSERT INTO `submode_native_numbers` (`id`, `native`, `submode_id`, `number_id`)
 (5, 'Nxk',  5,  3),
 (6, 'qKm',  6,  3),
 (7, 'XXj',  7,  3);
-
-DROP TABLE IF EXISTS `synonyms`;
-CREATE TABLE `synonyms` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `word_id_1` int(11) NOT NULL,
-  `word_id_2` int(11) NOT NULL,
-  `score` int(11) NOT NULL,
-  PRIMARY KEY (`id`),
-  KEY `word_id_1` (`word_id_1`),
-  KEY `word_id_2` (`word_id_2`),
-  CONSTRAINT `synonyms_ibfk_3` FOREIGN KEY (`word_id_1`) REFERENCES `words` (`id`) ON DELETE CASCADE,
-  CONSTRAINT `synonyms_ibfk_4` FOREIGN KEY (`word_id_2`) REFERENCES `words` (`id`) ON DELETE CASCADE
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 INSERT INTO `synonyms` (`id`, `word_id_1`, `word_id_2`, `score`) VALUES
 (1, 1,  10, 50),
@@ -1380,256 +841,249 @@ INSERT INTO `synonyms` (`id`, `word_id_1`, `word_id_2`, `score`) VALUES
 (9, 10, 25, 25),
 (10,  17, 23, 50);
 
-DROP TABLE IF EXISTS `translations`;
-CREATE TABLE `translations` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `language_id` int(11) NOT NULL,
-  `translation` varchar(255) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL,
-  PRIMARY KEY (`id`),
-  KEY `language_id` (`language_id`),
-  CONSTRAINT `translations_ibfk_4` FOREIGN KEY (`language_id`) REFERENCES `languages` (`id`) ON DELETE CASCADE
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
-
-INSERT INTO `translations` (`id`, `language_id`, `translation`) VALUES
-(1, 1,  'man'),
-(2, 1,  'husband'),
-(3, 1,  'work'),
-(4, 1,  'function'),
-(5, 1,  'woman'),
-(6, 1,  'wife'),
-(7, 1,  'have'),
-(10,  1,  'he'),
-(11,  1,  'uncle'),
-(13,  1,  'lose'),
-(15,  1,  'win'),
-(23,  1,  'cat'),
-(25,  1,  'pussy'),
-(26,  1,  'feline'),
-(30,  1,  'vagina'),
-(32,  1,  'kitten'),
-(33,  0,  'persoon'),
-(34,  1,  'one'),
-(35,  1,  'everyone'),
-(36,  1,  'tomcat'),
-(38,  1,  'hangover'),
-(39,  1,  'mister'),
-(42,  0,  'mijnheer'),
-(45,  1,  'she'),
-(48,  1,  'good'),
-(49,  1,  'ice'),
-(50,  1,  'ice cream'),
-(51,  1,  'I'),
-(52,  1,  'you'),
-(54,  1,  'we'),
-(55,  1,  'potatoe'),
-(56,  1,  'earth'),
-(57,  1,  'all'),
-(58,  1,  'pet'),
-(72,  1,  'party'),
-(73,  1,  'feast'),
-(74,  1,  'celebration'),
-(79,  1,  'pancake'),
-(80,  1,  'fool'),
-(81,  1,  'pancake'),
-(82,  1,  'pancake'),
-(83,  1,  'pancake'),
-(86,  1,  'stone'),
-(87,  1,  'stone'),
-(88,  1,  'manner'),
-(89,  1,  'way'),
-(90,  1,  'mood of speech'),
-(91,  1,  'sage'),
-(92,  1,  'wise man'),
-(93,  1,  'nose'),
-(94,  1,  'moon'),
-(95,  1,  'month'),
-(96,  1,  'bad'),
-(97,  1,  'lemon'),
-(98,  1,  'Lithviscian'),
-(99,  1,  'boy'),
-(100, 1,  'rain'),
-(101, 1,  'hail'),
-(102, 1,  'picnic'),
-(103, 1,  'dog'),
-(104, 1,  'hound'),
-(105, 1,  'pleasant'),
-(106, 1,  'nice'),
-(107, 1,  'enoyable'),
-(108, 1,  'likable'),
-(109, 1,  'good-looking'),
-(110, 1,  'quote'),
-(111, 1,  'tree'),
-(112, 1,  'wooden object'),
-(113, 1,  'pretty'),
-(114, 1,  'beautiful'),
-(115, 1,  'nice'),
-(116, 1,  'better'),
-(117, 1,  'best'),
-(118, 1,  'bad'),
-(119, 1,  'worse'),
-(120, 1,  'worst'),
-(131, 1,  'book'),
-(132, 1,  'bread'),
-(198, 8,  'mężczyzna'),
-(199, 8,  'pan'),
-(200, 8,  'człowiek'),
-(201, 1,  'a'),
-(202, 1,  'an'),
-(203, 1,  'cheer'),
-(204, 1,  'shout'),
-(205, 1,  'husband'),
-(206, 1,  'the'),
-(207, 1,  'little man'),
-(208, 1,  'male'),
-(209, 1,  'guy that preforms odd jobs'),
-(210, 1,  'little cat'),
-(211, 1,  'vice'),
-(212, 8,  'mać'),
-(213, 8,  'pracować'),
-(214, 8,  'działać'),
-(215, 8,  'udać się'),
-(216, 8,  'wiwatować'),
-(217, 8,  'kobieta'),
-(218, 8,  'żona'),
-(219, 8,  'żona'),
-(220, 8,  'on'),
-(221, 8,  ''),
-(222, 8,  'kot'),
-(223, 8,  'kot'),
-(224, 8,  'kot'),
-(225, 8,  'pochwa'),
-(226, 8,  'kot'),
-(227, 8,  'kocur'),
-(228, 8,  'kocurek'),
-(229, 8,  'pan'),
-(230, 8,  'ona'),
-(231, 8,  'kocur'),
-(232, 8,  'kac'),
-(233, 1,  'onion'),
-(234, 8,  'cebula'),
-(235, 8,  'pies'),
-(242, 8,  'ja'),
-(243, 8,  'mnie'),
-(244, 1,  'me'),
-(245, 1,  'I'),
-(246, 1,  'me'),
-(247, 8,  'dobry'),
-(248, 8,  'dobrze'),
-(249, 8,  'zdrowy'),
-(250, 8,  'odpowiedni'),
-(251, 8,  'lody'),
-(252, 8,  'ty'),
-(253, 8,  'ty'),
-(254, 8,  'my'),
-(255, 8,  'my'),
-(256, 8,  'ziemniak'),
-(257, 8,  'kartoffel'),
-(258, 10, 'man'),
-(259, 10, 'make'),
-(260, 10, 'gubbe'),
-(261, 10, 'karl'),
-(262, 10, 'en'),
-(263, 10, 'ett'),
-(264, 10, 'ha'),
-(265, 10, 'jobba'),
-(266, 10, 'jubla'),
-(267, 10, 'kvinna'),
-(268, 10, 'make'),
-(269, 10, 'hustru'),
-(270, 10, 'han'),
-(271, 10, 'farbror'),
-(272, 10, 'morbror'),
-(273, 10, 'tappa'),
-(274, 10, 'förlora'),
-(275, 10, 'vinna'),
-(276, 10, 'den'),
-(277, 10, 'det'),
-(278, 10, '-en'),
-(279, 10, '-et'),
-(280, 10, '-na'),
-(281, 10, 'katt'),
-(282, 10, 'man'),
-(283, 10, 'hon'),
-(284, 10, 'bra'),
-(285, 10, 'god'),
-(286, 10, 'is'),
-(287, 10, 'glass'),
-(288, 10, 'jag'),
-(289, 10, 'du'),
-(290, 10, 'du'),
-(291, 10, 'vi'),
-(292, 10, 'vi'),
-(293, 10, 'potatis'),
-(294, 10, 'jord'),
-(295, 10, 'mark'),
-(296, 10, 'alla'),
-(297, 10, 'allt'),
-(298, 10, 'klappa'),
-(299, 10, 'smeka'),
-(300, 10, 'alla'),
-(301, 10, 'allihopa'),
-(302, 10, 'fest'),
-(303, 10, 'kallas'),
-(304, 10, 'bok'),
-(305, 10, 'sten'),
-(306, 10, 'sätt'),
-(307, 10, 'viss'),
-(308, 10, 'näsa'),
-(309, 10, 'miss'),
-(310, 10, 'madam'),
-(311, 10, 'madam'),
-(312, 10, 'miss'),
-(313, 10, 'madam'),
-(314, 10, 'miss'),
-(315, 8,  'chleb'),
-(316, 10, 'kul'),
-(317, 10, 'rolig'),
-(318, 10, 'fin'),
-(319, 10, 'trevlig'),
-(320, 10, 'snygg'),
-(321, 10, 'vara'),
-(323, 1,  'miss'),
-(325, 1,  'be'),
-(326, 1,  'laundry'),
-(327, 1,  'wax'),
-(328, 1,  'ugly'),
-(329, 1,  'young'),
-(330, 1,  'young'),
-(331, 1,  'young'),
-(332, 1,  'you'),
-(333, 1,  'you guys'),
-(334, 1,  ''),
-(335, 1,  'they'),
-(336, 1,  'wish'),
-(337, 8,  'dom'),
-(338, 1,  'house'),
-(339, 1,  'without'),
-(340, 10, 'testa'),
-(341, 10, 'försöka'),
-(342, 10, ''),
-(343, 8,  'jeden'),
-(344, 8,  'blablabla'),
-(345, 8,  'blablabla'),
-(346, 8,  'man'),
-(347, 8,  ''),
-(348, 8,  ''),
-(349, 8,  ''),
-(350, 8,  ''),
-(351, 8,  ''),
-(352, 8,  ''),
-(353, 8,  ''),
-(354, 1,  'sheep'),
-(355, 1,  'test');
-
-DROP TABLE IF EXISTS `translation_alternatives`;
-CREATE TABLE `translation_alternatives` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `translation_id` int(11) NOT NULL,
-  `alternative` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  PRIMARY KEY (`id`),
-  KEY `translation_id` (`translation_id`),
-  CONSTRAINT `translation_alternatives_ibfk_1` FOREIGN KEY (`translation_id`) REFERENCES `translations` (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+INSERT INTO `translations` (`id`, `language_id`, `translation`, `description`, `created_on`, `user_id`) VALUES
+(1, 1,  'man',  'An adult living being of the male gender', '2017-04-16 11:42:11',  1),
+(2, 1,  'husband',  '', '2017-04-14 21:41:39',  1),
+(3, 1,  'work', '', '2017-04-14 21:41:39',  1),
+(4, 1,  'function', '', '2017-04-14 21:41:39',  1),
+(5, 1,  'woman',  '', '2017-04-14 21:41:39',  1),
+(6, 1,  'wife', '', '2017-04-14 21:41:39',  1),
+(7, 1,  'have', '', '2017-04-14 21:41:39',  1),
+(10,  1,  'he', '', '2017-04-14 21:41:39',  1),
+(11,  1,  'uncle',  '', '2017-04-14 21:41:39',  1),
+(13,  1,  'lose', '', '2017-04-14 21:41:39',  1),
+(15,  1,  'win',  '', '2017-04-14 21:41:39',  1),
+(23,  1,  'cat',  '', '2017-04-14 21:41:39',  1),
+(25,  1,  'pussy',  '', '2017-04-14 21:41:39',  1),
+(26,  1,  'feline', '', '2017-04-14 21:41:39',  1),
+(30,  1,  'vagina', '', '2017-04-14 21:41:39',  1),
+(32,  1,  'kitten', '', '2017-04-14 21:41:39',  1),
+(33,  0,  'persoon',  '', '2017-04-14 21:41:39',  1),
+(34,  1,  'one',  '', '2017-04-14 21:41:39',  1),
+(35,  1,  'everyone', '', '2017-04-14 21:41:39',  1),
+(36,  1,  'tomcat', '', '2017-04-14 21:41:39',  1),
+(38,  1,  'hangover', '', '2017-04-14 21:41:39',  1),
+(39,  1,  'mister', '', '2017-04-14 21:41:39',  1),
+(42,  0,  'mijnheer', '', '2017-04-14 21:41:39',  1),
+(45,  1,  'she',  '', '2017-04-14 21:41:39',  1),
+(48,  1,  'good', '', '2017-04-14 21:41:39',  1),
+(49,  1,  'ice',  '', '2017-04-14 21:41:39',  1),
+(50,  1,  'ice cream',  '', '2017-04-14 21:41:39',  1),
+(51,  1,  'I',  '', '2017-04-14 21:41:39',  1),
+(52,  1,  'you',  '', '2017-04-14 21:41:39',  1),
+(54,  1,  'we', '', '2017-04-14 21:41:39',  1),
+(55,  1,  'potatoe',  '', '2017-04-14 21:41:39',  1),
+(56,  1,  'earth',  '', '2017-04-14 21:41:39',  1),
+(57,  1,  'all',  '', '2017-04-14 21:41:39',  1),
+(58,  1,  'pet',  '', '2017-04-14 21:41:39',  1),
+(72,  1,  'party',  '', '2017-04-14 21:41:39',  1),
+(73,  1,  'feast',  '', '2017-04-14 21:41:39',  1),
+(74,  1,  'celebration',  '', '2017-04-14 21:41:39',  1),
+(79,  1,  'pancake',  '', '2017-04-14 21:41:39',  1),
+(80,  1,  'fool', '', '2017-04-14 21:41:39',  1),
+(81,  1,  'pancake',  '', '2017-04-14 21:41:39',  1),
+(82,  1,  'pancake',  '', '2017-04-14 21:41:39',  1),
+(83,  1,  'pancake',  '', '2017-04-14 21:41:39',  1),
+(86,  1,  'stone',  '', '2017-04-14 21:41:39',  1),
+(87,  1,  'stone',  '', '2017-04-14 21:41:39',  1),
+(88,  1,  'manner', '', '2017-04-14 21:41:39',  1),
+(89,  1,  'way',  '', '2017-04-14 21:41:39',  1),
+(90,  1,  'mood of speech', '', '2017-04-14 21:41:39',  1),
+(91,  1,  'sage', '', '2017-04-14 21:41:39',  1),
+(92,  1,  'wise man', '', '2017-04-14 21:41:39',  1),
+(93,  1,  'nose', '', '2017-04-14 21:41:39',  1),
+(94,  1,  'moon', '', '2017-04-14 21:42:08',  1),
+(95,  1,  'month',  '', '2017-04-14 21:42:08',  1),
+(96,  1,  'bad',  '', '2017-04-14 21:42:08',  1),
+(97,  1,  'lemon',  '', '2017-04-14 21:42:08',  1),
+(98,  1,  'Lithviscian',  '', '2017-04-14 21:42:08',  1),
+(99,  1,  'boy',  '', '2017-04-14 21:42:08',  1),
+(100, 1,  'rain', '', '2017-04-14 21:42:08',  1),
+(101, 1,  'hail', '', '2017-04-14 21:42:08',  1),
+(102, 1,  'picnic', '', '2017-04-14 21:42:08',  1),
+(103, 1,  'dog',  '', '2017-04-14 21:42:08',  1),
+(104, 1,  'hound',  '', '2017-04-14 21:42:08',  1),
+(105, 1,  'pleasant', '', '2017-04-14 21:42:08',  1),
+(106, 1,  'nice', '', '2017-04-14 21:42:08',  1),
+(107, 1,  'enoyable', '', '2017-04-14 21:42:08',  1),
+(108, 1,  'likable',  '', '2017-04-14 21:42:08',  1),
+(109, 1,  'good-looking', '', '2017-04-14 21:42:08',  1),
+(110, 1,  'quote',  '', '2017-04-14 21:42:08',  1),
+(111, 1,  'tree', '', '2017-04-14 21:42:08',  1),
+(112, 1,  'wooden object',  '', '2017-04-14 21:42:08',  1),
+(113, 1,  'pretty', '', '2017-04-14 21:42:08',  1),
+(114, 1,  'beautiful',  '', '2017-04-14 21:42:08',  1),
+(115, 1,  'nice', '', '2017-04-14 21:42:08',  1),
+(116, 1,  'better', '', '2017-04-14 21:42:08',  1),
+(117, 1,  'best', '', '2017-04-14 21:42:08',  1),
+(118, 1,  'bad',  '', '2017-04-14 21:42:08',  1),
+(119, 1,  'worse',  '', '2017-04-14 21:42:08',  1),
+(120, 1,  'worst',  '', '2017-04-14 21:42:08',  1),
+(131, 1,  'book', '', '2017-04-14 21:42:08',  1),
+(132, 1,  'bread',  '', '2017-04-14 21:42:08',  1),
+(198, 8,  'mężczyzna',  '', '2017-04-14 21:42:08',  1),
+(199, 8,  'pan',  '', '2017-04-14 21:42:08',  1),
+(200, 8,  'człowiek', '', '2017-04-14 21:42:08',  1),
+(201, 1,  'a',  '', '2017-04-14 21:42:08',  1),
+(202, 1,  'an', '', '2017-04-14 21:42:08',  1),
+(203, 1,  'cheer',  '', '2017-04-14 21:42:08',  1),
+(204, 1,  'shout',  '', '2017-04-14 21:42:08',  1),
+(205, 1,  'husband',  '', '2017-04-14 21:42:08',  1),
+(206, 1,  'the',  '', '2017-04-14 21:42:08',  1),
+(207, 1,  'little man', '', '2017-04-14 21:42:08',  1),
+(208, 1,  'male', '', '2017-04-14 21:42:08',  1),
+(209, 1,  'guy that preforms odd jobs', '', '2017-04-14 21:42:08',  1),
+(210, 1,  'little cat', '', '2017-04-14 21:42:08',  1),
+(211, 1,  'vice', '', '2017-04-14 21:42:08',  1),
+(212, 8,  'mać',  '', '2017-04-14 21:42:08',  1),
+(213, 8,  'pracować', '', '2017-04-14 21:42:08',  1),
+(214, 8,  'działać',  '', '2017-04-14 21:42:08',  1),
+(215, 8,  'udać się', '', '2017-04-14 21:42:08',  1),
+(216, 8,  'wiwatować',  '', '2017-04-14 21:42:08',  1),
+(217, 8,  'kobieta',  '', '2017-04-14 21:42:08',  1),
+(218, 8,  'żona', '', '2017-04-14 21:42:08',  1),
+(219, 8,  'żona', '', '2017-04-14 21:42:08',  1),
+(220, 8,  'on', '', '2017-04-14 21:42:08',  1),
+(221, 8,  '', '', '2017-04-14 21:42:08',  1),
+(222, 8,  'kot',  '', '2017-04-14 21:42:08',  1),
+(223, 8,  'kot',  '', '2017-04-14 21:42:08',  1),
+(224, 8,  'kot',  '', '2017-04-14 21:42:08',  1),
+(225, 8,  'pochwa', '', '2017-04-14 21:42:08',  1),
+(226, 8,  'kot',  '', '2017-04-14 21:42:08',  1),
+(227, 8,  'kocur',  '', '2017-04-14 21:42:08',  1),
+(228, 8,  'kocurek',  '', '2017-04-14 21:42:08',  1),
+(229, 8,  'pan',  '', '2017-04-14 21:42:08',  1),
+(230, 8,  'ona',  '', '2017-04-14 21:42:08',  1),
+(231, 8,  'kocur',  '', '2017-04-14 21:42:08',  1),
+(232, 8,  'kac',  '', '2017-04-14 21:42:08',  1),
+(233, 1,  'onion',  '', '2017-04-14 21:42:08',  1),
+(234, 8,  'cebula', '', '2017-04-14 21:42:08',  1),
+(235, 8,  'pies', '', '2017-04-14 21:42:08',  1),
+(242, 8,  'ja', '', '2017-04-14 21:42:08',  1),
+(243, 8,  'mnie', '', '2017-04-14 21:42:08',  1),
+(244, 1,  'me', '', '2017-04-14 21:42:08',  1),
+(245, 1,  'I',  '', '2017-04-14 21:42:08',  1),
+(246, 1,  'me', '', '2017-04-14 21:42:08',  1),
+(247, 8,  'dobry',  '', '2017-04-14 21:42:08',  1),
+(248, 8,  'dobrze', '', '2017-04-14 21:42:08',  1),
+(249, 8,  'zdrowy', '', '2017-04-14 21:42:08',  1),
+(250, 8,  'odpowiedni', '', '2017-04-14 21:42:08',  1),
+(251, 8,  'lody', '', '2017-04-14 21:42:08',  1),
+(252, 8,  'ty', '', '2017-04-14 21:42:08',  1),
+(253, 8,  'ty', '', '2017-04-14 21:42:08',  1),
+(254, 8,  'my', '', '2017-04-14 21:42:08',  1),
+(255, 8,  'my', '', '2017-04-14 21:42:08',  1),
+(256, 8,  'ziemniak', '', '2017-04-14 21:42:08',  1),
+(257, 8,  'kartoffel',  '', '2017-04-14 21:42:08',  1),
+(258, 10, 'man',  '', '2017-04-14 21:42:08',  1),
+(259, 10, 'make', '', '2017-04-14 21:42:08',  1),
+(260, 10, 'gubbe',  '', '2017-04-14 21:42:08',  1),
+(261, 10, 'karl', '', '2017-04-14 21:42:08',  1),
+(262, 10, 'en', '', '2017-04-14 21:42:08',  1),
+(263, 10, 'ett',  '', '2017-04-14 21:42:08',  1),
+(264, 10, 'ha', '', '2017-04-14 21:42:08',  1),
+(265, 10, 'jobba',  '', '2017-04-14 21:42:08',  1),
+(266, 10, 'jubla',  '', '2017-04-14 21:42:08',  1),
+(267, 10, 'kvinna', '', '2017-04-14 21:42:08',  1),
+(268, 10, 'make', '', '2017-04-14 21:42:08',  1),
+(269, 10, 'hustru', '', '2017-04-14 21:42:08',  1),
+(270, 10, 'han',  '', '2017-04-14 21:42:08',  1),
+(271, 10, 'farbror',  '', '2017-04-14 21:42:08',  1),
+(272, 10, 'morbror',  '', '2017-04-14 21:42:08',  1),
+(273, 10, 'tappa',  '', '2017-04-14 21:42:08',  1),
+(274, 10, 'förlora',  '', '2017-04-14 21:42:08',  1),
+(275, 10, 'vinna',  '', '2017-04-14 21:42:08',  1),
+(276, 10, 'den',  '', '2017-04-14 21:42:08',  1),
+(277, 10, 'det',  '', '2017-04-14 21:42:08',  1),
+(278, 10, '-en',  '', '2017-04-14 21:42:08',  1),
+(279, 10, '-et',  '', '2017-04-14 21:42:08',  1),
+(280, 10, '-na',  '', '2017-04-14 21:42:08',  1),
+(281, 10, 'katt', '', '2017-04-14 21:42:08',  1),
+(282, 10, 'man',  '', '2017-04-14 21:42:08',  1),
+(283, 10, 'hon',  '', '2017-04-14 21:42:08',  1),
+(284, 10, 'bra',  '', '2017-04-14 21:42:08',  1),
+(285, 10, 'god',  '', '2017-04-14 21:42:08',  1),
+(286, 10, 'is', '', '2017-04-14 21:42:08',  1),
+(287, 10, 'glass',  '', '2017-04-14 21:42:08',  1),
+(288, 10, 'jag',  '', '2017-04-14 21:42:08',  1),
+(289, 10, 'du', '', '2017-04-14 21:42:08',  1),
+(290, 10, 'du', '', '2017-04-14 21:42:08',  1),
+(291, 10, 'vi', '', '2017-04-14 21:42:08',  1),
+(292, 10, 'vi', '', '2017-04-14 21:42:08',  1),
+(293, 10, 'potatis',  '', '2017-04-14 21:42:08',  1),
+(294, 10, 'jord', '', '2017-04-14 21:42:08',  1),
+(295, 10, 'mark', '', '2017-04-14 21:42:08',  1),
+(296, 10, 'alla', '', '2017-04-14 21:42:08',  1),
+(297, 10, 'allt', '', '2017-04-14 21:42:08',  1),
+(298, 10, 'klappa', '', '2017-04-14 21:42:08',  1),
+(299, 10, 'smeka',  '', '2017-04-14 21:42:08',  1),
+(300, 10, 'alla', '', '2017-04-14 21:42:08',  1),
+(301, 10, 'allihopa', '', '2017-04-14 21:42:08',  1),
+(302, 10, 'fest', '', '2017-04-14 21:42:08',  1),
+(303, 10, 'kallas', '', '2017-04-14 21:42:08',  1),
+(304, 10, 'bok',  '', '2017-04-14 21:42:08',  1),
+(305, 10, 'sten', '', '2017-04-14 21:42:08',  1),
+(306, 10, 'sätt', '', '2017-04-14 21:42:08',  1),
+(307, 10, 'viss', '', '2017-04-14 21:42:08',  1),
+(308, 10, 'näsa', '', '2017-04-14 21:42:08',  1),
+(309, 10, 'miss', '', '2017-04-14 21:42:08',  1),
+(310, 10, 'madam',  '', '2017-04-14 21:42:08',  1),
+(311, 10, 'madam',  '', '2017-04-14 21:42:08',  1),
+(312, 10, 'miss', '', '2017-04-14 21:42:08',  1),
+(313, 10, 'madam',  '', '2017-04-14 21:42:08',  1),
+(314, 10, 'miss', '', '2017-04-14 21:42:08',  1),
+(315, 8,  'chleb',  '', '2017-04-14 21:42:08',  1),
+(316, 10, 'kul',  '', '2017-04-14 21:42:08',  1),
+(317, 10, 'rolig',  '', '2017-04-14 21:42:08',  1),
+(318, 10, 'fin',  '', '2017-04-14 21:42:08',  1),
+(319, 10, 'trevlig',  '', '2017-04-14 21:42:08',  1),
+(320, 10, 'snygg',  '', '2017-04-14 21:42:08',  1),
+(321, 10, 'vara', '', '2017-04-14 21:42:08',  1),
+(323, 1,  'miss', '', '2017-04-14 21:42:08',  1),
+(325, 1,  'be', '', '2017-04-14 21:42:08',  1),
+(326, 1,  'laundry',  '', '2017-04-14 21:42:08',  1),
+(327, 1,  'wax',  '', '2017-04-14 21:42:08',  1),
+(328, 1,  'ugly', '', '2017-04-14 21:42:08',  1),
+(329, 1,  'young',  '', '2017-04-14 21:42:08',  1),
+(330, 1,  'young',  '', '2017-04-14 21:42:08',  1),
+(331, 1,  'young',  '', '2017-04-14 21:42:08',  1),
+(332, 1,  'you',  '', '2017-04-14 21:42:08',  1),
+(333, 1,  'you guys', '', '2017-04-14 21:42:08',  1),
+(334, 1,  '', '', '2017-04-14 21:42:08',  1),
+(335, 1,  'they', '', '2017-04-14 21:42:08',  1),
+(336, 1,  'wish', '', '2017-04-14 21:42:08',  1),
+(337, 8,  'dom',  '', '2017-04-14 21:42:08',  1),
+(338, 1,  'house',  '', '2017-04-14 21:42:08',  1),
+(339, 1,  'without',  '', '2017-04-14 21:42:08',  1),
+(340, 10, 'testa',  '', '2017-04-14 21:42:08',  1),
+(341, 10, 'försöka',  '', '2017-04-14 21:42:08',  1),
+(342, 10, '', '', '2017-04-14 21:42:08',  1),
+(343, 0,  'jeden',  '', '2017-04-22 08:00:45',  1),
+(344, 8,  'blablabla',  '', '2017-04-14 21:42:08',  1),
+(345, 8,  'blablabla',  '', '2017-04-14 21:42:08',  1),
+(346, 8,  'man',  '', '2017-04-14 21:42:08',  1),
+(347, 8,  '', '', '2017-04-14 21:42:08',  1),
+(348, 8,  '', '', '2017-04-14 21:42:08',  1),
+(349, 8,  '', '', '2017-04-14 21:42:08',  1),
+(350, 8,  '', '', '2017-04-14 21:42:08',  1),
+(351, 8,  '', '', '2017-04-14 21:42:08',  1),
+(352, 8,  '', '', '2017-04-14 21:42:08',  1),
+(353, 8,  '', '', '2017-04-14 21:42:08',  1),
+(354, 1,  'sheep',  '', '2017-04-14 21:42:08',  1),
+(355, 1,  'test', '', '2017-04-14 21:42:08',  1),
+(356, 0,  '', '', '2017-04-14 21:42:08',  1),
+(357, 1,  'girl', '', '2017-04-14 21:42:08',  1),
+(358, 8,  'balblab',  '', '2017-04-14 21:42:08',  1),
+(359, 8,  '', '', '2017-04-14 21:42:08',  1),
+(360, 8,  '', '', '2017-04-14 21:42:08',  1),
+(361, 8,  '', '', '2017-04-14 21:42:08',  1),
+(362, 8,  '', '', '2017-04-14 21:42:08',  1),
+(363, 8,  '', '', '2017-04-14 21:42:08',  1),
+(364, 8,  '', '', '2017-04-14 21:42:08',  1),
+(365, 8,  '', '', '2017-04-14 21:42:08',  1),
+(366, 8,  '', '', '2017-04-14 21:42:08',  1),
+(367, 8,  '', '', '2017-04-14 21:42:08',  1),
+(368, 8,  '', '', '2017-04-14 21:42:08',  1);
 
 INSERT INTO `translation_alternatives` (`id`, `translation_id`, `alternative`) VALUES
 (1, 1,  'men'),
@@ -1640,21 +1094,6 @@ INSERT INTO `translation_alternatives` (`id`, `translation_id`, `alternative`) V
 (8, 325,  'was'),
 (9, 325,  'am'),
 (10,  1,  'male');
-
-DROP TABLE IF EXISTS `translation_exceptions`;
-CREATE TABLE `translation_exceptions` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `word_id` int(11) NOT NULL,
-  `language_id` int(11) NOT NULL,
-  `user_id` int(11) NOT NULL,
-  PRIMARY KEY (`id`),
-  KEY `word_id` (`word_id`),
-  KEY `language_id` (`language_id`),
-  KEY `user_id` (`user_id`),
-  CONSTRAINT `translation_exceptions_ibfk_1` FOREIGN KEY (`word_id`) REFERENCES `words` (`id`),
-  CONSTRAINT `translation_exceptions_ibfk_2` FOREIGN KEY (`language_id`) REFERENCES `languages` (`id`),
-  CONSTRAINT `translation_exceptions_ibfk_3` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 INSERT INTO `translation_exceptions` (`id`, `word_id`, `language_id`, `user_id`) VALUES
 (2, 2,  8,  1),
@@ -1679,21 +1118,7 @@ INSERT INTO `translation_exceptions` (`id`, `word_id`, `language_id`, `user_id`)
 (21,  60, 8,  1),
 (22,  56, 8,  1),
 (23,  61, 8,  1),
-(24,  62, 8,  1),
-(25,  88, 1,  1);
-
-DROP TABLE IF EXISTS `translation_words`;
-CREATE TABLE `translation_words` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `word_id` int(11) NOT NULL,
-  `translation_id` int(11) NOT NULL,
-  `specification` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  PRIMARY KEY (`id`),
-  KEY `translation_id` (`translation_id`),
-  KEY `word_id` (`word_id`),
-  CONSTRAINT `translation_words_ibfk_1` FOREIGN KEY (`translation_id`) REFERENCES `translations` (`id`),
-  CONSTRAINT `translation_words_ibfk_2` FOREIGN KEY (`word_id`) REFERENCES `words` (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+(24,  62, 8,  1);
 
 INSERT INTO `translation_words` (`id`, `word_id`, `translation_id`, `specification`) VALUES
 (1, 1,  1,  ''),
@@ -1777,7 +1202,7 @@ INSERT INTO `translation_words` (`id`, `word_id`, `translation_id`, `specificati
 (215, 2,  202,  ''),
 (216, 8,  203,  ''),
 (217, 8,  204,  ''),
-(218, 10, 205,  ''),
+(218, 10, 2,  ''),
 (219, 16, 206,  ''),
 (220, 20, 207,  ''),
 (221, 20, 208,  'animal kingdom'),
@@ -1887,8 +1312,6 @@ INSERT INTO `translation_words` (`id`, `word_id`, `translation_id`, `specificati
 (348, 86, 337,  ''),
 (349, 86, 338,  ''),
 (350, 87, 339,  ''),
-(351, 88, 340,  ''),
-(352, 88, 341,  ''),
 (353, 2,  343,  ''),
 (354, 14, 344,  ''),
 (355, 14, 345,  'test'),
@@ -1900,103 +1323,43 @@ INSERT INTO `translation_words` (`id`, `word_id`, `translation_id`, `specificati
 (361, 41, 351,  ''),
 (362, 15, 352,  ''),
 (363, 15, 353,  ''),
-(364, 89, 354,  ''),
-(365, 88, 355,  '');
+(364, 88, 357,  ''),
+(365, 64, 358,  ''),
+(366, 66, 359,  ''),
+(367, 66, 360,  ''),
+(368, 67, 361,  ''),
+(369, 67, 362,  ''),
+(370, 69, 363,  ''),
+(371, 69, 364,  ''),
+(372, 71, 365,  ''),
+(373, 71, 366,  ''),
+(374, 17, 367,  ''),
+(375, 72, 368,  '');
 
-DROP TABLE IF EXISTS `types`;
-CREATE TABLE `types` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `name` varchar(255) NOT NULL,
-  `short_name` varchar(255) NOT NULL,
-  `native_hidden_entry` int(11) NOT NULL,
-  `native_hidden_entry_short` int(11) NOT NULL,
-  `inflect_classifications` int(11) NOT NULL,
-  `inflect_not` int(11) NOT NULL DEFAULT '0',
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
-
-INSERT INTO `types` (`id`, `name`, `short_name`, `native_hidden_entry`, `native_hidden_entry_short`, `inflect_classifications`, `inflect_not`) VALUES
-(1, 'noun', 'n.', 0,  0,  0,  0),
-(2, 'verb', 'v',  0,  0,  0,  0),
-(3, 'name', 'nm.',  0,  0,  0,  0),
-(4, 'pronoun',  'pn.',  0,  0,  0,  0),
-(5, 'adjective',  'adj.', 0,  0,  1,  0),
-(6, 'adverb', 'adv',  0,  0,  0,  1),
-(7, 'conjunction',  'conj.',  0,  0,  0,  1),
-(8, 'preposition',  'pp', 0,  0,  0,  1),
-(9, 'postposition', 'posp', 0,  0,  0,  1),
-(10,  'article',  'art.', 0,  0,  0,  0),
-(11,  'determiner', 'det.', 0,  0,  0,  0),
-(12,  'prefix', 'pre.', 0,  0,  0,  1),
-(13,  'suffix', 'suf.', 0,  0,  0,  1),
-(14,  'phrase', 'phr.', 0,  0,  0,  1);
-
-DROP TABLE IF EXISTS `usage_notes`;
-CREATE TABLE `usage_notes` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `word_id` int(11) NOT NULL,
-  `last_update` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
-  `created_on` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00',
-  `user_id` int(11) NOT NULL,
-  `note` text COLLATE utf8mb4_unicode_ci NOT NULL,
-  PRIMARY KEY (`id`),
-  KEY `word_id` (`word_id`),
-  KEY `user_id` (`user_id`),
-  CONSTRAINT `usage_notes_ibfk_1` FOREIGN KEY (`word_id`) REFERENCES `words` (`id`),
-  CONSTRAINT `usage_notes_ibfk_2` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+INSERT INTO `types` (`id`, `name`, `short_name`, `inflect_classifications`, `inflect_not`) VALUES
+(1, 'noun', 'n.', 0,  0),
+(2, 'verb', 'v',  0,  0),
+(3, 'name', 'nm.',  0,  1),
+(4, 'pronoun',  'pn.',  0,  0),
+(5, 'adjective',  'adj.', 1,  0),
+(7, 'conjunction',  'conj.',  0,  1),
+(8, 'preposition',  'pp.',  0,  1),
+(10,  'article',  'art.', 0,  0),
+(11,  'determiner', 'det.', 0,  0),
+(12,  'prefix', 'pre.', 0,  1),
+(13,  'suffix', 'suf.', 0,  1),
+(16,  'Adverb', 'adv.', 1,  1);
 
 INSERT INTO `usage_notes` (`id`, `word_id`, `last_update`, `created_on`, `user_id`, `note`) VALUES
-(1, 1,  '2017-02-15 23:41:20',  '2017-02-15 23:38:50',  1,  '* The normal plural is *mannen*. The unchanged form man is used after numerals only; it refers to the size of a group rather than a number of individuals. For example: In totaal verloren er 5000 man hun leven in die slag. (“5000 men altogether lost their lives in that battle.”)\r\n\r\n* Compound words with -man as their last component often take -lieden or -lui in the plural, rather than -mannen. For example: brandweerman ‎(“firefighter”) → brandweerlieden (alongside brandweerlui and brandweermannen).\r\n');
-
-DROP TABLE IF EXISTS `users`;
-CREATE TABLE `users` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `longname` varchar(255) NOT NULL,
-  `username` varchar(255) NOT NULL,
-  `password` varchar(255) NOT NULL,
-  `editor_lang` int(11) NOT NULL,
-  `reg_date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
-  `role` int(11) NOT NULL,
-  PRIMARY KEY (`id`),
-  KEY `editor_lang` (`editor_lang`),
-  CONSTRAINT `users_ibfk_1` FOREIGN KEY (`editor_lang`) REFERENCES `languages` (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+(8, 1,  '2017-03-19 15:20:48',  '2017-03-19 15:20:48',  3,  '* The normal plural is *mannen*. The unchanged form man is used after numerals only; it refers to the size of a group rather than a number of individuals. For example: In totaal verloren er 5000 man hun leven in die slag. (“5000 men altogether lost their lives in that battle.”)\\n\\n* Compound words with -man as their last component often take -lieden or -lui in the plural, rather than -mannen. For example: brandweerman ‎(“firefighter”) → brandweerlieden (alongside brandweerlui and brandweermannen).\\n'),
+(12,  87, '2017-03-20 17:36:28',  '2017-03-20 17:36:28',  3,  '');
 
 INSERT INTO `users` (`id`, `longname`, `username`, `password`, `editor_lang`, `reg_date`, `role`) VALUES
-(1, 'Thomas de Roo',  'Thomas', 'd88aad0fd193b6ac9c03db2edddf9d1402956df84e709932dd2c4b70e5dc7f1b', 8,  '2017-02-25 18:00:30',  0),
+(0, 'Guest',  'guest',  '', 0,  '2017-03-30 22:54:37',  4),
+(1, 'Thomas de Roo',  'blekerfeld', '70674e943bcd2ce395ff619cff93c980f1cec914445cd69a30d612c7988e9966', 8,  '2017-04-09 10:55:33',  0),
 (2, '', 'Charlie',  'd88aad0fd193b6ac9c03db2edddf9d1402956df84e709932dd2c4b70e5dc7f1b', 1,  '2017-02-12 17:41:56',  0),
-(3, 'Mr. Donut',  'donut',  'e69fd784f93f82eb6bf5148f0a0e3f5282df5ac10427ab3d6704799adca95a07', 1,  '2017-02-25 17:12:45',  0);
-
-DROP TABLE IF EXISTS `votes`;
-CREATE TABLE `votes` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `user_id` int(11) NOT NULL,
-  `table_name` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `table_id` int(11) NOT NULL,
-  `value` tinyint(4) NOT NULL COMMENT '-1, 0, 1',
-  PRIMARY KEY (`id`),
-  KEY `user_id` (`user_id`),
-  CONSTRAINT `votes_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
-
-INSERT INTO `votes` (`id`, `user_id`, `table_name`, `table_id`, `value`) VALUES
-(1, 1,  'discussions',  10, 1);
-
-DROP TABLE IF EXISTS `wiki`;
-CREATE TABLE `wiki` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `reference` int(11) NOT NULL,
-  `article_title` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `article_content` longtext COLLATE utf8mb4_unicode_ci NOT NULL,
-  `article_date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  `user_id` int(11) NOT NULL,
-  `specification` text COLLATE utf8mb4_unicode_ci NOT NULL,
-  `revert_to` int(11) NOT NULL,
-  PRIMARY KEY (`id`),
-  KEY `user_id` (`user_id`),
-  CONSTRAINT `wiki_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`) ON DELETE NO ACTION
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+(3, 'Mr. Donut',  'donut',  'e69fd784f93f82eb6bf5148f0a0e3f5282df5ac10427ab3d6704799adca95a07', 1,  '2017-03-30 22:46:27',  0),
+(4, 'John Sprinkle',  'sprinkle', 'e69fd784f93f82eb6bf5148f0a0e3f5282df5ac10427ab3d6704799adca95a07', 1,  '2017-04-03 19:27:40',  3);
 
 INSERT INTO `wiki` (`id`, `reference`, `article_title`, `article_content`, `article_date`, `user_id`, `specification`, `revert_to`) VALUES
 (1, 0,  'Article',  '# This is a testing article\r\n\r\n## Markdown is awesome\r\n\r\n- We \r\n- Can \r\n- Make\r\n- Lists\r\n\r\nAnd... **tables**:\r\n\r\n|tabeles    |do       |work   |\r\n|---   |---    |---  |\r\n|really    |       |     |\r\n|they    |do       |     |', '2017-02-25 16:44:13',  3,  '', 0),
@@ -2018,110 +1381,92 @@ INSERT INTO `wiki` (`id`, `reference`, `article_title`, `article_content`, `arti
 (24,  1,  '', '', '2017-02-25 23:42:47',  3,  '', 22),
 (25,  1,  '', '', '2017-02-25 23:42:57',  3,  '', 1),
 (26,  0,  'man',  'Enter your content here...', '2017-02-26 00:15:39',  3,  'Initial Creation', 0),
-(27,  0,  'Nominative', 'In Dutch the nominative case is very cool! \n\nThe *nominative case* (abbreviated **NOM**) is one of the grammatical cases of a noun or other part of speech, which generally marks the subject of a verb or the predicate noun or predicate adjective, as opposed to its object or other verb arguments. Generally, the noun \"that is doing something\" is in the nominative, and the nominative is the dictionary form of the noun.', '2017-02-26 00:17:18',  3,  'Initial Creation', 0);
+(27,  0,  'Nominative', 'In Dutch the nominative case is very cool! \n\nThe *nominative case* (abbreviated **NOM**) is one of the grammatical cases of a noun or other part of speech, which generally marks the subject of a verb or the predicate noun or predicate adjective, as opposed to its object or other verb arguments. Generally, the noun \"that is doing something\" is in the nominative, and the nominative is the dictionary form of the noun.', '2017-02-26 00:17:18',  3,  'Initial Creation', 0),
+(28,  1,  '', '', '2017-02-26 01:12:01',  3,  '', 6),
+(29,  0,  'Dative case',  'Enter your content here...', '2017-02-26 01:12:36',  3,  'Initial Creation', 0),
+(30,  26, 'man',  'A man is an human being and the Dutch word for man is {{man}}.', '2017-02-26 10:38:59',  3,  '', 0),
+(31,  0,  'Irregular Verbs',  '**Dutch** has quite a lot of *irregular verbs*! The most important of those are:\n\n* {{zijn}}\n* {{hebben}}\n* {{kunnen}}\n* {{doen}}\n* {{weten}}\n* {{eten}}',  '2017-02-26 10:46:12',  3,  'Initial Creation', 0),
+(32,  1,  'Kijk nieuwe veranderingen',  '[[Article]]\n\n[[Article|Link]]\n\n[[Ik besta niet]]\n\n\n[[ååää]]\n\nblabla', '2017-02-26 11:46:37',  3,  '', 0),
+(33,  1,  'Kijk nieuwe veranderingen',  '[[Article]]\n\n[[Article|Link]]\n\n[[Ik besta niet]]\n\n\n[[ååää]]\n\nblabla', '2017-02-26 11:49:32',  3,  '', 0),
+(34,  1,  '', '', '2017-02-26 12:14:04',  3,  '', 1),
+(35,  0,  'Testarticle',  'This is a test article', '2017-02-26 14:53:26',  3,  'Initial Creation', 0),
+(36,  1,  'Article',  '# This is a testing article\n\n## Markdown is awesome\n\n- We \n- Can \n- Make\n- Lists\n\nAnd... **tables**:\n\n|tabeles    |do       |work   |\n|---   |---    |---  |\n|really    |       |     |\n|they    |do       |     |', '2017-02-27 15:43:57',  3,  '', 0),
+(37,  31, 'Irregular Verbs',  '**Dutch** has quite a lot of *irregular verbs*! The most important of those are:\n\n* {{zijn}}\n* {{hebben}}\n* {{kunnen}}\n* {{doen}}\n* {{weten}}\n* {{eten}}',  '2017-02-28 17:34:24',  3,  '', 0),
+(38,  31, 'Irregular Verbs',  '**Dutch** has quite a lot of *irregular verbs*! The most important of those are:\n\n* {{zijn}}\n* {{hebben}}\n* {{kunnen}}\n* {{doen}}\n* {{weten}}\n* {{eten}}',  '2017-02-28 17:34:27',  3,  '', 0),
+(39,  31, 'Irregular Verbs',  '**Dutch** has quite a lot of *irregular verbs*! The most important of those are:\n\n{{zijn}}\n{{hebben}}\n{{kunnen}}\n{{doen}}\n{{weten}}\n{{eten}}',  '2017-02-28 17:34:56',  3,  '', 0),
+(40,  31, 'Irregular Verbs',  '**Dutch** has quite a lot of *irregular verbs*! The most important of those are:\n\n[[zijn]]\n[[leuk]]\n[[man]]',  '2017-02-28 17:37:27',  3,  '', 0),
+(41,  31, 'Irregular Verbs',  '**Dutch** has quite a lot of *irregular verbs*! The most important of those are:\n\n[zijn]\n[hebben]', '2017-02-28 17:38:09',  3,  '', 0),
+(42,  31, 'Irregular Verbs',  '**Dutch** has quite a lot of *irregular verbs*! The most important of those are:\n\n[zijn]\n[hebben]\n[[man]]',  '2017-02-28 17:39:19',  3,  '', 0),
+(43,  31, 'Irregular Verbs',  '**Dutch** has quite a lot of *irregular verbs*! The most important of those are:\n\n[zijn]\n[hebben]\n[[man]]',  '2017-02-28 17:39:25',  3,  '', 0),
+(44,  31, 'Irregular Verbs',  '**Dutch** has quite a lot of *irregular verbs*! The most important of those are:\n\n[zijn]\n[hebben] [[man]]', '2017-02-28 17:39:31',  3,  '', 0),
+(45,  27, 'Nominative', 'In Dutch the nominative case is very cool! \n\nThe *nominative case* (abbreviated **NOM**) is one of the grammatical cases of a noun or other part of speech, which generally marks the subject of a verb or the predicate noun or predicate adjective, as opposed to its object or other verb arguments. Generally, the noun \"that is doing something\" is in the nominative, and the nominative is the dictionary form of the noun.\n\n**Testing the editing!**', '2017-02-28 22:12:18',  3,  '', 0),
+(46,  1,  'Article',  '# This is a testing article\n\n## Markdown is awesome\n\n- We \n- Can \n- Make\n- Lists\n\nAnd... **tables**:\n\n|tabeles    |do       |work   |\n|---   |---    |---  |\n|really    |       |     |\n|they    |do       |     |', '2017-03-01 20:48:07',  3,  '', 0),
+(47,  1,  '', '', '2017-03-19 17:10:32',  3,  '', 36),
+(48,  1,  '', '', '2017-03-19 17:10:36',  3,  '', 36);
 
-DROP TABLE IF EXISTS `words`;
-CREATE TABLE `words` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `native` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
-  `ipa` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
-  `hidden` int(11) NOT NULL,
-  `type_id` int(11) NOT NULL,
-  `classification_id` int(11) NOT NULL,
-  `subclassification_id` int(11) NOT NULL,
-  `derivation_of` int(11) DEFAULT '0',
-  `derivation_type` int(11) DEFAULT '0',
-  `derivation_name` int(11) DEFAULT '0',
-  `derivation_clonetranslations` int(11) DEFAULT '0',
-  `derivation_show_in_title` int(11) DEFAULT '0',
-  `created` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
-  `updated` timestamp NULL DEFAULT NULL ON UPDATE CURRENT_TIMESTAMP,
-  `created_by` int(11) DEFAULT NULL,
-  `image` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL,
-  PRIMARY KEY (`id`),
-  KEY `type_id` (`type_id`),
-  KEY `classification_id` (`classification_id`),
-  KEY `created_by` (`created_by`),
-  CONSTRAINT `words_ibfk_1` FOREIGN KEY (`type_id`) REFERENCES `types` (`id`),
-  CONSTRAINT `words_ibfk_2` FOREIGN KEY (`classification_id`) REFERENCES `classifications` (`id`),
-  CONSTRAINT `words_ibfk_3` FOREIGN KEY (`created_by`) REFERENCES `users` (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
-
-INSERT INTO `words` (`id`, `native`, `ipa`, `hidden`, `type_id`, `classification_id`, `subclassification_id`, `derivation_of`, `derivation_type`, `derivation_name`, `derivation_clonetranslations`, `derivation_show_in_title`, `created`, `updated`, `created_by`, `image`) VALUES
-(1, 'man',  'mɑn',  0,  1,  1,  0,  0,  0,  0,  0,  0,  '2017-02-06 00:21:03',  '2017-02-13 11:40:04',  1,  NULL),
-(2, 'een',  '', 0,  10, 1,  0,  0,  0,  0,  0,  0,  '2017-02-06 00:21:03',  '2017-02-12 17:39:50',  1,  NULL),
-(5, 'hebben', '', 0,  2,  6,  0,  0,  0,  0,  0,  0,  '2017-02-06 00:21:03',  '2017-02-12 17:39:50',  1,  NULL),
-(7, 'werken', 'wərkm',  0,  2,  5,  1,  0,  0,  0,  0,  0,  '2017-02-06 00:21:03',  '2017-02-18 14:17:52',  1,  NULL),
-(8, 'juichen',  '', 0,  2,  5,  0,  0,  0,  0,  0,  0,  '2017-02-06 00:21:03',  '2017-02-12 17:39:50',  1,  NULL),
-(9, 'vrouw',  'vrɑu̯',  0,  1,  2,  0,  0,  0,  0,  0,  0,  '2017-02-06 00:21:03',  '2017-02-12 17:39:50',  1,  NULL),
-(10,  'echtgenoot', 'ɛxtxəˌnot',  0,  1,  1,  0,  0,  0,  0,  0,  0,  '2017-02-06 00:21:03',  '2017-02-12 17:39:50',  1,  NULL),
-(11,  'hij',  '', 0,  4,  10, 2,  0,  0,  0,  0,  0,  '2017-02-06 00:21:03',  '2017-02-12 17:39:50',  1,  NULL),
-(14,  'verliezen',  '', 0,  2,  6,  0,  0,  0,  0,  0,  0,  '2017-02-06 00:21:03',  '2017-02-12 17:39:50',  1,  NULL),
-(15,  'winnen', '', 0,  2,  5,  1,  0,  0,  0,  0,  0,  '2017-02-06 00:21:03',  '2017-02-12 17:39:50',  1,  NULL),
-(16,  'de', '', 0,  10, 1,  0,  0,  0,  0,  0,  0,  '2017-02-06 00:21:03',  '2017-02-12 17:39:50',  1,  NULL),
-(17,  'kat',  'kɑt',  0,  1,  2,  0,  0,  0,  0,  0,  0,  '2017-02-06 00:21:03',  '2017-02-12 17:39:50',  1,  'kat.png'),
-(18,  'poes', 'pus',  0,  1,  2,  0,  0,  0,  0,  0,  0,  '2017-02-06 00:21:03',  '2017-02-12 17:39:50',  1,  NULL),
-(19,  'katje',  'kɑtjə',  0,  1,  3,  0,  17, 0,  1,  1,  1,  '2017-02-06 00:21:03',  '2017-02-12 17:39:50',  1,  NULL),
-(20,  'mannetje', 'mɑn.ətjə', 0,  1,  3,  0,  1,  0,  1,  0,  1,  '2017-02-06 00:21:03',  '2017-02-15 23:57:43',  1,  NULL),
-(22,  'men',  'mɛn',  0,  4,  3,  0,  1,  4,  0,  0,  0,  '2017-02-06 00:21:03',  '2017-02-12 17:39:50',  1,  NULL),
-(23,  'kater',  'kaːtə̣r',  0,  1,  1,  0,  17, 1,  0,  0,  0,  '2017-02-06 00:21:03',  '2017-02-12 17:39:50',  1,  NULL),
-(24,  'katertje', 'kaːtərtjə',  0,  1,  3,  0,  23, 0,  1,  1,  1,  '2017-02-06 00:21:03',  '2017-02-12 17:39:50',  1,  NULL),
-(25,  'meneer', 'məˈ neːr', 0,  1,  1,  0,  0,  0,  0,  0,  0,  '2017-02-06 00:21:03',  '2017-02-12 17:39:50',  1,  NULL),
-(27,  'meneertje',  '', 0,  1,  3,  0,  25, 0,  1,  0,  1,  '2017-02-06 00:21:03',  '2017-02-12 17:39:50',  1,  NULL),
-(28,  'zij',  '', 0,  4,  11, 2,  0,  0,  0,  0,  0,  '2017-02-06 00:21:03',  '2017-02-12 17:39:50',  1,  NULL),
-(29,  'goed', 'xut',  0,  5,  13, 4,  0,  0,  0,  0,  0,  '2017-02-06 00:21:03',  '2017-02-12 17:39:50',  1,  NULL),
-(31,  'ik', 'ik', 0,  4,  8,  2,  0,  0,  0,  0,  0,  '2017-02-06 00:21:03',  '2017-02-12 17:39:50',  1,  NULL),
-(32,  'jij',  'jɛi̯/, (unstressed) /jə',  0,  4,  9,  2,  0,  0,  0,  0,  0,  '2017-02-06 00:21:03',  '2017-02-12 17:39:50',  1,  NULL),
-(33,  'je', '', 0,  4,  9,  2,  32, 4,  0,  0,  1,  '2017-02-06 00:21:03',  '2017-02-12 17:39:50',  1,  NULL),
-(34,  'wij',  'ʋɛi̯', 0,  4,  8,  3,  0,  0,  0,  0,  0,  '2017-02-06 00:21:03',  '2017-02-12 17:39:50',  1,  NULL),
-(35,  'we', 'ʋə', 0,  4,  8,  3,  34, 4,  0,  0,  1,  '2017-02-06 00:21:03',  '2017-02-12 17:39:50',  1,  NULL),
-(40,  'aardappel',  'ɑ:rdappəl',  0,  1,  1,  0,  0,  0,  0,  0,  0,  '2017-02-06 00:21:03',  '2017-02-12 17:39:50',  1,  NULL),
-(41,  'aarde',  'ɑ:rdə',  0,  1,  2,  0,  0,  0,  0,  0,  0,  '2017-02-06 00:21:03',  '2017-02-12 17:39:50',  1,  NULL),
-(42,  'alle', 'ɑl:ə', 0,  5,  13, 4,  0,  0,  0,  0,  0,  '2017-02-06 00:21:03',  '2017-02-12 17:39:50',  1,  NULL),
-(43,  'aaien',  '', 0,  2,  6,  0,  0,  0,  0,  0,  0,  '2017-02-06 00:21:03',  '2017-02-12 17:39:50',  1,  NULL),
-(44,  'allemaal', 'llem', 0,  4,  3,  0,  0,  0,  0,  0,  0,  '2017-02-06 00:21:03',  '2017-02-18 00:49:18',  1,  NULL),
-(51,  'feest',  '', 0,  1,  3,  0,  0,  0,  0,  0,  0,  '2017-02-06 00:21:03',  '2017-02-12 17:39:50',  1,  NULL),
-(56,  'boek', 'buk',  0,  1,  3,  0,  0,  0,  0,  0,  0,  '2017-02-06 00:21:03',  '2017-02-12 17:39:50',  1,  NULL),
-(57,  'steen',  'steː:n', 0,  1,  1,  0,  0,  0,  0,  0,  0,  '2017-02-06 00:21:03',  '2017-02-12 17:39:50',  1,  NULL),
-(58,  'wijze',  'wɛi̯zə', 0,  1,  2,  0,  0,  0,  0,  0,  0,  '2017-02-06 00:21:03',  '2017-02-12 17:39:50',  1,  NULL),
-(59,  'wijze',  'wɛi̯zə', 0,  1,  1,  0,  0,  0,  0,  0,  0,  '2017-02-06 00:21:03',  '2017-02-12 17:39:50',  1,  NULL),
-(60,  'neus', 'nøs',  0,  1,  1,  0,  0,  0,  0,  0,  0,  '2017-02-06 00:21:03',  '2017-02-12 17:39:50',  1,  NULL),
-(61,  'maan', 'ma:n', 0,  1,  2,  0,  0,  0,  0,  0,  0,  '2017-02-06 00:21:03',  '2017-02-12 17:39:50',  1,  NULL),
-(62,  'maand',  'ma:nt',  0,  1,  2,  0,  0,  0,  0,  0,  0,  '2017-02-06 00:21:03',  '2017-02-12 17:39:50',  1,  NULL),
-(64,  'citroen',  'siˈtrun',  0,  1,  2,  0,  0,  0,  0,  0,  0,  '2017-02-06 00:21:03',  '2017-02-12 17:39:50',  1,  'lemons.jpg'),
-(66,  'hagelen',  'ha:xell:en', 0,  2,  5,  1,  0,  0,  0,  0,  0,  '2017-02-06 00:21:03',  '2017-02-12 17:39:50',  1,  NULL),
-(67,  'picknick', '', 0,  1,  1,  0,  0,  0,  0,  0,  0,  '2017-02-06 00:21:03',  '2017-02-12 17:39:50',  1,  NULL),
-(68,  'hond', 'hond', 0,  1,  1,  0,  0,  0,  0,  0,  0,  '2017-02-06 00:21:03',  '2017-02-12 17:39:50',  1,  NULL),
-(69,  'leuk', 'løːk', 0,  5,  13, 4,  0,  0,  0,  0,  0,  '2017-02-06 00:21:03',  '2017-02-12 17:39:50',  1,  NULL),
-(71,  'boom', 'bo:m', 0,  1,  1,  0,  0,  0,  0,  0,  0,  '2017-02-06 00:21:03',  '2017-02-12 17:39:50',  1,  NULL),
-(72,  'mooi', 'moːi̯',  0,  5,  13, 0,  0,  0,  0,  0,  0,  '2017-02-06 00:21:03',  '2017-02-12 17:39:50',  1,  NULL),
-(73,  'slecht', 'slɛxt',  0,  5,  13, 4,  0,  0,  0,  0,  0,  '2017-02-06 00:21:03',  '2017-02-12 17:39:50',  1,  NULL),
-(74,  'brood',  'bro:d',  0,  1,  3,  0,  0,  0,  0,  0,  0,  '2017-02-06 00:21:03',  '2017-02-12 17:39:50',  1,  NULL),
-(75,  'ui', 'œy̯',  0,  1,  1,  0,  0,  0,  0,  0,  0,  '2017-02-06 00:21:03',  '2017-02-12 17:39:50',  1,  NULL),
-(78,  'mevrouw',  'mevrouw',  0,  1,  2,  0,  0,  0,  0,  0,  0,  '2017-02-06 00:21:03',  '2017-02-12 17:39:50',  1,  NULL),
-(79,  'zijn', 'zɛi̯n',  0,  2,  6,  0,  0,  0,  0,  0,  0,  '2017-02-06 00:21:03',  '2017-02-12 17:39:50',  1,  NULL),
-(80,  'was',  'ʋɑs',  0,  1,  1,  0,  0,  0,  0,  0,  0,  '2017-02-06 00:21:03',  '2017-02-12 17:39:50',  1,  NULL),
-(81,  'was',  'ʋɑs',  0,  1,  1,  0,  0,  0,  0,  0,  0,  '2017-02-06 00:21:03',  '2017-02-12 17:39:50',  1,  NULL),
-(82,  'jong', 'jɔŋ',  0,  5,  1,  4,  0,  0,  0,  0,  0,  '2017-02-06 00:21:03',  '2017-02-12 17:39:50',  1,  NULL),
-(83,  'jullie', '', 0,  4,  9,  0,  0,  0,  0,  0,  0,  '2017-02-06 00:21:03',  '2017-02-12 17:39:50',  1,  NULL),
-(84,  'zij',  '', 0,  4,  12, 0,  0,  0,  0,  0,  0,  '2017-02-06 00:21:03',  '2017-02-12 17:39:50',  1,  NULL),
-(85,  'wensen', '', 0,  2,  5,  0,  0,  0,  0,  0,  0,  '2017-02-06 00:21:03',  '2017-02-12 17:39:50',  1,  NULL),
-(86,  'huis', 'ɦœʏ̯s',  0,  1,  3,  0,  0,  0,  0,  0,  0,  '2017-02-12 17:53:05',  '2017-02-12 17:53:39',  NULL, NULL),
-(87,  'zonder', 'zonder', 0,  8,  1,  0,  0,  0,  0,  0,  0,  '2017-02-12 23:54:33',  '2017-02-13 11:49:11',  NULL, NULL),
-(88,  'testen', 'tɛst.m', 0,  2,  5,  1,  0,  0,  0,  0,  0,  '2017-02-18 14:19:50',  NULL, NULL, NULL),
-(89,  'schaap', 'sxa:p',  0,  1,  3,  0,  0,  0,  0,  0,  0,  '2017-02-20 16:23:05',  '2017-02-20 16:23:37',  NULL, NULL);
-
-DROP TABLE IF EXISTS `words_wiki`;
-CREATE TABLE `words_wiki` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `word_id` int(11) NOT NULL,
-  `wiki_id` int(11) NOT NULL,
-  PRIMARY KEY (`id`),
-  KEY `word_id` (`word_id`),
-  KEY `wiki_id` (`wiki_id`),
-  CONSTRAINT `words_wiki_ibfk_1` FOREIGN KEY (`word_id`) REFERENCES `words` (`id`),
-  CONSTRAINT `words_wiki_ibfk_2` FOREIGN KEY (`wiki_id`) REFERENCES `wiki` (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+INSERT INTO `words` (`id`, `native`, `lexical_form`, `ipa`, `hidden`, `type_id`, `classification_id`, `subclassification_id`, `derivation_of`, `derivation_type`, `derivation_name`, `derivation_clonetranslations`, `derivation_show_in_title`, `created`, `updated`, `created_by`, `image`) VALUES
+(1, 'man',  '', 'mɑn',  0,  1,  1,  0,  0,  0,  0,  0,  0,  '2017-02-06 00:21:03',  '2017-04-04 14:28:19',  1,  NULL),
+(2, 'een',  '', '', 0,  10, 1,  0,  0,  0,  0,  0,  0,  '2017-02-06 00:21:03',  '2017-02-12 17:39:50',  1,  NULL),
+(5, 'hebben', '', '', 0,  2,  6,  0,  0,  0,  0,  0,  0,  '2017-02-06 00:21:03',  '2017-02-12 17:39:50',  1,  NULL),
+(7, 'werken', '', 'wərkm',  0,  2,  5,  1,  0,  0,  0,  0,  0,  '2017-02-06 00:21:03',  '2017-02-18 14:17:52',  1,  NULL),
+(8, 'juichen',  '', '', 0,  2,  5,  0,  0,  0,  0,  0,  0,  '2017-02-06 00:21:03',  '2017-02-12 17:39:50',  1,  NULL),
+(9, 'vrouw',  '', 'vrɑu̯',  0,  1,  2,  0,  0,  0,  0,  0,  0,  '2017-02-06 00:21:03',  '2017-02-12 17:39:50',  1,  NULL),
+(10,  'echtgenoot', '', 'ɛxtxəˌnot',  0,  1,  1,  0,  0,  0,  0,  0,  0,  '2017-02-06 00:21:03',  '2017-02-12 17:39:50',  1,  NULL),
+(11,  'hij',  '', '', 0,  4,  10, 2,  0,  0,  0,  0,  0,  '2017-02-06 00:21:03',  '2017-02-12 17:39:50',  1,  NULL),
+(14,  'verliezen',  '', '', 0,  2,  6,  0,  0,  0,  0,  0,  0,  '2017-02-06 00:21:03',  '2017-02-12 17:39:50',  1,  NULL),
+(15,  'winnen', '', '', 0,  2,  5,  1,  0,  0,  0,  0,  0,  '2017-02-06 00:21:03',  '2017-02-12 17:39:50',  1,  NULL),
+(16,  'de', '', '', 0,  10, 1,  0,  0,  0,  0,  0,  0,  '2017-02-06 00:21:03',  '2017-02-12 17:39:50',  1,  NULL),
+(17,  'kat',  '', 'kɑt',  0,  1,  2,  0,  0,  0,  0,  0,  0,  '2017-02-06 00:21:03',  '2017-02-12 17:39:50',  1,  'kat.png'),
+(18,  'poes', '', 'pus',  0,  1,  2,  0,  0,  0,  0,  0,  0,  '2017-02-06 00:21:03',  '2017-02-12 17:39:50',  1,  NULL),
+(19,  'katje',  '', 'kɑtjə',  0,  1,  3,  0,  17, 0,  1,  1,  1,  '2017-02-06 00:21:03',  '2017-02-12 17:39:50',  1,  NULL),
+(20,  'mannetje', '', 'mɑn.ətjə', 0,  1,  3,  0,  1,  0,  1,  0,  1,  '2017-02-06 00:21:03',  '2017-02-15 23:57:43',  1,  NULL),
+(22,  'men',  '', 'mɛn',  0,  4,  3,  0,  1,  4,  0,  0,  0,  '2017-02-06 00:21:03',  '2017-02-12 17:39:50',  1,  NULL),
+(23,  'kater',  '', 'kaːtə̣r',  0,  1,  1,  0,  17, 1,  0,  0,  0,  '2017-02-06 00:21:03',  '2017-02-12 17:39:50',  1,  NULL),
+(24,  'katertje', '', 'kaːtərtjə',  0,  1,  3,  0,  23, 0,  1,  1,  1,  '2017-02-06 00:21:03',  '2017-02-12 17:39:50',  1,  NULL),
+(25,  'meneer', '', 'məˈ neːr', 0,  1,  1,  0,  0,  0,  0,  0,  0,  '2017-02-06 00:21:03',  '2017-02-12 17:39:50',  1,  NULL),
+(27,  'meneertje',  '', '', 0,  1,  3,  0,  25, 0,  1,  0,  1,  '2017-02-06 00:21:03',  '2017-02-12 17:39:50',  1,  NULL),
+(28,  'zij',  '', '', 0,  4,  11, 2,  0,  0,  0,  0,  0,  '2017-02-06 00:21:03',  '2017-02-12 17:39:50',  1,  NULL),
+(29,  'goed', '', 'xut',  0,  5,  13, 4,  0,  0,  0,  0,  0,  '2017-02-06 00:21:03',  '2017-02-12 17:39:50',  1,  NULL),
+(31,  'ik', '', 'ik', 0,  4,  8,  2,  0,  0,  0,  0,  0,  '2017-02-06 00:21:03',  '2017-02-12 17:39:50',  1,  NULL),
+(32,  'jij',  '', 'jɛi̯/, (unstressed) /jə',  0,  4,  9,  2,  0,  0,  0,  0,  0,  '2017-02-06 00:21:03',  '2017-02-12 17:39:50',  1,  NULL),
+(33,  'je', '', '', 0,  4,  9,  2,  32, 4,  0,  0,  1,  '2017-02-06 00:21:03',  '2017-02-12 17:39:50',  1,  NULL),
+(34,  'wij',  '', 'ʋɛi̯', 0,  4,  8,  3,  0,  0,  0,  0,  0,  '2017-02-06 00:21:03',  '2017-02-12 17:39:50',  1,  NULL),
+(35,  'we', '', 'ʋə', 0,  4,  8,  3,  34, 4,  0,  0,  1,  '2017-02-06 00:21:03',  '2017-02-12 17:39:50',  1,  NULL),
+(40,  'aardappel',  '', 'ɑ:rdappəl',  0,  1,  1,  0,  0,  0,  0,  0,  0,  '2017-02-06 00:21:03',  '2017-02-12 17:39:50',  1,  NULL),
+(41,  'aarde',  '', 'ɑ:rdə',  0,  1,  2,  0,  0,  0,  0,  0,  0,  '2017-02-06 00:21:03',  '2017-02-12 17:39:50',  1,  NULL),
+(42,  'alle', '', 'ɑl:ə', 0,  5,  13, 4,  0,  0,  0,  0,  0,  '2017-02-06 00:21:03',  '2017-02-12 17:39:50',  1,  NULL),
+(43,  'aaien',  '', '', 0,  2,  6,  0,  0,  0,  0,  0,  0,  '2017-02-06 00:21:03',  '2017-02-12 17:39:50',  1,  NULL),
+(44,  'allemaal', '', 'llem', 0,  4,  3,  0,  0,  0,  0,  0,  0,  '2017-02-06 00:21:03',  '2017-02-18 00:49:18',  1,  NULL),
+(51,  'feest',  '', '', 0,  1,  3,  0,  0,  0,  0,  0,  0,  '2017-02-06 00:21:03',  '2017-02-12 17:39:50',  1,  NULL),
+(56,  'boek', '', 'buk',  0,  1,  3,  0,  0,  0,  0,  0,  0,  '2017-02-06 00:21:03',  '2017-02-12 17:39:50',  1,  NULL),
+(57,  'steen',  '', 'steː:n', 0,  1,  1,  0,  0,  0,  0,  0,  0,  '2017-02-06 00:21:03',  '2017-02-12 17:39:50',  1,  NULL),
+(58,  'wijze',  '', 'wɛi̯zə', 0,  1,  2,  0,  0,  0,  0,  0,  0,  '2017-02-06 00:21:03',  '2017-02-12 17:39:50',  1,  NULL),
+(59,  'wijze',  '', 'wɛi̯zə', 0,  1,  1,  0,  0,  0,  0,  0,  0,  '2017-02-06 00:21:03',  '2017-02-12 17:39:50',  1,  NULL),
+(60,  'neus', '', 'nøs',  0,  1,  1,  0,  0,  0,  0,  0,  0,  '2017-02-06 00:21:03',  '2017-02-12 17:39:50',  1,  NULL),
+(61,  'maan', '', 'ma:n', 0,  1,  2,  0,  0,  0,  0,  0,  0,  '2017-02-06 00:21:03',  '2017-02-12 17:39:50',  1,  NULL),
+(62,  'maand',  '', 'ma:nt',  0,  1,  2,  0,  0,  0,  0,  0,  0,  '2017-02-06 00:21:03',  '2017-02-12 17:39:50',  1,  NULL),
+(64,  'citroen',  '', 'siˈtrun',  0,  1,  2,  0,  0,  0,  0,  0,  0,  '2017-02-06 00:21:03',  '2017-02-12 17:39:50',  1,  'lemons.jpg'),
+(66,  'hagelen',  '', 'ha:xell:en', 0,  2,  5,  1,  0,  0,  0,  0,  0,  '2017-02-06 00:21:03',  '2017-02-12 17:39:50',  1,  NULL),
+(67,  'picknick', '', '', 0,  1,  1,  0,  0,  0,  0,  0,  0,  '2017-02-06 00:21:03',  '2017-02-12 17:39:50',  1,  NULL),
+(68,  'hond', '', 'hond', 0,  1,  1,  0,  0,  0,  0,  0,  0,  '2017-02-06 00:21:03',  '2017-02-12 17:39:50',  1,  NULL),
+(69,  'leuk', '', 'løːk', 0,  5,  13, 4,  0,  0,  0,  0,  0,  '2017-02-06 00:21:03',  '2017-02-12 17:39:50',  1,  NULL),
+(71,  'boom', '', 'bo:m', 0,  1,  1,  0,  0,  0,  0,  0,  0,  '2017-02-06 00:21:03',  '2017-02-12 17:39:50',  1,  NULL),
+(72,  'mooi', '', 'moːi̯',  0,  5,  13, 0,  0,  0,  0,  0,  0,  '2017-02-06 00:21:03',  '2017-02-12 17:39:50',  1,  NULL),
+(73,  'slecht', '', 'slɛxt',  0,  5,  13, 4,  0,  0,  0,  0,  0,  '2017-02-06 00:21:03',  '2017-02-12 17:39:50',  1,  NULL),
+(74,  'brood',  '', 'bro:d',  0,  1,  3,  0,  0,  0,  0,  0,  0,  '2017-02-06 00:21:03',  '2017-02-12 17:39:50',  1,  NULL),
+(75,  'ui', '', 'œy̯',  0,  1,  1,  0,  0,  0,  0,  0,  0,  '2017-02-06 00:21:03',  '2017-02-12 17:39:50',  1,  NULL),
+(78,  'mevrouw',  '', 'mevrouw',  0,  1,  2,  0,  0,  0,  0,  0,  0,  '2017-02-06 00:21:03',  '2017-02-12 17:39:50',  1,  NULL),
+(79,  'zijn', '', 'zɛi̯n',  0,  2,  6,  0,  0,  0,  0,  0,  0,  '2017-02-06 00:21:03',  '2017-02-12 17:39:50',  1,  NULL),
+(80,  'was',  '', 'ʋɑs',  0,  1,  1,  0,  0,  0,  0,  0,  0,  '2017-02-06 00:21:03',  '2017-02-12 17:39:50',  1,  NULL),
+(81,  'was',  '', 'ʋɑs',  0,  1,  1,  0,  0,  0,  0,  0,  0,  '2017-02-06 00:21:03',  '2017-02-12 17:39:50',  1,  NULL),
+(82,  'jong', '', 'jɔŋ',  0,  5,  1,  4,  0,  0,  0,  0,  0,  '2017-02-06 00:21:03',  '2017-02-12 17:39:50',  1,  NULL),
+(83,  'jullie', '', '', 0,  4,  9,  0,  0,  0,  0,  0,  0,  '2017-02-06 00:21:03',  '2017-02-12 17:39:50',  1,  NULL),
+(84,  'zij',  '', '', 0,  4,  12, 0,  0,  0,  0,  0,  0,  '2017-02-06 00:21:03',  '2017-02-12 17:39:50',  1,  NULL),
+(85,  'wensen', '', '', 0,  2,  5,  0,  0,  0,  0,  0,  0,  '2017-02-06 00:21:03',  '2017-02-12 17:39:50',  1,  NULL),
+(86,  'huis', '', 'ɦœʏ̯s',  0,  1,  3,  0,  0,  0,  0,  0,  0,  '2017-02-12 17:53:05',  '2017-02-12 17:53:39',  NULL, NULL),
+(87,  'zonder', '', 'zonder', 0,  8,  1,  0,  0,  0,  0,  0,  0,  '2017-02-12 23:54:33',  '2017-02-13 11:49:11',  NULL, NULL),
+(88,  'meisje', '', 'mɛɪ:sjɛ',  0,  1,  2,  0,  0,  0,  0,  0,  0,  '2017-03-31 20:12:43',  NULL, NULL, NULL),
+(89,  'lezen',  'l&Ezen', 'le:zen', 0,  2,  1,  0,  0,  0,  0,  0,  0,  '2017-04-28 11:26:48',  NULL, NULL, NULL);
 
 
--- 2017-02-26 01:09:16
+-- 2017-04-29 07:28:33

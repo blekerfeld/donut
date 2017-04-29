@@ -19,14 +19,16 @@ class pTranslationTemplate extends pEntryTemplate{
 
 		$back = '';
 		if($backhref != null)
-			$back = "<a class='tooltip' href='".$backhref."'>".(new pIcon('fa-arrow-left', 12))."</a>";	
+			$back = "<a class='back-mini' href='".$backhref."'>".(new pIcon('fa-arrow-left', 12))."</a>";	
 
-		$titleSection = new pEntrySection($back." <strong class='pWord'><span class='native'><a>".$this->_data['translation']."</span></strong>", '', null, false, true);
+		$realTitle = pMarkdown("# ".$back." <strong class='pWord'><span class='native'><a>".$this->_data['translation']."</span></strong>", true);
+
+		$titleSection = new pEntrySection("", '', null, false, true);
 
 		$titleSection->addInformationElement($flag." ".(new pLanguage($this->_data['language_id']))->parse());
 		$titleSection->addInformationElement(DA_TRANSLATION);
 
-		return "<br />".$titleSection."<br />";
+		return $realTitle.$titleSection."<br />";
 
 	}
 
