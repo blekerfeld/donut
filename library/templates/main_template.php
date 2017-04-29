@@ -3,7 +3,6 @@
   <head>
     <link href="<?php echo pUrl('library/assets/css/main.css'); ?>" rel="stylesheet">
     <link href="<?php echo pUrl('library/assets/css/markdown.css'); ?>" rel="stylesheet">
-    <?php echo (pCheckMobile() ? '<link href="library/assets/css/mobile.css" rel="stylesheet">' : '' ); ?>
     <link rel="shortcut icon" href="<?php echo pUrl('library/images/static/favicon.png'); ?>">
     <link rel="stylesheet" href="<?php echo pUrl('library/assets/css/vendors/font-awesome.css'); ?>">
     <link rel="stylesheet" href="<?php echo pUrl('library/assets/css/vendors/materialdesignicons.css'); ?>">
@@ -13,6 +12,13 @@
     <link rel="stylesheet" href="<?php echo pUrl('library/assets/css/vendors/jquery.select2.css'); ?>">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/simplemde/latest/simplemde.min.css">
     <link href='http://fonts.googleapis.com/css?family=Slabo+27px' rel='stylesheet' type='text/css'>
+    <link rel="manifest" href="<?php echo pUrl('manifest.json.php'); ?>">
+
+   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+   <meta name="mobile-web-app-capable" content="yes">
+
+
     <script src="https://cdn.jsdelivr.net/simplemde/latest/simplemde.min.js"></script>
     <script src="<?php echo pUrl('library/assets/js/vendors/jquery.js'); ?>"></script>
     <script src="<?php echo pUrl('library/assets/js/vendors/jquery.pace.js'); ?>"></script>
@@ -32,11 +38,13 @@
     <div class="top_area">
       <div class="absolute_header">
         <div class="logotop">
-            <?php echo pAbsHeader(); ?>
-            <?php if(!pLogged()){ echo '<a href="'.pUrl('?login').'">'.MMENU_LOGIN.'</a>'; } ?>
+            <div class='user'>
+              <?php echo pAbsHeader(); ?>
+            </div>
+            <?php if(!pUser::noGuest()){ echo '<a href="'.pUrl('?auth/login').'">'.MMENU_LOGIN.'</a>'; } ?>
         </div>
         <a class="logotop" href="<?php echo pUrl("?home"); ?>">
-        <?php echo pMarkDownParse(CONFIG_LOGO_TITLE); ?></a> 
+        <?php echo pMarkDown(CONFIG_LOGO_TITLE, false); ?></a> 
       </div>
     </div>
     <div class="outerwrap">
@@ -65,11 +73,11 @@
     </div>
     <div class='absolute_footer'>
           <img src='<?php echo pUrl('library/images/static/logobw.png'); ?>' />
-        <span class='xxsmall'>donut public alpha, version ɑ.1 build
+        <span class='xxsmall mobilehide'>donut public alpha, version ɑ.1 build
          <?php 
           $head = file_get_contents(sprintf('.git/refs/heads/%s', 'master'));
           echo "<a href='https://github.com/blekerfeld/donut/commit/$head' class='tooltip'><i class='fa fa-github fa-10'></i>".substr($head, 0, 7)."</a>"; 
-        ?></span> <br/ >
+        ?><br/ ></span> 
         <span class='xxxsmall'>&copy; 2017 Thomas de Roo </span><br />
 
     </div>

@@ -80,7 +80,7 @@ class pTwolc{
 		// UTF-8 support enabled
 		$regex .= '/u';
 
-		var_dump($regex);
+		//pConsole(pVarDump($regex));
 
 		$this->_pending[] = array('pattern' => $regex, 'replace' => $this->parseReplace($rule['replace']));
 		
@@ -103,20 +103,19 @@ class pTwolc{
 
 		foreach($splitContext as $char){
 
-
 			if($char == '<:'){
 				$parsedContext[$count] = '\A'; 
 				continue;
 			}elseif($char == ':>'){
-				$parseContext[$count] = '\z'; 
+				$parsedContext[$count] = '\z'; 
 				continue;
 			}
 			elseif($char == '%'){
-				$parseContext[$count] = '$1';
+				$parsedContext[$count] = '$1';
 				continue;
 			}
 			elseif($char == ':'){
-				$parseContext[$count] = '[:]{1}';
+				$parsedContext[$count] = '[:]{1}';
 				continue;
 			}
 			// Variables
@@ -170,10 +169,11 @@ class pTwolc{
 
 class pTwolcString{
 
-	protected $_string;
+	protected $_string, $_orginalString;
 
 	public function __construct($string){
 		$this->_string = $string;
+		$this->_orginalString = $string;
 	}
 
 	public function __toString(){
@@ -186,7 +186,7 @@ class pTwolcString{
 
 	public function toSurface(){
 		//return $this->_string;
-		return strtolower(str_replace(array('0', '+', '{', '::', '&', '#'), '', $this->_string));
+		return strtolower(str_replace(array('0', '+', '{', '::', '&', '#'), '', $this->_string)).' - ('.$this->_string.') - ← '.$this->_orginalString;
 	}
 
 }

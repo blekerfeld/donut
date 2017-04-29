@@ -60,7 +60,9 @@ class pLemmaTemplate extends pEntryTemplate{
 
 		//"<a class='' href='javascript:void();'' onclick='window.history.back();'' >".(new pIcon('fa-arrow-left', 12))."</a><strong class='pWord'><span class='native'><a>"
 
-		$titleSection = new pEntrySection("<strong class='pWord'><span class='native'><a>".$this->_data['native']."</a></span></strong>", '', null, false, true);
+		$realTitle = pMarkdown("# <span class='native'><strong class='pWord'><a>".$this->_data['native']."</a></strong></span>", true);
+
+		$titleSection = new pEntrySection("", '', null, false, true);
 
 		// Adding information elements to the title
 		$titleSection->addInformationElement($type['name']);
@@ -68,9 +70,9 @@ class pLemmaTemplate extends pEntryTemplate{
 		if($subclass != null)
 			$titleSection->addInformationElement($subclass['name']);
 
-		return $titleSection."<br /><br />";
+		return $realTitle.$titleSection."<br />";
 
-	}
+	}	
 
 	public function usageNotes($data, $icon){
 		$parsed = '';

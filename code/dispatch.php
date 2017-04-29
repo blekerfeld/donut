@@ -10,6 +10,12 @@
 
 
 return array(
+	'home' => array(
+		'page_title' => CONFIG_SITE_TITLE,
+		'default_section' => 'home',
+		'arguments' => array(
+		),
+	),
 	'dictionary-admin' => array(
 		'page_title' => 'Admin panel',
 		'default_section' => 'lexcat',
@@ -43,5 +49,11 @@ return array(
 			0 => 'section',
 		),
 	),	
-
+	'auth' => array(
+		'page_title' => 'Login',
+		'default_section' => 'login',
+		'arguments' => array(
+			0 => 'section',
+		),
+	)
 );

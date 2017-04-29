@@ -30,7 +30,7 @@ class pUser{
 	}
 
 	public function __destruct(){
-		self::restore();
+		//self::restore();
 	}
 
 	private function load($data){
@@ -45,13 +45,25 @@ class pUser{
 	}
 
 	public static function logIn($id){
+		if(!is_numeric($id)){
+			self::$dataObject->setCondition(" WHERE username = '$id' ");
+			self::$dataObject->getObjects();
+			$id = self::$dataObject->data()->fetchAll()[0]['id'];
+			self::$dataObject->setCondition('');
+		}
 		$_SESSION['pUser'] = $id;
+		self::$dataObject->setCondition('');
 		self::$dataObject->getSingleObject($id);
+		self::load(self::$dataObject->data()->fetchAll()[0]);
+		$arr = array($id, self::read('password'), self::read('username'));
+		setcookie('pKeepLogged', serialize($arr), time()+5*52*7*24*3600);
 	}
 
 	public static function logOut(){
 		unset($_SESSION['pUser']);
-		return setcookie('pKeepLogged', '', time() - 3600);
+		unset($_SESSION['pUserData']);
+		setcookie('pKeepLogged', $_COOKIE['pKeepLogged'], time()-3600);
+		self::logIn(0);
 	}
 
 	// This will return false if we are logged in as a guest
@@ -61,16 +73,16 @@ class pUser{
 
 	public static function restore(){
 
-
 		// Creating a connection to the user table
 		if(self::$dataObject == null)
 			self::$dataObject = new pDataObject('users');
 
 
-		if(isset($_SESSION['pUser']) AND self::$id != $_SESSION['pUser']){
-			self::$dataObject->getSingleObject($_SESSION['pUser']);
-			return self::load(self::$dataObject->data()->fetchAll()[0]);
-		}
+		if(!isset($_COOKIE['pKeepLogged']))
+			if(isset($_SESSION['pUser']) AND self::$id != $_SESSION['pUser']){
+				self::$dataObject->getSingleObject($_SESSION['pUser']);
+				return self::load(self::$dataObject->data()->fetchAll()[0]);
+			}
 
 		if(isset($_COOKIE['pKeepLogged']))
 			{
@@ -78,7 +90,7 @@ class pUser{
 				{
 					$userInfo = unserialize($_COOKIE['pKeepLogged']);
 
-					// Creating the dataobject, for checking if the cookie-obtained info is still valid.
+						// Creating the dataobject, for checking if the cookie-obtained info is still valid.
 					
 					self::$dataObject->setCondition("WHERE username = '{$userInfo[2]}' and password = '{$userInfo[1]}' and id = {$userInfo[0]}");
 					self::$dataObject->getSingleObject($userInfo[0]);
@@ -103,7 +115,9 @@ class pUser{
 			}
 
 			// If nothing happend then we are a guest and we have to log in to the guest account
+			self::$dataObject->setCondition("");
 			self::$dataObject->getSingleObject(0);
+
 			return self::load(self::$dataObject->data()->fetchAll()[0]);
 
 	}
@@ -158,6 +172,13 @@ class pUser{
 
 	public function giveRole($minus){
 		return self::$dataObject->changeField(self::$id, (new pDataField('role')), 4 + $minus);
+	}
+
+	public function checkCre($username, $password){
+		self::$dataObject->setCondition(" WHERE username = '".$username."' AND password = '".pHash($password)."'");
+		if(self::$dataObject->getObjects()->rowCount() == 1)
+			return true;
+		return false;
 	}
 	
 

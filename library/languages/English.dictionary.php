@@ -20,6 +20,7 @@ define('DICT_KEYWORD', 'Keyword');
 define('DICT_EXACT_MATCH', 'exact match');
 define('DICT_MATCH', 'Your query yielded %s result.');
 define('DICT_NO_HITS', 'Your query yielded no results.');
+define('DICT_NO_QUERY', 'Please provide a search query.');
 define('DICT_MATCHES', 'Your query yielded %s results.');
 
 // Lemma information
@@ -30,6 +31,7 @@ define("TRANSLATION_LEMMAS", 'Linked entries in %s');
 define("TRANSLATION_DESC", 'Description');
 define("LEMMA_EXAMPLES", 'Examples and idiom');
 define("LEMMA_EXAMPLE", 'Example/idiom');
+define("LEMMA_EXAMPLE_IN", 'Example/idiom in %s');
 define("LEMMA_TRANSLATION_INTO", 'Translation into %s');
 define("LEMMA_TRANSLATION_ADDED", 'Translation added by %s on %s');
 define("LEMMA_TRANSLATIONS_INTO", 'Translations into %s');

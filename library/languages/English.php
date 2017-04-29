@@ -16,8 +16,8 @@ $donut['lang_sub_files'] = array('date', 'dictionary', 'admin');
 	
 
 // 404 text
-define('ERROR_404_TITLE', 'Oops. Page not found. ');
-define('ERROR_404_MESSAGE', 'The page or file you requested could not be found.');
+define('ERROR_404_TITLE', 'Page not found!');
+define('ERROR_404_MESSAGE', 'We are sorry, the page or file you requested could not be found.');
 
 // Some basic information about the language itself
 define('LANGUAGE_NAME', 'English (US)');
@@ -60,15 +60,14 @@ define('MMENU_LOGIN', "Editor log in");
 define('MMENU_LOGOUT', "Log out");
 
 // Login string
-define('LOGIN_TITLE', "Welcome, editor.");
+define('LOGIN_TITLE', "Editor login");
 define('LOGIN_TITLE_SHORT', "Log in");
 define('LOGIN_USERNAME', "Username");
 define('LOGIN_PASSWORD', "Password");
 define('LOGIN_PROCEED', "Proceed");
-define('LOGIN_FIELDS', "Please submit both an username and a password.");
-define('LOGIN_WRONG', "Password or username is wrong.");
+define('LOGIN_ERROR', "Username and/or password are not correct.");
 define('LOGIN_SUCCESS', "Succesfully logged in, you will be redirected...");
-define('LOGIN_CHECKING', "Checking...");
+define('LOGIN_CHECKING', "Trying to log in...");
 
 // Batch translating
 define('BTRANS_TITLE', "Batch translating into ");
