@@ -12,7 +12,7 @@ class pIcon extends pSnippit{
 
 	private $_icon, $_size, $_classes;
 
-	public function __construct($icon, $size, $classes = ''){
+	public function __construct($icon, $size = 'inherit', $classes = ''){
 		$this->_icon = $icon;
 		$this->_size = $size;
 		$this->_classes = $classes;

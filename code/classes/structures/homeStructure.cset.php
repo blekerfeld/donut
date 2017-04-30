@@ -29,8 +29,9 @@ class pHomeStructure extends pStructure{
 
 	public function render(){
 
-		// The home search box!
-		pOut(new pSearchBox(true));
+		// The home search box! Only if needed!
+		if(!(isset(pAdress::arg()['ajax']) and isset(pAdress::arg()['nosearch'])))
+			pOut(new pSearchBox(true));
 
 		pOut("<br/ ><div class='home-margin pEntry'>".pMarkdown(file_get_contents(pFromRoot("static/home.md")), true)."</div><br />");
 

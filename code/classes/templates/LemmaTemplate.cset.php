@@ -55,12 +55,18 @@ class pLemmaTemplate extends pEntryTemplate{
 		return new pEntrySection((new pIcon('fa-quote-right', 12))." ".LEMMA_EXAMPLES, $overAllContent."</ol>");
 	}
 
+	public function parseInflections($inflector){
+		return new pEntrySection((new pIcon('fa-quote-right', 12))." ".LEMMA_EXAMPLES, $inflector->render()."<br id='cl' />");
+	}
+
+
 	// Requires the type, class and subclass
 	public function title($type, $class, $subclass){
 
 		//"<a class='' href='javascript:void();'' onclick='window.history.back();'' >".(new pIcon('fa-arrow-left', 12))."</a><strong class='pWord'><span class='native'><a>"
 
-		$realTitle = pMarkdown("# <span class='native'><strong class='pWord'><a>".$this->_data['native']."</a></strong></span>", true);
+
+		$realTitle = '<a class="lemma-code big float-right ttip" href="'.pUrl('?entry/'.pHashId($this->_data['id'])).'" title="'.$this->_data['id'].'">'.(new pIcon('fa-bookmark-o', 12)).' '.pHashId($this->_data['id']).'</a>'.pMarkdown("# <span class='native'><strong class='pWord'><a>".$this->_data['native']."</a></strong></span>", true);
 
 		$titleSection = new pEntrySection("", '', null, false, true);
 

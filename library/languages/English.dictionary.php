@@ -19,6 +19,7 @@ define('DICT_SEARCH', 'Search');
 define('DICT_KEYWORD', 'Keyword');
 define('DICT_EXACT_MATCH', 'exact match');
 define('DICT_MATCH', 'Your query yielded %s result.');
+define('DICT_SEARCH_RESULTS', 'Search results');
 define('DICT_NO_HITS', 'Your query yielded no results.');
 define('DICT_NO_QUERY', 'Please provide a search query.');
 define('DICT_MATCHES', 'Your query yielded %s results.');
@@ -130,6 +131,7 @@ define("DA_GRAMTAGS_TITLE", "Grammatical tags");
 define("DA_TITLE_HOME", "Home");
 define("DA_TITLE_CONTENT", "Content");
 define("DA_TITLE_GRAMMAR", "Grammar");
+define("DA_TITLE_TABLES", "Inflection tables");
 define("DA_TITLE_LANGUAGES", "Languages");
 define("DA_TITLE_PHONOLOGY", "Phonology");
 define("DA_TITLE_ORTOGRAPHY", "Ortography");
@@ -144,3 +146,6 @@ define("DA_WORDS_NEW_EXTERN", "New word ".(new pIcon('fa-external-link', 8)));
 
 define("DA_TRANSLATIONS", "Translations");
 define("DA_TRANSLATION", "Translation");
+
+// Grammatical tables
+define("DA_HEADINGS", "Headings");

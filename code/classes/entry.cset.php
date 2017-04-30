@@ -74,4 +74,10 @@ class pEntry{
 
 	}
 
+	public function read($var){
+		if(isset($this->_entry[$var]))
+			return $this->_entry[$var];
+		return null;
+	}
+
 }

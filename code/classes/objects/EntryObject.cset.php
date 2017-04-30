@@ -39,7 +39,7 @@ class pEntryObject extends pObject{
 
 	public function render(){
 
-		$this->_actionbar->generate();
+		$this->_actionbar->generate((isset(pAdress::arg()['id'])) ?pAdress::arg()['id'] : -1);
 
 		pOut($this->_actionbar->output);
 
@@ -49,7 +49,7 @@ class pEntryObject extends pObject{
 		// Passing the data on to the template
 		$this->_template = new $this->_activeSection['template']($data, $this->_activeSection);
 
-		// We might pass this job to an object if that is specified in the metadat
+		// We might pass this job to an object if that is specified in the metadata
 		if(isset($this->_meta['parseAsObject']) AND class_exists($this->_meta['parseAsObject'])){
 			$object = new $this->_meta['parseAsObject']($this->dataObject);
 			$object->setTemplate($this->_template);
@@ -58,14 +58,5 @@ class pEntryObject extends pObject{
 			}
 			return $object->renderEntry();
 		}
-
-		// The title section
-		pOut($this->_template->title($data[$this->_meta['title_field']]));
-
-		foreach($this->_activeSection['subobjects'] as $subObject){
-			$subObject->setID($this->id);
-			$subObject->compile();
-		}
-
 	}
 }
