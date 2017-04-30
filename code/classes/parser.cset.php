@@ -78,9 +78,15 @@ class pParser{
 		// Creating the actions per item set
 		$this->_actionbar = new pSet;
 		foreach($this->_data['actions_bar'] as $action){
-			$pAction = new pAction($action[0], $action[1], $action[2], $action[3], $action[4], $action[5], $this->_section, $this->_app);
-			if(isset($action[6]))
-				$pAction->setOverride($action[6]);
+			if(is_array($action)){
+				$pAction = new pAction($action[0], $action[1], $action[2], $action[3], $action[4], $action[5], $this->_section, $this->_app);
+				if(isset($action[6]))
+					$pAction->setOverride($action[6]);
+			}
+			else{
+				$pAction = $action;
+			}
+
 			$this->_actionbar->add($pAction);
 		}
 

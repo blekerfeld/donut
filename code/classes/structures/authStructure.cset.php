@@ -28,8 +28,9 @@ class pAuthStructure extends pStructure{
 	}
 
 	protected function logInAjax(){
+
 		if(pUser::checkCre(pAdress::post()['username'], pAdress::post()['password'])){
-			(new pUser)->login(pAdress::post()['username']);
+			(new pUser)->logIn(pAdress::post()['username']);
 			pOut("<script>window.location = '".pUrl('?home')."';</script>");
 		}
 		else
@@ -38,7 +39,7 @@ class pAuthStructure extends pStructure{
 
 	protected function logOut(){
 		(new pUser)->logOut();	
-		return pUrl('?auth/login', true);
+		return pUrl('?auth/logiddn', true);
 	}
 
 	public function render(){

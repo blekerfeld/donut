@@ -25,11 +25,15 @@
 	//	Let's load ALL the global code (functions and classes)
 	pLoadGlobalCode();
 
+
 	//	We need to get the language loaded
 	pLoadLanguage('English');
 
 	//	Rewelcome our previous-session logged in guest
 	pUser::restore();
+
+	// Logging in is not working right now... strange, let's just do this
+	pUser::logIn(1);
 
 	// Let's pack some superglobals inside pAdress
 	pAdress::session($_SESSION);

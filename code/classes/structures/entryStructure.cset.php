@@ -10,6 +10,7 @@
 
 class pEntryStructure extends pStructure{
 	
+	protected $_error;
 
 	public function compile(){
 
@@ -20,7 +21,9 @@ class pEntryStructure extends pStructure{
 			$this->_section = pAdress::arg()['section'];
 		else{
 
-			$this->_error = pNoticeBox('fa-info-circle fa-12', DA_SECTION_ERROR, 'danger-notice');
+			// Don't show an error if we are forced to have the search load a search action
+			if(!(isset(pAdress::arg()['query'], pAdress::arg()['dictionary'])))
+				$this->_error = pNoticeBox('fa-info-circle fa-12', DA_SECTION_ERROR, 'danger-notice');
 
 			$this->_section = $this->_default_section;
 		}
@@ -58,10 +61,15 @@ class pEntryStructure extends pStructure{
 
 	public function render(){
 
-		pOut(new pSearchBox);
+		$searchBox = new pSearchBox;
+
+		if(isset(pAdress::arg()['is:result'], pAdress::session()['searchQuery']))
+			$searchBox->setValue(pAdress::session()['searchQuery']);
+
+		pOut($searchBox);
 
 		// Starting with the wrapper
-		pOut("<div class='pEntry'><div class='home-margin'>");
+		pOut("<div class='pEntry ".(($this->_error != '' OR $this->_error != null) ? 'hasErrors' : '')."'><div class='home-margin'>");
 
 		// If there is an offset, we need to define that
 		if(isset(pAdress::arg()['offset']))
@@ -71,7 +79,8 @@ class pEntryStructure extends pStructure{
 
 		if(isset(pAdress::arg()['id'])){
 			if(!($this->_parser->runData(is_numeric(pAdress::arg()['id']) ?  pAdress::arg()['id'] : pHashId(pAdress::arg()['id'], true)[0]))){
-				pOut(pNoticeBox('fa-info-circle fa-12', ENTRY_NOT_FOUND, 'danger-notice'));
+				if(!(isset(pAdress::arg()['query'], pAdress::arg()['dictionary'])))
+					pOut(pNoticeBox('fa-info-circle fa-12', ENTRY_NOT_FOUND, 'danger-notice'));
 				goto SkipError;
 			}
 		}

@@ -24,7 +24,7 @@ class pLoginTemplate extends pTemplate{
 		<div class='btSource'><span class='btLanguage'>".LOGIN_PASSWORD."</span><br />
 			<span class='btNative'><input class='btInput nWord small normal-font password' type='password'/></span></div>
 		<div class='btButtonBar'>
-			<a class='btAction green login-button'>".(new pIcon('fa-sign-in', 12))." ".LOGIN_TITLE_SHORT."</a><br id='cl' />
+			<a class='btAction green login-button not-smooth'>".(new pIcon('fa-sign-in', 12))." ".LOGIN_TITLE_SHORT."</a><br id='cl' />
 		</div>
 		</form>
 		</div>

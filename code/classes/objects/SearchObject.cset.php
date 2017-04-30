@@ -40,6 +40,15 @@ class pSearchObject extends pObject{
 
 	public function render(){
 
+		if(pAdress::arg()['section'] == 'wiki'){
+
+			var_dump(pAdress::arg());
+
+			return pOut("wiki search is coming soon");
+
+
+		}		
+
 		$languageQuery = explode('-', pAdress::arg()['section']);
 
 		// Fetching the search-language
@@ -75,6 +84,9 @@ class pSearchObject extends pObject{
 		// If not ajax we need to fancy up a bit here TODO
 
 		ajaxSkip:
+
+			pOut(pMarkdown("# ".new pIcon('format-list-bulleted')." ".DICT_SEARCH_RESULTS." <span class='counter s-13'>".count($fetchSearch)."</span>", true));
+
 			if(count($fetchSearch) == 0)
 				pOut("<div class='danger-notice small'>".(new pIcon('fa-warning', 12))." ".DICT_NO_HITS."</div>");
 

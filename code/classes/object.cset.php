@@ -63,6 +63,7 @@ class pObject{
 	// This one lets the dataobject work! 
 
 	public function getData($id = -1){
+
 		if($id == -1){
 			return $this->_data = $this->dataObject->getObjects($this->_offset, $this->_itemsperpage)->fetchAll();
 		}
@@ -86,12 +87,12 @@ class pObject{
 
 	public function pagePrevious(){
 		if($this->_offset >= $this->_itemsperpage)
-			return "<a href='".pUrl("?".$this->_app . "/". $this->_section . '/offset/'.($this->_offset - $this->_itemsperpage))."' class='back-mini'><i class='fa fa-8 fa-arrow-left'></i></a>";
+			return "<a href='".pUrl("?".$this->_app . "/". $this->_section . '/offset/'.($this->_offset - $this->_itemsperpage))."' class='back-mini no-marg'><i class='fa fa-8 fa-arrow-left'></i></a>";
 	}
 
 	public function pageNext(){
 		if($this->_total > ($this->_offset + $this->_itemsperpage))
-			return "<a href='".pUrl("?".$this->_app . "/". $this->_section . '/offset/'.($this->_offset + $this->_itemsperpage))."' class='back-mini'><i class='fa fa-8 fa-arrow-right' style='font-size: 12px!important;'></i></a> ";
+			return "<a href='".pUrl("?".$this->_app . "/". $this->_section . '/offset/'.($this->_offset + $this->_itemsperpage))."' class='back-mini no-marg'><i class='fa fa-8 fa-arrow-right' style='font-size: 12px!important;'></i></a> ";
 	}
 
 	public function changePagination($value){

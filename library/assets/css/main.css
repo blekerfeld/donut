@@ -31,8 +31,8 @@ html, body {
   height:100%;
   padding: 0;
   font-family: Open Sans;
-  background: radial-gradient(circle, #e1e1e1, #f4f4f4);
-  font-size: 12px;
+  background: #EFF3F5;
+  font-size: 14px;
 }
 
 a {
@@ -84,16 +84,28 @@ p{
 }
 
 .counter {
-  display: inline-block;
-  padding: 2px 5px;
+  display: inline-block;  
+  text-align: center;
+  padding-top: 2px;
   font-style: normal!important;
   font-size: 11px;
   font-family: Raleway!important;
   font-weight: bold;
-  line-height: 1;
   color: #666;
   background-color: #ddd;
   border-radius: 20px;
+  min-width: 20px;
+  width: auto;
+  height: 20px;
+  margin-top: -5px;
+}
+
+.counter.inherit{
+  font-size: inherit;
+}
+
+.counter.s-13{
+  font-size: 13px;
 }
 
 .inline-title, .small-caps {
@@ -177,9 +189,12 @@ span.tab, div.tab {
   margin-left: 7%;
   margin-right: 7%;
   padding-top: 5px;
+  padding: 15px;
   padding-right: 10px;
-  border-left:dotted 1px #e7e7e7;
-  border-right:dotted 1px #e7e7e7;
+  border-left:solid 1px #e7e7e7;
+  border-right:solid 1px #e7e7e7;
+  box-shadow: 0px 1px 3px rgba(100, 100, 100, 0.05);
+      background: radial-gradient(circle, rgba(241,241,241,1), #fff);
 }
 
 .absolute_header a{
@@ -209,7 +224,7 @@ a.logotop {
 } 
 
 a.logotop p{
-  color: #1D1F21;
+  color:  #292E32;
     text-transform: capitalize!important;
     border-bottom: 3px double #E3E7EA;
     margin-bottom: 4px!important;
@@ -236,10 +251,8 @@ div.hStripe.min{
 }
 
 div.top_area{
-    background: radial-gradient(circle, #f1f1f1, #f4f4f4);
-    box-shadow: 0px 1px 3px rgba(100, 100, 100, 0.05);
-    border-bottom:1px #E7E7E7 solid;
-    padding-bottom: 2px;
+
+    /border-bottom:4px #E7E7E7 solid;
     padding-top: 0px;
 } 
 
@@ -285,6 +298,10 @@ div.outerwrap {
   height: auto;
   padding-bottom: 20px;
   min-height: 500px;
+}
+
+.page.min{
+  min-height: 0px;
 }
 
 .inner-page{
@@ -335,6 +352,7 @@ div.outerwrap {
 div.nav {
   color: #fff;
   background-color: #5E6573; 
+  border-top: 1px #e7e7e7 solid;
   background: radial-gradient(circle, #f4f4f4, #f9f9f9);
   padding-top: 4px;
   border-bottom: 1px #e7e7e7 solid;
@@ -569,8 +587,10 @@ select.pEditorlanguage {
 
 .notice{
     display: block;
-    padding: 4px;
+    padding: 5px;
     color: #3a87ad;
+    border-bottom: 4px solid #3a87ad;
+    border-radius: 4px;
     margin: 4px;
     margin-left: 0px;
     margin-right: 0px;
@@ -579,24 +599,22 @@ select.pEditorlanguage {
 
 .danger-notice{
     display: block;
-    padding: 10px;
-    color: snow;
-    background: rgba(191,63,65,0.8);
-    border: 1px solid  rgba(191,63,65,0.6);
+    padding: 5px;
+    color: rgba(191,63,65,0.8);
+    border-bottom: 4px solid  rgba(191,63,65,0.6);
+    border-radius: 4px;
     margin: 4px;
     margin-left: 0px;
     margin-right: 0px;
     margin-bottom: 6px;
 }
 
-.danger-notice i{
-  color: white;
-}
-
 .succes-notice{
     display: block;
-    padding: 4px;
+    padding: 5px;
     color: #468847;
+    border-bottom: 4px solid #468847;
+    border-radius: 4px;
     margin: 4px;
     margin-left: 0px;
     margin-right: 0px;
@@ -604,7 +622,7 @@ select.pEditorlanguage {
 }
 
 .hide {
-  display: none!important;
+  display: none;
 }
 
 input#wordsearch, input#filter, input#searchfilter {
@@ -688,34 +706,20 @@ div.hSearch .load-hide{
 
 
 .header.dictionary{
-
   transition: all .3s;
-  background: rgba(240,247,250, 0.3);
-  box-shadow: 0 4px 10px 0px rgba(190,197,200, 0.2);
-  padding: 10px;
-  padding-bottom: 0px!important;
+  background: rgba(240,240,240,0.2);
+  box-shadow: 0 4px 10px 0px rgba(190,197,200, 0.05);
+  padding-left: 80px;
+  padding-right: 80px;
+  padding-bottom: 5px!important;
   padding-top: 10px;
   border: none;
   margin-bottom: 25px;
   position: relative;
+  margin-top: -25px;
+  border-bottom: 1px #e7e7e7 dotted;
 }
 
-
-
-.header.dictionary.home img.logo{
-  border: none;
-  height: 50px;
-  width: auto;
-  transition: all .3s;
-  padding: 0px;
-  margin: 0px;
-  filter: none;
-  background: transparent;
-}
-
-.header.dictionary.home .notice{
-  color: snow;
-}
 
 
 .header.dictionary.home{
@@ -888,7 +892,8 @@ strong.dWord a {
 .dQueryHighlight{
   border: none;
   border-radius: 2px;
-  border-bottom: 4px solid #d9d2d9;
+  border-bottom: 4px solid #DB4A3C;
+  color: #DB4A3C
 }
 
 strong.dWord a:hover {
@@ -981,7 +986,7 @@ span.translation.tooltip a{
 
 .pSectionWrapper div.desc, ol div.desc {
   margin: 0px;
-  font-size: 10px;
+  font-size: 13px;
   font-weight: normal;
   font-family: open sans;
   padding: 1px;
@@ -1045,23 +1050,23 @@ span.translation.tooltip a{
 
 .dDesc {
   margin-left: 20px;
-  font-size: 11px;
+  font-size: 13px;
   font-family: monospace;
 }
 
 .dType {
-  font-size: 11px;
+  font-size: 13px;
 }
 
 .dPron {
-  font-size: 12px;
+  font-size: 13px;
   color: grey;
   cursor: pointer;
 }
 
 .dInflection {
   font-weight: normal;
-  font-size: 12px;
+  font-size: 13px;
   color: grey;
 }
 
@@ -1263,38 +1268,11 @@ table.admin.editing {
   border-right: none;
 }
 
-table.admin.editing tr.title td {
-  background: #FFF;
-  font-weight: bolder;
-  font-family: Open Sans;
-  font-size: 10px;
-  color: #000;
-  border: 1px solid transparent;
-  border-bottom: 1px dotted #d8d8d8;
-  border-top: 1px dotted #d8d8d8;
-  border-right: 1px dotted #d8d8d8;
-  text-transform: uppercase;
-}
-
-
-table.admin tr:first-child td:first-child {
-    border-radius: 7px 0 0 0;
-}
-
-table.admin tr:first-child td:last-child {
-    border-radius: 7px 0 0 0;
-}
-
-table.admin tr:last-child td:last-child{
-   border-radius: 0 7px 0px 0px;
-}
-
 table.admin tr.title td {
   background: rgba(13,21,49,0.7);
   color: snow;
   font-size: 11px;
   font-weight: bolder;
-  border-bottom: 2px solid #BF3F41;
   border-right: 1px dotted #0D0E11;
   font-family: Trebuchet MS;
   padding: 10px;
@@ -1561,6 +1539,13 @@ a.lemma-code {
   cursor: pointer;
 }
 
+a.lemma-code.big{
+  font-size: 17px;
+  display: inline-block;
+  margin-top: 10px;
+  margin-right: 15px;
+}
+
 a.lemma-code.discussion {
   margin-right: 10px;
   font-family: Open Sans;
@@ -1703,9 +1688,10 @@ span.pSectionTitle.editing.first strong.pWord a, span.pSectionTitle.editing.firs
 
 a.red-link{
   display: inline-block!important;
-  padding: 5px!important;
-  border: #f04f48 dashed 1px!important;
-  border-radius: 7px;
+  padding: 0px!important;
+ border: none!important;
+  border-radius: 0px;
+  opacity: 0.8;
   color: #f04f48!important;
   opacity: 0.5;
 }
@@ -2726,7 +2712,7 @@ div.d_admin_menu{
   transition: width .2s ease-in, background .2s;
   margin-left: 35px;
   margin-top: -36px;
-  margin-bottom: -72px;
+  margin-bottom: -20px;
   background: rgba(13,21,49,0.6);
   padding-top: 108px;
 }
@@ -2834,6 +2820,7 @@ div.debugConsole span.line{
     margin-top: -5px;
    }
 
+
    .home-search input#wordsearch, .header.dictionary input#wordsearch{
     margin-top: -14px;
       min-width: 0px;
@@ -2866,6 +2853,27 @@ div.debugConsole span.line{
       transition: all 0.2s;
    }
 
+   .hMobile .header{
+    opacity: 1; 
+    background: transparent;
+    width: 100%;
+    box-shadow: none;
+    padding: 10px;
+
+   }
+
+   .actionbar{
+    margin-top: 40px;
+    margin: 0 auto;
+    display: block;
+    width: 70%;
+    text-align: center;
+   }
+
+   .actionbar.float-right{
+    float: none;
+   }
+
    .hMobile.fixed{
     width: 100%;
     z-index: 1000;
@@ -2882,6 +2890,8 @@ div.debugConsole span.line{
     background: transparent;
     width: 100%;
     box-shadow: none;
+    padding: 10px;
+    margin: 0px;
    }
 
    .hMobile.fixed .hWrap{
@@ -2954,7 +2964,7 @@ div.debugConsole span.line{
       min-height: 200px;  
      }
 
-     .markdown-body{
+    .markdown-body{
       padding-top: 20px;
      }
 
@@ -3017,4 +3027,48 @@ div.debugConsole span.line{
     display: none;
   }
 
+}
+
+table.inflections{
+  width: 30%;
+  float: left;
+  font-size: 15px;
+  margin: 5px;
+  box-shadow: 0px 1px 3px rgba(100, 100, 100, 0.1);
+}
+
+table.inflections td{
+  padding: 4px;
+}
+
+table.inflections tr.heading td{
+  font-size: 14px;
+  color: gray;
+   border-bottom: 1px solid rgba(94,101,115, 0.2);
+  opacity: .7;
+}
+
+table.inflections td.row_name{
+   border-right: 1px solid rgba(94,101,115, 0.2);
+   opacity: .8;
+   color: darkgray;
+   font-size: 12px;
+   width: 40%;
+}
+
+table.inflections tr.title td{
+  font-size: 29px;
+  border-bottom: 1px solid rgba(94,101,115, 0.2);
+  padding-bottom: 0px;
+  font-weight: 700;
+  color: #333;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  white-space: normal;
+  line-height: normal;
+  font-size: 12px;
+  padding-left: 10px;
+  padding-right: 10px;
+  padding-bottom: 5px;
+  padding-top: 5px;
 }

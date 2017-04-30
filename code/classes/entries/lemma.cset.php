@@ -12,14 +12,14 @@
 // This represents a word
 class pLemma extends pEntry{
 
-	private $_translations, $_examples, $__lemmaDataObject, $_type, $_class, $_subclass, $_isInflection, $_hitTranslation = null, $_query;
+	private $_translations, $_examples, $__lemmaDataObject, $_type, $_class, $_subclass, $_isInflection, $_hitTranslation = null, $_query, $_inflector;
 
 	public $word;
 
 	// The constructur will call the parent (pEntry) with its arguments and then do a list of aditional tasks...
-	public function __construct(){
+	public function __construct($id){
 		// First we are calling the parent's constructor
-		call_user_func_array('parent::__construct', func_get_args());
+		parent::__construct($id, 'words');
 
 		$this->_lemmaDataObject = new pLemmaDataObject($this->_id);
 
@@ -48,8 +48,13 @@ class pLemma extends pEntry{
 	}
 
 	// This function renders a simple link to the entry page
-	public function renderSimpleLink($class = ''){
-		return "<a class='".$class." 'href='".pUrl('?entry/'.pHashId($this->_entry['id']))."'>".$this->_entry['native']."</a> ";
+	public function renderSimpleLink($result = false, $extra = '', $class = ''){
+		return "<a class='".$class." 'href='".$this->renderSimpleHref($result)."'>".$this->_entry['native']."</a> ";
+	}
+
+	// This function renders a simple link to the entry page
+	public function renderSimpleHref($result = false){
+		return pUrl('?entry/'.pHashId($this->_entry['id']).($result ? '/is:result' : ''));
 	}
 
 
@@ -83,6 +88,11 @@ class pLemma extends pEntry{
 		if($this->_translations != null) 
 			pOut($this->_template->parseTranslations($this->_translations));
 
+		if($this->_type['inflect_not'] == 0){
+			$this->bindInflector();
+			pOut($this->_template->parseInflections($this->_inflector));
+		}
+
 		if($this->_examples != null) 
 			pOut($this->_template->parseExamples($this->_examples));
 
@@ -114,12 +124,12 @@ class pLemma extends pEntry{
 			$hitTranslation = '';
 
 		if($searchlang == 0)
-			$linkToWord = pHighlight($this->_query, $this->renderSimpleLink(), '<strong class="dQueryHighlight">','</strong>');
+			$linkToWord = "<a href='".$this->renderSimpleHref(true)."'>".pHighlight($this->_query, $this->_entry['native'], '<strong class="dQueryHighlight">','</strong>')."</a>";
 		else
-			$linkToWord = $this->renderSimpleLink();
+			$linkToWord = $this->renderSimpleLink(true);
 
 		pOut("<tr class='hSearchResult'>");
-		pOut('<td><div class="dWordWrapper">'.$hitTranslation.'<strong class="dWord">'.$linkToWord."</strong><span class='dType'> · ".$this->generateInfoString()."</span> <br />".$this->_template->parseTranslations($this->_translations, true)."</div></td></tr>");
+		pOut('<td><div class="dWordWrapper">'.$hitTranslation.'<strong class="dWord"><span class="native">'.$linkToWord."</span></strong><span class='dType'> · ".$this->generateInfoString()."</span> <br />".$this->_template->parseTranslations($this->_translations, true)."</div></td></tr>");
 	}
 
 
@@ -148,6 +158,12 @@ class pLemma extends pEntry{
 	/// Binding examples to the lemma
 	public function bindExamples(){
 		$this->_examples = $this->_lemmaDataObject->getIdioms();
+	}
+
+	// Binding inflections
+	public function bindInflector(){
+		$this->_inflector = new pInflector($this, (new pTwolcRules('phonology_contexts'))->toArray());
+		$this->_inflector->compile();
 	}
 
 }

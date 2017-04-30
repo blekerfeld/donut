@@ -11,7 +11,7 @@
 
 class pAction{
 
-	public $_surface, $_icon, $_class, $_app, $_section, $_override = null;
+	public $_surface, $_icon, $_class, $_app, $_section, $_override = null, $_permission;
 
 	public $name, $followUpFields, $followUp;
 
@@ -26,7 +26,7 @@ class pAction{
 		$this->_override = $override;
 	}
 
-	public function __construct($name, $surface, $icon, $class, $follow_up, $follow_up_fields, $section, $app = 'dictionary-admin', $override = null){
+	public function __construct($name, $surface, $icon, $class, $follow_up, $follow_up_fields, $section, $app = 'dictionary-admin', $override = null, $permission = 0){
 		$this->name = $name;
 		$this->_surface = $surface;
 		$this->_icon = $icon;
@@ -36,9 +36,13 @@ class pAction{
 		$this->followUp = $follow_up;
 		$this->followUpFields = $follow_up_fields;
 		$this->_override = $override;
+		$this->_permission = $permission;
 	}
 
 	public function render($id = -1, $linked = null){
+
+		if(!pUser::checkPermission($this->_permission))
+			return false;
 
 		// Remove-actions need to be done a little different
 		if($this->name == 'remove' OR $this->name == 'remove-link')
@@ -47,7 +51,7 @@ class pAction{
 					if(confirm(\''.htmlspecialchars(DA_DELETE_SURE).'\') == true) {
 			    		$(\'.delete_load_'.$id.'\').load(\''.pUrl($this->actionUrl($id, true).($linked != null ? "/".$linked : '')).'\');
 			    		$(\'.item_'.$id.'\').slideUp(function(){
-			    				location.reload();
+			    				window.location = window.location;
 			    		});
 					}">'.(new pIcon($this->_icon, 12)).' '.$this->_surface.'</a>';
 

@@ -213,5 +213,10 @@ class pDataObject {
 		$this->_joined[] = array('table' => $table, 'field' => $field);
 	}
 
+	public function customQuery($query){
+		$this->_data = pQuery($query);
+		return $this->_data;
+	}
+
 }
 

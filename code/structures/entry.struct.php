@@ -48,13 +48,15 @@ return array(
 			),
 			'actions_bar' => array(
 				'discuss' => array('discuss', DA_WORDS_NEW_EXTERN, 'fa-comments', 'lemma-code discussion float-right', null, null, null),
+				'edit' => new pAction('edit', 'edit', 'fa-pencil', 'lemma-code discussion float-right', null, null, 'words', 'dictionary-admin', null, -3),
+				'remove' => new pAction('remove', 'remove', 'fa-times', 'lemma-code discussion float-right', null, null, 'words', 'dictionary-admin', null, -3),
 			),
 			'save_strings' => $saveStrings,
 			'subobjects' => array(
 				new pEntryDataObject('usage_notes', 'word_id', 'fa-info', false, null, 'usageNotes'),
 				new pEntryDataObject('synonyms', array('word_id_1', 'word_id_2'), 'fa-clone', false, null, 'synonyms'),
 				new pEntryDataObject('antonyms', array('word_id_1', 'word_id_2'), 'fa-venus-mars', false, null, 'antonyms'),
-				new pEntryDataObject('homophones', array('word_id_1', 'word_id_2'), 'fa-microphone', false, null, 'homophones'),
+				new pEntryDataObject('homophones', array('word_id_1', 'word_id_2'), 'fa-microphone	', false, null, 'homophones'),
 			),
 		),
 

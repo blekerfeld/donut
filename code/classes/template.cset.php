@@ -14,6 +14,7 @@ class pTemplate{
 
 	public function __construct($data = null, $activeStructure = null){
 
+
 		$this->_data = $data;
 		$this->activeStructure = $activeStructure;
 

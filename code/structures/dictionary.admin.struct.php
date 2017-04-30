@@ -56,6 +56,11 @@ return array(
 				'surface' => DA_TITLE_GRAMMAR,
 				'section' => 'lexcat',
 			),
+			'table' => array(
+				'icon' => 'table',
+				'surface' => DA_TITLE_TABLES,
+				'section' => 'headings'
+			),
 			'languages' => array(
 				'icon' => 'translate',
 				'surface' => DA_TITLE_LANGUAGES,
@@ -502,6 +507,54 @@ return array(
 			),
 		),
 
+
+		// Table sections
+		'headings' => array(
+			'section_key' => 'headings',
+			'permission' => -1,
+			'icon' => 'fa-header',
+			'menu' => 'table',
+			'type' => 'pTableObject',
+			'surface' => DA_HEADINGS,
+			'condition' => false,
+			'items_per_page' => 20,
+			'disable_pagination' => false,
+			'table' => 'modes',
+			'datafields' => array(
+				new pDataField('name', DA_TRANSLATION, '67%', 'input', true, true, true),
+				new pDataField('mode_type_id', "TEMPLATE", '10%', 'select', true, true, true, 'small-caps', false, new pSelector('mode_types', null, 'name', true, 'table-templates')),
+			),
+			'actions_item' => array(
+				'edit' => $action_edit,
+				'remove' => $action_remove,
+			),
+			'actions_bar' => array(
+				'new' => array('new', "New translations", 'fa-plus-circle fa-12', 'btAction wikiEdit', null, null, null),
+			),
+			'save_strings' => $saveStrings,
+			'outgoing_links' => array(
+					'words' => array(
+					 		'section' => 'words', 
+					 		'surface' => "Words", 
+					 		'icon' => 'fa-font', 
+					 		'table'=> 'translation_words', 
+					 		'field' => 'translation_id'
+					 ),
+				),
+			'incoming_links' => array(
+				'words' => array(
+						'section' => 'words',
+						'table' => 'translation_words',
+						'parent' => 'translation_id',
+						'child' => 'word_id',
+						'fields' => array(
+								(new pDataField('specification', DA_TABLE_LINK_SPECIFICATION)),
+							),
+						'show_parent' => 'native',
+						'show_child' => 'translation',
+				),
+			),
+		),
 
 		// Ortography section
 		'graphemes' => array(

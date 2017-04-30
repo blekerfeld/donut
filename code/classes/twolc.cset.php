@@ -32,8 +32,9 @@ class pTwolc{
 	}
 
 	public function compile(){
-		foreach($this->_rules as $rule)
+		foreach($this->_rules as $rule){
 			$this->parseRule($rule);
+		}
 		foreach($this->_parsedRules as $rule)
 			$this->pendChange($rule);
 	}
@@ -184,9 +185,32 @@ class pTwolcString{
 		$this->_string = preg_replace($search, $replace, $this->_string);
 	}
 
-	public function toSurface(){
+	public function toDebug(){
 		//return $this->_string;
 		return strtolower(str_replace(array('0', '+', '{', '::', '&', '#'), '', $this->_string)).' - ('.$this->_string.') - ← '.$this->_orginalString;
+	}
+
+	public function toSurface(){
+		//return $this->_string;
+		return strtolower(str_replace(array('0', '+', '{', '::', '&', '#'), '', $this->_string));
+	}
+
+}
+
+class pTwolcRules{
+
+	public $rules = array();
+
+	public function __construct($table){
+		$dataObject = new pDataObject($table);
+		$dataObject->setOrder(" sorter ASC ");
+		$dataObject->getObjects();
+		foreach($dataObject->getObjects()->fetchAll() as $rule)
+			$this->rules[] = $rule['rule'];
+	} 
+
+	public function toArray(){
+		return $this->rules;
 	}
 
 }
