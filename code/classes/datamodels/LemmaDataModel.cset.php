@@ -6,11 +6,11 @@
 	//		Written by Thomas de Roo
 	//		Licensed under MIT
 
-	//	++	File: lemmaDataObject.cset.php
+	//	++	File: lemmaDataModel.cset.php
 
 
 
-class pLemmaDataObject extends pDataObject{
+class pLemmaDataModel extends pDataModel{
 
 	private $_lemma;
 

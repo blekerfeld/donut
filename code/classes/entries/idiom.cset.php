@@ -44,7 +44,7 @@ class pIdiom extends pEntry{
 	public function bindLemma($lemma_id = null){
 		$this->_lemma = $lemma_id;
 		$this->_lemmas = null;
-		$linkTable = new pDataObject('idiom_words');
+		$linkTable = new pDataModel('idiom_words');
 		
 		if($lemma_id != null){
 			$linkTable->setCondition(" WHERE word_id = '".$lemma_id."' AND idiom_id = '".$this->_entry['id']."' ");
@@ -66,7 +66,7 @@ class pIdiom extends pEntry{
 	public function bindTranslations($language_id = null){
 
 		// Dataobject for the linking table
-		$linkTable = new pDataObject('idiom_translations');
+		$linkTable = new pDataModel('idiom_translations');
 		$condition =  " WHERE idiom_id = ".$this->_entry['id'];
 		if($language_id != null)
 			$condition .= " AND language_id = ".$language_id;	

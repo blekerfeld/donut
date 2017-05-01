@@ -56,7 +56,7 @@ class pLemmaTemplate extends pEntryTemplate{
 	}
 
 	public function parseInflections($inflector){
-		return new pEntrySection((new pIcon('fa-quote-right', 12))." ".LEMMA_EXAMPLES, $inflector->render()."<br id='cl' />");
+		return new pEntrySection((new pIcon('cards-variant', 12))." ".LEMMA_DECLENSION, $inflector->render()."<br id='cl' />", null, true, false, false, true);
 	}
 
 
@@ -86,7 +86,7 @@ class pLemmaTemplate extends pEntryTemplate{
 		foreach($data as $note)
 			$parsed .= '<div class="pNotes">'.pMarkdown($note['note']).'</div>';
 
-		// Retruning the notes in an entry section
+		// Returning the notes in an entry section
 		return new pEntrySection("Usage notes", $parsed, $icon);
 
 	}

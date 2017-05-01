@@ -30,6 +30,7 @@ define("LEMMA_INFLECTIONS", "Inflections");
 define("LEMMA_TRANSLATIONS", 'Meaning and translations');
 define("TRANSLATION_LEMMAS", 'Linked entries in %s');
 define("TRANSLATION_DESC", 'Description');
+define("LEMMA_DECLENSION", 'Declension');
 define("LEMMA_EXAMPLES", 'Examples and idiom');
 define("LEMMA_EXAMPLE", 'Example/idiom');
 define("LEMMA_EXAMPLE_IN", 'Example/idiom in %s');

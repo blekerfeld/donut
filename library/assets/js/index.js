@@ -1,30 +1,3 @@
-require('vendors.js');
-
-
-$(document).ready(function(){
-
-
-    
-$('.tooltip').tooltipster({theme: 'tooltipster-donut'});
-$(".elastic").elastic();
-
-    });
-
-    $('table.admin').DataTable();
-
-
-}
-
-var delay = (function(){
-  var timer = 0;
-  return function(callback, ms){
-    clearTimeout (timer);
-    timer = setTimeout(callback, ms);
-  };
-})();
-
-
-
 function loadfunction(url){
     window.location = url;
 }
@@ -59,3 +32,4 @@ $(document).delegate('.allowtabs', 'keydown', function(e) {
     $(this).get(0).selectionEnd = start + 1;
   }
 });
+

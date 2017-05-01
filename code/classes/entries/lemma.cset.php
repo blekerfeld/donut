@@ -21,17 +21,17 @@ class pLemma extends pEntry{
 		// First we are calling the parent's constructor
 		parent::__construct($id, 'words');
 
-		$this->_lemmaDataObject = new pLemmaDataObject($this->_id);
+		$this->_lemmaDataObject = new pLemmaDataModel($this->_id);
 
 		// Getting type (part of speech), classification (grammatical category) and grammatical tag
 			if($this->_entry['type_id'] != 0)
-				$this->_type = (new pDataObject('types', null, false, $this->_entry['type_id']))->data()->fetchAll()[0];
+				$this->_type = (new pDataModel('types', null, false, $this->_entry['type_id']))->data()->fetchAll()[0];
 
 			if($this->_entry['classification_id'] != 0)
-				$this->_class = (new pDataObject('classifications', null, false, $this->_entry['classification_id']))->data()->fetchAll()[0];
+				$this->_class = (new pDataModel('classifications', null, false, $this->_entry['classification_id']))->data()->fetchAll()[0];
 
 			if($this->_entry['subclassification_id'] != 0)
-				$this->_subclass = (new pDataObject('subclassifications', null, false, $this->_entry['subclassification_id']))->data()->fetchAll()[0];
+				$this->_subclass = (new pDataModel('subclassifications', null, false, $this->_entry['subclassification_id']))->data()->fetchAll()[0];
 
 			// Make it easier to access the word itself
 			$this->word = $this->_entry['native'];

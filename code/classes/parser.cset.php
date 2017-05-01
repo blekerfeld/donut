@@ -11,7 +11,7 @@
 
 class pParser{
 
-	public $_section, $_app, $_data, $_paginated = true, $_condition, $_offset, $_object, $structure, $_permission;
+	public $_section, $_app, $_data, $_paginated = true, $_condition, $_offset, $_handler, $structure, $_permission;
 
 	static public $stApp, $stSection;
 
@@ -37,18 +37,18 @@ class pParser{
 		$this->_paginated = !$this->_paginated;
 	}
 
-	// Used to give the SELECT query of the dataObject a condition 
+	// Used to give the SELECT query of the dataModel a condition 
 
 	// Passing on
 	public function setCondition($condition){
-		if($this->_object != null)
-			$this->_object->setCondition($condition);
+		if($this->_handler != null)
+			$this->_handler->setCondition($condition);
 	}
 
 	// Passing on
 	public function setOrder($order){
-		if($this->_object != null)
-			$this->_object->setOrder($order);
+		if($this->_handler != null)
+			$this->_handler->setOrder($order);
 	}
 
 	public function compile(){
@@ -90,7 +90,7 @@ class pParser{
 			$this->_actionbar->add($pAction);
 		}
 
-		$this->_object = new $this->_data['type']($this->structure, $this->_data['icon'], $this->_data['surface'], $this->_data['table'], $this->_data['items_per_page'], $this->_fields, $this->_actions, $this->_actionbar, $this->_paginated, $this->_section, $this->_app);
+		$this->_handler = new $this->_data['type']($this->structure, $this->_data['icon'], $this->_data['surface'], $this->_data['table'], $this->_data['items_per_page'], $this->_fields, $this->_actions, $this->_actionbar, $this->_paginated, $this->_section, $this->_app);
 		
 		$this->setCondition((isset($this->_data['condition']) ? $this->_data['condition'] : ''));
 		
@@ -99,21 +99,21 @@ class pParser{
 		// Do we need to add links?
 		if(isset($this->_data['outgoing_links']))
 			foreach($this->_data['outgoing_links'] as $key => $link)
-				$this->_object->addLink($link, $key);
+				$this->_handler->addLink($link, $key);
 
 
 		
 	}
 
-	// A shortcut to running the queries of the adminObject which runs it inside its dataObject
+	// A shortcut to running the queries of the adminObject which runs it inside its dataModel
 	public function runData($id = -1){
-		return $this->_object->getData($id);
+		return $this->_handler->getData($id);
 	}
 
 	public function render(){
 		// We can only render if we are allowed to 
 		if(pUser::checkPermission($this->_permission))
-			return $this->_object->render();
+			return $this->_handler->render();
 		else
 			return pOut("<div class='btCard minimal admin'>".pNoticeBox('fa-info-circle fa-12', DA_PERMISSION_ERROR, 'danger-notice')."</div>");
 	}
@@ -121,12 +121,12 @@ class pParser{
 	// Passes on the action to the object
 	public function passOnAction($action){
 		if(pUser::checkPermission($this->_permission))
-			return $this->_object->catchAction($action);
+			return $this->_handler->catchAction($action);
 	}
 
 	// Allias function
 	public function setOffset($offset){
-		$this->_object->setOffset($offset);
+		$this->_handler->setOffset($offset);
 	}
 
 	// This parsers actions
@@ -144,7 +144,7 @@ class pParser{
 
 			if($linked != null){
 				// Guests
-				$this->_object->changePagination(false);
+				$this->_handler->changePagination(false);
 
 				@$guests = new pParser($this->structure, $this->structure[$this->structure[$this->_section]['incoming_links'][$linked]['section']], $this->_app);
 
@@ -171,7 +171,7 @@ class pParser{
 				if(isset(pAdress::arg()['id']))
 					$guests->runData(pAdress::arg()['id']);
 
-				$linkTableObject = new pLinkTableObject($this->structure, 'fa-link',  $this->structure[$this->_data['incoming_links'][$linked]['section']]['surface']."&#x205F; (&#x205F;".DA_TABLE_LINKS_PARENT."&#x205F;) &#x205F; ↔ &#x205F;".$this->_data['surface']." &#x205F;(&#x205F;".DA_TABLE_LINKS_CHILD."&#x205F;)", $this->_data['incoming_links'][$linked]['table'], 0, $dfs, $actions, $action_bar, false, $this->_section, $this->_app);
+				$linkTableObject = new pLinkTableHandler($this->structure, 'fa-link',  $this->structure[$this->_data['incoming_links'][$linked]['section']]['surface']."&#x205F; (&#x205F;".DA_TABLE_LINKS_PARENT."&#x205F;) &#x205F; ↔ &#x205F;".$this->_data['surface']." &#x205F;(&#x205F;".DA_TABLE_LINKS_CHILD."&#x205F;)", $this->_data['incoming_links'][$linked]['table'], 0, $dfs, $actions, $action_bar, false, $this->_section, $this->_app);
 
 
 				if(isset(pAdress::arg()['id'])){
@@ -186,16 +186,16 @@ class pParser{
 
 				}
 
-				$this->_object->getData();
+				$this->_handler->getData();
 				$linkTableObject->getData();
 				// Passing some very useful information to the linking table
-				$linkTableObject->passData($guests, $linked,$this->_object->_data, $this->_data['incoming_links'][$linked]['show_parent'], $this->_data['incoming_links'][$linked]['show_child'], $this->_data['incoming_links'][$linked]['parent'], pAdress::arg()['id']);
+				$linkTableObject->passData($guests, $linked,$this->_handler->_data, $this->_data['incoming_links'][$linked]['show_parent'], $this->_data['incoming_links'][$linked]['show_child'], $this->_data['incoming_links'][$linked]['parent'], pAdress::arg()['id']);
 
 				if($name == 'link-table')
 					return $linkTableObject->render();
 				elseif($name == 'remove-link' && $ajax){
-					$dataObject = new pDataObject($this->_data['incoming_links'][$linked]['table'], new pSet);
-					return $dataObject->remove(0, 0, $_REQUEST['id']);
+					$dataModel = new pDataModel($this->_data['incoming_links'][$linked]['table'], new pSet);
+					return $dataModel->remove(0, 0, $_REQUEST['id']);
 				}
 				elseif($name == 'new-link'){
 					$action = new pMagicActionForm('new-link', $this->_data['incoming_links'][$linked]['table'], $dfs, $this->_data['save_strings'], $this->_app, $this->_section, $linkTableObject);
@@ -235,20 +235,20 @@ class pParser{
 
 		// Removing is like very simple! 
 		elseif($name == 'remove' && $ajax){
-			$action = $this->_object->getAction($name);
-			return $this->_object->dataObject->remove($action->followUp, $action->followUpFields);
+			$action = $this->_handler->getAction($name);
+			return $this->_handler->dataModel->remove($action->followUp, $action->followUpFields);
 		}
 
 		// If the action is like, not removing, then we need something else:
 
 
 		// Our action!
-		$action = $this->_object->getAction($name);
+		$action = $this->_handler->getAction($name);
 		
 		// Replacing the surface string of the action
 		$this->_data['save_strings'][0] = $this->_data['surface'];
 
-		$action = new pMagicActionForm($name, $this->_data['table'], $this->_fields, $this->_data['save_strings'], $this->_app, $this->_section, $this->_object); 
+		$action = new pMagicActionForm($name, $this->_data['table'], $this->_fields, $this->_data['save_strings'], $this->_app, $this->_section, $this->_handler); 
 
 		$action->compile();
 

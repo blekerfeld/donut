@@ -202,10 +202,10 @@ class pTwolcRules{
 	public $rules = array();
 
 	public function __construct($table){
-		$dataObject = new pDataObject($table);
-		$dataObject->setOrder(" sorter ASC ");
-		$dataObject->getObjects();
-		foreach($dataObject->getObjects()->fetchAll() as $rule)
+		$dataModel = new pDataModel($table);
+		$dataModel->setOrder(" sorter ASC ");
+		$dataModel->getObjects();
+		foreach($dataModel->getObjects()->fetchAll() as $rule)
 			$this->rules[] = $rule['rule'];
 	} 
 

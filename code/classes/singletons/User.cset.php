@@ -10,7 +10,7 @@
 
 class pUser{
 
-	public static $id, $user, $dataObject, $static = true;
+	public static $id, $user, $dataModel, $static = true;
 
 
 	// This would work only with 'new pUser'
@@ -19,12 +19,12 @@ class pUser{
 	}
 
 	public function __construct($id = NULL){
-		self::$dataObject = new pDataObject('users');
+		self::$dataModel = new pDataModel('users');
 
 		// Overwrite the loaded user
 		if(isset($id)){
-			self::$dataObject->getSingleObject($id);
-			return self::load(self::$dataObject->data()->fetchAll()[0]);
+			self::$dataModel->getSingleObject($id);
+			return self::load(self::$dataModel->data()->fetchAll()[0]);
 		}
 		
 	}
@@ -46,15 +46,15 @@ class pUser{
 
 	public static function logIn($id){
 		if(!is_numeric($id)){
-			self::$dataObject->setCondition(" WHERE username = '$id' ");
-			self::$dataObject->getObjects();
-			$id = self::$dataObject->data()->fetchAll()[0]['id'];
-			self::$dataObject->setCondition('');
+			self::$dataModel->setCondition(" WHERE username = '$id' ");
+			self::$dataModel->getObjects();
+			$id = self::$dataModel->data()->fetchAll()[0]['id'];
+			self::$dataModel->setCondition('');
 		}
 		$_SESSION['pUser'] = $id;
-		self::$dataObject->setCondition('');
-		self::$dataObject->getSingleObject($id);
-		self::load(self::$dataObject->data()->fetchAll()[0]);
+		self::$dataModel->setCondition('');
+		self::$dataModel->getSingleObject($id);
+		self::load(self::$dataModel->data()->fetchAll()[0]);
 		$arr = array($id, self::read('password'), self::read('username'));
 		setcookie('pKeepLogged', serialize($arr), time()+5*52*7*24*3600);
 	}
@@ -74,14 +74,14 @@ class pUser{
 	public static function restore(){
 
 		// Creating a connection to the user table
-		if(self::$dataObject == null)
-			self::$dataObject = new pDataObject('users');
+		if(self::$dataModel == null)
+			self::$dataModel = new pDataModel('users');
 
 
 		if(!isset($_COOKIE['pKeepLogged']))
 			if(isset($_SESSION['pUser']) AND self::$id != $_SESSION['pUser']){
-				self::$dataObject->getSingleObject($_SESSION['pUser']);
-				return self::load(self::$dataObject->data()->fetchAll()[0]);
+				self::$dataModel->getSingleObject($_SESSION['pUser']);
+				return self::load(self::$dataModel->data()->fetchAll()[0]);
 			}
 
 		if(isset($_COOKIE['pKeepLogged']))
@@ -90,14 +90,14 @@ class pUser{
 				{
 					$userInfo = unserialize($_COOKIE['pKeepLogged']);
 
-						// Creating the dataobject, for checking if the cookie-obtained info is still valid.
+						// Creating the datamodel, for checking if the cookie-obtained info is still valid.
 					
-					self::$dataObject->setCondition("WHERE username = '{$userInfo[2]}' and password = '{$userInfo[1]}' and id = {$userInfo[0]}");
-					self::$dataObject->getSingleObject($userInfo[0]);
+					self::$dataModel->setCondition("WHERE username = '{$userInfo[2]}' and password = '{$userInfo[1]}' and id = {$userInfo[0]}");
+					self::$dataModel->getSingleObject($userInfo[0]);
 
-					if(self::$dataObject->data()->rowCount() == 1){
+					if(self::$dataModel->data()->rowCount() == 1){
 						if(!isset($_SESSION['pUser'])){
-							self::load(self::$dataObject->data()->fetchAll()[0]);
+							self::load(self::$dataModel->data()->fetchAll()[0]);
 							return $_SESSION['pUser'] = $userInfo[0];
 						}
 						 return true;
@@ -115,10 +115,10 @@ class pUser{
 			}
 
 			// If nothing happend then we are a guest and we have to log in to the guest account
-			self::$dataObject->setCondition("");
-			self::$dataObject->getSingleObject(0);
+			self::$dataModel->setCondition("");
+			self::$dataModel->getSingleObject(0);
 
-			return self::load(self::$dataObject->data()->fetchAll()[0]);
+			return self::load(self::$dataModel->data()->fetchAll()[0]);
 
 	}
 
@@ -135,7 +135,7 @@ class pUser{
 	*/ 
 
 	public function changeEditorLang($lang_id){
-		return self::$dataObject->changeField(self::$id, (new pDataField('editor_lang')), $lang_id, self::$user['editor_lang']);
+		return self::$dataModel->changeField(self::$id, (new pDataField('editor_lang')), $lang_id, self::$user['editor_lang']);
 	}
 
 	// This function also contains information on how the username needs to look
@@ -146,12 +146,12 @@ class pUser{
 			return false;
 
 		// First we need to check if this username does not already exist;
-		self::$dataObject->setCondition("WHERE username = '{$newUserName}'");
-		if(self::$dataObject->getObjects()->rowCount() != 0)
+		self::$dataModel->setCondition("WHERE username = '{$newUserName}'");
+		if(self::$dataModel->getObjects()->rowCount() != 0)
 			return false;
 
 		// Now it is time to change the shit out of it
-		return self::$dataObject->changeField(self::$id, (new pDataField('username')), $newUserName, self::$user['username']);
+		return self::$dataModel->changeField(self::$id, (new pDataField('username')), $newUserName, self::$user['username']);
 
 	}
 
@@ -166,17 +166,17 @@ class pUser{
 			return false;
 
 		// Now it is time to change the shit out of it
-		return self::$dataObject->changeField(self::$id, (new pDataField('password')), pHash($password));
+		return self::$dataModel->changeField(self::$id, (new pDataField('password')), pHash($password));
 
 	}
 
 	public function giveRole($minus){
-		return self::$dataObject->changeField(self::$id, (new pDataField('role')), 4 + $minus);
+		return self::$dataModel->changeField(self::$id, (new pDataField('role')), 4 + $minus);
 	}
 
 	public function checkCre($username, $password){
-		self::$dataObject->setCondition(" WHERE username = '".$username."' AND password = '".pHash($password)."'");
-		if(self::$dataObject->getObjects()->rowCount() == 1)
+		self::$dataModel->setCondition(" WHERE username = '".$username."' AND password = '".pHash($password)."'");
+		if(self::$dataModel->getObjects()->rowCount() == 1)
 			return true;
 		return false;
 	}

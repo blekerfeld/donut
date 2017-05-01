@@ -62,7 +62,7 @@ class pTranslation extends pEntry{
 	public function bindLemma($lemma_id = null){
 		$this->_lemma = $lemma_id;
 		$this->_lemmas = null;
-		$linkTable = new pDataObject('translation_words');
+		$linkTable = new pDataModel('translation_words');
 		
 		if($lemma_id != null){
 			$linkTable->setCondition(" WHERE word_id = '".$lemma_id."' AND translation_id = '".$this->_entry['real_id']."' ");

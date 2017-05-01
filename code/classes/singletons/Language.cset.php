@@ -10,7 +10,7 @@
 
 class pLanguage{
 
-	public $id, $data, $dataObject; 
+	public $id, $data, $dataModel; 
 
 
 	// This would work only with 'new pLanguage'
@@ -20,22 +20,22 @@ class pLanguage{
 
 	// Constructure accepts both a language code or a number
 	public function __construct($id){
-		$this->dataObject = new pDataObject('languages');
+		$this->dataModel = new pDataModel('languages');
 		if(is_numeric($id))
-			$this->dataObject->getSingleObject($id);
+			$this->dataModel->getSingleObject($id);
 		else{
-			$this->dataObject->setCondition(" WHERE locale = '".$id."'");
-			$this->dataObject->getObjects();
-			if($this->dataObject->data()->rowCount() == 0 OR $this->dataObject->data()->rowCount() > 1)
+			$this->dataModel->setCondition(" WHERE locale = '".$id."'");
+			$this->dataModel->getObjects();
+			if($this->dataModel->data()->rowCount() == 0 OR $this->dataModel->data()->rowCount() > 1)
 				die("Could not fetch language");
 		}
-		$this->load($this->dataObject->data()->fetchAll()[0]);
+		$this->load($this->dataModel->data()->fetchAll()[0]);
 	}
 
 	// Makes it possible to do pLanguage::dictionarySelector($class);
 	public static function dictionarySelector($class){
 
-		$data = (new pDataObject('languages'))->getObjects()->fetchAll();
+		$data = (new pDataModel('languages'))->getObjects()->fetchAll();
 
 		$select = '<select class="'.$class.'">';
 

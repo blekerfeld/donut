@@ -625,6 +625,10 @@ select.pEditorlanguage {
   display: none;
 }
 
+.pointer{
+  cursor: pointer;
+}
+
 input#wordsearch, input#filter, input#searchfilter {
   padding: 9px;
   font-size: 15px;
@@ -1749,7 +1753,8 @@ span.pSectionTitle.editing.first a.tooltip:hover{
 
 
 span.pSectionTitle.extra.closed {
-  border-radius: 7px;
+  margin-bottom: 20px;
+  border-bottom: 6px solid #f7f7f7;
 }
 
 .pSectionTitle.extra.sub {

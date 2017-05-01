@@ -6,9 +6,9 @@
 	//		Written by Thomas de Roo
 	//		Licensed under MIT
 
-	//	++	File: entryDataObject.cset.php
+	//	++	File: entryDataModel.cset.php
 
-class pEntryDataObject extends pDataObject{
+class pEntryDataModel extends pDataModel{
 
 	private $_field, $_join;
 	public $ID, $icon, $templateFunction;

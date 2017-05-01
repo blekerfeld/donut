@@ -3,7 +3,7 @@
   <head>
     <link href="<?php echo pUrl('library/assets/css/main.css'); ?>" rel="stylesheet">
     <link href="<?php echo pUrl('library/assets/css/markdown.css'); ?>" rel="stylesheet">
-    <link rel="shortcut icon" href="<?php echo pUrl('library/images/static/favicon.png'); ?>">
+    <link rel="shortcut icon" href="<?php echo pUrl('library/images/static/app_icon.png'); ?>">
     <link rel="stylesheet" href="<?php echo pUrl('library/assets/css/vendors/font-awesome.css'); ?>">
     <link rel="stylesheet" href="<?php echo pUrl('library/assets/css/vendors/materialdesignicons.css'); ?>">
     <link rel="stylesheet" href="<?php echo pUrl('library/assets/css/vendors/tooltipster.css'); ?>">
@@ -12,7 +12,7 @@
     <link rel="stylesheet" href="<?php echo pUrl('library/assets/css/vendors/jquery.select2.css'); ?>">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/simplemde/latest/simplemde.min.css">
     <link href='http://fonts.googleapis.com/css?family=Slabo+27px' rel='stylesheet' type='text/css'>
-    <link rel="manifest" href="<?php echo pUrl('manifest.json.php'); ?>">
+    <link rel="manifest" href="<?php echo pUrl('library/assets/js/manifest.json.php'); ?>">
 
    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
   <meta name="apple-mobile-web-app-capable" content="yes">

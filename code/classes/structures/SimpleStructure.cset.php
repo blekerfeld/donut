@@ -8,7 +8,7 @@
 
 	//	++	File: admin.structure.cset.php
 
-class pHomeStructure extends pStructure{
+class pSimpleStructure extends pStructure{
 	
 	private $_ajax, $_section, $_template;
 
@@ -21,7 +21,10 @@ class pHomeStructure extends pStructure{
 		else
 			$this->_section = $this->_default_section;
 
-		$this->_template = new pLoginTemplate();
+		if(isset($this->_structure['template']))
+			$this->_template = new $this->_structure['template'];
+		else
+			die('Could not compile the simple structure, requires a template!');
 
 		$donut['page']['title'] = $this->_page_title;
 
@@ -29,7 +32,8 @@ class pHomeStructure extends pStructure{
 
 	public function render(){
 
-		var_dump($this);
+		// Call the render function of the simple template
+		$this->_template->renderAll();
 
 	}
 

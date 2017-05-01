@@ -8,11 +8,11 @@
 
 	//	++	File: entrysection.cset.php
 
-class pEntrySection extends pSnippit{
+class pEntrySection extends pTemplatePiece{
 
-	private $_title, $_content, $_forceNoContent, $_informationElements = array(), $_icon;
+	private $_title, $_content, $_forceNoContent, $_informationElements = array(), $_icon, $_closable;
 
-	public function __construct($title, $content, $icon = null, $extra = true,  $forceNoContent = false, $sub = false){
+	public function __construct($title, $content, $icon = null, $extra = true,  $forceNoContent = false, $sub = false, $closable = false){
 		$this->_title = $title;
 		$this->_icon = $icon;
 		if($extra)
@@ -25,6 +25,7 @@ class pEntrySection extends pSnippit{
 
 		$this->_forceNoContent = $forceNoContent;
 		$this->_content = $content;
+		$this->_closable = $closable;
 	}
 
 	public function addInformationElement($information, $class ='', $link = null){
@@ -42,13 +43,22 @@ class pEntrySection extends pSnippit{
 	}
 
 	public function __toString(){
-		$output = "<span class='pSectionTitle $this->_extraClass'>";
+
+		$id = spl_object_hash($this);
+
+		$output = "<div ".($this->_closable ? 'class="closable pointer" onClick="$(\'.title_'.$id.'\').toggleClass(\'closed\');$(\'.content_'.$id.'\').slideToggle(\'fast\');$(\'.hideIcon_'.$id.'\').toggle();$(\'.showIcon_'.$id.'\').toggle();"' : '')."><span class='pSectionTitle title_$id $this->_extraClass  ".($this->_closable ? 'closed' : '')."'>";
 
 		if($this->_icon != null)
 			$output .= new pIcon($this->_icon, 10)." ";
 
 		if($this->_title != '')
-			$output .= $this->_title."<br />";
+			$output .= $this->_title;
+
+		if($this->_closable)
+			$output .= ' <span class="showIcon_'.$id.'">'.(new pIcon('fa-chevron-down', 12)).'</span><span class="hideIcon_'.$id.' hide">'.(new pIcon('fa-chevron-up', 12)).'</span>';
+
+		if($this->_title != '')
+			$output .= "<br />";
 
 		foreach($this->_informationElements as $informationElement)
 			$output .= "<em class='info'><span class='tooltip'>".$informationElement."</span></em> ";
@@ -56,9 +66,11 @@ class pEntrySection extends pSnippit{
 		$output .= "</span>";
 
 		if(!$this->_forceNoContent)
-			$output .= "<div class='pSectionWrapper'>$this->_content</div>";
+			$output .= "<div class='pSectionWrapper  ".($this->_closable ? 'hide content_'.$id : '')."'>$this->_content</div>";
 		else
 			$output .= $this->_content;
+
+		$output .= "</div>";
 
 		return $output;
 	}

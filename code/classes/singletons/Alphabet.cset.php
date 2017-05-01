@@ -10,13 +10,13 @@
 
 class pAlphabet{
 
-	private static $dataObject, $dataObjectGroups, $_graphemes, $order, $_init = false, $_groups = array();
+	private static $dataModel, $dataModelGroups, $_graphemes, $order, $_init = false, $_groups = array();
 
 
 	// This will print a freaking alphabet bar via pOut(new pAlphabet);
 	public function __toString(){
 		$output = '<div class="alphabetbar">';
-		foreach (self::$dataObject->data()->fetchAll() as $grapheme)
+		foreach (self::$dataModel->data()->fetchAll() as $grapheme)
 			$output .= "<a href='".pUrl('?list/alphabet/'.$grapheme['id'].'/'.$grapheme['grapheme'])."'><span class='native'>".$grapheme['grapheme']."</span></a>";
 		return $output."</div>";
 	}
@@ -35,14 +35,14 @@ class pAlphabet{
 			return new self;
 
 		// Let's get our alphabet
-		self::$dataObject = new pDataObject('graphemes');
-		self::$dataObjectGroups = new pDataObject('graphemes_groups');
-		self::$dataObject->setCondition(" WHERE in_alphabet = 1");
-		self::$dataObject->setOrder(" sorter ASC ");
-		self::$dataObject->getObjects();
+		self::$dataModel = new pDataModel('graphemes');
+		self::$dataModelGroups = new pDataModel('graphemes_groups');
+		self::$dataModel->setCondition(" WHERE in_alphabet = 1");
+		self::$dataModel->setOrder(" sorter ASC ");
+		self::$dataModel->getObjects();
 
 		// Let's create the order
-		foreach(self::$dataObject->data()->fetchAll() as $grapheme)
+		foreach(self::$dataModel->data()->fetchAll() as $grapheme)
 			self::$order[] = $grapheme['grapheme'];
 
 		// Remember this...
@@ -171,9 +171,9 @@ class pAlphabet{
 
 		$output = array();
 		
-		self::$dataObjectGroups->setCondition(" WHERE groupstring = '".$groupstring."' ");
+		self::$dataModelGroups->setCondition(" WHERE groupstring = '".$groupstring."' ");
 		
-		foreach(self::$dataObjectGroups->getObjects()->fetchAll() as $grapheme)
+		foreach(self::$dataModelGroups->getObjects()->fetchAll() as $grapheme)
 			$output[] = $grapheme['grapheme'];
 		
 		self::$_groups[$groupstring]  = $output;
