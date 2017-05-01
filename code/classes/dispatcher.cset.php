@@ -14,19 +14,25 @@
 class pDispatch {
 
 	private $_dispatchData, $_magicArguments = array(array('is:result', 'ajax', 'nosearch'), array('offset', 'return', 'position'), array(array('search', 'dictionary', 'query'))), $_urlArguments, $_arguments;
+
 	public $query, $structureObject;
 
+	public static $active;
 
 	public function __construct($query){
 		$this->query = $query;
 		pAdress::queryString($this->query);
-		$this->_dispatchData = require_once pFromRoot("code/dispatch.php");
+		$this->_dispatchData = require_once pFromRoot("code/Dispatch.php");
+		unset($this->_dispatchData['META_MENU']);
 	}
 
 	public function compile(){
 		// This will be filled with compiled arguments
 		$this->_arguments = array();
 		$this->_urlArguments = explode("/", $this->query);
+
+		self::$active = $this->_urlArguments[0];
+
 		if(isset($this->_urlArguments[0]) AND isset($this->_dispatchData[$this->_urlArguments[0]]))
 			$templateArguments = $this->_dispatchData[$this->_urlArguments[0]]['arguments'];
 
@@ -66,7 +72,7 @@ class pDispatch {
 			return false;
 		}
 
-		$this->structureObject = new $structureType($structureName[0], (isset($structureName[1]) ? $structureName[1] : ''), $this->_urlArguments[0], $this->_dispatchData[$this->_urlArguments[0]]['default_section'], $this->_dispatchData[$this->_urlArguments[0]]['page_title']);
+		$this->structureObject = new $structureType($structureName[0], (isset($structureName[1]) ? $structureName[1] : ''), $this->_urlArguments[0], $this->_dispatchData[$this->_urlArguments[0]]['default_section'], $this->_dispatchData[$this->_urlArguments[0]]['page_title'], $this->_dispatchData[$this->_urlArguments[0]]);
 
 
 		// Handeling the magic arguments
@@ -117,7 +123,7 @@ class pDispatch {
 	}
 
 	protected function do404($extra = ''){
-		pOut("<div class='home-margin'>".pMarkdown("## ".(new pIcon('fa-warning', 12))." ".ERROR_404_TITLE."\n".
+		pOut("<div class='home-margin'>".pMarkdown("# ".(new pIcon('fa-warning'))." ".ERROR_404_TITLE."\n".
 				ERROR_404_MESSAGE."\n".$extra)."</div>");
 	}
 

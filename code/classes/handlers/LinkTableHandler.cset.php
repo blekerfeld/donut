@@ -8,7 +8,7 @@
 
 	//	++	File: LinkTableObject.cset.php
 
-class pLinkTableObject extends pObject{
+class pLinkTableHandler extends pHandler{
 
 	public $_passed_data, $_show, $_matchOn, $_matchOnValue, $_link, $_guests;
 
@@ -44,7 +44,7 @@ class pLinkTableObject extends pObject{
 
 
 		pOut("<div class='btSource'><span class='btLanguage'>".DA_TABLE_LINKS_PARENT.": </span><br />
-			<span class='btNative'>".$this->_guests->_object->_data[0][$this->_show_parent]."</span></div>");
+			<span class='btNative'>".$this->_guests->_handler->_data[0][$this->_show_parent]."</span></div>");
 
 		pOut("<div class='btSource'><span class='btLanguage'>".DA_TABLE_LINKS_CHILDREN.": </span></div>");
 
@@ -81,14 +81,14 @@ class pLinkTableObject extends pObject{
 							else{
 							
 								// Simple and a little dirty support for double parenting
-								if((isset($this->_guests->structure[$this->_section]['incoming_links'][$this->_link]['double_parent']) AND $this->_guests->structure[$this->_section]['incoming_links'][$this->_link]['double_parent'] == true) AND $this->_guests->_object->_data[0][$this->_show_parent] == $item[$this->_show_child]){
+								if((isset($this->_guests->structure[$this->_section]['incoming_links'][$this->_link]['double_parent']) AND $this->_guests->structure[$this->_section]['incoming_links'][$this->_link]['double_parent'] == true) AND $this->_guests->_handler->_data[0][$this->_show_parent] == $item[$this->_show_child]){
 
 									// We have to get the data from another freaking data object
 
 									// Getting the other item we need
-									$this->_guests->_object->dataObject->getSingleObject($data[$this->_guests->structure[$this->_section]['incoming_links'][$this->_link]['child']]);
+									$this->_guests->_handler->dataModel->getSingleObject($data[$this->_guests->structure[$this->_section]['incoming_links'][$this->_link]['child']]);
 
-									pOut("<td style='width: ".$datafield->width."'>".$datafield->parse($this->_guests->_object->dataObject->data()->fetchAll()[0]['id'])."</td>");
+									pOut("<td style='width: ".$datafield->width."'>".$datafield->parse($this->_guests->_handler->dataModel->data()->fetchAll()[0]['id'])."</td>");
 								}
 								else
 									pOut("<td style='width: ".$datafield->width."'>".$datafield->parse($item['id'])."</td>");

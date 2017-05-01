@@ -8,7 +8,7 @@
 
 	//	++	File: entrysection.cset.php
 
-class pSearchBox extends pSnippit{
+class pSearchBox extends pTemplatePiece{
 
 	private $_value = null, $_enableLanguage, $_section = null, $_enableWholeWord, $_enableAlpbabetBar, $_home = false, $_idS;
 

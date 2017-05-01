@@ -6,9 +6,9 @@
 	//		Written by Thomas de Roo
 	//		Licensed under MIT
 
-	//	++	File: dataobject.cset.php
+	//	++	File: datamodel.cset.php
 
-class pDataObject {
+class pDataModel {
 
 	public $_fields = null, $_table, $_fieldstring, $_valuestring, $_updateid, $_updatestring, $_singleId, $_paginated, $_data, $_condition, $_order = '1', $_limit = null;
 
@@ -89,12 +89,12 @@ class pDataObject {
 		return  $this->_data;
 	}
 
-	// Prepare funcition to prepare the dataObject for new data
+	// Prepare funcition to prepare the dataModel for new data
 	public function prepareForInsert($data){
 		global $donut;
 		if($this->_fields != null)
 			if(count($data) != count($this->_fields->get()))
-				die("FATAL ERROR from within pDataObject->prepareForInsert(\$data). \$data does not match the field count of the object!");
+				die("FATAL ERROR from within pDataModel->prepareForInsert(\$data). \$data does not match the field count of the object!");
 		$valueString = array('NULL');
 		$key = 0;
 		foreach($this->_fields->get() as $field){
@@ -116,7 +116,7 @@ class pDataObject {
 		return $this->update();
 	}
 
-	// Prepare funcition to prepare the dataObject for new data
+	// Prepare funcition to prepare the dataModel for new data
 	public function prepareForUpdate($data, $id = -1){
 
 		global $donut;
@@ -125,7 +125,7 @@ class pDataObject {
 			$id = $this->_singleId;
 		if($this->_fields != null)
 			if(count($data) != count($this->_fields->get()))
-				die("FATAL ERROR from within pDataObject->prepareForUpdate(..., \$data). \$data does not match the field count of the object!");
+				die("FATAL ERROR from within pDataModel->prepareForUpdate(..., \$data). \$data does not match the field count of the object!");
 		
 		$updateString = array();
 
@@ -157,7 +157,7 @@ class pDataObject {
 			foreach($follow_up as $key => $table){
 				if(is_array($follow_up_field)){
 					if(count($follow_up_field) != count ($follow_up))
-						die("FATAL ERROR from within pDataObject->remove(...\$follow_up_field...). \$follow_up_field does not match the field count of the follow_up!");
+						die("FATAL ERROR from within pDataModel->remove(...\$follow_up_field...). \$follow_up_field does not match the field count of the follow_up!");
 					$field = $follow_up_field[$key];
 				}
 				else
@@ -165,7 +165,7 @@ class pDataObject {
 
 				$tempSet = new pSet;
 				$tempSet->add(new pDataField($field)); 
-				$tempObject = new pDataObject($table, $tempSet);
+				$tempObject = new pDataModel($table, $tempSet);
 				$tempObject->remove($selective, $field);
 			}
 

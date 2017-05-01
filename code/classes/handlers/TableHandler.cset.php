@@ -8,7 +8,7 @@
 
 	//	++	File: TableObject.cset.php
 
-class pTableObject extends pObject{
+class pTableHandler extends pHandler{
 	// Used as last
 
 	public function render(){
@@ -83,7 +83,7 @@ class pTableObject extends pObject{
 						$action = new pAction('link-table', "&#x205F;".$link->structure[$this->_section]['outgoing_links'][$key]['surface'], $link->structure[$this->_section]['outgoing_links'][$key]['icon'], 'small table-link', null, null, ((isset($link->structure[$this->_section]['outgoing_links'][$key]['double_parent'])) ? $this->_section : $key), $link->_app);
 
 						// Counting the links
-						$dataCount = new pDataObject($link->structure[$this->_section]['outgoing_links'][$key]['table']);
+						$dataCount = new pDataModel($link->structure[$this->_section]['outgoing_links'][$key]['table']);
 
 						$dataCount->setCondition("WHERE ((".$link->structure[$this->_section]['outgoing_links'][$key]['field']." = '".$real_id."'" . ((isset($link->structure[$this->_section]['outgoing_links'][$key]['double_parent'])) ? ") OR (". $link->structure[$this->_section]['outgoing_links'][$key]['double_parent'] . " = '".$real_id."'" : '')."))");
 

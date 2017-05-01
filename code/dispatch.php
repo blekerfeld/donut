@@ -10,10 +10,19 @@
 
 
 return array(
+	'META_MENU' => array(
+
+	),
 	'home' => array(
 		'page_title' => CONFIG_SITE_TITLE,
 		'default_section' => 'home',
 		'arguments' => array(
+		),
+		'override_structure_type' => 'pSimpleStructure',
+		'template' => 'pHomeTemplate',
+		'metadata' => array(),
+		'menu' => array(
+			'name'
 		),
 	),
 	'dictionary-admin' => array(

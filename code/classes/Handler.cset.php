@@ -11,9 +11,9 @@
 
 
 // ↓ Object
-class pObject{
+class pHandler{
 
-	public $_icon, $_surface, $_data, $_dfs, $dataObject, $_section, $_app, $_actions, $_actionbar, $_paginated, $_offset, $_itemsperpage, $_condition = '', $_total, $_number_of_pages, $_linked = null, $_structure, $_order = '1', $id, $_activeSection;
+	public $_icon, $_surface, $_data, $_dfs, $dataModel, $_section, $_app, $_actions, $_actionbar, $_paginated, $_offset, $_itemsperpage, $_condition = '', $_total, $_number_of_pages, $_linked = null, $_structure, $_order = '1', $id, $_activeSection;
 
 	public function __construct($structure, $icon, $surface, $table, $itemsperpage, $dfs, $actions, $actionbar, $paginated, $section, $app = 'dictionary-admin'){
 		$this->_structure = $structure;
@@ -32,8 +32,8 @@ class pObject{
 		if(empty($this->_dfs->get()))
 			$this->_dfs = null;
 
-		$this->dataObject = new pDataObject($table, $this->_dfs, $this->_paginated);
-		$this->_total = $this->dataObject->countAll();
+		$this->dataModel = new pDataModel($table, $this->_dfs, $this->_paginated);
+		$this->_total = $this->dataModel->countAll();
 
 		$this->_section = $section;
 		$this->_app = $app;
@@ -60,29 +60,29 @@ class pObject{
 		// The different objects might handle this differently
 	}
 
-	// This one lets the dataobject work! 
+	// This one lets the datamodel work! 
 
 	public function getData($id = -1){
 
 		if($id == -1){
-			return $this->_data = $this->dataObject->getObjects($this->_offset, $this->_itemsperpage)->fetchAll();
+			return $this->_data = $this->dataModel->getObjects($this->_offset, $this->_itemsperpage)->fetchAll();
 		}
 		else{
 			if(!is_numeric($id))
 				$id = pHashId($id, true)[0];
 			$this->id = $id;
-			return $this->_data = $this->dataObject->getSingleObject($id)->fetchAll();
+			return $this->_data = $this->dataModel->getSingleObject($id)->fetchAll();
 		}
 	}
 
 	// Passing on
 	public function setCondition($condition){
-		$this->dataObject->setCondition($condition);
+		$this->dataModel->setCondition($condition);
 	}
 
 	// Passing on
 	public function setOrder($order){
-		$this->dataObject->setOrder($order);
+		$this->dataModel->setOrder($order);
 	}
 
 	public function pagePrevious(){
@@ -96,7 +96,7 @@ class pObject{
 	}
 
 	public function changePagination($value){
-		$this->dataObject->changePagination($value);
+		$this->dataModel->changePagination($value);
 	}
 
 	public function pageSelect(){

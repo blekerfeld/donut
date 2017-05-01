@@ -11,18 +11,18 @@
 
 class pParadigm{
 
-	protected $_id, $_data, $_dataObject, $_headings, $_rows;
+	protected $_id, $_data, $_dataModel, $_headings, $_rows;
 
 	public function __construct($mode){
 		$this->_data = $mode;
 		$this->_id = $mode['id'];
-		$this->_dataObject = new pDataObject('modes');
+		$this->_dataModel = new pDataModel('modes');
 		if(is_numeric($mode)){
-			$this->_data = $this->_dataObject->getSingleObject($mode)->fetchAll()[0];
+			$this->_data = $this->_dataModel->getSingleObject($mode)->fetchAll()[0];
 			$this->_id = $mode;
 		}
-		$this->_headings = $this->_dataObject->customQuery("SELECT submodes.* FROM submodes JOIN submode_apply ON submodes.id = submode_apply.submode_id WHERE submode_apply.mode_type_id = ".$this->_data['mode_type_id'])->fetchAll();
-		$this->_rows = $this->_dataObject->customQuery("SELECT numbers.* FROM numbers JOIN number_apply ON numbers.id = number_apply.number_id WHERE number_apply.mode_type_id =  ".$this->_data['mode_type_id'].";")->fetchAll();
+		$this->_headings = $this->_dataModel->customQuery("SELECT submodes.* FROM submodes JOIN submode_apply ON submodes.id = submode_apply.submode_id WHERE submode_apply.mode_type_id = ".$this->_data['mode_type_id'])->fetchAll();
+		$this->_rows = $this->_dataModel->customQuery("SELECT numbers.* FROM numbers JOIN number_apply ON numbers.id = number_apply.number_id WHERE number_apply.mode_type_id =  ".$this->_data['mode_type_id'].";")->fetchAll();
 	}
 
 	public function compile($lemma){
@@ -57,7 +57,7 @@ class pParadigm{
 
 	protected function findRowNative($row){
 
-		$check = $this->_dataObject->customQuery("SELECT native FROM words JOIN row_native ON row_native.word_id = words.id WHERE row_native.row_id = ".$row['id']);
+		$check = $this->_dataModel->customQuery("SELECT native FROM words JOIN row_native ON row_native.word_id = words.id WHERE row_native.row_id = ".$row['id']);
 
 		if($check->rowCount() != 0)
 			$row['name'] = $check->fetchAll()[0]['native'];
@@ -67,7 +67,7 @@ class pParadigm{
 
 	protected function findAux($row, $heading, $lemma){
 
-		$checkGramGroups = $this->_dataObject->customQuery("
+		$checkGramGroups = $this->_dataModel->customQuery("
 
 			SELECT aux.word_id AS id, aux.mode_id, aux.placement, aux.inflect FROM gram_groups_aux AS aux
 			JOIN gram_groups_members AS gg ON aux.gram_group_id = gg.gram_group_id
@@ -95,7 +95,7 @@ class pParadigm{
 
 		// First we need to check if there maybe is an irregular form for the whole grammatical group
 
-		$checkGramGroups = $this->_dataObject->customQuery("SELECT i.id, i.irregular_form, i.stem FROM gram_groups_irregular AS i
+		$checkGramGroups = $this->_dataModel->customQuery("SELECT i.id, i.irregular_form, i.stem FROM gram_groups_irregular AS i
 			JOIN gram_groups_members gg ON gg.mode_id = ".$this->_id." AND gg.submode_id = ".$heading['id']." AND (gg.number_id = ".$row['id']." OR gg.number_id = 0) AND
 			(gg.type_id = '".$lemma->read('type_id')."' OR gg.type_id = 0) AND
 			(gg.classification_id = '".$lemma->read('classification_id')."' OR gg.classification_id = 0) AND
@@ -117,7 +117,7 @@ class pParadigm{
 				continue;
 			}
 
-			$checkMorphology = $this->_dataObject->customQuery("SELECT i.id, i.irregular_form, i.stem FROM morphology_irregular AS i
+			$checkMorphology = $this->_dataModel->customQuery("SELECT i.id, i.irregular_form, i.stem FROM morphology_irregular AS i
 			JOIN morphology AS m ON m.id = i.morphology_id
 			WHERE i.word_id = ".$lemma->read('id')." AND m.id = ".$rule['id']);
 			if($checkMorphology->rowCount() != 0)
@@ -136,7 +136,7 @@ class pParadigm{
 		echo "";
 
 
-		return $this->_dataObject->customQuery("
+		return $this->_dataModel->customQuery("
 
 			SELECT DISTINCT m.* FROM morphology AS m
 			JOIN morphology_modes AS mm ON mm.morphology_id = m.id

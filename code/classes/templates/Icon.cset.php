@@ -8,7 +8,7 @@
 
 	//	++	File: icon.cset.php
 
-class pIcon extends pSnippit{
+class pIcon extends pTemplatePiece{
 
 	private $_icon, $_size, $_classes;
 

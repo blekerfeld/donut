@@ -57,7 +57,7 @@ function pWikiGetRealArticle($id){
 
 function pWikiShowArticle($article, $permalink = false){
 	
-	if(!is_object($article))
+	if(!is_handler($article))
 		return false;
 
 	// Is this a revertion?
@@ -142,7 +142,7 @@ function pWikiShowHistory($article){
 	if(CONFIG_WIKI_ENABLE_HISTORY == 0)
 		return pUrl('?wiki', true);
 
-	if(!is_object($article))
+	if(!is_handler($article))
 		return false;
 
 	$output = '';
@@ -196,7 +196,7 @@ function pWikiShowEdit($article, $reference){
 
 	global $donut;
 
-	if(!is_object($article))
+	if(!is_handler($article))
 		return false;
 
 	// Is this a revertion?
@@ -318,7 +318,7 @@ function pWikiLinks($text){
 
 		$link_par = explode("|", $matches[1]);
 
-		if($search = pWikiArticleByName($link_par[0])->fetchObject() and is_object($search)){
+		if($search = pWikiArticleByName($link_par[0])->fetchObject() and is_handler($search)){
 				$link = '?wiki='.urlencode($search->article_title);
 				$class = "";
 			}
@@ -328,7 +328,7 @@ function pWikiLinks($text){
 			}
 		
 
-		if(count($link_par) == 1 and is_object($search))
+		if(count($link_par) == 1 and is_handler($search))
 			$link_par[1] = $search->article_title;
 		elseif(count($link_par) == 1)
 			$link_par[1] = $link_par[0];

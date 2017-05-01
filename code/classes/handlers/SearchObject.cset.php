@@ -10,17 +10,17 @@
 
 //$structure, $icon, $surface, $table, $itemsperpage, $dfs, $actions, $actionbar, $paginated, $section, $app = 'dictionary-admin')
 
-class pSearchObject extends pObject{
+class pSearchHandler extends pHandler{
 
 	private $_template, $_meta;
 
 	public function __construct(){
-		// First we are calling the parent's constructor (pObject)
+		// First we are calling the parent's constructor (pHandler)
 		call_user_func_array('parent::__construct', func_get_args());
 
 		// Now we need to know if there is a 
 		if(!isset($this->_activeSection['entry_meta']))
-			return trigger_error("pEntryObject needs a **entry_meta** key in its array structure.", E_USER_ERROR);
+			return trigger_error("pEntryHandler needs a **entry_meta** key in its array structure.", E_USER_ERROR);
 
 		$this->_meta = $this->_activeSection['entry_meta'];
 	}
@@ -76,7 +76,7 @@ class pSearchObject extends pObject{
 		pAdress::session('exactMatch', $wholeword);
 
 
-		$lemmaObject = new pLemmaDataObject;
+		$lemmaObject = new pLemmaDataModel;
 
 
 		$fetchSearch = $lemmaObject->search($searchlang->id, $returnlang->id, $query, $wholeword);

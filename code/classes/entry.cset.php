@@ -13,25 +13,25 @@
 
 class pEntry{
 
-	public $_id, $_entry, $_dataObject, $_data, $_subEntries, $_template;
+	public $_id, $_entry, $_dataModel, $_data, $_subEntries, $_template;
 
-	public function __construct($dataObject, $table = ''){
+	public function __construct($dataModel, $table = ''){
 
-		if(is_a($dataObject, "pDataObject") OR is_subclass_of($dataObject, "pDataObject")){
-			$this->_dataObject = $dataObject;
-			$this->_id = $this->_dataObject->_singleId;
-			$this->_entry = $this->_dataObject->data()->fetchAll()[0];
+		if(is_a($dataModel, "pDataModel") OR is_subclass_of($dataModel, "pDataModel")){
+			$this->_dataModel = $dataModel;
+			$this->_id = $this->_dataModel->_singleId;
+			$this->_entry = $this->_dataModel->data()->fetchAll()[0];
 		}
-		elseif(is_array($dataObject) ANd $table != ''){
-			$this->_id = $dataObject['id'];
-			$this->_dataObject = new pDataObject($table);
-			$this->_entry  = $dataObject;
+		elseif(is_array($dataModel) ANd $table != ''){
+			$this->_id = $dataModel['id'];
+			$this->_dataModel = new pDataModel($table);
+			$this->_entry  = $dataModel;
 		}
 		elseif($table != ''){
-			$this->_dataObject = new pDataObject($table);
-			$this->_id = $dataObject;
-			$this->_dataObject->getSingleObject($this->_id);
-			$this->_entry = $this->_dataObject->data()->fetchAll()[0];
+			$this->_dataModel = new pDataModel($table);
+			$this->_id = $dataModel;
+			$this->_dataModel->getSingleObject($this->_id);
+			$this->_entry = $this->_dataModel->data()->fetchAll()[0];
 		}
 		else
 			return die ("Fatal error creating the entry object");
@@ -56,22 +56,6 @@ class pEntry{
 			$subEntry->setID($this->_id);
 			$subEntry->compile();
 		}
-	}
-
-
-	// This function will fetch all needed data, based on a entry data object.
-
-	public function parseEntryDataObject($entryDataObject){
-		if(!is_a($entryDataObject, 'pEntryDataObject'))
-			return die("Subobjects of the entry need to be of type **pEntryDataObject**.");
-
-		// First the EntryDataObject will be pleased with some kind of indentification, let's pass our ID
-
-		$entryDataObject->setID($this->_id);
-		$entryDataObject->compile();
-
-		var_dump($entryDataObject);
-
 	}
 
 	public function read($var){

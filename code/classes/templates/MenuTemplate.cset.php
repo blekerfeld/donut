@@ -6,9 +6,10 @@
 	//		Written by Thomas de Roo
 	//		Licensed under MIT
 
-	//	++	File: templates.cset.php
+	//	++	File: MenuTemplate.cset.php
 
-class pSnippit{
+class pMenuTemplate extends pTemplate{
 
+	
 
 }

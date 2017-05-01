@@ -11,15 +11,15 @@
 
 class pInflector{
 	
-	protected $_modes, $_tables, $_dataObject, $_lemma, $_compiledParadigms, $_twolc, $_twolcRules, $_auxNesting;
+	protected $_modes, $_tables, $_dataModel, $_lemma, $_compiledParadigms, $_twolc, $_twolcRules, $_auxNesting;
 
 	public function __construct($lemma, $twolcRules, $nesting = 0, $auxNesting = 0){
 		if($nesting > 12){
 			die();
 		}
 		$this->_lemma = $lemma;
-		$this->_dataObject = new pDataObject('modes');
-		$this->_modes = $this->_dataObject->customQuery("SELECT DISTINCT modes.* FROM modes JOIN mode_apply ON modes.id = mode_apply.mode_id WHERE mode_apply.type_id = ".$this->_lemma->read('type_id'))->fetchAll();
+		$this->_dataModel = new pDataModel('modes');
+		$this->_modes = $this->_dataModel->customQuery("SELECT DISTINCT modes.* FROM modes JOIN mode_apply ON modes.id = mode_apply.mode_id WHERE mode_apply.type_id = ".$this->_lemma->read('type_id'))->fetchAll();
 		$this->_compiledParadigms = new pSet;
 		$this->_twolc = new pTwolc($twolcRules);
 		$this->_twolc->compile();
@@ -112,20 +112,7 @@ class pInflector{
 
 	public function buildMode($mode_array){
 
-		$mode = $this->_compiledParadigms[$mode_array['id']];
-		$mode_name = $mode_array['name'];
-
-		$output = "<div class='inflections_mode_wrap'><table class='inflections'><tr class='title'><td colspan='2'>".$mode_name."</td></tr>";
-
-		foreach($mode as $headingHolder){
-			$heading = $headingHolder['heading'];
-			$output .= "<tr class='heading'><td colspan='2'>".$heading['name']."</td></tr>";
-			foreach($headingHolder['rows'] as $row){
-				$output .= "<tr><td class='row_name'>".$row['self']['name']."</td><td class='row_inflected'>".($this->_twolc->feed($row['inflected']))->toSurface()."</td></tr>";
-			}
-		}
-
-		return $output."</table></div>";
+		return (new pInflectionTable($this->_twolc, $mode_array, $this->_compiledParadigms));
 
 	}
 

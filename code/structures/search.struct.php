@@ -20,7 +20,7 @@ return array(
 		),
 		'search' => array(
 			'section_key' => 'search',
-			'type' => 'pSearchObject',
+			'type' => 'pSearchHandler',
 			'template' => 'pLemmaTemplate',
 			'table' => 'words',
 			// Beware: the information fields need to exitst in the structure's datafields array
@@ -55,7 +55,7 @@ return array(
 			),
 			'save_strings' => $saveStrings,
 			'subobjects' => array(
-				new pEntryDataObject("Usage notes", 'usage_notes', 'word_id', false, null, 'pLemmaTemplate'),
+				new pEntryDataModel("Usage notes", 'usage_notes', 'word_id', false, null, 'pLemmaTemplate'),
 			),
 		),
 

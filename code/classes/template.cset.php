@@ -41,3 +41,15 @@ class pEntryTemplate extends pTemplate{
 
 
 }
+
+class pSimpleTemplate extends pTemplate{
+
+	public function renderAll(){
+		pOut("simple template must contain renderAll function");
+	}
+
+}
+
+class pTemplatePiece{
+	
+}

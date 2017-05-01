@@ -20,7 +20,7 @@ return array(
 		),
 		'lemma' => array(
 			'section_key' => 'lemma',
-			'type' => 'pEntryObject',
+			'type' => 'pEntryHandler',
 			'template' => 'pLemmaTemplate',
 			'table' => 'words',
 			// Beware: the information fields need to exitst in the structure's datafields array
@@ -53,16 +53,16 @@ return array(
 			),
 			'save_strings' => $saveStrings,
 			'subobjects' => array(
-				new pEntryDataObject('usage_notes', 'word_id', 'fa-info', false, null, 'usageNotes'),
-				new pEntryDataObject('synonyms', array('word_id_1', 'word_id_2'), 'fa-clone', false, null, 'synonyms'),
-				new pEntryDataObject('antonyms', array('word_id_1', 'word_id_2'), 'fa-venus-mars', false, null, 'antonyms'),
-				new pEntryDataObject('homophones', array('word_id_1', 'word_id_2'), 'fa-microphone	', false, null, 'homophones'),
+				new pEntryDataModel('usage_notes', 'word_id', 'fa-info', false, null, 'usageNotes'),
+				new pEntryDataModel('synonyms', array('word_id_1', 'word_id_2'), 'fa-clone', false, null, 'synonyms'),
+				new pEntryDataModel('antonyms', array('word_id_1', 'word_id_2'), 'fa-venus-mars', false, null, 'antonyms'),
+				new pEntryDataModel('homophones', array('word_id_1', 'word_id_2'), 'fa-microphone	', false, null, 'homophones'),
 			),
 		),
 
 		'translation' => array(
 			'section_key' => 'translation',
-			'type' => 'pEntryObject',
+			'type' => 'pEntryHandler',
 			'template' => 'pTranslationTemplate',
 			'table' => 'translations',
 			// Beware: the information fields need to exitst in the structure's datafields array
@@ -96,7 +96,7 @@ return array(
 
 		'example' => array(
 			'section_key' => 'example',
-			'type' => 'pEntryObject',
+			'type' => 'pEntryHandler',
 			'template' => 'pExampleTemplate',
 			'table' => 'idioms',
 			// Beware: the information fields need to exitst in the structure's datafields array

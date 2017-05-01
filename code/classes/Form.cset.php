@@ -75,7 +75,7 @@ class pSelector{
 
 	private $_data = NULL, $_showField = null, $_useTable = false, $_interactive, $_overrideSection;
 
-	public $dataObject, $value;
+	public $dataModel, $value;
 
 	public function __construct($data, $value = null, $show_field = NULL, $interactive = true, $override_section = null, $condition = NULL){
 		
@@ -102,7 +102,7 @@ class pSelector{
 			$dfs->add(new pDataField($show_field));
 
 			$this->_showField = $show_field; 
-			$this->dataObject = new pDataObject($data, $dfs);
+			$this->dataModel = new pDataModel($data, $dfs);
 		}
 	}
 
@@ -114,7 +114,7 @@ class pSelector{
 	public function render(){
 
 		// Fetching the data that we need
-		$this->dataObject->getObjects();
+		$this->dataModel->getObjects();
 
 		$output = '';
 
@@ -124,7 +124,7 @@ class pSelector{
 				$output .= '<option value="'.$value.'" '.($this->value == $value ? 'selected' : '').'>'.$name.'</option>';
 		else{
 			// Now we have to do things
-			foreach($this->dataObject->data()->fetchAll() as $option)
+			foreach($this->dataModel->data()->fetchAll() as $option)
 				$output .= '<option value="'.$option['id'].'" '.($this->value == $option['id'] ? 'selected' : '').'>'.$option[$this->_showField].'</option>';
 
 		}
@@ -154,10 +154,10 @@ class pSelector{
 		if(array_key_exists($key, pDataField::stack()))
 			$output .= pDataField::stack()[$key];
 		else{	
-			$this->dataObject->getSingleObject($this->value);
-			if($this->dataObject->count() != 0){
-				pDataField::addToStack($key, ($this->dataObject->data()->fetchAll()[0])[$this->_showField]);
-				$output .= ($this->dataObject->data()->fetchAll()[0])[$this->_showField];
+			$this->dataModel->getSingleObject($this->value);
+			if($this->dataModel->count() != 0){
+				pDataField::addToStack($key, ($this->dataModel->data()->fetchAll()[0])[$this->_showField]);
+				$output .= ($this->dataModel->data()->fetchAll()[0])[$this->_showField];
 			}
 			else
 				$output .= '';
@@ -182,14 +182,14 @@ class pMagicActionForm{
 		$this->_fields = $fields;
 		$this->_table = $table;
 		$this->_app = $app;
-		$this->_object = $object;
-		$this->_action = $this->_object->getAction($name);
+		$this->_handler = $object;
+		$this->_action = $this->_handler->getAction($name);
 		$this->_edit = ($this->_name == 'edit');
 		$this->_section = $section;
 		$this->_strings = $strings;
 		$this->_magicfields = new pSet;
 		if($this->_edit)
-			$this->_data = $this->_object->_data;
+			$this->_data = $this->_handler->_data;
 		else
 			$this->_data = array();
 		$this->_name = ($this->_edit ? 'edit' : 'new');
@@ -226,13 +226,13 @@ class pMagicActionForm{
 
 				// Editing
 				if($this->_edit){
-					$this->_object->dataObject->prepareForUpdate($values);
-					$this->_object->dataObject->update();
+					$this->_handler->dataModel->prepareForUpdate($values);
+					$this->_handler->dataModel->update();
 				}
 				//Adding
 				else{
-					$this->_object->dataObject->prepareForInsert($values);
-					$this->_object->dataObject->insert();
+					$this->_handler->dataModel->prepareForInsert($values);
+					$this->_handler->dataModel->insert();
 				}
 
 				pOut(pNoticeBox('fa-check fa-12', $this->_strings[5].". <a href='".pUrl("?".$this->_app."/".$this->_section. (isset($_REQUEST['position']) ? "/offset/".$_REQUEST['position'] : ""))."'>".$this->_strings[6]."</a>", 'succes-notice ajaxMessage'));
@@ -295,7 +295,7 @@ class pMagicActionForm{
 		}
 
 		pOut("<script type='text/javascript'>
-			".(!(isset($this->_object->_structure[$this->_section]['disable_enter']) AND $this->_object->_structure[$this->_section]['disable_enter'] != true) ? "$(window).keydown(function(e) {
+			".(!(isset($this->_handler->_structure[$this->_section]['disable_enter']) AND $this->_handler->_structure[$this->_section]['disable_enter'] != true) ? "$(window).keydown(function(e) {
 			    		switch (e.keyCode) {
 			       		 case 13:
 			       			 $('.submit-form').click();
@@ -316,7 +316,7 @@ class pMagicActionForm{
 	public function newLinkPrepare($linked, $linkObject, $show_parent, $show_child, $doExtraFields = false, $fields = null){
 
 		$this->_linked = $linked;
-		$this->_linkObject = $linkObject->_object;
+		$this->_linkObject = $linkObject->_handler;
 		$this->_guestObject = $linkObject;
 		$this->_show_parent = $show_parent;
 		$this->_show_child = $show_child;
@@ -344,7 +344,7 @@ class pMagicActionForm{
 		if($empty_error == 0){
 
 			// We have to check if the relation already exists
-			if($this->_object->dataObject->countAll($this->_guestObject->structure[$this->_section]['incoming_links'][$this->_linked]['child'] . " = '" . $this->_object->_matchOnValue . "' AND " . $this->_guestObject->structure[$this->_section]['incoming_links'][$this->_linked]['parent'] . " = '" . $_REQUEST['admin_form_'.$this->_guestObject->structure[$this->_section]['incoming_links'][$this->_linked]['parent']] . "'")){
+			if($this->_handler->dataModel->countAll($this->_guestObject->structure[$this->_section]['incoming_links'][$this->_linked]['child'] . " = '" . $this->_handler->_matchOnValue . "' AND " . $this->_guestObject->structure[$this->_section]['incoming_links'][$this->_linked]['parent'] . " = '" . $_REQUEST['admin_form_'.$this->_guestObject->structure[$this->_section]['incoming_links'][$this->_linked]['parent']] . "'")){
 
 				pOut(pNoticeBox('fa-info-circle fa-12', DA_TABLE_RELATION_EXIST.". <a href='".pUrl("?".$this->_app."&".$this->_section."&link-table&id=".$this->_linkObject->_data[0]['id']."&linked=".$this->_linked)."'>".$this->_strings[6]."</a>", 'notice ajaxMessage'));
 
@@ -355,13 +355,13 @@ class pMagicActionForm{
 			
 				foreach($this->_fields->get() as $field)
 					if($field->name == $this->_guestObject->structure[$this->_section]['incoming_links'][$this->_linked]['child'])
-						$values[] = $this->_object->_matchOnValue;
+						$values[] = $this->_handler->_matchOnValue;
 					else
 						$values[] = $_REQUEST['admin_form_'.$field->name];
 
-				$this->_object->dataObject->prepareForInsert($values);
-				$this->_object->dataObject->insert();
-				$this->_object->dataObject->getSingleObject(1);
+				$this->_handler->dataModel->prepareForInsert($values);
+				$this->_handler->dataModel->insert();
+				$this->_handler->dataModel->getSingleObject(1);
 				pOut(pNoticeBox('fa-info-circle fa-12', DA_TABLE_RELATION_ADDED.". <a href='".pUrl("?".$this->_app."&".$this->_section."&link-table&id=".$this->_linkObject->data()[0]['id']."&linked=".$this->_linked)."'>".$this->_strings[6]."</a>", 'succes-notice ajaxMessage'));
 			}
 		}
@@ -379,7 +379,7 @@ class pMagicActionForm{
 	public function newLinkForm(){
 
 		pOut("<div class='btCard admin link-table'>");
-		pOut("<div class='btTitle'><i class='fa fa-plus-circle'></i> ".DA_TABLE_NEW_RELATION."<span class='medium'>".$this->_object->_surface."</span></div>");
+		pOut("<div class='btTitle'><i class='fa fa-plus-circle'></i> ".DA_TABLE_NEW_RELATION."<span class='medium'>".$this->_handler->_surface."</span></div>");
 
 		pOut(pNoticeBox('fa-spinner fa-spin fa-12', $this->_strings[2], 'notice saving hide'));
 
