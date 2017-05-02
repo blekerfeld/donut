@@ -93,17 +93,9 @@ class pAdminStructure extends pStructure{
 
 	}
 
-	private function headerDropDown(){
+	private function header(){
 
-		$output = "<div class=' header dictionary home wiki' ><div class='title_header d_admin_header_dropdown' ><span class='ttip_header' data-tooltip-content='#dropdown_header'>".(new pIcon($this->_meta['icon'], 24))." ".$this->_meta['title']."</span> ".(new pIcon('fa-chevron-down', 12))." </div></div>
-
-			<div class='hide'><div id='dropdown_header' class=''>
-			<a href='".pUrl("?".$this->_app)."' class='ttip-sub active'>".(new pIcon($this->_meta['icon'], 10))." ".$this->_meta['title']."</a>";
-
-		foreach($this->_meta['other_apps'] as $app)
-			$output .= "<a href='".pUrl("?".$app['app'])."' class='ttip-sub'>".(new pIcon($app['icon'], 10))." ".$app['surface']."</a>";
-
-		$output .= "	</div></div>";
+		$output = pMarkDown("## ".(new pIcon($this->_meta['icon']))." ".$this->_meta['title']);
 
 		return $output;
 	}
@@ -120,8 +112,8 @@ class pAdminStructure extends pStructure{
 		// Starting with the wrapper
 		pOut("<div class='d_admin_wrap'><div class='d_admin'>");
 
-		// Header time
-		pOut($this->headerDropDown());
+				// Header time
+		pOut("<div class='d_admin_header'>".$this->header()."</div>");
 
 		// Showing an error if there is one set.
 		if($this->_error != null)

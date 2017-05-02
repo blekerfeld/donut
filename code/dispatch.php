@@ -8,10 +8,49 @@
 	//	++	File: dispatch.struct.php
 	// The structure of donut's routing
 
+/*
+
+Menu item:
+
+		array(
+			'name' => 'Dictionary',
+			'app' => 'home',
+			'icon' => 'fa-book',
+			'subitems' => array(
+				array(
+					'name' => '',
+					'app' => '',
+					'icon' => ''
+				),
+			),
+		),
+
+*/ 
 
 return array(
-	'META_MENU' => array(
-
+	'MAGIC_MENU' => array(
+		'default_permission' => 0,
+		'items' => array(
+			'home' => array(
+				'name' => MMENU_DICTIONARY,
+				'app' => 'home',
+			),
+			'dictionary-admin' => array(
+				'name' => MMENU_SETTINGS,
+				'app' => 'dictionary-admin',
+				'permission' => -4,
+				'class' => 'admin',
+				'icon' => 'fa-cog',
+				'subitems' => array(
+					'dictionary-admin' => array(
+						'name' => 'Dictionary',
+						'icon' => 'fa-book',
+						'app' => 'dictionary-admin',
+						'permission' => -4,
+					),
+				),
+			),
+		),
 	),
 	'home' => array(
 		'page_title' => CONFIG_SITE_TITLE,
@@ -21,9 +60,7 @@ return array(
 		'override_structure_type' => 'pSimpleStructure',
 		'template' => 'pHomeTemplate',
 		'metadata' => array(),
-		'menu' => array(
-			'name'
-		),
+		'menu' => 'home',
 	),
 	'dictionary-admin' => array(
 		'page_title' => 'Admin panel',
@@ -34,6 +71,7 @@ return array(
 			2 => 'id',
 			3 => 'linked',
 		),
+		'menu' => 'dictionary-admin',
 	),
 	'entry' => array(
 		'page_title' => 'Entry',
@@ -42,6 +80,7 @@ return array(
 			1 => 'id',
 			2 => 'action',
 		),
+		'menu' => '',
 	),		
 	'search' => array(
 		'page_title' => 'Search',
@@ -50,6 +89,7 @@ return array(
 			0 => 'section',
 			1 => 'query',
 		),
+		'menu' => '',
 	),	
 	'docs' => array(
 		'page_title' => 'Documentation',
@@ -57,6 +97,7 @@ return array(
 		'arguments' => array(
 			0 => 'section',
 		),
+		'menu' => '',
 	),	
 	'auth' => array(
 		'page_title' => 'Login',
@@ -64,5 +105,6 @@ return array(
 		'arguments' => array(
 			0 => 'section',
 		),
+		'menu' => '',
 	)
 );

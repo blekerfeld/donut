@@ -2,8 +2,6 @@
 
 $time_start = microtime(true); 
 
-	
-
 	// l&Ezen [-en;&E=a]
 
 	$rules = array("CON.VOW_CON_+.VOW=>%%", 
@@ -20,11 +18,9 @@ $time_start = microtime(true);
 		   "CON_&EE_z=>e",
 		    "<:CON._VOW.VOW__CON.+=>$1");
 
-	$x = new pInflector(new pLemma(1), $rules);
+	
 
-	var_dump($x->compile());
-
-	pOut($x->buildMode(array('id' => 1, 'name' => 'nominative')));
+	(new pMenuTemplate)->render();
 
 	$rules2 = array(
 		"<:_o_CON.VOW=>oʊ", "CON_o_CON.VOW=>oʊ", "_o.o_=>oʊ",
@@ -65,6 +61,8 @@ $time_start = microtime(true);
 	// Rule variables: E -> e that doesn't need to be corrected, D -> becomes d or t by phonological rules
 
 	pConsole($twolc->feed((new pInflection("[]s"))->inflect("aardappel"))->toDebug()."<br />");
+	pConsole($twolc->feed((new pInflection("[-en]en-!/je;s-/je"))->inflect("mannetje"))->toDebug()."<br />");
+	pConsole($twolc->feed((new pInflection("[-en]en-!/je;s-/je"))->inflect("huis"))->toDebug()."<br />");
 	pConsole($twolc->feed((new pInflection("[]en"))->inflect("kind+er"))->toDebug()."<br />");
 	pConsole($twolc->feed((new pInflection("[]en"))->inflect("man"))->toDebug()."<br />");
 	pConsole($twolc->feed((new pInflection("[]en"))->inflect("ei+er"))->toDebug()."<br />");

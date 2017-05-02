@@ -54,9 +54,7 @@
             <div class='notice danger-notice'><i class='fa fa-warning fa-12'></i> This site needs javascript to function, with javascript turned off, most of the functionality won't work!</div>
           </noscript>
           <div class='ajaxOutLoad' id='main'>
-            <div class='nav <?php echo (isset($_REQUEST['home']) ? 'home' : '');?>'>
-                  <?php echo $donut['page']['menu']; ?>
-            </div>
+              <?php echo (new pMenuTemplate); ?>
               <?php
                   if(!empty($donut['page']['header']))
                     echo "<div class='header'>\n".$donut['page']['header_final']."\n </div>" ;
