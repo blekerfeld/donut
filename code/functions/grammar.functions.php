@@ -4,17 +4,6 @@ function pMarkDownParse($text){
 	return pMarkDown($text);
 }
 
-function pMarkDown($text, $block = true){
-	
-	// We need to require the parsedown files, but only once.
-	require_once pFromRoot('library/assets/php/vendors/parsedown.require.php');
-	require_once pFromRoot('library/assets/php/vendors/parsedown_extra.require.php');
-
-	$parse = new ParsedownExtra;
-
-	return "<div class='markdown-body ".($block ? '' : 'inline-block')."'>".$parse->text($text)."</div>";
-}
-
 
 function pLanguageDelete($id){
 	return pQuery("DELETE translation_words FROM translation_words JOIN translations ON translations.id = translation_words.translation_id WHERE translations.language_id = $id;

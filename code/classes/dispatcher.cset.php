@@ -11,18 +11,19 @@
 
 // This class takes the url-querystring, reads and understands it (with help of dispatch.struct.php in the structure-folder) and creates all the parsers and objects needed in order to route to the desired place.
 
-class pDispatch {
+class pDispatcher {
 
 	private $_dispatchData, $_magicArguments = array(array('is:result', 'ajax', 'nosearch'), array('offset', 'return', 'position'), array(array('search', 'dictionary', 'query'))), $_urlArguments, $_arguments;
 
 	public $query, $structureObject;
 
-	public static $active;
+	public static $active, $structure;
 
 	public function __construct($query){
 		$this->query = $query;
 		pAdress::queryString($this->query);
 		$this->_dispatchData = require_once pFromRoot("code/Dispatch.php");
+		self::$structure = $this->_dispatchData;
 		unset($this->_dispatchData['META_MENU']);
 	}
 
@@ -42,7 +43,7 @@ class pDispatch {
 		// We can only create a structure if we have the necessary data!
 		if(!isset($this->_dispatchData[$this->_urlArguments[0]])){
 			if(file_exists(pFromRoot("static/".$this->_urlArguments[0].".md")))
-				pOut("<div class='home-margin'>".pMarkdown(file_get_contents(pFromRoot("static/".$this->_urlArguments[0].".md")), true)."</div>");
+				pOut("<div class='home-margin'>".pMarkdown(file_get_contents(pFromRoot("static/".$this->_urlArguments[0].".md")), true, true, true)."</div>");
 			// DEBUG MODE ONLY
 			elseif($this->_urlArguments[0] == 'debug' AND file_exists(pFromRoot("debug.php"))){
 				pOut("<div class='home-margin'>");
@@ -82,6 +83,10 @@ class pDispatch {
 			$this->takeApartDouble($double);
 		foreach($this->_magicArguments[2] as $tripple)
 			$this->takeApartTripple($tripple[0], $tripple[1], $tripple[2]);
+
+		// Optional trailing slashes
+		if(!isset($this->_urlArguments[1]))
+			$this->_urlArguments[1] = '';
 
 		//A section can be optional
 		if(!in_array('section', $templateArguments) AND (count($this->_urlArguments) == count($templateArguments) + 1)){
@@ -165,6 +170,14 @@ class pDispatch {
 				unset($this->_urlArguments[$keyDict]);
 				unset($this->_urlArguments[$keySearch - 2]);
 			}
+	}
+
+	public static function active(){
+		return self::$active;
+	}
+
+	public static function structure(){
+		return self::$structure;
 	}
 
 }

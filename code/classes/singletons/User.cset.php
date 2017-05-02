@@ -41,10 +41,14 @@ class pUser{
 	}
 
 	public function checkPermission($minus){
-		return (self::$user['role'] == (4 + $minus) OR self::$user['role']< (4 + $minus));
+		if(isset(self::$user))
+			return (self::$user['role'] == (4 + $minus) OR self::$user['role']< (4 + $minus));
+		else
+			return ((4 + $minus) == 4 OR (4 + $minus) < 4);
 	}
 
 	public static function logIn($id){
+		setcookie('pKeepLogged', $_COOKIE['pKeepLogged'], time()-3600, '/');
 		if(!is_numeric($id)){
 			self::$dataModel->setCondition(" WHERE username = '$id' ");
 			self::$dataModel->getObjects();
@@ -56,13 +60,13 @@ class pUser{
 		self::$dataModel->getSingleObject($id);
 		self::load(self::$dataModel->data()->fetchAll()[0]);
 		$arr = array($id, self::read('password'), self::read('username'));
-		setcookie('pKeepLogged', serialize($arr), time()+5*52*7*24*3600);
+		setcookie('pKeepLogged', serialize($arr), time()+5*52*7*24*3600, '/');
 	}
 
 	public static function logOut(){
 		unset($_SESSION['pUser']);
 		unset($_SESSION['pUserData']);
-		setcookie('pKeepLogged', $_COOKIE['pKeepLogged'], time()-3600);
+		setcookie('pKeepLogged', $_COOKIE['pKeepLogged'], time()-3600, '/');
 		self::logIn(0);
 	}
 
@@ -79,7 +83,7 @@ class pUser{
 
 
 		if(!isset($_COOKIE['pKeepLogged']))
-			if(isset($_SESSION['pUser']) AND self::$id != $_SESSION['pUser']){
+			if(isset($_SESSION['pUser'])){
 				self::$dataModel->getSingleObject($_SESSION['pUser']);
 				return self::load(self::$dataModel->data()->fetchAll()[0]);
 			}
@@ -89,19 +93,16 @@ class pUser{
 				try
 				{
 					$userInfo = unserialize($_COOKIE['pKeepLogged']);
-
-						// Creating the datamodel, for checking if the cookie-obtained info is still valid.
+	
+					// Creating the datamodel, for checking if the cookie-obtained info is still valid.
 					
 					self::$dataModel->setCondition("WHERE username = '{$userInfo[2]}' and password = '{$userInfo[1]}' and id = {$userInfo[0]}");
 					self::$dataModel->getSingleObject($userInfo[0]);
 
-					if(self::$dataModel->data()->rowCount() == 1){
-						if(!isset($_SESSION['pUser'])){
-							self::load(self::$dataModel->data()->fetchAll()[0]);
-							return $_SESSION['pUser'] = $userInfo[0];
-						}
-						 return true;
 
+					if(self::$dataModel->data()->rowCount() == 1){
+						self::load(self::$dataModel->data()->fetchAll()[0]);
+						return $_SESSION['pUser'] = $userInfo[0];
 					}
 
 					// The data is not found that way, that means we have to loggout

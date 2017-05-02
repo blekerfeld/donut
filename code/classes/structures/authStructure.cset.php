@@ -39,7 +39,7 @@ class pAuthStructure extends pStructure{
 
 	protected function logOut(){
 		(new pUser)->logOut();	
-		return pUrl('?auth/logiddn', true);
+		return pUrl('?auth', true);
 	}
 
 	public function render(){
