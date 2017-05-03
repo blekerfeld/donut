@@ -35,6 +35,41 @@ class pEntryHandler extends pHandler{
 			pUrl('?entry/'.pAdress::arg()['id'], true);
 		}
 
+		// Discuss
+		if($action == 'discuss'){
+			pOut("<div class='wdComments-list'>
+					<div class='wdComment'>
+						<div class='wdContent'>
+							mysql_get_host_info();
+						</div>
+						<div class='children'>
+							<div class='wdComment'>
+								<div class='wdContent'>
+									hoi
+								</div>
+								<div class='children'>
+										<div class='wdComment'>
+								<div class='wdContent'>
+									hoi
+								</div>
+								<div class='children'>
+
+									<div class='wdComment'>
+								<div class='wdContent'>
+									hoi
+								</div>
+								<div class='children'>
+								</div>
+							</div>
+								</div>
+							</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>");
+		}
+
 	}
 
 	public function render(){
