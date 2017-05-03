@@ -37,21 +37,34 @@ class pDispatcher {
 		if(isset($this->_urlArguments[0]) AND isset($this->_dispatchData[$this->_urlArguments[0]]))
 			$templateArguments = $this->_dispatchData[$this->_urlArguments[0]]['arguments'];
 
+		// Handeling the magic arguments
+		foreach($this->_magicArguments[0] as $single)
+			$this->takeApartSingle($single);
+		foreach($this->_magicArguments[1] as $double)
+			$this->takeApartDouble($double);
+		foreach($this->_magicArguments[2] as $tripple)
+			$this->takeApartTripple($tripple[0], $tripple[1], $tripple[2]);
+
 		// The first argument decides which structure to use.
 		$structureName = explode('-', $this->_urlArguments[0]);
 
 		// We can only create a structure if we have the necessary data!
 		if(!isset($this->_dispatchData[$this->_urlArguments[0]])){
-			if(file_exists(pFromRoot("static/".$this->_urlArguments[0].".md")))
+			if(file_exists(pFromRoot("static/".$this->_urlArguments[0].".md"))){
+				pAdress::arg($this->_arguments);
 				pOut("<div class='home-margin'>".pMarkdown(file_get_contents(pFromRoot("static/".$this->_urlArguments[0].".md")), true, true, true)."</div>");
+			}
 			// DEBUG MODE ONLY
 			elseif($this->_urlArguments[0] == 'debug' AND file_exists(pFromRoot("debug.php"))){
+				pAdress::arg($this->_arguments);
 				pOut("<div class='home-margin'>");
 				require pFromRoot("debug.php");
 				pOut("</div>");
 			}
-			elseif($this->_urlArguments[0] == 'README' AND file_exists(pFromRoot("README.md")))
+			elseif($this->_urlArguments[0] == 'README' AND file_exists(pFromRoot("README.md"))){
+				pAdress::arg($this->_arguments);
 				pOut("<div class='home-margin'>".pMarkdown(file_get_contents(pFromRoot("README.md")), true)."</div>");
+			}
 			else
 				$this->do404();
 			return false;
@@ -75,14 +88,6 @@ class pDispatcher {
 
 		$this->structureObject = new $structureType($structureName[0], (isset($structureName[1]) ? $structureName[1] : ''), $this->_urlArguments[0], $this->_dispatchData[$this->_urlArguments[0]]['default_section'], $this->_dispatchData[$this->_urlArguments[0]]['page_title'], $this->_dispatchData[$this->_urlArguments[0]]);
 
-
-		// Handeling the magic arguments
-		foreach($this->_magicArguments[0] as $single)
-			$this->takeApartSingle($single);
-		foreach($this->_magicArguments[1] as $double)
-			$this->takeApartDouble($double);
-		foreach($this->_magicArguments[2] as $tripple)
-			$this->takeApartTripple($tripple[0], $tripple[1], $tripple[2]);
 
 		// Optional trailing slashes
 		if(!isset($this->_urlArguments[1]))
