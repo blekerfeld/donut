@@ -23,18 +23,25 @@ class pTwolc{
 		// Let's create a string object
 		$string = new pTwolcString($string);
 
-		if($this->_pending != null)
-			foreach($this->_pending as $change)
-				$string->change($change['pattern'], $change['replace']);
+		// The changes have to be run twice, to give variables a chance!
+		// TODO; FOR NO ONLY RUN ONCE
+		for ($i=0; $i < 1; $i++) { 
+			// First time, to replace variables
+			if($this->_pending != null)
+				foreach($this->_pending as $change)
+					$string->change($change['pattern'], $change['replace'], $change['middle']);
+		}
+
 
 		return $string;
 
 	}
 
 	public function compile(){
-		foreach($this->_rules as $rule){
+
+		foreach($this->_rules as $rule)
 			$this->parseRule($rule);
-		}
+
 		foreach($this->_parsedRules as $rule)
 			$this->pendChange($rule);
 	}
@@ -54,6 +61,7 @@ class pTwolc{
 			'middle' => "(".$this->parseContext($middlePart, false, true).")",
 			'right' => $this->parseContext($rightPart, true),
 			'replace' => $replace,
+			'original_middle' => $middlePart,
 		);
 		return $this->_parsedRules[] = $parsedRule;
 	}
@@ -83,12 +91,12 @@ class pTwolc{
 
 		//pConsole(pVarDump($regex));
 
-		$this->_pending[] = array('pattern' => $regex, 'replace' => $this->parseReplace($rule['replace']));
+		$this->_pending[] = array('pattern' => $regex, 'replace' => $this->parseReplace($rule['replace']), 'middle' => $rule['original_middle']);
 		
 	}
 
 
-	protected function parseContext($context, $right = false, $middle = false){
+	public function parseContext($context, $right = false, $middle = false){
 		$parsedContext = array();
 		$splitContext = explode('.', $context);
 		// CON.CON.CON (three consonants)
@@ -147,11 +155,17 @@ class pTwolc{
 				$parsedContext[$count] = "[^".pAlphabet::getGroupsAsString($char)."]{1}";
 			}
 			elseif(strlen($char) == 3)
-				$parsedContext[$count] = "[".pAlphabet::getGroupsAsString($char)."]{1}";
+				if(pAlphabet::getGroupsAsString($char) != '')
+					$parsedContext[$count] = "[".pAlphabet::getGroupsAsString($char)."]{1}";
+				else
+					$parsedContext[$count] = preg_quote($char);
 			elseif($char == '+' OR $char == '#')
 				$parsedContext[$count] = '[+]{1}';	
 			elseif(strlen($char) == 1){
 				$parsedContext[$count] = "[".$char."]{1}";
+			}
+			else{
+				$parsedContext[$count] = preg_quote($char);
 			}
 
 			if($right OR $middle)
@@ -181,13 +195,26 @@ class pTwolcString{
 		return $this->_string;
 	}
 
-	public function change($search, $replace){
-		$this->_string = preg_replace($search, $replace, $this->_string);
+	public function change($search, $replace, $middle){
+		//$this->_string = preg_replace($search, $replace, $this->_string);
+		$string = $this->_string;
+		$this->_string = preg_replace_callback($search, function($matches) use ($search, $replace, $middle, $string){
+			$match = $matches[1];
+			$output = $string;
+			$middleExploded = explode(',', substr($middle, 1, -1));
+			$replaceExploded = explode(',', substr($replace, 1, -1));
+
+			if(isset($replaceExploded[array_search($match, $middleExploded)]))
+				return $replaceExploded[array_search($match, $middleExploded)];
+			else
+				return $replace;
+				
+		}, $this->_string);
 	}
 
 	public function toDebug(){
 		//return $this->_string;
-		return strtolower(str_replace(array('0', '+', '{', '::', '&', '#'), '', $this->_string)).' - ('.$this->_string.') - ← '.$this->_orginalString;
+		return strtolower(str_replace(array('0', '+', '{', '::', ':', '&', '#'), '', $this->_string)).' - ('.$this->_string.') - ← '.$this->_orginalString;
 	}
 
 	public function toSurface(){

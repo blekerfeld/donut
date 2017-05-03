@@ -1,4 +1,5 @@
 <?php
+	$time_start = microtime(true); 
 	// 	Donut 				🍩 
 	//	Dictionary Toolkit
 	// 		Version a.1

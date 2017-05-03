@@ -79,6 +79,8 @@ class pEntryHandler extends pHandler{
 		pOut($this->_actionbar->output);
 
 		// Shortcut to the data
+
+
 		$data = $this->dataModel->data()->fetchAll()[0];
 
 		// Passing the data on to the template

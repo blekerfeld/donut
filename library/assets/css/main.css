@@ -2806,9 +2806,19 @@ div.d_admin{
 }
 
 
+div.debugConsole input{
+  border: none;
+  background: transparent;
+  font-family: Consolas;
+  color: white;
+  width: 97%;
+}
+
 div.debugConsole{
   color: #fff;
   padding: 40px;
+  height: 500px;
+  overflow: scroll;
   background: #111;
   font-family: Consolas;
 }
