@@ -2432,10 +2432,17 @@ a.btAction.blue.disabled:hover{
   color: snow;
 }
 
-.wdComments-list, .wdComment {
+.wdComments-list{
+  border-collapse: separate;
+    border-spacing: 10px 50px;  
+}
+
+.wdComments-list .wdComment {
   width: 100%;
   margin-top: 10px;
 }
+
+
 .wdComment a.actionbutton {
   font-size: 12px;
   padding: 4px;
@@ -2446,8 +2453,6 @@ a.btAction.blue.disabled:hover{
 .wdContent {
   background: #fafafa;
   padding: 10px;
-  border: 1px solid rgba(240, 240, 240, 0.4);
-  border-radius: 10px;
   font-family: Trebuchet MS;
   font-size: 14px;
 }
@@ -2500,13 +2505,18 @@ a.wdTopLink, a.wdTopLink i.fa {
   color: #68777d;
   font-weight: bold;
 }
-.wdComments .children {
+.wdComment .children {
   margin-left: 2%;
   padding-left: 20px;
   width: 100%;
-  border-left: dashed 1px #c9c9c9;
+  border-left: solid 1px #EFEFEF;
 }
-.wdComments .children.bottom {}
+
+.children .wdContent{
+  margin-right: 1%;
+}
+
+.wdComment .children.bottom {}
 .beta {
   color: #677461;
   font-family: Open Sans;

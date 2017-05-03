@@ -60,9 +60,10 @@ $time_start = microtime(true);
 
 	// Rule variables: E -> e that doesn't need to be corrected, D -> becomes d or t by phonological rules
 
+	pConsole($twolc->feed((new pInflection("[]s-^a"))->inflect("aardappel"))->toDebug()."<br />");
 	pConsole($twolc->feed((new pInflection("[]s"))->inflect("aardappel"))->toDebug()."<br />");
-	pConsole($twolc->feed((new pInflection("[-en]en-!/je;s-/je"))->inflect("mannetje"))->toDebug()."<br />");
-	pConsole($twolc->feed((new pInflection("[-en]en-!/je;s-/je"))->inflect("huis"))->toDebug()."<br />");
+	pConsole($twolc->feed((new pInflection("[-en]en-!\$je;s-\$je"))->inflect("mannetje"))->toDebug()."<br />");
+	pConsole($twolc->feed((new pInflection("[-en]en-!\$en;s-\$je"))->inflect("huis"))->toDebug()."<br />");
 	pConsole($twolc->feed((new pInflection("[]en"))->inflect("kind+er"))->toDebug()."<br />");
 	pConsole($twolc->feed((new pInflection("[]en"))->inflect("man"))->toDebug()."<br />");
 	pConsole($twolc->feed((new pInflection("[]en"))->inflect("ei+er"))->toDebug()."<br />");

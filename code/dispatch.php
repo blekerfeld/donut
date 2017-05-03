@@ -79,6 +79,8 @@ return array(
 		'arguments' => array(
 			1 => 'id',
 			2 => 'action',
+			3 => 'sub_action',
+			4 => 'sub_id'
 		),
 		'menu' => '',
 	),		

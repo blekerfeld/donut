@@ -109,26 +109,14 @@ class pInflection{
 
 	protected function look($string, $negOver){
 
-		$check = false;
-
-		if(pStartsWith($negOver, '!^')){
-			if(pStartsWith($string, substr($negOver, 2)))
-				$check = true;
-		}
-		elseif(pStartsWith($negOver, '!/')){
-			if(pEndsWith($string, substr($negOver, 2)))
-				$check = true;
-		}
-
-		elseif(pStartsWith($negOver, '^')){
-			if(pStartsWith($string, substr($negOver, 2)))
-				$check = false;
-		}
-		elseif(pStartsWith($negOver, '/'))
-			if(pEndsWith($string, substr($negOver, 1)))
-				$check = false;
-
-		return $check;
+		if(pStartsWith($negOver, '!^'))
+			return pStartsWith($string, substr($negOver, 2));
+		elseif(pStartsWith($negOver, '!$'))
+			return pEndsWith($string, substr($negOver, 2));
+		elseif(pStartsWith($negOver, '^'))
+			return !(pStartsWith($string, substr($negOver, 1)));
+		elseif(pStartsWith($negOver, '$'))
+			return !(pEndsWith($string, substr($negOver, 1)));
 
 	}
 
@@ -143,8 +131,6 @@ class pInflection{
 		if(isset($whatExploded[1])){
 			foreach($whatExploded as $negOver){
 				$check = $this->look($string, $negOver);
-				if($check == true)
-					break;
 			}
 		}
 
