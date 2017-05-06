@@ -22,9 +22,21 @@ class pRulesheetTemplate extends pTemplate{
 
 	public function ruleTypeWatch($section){
 		return "<script type='text/javascript'>
+
+				function loadDesc(){
+					$('.describeStatement').load('".pUrl('?rulesheet/'.$section.'/describe/ajax')."', {'rule' : $('#rule-content').val()});
+					if($('#example').val() != ''){
+						loadEx();
+					}
+				}
+
+				$(document).ready(function(){
+					loadDesc();
+				});
+
 				var options = {
 			    	callback: function (value) {
-			    		$('.describeStatement').load('".pUrl('?rulesheet/'.$section.'/describe/ajax')."', {'rule' : $('#rule-content').val()});
+			    		loadDesc();
 			    	},
 			    	wait: 200,
 			   		highlight: true,
@@ -32,6 +44,26 @@ class pRulesheetTemplate extends pTemplate{
 			    	captureLength: 1,
 				};
 				$('#rule-content').typeWatch( options );
+				</script>";
+	}
+
+	public function exampleTypeWatch($section){
+		return "<script type='text/javascript'>
+
+				function loadEx(){
+					$('.example').load('".pUrl('?rulesheet/'.$section.'/example/ajax')."', {'rule' : $('#rule-content').val(), 'lexform' : $('#example').val()});
+				}
+
+				var options = {
+			    	callback: function (value) {
+			    		loadEx();
+			    	},
+			    	wait: 200,
+			   		highlight: true,
+			    	allowSubmit: false,
+			    	captureLength: 1,
+				};
+				$('#example').typeWatch( options );
 				</script>";
 	}
 
@@ -43,9 +75,13 @@ class pRulesheetTemplate extends pTemplate{
 				<div class='btTitle'>Rule</div>
 				<div class='btSource'><span class='btLanguage'>Name <span class='xsmall' style='color: darkred;opacity: 1;'>*</span></span><br />
 				<span class='btNative'><input class='btInput nWord small normal-font' value='".($edit ? $data['name'] : '')."'/></span></div>
-				<div class='btSource'><span class='btLanguage'>Statement</span><br />
+				<div class='btSource'><span class='btLanguage'>Statement </span><span class='xsmall' style='color: darkred;opacity: 1;'>*</span><br />
 				<span class='btNative'><textarea placeholder='prefix [stem] suffix' spellcheck='false' class='btInput Rule elastic allowtabs' id='rule-content'>".($edit ? $data['rule'] : '')."</textarea><div class='describeStatement'></div></span></div>
-				".$this->ruleTypeWatch($section)." <br />
+				".$this->ruleTypeWatch($section)."
+				<div class='btSource'><span class='btLanguage'>Test rule</span><br />
+				<span class='btNative'><input class='btInput nWord small normal-font' id='example' placeholder='Lexical form'/><div class='example'></div></span></div>
+				".$this->exampleTypeWatch($section)."
+				<br />
 			</div>
 		</div>
 		<div class='right'>	");
