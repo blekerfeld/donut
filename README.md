@@ -6,7 +6,7 @@ Donut is UNDER DEVELOPMENT, so it's structure might change drastically. If you a
 
 ### Installation
 
-* Clone the git repository to a web server that supports PHP 7 and MySQL (PHP 5.3+ might work, but is tested at time of writing)
+* Clone the git repository to a web server that supports PHP 7 and MySQL (PHP 5.3+ might work, but is not tested at time of writing)
 * Edit config.php to your configuaration
 * Import `db.sql` to the database
 * Enjoy!
