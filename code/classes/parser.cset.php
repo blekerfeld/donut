@@ -63,8 +63,9 @@ class pParser{
 
 		// Creating the field set
 		$this->_fields = new pSet; 
-		foreach($this->_data['datafields'] as $field)
-			@$this->_fields->add($field);
+		if(isset($this->_data['datafields']))
+			foreach($this->_data['datafields'] as $field)
+				@$this->_fields->add($field);
 
 		// Creating the actions per item set
 		$this->_actions = new pSet;
@@ -121,7 +122,7 @@ class pParser{
 	// Passes on the action to the object
 	public function passOnAction($action){
 		if(pUser::checkPermission($this->_permission))
-			return $this->_handler->catchAction($action);
+			return $this->_handler->catchAction($action, $this->_data['template']);
 	}
 
 	// Allias function

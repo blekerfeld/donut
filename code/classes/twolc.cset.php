@@ -69,7 +69,6 @@ class pTwolc{
 	protected function parseReplace($replacePattern){
 		// Might be changed a little
 		$replaced = $replacePattern;
-		$replaced = str_replace('%', '$1', $replaced);
 		return $replaced;
 	} 	
 
@@ -201,13 +200,14 @@ class pTwolcString{
 		$this->_string = preg_replace_callback($search, function($matches) use ($search, $replace, $middle, $string){
 			$match = $matches[1];
 			$output = $string;
+
 			$middleExploded = explode(',', substr($middle, 1, -1));
 			$replaceExploded = explode(',', substr($replace, 1, -1));
 
-			if(isset($replaceExploded[array_search($match, $middleExploded)]))
+			if(isset($replaceExploded[array_search($match, $middleExploded)]) AND pStartsWith($replace, '['))
 				return $replaceExploded[array_search($match, $middleExploded)];
 			else
-				return $replace;
+				return str_replace("%", $match, $replace);
 				
 		}, $this->_string);
 	}

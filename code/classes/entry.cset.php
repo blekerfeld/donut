@@ -13,7 +13,7 @@
 
 class pEntry{
 
-	public $_id, $_entry, $_dataModel, $_data, $_subEntries, $_template;
+	public $_id, $_entry, $_dataModel, $_data, $_subEntries, $_template, $_actionbar;
 
 	public function __construct($dataModel, $table = ''){
 
@@ -43,6 +43,10 @@ class pEntry{
 		$this->_template = $template;
 	}
 
+
+	public function passActionBar($ab){
+		$this->_actionbar = $ab;
+	}
 
 	// This function will save the subentries defined in the structure.
 	public function fillSubEntries($subObjects){

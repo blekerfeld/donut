@@ -6,7 +6,7 @@
 	//		Written by Thomas de Roo
 	//		Licensed under MIT
 
-	//	++	File: MenuTemplate.cset.php
+	//	++	File: HomeTemplate.cset.php
 
 class pHomeTemplate extends pSimpleTemplate{
 

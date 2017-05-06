@@ -71,6 +71,6 @@
 
 $voltooidDeelwoord = "ge-!^ver+-!^be+[-en]&D";
 	$meervoud = '[-en]&EN';
-	$dim = '[]&ETJE-$m;&ETJE-$ng:;nkje-$ng;etje-$an;tje-!$m-!$n-!$an-$uin;tje-$VOW;je-&ELSE';
+	$dim = '[]&ETJE?$m;&ETJE?$ng:;nkje?$ng;etje?$an;tje?!$m?!$n?!$an?$uin;tje?$VOW;je?&ELSE';
 
 	(new pTerminal)->initialState();

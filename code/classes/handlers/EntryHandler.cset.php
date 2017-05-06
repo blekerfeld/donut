@@ -27,7 +27,7 @@ class pEntryHandler extends pHandler{
 
 
 	// This is the internal dispatcher for action of an entry
-	public function catchAction($action){
+	public function catchAction($action, $template = ''){
 
 		// reset translations
 		if($action == 'resetTranslations'){
@@ -76,11 +76,7 @@ class pEntryHandler extends pHandler{
 
 		$this->_actionbar->generate((isset(pAdress::arg()['id'])) ?pAdress::arg()['id'] : -1);
 
-		pOut($this->_actionbar->output);
-
 		// Shortcut to the data
-
-
 		$data = $this->dataModel->data()->fetchAll()[0];
 
 		// Passing the data on to the template
@@ -93,6 +89,7 @@ class pEntryHandler extends pHandler{
 			if(isset($this->_activeSection['subobjects'])){
 				$object->fillSubEntries($this->_activeSection['subobjects']);
 			}
+			$object->passActionBar($this->_actionbar);
 			return $object->renderEntry();
 		}
 	}

@@ -2,6 +2,10 @@ function loadfunction(url){
     window.location = url;
 }
 
+$(document).ready(function(){
+    $('.elastic').elastic();
+});
+
 
 function wrapText(elementID, openTag, closeTag) {
     var textArea = $(elementID);

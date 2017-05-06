@@ -48,6 +48,7 @@ define('SAVED_EMPTY', "Please submit all required information");
 define('MMENU_DICTIONARY', "Dictionary");
 define('MMENU_DICTIONARYADMIN', "Dictionary settings");
 define('MMENU_SETTINGS', "Settings");
+define('MMENU_EDITORMENU', "Editor menu");
 define('MMENU_WIKI', "Wiki");
 define('MMENU_DASHBOARD', "Dashboard");
 define('MMENU_BLOG', "Blog");

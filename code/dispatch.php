@@ -36,16 +36,27 @@ return array(
 				'app' => 'home',
 			),
 			'dictionary-admin' => array(
-				'name' => MMENU_SETTINGS,
+				'name' => MMENU_EDITORMENU." ".(new pIcon('fa-caret-down', 10)),
 				'app' => 'dictionary-admin',
 				'permission' => -4,
-				'class' => 'admin',
-				'icon' => 'fa-cog',
+				'class' => 'admin',	
 				'subitems' => array(
 					'dictionary-admin' => array(
 						'name' => 'Dictionary',
 						'icon' => 'fa-book',
 						'app' => 'dictionary-admin',
+						'permission' => -4,
+					),
+					'rulesheet' => array(
+						'name' => 'Rules',
+						'icon' => 'fa-book',
+						'app' => 'rulesheet',
+						'permission' => -4,
+					),
+					'terminal' => array(
+						'name' => 'Terminal',
+						'icon' => 'fa-terminal',
+						'app' => 'terminal',
 						'permission' => -4,
 					),
 				),
@@ -73,6 +84,19 @@ return array(
 		),
 		'menu' => 'dictionary-admin',
 	),
+
+	'rulesheet' => array(
+		'page_title' => 'rulesheet',
+		'default_section' => 'inflections',
+		'arguments' => array(
+			0 => 'section',
+			1 => 'action',
+			2 => 'id',
+			3 => 'linked',
+		),
+		'menu' => 'dictionary-admin',
+	),
+
 	'entry' => array(
 		'page_title' => 'Entry',
 		'default_section' => 'lemma',
@@ -108,5 +132,15 @@ return array(
 			0 => 'section',
 		),
 		'menu' => '',
-	)
+	),
+	'terminal' => array(
+		'page_title' => CONFIG_SITE_TITLE,
+		'default_section' => 'terminal',
+		'arguments' => array(
+		),
+		'override_structure_type' => 'pSimpleStructure',
+		'template' => 'pTerminalTemplate',
+		'metadata' => array(),
+		'menu' => 'dictionary-admin',
+	),
 );

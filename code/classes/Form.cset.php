@@ -121,11 +121,11 @@ class pSelector{
 		// If it is not an array we need to do things with tables
 		if(is_array($this->_data))
 			foreach($this->_data as $value => $name)
-				$output .= '<option value="'.$value.'" '.($this->value == $value ? 'selected' : '').'>'.$name.'</option>';
+				$output .= '<option value="'.$value.'" '.((is_array($this->value) ? (in_array($value, $this->value) ? 'selected' : '') : (($this->value == $value) ? 'selected' : ''))).'>'.$name.'</option>';
 		else{
 			// Now we have to do things
 			foreach($this->dataModel->data()->fetchAll() as $option)
-				$output .= '<option value="'.$option['id'].'" '.($this->value == $option['id'] ? 'selected' : '').'>'.$option[$this->_showField].'</option>';
+				$output .= '<option value="'.$option['id'].'" '.((is_array($this->value) ? (in_array($option['id'], $this->value) ? 'selected' : '') : (($this->value == $option['id']) ? 'selected' : ''))).'>'.$option[$this->_showField].'</option>';
 
 		}
 

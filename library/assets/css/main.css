@@ -592,6 +592,12 @@ select.pEditorlanguage {
     margin-bottom: 6px;
 }
 
+.btCard .notice{
+  border: none;
+  font-size: 0.85em;
+  margin: 0;
+}
+
 .danger-notice{
     display: block;
     padding: 5px;
@@ -2312,10 +2318,10 @@ img.btFlag {
 
 
 span.btLanguage {
-  font-variant: small-caps;
-  color: #ccc;
-  font-size: 12px;
-  font-family: !important;
+  color: #444;
+  font-size: 14px;
+  opacity: .8;
+  font-family: Open Sans!important;
 }
 
 div.btCard.admin span.btLanguage {
@@ -2337,6 +2343,12 @@ input.btInput, textarea.btInput {
 }
 div.btSource {
   margin-bottom: 20px;
+}
+
+div.btSource select{
+  width: 100%;
+  font-size: 13px;
+  font-family: Open Sans!important;
 }
 
 div.btSource span.btNative {
@@ -2709,9 +2721,98 @@ textarea.wikiEditContent{
 /* D_ADMIN
 */ 
 
-div.d_admin_wrap{
+div.d_admin_wrap, div.rulesheet{
   display: flex;
   margin-right: -15px;
+}
+
+div.rulesheet{
+  padding: 30px;
+  padding-top: 0px;
+}
+
+
+div.rulesheet.inner{
+  padding: 0px;
+}
+
+div.rulesheet-header{
+  padding-left: 30px;
+  padding-right: 30px;
+}
+
+div.rulesheet .left{
+  align-items: stretch;
+  width: 50%;
+}
+
+div.rulesheet .right{
+  align-items: stretch;
+  width: 50%;
+  margin-left: 0px;  
+}
+
+div.rulesheet.inner .left{
+  padding-right: 10px;
+}
+
+div.rulesheet.inner .right{
+  margin-left: 0px;
+  padding-left: 10px;
+  border-left: 1px dotted #ccc;
+}
+
+.btCard.rulesheetCard{
+  margin: 0 auto;
+  width: 95%;
+}
+
+.btInput.Rule{
+  width: 100%;
+  font-family: Consolas;
+  background: #f7f7f7;
+  text-align: center;
+  color: #333;
+  font-size: 20px;
+  padding: 10px;
+}
+
+div.rulesheet div.describeStatement{
+  font-size: 13px;
+  font-family: Open Sans;
+  font-weight: normal!important;
+}
+
+div.rulesheet div.describeStatement table.describe{
+  width: 100%;
+  font-family: Open Sans!important;
+  cursor: pointer;
+  opacity: .7;
+}
+
+div.rulesheet div.describeStatement table.describe:hover{
+  opacity: 1;
+}
+
+div.rulesheet div.describeStatement table.describe td{
+  padding-left: 20px;
+  padding-right: 20px;
+}
+
+div.rulesheet div.describeStatement table.describe strong{
+  font-family: Open Sans!important;
+}
+
+div.rulesheet div.describeStatement table.describe tr:nth-child(even) td{
+  background: #eee;
+}
+
+div.rulesheet div.describeStatement table.describe tr:nth-child(odd) td{
+  background: #f5f5f5;
+}
+
+div.rulesheet div.describeStatement table.describe tr.title td{
+  background: #e0e0e0;
 }
 
 div.d_admin_menu{
@@ -2817,10 +2918,27 @@ div.debugConsole input{
 div.debugConsole{
   color: #fff;
   padding: 40px;
+  padding-top: 5px;
+  padding-bottom: 5px;
   height: 500px;
   overflow: scroll;
   background: #111;
   font-family: Consolas;
+  border-top: 1px black solid;
+  margin-top: -24px;
+  margin-bottom: -20px;
+  margin-left: -15px;
+  margin-right: -15px;
+}
+
+div.debugConsole table *{
+  color: snow!important;
+}
+div.debugConsole table td::before{
+  content: '|';
+}
+div.debugConsole table td pre::before, div.debugConsole table td pre::after{
+  content: "'";
 }
 
 div.debugConsole span.line{
@@ -2830,6 +2948,7 @@ div.debugConsole span.line{
 
 /* Responsive theming */
 @media only screen and (max-width: 700px) {
+
    .hSearch a.button.search{
     display: none;
    }
@@ -2867,6 +2986,7 @@ div.debugConsole span.line{
    .hMobile{
      -webkit-transition: width 0.2s;
       transition: width 0.2s;
+      margin-bottom: -45px;
    }
 
    .hMobile *{
@@ -2884,11 +3004,12 @@ div.debugConsole span.line{
    }
 
    .actionbar{
-    margin-top: 40px;
+    margin-top: 100px;
     margin: 0 auto;
     display: block;
     width: 70%;
     text-align: center;
+    display: none;
    }
 
    .actionbar.float-right{
@@ -2958,17 +3079,20 @@ div.debugConsole span.line{
       background: #3B3C53;
       text-align: center;
       margin-bottom: 10px;
-      display: block;
-      float: none;
-      padding: 5px;
       color: snow;
-      margin-top: -5px;
-      margin-left: -11px;
-      width: calc(100% + 22px);
+      float: none;
+      display: block;
+      margin: 0 auto;
+      margin-top: -20px;
+      margin-left: -18px;
+      width: calc(100vw + 2px);
+      padding: 5px;
+      margin-bottom: 10px;
+      clear: both;
      }
 
      div.nav{
-      display: none;
+  
      }
 
      input#wordsearch
@@ -2981,7 +3105,7 @@ div.debugConsole span.line{
     }
 
      div.page{
-      padding-top: 15px;
+      padding-top: 35px;
       min-height: 200px;  
      }
 
@@ -2999,7 +3123,7 @@ div.debugConsole span.line{
      }
 
      a.logotop{
-      font-size: 15px;
+      font-size: 17px;
      }
 
      div.d_admin_menu{
