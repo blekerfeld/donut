@@ -57,11 +57,11 @@ class pInflection{
 
 		foreach($this->_addBefore as $action)
 			if($action != '')
-				$word = $this->addBefore($action, $stem);
+				$stem = $this->addBefore($action, $stem);
 
 		foreach($this->_addAfter as $action)
 			if($action != '')
-				$word = $this->addAfter($action, $stem);
+				$stem = $this->addAfter($action, $stem);
 
 		$this->_deniedLeft = 0;
 		$this->_deniedRight = 0;

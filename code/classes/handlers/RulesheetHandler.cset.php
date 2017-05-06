@@ -28,7 +28,7 @@ class pRulesheetHandler extends pHandler{
 		
 	}
 
-	// This is the ajax handler for
+	// This is the ajax handler for desribing a rule, with help of the respective class
 	public function ajaxDescribe(){
 		if($this->_section == 'inflections' AND isset(pAdress::post()['rule'])){
 			$inflection = new pInflection(pAdress::post()['rule']);
@@ -36,4 +36,15 @@ class pRulesheetHandler extends pHandler{
 		}
 
 	}
+
+	public function ajaxExample(){
+		if($this->_section == 'inflections' AND isset(pAdress::post()['rule'], pAdress::post()['lexform'])){
+			$inflection = new pInflection(pAdress::post()['rule']);
+			$twolc = new pTwolc((new pTwolcRules('phonology_contexts'))->toArray());
+			$twolc->compile();
+			pOut(@$twolc->feed($inflection->inflect(pAdress::post()['lexform']))->toRulesheet());
+		}
+	}
+
+
 }

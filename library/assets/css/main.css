@@ -2777,41 +2777,49 @@ div.rulesheet.inner .right{
   padding: 10px;
 }
 
-div.rulesheet div.describeStatement{
+div.rulesheet div.describeStatement, div.rulesheet div.example{
   font-size: 13px;
   font-family: Open Sans;
   font-weight: normal!important;
 }
 
-div.rulesheet div.describeStatement table.describe{
+div.rulesheet div.example{
+  background: #f7f7f7;
+  margin-top: 10px;
+  padding: 5px;
+  width: 97%;
+  font-size: 14px;
+}
+
+div.rulesheet table.describe{
   width: 100%;
   font-family: Open Sans!important;
   cursor: pointer;
   opacity: .7;
 }
 
-div.rulesheet div.describeStatement table.describe:hover{
+div.rulesheet  table.describe:hover{
   opacity: 1;
 }
 
-div.rulesheet div.describeStatement table.describe td{
+div.rulesheet table.describe td{
   padding-left: 20px;
   padding-right: 20px;
 }
 
-div.rulesheet div.describeStatement table.describe strong{
+div.rulesheet table.describe strong{
   font-family: Open Sans!important;
 }
 
-div.rulesheet div.describeStatement table.describe tr:nth-child(even) td{
+div.rulesheet  table.describe tr:nth-child(even) td{
   background: #eee;
 }
 
-div.rulesheet div.describeStatement table.describe tr:nth-child(odd) td{
+div.rulesheet  table.describe tr:nth-child(odd) td{
   background: #f5f5f5;
 }
 
-div.rulesheet div.describeStatement table.describe tr.title td{
+div.rulesheet  table.describe tr.title td{
   background: #e0e0e0;
 }
 
