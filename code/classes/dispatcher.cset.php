@@ -61,6 +61,11 @@ class pDispatcher {
 				require pFromRoot("debug.php");
 				pOut("</div>");
 			}
+			// DEBUG MODE ONLY
+			elseif($this->_urlArguments[0] == 'scrap' AND file_exists(pFromRoot("scrap.php"))){
+				pAdress::arg($this->_arguments);
+				require pFromRoot("scrap.php");
+			}
 			elseif($this->_urlArguments[0] == 'README' AND file_exists(pFromRoot("README.md"))){
 				pAdress::arg($this->_arguments);
 				pOut("<div class='home-margin'>".pMarkdown(file_get_contents(pFromRoot("README.md")), true)."</div>");
@@ -86,8 +91,8 @@ class pDispatcher {
 			return false;
 		}
 
+		// Else we need to create the almighty structure
 		$this->structureObject = new $structureType($structureName[0], (isset($structureName[1]) ? $structureName[1] : ''), $this->_urlArguments[0], $this->_dispatchData[$this->_urlArguments[0]]['default_section'], $this->_dispatchData[$this->_urlArguments[0]]['page_title'], $this->_dispatchData[$this->_urlArguments[0]]);
-
 
 		// Optional trailing slashes
 		if(!isset($this->_urlArguments[1]))
@@ -108,18 +113,12 @@ class pDispatcher {
 		}
 
 
-		// The default action has to empty
-		if(in_array('action', $templateArguments) and !isset($this->_urlArguments[array_search('action', $templateArguments)])){
-			$this->_urlArguments[array_search('action', $templateArguments)] = '';
-			unset($templateArguments[array_search('action', $templateArguments)]);
-			$this->_arguments['action'] = '';
-		}
-
 		// Now it's time to go through the arguments!
 		$countArguments = 0;
+
 		foreach($templateArguments as $key => $templateArgument)
 			// The previous key can't be the offset, or the section for this to work
-			if(isset($this->_urlArguments[$key + 1]))
+			if(isset($this->_urlArguments[$key + 1]) AND $this->_urlArguments[$key + 1] != '')
 				$this->_arguments[$templateArgument] = $this->_urlArguments[$key + 1];
 				$countArguments++;
 

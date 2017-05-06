@@ -218,5 +218,13 @@ class pDataModel {
 		return $this->_data;
 	}
 
+	protected function resultToSingleArray($query, $field){
+		$query = $this->customQuery($query);
+		$array = array();
+		foreach($query->fetchAll() as $result)
+			$array[] = $result[$field];
+		return $array;
+	}
+
 }
 

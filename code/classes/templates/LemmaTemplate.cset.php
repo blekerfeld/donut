@@ -76,7 +76,7 @@ class pLemmaTemplate extends pEntryTemplate{
 		if($subclass != null)
 			$titleSection->addInformationElement($subclass['name']);
 
-		return $realTitle.$titleSection."<br />";
+		return $realTitle.$titleSection;
 
 	}	
 

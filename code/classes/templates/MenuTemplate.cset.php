@@ -55,7 +55,7 @@ class pMenuTemplate extends pTemplate{
 						$output .= "title='";
 						foreach($this->_meta[$key]['subitems'] as $item){
 							if(pUser::checkPermission($this->itemPermission($key)))
-								$output .= "<a href=\"".pUrl("?".$item['app'])."\" class=\"ttip-sub nav ".($this->checkActiveSub($key) ? 'active' : '')."\">".(new pIcon($item['icon'], 12))." ". htmlspecialchars($item['name'])."</a>";
+								$output .= "<a href=\"".pUrl("?".$item['app'])."\" class=\"ttip-sub nav ".($this->checkActiveSub($item['app']) ? 'active' : '')."\">".(new pIcon($item['icon'], 12))." ". htmlspecialchars($item['name'])."</a>";
 						}
 						$output .= "'";	
 					}

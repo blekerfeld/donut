@@ -41,13 +41,6 @@ return array(
 			'condition' => false,
 			'items_per_page' => 20,
 			'disable_pagination' => false,
-			'datafields' => array(
-				new pDataField('native', DA_WORDS_NATIVE, '15%', 'input', true, true, true),
-				new pDataField('ipa', DA_WORDS_IPA, '10%', 'input'),
-				new pDataField('type_id', DA_LEXCAT, '10%', 'select', true, true, true, 'small-caps', false, new pSelector('types', null, 'name', true, 'lexcat')),
-				new pDataField('classification_id', DA_GRAMCAT, '20%', 'select', true, true, true, 'small-caps', false, new pSelector('classifications', null, 'name', true, 'gramcat')),
-				new pDataField('subclassification_id', DA_GRAMTAG, '20%', 'select', true, true, true, 'small-caps', false, new pSelector('subclassifications', null, 'name', true, 'gramtags')),
-			),
 			'actions_item' => array(
 			),
 			'actions_bar' => array(

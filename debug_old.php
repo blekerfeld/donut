@@ -8,7 +8,7 @@
 
 	$voltooidDeelwoord = "ge-!^ver+-!^be+[-en]&D";
 	$meervoud = '[-en]&EN';
-	$dim = '[]&ETJE-$m;&ETJE-$ng:;nkje-$ng;etje-$an;tje-!$m-!$n-!$an-$uin;tje-$VOW;je-&ELSE';
+	$dim = '[]&ETJE-$m;&ETJE-$ng:;nkje-$ng;etje-$n;tje-!$m-!$n-!$an-$uin;tje-$VOW;je-&ELSE';
 	
 	pConsole($twolc->feed((new pInflection($voltooidDeelwoord))->inflect("maken"))->toDebug()."<br />");
 	pConsole($twolc->feed((new pInflection($voltooidDeelwoord))->inflect("horen"))->toDebug()."<br />");

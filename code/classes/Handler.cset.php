@@ -33,8 +33,8 @@ class pHandler{
 			$this->_dfs = null;
 
 		$this->dataModel = new pDataModel($table, $this->_dfs, $this->_paginated);
+		
 		$this->_total = $this->dataModel->countAll();
-
 		$this->_section = $section;
 		$this->_app = $app;
 
@@ -56,8 +56,20 @@ class pHandler{
 			@$this->_actionbar->get()[$name];
 	}
 
-	public function catchAction($action){
-		// The different objects might handle this differently
+	// This is only the default behaviour of the catchAction, other objects might handle this differently!
+	public function catchAction($action, $template){
+		$this->_template = new $template($this->dataModel, $this->_structure[$this->_section]);
+		// The different objects might handle this differently, default is looks for methods
+		if(isset(pAdress::arg()['ajax'])){
+			$method = "ajax".ucfirst($action);
+			if(method_exists($this, $method))
+				return $this->$method();
+		}
+		else{
+			$method = "render".ucfirst($action);
+			if(method_exists(get_class($this->_template), $method))
+				return $this->_template->$method();
+		}
 	}
 
 	// This one lets the datamodel work! 

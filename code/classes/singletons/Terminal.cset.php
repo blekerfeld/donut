@@ -130,6 +130,16 @@ class pTerminal{
 		echo $this->nextLine($line);
 	}
 
+	public function describeinf($arg, $line){
+		if(!$this->requireArg($arg, 1, 'describeinf')){
+			echo $this->nextLine($line);
+			return false;
+		}
+		$inflection = new pInflection($arg[1]);
+		echo $inflection->describeRule();
+		echo $this->nextLine($line);
+	}
+
 	public function insert(){
 
 	}

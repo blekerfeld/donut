@@ -85,6 +85,8 @@ class pLemma extends pEntry{
 
 		pOut($this->_template->title($this->_type, $this->_class, $this->_subclass));
 
+		pOut($this->_actionbar->output);
+
 		if($this->_translations != null) 
 			pOut($this->_template->parseTranslations($this->_translations));
 

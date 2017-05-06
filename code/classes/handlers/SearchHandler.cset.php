@@ -17,12 +17,6 @@ class pSearchHandler extends pHandler{
 	public function __construct(){
 		// First we are calling the parent's constructor (pHandler)
 		call_user_func_array('parent::__construct', func_get_args());
-
-		// Now we need to know if there is a 
-		if(!isset($this->_activeSection['entry_meta']))
-			return trigger_error("pEntryHandler needs a **entry_meta** key in its array structure.", E_USER_ERROR);
-
-		$this->_meta = $this->_activeSection['entry_meta'];
 	}
 
 	private function parseSearchResults($query, $results, $searchlang){

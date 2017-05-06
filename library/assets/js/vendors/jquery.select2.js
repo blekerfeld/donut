@@ -1699,7 +1699,7 @@ S2.define('select2/selection/placeholder',[
   Placeholder.prototype.createPlaceholder = function (decorated, placeholder) {
     var $placeholder = this.selectionContainer();
 
-    $placeholder.html(this.display(placeholder));
+    $placeholder.html(this.display('<em>' + placeholder + '</em>'));
     $placeholder.addClass('select2-selection__placeholder')
                 .removeClass('select2-selection__choice');
 
