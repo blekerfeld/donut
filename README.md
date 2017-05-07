@@ -2,7 +2,7 @@
 
 Donut is a dictonary and grammar toolkit that allows for easy creation of an online dictionary, with inflected word forms. (More info to come...)
 
-Donut is UNDER DEVELOPMENT, so it's structure might change drastically. If you are eager to try out some of the features already, installation goes as follows.
+Donut is UNDER DEVELOPMENT, so its structure might change drastically. If you are eager to try out some of the features already, installation goes as follows.
 
 ### Installation
 
