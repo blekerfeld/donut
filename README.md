@@ -11,7 +11,7 @@ Donut is UNDER DEVELOPMENT, so its structure might change drastically. If you ar
 * Import `db.sql` to the database
 * Enjoy!
 
-Please note that donut still misses a lot of features. At this moment you should only install donut if you want to take a look at its progress.
+Please note that donut still lacks a lot of features. At this moment you should only install donut if you want to take a look at its progress.
 
 ### Test account
 **Username**: donut
