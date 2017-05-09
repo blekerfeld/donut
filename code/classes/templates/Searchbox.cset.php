@@ -63,7 +63,6 @@ class pSearchBox extends pTemplatePiece{
 		orgTitle = '';
 
 		"; 
-
 		if(isset(pAdress::arg()['query']) AND isset(pAdress::arg()['dictionary']))
 			$output .= "
 				$(document).ready(function(){

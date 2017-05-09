@@ -97,10 +97,14 @@ class pDataModel {
 				die("FATAL ERROR from within pDataModel->prepareForInsert(\$data). \$data does not match the field count of the object!");
 		$valueString = array('NULL');
 		$key = 0;
-		foreach($this->_fields->get() as $field){
-			$valueString[] = pQuote($data[$key]);
-			$key++;
-		}
+		if($this->_fields != null)
+			foreach($this->_fields->get() as $field){
+				$valueString[] = pQuote($data[$key]);
+				$key++;
+			}
+		else
+			foreach($data as $value)
+				$valueString[] = pQuote($value);
 		$this->_valuestring = implode(', ', $valueString);
 	}
 
@@ -192,13 +196,18 @@ class pDataModel {
 	}
 
 	public function insert(){
+
+		global $donut;
+
 		// Maybe we just need all fields?
 		if($this->_fieldstring == "")
 			$fieldString = "";
 		else
 			$fieldString = "(".$this->_fieldstring.")";
 
-		return pQuery("INSERT INTO ".$this->_table." $fieldString  VALUES (".$this->_valuestring.");");
+		pQuery("INSERT INTO ".$this->_table." $fieldString  VALUES (".$this->_valuestring.");");
+
+		return $donut['db']->lastInsertId();
 	}
 
 	public function changePagination($value){

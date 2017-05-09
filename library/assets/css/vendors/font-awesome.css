@@ -2267,6 +2267,19 @@
 .fa-font-awesome:before {
   content: "\f2b4";
 }
+
+.fa-schwa:before{
+  content: "ə";
+  display: inline-block;
+  padding: 1px;
+  border: 2px solid;
+  border-color: currentColor;
+  padding-left: 4px;
+  padding-right: 4px;
+  padding-bottom: 3px;
+  font-family: Verdana;
+}
+
 .sr-only {
   position: absolute;
   width: 1px;

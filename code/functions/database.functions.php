@@ -54,6 +54,9 @@ function pQuery($sql, $force_no_cache = false, $force_no_count = false){
 
 	// If query caching is disabled, we just need to execute the query
 	if($force_no_cache or CONFIG_ENABLE_QUERY_CACHING == 0){
+		// Only select queries can be cached
+		if(!pStartsWith($sql, "SELECT"))
+			return $donut["db"]->query($sql);		
 		$execute = $donut["db"]->query($sql);
 		$objects = array();
 		while($object = $execute->fetchObject()){

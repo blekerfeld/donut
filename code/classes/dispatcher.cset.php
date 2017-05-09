@@ -94,30 +94,27 @@ class pDispatcher {
 		// Else we need to create the almighty structure
 		$this->structureObject = new $structureType($structureName[0], (isset($structureName[1]) ? $structureName[1] : ''), $this->_urlArguments[0], $this->_dispatchData[$this->_urlArguments[0]]['default_section'], $this->_dispatchData[$this->_urlArguments[0]]['page_title'], $this->_dispatchData[$this->_urlArguments[0]]);
 
+		// Let's prepare our structureObject a little, so that we can access the full structure here
+		$this->structureObject->load();
+
+		// The section can be optional
+		if($templateArguments[0] != 'section'){
+			if(array_key_exists($this->_urlArguments[1], $this->structureObject->_structure)){
+				// Now we have a section after all
+				$templateArgumentsNew = array(0 => 'section');
+				foreach($templateArguments as $key => $value)
+					$templateArgumentsNew[$key + 1] = $value;
+				$templateArguments = $templateArgumentsNew;
+			}
+		}
 		// Optional trailing slashes
 		if(!isset($this->_urlArguments[1]))
 			$this->_urlArguments[1] = '';
-
-		//A section can be optional
-		if(!in_array('section', $templateArguments) AND (count($this->_urlArguments) == count($templateArguments) + 1)){
-			@$this->_arguments['section'] = $this->_urlArguments[1];
-			unset($this->_urlArguments[1]);
-		}
-		// If no section is given, we need to correct something
-		elseif(!in_array('section', $templateArguments) AND (count($this->_urlArguments)  != count($templateArguments) + 1)){
-
-			$templateArgumentsNew = array();
-			foreach($templateArguments as $key => $value)
-				$templateArgumentsNew[$key - 1] = $value;
-			$templateArguments = $templateArgumentsNew;
-		}
-
 
 		// Now it's time to go through the arguments!
 		$countArguments = 0;
 
 		foreach($templateArguments as $key => $templateArgument)
-			// The previous key can't be the offset, or the section for this to work
 			if(isset($this->_urlArguments[$key + 1]) AND $this->_urlArguments[$key + 1] != '')
 				$this->_arguments[$templateArgument] = $this->_urlArguments[$key + 1];
 				$countArguments++;
@@ -125,7 +122,6 @@ class pDispatcher {
 		// Let's bind this information to our static adress
 		pAdress::arg($this->_arguments);
 
-		$this->structureObject->load();
 		$this->structureObject->compile();
 
 		return true;

@@ -143,7 +143,7 @@ class pParadigm{
 			JOIN morphology_submodes AS s ON s.morphology_id = m.id
 			JOIN morphology_numbers AS n ON n.morphology_id = m.id
 			WHERE 
-			((mm.mode_id = ".$this->_id." AND s.submode_id = ".$heading['id'].") AND (m.number_optional = 1)) OR
+			((mm.mode_id = ".$this->_id." AND s.submode_id = ".$heading['id'].")) OR
 			(mm.mode_id = ".$this->_id." AND s.submode_id = ".$heading['id']." AND n.number_id = ".$row['id'].")
 
 			UNION

@@ -44,7 +44,7 @@ class pRulesheetStructure extends pStructure{
 			$this->_parser->setOffset(pAdress::arg()['offset']);
 
 		if(!isset(pAdress::arg()['ajax']))
-			pOut("<div class='rulesheet-header'>".pMarkdown("## ".$this->_structure[$this->_section]['surface'])."</div><br /><div class='rulesheet'>");
+			pOut("<div class='rulesheet-header'>".pMarkdown("## ".$this->_structure[$this->_section]['surface'])."</div><br />");
 			
 		// Let's handle the action by the object
 		if(isset(pAdress::arg()['action'])){
@@ -59,9 +59,6 @@ class pRulesheetStructure extends pStructure{
 				$this->_parser->runData();
 			$this->_parser->render();
 		}
-
-		if(!isset(pAdress::arg()['ajax']))
-			pOut("</div>");
 
 		// Tooltipster time!
 		pOut("<script type='text/javascript'>

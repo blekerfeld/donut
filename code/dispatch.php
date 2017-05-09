@@ -101,10 +101,10 @@ return array(
 		'page_title' => 'Entry',
 		'default_section' => 'lemma',
 		'arguments' => array(
-			1 => 'id',
-			2 => 'action',
-			3 => 'sub_action',
-			4 => 'sub_id'
+			0 => 'id',
+			1 => 'action',
+			2 => 'sub_action',
+			3 => 'sub_id'
 		),
 		'menu' => '',
 	),		
