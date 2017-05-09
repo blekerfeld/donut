@@ -88,6 +88,7 @@ class pTwolc{
 		// UTF-8 support enabled
 		$regex .= '/u';
 
+
 		//pConsole(pVarDump($regex));
 
 		$this->_pending[] = array('pattern' => $regex, 'replace' => $this->parseReplace($rule['replace']), 'middle' => $rule['original_middle']);
@@ -109,6 +110,8 @@ class pTwolc{
 			$count = count($splitContext);
 
 
+		$captureCount = 1;
+
 		foreach($splitContext as $char){
 
 			if($char == '<:'){
@@ -118,8 +121,12 @@ class pTwolc{
 				$parsedContext[$count] = '\z'; 
 				continue;
 			}
+			elseif(pStartsWith($char, '(') AND pEndsWith($char, ')') AND is_numeric(substr($char, 1, -1))){
+				$parsedContext[$count] = '\\'.substr($char, 1, -1);
+				continue;
+			}
 			elseif($char == '%'){
-				$parsedContext[$count] = '$1';
+				$parsedContext[$count] = '\\'.$captureCount;
 				continue;
 			}
 			elseif($char == ':'){
@@ -150,21 +157,25 @@ class pTwolc{
 				$char = substr($char, 1, -1);
 				$parsedContext[$count] = "[^".implode('', explode(',', $char))."]{1}";
 			}
-			elseif(strlen($char) == 4 AND pStartsWith($char, '^') ){
-				$parsedContext[$count] = "[^".pAlphabet::getGroupsAsString($char)."]{1}";
+			elseif(strlen($char) == 4 AND pStartsWith($char, '^') AND mb_strtoupper(substr($char, 1), 'utf-8') == substr($char, 1) ){
+				$parsedContext[$count] = "[^".pAlphabet::getGroupsAsString(substr($char, 1))."]{1}";
 			}
-			elseif(strlen($char) == 3)
+			elseif(strlen($char) == 3 AND mb_strtoupper($char, 'utf-8') == $char)
 				if(pAlphabet::getGroupsAsString($char) != '')
 					$parsedContext[$count] = "[".pAlphabet::getGroupsAsString($char)."]{1}";
 				else
 					$parsedContext[$count] = preg_quote($char);
 			elseif($char == '+' OR $char == '#')
-				$parsedContext[$count] = '[+]{1}';	
+				$parsedContext[$count] = '['.$char.']{1}';	
 			elseif(strlen($char) == 1){
 				$parsedContext[$count] = "[".$char."]{1}";
 			}
+			elseif(pStartsWith($char, '(') AND pEndsWith($char, ')')){
+				$parsedContext[$count] = '('.$this->parseContext(substr($char, 1, -1))[1].')';
+				$captureCount++;
+			}
 			else{
-				$parsedContext[$count] = preg_quote($char);
+				$parsedContext[$count] = $char;
 			}
 
 			if($right OR $middle)
@@ -235,7 +246,7 @@ class pTwolcRules{
 
 	public function __construct($table){
 		$dataModel = new pDataModel($table);
-		$dataModel->setOrder(" sorter ASC ");
+		//$dataModel->setOrder(" sorter ASC ");
 		$dataModel->getObjects();
 		foreach($dataModel->getObjects()->fetchAll() as $rule)
 			$this->rules[] = $rule['rule'];

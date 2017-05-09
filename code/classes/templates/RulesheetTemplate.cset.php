@@ -12,21 +12,13 @@
 
 class pRulesheetTemplate extends pTemplate{
 
-	public function renderAll(){
-		// The home search box! Only if needed!
-		if(!(isset(pAdress::arg()['ajax']) and isset(pAdress::arg()['nosearch'])))
-			pOut(new pSearchBox(true));
-
-		pOut("<br/ ><div class='home-margin pEntry'>".pMarkdown(file_get_contents(pFromRoot("static/home.md")), true)."</div><br />");
-	}
-
 	public function ruleTypeWatch($section){
 		return "<script type='text/javascript'>
 
 				function loadDesc(){
 					$('.describeStatement').load('".pUrl('?rulesheet/'.$section.'/describe/ajax')."', {'rule' : $('#rule-content').val()});
 					if($('#example').val() != ''){
-						loadEx();
+						loadEx();	
 					}
 				}
 
@@ -70,11 +62,18 @@ class pRulesheetTemplate extends pTemplate{
 	public function rulesheetForm($section, $edit = false){
 		if($edit)
 			$data = $this->_data->data()->fetchAll()[0];
-		pOut("<div class='left'>
+		
+		pOut(pNoticeBox('fa-spinner fa-spin fa-12', SAVING, 'notice saving hide rulesheet-margin'));
+
+		// That is where the ajax magic happens:
+		pOut("<div class='ajaxSave rulesheet-margin'></div>");
+
+		pOut("<div class='rulesheet'>
+			<div class='left'>
 			<div class='btCard rulesheetCard'>
 				<div class='btTitle'>Rule</div>
 				<div class='btSource'><span class='btLanguage'>Name <span class='xsmall' style='color: darkred;opacity: 1;'>*</span></span><br />
-				<span class='btNative'><input class='btInput nWord small normal-font' value='".($edit ? $data['name'] : '')."'/></span></div>
+				<span class='btNative'><input class='btInput nWord small normal-font name' value='".($edit ? $data['name'] : '')."'/></span></div>
 				<div class='btSource'><span class='btLanguage'>Statement </span><span class='xsmall' style='color: darkred;opacity: 1;'>*</span><br />
 				<span class='btNative'><textarea placeholder='prefix [stem] suffix' spellcheck='false' class='btInput Rule elastic allowtabs' id='rule-content'>".($edit ? $data['rule'] : '')."</textarea><div class='describeStatement'></div></span></div>
 				".$this->ruleTypeWatch($section)."
@@ -98,22 +97,36 @@ class pRulesheetTemplate extends pTemplate{
 							<div class='btSource'><span class='btLanguage'>Grammatical categories</span><br />
 							<span class='btNative'><select class='select-gramcat select2' multiple='multiple'>".(new pSelector('classifications', $this->_data->_links['gramcat'], 'name', true, 'rules', true))->render()."</select></span></div>
 							<div class='btSource'><span class='btLanguage'>Grammatical tags</span><br />
-							<span class='btNative'><select class='select-tags select2' multiple='multiple'>".(new pSelector('subclassifications', $this->_data->_links['tags'], 'name', true, 'rules', true))->render()."</select></span></div>
+							<span class='btNative'><select class='select-tags select2' multiple='multiple'>".(new pSelector('subclassifications', $this->_data->_links['tag'], 'name', true, 'rules', true))->render()."</select></span></div>
 						</div>
 						<div class='right'>
 							".pMarkdown("##### Secondary selectors ")."<br />
 							<div class='btSource'><span class='btLanguage'>Inflection tables</span><br />
-							<span class='btNative'><select class='select-tables select2' multiple='multiple'>".(new pSelector('modes', $this->_data->_links['tables'], 'name', true, 'rules', true))->render()."</select></span></div>
+							<span class='btNative'><select class='select-tables select2' multiple='multiple'>".(new pSelector('modes', $this->_data->_links['modes'], 'name', true, 'rules', true))->render()."</select></span></div>
 							<div class='btSource'><span class='btLanguage'>Table headings</span><br />
-							<span class='btNative'><select class='select-headings select2' multiple='multiple'>".(new pSelector('submodes', $this->_data->_links['headings'], 'name', true, 'rules', true))->render()."</select></span></div>
+							<span class='btNative'><select class='select-headings select2' multiple='multiple'>".(new pSelector('submodes', $this->_data->_links['submodes'], 'name', true, 'rules', true))->render()."</select></span></div>
 							<div class='btSource'><span class='btLanguage'>Table rows</span><br />
-							<span class='btNative'><select class='select-rows select2' multiple='multiple'>".(new pSelector('numbers', $this->_data->_links['rows'], 'name', true, 'rules', true))->render()."</select></span></div>
+							<span class='btNative'><select class='select-rows select2' multiple='multiple'>".(new pSelector('numbers', $this->_data->_links['numbers'], 'name', true, 'rules', true))->render()."</select></span></div>
 						</div>
 				</div>");
-		pOut("</div>
-		</div>
-
+		pOut("</div><br /><a class='btAction no-float green submit-form'>Click</a><br id='cl' />
+		</div></div>
 		<script type='text/javascript'>
+		$('.submit-form').click(function(){
+					$('.saving').slideDown();
+					$('.ajaxSave').load('".pUrl("?rulesheet/".$section."/".($edit ? 'edit/'.$data['id'] : 'new')."/ajax")."', {
+						".(!in_array($section, array('phonology', 'ipa')) ? "
+						'lexcat': $('.select-lexcat').val(),
+						'gramcat': $('.select-gramcat').val(),
+						'tags': $('.select-tags').val(),
+						'rows': $('.select-rows').val(),
+						'headings': $('.select-headings').val(),
+						'tables': $('.select-tables').val()," : "")."
+						'rule': $('#rule-content').val(),
+						'name': $('.name').val(),
+					});
+				});
+
 			$('.select2').select2({placeholder: 'All possible', allowClear: true});
 		</script>");
 	}

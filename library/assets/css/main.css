@@ -13,13 +13,13 @@
 
 
  ::-moz-selection {
-  background: #5EA273;
+  background: #7CADDE;
   color: #fff;
   font-style: italic;
 }
 
  ::Selection {
-  background: #5EA273;
+ background: #7CADDE;
   font-style: italic;
   color: #fff;
 }
@@ -2734,6 +2734,11 @@ div.rulesheet{
 
 div.rulesheet.inner{
   padding: 0px;
+}
+
+div.rulesheet-margin{
+  margin-left: 30px;
+  margin-right: 30px;f
 }
 
 div.rulesheet-header{

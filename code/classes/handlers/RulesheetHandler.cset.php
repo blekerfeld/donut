@@ -19,7 +19,9 @@ class pRulesheetHandler extends pHandler{
 		// First we are calling the parent's constructor (pHandler)
 		call_user_func_array('parent::__construct', func_get_args());
 		// Override the datamodel
-		$this->dataModel = new pRuleDataModel((isset(pAdress::arg()['id']) ? pAdress::arg()['id'] : null));
+		if($this->_section == 'inflections')
+			$table = 'morphology';
+		$this->dataModel = new pRuleDataModel($table, (isset(pAdress::arg()['id']) ? pAdress::arg()['id'] : null));
 	}
 
 	// This would render the rule list table :)
@@ -28,7 +30,7 @@ class pRulesheetHandler extends pHandler{
 		
 	}
 
-	// This is the ajax handler for desribing a rule, with help of the respective class
+	// This is the ajax handler for describing a rule, with help of the respective class
 	public function ajaxDescribe(){
 		if($this->_section == 'inflections' AND isset(pAdress::post()['rule'])){
 			$inflection = new pInflection(pAdress::post()['rule']);
@@ -37,6 +39,7 @@ class pRulesheetHandler extends pHandler{
 
 	}
 
+	// This is the ajax handler for testing the rule with an example
 	public function ajaxExample(){
 		if($this->_section == 'inflections' AND isset(pAdress::post()['rule'], pAdress::post()['lexform'])){
 			$inflection = new pInflection(pAdress::post()['rule']);
@@ -46,5 +49,32 @@ class pRulesheetHandler extends pHandler{
 		}
 	}
 
+	protected function generateLinksArray(){
+		if($this->_section == 'inflections')
+			$links = array('lexcat' => @pAdress::post()['lexcat'], 'gramcat' => @pAdress::post()['gramcat'], 'tag' => @pAdress::post()['tags'], 'modes' => @pAdress::post()['tables'], 'submodes' => @pAdress::post()['headings'], 'numbers' => @pAdress::post()['rows']);
+		else
+			$links = null;
+
+		return $links;
+	}
+
+	public function ajaxEdit(){
+		$links = $this->generateLinksArray();
+		$edit = $this->dataModel->updateRule(pAdress::post()['name'], pAdress::post()['rule'], $links);
+		if($edit == false)
+			echo pNoticeBox('fa-warning', SAVED_EMPTY, 'hide danger-notice errorSave');
+		die('<script>$(".saving").slideUp();'.(($edit == false) ? '$(".errorSave").slideDown();' : '$(".errorSave").slideUp();')."</script>");
+	}
+
+	public function ajaxNew(){
+		$links = $this->generateLinksArray();
+		$id = $this->dataModel->newRule(pAdress::post()['name'], pAdress::post()['rule'], $links);
+		if($id == false){
+			echo pNoticeBox('fa-warning', SAVED_EMPTY, 'hide danger-notice errorSave');
+			die('<script>$(".saving").slideUp();'.(($id == false) ? '$(".errorSave").slideDown();' : '')."</script>");
+		}
+		die('<script>$(".errorSave").slideUp();
+			window.location = "'.pUrl('?rulesheet/'.$this->_section.'/edit/'.$id).'";</script>');
+	}
 
 }

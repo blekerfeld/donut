@@ -74,6 +74,9 @@ class pEntryHandler extends pHandler{
 
 	public function render(){
 
+		if(isset(pAdress::arg()['query'], pAdress::arg()['dictionary']))
+			return false;
+
 		$this->_actionbar->generate((isset(pAdress::arg()['id'])) ?pAdress::arg()['id'] : -1);
 
 		// Shortcut to the data

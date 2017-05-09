@@ -42,7 +42,7 @@ define('SAVED', "Changes succesfully saved");
 define('SAVE_LINKBACK', "Click here to go back.");
 define('SAVED_REDIRECT', SAVED.", you will be redirected.");
 define('SAVED_ERROR', "An error occured while saving");
-define('SAVED_EMPTY', "Please submit all required information");
+define('SAVED_EMPTY', "Please submit all required information.");
 
 // Menu strings
 define('MMENU_DICTIONARY', "Dictionary");
