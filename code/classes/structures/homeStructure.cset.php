@@ -23,7 +23,7 @@ class pHomeStructure extends pStructure{
 
 		$this->_template = new pLoginTemplate();
 
-		$donut['page']['title'] = $this->_page_title;
+		pMainTemplate::setTitle($this->_page_title);
 
 	}
 

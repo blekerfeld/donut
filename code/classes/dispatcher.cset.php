@@ -19,15 +19,25 @@ class pDispatcher {
 
 	public static $active, $structure;
 
-	public function __construct($query){
+	public function __construct($query = null){
+		$query = $_SERVER['QUERY_STRING'];
+		if($query == '')
+			$query = 'home';
 		$this->query = $query;
-		pAdress::queryString($this->query);
+		pAdress::queryString($this->query);		
+		// Let's pack some superglobals inside pAdress
+		pAdress::session($_SESSION);
+		pAdress::post($_POST);
 		$this->_dispatchData = require_once p::FromRoot("code/Dispatch.php");
 		self::$structure = $this->_dispatchData;
 		unset($this->_dispatchData['META_MENU']);
 	}
 
 	public function compile(){
+
+		if(!(isset($this) && get_class($this) == __CLASS__))
+			return (new self)->compile();
+
 		// This will be filled with compiled arguments
 		$this->_arguments = array();
 		$this->_urlArguments = explode("/", $this->query);
@@ -127,7 +137,10 @@ class pDispatcher {
 	}
 
 	public function dispatch(){
-		return $this->structureObject->render();
+		// Let's render our object and return the template :D
+		$this->structureObject->render();
+		// Calling the template
+		return new pMainTemplate;
 	}
 
 	protected function do404($extra = ''){

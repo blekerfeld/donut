@@ -10,9 +10,9 @@
 
 */
 
-global $donut;
+global $transfer;
 
-$donut['lang_sub_files'] = array('date', 'dictionary', 'admin');
+$transfer['lang_sub_files'] = array('date', 'dictionary', 'admin');
 	
 
 // 404 text
