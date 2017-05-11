@@ -167,7 +167,7 @@ class pUser{
 			return false;
 
 		// Now it is time to change the shit out of it
-		return self::$dataModel->changeField(self::$id, (new pDataField('password')), pHash($password));
+		return self::$dataModel->changeField(self::$id, (new pDataField('password')), p::Hash($password));
 
 	}
 
@@ -176,7 +176,7 @@ class pUser{
 	}
 
 	public function checkCre($username, $password){
-		self::$dataModel->setCondition(" WHERE username = '".$username."' AND password = '".pHash($password)."'");
+		self::$dataModel->setCondition(" WHERE username = '".$username."' AND password = '".p::Hash($password)."'");
 		if(self::$dataModel->getObjects()->rowCount() == 1)
 			return true;
 		return false;

@@ -81,7 +81,7 @@ class pHandler{
 		}
 		else{
 			if(!is_numeric($id))
-				$id = pHashId($id, true)[0];
+				$id = p::HashId($id, true)[0];
 			$this->id = $id;
 			return $this->_data = $this->dataModel->getSingleObject($id)->fetchAll();
 		}
@@ -99,12 +99,12 @@ class pHandler{
 
 	public function pagePrevious(){
 		if($this->_offset >= $this->_itemsperpage)
-			return "<a href='".pUrl("?".$this->_app . "/". $this->_section . '/offset/'.($this->_offset - $this->_itemsperpage))."' class='back-mini no-marg'><i class='fa fa-8 fa-arrow-left'></i></a>";
+			return "<a href='".p::Url("?".$this->_app . "/". $this->_section . '/offset/'.($this->_offset - $this->_itemsperpage))."' class='back-mini no-marg'><i class='fa fa-8 fa-arrow-left'></i></a>";
 	}
 
 	public function pageNext(){
 		if($this->_total > ($this->_offset + $this->_itemsperpage))
-			return "<a href='".pUrl("?".$this->_app . "/". $this->_section . '/offset/'.($this->_offset + $this->_itemsperpage))."' class='back-mini no-marg'><i class='fa fa-8 fa-arrow-right' style='font-size: 12px!important;'></i></a> ";
+			return "<a href='".p::Url("?".$this->_app . "/". $this->_section . '/offset/'.($this->_offset + $this->_itemsperpage))."' class='back-mini no-marg'><i class='fa fa-8 fa-arrow-right' style='font-size: 12px!important;'></i></a> ";
 	}
 
 	public function changePagination($value){
@@ -118,7 +118,7 @@ class pHandler{
 
 		$current_page_number  = 1;
 
-		$select_page = "<select class='selectPage' onChange='window.location = \"".pUrl("?".$this->_app . "/". $this->_section . '/offset/')."\" + $(this).val();'>";
+		$select_page = "<select class='selectPage' onChange='window.location = \"".p::Url("?".$this->_app . "/". $this->_section . '/offset/')."\" + $(this).val();'>";
 
 			while($number_of_pages > 0){
 				$calculated_offset = (($current_page_number * $this->_itemsperpage) - $this->_itemsperpage);

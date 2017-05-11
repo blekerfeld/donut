@@ -19,7 +19,7 @@ class pAction{
 
 		if($this->_override != null)
 			return $this->_override;
-		return pUrl('?'.$this->_app.'/'.$this->_section.'/'.$this->name.(($id != -1) ? '/'.$id : '').($linked != false ? '/'.$linked.'/' : '').(($ajax != 0) ? '/ajax': '').(isset(pAdress::arg()['offset']) ? "/position/".pAdress::arg()['offset'] : ""));
+		return p::Url('?'.$this->_app.'/'.$this->_section.'/'.$this->name.(($id != -1) ? '/'.$id : '').($linked != false ? '/'.$linked.'/' : '').(($ajax != 0) ? '/ajax': '').(isset(pAdress::arg()['offset']) ? "/position/".pAdress::arg()['offset'] : ""));
 	}
 
 	public function setOverride($override){
@@ -49,13 +49,13 @@ class pAction{
 			return '<span class="delete_load_'.$id.'"></span>
 			<a class="'.$this->_class." link_".$this->name.' red-link" href="javascript:void(0);" onClick="
 					if(confirm(\''.htmlspecialchars(DA_DELETE_SURE).'\') == true) {
-			    		$(\'.delete_load_'.$id.'\').load(\''.pUrl($this->actionUrl($id, true).($linked != null ? "/".$linked : '')).'\');
+			    		$(\'.delete_load_'.$id.'\').load(\''.p::Url($this->actionUrl($id, true).($linked != null ? "/".$linked : '')).'\');
 			    		$(\'.item_'.$id.'\').slideUp(function(){
 			    				window.location = window.location;
 			    		});
 					}">'.(new pIcon($this->_icon, 12)).' '.$this->_surface.'</a>';
 
-		return "<a href='".pUrl($this->actionUrl($id, false, ($linked != null ? $linked : false)))."' class='".$this->_class." link_".$this->name."'>".(new pIcon($this->_icon, 12))." ".$this->_surface."</a>";
+		return "<a href='".p::Url($this->actionUrl($id, false, ($linked != null ? $linked : false)))."' class='".$this->_class." link_".$this->name."'>".(new pIcon($this->_icon, 12))." ".$this->_surface."</a>";
 	}
 
 }

@@ -13,11 +13,11 @@ class pAlphabet{
 	private static $dataModel, $dataModelGroups, $_graphemes, $order, $_init = false, $_groups = array();
 
 
-	// This will print a freaking alphabet bar via pOut(new pAlphabet);
+	// This will print a freaking alphabet bar via p::Out(new pAlphabet);
 	public function __toString(){
 		$output = '<div class="alphabetbar">';
 		foreach (self::$dataModel->data()->fetchAll() as $grapheme)
-			$output .= "<a href='".pUrl('?list/alphabet/'.$grapheme['id'].'/'.$grapheme['grapheme'])."'><span class='native'>".$grapheme['grapheme']."</span></a>";
+			$output .= "<a href='".p::Url('?list/alphabet/'.$grapheme['id'].'/'.$grapheme['grapheme'])."'><span class='native'>".$grapheme['grapheme']."</span></a>";
 		return $output."</div>";
 	}
 

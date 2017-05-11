@@ -22,7 +22,7 @@ class pRulesheetStructure extends pStructure{
 			$this->_section = pAdress::arg()['section'];
 		else{
 
-			$this->_error = pNoticeBox('fa-info-circle fa-12', DA_SECTION_ERROR, 'danger-notice');
+			$this->_error = p::Notice('fa-info-circle fa-12', DA_SECTION_ERROR, 'danger-notice');
 
 			$this->_section = $this->_default_section;
 		}
@@ -44,7 +44,7 @@ class pRulesheetStructure extends pStructure{
 			$this->_parser->setOffset(pAdress::arg()['offset']);
 
 		if(!isset(pAdress::arg()['ajax']))
-			pOut("<div class='rulesheet-header'>".pMarkdown("## ".$this->_structure[$this->_section]['surface'])."</div><br />");
+			p::Out("<div class='rulesheet-header'>".p::Markdown("## ".$this->_structure[$this->_section]['surface'])."</div><br />");
 			
 		// Let's handle the action by the object
 		if(isset(pAdress::arg()['action'])){
@@ -61,7 +61,7 @@ class pRulesheetStructure extends pStructure{
 		}
 
 		// Tooltipster time!
-		pOut("<script type='text/javascript'>
+		p::Out("<script type='text/javascript'>
 
 			$('.ttip').tooltipster({animation: 'grow', animationDuration: 100,  distance: 0, contentAsHTML: true, interactive: true, side:'left'});
 

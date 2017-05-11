@@ -30,19 +30,19 @@ class pAuthStructure extends pStructure{
 	protected function logInAjax(){
 
 		if(isset(pAdress::post()['username'], pAdress::post()['password']) AND empty(pAdress::post()['username']) OR empty(pAdress::post()['password']))
-			return pOut($this->_template->warning());
+			return p::Out($this->_template->warning());
 
 		if(pUser::checkCre(pAdress::post()['username'], pAdress::post()['password'])){
 			(new pUser)->logIn(pAdress::post()['username']);
-			return pOut($this->_template->succes()."<script>window.location = '".pUrl('?home')."';</script>");
+			return p::Out($this->_template->succes()."<script>window.location = '".p::Url('?home')."';</script>");
 		}
 		else
-			return pOut($this->_template->errorMessage());
+			return p::Out($this->_template->errorMessage());
 	}
 
 	protected function logOut(){
 		(new pUser)->logOut();	
-		return pUrl('?auth', true);
+		return p::Url('?auth', true);
 	}
 
 	public function render(){
@@ -54,9 +54,9 @@ class pAuthStructure extends pStructure{
 			return $this->logInAjax();
 
 		if(pUser::noGuest())
-			return pUrl('?home', true);
+			return p::Url('?home', true);
 
-		pOut("<div class='home-margin'>".$this->_template->loginForm()."</div>");
+		p::Out("<div class='home-margin'>".$this->_template->loginForm()."</div>");
 
 	}
 

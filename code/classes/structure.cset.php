@@ -45,13 +45,13 @@ abstract class pStructure{
 			// Loading the sturcture
 
 			if($this->_type != '')
-				if(file_exists(pFromRoot("code/structures/".$this->_name.".".$this->_type.".struct.php")))
-					$this->_structure = require_once pFromRoot("code/structures/".$this->_name.".".$this->_type.".struct.php");
+				if(file_exists(p::FromRoot("code/structures/".$this->_name.".".$this->_type.".struct.php")))
+					$this->_structure = require_once p::FromRoot("code/structures/".$this->_name.".".$this->_type.".struct.php");
 				else
 					$this->_structure = $this->_dispatchStructure;
 			else
-				if(file_exists(pFromRoot("code/structures/".$this->_name.".struct.php")))
-					$this->_structure = require_once pFromRoot("code/structures/".$this->_name.".struct.php");
+				if(file_exists(p::FromRoot("code/structures/".$this->_name.".struct.php")))
+					$this->_structure = require_once p::FromRoot("code/structures/".$this->_name.".struct.php");
 				else
 					$this->_structure = $this->_dispatchStructure;
 

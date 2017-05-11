@@ -35,19 +35,19 @@ class pMagicField{
 		if($this->_field->disableOnNull AND $this->_is_null)
 			return false;
 
-		pOut("<div class='btSource'><span class='btLanguage'>".$this->_field->surface."</span>");
+		p::Out("<div class='btSource'><span class='btLanguage'>".$this->_field->surface."</span>");
 		// If required show an asterisk
 		if($this->_field->required == true)
-			pOut("<span class='xsmall' style='color: darkred;opacity: .3;'>*</span>");
-		pOut("<br />");
-		pOut("<span class='btNative'>");
+			p::Out("<span class='xsmall' style='color: darkred;opacity: .3;'>*</span>");
+		p::Out("<br />");
+		p::Out("<span class='btNative'>");
 		switch ($this->_field->type) {
 			case 'textarea':
-				pOut("<textarea name='".$this->_field->name."' class=field_'".$this->_field->name." ".$this->_field->class."'>".$this->_field->_value."</textarea>");
+				p::Out("<textarea name='".$this->_field->name."' class=field_'".$this->_field->name." ".$this->_field->class."'>".$this->_field->_value."</textarea>");
 				break;
 
 			case 'boolean':
-				pOut("<select name='".$this->name."' class='field_".$this->name." ".$this->_field->class."'><option value='1' ".($this->value() == 1 ? 'selected' : '').">".DL_ENABLED."</option><option value='0' ".($this->value() == 0 ? 'selected' : '').">".DL_DISABLED."</option></select></span>");
+				p::Out("<select name='".$this->name."' class='field_".$this->name." ".$this->_field->class."'><option value='1' ".($this->value() == 1 ? 'selected' : '').">".DL_ENABLED."</option><option value='0' ".($this->value() == 0 ? 'selected' : '').">".DL_DISABLED."</option></select></span>");
 				break;
 
 			case 'select':
@@ -58,14 +58,14 @@ class pMagicField{
 				if($this->_field->required == false)
 					$optional = "<option value='' ".($this->value() == '' ? 'selected' : '')."><em>(".DA_OPTIONAL.")</em></option>";
 				
-				pOut("<select name='".$this->name."'' class='field_".$this->name." ".$this->_field->class."'>".$optional.$this->_field->selectionValues->render()."</select></span>");
+				p::Out("<select name='".$this->name."'' class='field_".$this->name." ".$this->_field->class."'>".$optional.$this->_field->selectionValues->render()."</select></span>");
 				break;
 			
 			default:
-				pOut("<input name='".$this->_field->name."' class='btInput nWord small normal-font field_".$this->name." ".$this->_class."' value='".$this->_value."' />");
+				p::Out("<input name='".$this->_field->name."' class='btInput nWord small normal-font field_".$this->name." ".$this->_class."' value='".$this->_value."' />");
 				break;
 		}
-		pOut("</span></div>");
+		p::Out("</span></div>");
 	}
 
 }
@@ -148,7 +148,7 @@ class pSelector{
 
 		if($this->_interactive && $this->_useTable){
 			$_SESSION['pJSBack'] = true;
-			$output .= "<a href='".pUrl("?".pParser::$stApp."/".$this->_overrideSection."/edit/".$this->value)."' class='tooltip'>";
+			$output .= "<a href='".p::Url("?".pParser::$stApp."/".$this->_overrideSection."/edit/".$this->value)."' class='tooltip'>";
 		}
 
 		if(array_key_exists($key, pDataField::stack()))
@@ -213,7 +213,7 @@ class pMagicActionForm{
 				$empty_error++;
 
 		if($empty_error != 0){
-			pOut(pNoticeBox('fa-warning fa-12', $this->_strings[3], 'danger-notice ajaxMessage'));
+			p::Out(p::Notice('fa-warning fa-12', $this->_strings[3], 'danger-notice ajaxMessage'));
 		}
 		else{
 
@@ -226,7 +226,7 @@ class pMagicActionForm{
 
 				// Editing
 				if($this->_edit){
-					$this->_handler->dataModel->prepareForUpdate($values);
+					$this->_handler->dataModel->prepareForUp::Date($values);
 					$this->_handler->dataModel->update();
 				}
 				//Adding
@@ -235,20 +235,20 @@ class pMagicActionForm{
 					$this->_handler->dataModel->insert();
 				}
 
-				pOut(pNoticeBox('fa-check fa-12', $this->_strings[5].". <a href='".pUrl("?".$this->_app."/".$this->_section. (isset($_REQUEST['position']) ? "/offset/".$_REQUEST['position'] : ""))."'>".$this->_strings[6]."</a>", 'succes-notice ajaxMessage'));
+				p::Out(p::Notice('fa-check fa-12', $this->_strings[5].". <a href='".p::Url("?".$this->_app."/".$this->_section. (isset($_REQUEST['position']) ? "/offset/".$_REQUEST['position'] : ""))."'>".$this->_strings[6]."</a>", 'succes-notice ajaxMessage'));
 
 				// If this is not a edit action, we need to reload the form
 				if(!$this->_edit)
-				pOut("<script type='text/javascript'>
+				p::Out("<script type='text/javascript'>
 					$('#adminForm').trigger('reset');
 				</script>");
 
 			} catch (Exception $e) {
-				pOut(pNoticeBox('fa-warning fa-12', $this->_strings[4], 'danger-notice ajaxMessage'));
+				p::Out(p::Notice('fa-warning fa-12', $this->_strings[4], 'danger-notice ajaxMessage'));
 			}
 
 		}
-		pOut("<script type='text/javascript'>
+		p::Out("<script type='text/javascript'>
 				$('.saving').slideUp(function(){
 					$('.ajaxMessage').slideDown();
 				});
@@ -258,33 +258,33 @@ class pMagicActionForm{
 
 
 	public function form(){
-		pOut("<div class='btCard admin'>");
-		pOut("<div class='btTitle'>".$this->_strings[0]."</div>");
+		p::Out("<div class='btCard admin'>");
+		p::Out("<div class='btTitle'>".$this->_strings[0]."</div>");
 
-		pOut(pNoticeBox('fa-spinner fa-spin fa-12', $this->_strings[2], 'notice saving hide'));
+		p::Out(p::Notice('fa-spinner fa-spin fa-12', $this->_strings[2], 'notice saving hide'));
 
 		// That is where the ajax magic happens:
-		pOut("<div class='ajaxSave'></div>");
+		p::Out("<div class='ajaxSave'></div>");
 
-		pOut("<form id='adminForm'>");
+		p::Out("<form id='adminForm'>");
 
 			foreach($this->_magicfields->get() as $magicField){
 				$magicField->render();
 			}
 
-		pOut("</form>");
+		p::Out("</form>");
 
 		if(isset($_SESSION['pJSBack']) && $_SESSION['pJSBack'] == true){
 			$hrefBack = "javascript:window.history.back();";
 			$_SESSION['pJSBack'] = false;
 		}
 		else
-			$hrefBack = pUrl("?".$this->_app."/".$this->_section.(isset($_REQUEST['position']) ? "/offset/".$_REQUEST['position'] : ""));
+			$hrefBack = p::Url("?".$this->_app."/".$this->_section.(isset($_REQUEST['position']) ? "/offset/".$_REQUEST['position'] : ""));
 
-		pOut("<div class='btButtonBar'>
+		p::Out("<div class='btButtonBar'>
 			<a class='btAction wikiEdit' href='".$hrefBack."'><i class='fa fa-12 fa-arrow-left' ></i> ".BACK."</a>
 			<a class='btAction green submit-form not-smooth'><i class='fa fa-12 fa-check-circle'></i> ".$this->_strings[1]."</a><br id='cl'/></div>");
-		pOut("</div>");
+		p::Out("</div>");
 		$loadValues = array();
 
 		foreach ($this->_fields->get() as $field){
@@ -294,7 +294,7 @@ class pMagicActionForm{
 				$loadValues[] = "'admin_form_".$field->name."': $('.field_".$field->name."').val()";
 		}
 
-		pOut("<script type='text/javascript'>
+		p::Out("<script type='text/javascript'>
 			".(!(isset($this->_handler->_structure[$this->_section]['disable_enter']) AND $this->_handler->_structure[$this->_section]['disable_enter'] != true) ? "$(window).keydown(function(e) {
 			    		switch (e.keyCode) {
 			       		 case 13:
@@ -305,7 +305,7 @@ class pMagicActionForm{
 				$('.btCard select').select2();
 				$('.submit-form').click(function(){
 					$('.saving').slideDown();
-					$('.ajaxSave').load('".pUrl("?".$this->_app."/".$this->_section."/".$this->_name.(($this->_edit) ? '/'.$this->_data[0]['id'] : '')."/ajax")."', {
+					$('.ajaxSave').load('".p::Url("?".$this->_app."/".$this->_section."/".$this->_name.(($this->_edit) ? '/'.$this->_data[0]['id'] : '')."/ajax")."', {
 						".implode(", ", $loadValues)."
 					});
 				});
@@ -346,7 +346,7 @@ class pMagicActionForm{
 			// We have to check if the relation already exists
 			if($this->_handler->dataModel->countAll($this->_guestObject->structure[$this->_section]['incoming_links'][$this->_linked]['child'] . " = '" . $this->_handler->_matchOnValue . "' AND " . $this->_guestObject->structure[$this->_section]['incoming_links'][$this->_linked]['parent'] . " = '" . $_REQUEST['admin_form_'.$this->_guestObject->structure[$this->_section]['incoming_links'][$this->_linked]['parent']] . "'")){
 
-				pOut(pNoticeBox('fa-info-circle fa-12', DA_TABLE_RELATION_EXIST.". <a href='".pUrl("?".$this->_app."&".$this->_section."&link-table&id=".$this->_linkObject->_data[0]['id']."&linked=".$this->_linked)."'>".$this->_strings[6]."</a>", 'notice ajaxMessage'));
+				p::Out(p::Notice('fa-info-circle fa-12', DA_TABLE_RELATION_EXIST.". <a href='".p::Url("?".$this->_app."&".$this->_section."&link-table&id=".$this->_linkObject->_data[0]['id']."&linked=".$this->_linked)."'>".$this->_strings[6]."</a>", 'notice ajaxMessage'));
 
 			}
 			else{
@@ -362,13 +362,13 @@ class pMagicActionForm{
 				$this->_handler->dataModel->prepareForInsert($values);
 				$this->_handler->dataModel->insert();
 				$this->_handler->dataModel->getSingleObject(1);
-				pOut(pNoticeBox('fa-info-circle fa-12', DA_TABLE_RELATION_ADDED.". <a href='".pUrl("?".$this->_app."&".$this->_section."&link-table&id=".$this->_linkObject->data()[0]['id']."&linked=".$this->_linked)."'>".$this->_strings[6]."</a>", 'succes-notice ajaxMessage'));
+				p::Out(p::Notice('fa-info-circle fa-12', DA_TABLE_RELATION_ADDED.". <a href='".p::Url("?".$this->_app."&".$this->_section."&link-table&id=".$this->_linkObject->data()[0]['id']."&linked=".$this->_linked)."'>".$this->_strings[6]."</a>", 'succes-notice ajaxMessage'));
 			}
 		}
 		else
-			pOut(pNoticeBox('fa-warning fa-12', $this->_strings[3], 'danger-notice ajaxMessage'));
+			p::Out(p::Notice('fa-warning fa-12', $this->_strings[3], 'danger-notice ajaxMessage'));
 
-		pOut("<script type='text/javascript'>
+		p::Out("<script type='text/javascript'>
 				$('.saving').slideUp(function(){
 					$('.ajaxMessage').slideDown();
 				});
@@ -378,21 +378,21 @@ class pMagicActionForm{
 
 	public function newLinkForm(){
 
-		pOut("<div class='btCard admin link-table'>");
-		pOut("<div class='btTitle'><i class='fa fa-plus-circle'></i> ".DA_TABLE_NEW_RELATION."<span class='medium'>".$this->_handler->_surface."</span></div>");
+		p::Out("<div class='btCard admin link-table'>");
+		p::Out("<div class='btTitle'><i class='fa fa-plus-circle'></i> ".DA_TABLE_NEW_RELATION."<span class='medium'>".$this->_handler->_surface."</span></div>");
 
-		pOut(pNoticeBox('fa-spinner fa-spin fa-12', $this->_strings[2], 'notice saving hide'));
+		p::Out(p::Notice('fa-spinner fa-spin fa-12', $this->_strings[2], 'notice saving hide'));
 
 		// That is where the ajax magic happens:
-		pOut("<div class='ajaxSave'></div>");
-		pOut("<div class='btSource'><span class='btLanguage'>".DA_TABLE_LINKS_PARENT."</span><br />
+		p::Out("<div class='ajaxSave'></div>");
+		p::Out("<div class='btSource'><span class='btLanguage'>".DA_TABLE_LINKS_PARENT."</span><br />
 			<span class='btNative'>".$this->_linkObject->_data[0][$this->_show_parent]."</span></div>");
 
-		pOut("<div class='btSource'><span class='btLanguage'>".DA_TABLE_LINKS_CHILD."</span><br /><span class='btNative'><select class='field_".$this->_guestObject->structure[$this->_section]['incoming_links'][$this->_linked]['parent']."'>");
+		p::Out("<div class='btSource'><span class='btLanguage'>".DA_TABLE_LINKS_CHILD."</span><br /><span class='btNative'><select class='field_".$this->_guestObject->structure[$this->_section]['incoming_links'][$this->_linked]['parent']."'>");
 
-		pOut($this->_fields->get()[$this->_guestObject->structure[$this->_section]['incoming_links'][$this->_linked]['child']]->selectionValues->render());
+		p::Out($this->_fields->get()[$this->_guestObject->structure[$this->_section]['incoming_links'][$this->_linked]['child']]->selectionValues->render());
 
-		pOut("</select></span></div>");
+		p::Out("</select></span></div>");
 
 
 		// Extra fields	
@@ -400,10 +400,10 @@ class pMagicActionForm{
 			foreach($this->_extra_fields as $field)
 				(new pMagicField($field))->render();
 
-		pOut("<div class='btButtonBar'>
-			<a class='btAction wikiEdit' href='".pUrl("?".$this->_app."/".$this->_section."/link-table/".$this->_linkObject->_data[0]['id']."/".$this->_linked)."'><i class='fa fa-12 fa-arrow-left' ></i> ".BACK."</a>
+		p::Out("<div class='btButtonBar'>
+			<a class='btAction wikiEdit' href='".p::Url("?".$this->_app."/".$this->_section."/link-table/".$this->_linkObject->_data[0]['id']."/".$this->_linked)."'><i class='fa fa-12 fa-arrow-left' ></i> ".BACK."</a>
 			<a class='btAction green submit-form not-smooth'><i class='fa fa-12 fa-check-circle'></i> ".$this->_strings[1]."</a><br id='cl'/></div>");
-		pOut("</div>");
+		p::Out("</div>");
 
 		$loadValues = array();
 
@@ -414,7 +414,7 @@ class pMagicActionForm{
 				$loadValues[] = "'admin_form_".$field->name."': $('.field_".$field->name."').val()";
 		}
 
-		pOut("<script type='text/javascript'>
+		p::Out("<script type='text/javascript'>
 				".(!(isset($this->_guestObject->structure[$this->_section]['incoming_links']['disable_enter']) AND $this->_guestObject->structure[$this->_section]['incoming_links']['disable_enter'] != true) ? "$(window).keydown(function(e) {
 			    		switch (e.keyCode) {
 			       		 case 13:
@@ -425,7 +425,7 @@ class pMagicActionForm{
 				$('.field_".$this->_guestObject->structure[$this->_section]['incoming_links'][$this->_linked]['parent']."').select2();
 				$('.submit-form').click(function(){
 					$('.saving').slideDown();
-					$('.ajaxSave').load('".pUrl("?".$this->_app."/".$this->_section."/new-link/".$this->_linkObject->_data[0]['id']."/".$this->_linked)."/ajax', {".implode(", ", $loadValues)."});
+					$('.ajaxSave').load('".p::Url("?".$this->_app."/".$this->_section."/new-link/".$this->_linkObject->_data[0]['id']."/".$this->_linked)."/ajax', {".implode(", ", $loadValues)."});
 				});
 			</script>");
 	}

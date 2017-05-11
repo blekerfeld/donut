@@ -30,15 +30,15 @@ class pDocsStructure extends pStructure{
 	protected function logInAjax(){
 		if(pUser::checkCre(pAdress::post()['username'], pAdress::post()['password'])){
 			(new pUser)->login(pAdress::post()['username']);
-			pOut("<script>window.location = '".pUrl('?home')."';</script>");
+			p::Out("<script>window.location = '".p::Url('?home')."';</script>");
 		}
 		else
-			pOut($this->_template->errorMessage());
+			p::Out($this->_template->errorMessage());
 	}
 
 	protected function logOut(){
 		(new pUser)->logOut();	
-		return pUrl('?auth/login', true);
+		return p::Url('?auth/login', true);
 	}
 
 	public function render(){
@@ -50,9 +50,9 @@ class pDocsStructure extends pStructure{
 			return $this->logInAjax();
 
 		if(pUser::noGuest())
-			return pUrl('?home', true);
+			return p::Url('?home', true);
 
-		pOut("<div class='home-margin'>".$this->_template->loginForm()."</div>");
+		p::Out("<div class='home-margin'>".$this->_template->loginForm()."</div>");
 
 	}
 

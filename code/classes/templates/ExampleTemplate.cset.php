@@ -19,14 +19,14 @@ class pExampleTemplate extends pEntryTemplate{
 		if($backHref != null)
 			$back = "<a class='back-mini' href='".$backHref."'>".(new pIcon('fa-arrow-left', 12))."</a>";	
 
-		$realTitle = pMarkdown("# ".$back." <strong class='pWord'><span class='native'><a>".$this->_data['idiom']."</span></strong>", true);
+		$realTitle = p::Markdown("# ".$back." <strong class='pWord'><span class='native'><a>".$this->_data['idiom']."</span></strong>", true);
 
 		$titleSection = new pEntrySection("", '', null, false, true);
 
 
 		$titleSection->addInformationElement((new pDataField(null, null, null, 'flag'))->parse((new pLanguage(0))->read('flag'))." ".LEMMA_EXAMPLE);
 
-		return $realTitle.$titleSection."<br /><span class='small-caps xsmall'>".sprintf(LEMMA_TRANSLATION_ADDED, "<a href='".pUrl('?profile/'.$this->_data['user_id'])."'>".(new pUser($this->_data['user_id']))->read('username')."</a>", pDate($this->_data['created_on']))."</span>";
+		return $realTitle.$titleSection."<br /><span class='small-caps xsmall'>".sprintf(LEMMA_TRANSLATION_ADDED, "<a href='".p::Url('?profile/'.$this->_data['user_id'])."'>".(new pUser($this->_data['user_id']))->read('username')."</a>", p::Date($this->_data['created_on']))."</span>";
 
 	}
 
@@ -44,7 +44,7 @@ class pExampleTemplate extends pEntryTemplate{
 		
 		$content .= "</ol>";
 
-		return pOut(new pEntrySection($title, $content));
+		return p::Out(new pEntrySection($title, $content));
 
 
 	}

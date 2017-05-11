@@ -22,7 +22,7 @@ class pAdminStructure extends pStructure{
 			$this->_section = pAdress::arg()['section'];
 		else{
 
-			$this->_error = pNoticeBox('fa-info-circle fa-12', DA_SECTION_ERROR, 'notice');
+			$this->_error = p::Notice('fa-info-circle fa-12', DA_SECTION_ERROR, 'notice');
 
 			$this->_section = $this->_default_section;
 		}
@@ -69,12 +69,12 @@ class pAdminStructure extends pStructure{
 		foreach($this->_menu as $key => $main){
 			// Permission check
 			if(pUser::checkPermission($this->itemPermission($main['section'])) OR isset($main['items'])){
-				$output .= "<a href='".(isset($main['section']) ? pUrl("?".$this->_app."/".$main['section']) : '')."' class='".(($this->checkActiveMain($key) OR (isset(pAdress::arg()['section'], $main['section']) AND pAdress::arg()['section'] == $main['section'])) ? 'active' : '')." ttip' title='
+				$output .= "<a href='".(isset($main['section']) ? p::Url("?".$this->_app."/".$main['section']) : '')."' class='".(($this->checkActiveMain($key) OR (isset(pAdress::arg()['section'], $main['section']) AND pAdress::arg()['section'] == $main['section'])) ? 'active' : '')." ttip' title='
 					<strong>".htmlspecialchars($main['surface'])."</strong>";
 
 				if(isset($main['items']))
 					foreach($main['items'] as $item){
-						$output .= "<a href=\"".pUrl("?".$this->_app."/".$item['section_key'])."\" class=\"ttip-sub ".($this->checkActiveSub($item['section_key']) ? 'active' : '')."\">".(new pIcon($item['icon'], 12))." ". htmlspecialchars($item['surface'])."</a>";
+						$output .= "<a href=\"".p::Url("?".$this->_app."/".$item['section_key'])."\" class=\"ttip-sub ".($this->checkActiveSub($item['section_key']) ? 'active' : '')."\">".(new pIcon($item['icon'], 12))." ". htmlspecialchars($item['surface'])."</a>";
 					}
 
 				$items++;
@@ -89,13 +89,13 @@ class pAdminStructure extends pStructure{
 		if($items == 0)
 			return false;
 
-		return pOut($output);
+		return p::Out($output);
 
 	}
 
 	private function header(){
 
-		$output = pMarkDown("## ".(new pIcon($this->_meta['icon']))." ".$this->_meta['title']);
+		$output = p::Markdown("## ".(new pIcon($this->_meta['icon']))." ".$this->_meta['title']);
 
 		return $output;
 	}
@@ -110,14 +110,14 @@ class pAdminStructure extends pStructure{
 		$this->prepareMenu();
 
 		// Starting with the wrapper
-		pOut("<div class='d_admin_wrap'><div class='d_admin'>");
+		p::Out("<div class='d_admin_wrap'><div class='d_admin'>");
 
 				// Header time
-		pOut("<div class='d_admin_header'>".$this->header()."</div>");
+		p::Out("<div class='d_admin_header'>".$this->header()."</div>");
 
 		// Showing an error if there is one set.
 		if($this->_error != null)
-			pOut("<div class='btCard minimal admin'>".$this->_error."</div>");
+			p::Out("<div class='btCard minimal admin'>".$this->_error."</div>");
 
 		// If there is an offset, we need to define that
 		if(isset(pAdress::arg()['offset']))
@@ -128,7 +128,7 @@ class pAdminStructure extends pStructure{
 		if(isset(pAdress::arg()['action'])){
 
 			if(isset(pAdress::arg()['id']) AND !in_array(pAdress::arg()['action'], array('link-table')))
-				$this->_parser->runData((is_numeric(pAdress::arg()['id']) ?  pAdress::arg()['id'] : pHashId(pAdress::arg()['id'], true)[0]));
+				$this->_parser->runData((is_numeric(pAdress::arg()['id']) ?  pAdress::arg()['id'] : p::HashId(pAdress::arg()['id'], true)[0]));
 
 			$this->_parser->action(pAdress::arg()['action'], (boolean)isset(pAdress::arg()['ajax']), ((isset(pAdress::arg()['linked']) ? pAdress::arg()['linked'] : null)));
 			if(isset(pAdress::arg()['ajax']))
@@ -136,7 +136,7 @@ class pAdminStructure extends pStructure{
 		}
 		else{
 			if(isset(pAdress::arg()['id']))
-				$this->_parser->runData(is_numeric(pAdress::arg()['id']) ?  pAdress::arg()['id'] : pHashId(pAdress::arg()['id'], true)[0]);
+				$this->_parser->runData(is_numeric(pAdress::arg()['id']) ?  pAdress::arg()['id'] : p::HashId(pAdress::arg()['id'], true)[0]);
 			else
 				$this->_parser->runData();
 
@@ -146,14 +146,14 @@ class pAdminStructure extends pStructure{
 		}
 
 		// Ending content
-		pOut("</div>");
+		p::Out("</div>");
 
 		// Time for the menu
 		$this->renderMenu();
 
 
 		// Tooltipster time!
-		pOut("<script type='text/javascript'>
+		p::Out("<script type='text/javascript'>
 
 			$('.ttip').tooltipster({animation: 'grow', animationDuration: 100,  distance: 0, contentAsHTML: true, interactive: true, side:'left'});
 
@@ -170,7 +170,7 @@ class pAdminStructure extends pStructure{
 			</script>");
 
 		// Ending overall 
-		pOut("</div>");
+		p::Out("</div>");
 
 	}
 

@@ -20,7 +20,7 @@ class pSearchStructure extends pStructure{
 			$this->_section = pAdress::arg()['section'];
 		else{
 
-			$this->_error = pNoticeBox('fa-info-circle fa-12', DA_SECTION_ERROR, 'danger-notice');
+			$this->_error = p::Notice('fa-info-circle fa-12', DA_SECTION_ERROR, 'danger-notice');
 			$this->_section = $this->_default_section;
 		}
 
@@ -35,14 +35,14 @@ class pSearchStructure extends pStructure{
 
 	public function render(){
 
-		pOut("<div class='home-margin no-padding-bottom'>");
+		p::Out("<div class='home-margin no-padding-bottom'>");
 		// If there is an offset, we need to define that
 		if(isset(pAdress::arg()['offset']))
 			$this->_parser->setOffset(pAdress::arg()['offset']);
 		$this->_parser->render();
-		pOut("</div>");
+		p::Out("</div>");
 
-		pOut("<script type='text/javascript'>
+		p::Out("<script type='text/javascript'>
 
 			$('.tooltip').tooltipster({animation: 'grow', animationDuration: 150,  distance: 0, contentAsHTML: true, interactive: true, side: 'bottom'});
 			</script>");

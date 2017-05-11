@@ -50,7 +50,7 @@ class pSearchBox extends pTemplatePiece{
 			// Throwing this object's script into a session
 			pAdress::session($hashKey, $this->script());
 
-			$output .= "<script type='text/javascript' src='".pUrl('pol://library/assets/js/jsMover.js.php?key='.$hashKey)."'></script>";
+			$output .= "<script type='text/javascript' src='".p::Url('pol://library/assets/js/jsMover.js.php?key='.$hashKey)."'></script>";
 
 			return $output;
 	}
@@ -79,7 +79,7 @@ class pSearchBox extends pTemplatePiece{
 
 		function callBack(){
 			  if($('.word-search').val() == ''){
-		    	window.history.pushState('string', '', '".pUrl("?".pAdress::queryString())."');
+		    	window.history.pushState('string', '', '".p::Url("?".pAdress::queryString())."');
 		    	$('.page').removeClass('min');
 				$('.searchLoad').slideUp();
 				loadhome();
@@ -139,8 +139,8 @@ class pSearchBox extends pTemplatePiece{
 			// Don't show an error if we are forced to have the search load a search action
 			if((isset(pAdress::arg()['query'], pAdress::arg()['dictionary'])))
 
-				$output .= "$('.pEntry').load('".pUrl('?home/ajax/nosearch')."', {}, function(){
-					window.history.pushState('string', '', '".pUrl("?home")."');
+				$output .= "$('.pEntry').load('".p::Url('?home/ajax/nosearch')."', {}, function(){
+					window.history.pushState('string', '', '".p::Url("?home")."');
 					$('.header.dictionary').addClass('home');	
 				});";
 
@@ -157,9 +157,9 @@ class pSearchBox extends pTemplatePiece{
 			if(bypass === true || $('.word-search').val().length > 0){
 				$('.page').addClass('min');
 				$('.header.dictionary').removeClass('home').addClass('home-search');
-      			$('.searchLoad').load('".pUrl('?search/')."' + $('.dictionary-selector').val() + '/ajax/', {'query': $('.word-search').val(), 'exactMatch': $('.checkbox-wholeword').is(':checked')}, function(e){
+      			$('.searchLoad').load('".p::Url('?search/')."' + $('.dictionary-selector').val() + '/ajax/', {'query': $('.word-search').val(), 'exactMatch': $('.checkbox-wholeword').is(':checked')}, function(e){
       					if($('.word-search').val() != ''){
-      						window.history.pushState('string', '', '".pUrl("?entry/search/")."' + $('.dictionary-selector').val().toLowerCase() + '/' + $('.word-search').val());
+      						window.history.pushState('string', '', '".p::Url("?entry/search/")."' + $('.dictionary-selector').val().toLowerCase() + '/' + $('.word-search').val());
       					}
       					html = e;
       					$('.load-hide').hide();
@@ -187,7 +187,7 @@ class pSearchBox extends pTemplatePiece{
 				$('.searchLoad').slideUp();
 				loadhome();
 				$('.pEntry').slideDown();
-				window.history.pushState('string', '', '".pUrl("?".pAdress::queryString())."');				
+				window.history.pushState('string', '', '".p::Url("?".pAdress::queryString())."');				
 			}
 
 		});

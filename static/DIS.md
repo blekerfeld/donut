@@ -22,7 +22,8 @@ gewoond		*surface level*
 An inflection looks as follows:
 
 ```
-ge-!ver-!be[-en]&D
+ge-!ver-!be[-en]&D OR
+[]&ETJE?$m;&ETJE?$ng:;nkje?$ng;etje?$an;tje?!$m?!$n?!$an?$uin;tje?$VOW;je?&ELSE
 ```
 
 The example is the inflection rule for a regular past participle in Dutch, it accepts an infinitive regular verb as input. Let's break down the syntax:
