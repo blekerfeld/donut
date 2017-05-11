@@ -89,7 +89,7 @@ class pTwolc{
 		$regex .= '/u';
 
 
-		//pConsole(pVarDump($regex));
+		//p::Out(pVarDump($regex));
 
 		$this->_pending[] = array('pattern' => $regex, 'replace' => $this->parseReplace($rule['replace']), 'middle' => $rule['original_middle']);
 		
@@ -121,7 +121,7 @@ class pTwolc{
 				$parsedContext[$count] = '\z'; 
 				continue;
 			}
-			elseif(pStartsWith($char, '(') AND pEndsWith($char, ')') AND is_numeric(substr($char, 1, -1))){
+			elseif(p::StartsWith($char, '(') AND p::EndsWith($char, ')') AND is_numeric(substr($char, 1, -1))){
 				$parsedContext[$count] = '\\'.substr($char, 1, -1);
 				continue;
 			}
@@ -134,7 +134,7 @@ class pTwolc{
 				continue;
 			}
 			// Variables
-			elseif (pStartsWith($char, '&')) {
+			elseif (p::StartsWith($char, '&')) {
 				$char = substr($char, 1);
 				$explode = explode(',', $char);
 				$output = '(?:';
@@ -144,20 +144,20 @@ class pTwolc{
 				$parsedContext[$count] = "[&]{1}".$output.implode('|', $matches).")";
 			}
 			// literal occurances 'at'
-			elseif(pStartsWith($char, '\'') AND pEndsWith($char, '\'')){
+			elseif(p::StartsWith($char, '\'') AND p::EndsWith($char, '\'')){
 				$char = substr($char, 1, -1);
 				$parsedContext[$count] = "[".$char."]{1}";
 			}
 			// one of follolwing [a,b,c]
-			elseif(pStartsWith($char, '[') AND pEndsWith($char, ']')){
+			elseif(p::StartsWith($char, '[') AND p::EndsWith($char, ']')){
 				$char = substr($char, 1, -1);
 				$parsedContext[$count] = "[".implode('', explode(',', $char))."]{1}";
 			}
-			elseif(pStartsWith($char, '[^') AND pEndsWith($char, ']')){
+			elseif(p::StartsWith($char, '[^') AND p::EndsWith($char, ']')){
 				$char = substr($char, 1, -1);
 				$parsedContext[$count] = "[^".implode('', explode(',', $char))."]{1}";
 			}
-			elseif(strlen($char) == 4 AND pStartsWith($char, '^') AND mb_strtoupper(substr($char, 1), 'utf-8') == substr($char, 1) ){
+			elseif(strlen($char) == 4 AND p::StartsWith($char, '^') AND mb_strtoupper(substr($char, 1), 'utf-8') == substr($char, 1) ){
 				$parsedContext[$count] = "[^".pAlphabet::getGroupsAsString(substr($char, 1))."]{1}";
 			}
 			elseif(strlen($char) == 3 AND mb_strtoupper($char, 'utf-8') == $char)
@@ -170,7 +170,7 @@ class pTwolc{
 			elseif(strlen($char) == 1){
 				$parsedContext[$count] = "[".$char."]{1}";
 			}
-			elseif(pStartsWith($char, '(') AND pEndsWith($char, ')')){
+			elseif(p::StartsWith($char, '(') AND p::EndsWith($char, ')')){
 				$parsedContext[$count] = '('.$this->parseContext(substr($char, 1, -1))[1].')';
 				$captureCount++;
 			}
@@ -215,7 +215,7 @@ class pTwolcString{
 			$middleExploded = explode(',', substr($middle, 1, -1));
 			$replaceExploded = explode(',', substr($replace, 1, -1));
 
-			if(isset($replaceExploded[array_search($match, $middleExploded)]) AND pStartsWith($replace, '['))
+			if(isset($replaceExploded[array_search($match, $middleExploded)]) AND p::StartsWith($replace, '['))
 				return $replaceExploded[array_search($match, $middleExploded)];
 			else
 				return str_replace("%", $match, $replace);

@@ -54,7 +54,7 @@ class pLemma extends pEntry{
 
 	// This function renders a simple link to the entry page
 	public function renderSimpleHref($result = false){
-		return pUrl('?entry/'.pHashId($this->_entry['id']).($result ? '/is:result' : ''));
+		return p::Url('?entry/'.p::HashId($this->_entry['id']).($result ? '/is:result' : ''));
 	}
 
 
@@ -66,7 +66,7 @@ class pLemma extends pEntry{
 
 	// Used by the discuss action
 	public function renderDiscussion(){
-		pOut("DISCUSSION OF THIS LEMMA");
+		p::Out("DISCUSSION OF THIS LEMMA");
 	}
 
 	// This function is called to render the lemma as an entry
@@ -83,23 +83,23 @@ class pLemma extends pEntry{
 		// The Subentries need to be prepared
 		$this->compileSubEntries();
 
-		pOut($this->_template->title($this->_type, $this->_class, $this->_subclass));
+		p::Out($this->_template->title($this->_type, $this->_class, $this->_subclass));
 
 		if($this->_translations != null) 
-			pOut($this->_template->parseTranslations($this->_translations));
+			p::Out($this->_template->parseTranslations($this->_translations));
 
 		if($this->_type['inflect_not'] == 0){
 			$this->bindInflector();
-			pOut($this->_template->parseInflections($this->_inflector));
+			p::Out($this->_template->parseInflections($this->_inflector));
 		}
 
 		if($this->_examples != null) 
-			pOut($this->_template->parseExamples($this->_examples));
+			p::Out($this->_template->parseExamples($this->_examples));
 
 		// Let's throw the subentries through their template
-		pOut($this->_template->parseSubEntries($this->_subEntries));
+		p::Out($this->_template->parseSubEntries($this->_subEntries));
 
-		pOut($this->_actionbar->output);
+		p::Out($this->_actionbar->output);
 	}
 
 	// This function will generate an infostring
@@ -121,22 +121,22 @@ class pLemma extends pEntry{
 		$this->_template = new pLemmaTemplate($this->_entry, null);
 
 		if(!($this->_hitTranslation == null))
-			$hitTranslation = '<em class="dHitTranslation">'.pHighlight($this->_query, $this->_hitTranslation, '<strong class="dQueryHighlight">', '</strong>').'</em> · ';
+			$hitTranslation = '<em class="dHitTranslation">'.p::Highlight($this->_query, $this->_hitTranslation, '<strong class="dQueryHighlight">', '</strong>').'</em> · ';
 		else
 			$hitTranslation = '';
 
 		if($searchlang == 0)
-			$linkToWord = "<a href='".$this->renderSimpleHref(true)."'>".pHighlight($this->_query, $this->_entry['native'], '<strong class="dQueryHighlight">','</strong>')."</a>";
+			$linkToWord = "<a href='".$this->renderSimpleHref(true)."'>".p::Highlight($this->_query, $this->_entry['native'], '<strong class="dQueryHighlight">','</strong>')."</a>";
 		else
 			$linkToWord = $this->renderSimpleLink(true);
 
-		pOut("<tr class='hSearchResult'>");
-		pOut('<td><div class="dWordWrapper">'.$hitTranslation.'<strong class="dWord"><span class="native">'.$linkToWord."</span></strong><span class='dType'> · ".$this->generateInfoString()."</span> <br />".$this->_template->parseTranslations($this->_translations, true)."</div></td></tr>");
+		p::Out("<tr class='hSearchResult'>");
+		p::Out('<td><div class="dWordWrapper">'.$hitTranslation.'<strong class="dWord"><span class="native">'.$linkToWord."</span></strong><span class='dType'> · ".$this->generateInfoString()."</span> <br />".$this->_template->parseTranslations($this->_translations, true)."</div></td></tr>");
 	}
 
 
 	public function parseListItem(){
-		return "<li><span><span class='lemma lemma_".$this->_entry['id']." tooltip'><strong class='dWordTranslation'><a href='".pUrl('?entry/'.$this->_entry['id'])."'>".$this->_entry['native']."</a></strong></span><span class='dType'>
+		return "<li><span><span class='lemma lemma_".$this->_entry['id']." tooltip'><strong class='dWordTranslation'><a href='".p::Url('?entry/'.$this->_entry['id'])."'>".$this->_entry['native']."</a></strong></span><span class='dType'>
 				".$this->generateInfoString()."</span></span></li>";
 	}
 

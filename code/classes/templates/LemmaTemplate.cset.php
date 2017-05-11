@@ -33,7 +33,7 @@ class pLemmaTemplate extends pEntryTemplate{
 		}
 
 		// If there is a session that restricts the shown languages, offer a link that is able cancel that restriction
-		$showAll = ((isset(pAdress::session()['returnLanguage'])) ? '<a class="xsmall float-right" href="'.pUrl("?entry/".$this->_data['id']."/resetTranslations/").'">'.LEMMA_TRANSLATIONS_RESET.'</a>' : '');
+		$showAll = ((isset(pAdress::session()['returnLanguage'])) ? '<a class="xsmall float-right" href="'.p::Url("?entry/".$this->_data['id']."/resetTranslations/").'">'.LEMMA_TRANSLATIONS_RESET.'</a>' : '');
 
 		if($justList)
 				return $content;
@@ -66,7 +66,7 @@ class pLemmaTemplate extends pEntryTemplate{
 		//"<a class='' href='javascript:void();'' onclick='window.history.back();'' >".(new pIcon('fa-arrow-left', 12))."</a><strong class='pWord'><span class='native'><a>"
 
 
-		$realTitle = '<a class="lemma-code big float-right ttip" href="'.pUrl('?entry/'.pHashId($this->_data['id'])).'" title="'.$this->_data['id'].'">'.(new pIcon('fa-bookmark-o', 12)).' '.pHashId($this->_data['id']).'</a>'.pMarkdown("# <span class='native'><strong class='pWord'><a>".$this->_data['native']."</a></strong></span>", true);
+		$realTitle = '<a class="lemma-code big float-right ttip" href="'.p::Url('?entry/'.p::HashId($this->_data['id'])).'" title="'.$this->_data['id'].'">'.(new pIcon('fa-bookmark-o', 12)).' '.p::HashId($this->_data['id']).'</a>'.p::Markdown("# <span class='native'><strong class='pWord'><a>".$this->_data['native']."</a></strong></span>", true);
 
 		$titleSection = new pEntrySection("", '', null, false, true);
 
@@ -84,7 +84,7 @@ class pLemmaTemplate extends pEntryTemplate{
 		$parsed = '';
 		// Parsing the notes
 		foreach($data as $note)
-			$parsed .= '<div class="pNotes">'.pMarkdown($note['note']).'</div>';
+			$parsed .= '<div class="pNotes">'.p::Markdown($note['note']).'</div>';
 
 		// Returning the notes in an entry section
 		return new pEntrySection("Usage notes", $parsed, $icon);
@@ -102,7 +102,7 @@ class pLemmaTemplate extends pEntryTemplate{
 
 			$synonymLemma = new pLemma($synonym_id, 'words');
 
-			$output .= '<a class="ttip '.$section.' score-'.$synonym['score'].'" title="Similarity: '.($section == 'antonym' ? 100 - $synonym['score'] : $synonym['score']).'%" href="'.pUrl('?entry/'.pHashId($synonymLemma->_entry['id'])).'">'.$synonymLemma->native().'</a> ';
+			$output .= '<a class="ttip '.$section.' score-'.$synonym['score'].'" title="Similarity: '.($section == 'antonym' ? 100 - $synonym['score'] : $synonym['score']).'%" href="'.p::Url('?entry/'.p::HashId($synonymLemma->_entry['id'])).'">'.$synonymLemma->native().'</a> ';
 		}
 
 		return new pEntrySection(($section == 'antonym' ? LEMMA_ANTONYMS : ($section == 'synonym' ? LEMMA_SYNONYMS : LEMMA_HOMOPHONES)), $output, $icon);

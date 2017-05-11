@@ -54,10 +54,10 @@ class pDataModel {
 	public function getSingleObject($id){
 
 		if(!is_numeric($id))
-			$id = pHashId($id, true)[0];
+			$id = p::HashId($id, true)[0];
 
 		// Condition can't start with WHERE
-		$condition = pStr($this->_condition)->replacePrefix("WHERE", ' AND ');
+		$condition = p::Str($this->_condition)->replacePrefix("WHERE", ' AND ');
 
 		$this->_singleId = $id;
 
@@ -67,7 +67,7 @@ class pDataModel {
 		else
 			$fieldString = $this->_fieldstring;
 
-		$this->_data =  pQuery("SELECT ".$fieldString." FROM ".$this->_table." WHERE id = ".$id." ".$condition." ORDER BY $this->_order LIMIT 1");
+		$this->_data =  p::Query("SELECT ".$fieldString." FROM ".$this->_table." WHERE id = ".$id." ".$condition." ORDER BY $this->_order LIMIT 1");
 
 		return  $this->_data;
 	}
@@ -84,7 +84,7 @@ class pDataModel {
 		else
 			$fieldString = $this->_fieldstring;
 
-		$this->_data = pQuery("SELECT ".$fieldString." FROM ".$this->_table." ".$this->_condition.(($this->_paginated) ? " ORDER BY $this->_order LIMIT ".$offset.",".$itemsperpage : " ORDER BY $this->_order ".($this->_limit != null ? ' LIMIT '.$this->_limit : '')).";");
+		$this->_data = p::Query("SELECT ".$fieldString." FROM ".$this->_table." ".$this->_condition.(($this->_paginated) ? " ORDER BY $this->_order LIMIT ".$offset.",".$itemsperpage : " ORDER BY $this->_order ".($this->_limit != null ? ' LIMIT '.$this->_limit : '')).";");
 
 		return  $this->_data;
 	}
@@ -116,7 +116,7 @@ class pDataModel {
 		$fields = new pSet;
 		$fields->add($field);
 		$this->setFields($fields);
-		$this->prepareForUpdate(array($value), $id);
+		$this->prepareForUp::Date(array($value), $id);
 		return $this->update();
 	}
 
@@ -129,7 +129,7 @@ class pDataModel {
 			$id = $this->_singleId;
 		if($this->_fields != null)
 			if(count($data) != count($this->_fields->get()))
-				die("FATAL ERROR from within pDataModel->prepareForUpdate(..., \$data). \$data does not match the field count of the object!");
+				die("FATAL ERROR from within pDataModel->prepareForUp::Date(..., \$data). \$data does not match the field count of the object!");
 		
 		$updateString = array();
 
@@ -154,7 +154,7 @@ class pDataModel {
 			$selective = $this->_singleId;
 
 		if($selective == 0)
-			return pQuery("DELETE FROM ".$this->_table,";");
+			return p::Query("DELETE FROM ".$this->_table,";");
 		
 		// This will go through follow_up, to delete any records that need to be gone first. 
 		if(is_array($follow_up)){
@@ -175,13 +175,13 @@ class pDataModel {
 
 		}
 
-		return pQuery("DELETE FROM ".$this->_table." WHERE id = ".$this->_field = " ".pQuote($selective).";");
+		return p::Query("DELETE FROM ".$this->_table." WHERE id = ".$this->_field = " ".pQuote($selective).";");
 
 	}
 
 	public function update(){
 
-		return pQuery("UPDATE ".$this->_table." SET ".$this->_updatestring." WHERE id = '".$this->_updateid."';");
+		return p::Query("UPDATE ".$this->_table." SET ".$this->_updatestring." WHERE id = '".$this->_updateid."';");
 	}
 
 	public function count(){
@@ -190,7 +190,7 @@ class pDataModel {
 
 	public function countAll(){
 
-		$count = (pQuery("SELECT count(id) AS total FROM ".$this->_table." ".$this->_condition.";"))->fetchObject();
+		$count = (p::Query("SELECT count(id) AS total FROM ".$this->_table." ".$this->_condition.";"))->fetchObject();
 
 		return $count->total;
 	}
@@ -205,7 +205,7 @@ class pDataModel {
 		else
 			$fieldString = "(".$this->_fieldstring.")";
 
-		pQuery("INSERT INTO ".$this->_table." $fieldString  VALUES (".$this->_valuestring.");");
+		p::Query("INSERT INTO ".$this->_table." $fieldString  VALUES (".$this->_valuestring.");");
 
 		return $donut['db']->lastInsertId();
 	}
@@ -223,7 +223,7 @@ class pDataModel {
 	}
 
 	public function customQuery($query){
-		$this->_data = pQuery($query);
+		$this->_data = p::Query($query);
 		return $this->_data;
 	}
 

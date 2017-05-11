@@ -44,7 +44,6 @@ class pRuleDataModel extends pDataModel{
 		$this->prepareForInsert(array($name, $rule));
 		$id = $this->insert();
 		// We have to create the links
-		var_dump($links);
 		if(is_array($links)){
 			foreach($links as $key => $section){
 				$dM = new pDataModel("morphology_".$key);
@@ -63,7 +62,7 @@ class pRuleDataModel extends pDataModel{
 		if($name == '' OR $rule == '')
 			return false;
 		// First change the basic info
-		$this->prepareForUpdate(array($name, $rule));
+		$this->prepareForUp::Date(array($name, $rule));
 		$this->update();
 		// If this is a rule with links, we need to add any new links, remove any others
 		if(is_array($links)){

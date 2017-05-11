@@ -89,7 +89,7 @@ return array(
 			'actions_item' => array(
 			),
 			'actions_bar' => array(
-				'new' => array('new', DA_WORDS_NEW_EXTERN, 'fa-plus-circle fa-12', 'lemma-code discussion float-right', null, null, pUrl('?addword')),
+				'new' => array('new', DA_WORDS_NEW_EXTERN, 'fa-plus-circle fa-12', 'lemma-code discussion float-right', null, null, p::Url('?addword')),
 			),
 			'save_strings' => $saveStrings,
 		),
@@ -117,7 +117,7 @@ return array(
 			'actions_item' => array(
 			),
 			'actions_bar' => array(
-				'new' => array('new', DA_WORDS_NEW_EXTERN, 'fa-plus-circle fa-12', 'lemma-code discussion float-right', null, null, pUrl('?addword')),
+				'new' => array('new', DA_WORDS_NEW_EXTERN, 'fa-plus-circle fa-12', 'lemma-code discussion float-right', null, null, p::Url('?addword')),
 			),
 			'save_strings' => $saveStrings,
 		),

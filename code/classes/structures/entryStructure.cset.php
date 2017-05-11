@@ -23,7 +23,7 @@ class pEntryStructure extends pStructure{
 
 			// Don't show an error if we are forced to have the search load a search action
 			if(!(isset(pAdress::arg()['query'], pAdress::arg()['dictionary'])))
-				$this->_error = pNoticeBox('fa-info-circle fa-12', DA_SECTION_ERROR, 'danger-notice');
+				$this->_error = p::Notice('fa-info-circle fa-12', DA_SECTION_ERROR, 'danger-notice');
 
 			$this->_section = $this->_default_section;
 		}
@@ -66,10 +66,10 @@ class pEntryStructure extends pStructure{
 		if(isset(pAdress::arg()['is:result'], pAdress::session()['searchQuery']))
 			$searchBox->setValue(pAdress::session()['searchQuery']);
 
-		pOut($searchBox);
+		p::Out($searchBox);
 
 		// Starting with the wrapper
-		pOut("<div class='pEntry ".(($this->_error != '' OR $this->_error != null) ? 'hasErrors' : '')."'><div class='home-margin'>");
+		p::Out("<div class='pEntry ".(($this->_error != '' OR $this->_error != null) ? 'hasErrors' : '')."'><div class='home-margin'>");
 
 		// If there is an offset, we need to define that
 		if(isset(pAdress::arg()['offset']))
@@ -78,9 +78,9 @@ class pEntryStructure extends pStructure{
 		ajaxSkipOutput:
 
 		if(isset(pAdress::arg()['id'])){
-			if(!($this->_parser->runData(is_numeric(pAdress::arg()['id']) ?  pAdress::arg()['id'] : pHashId(pAdress::arg()['id'], true)[0]))){
+			if(!($this->_parser->runData(is_numeric(pAdress::arg()['id']) ?  pAdress::arg()['id'] : p::HashId(pAdress::arg()['id'], true)[0]))){
 				if(!(isset(pAdress::arg()['query'], pAdress::arg()['dictionary'])))
-					pOut(pNoticeBox('fa-info-circle fa-12', ENTRY_NOT_FOUND, 'danger-notice'));
+					p::Out(p::Notice('fa-info-circle fa-12', ENTRY_NOT_FOUND, 'danger-notice'));
 				goto SkipError;
 			}
 		}
@@ -103,10 +103,10 @@ class pEntryStructure extends pStructure{
 		SkipError:
 
 		// Ending content
-		pOut("</div></div>");
+		p::Out("</div></div>");
 
 		// Tooltipster time!
-		pOut("<script type='text/javascript'>
+		p::Out("<script type='text/javascript'>
 
 			$('.ttip').tooltipster({animation: 'grow'});
 

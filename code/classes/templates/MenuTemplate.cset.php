@@ -49,13 +49,13 @@ class pMenuTemplate extends pTemplate{
 		foreach($this->_menu as $key => $main){
 			if(isset($this->_meta[$key])){
 				if(pUser::checkPermission($this->itemPermission($key)) OR (isset($this->_meta[$key]['subitems']) AND $this->checkSubItemPermission($this->_meta[$key]['subitems']))){
-					$output .= "<a href='".(isset($this->_meta[$key]['app']) ? pUrl("?".$this->_meta[$key]['app']) : '')."' class=' ".(isset($this->_meta[$key]['class']) ? $this->_meta[$key]['class'] : '')." ".($this->checkActiveMain($key) ? 'active' : '')." ttip_menu'";
+					$output .= "<a href='".(isset($this->_meta[$key]['app']) ? p::Url("?".$this->_meta[$key]['app']) : '')."' class=' ".(isset($this->_meta[$key]['class']) ? $this->_meta[$key]['class'] : '')." ".($this->checkActiveMain($key) ? 'active' : '')." ttip_menu'";
 
 					if(isset($this->_meta[$key]['subitems']) AND $this->checkSubItemPermission($this->_meta[$key]['subitems'])){
 						$output .= "title='";
 						foreach($this->_meta[$key]['subitems'] as $item){
 							if(pUser::checkPermission($this->itemPermission($key)))
-								$output .= "<a href=\"".pUrl("?".$item['app'])."\" class=\"ttip-sub nav ".($this->checkActiveSub($item['app']) ? 'active' : '')."\">".(new pIcon($item['icon'], 12))." ". htmlspecialchars($item['name'])."</a>";
+								$output .= "<a href=\"".p::Url("?".$item['app'])."\" class=\"ttip-sub nav ".($this->checkActiveSub($item['app']) ? 'active' : '')."\">".(new pIcon($item['icon'], 12))." ". htmlspecialchars($item['name'])."</a>";
 						}
 						$output .= "'";	
 					}
@@ -72,7 +72,7 @@ class pMenuTemplate extends pTemplate{
 		if($items == 0)
 			return '<div class="nav"></div>';
 		if($pOut)
-			return pOut($output);
+			return p::Out($output);
 
 		return $output;
 

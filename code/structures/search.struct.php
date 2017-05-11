@@ -44,7 +44,7 @@ return array(
 			'actions_item' => array(
 			),
 			'actions_bar' => array(
-				'new' => array('new', DA_WORDS_NEW_EXTERN, 'fa-plus-circle fa-12', 'btAction wikiEdit', null, null, pUrl('?addword')),
+				'new' => array('new', DA_WORDS_NEW_EXTERN, 'fa-plus-circle fa-12', 'btAction wikiEdit', null, null, p::Url('?addword')),
 			),
 			'save_strings' => $saveStrings,
 			'subobjects' => array(

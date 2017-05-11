@@ -32,12 +32,12 @@ class pEntryHandler extends pHandler{
 		// reset translations
 		if($action == 'resetTranslations'){
 			unset($_SESSION['returnLanguage']);
-			pUrl('?entry/'.pAdress::arg()['id'], true);
+			p::Url('?entry/'.pAdress::arg()['id'], true);
 		}
 
 		// Discuss
 		if($action == 'discuss'){
-			pOut("<div class='wdComments-list'>
+			p::Out("<div class='wdComments-list'>
 					<div class='wdComment'>
 						<div class='wdContent'>
 							mysql_get_host_info();

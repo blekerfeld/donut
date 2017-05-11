@@ -19,7 +19,7 @@ require 'config.php';
   "background_color": "#e1e1e1",
   "description": "<?php echo CONFIG_SITE_DESC; ?>",
   "icons": [{
-    "src": "<?php echo pUrl("pol://library/images/static/app_icon.png"); ?>",
+    "src": "<?php echo p::Url("pol://library/images/static/app_icon.png"); ?>",
     "sizes": "210x210",
     "type": "image/png"
   }], 

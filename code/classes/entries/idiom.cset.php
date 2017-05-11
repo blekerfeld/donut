@@ -30,10 +30,10 @@ class pIdiom extends pEntry{
 		// If there is someplace to return to, we better do that.
 		if(isset(pAdress::arg()['return'])){
 			$returnTo = explode(':', pAdress::arg()['return']);
-			$backHref = pUrl('?entry/'.($returnTo[0] == '' ? '' : $returnTo[0].'/').$returnTo[1]);
+			$backHref = p::Url('?entry/'.($returnTo[0] == '' ? '' : $returnTo[0].'/').$returnTo[1]);
 		}
 
-		pOut($this->_template->title($backHref));
+		p::Out($this->_template->title($backHref));
 
 		// Let's render all the lemma's
 		$this->bindLemma();
@@ -78,12 +78,12 @@ class pIdiom extends pEntry{
 	}
 
 	public function parseListItem(){
-		$output = '<li><a href="'.pUrl('?entry/example/'.$this->_id.'/return/:'.pHashId($this->_lemma)).'"><span class="pIdiom native">'.pHighlight($this->_keyword, pMarkDown($this->text, false), '<span class="pIdiomHighlight">', '</span>').'</a>';
+		$output = '<li><a href="'.p::Url('?entry/example/'.$this->_id.'/return/:'.p::HashId($this->_lemma)).'"><span class="pIdiom native">'.p::Highlight($this->_keyword, p::Markdown($this->text, false), '<span class="pIdiomHighlight">', '</span>').'</a>';
 		foreach($this->_translations as $key => $language){
 			$output .= "<br />(<em>".(new pLanguage($key))->parse()."</em>) ";
 			$translations = array();
 		foreach($language as $idiom)
-				$translations[] = "<span class='pIdiomTranslation'>".pMarkdown($idiom['translation'], false)."</span>";
+				$translations[] = "<span class='pIdiomTranslation'>".p::Markdown($idiom['translation'], false)."</span>";
 			$output .= implode(', ', $translations);
 		}
 

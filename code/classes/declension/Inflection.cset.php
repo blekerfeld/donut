@@ -34,18 +34,18 @@ class pInflection{
 		// If we have no specified stem, we need to form one
 		if(($this->_stem == null))
 			foreach($this->_formStem as $action){
-				if(pStartsWith($action, '+^'))
+				if(p::StartsWith($action, '+^'))
 					$stem = substr($action, 2) . $stem;
-				elseif(pStartsWith($action, '+'))
+				elseif(p::StartsWith($action, '+'))
 					$stem = $stem . '+' . substr($action, 1);
-				elseif(pStartsWith($action, '-^') AND pStartsWith($stem, substr($action, 2)))
+				elseif(p::StartsWith($action, '-^') AND p::StartsWith($stem, substr($action, 2)))
 					$stem = substr($stem, strlen(substr($action, 2)));
-				elseif(pStartsWith($action, '-')){
-					$stem = pStr($stem)->replaceSuffix(substr($action, 1), '');
+				elseif(p::StartsWith($action, '-')){
+					$stem = p::Str($stem)->replaceSuffix(substr($action, 1), '');
 					$stem = $stem->__toString();
 				}
 				// Base modification
-				elseif(pStartsWith($action, '&')){
+				elseif(p::StartsWith($action, '&')){
 					$value = explode('=>', $action)[1];
 					$name = explode('=>', $action)[0];
 					$stem = str_replace($name, $value, $stem);
@@ -133,13 +133,13 @@ class pInflection{
 		}
 			
 
-		elseif(pStartsWith($negOver, '!^'))
+		elseif(p::StartsWith($negOver, '!^'))
 			return $this->GroupControl(substr($negOver, 2), true, $string, false);
-		elseif(pStartsWith($negOver, '!$'))
+		elseif(p::StartsWith($negOver, '!$'))
 			return $this->GroupControl(substr($negOver, 2), false, $string, false);
-		elseif(pStartsWith($negOver, '^'))
+		elseif(p::StartsWith($negOver, '^'))
 			return $this->GroupControl(substr($negOver, 1), true, $string, true);
-		elseif(pStartsWith($negOver, '$'))
+		elseif(p::StartsWith($negOver, '$'))
 			return $this->GroupControl(substr($negOver, 1), false, $string, true);
 		else
 			return false;
@@ -176,13 +176,13 @@ class pInflection{
 
 	public function describeCondition($condition){
 		$output = '';
-		if(pStartsWith($condition, '!^'))
+		if(p::StartsWith($condition, '!^'))
 			$output .= "- stem does not start with '".substr($condition, 2)."' <br/ >";
-		elseif(pStartsWith($condition, '!$'))
+		elseif(p::StartsWith($condition, '!$'))
 			$output .= "- stem does not end with '".substr($condition, 2)."' <br/ >";
-		elseif(pStartsWith($condition, '^'))
+		elseif(p::StartsWith($condition, '^'))
 			$output .= "- stem starts with '".substr($condition, 1)."' <br/ >";
-		elseif(pStartsWith($condition, '$'))
+		elseif(p::StartsWith($condition, '$'))
 			$output .= "- stem ends with '".substr($condition, 1)."' <br/ >";
 		elseif($condition == '&ELSE')
 			$output .= "- all other conditions in the rule are not met <br/ >";
@@ -196,21 +196,21 @@ class pInflection{
 		$overAllVM = array();
 
 		foreach($this->_formStem as $key => $action){
-			if(pStartsWith($action, '+^'))
+			if(p::StartsWith($action, '+^'))
 				$output .= "<tr><td>'".substr($action, 2)."' is added to the front of the input word.</td></tr>";
-			elseif(pStartsWith($action, '+'))
+			elseif(p::StartsWith($action, '+'))
 				$output .= "<tr><td>'".substr($action, 1)."' is added at the end of the input word.</td></tr>";
-			elseif(pStartsWith($action, '-^') AND pStartsWith($stem, substr($action, 2)))
+			elseif(p::StartsWith($action, '-^') AND p::StartsWith($stem, substr($action, 2)))
 				$output .= "<tr><td>'".substr($action, 2)."' is taken away from the begining of the word.</td></tr>";
-			elseif(pStartsWith($action, '-'))
+			elseif(p::StartsWith($action, '-'))
 				$output .= "<tr><td>'".substr($action, 1)."' is taken away form the end of the word.</td></tr>";
 			// Base modification
-			elseif(pStartsWith($action, '&')){
+			elseif(p::StartsWith($action, '&')){
 				@$value = explode('=>', $action)[1];
 				@$name = explode('=>', $action)[0];
-				if(pStartsWith($value, '&'))
+				if(p::StartsWith($value, '&'))
 					$overAllVM[] = substr($value, 1);
-				$output .= "<tr><td>Variable ".pMarkdown("`".$name."`", false)." is replaced with ".pMarkdown("`".$value."`", false)."</td></tr>";
+				$output .= "<tr><td>Variable ".p::Markdown("`".$name."`", false)." is replaced with ".p::Markdown("`".$value."`", false)."</td></tr>";
 			}
 			elseif($key == 0)
 				$output .= "<tr><td>The stem remains unchanged.</td></tr>";
@@ -222,7 +222,7 @@ class pInflection{
 				$explode = explode('?', $before);
 				if($explode[0] == '')
 					continue;
-				$output .= "<tr><td>".pMarkdown("This rule adds `".$explode[0]."` as a prefix if the following conditions are met:", false)."<br />	";
+				$output .= "<tr><td>".p::Markdown("This rule adds `".$explode[0]."` as a prefix if the following conditions are met:", false)."<br />	";
 
 				preg_match("/(?<=&)(.*)/", $explode[0], $vM);
 				$variableMatches = array_unique($vM);
@@ -247,7 +247,7 @@ class pInflection{
 				$explode = explode('?', $before);
 				if($explode[0] == '')
 					continue;
-				$output .= "<tr><td>".pMarkdown("This rule adds `".$explode[0]."` as a suffix if the following conditions are met:", false)." <br />";
+				$output .= "<tr><td>".p::Markdown("This rule adds `".$explode[0]."` as a suffix if the following conditions are met:", false)." <br />";
 				preg_match("/(?<=&)(.*)/", $explode[0], $vM);
 				$variableMatches = array_unique($vM);
 				unset($explode[0]);
@@ -272,7 +272,7 @@ class pInflection{
 			foreach($overAllVM as $m){
 				$implodeThis[] = '`&'.$m.'`';
 			}
-			$output .= pMarkdown(implode(', ', $implodeThis), false);
+			$output .= p::Markdown(implode(', ', $implodeThis), false);
 			$output .= "</td></tr>";
 		}
 

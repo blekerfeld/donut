@@ -36,7 +36,7 @@ class pRulesheetHandler extends pHandler{
 	public function ajaxDescribe(){
 		if($this->_section == 'inflections' AND isset(pAdress::post()['rule'])){
 			$inflection = new pInflection(pAdress::post()['rule']);
-			pOut($inflection->describeRule());
+			p::Out($inflection->describeRule());
 		}
 
 	}
@@ -47,7 +47,7 @@ class pRulesheetHandler extends pHandler{
 			$inflection = new pInflection(pAdress::post()['rule']);
 			$twolc = new pTwolc((new pTwolcRules('phonology_contexts'))->toArray());
 			$twolc->compile();
-			pOut(@$twolc->feed($inflection->inflect(pAdress::post()['lexform']))->toRulesheet());
+			p::Out(@$twolc->feed($inflection->inflect(pAdress::post()['lexform']))->toRulesheet());
 		}
 	}
 
@@ -64,9 +64,9 @@ class pRulesheetHandler extends pHandler{
 		$links = $this->generateLinksArray();
 		$edit = $this->dataModel->updateRule(pAdress::post()['name'], pAdress::post()['rule'], $links);
 		if($edit == false)
-			echo pNoticeBox('fa-warning', SAVED_EMPTY, 'hide warning-notice errorSave');
+			echo p::Notice('fa-warning', SAVED_EMPTY, 'hide warning-notice errorSave');
 		else
-			echo pNoticeBox('fa-check', SAVED, 'hide succes-notice successSave');
+			echo p::Notice('fa-check', SAVED, 'hide succes-notice successSave');
 		die('<script>$(".saving").slideUp();'.(($edit == false) ? '$(".errorSave").slideDown();' : '$(".errorSave").slideUp();$(".successSave").slideDown().delay(1500).slideUp();')."</script>");
 	}
 
@@ -74,13 +74,13 @@ class pRulesheetHandler extends pHandler{
 		$links = $this->generateLinksArray();
 		$id = $this->dataModel->newRule(pAdress::post()['name'], pAdress::post()['rule'], $links);
 		if($id == false){
-			echo pNoticeBox('fa-warning', SAVED_EMPTY, 'hide warning-notice errorSave');
+			echo p::Notice('fa-warning', SAVED_EMPTY, 'hide warning-notice errorSave');
 			die('<script>$(".saving").slideUp();'.(($id == false) ? '$(".errorSave").slideDown();' : '$(".errorSave").slideUp();$(".successSave").slideDown().delay(1500).slideUp();')."</script>");
 		}
 		else
-			echo pNoticeBox('fa-check', SAVED, 'hide succes-notice successSave');
+			echo p::Notice('fa-check', SAVED, 'hide succes-notice successSave');
 		die('<script>$(".errorSave").slideUp();$(".successSave").slideDown().delay(1500).slideUp();
-			window.location = "'.pUrl('?rulesheet/'.$this->_section.'/edit/'.$id).'";</script>');
+			window.location = "'.p::Url('?rulesheet/'.$this->_section.'/edit/'.$id).'";</script>');
 	}
 
 }

@@ -22,7 +22,7 @@ class pDispatcher {
 	public function __construct($query){
 		$this->query = $query;
 		pAdress::queryString($this->query);
-		$this->_dispatchData = require_once pFromRoot("code/Dispatch.php");
+		$this->_dispatchData = require_once p::FromRoot("code/Dispatch.php");
 		self::$structure = $this->_dispatchData;
 		unset($this->_dispatchData['META_MENU']);
 	}
@@ -50,25 +50,25 @@ class pDispatcher {
 
 		// We can only create a structure if we have the necessary data!
 		if(!isset($this->_dispatchData[$this->_urlArguments[0]])){
-			if(file_exists(pFromRoot("static/".$this->_urlArguments[0].".md"))){
+			if(file_exists(p::FromRoot("static/".$this->_urlArguments[0].".md"))){
 				pAdress::arg($this->_arguments);
-				pOut("<div class='home-margin'>".pMarkdown(file_get_contents(pFromRoot("static/".$this->_urlArguments[0].".md")), true, true, true)."</div>");
+				p::Out("<div class='home-margin'>".p::Markdown(file_get_contents(p::FromRoot("static/".$this->_urlArguments[0].".md")), true, true, true)."</div>");
 			}
 			// DEBUG MODE ONLY
-			elseif($this->_urlArguments[0] == 'debug' AND file_exists(pFromRoot("debug.php"))){
+			elseif($this->_urlArguments[0] == 'debug' AND file_exists(p::FromRoot("debug.php"))){
 				pAdress::arg($this->_arguments);
-				pOut("<div class='home-margin'>");
-				require pFromRoot("debug.php");
-				pOut("</div>");
+				p::Out("<div class='home-margin'>");
+				require p::FromRoot("debug.php");
+				p::Out("</div>");
 			}
 			// DEBUG MODE ONLY
-			elseif($this->_urlArguments[0] == 'scrap' AND file_exists(pFromRoot("scrap.php"))){
+			elseif($this->_urlArguments[0] == 'scrap' AND file_exists(p::FromRoot("scrap.php"))){
 				pAdress::arg($this->_arguments);
-				require pFromRoot("scrap.php");
+				require p::FromRoot("scrap.php");
 			}
-			elseif($this->_urlArguments[0] == 'README' AND file_exists(pFromRoot("README.md"))){
+			elseif($this->_urlArguments[0] == 'README' AND file_exists(p::FromRoot("README.md"))){
 				pAdress::arg($this->_arguments);
-				pOut("<div class='home-margin'>".pMarkdown(file_get_contents(pFromRoot("README.md")), true)."</div>");
+				p::Out("<div class='home-margin'>".p::Markdown(file_get_contents(p::FromRoot("README.md")), true)."</div>");
 			}
 			else
 				$this->do404();
@@ -123,11 +123,15 @@ class pDispatcher {
 
 		$this->structureObject->compile();
 
-		return true;
+		return $this;
+	}
+
+	public function dispatch(){
+		return $this->structureObject->render();
 	}
 
 	protected function do404($extra = ''){
-		pOut("<div class='home-margin'>".pMarkdown("# ".(new pIcon('fa-warning'))." ".ERROR_404_TITLE."\n".
+		p::Out("<div class='home-margin'>".p::Markdown("# ".(new pIcon('fa-warning'))." ".ERROR_404_TITLE."\n".
 				ERROR_404_MESSAGE."\n".$extra)."</div>");
 	}
 

@@ -17,11 +17,11 @@ class pTerminal{
 
 	public function initialState(){
 
-		pOut("<div class='debugConsole'>");
-		pConsole((new pIcon('fa-terminal', 12))." donut ɑ.1 - terminal ~".pUser::read('username').":".$_SERVER['REMOTE_ADDR']." <br />")	;
-		pOut("> <input class='debug init' /><div class='debugLoad-init'></div>");
-		pOut("</div>");
-		pOut("<script type='text/javascript'>
+		p::Out("<div class='debugConsole'>");
+		p::Out((new pIcon('fa-terminal', 12))." donut ɑ.1 - terminal ~".pUser::read('username').":".$_SERVER['REMOTE_ADDR']." <br />")	;
+		p::Out("> <input class='debug init' /><div class='debugLoad-init'></div>");
+		p::Out("</div>");
+		p::Out("<script type='text/javascript'>
 				$('.debug.init').focus();
 				$('.debugConsole').mouseover(function(){
 					$('.debug').focus();
@@ -29,7 +29,7 @@ class pTerminal{
 				$('.debug.init').keydown(function(e) {
 				    		switch (e.keyCode) {
 				       		 case 13:
-				       			$('.debugLoad-init').load('".pUrl('?debug/ajax')."', {'line': $(this).val()}, function(){
+				       			$('.debugLoad-init').load('".p::Url('?debug/ajax')."', {'line': $(this).val()}, function(){
 				       				$('.debug.init').prop('disabled', true);
 				       			});
 				   			 }
@@ -50,7 +50,7 @@ class pTerminal{
 			$('.debug').keydown(function(e) {
 			    		switch (e.keyCode) {
 			       		 case 13:
-			       			$('.load".$id."').load('".pUrl('?debug/ajax')."', {'line': $(this).val()}, function(){
+			       			$('.load".$id."').load('".p::Url('?debug/ajax')."', {'line': $(this).val()}, function(){
 			       				$('.debug.init').prop('disabled', true);
 			       				$('.debug.loaded').addClass('init');
 			       				$('.debugLoad').addClass('debugLoad-init');

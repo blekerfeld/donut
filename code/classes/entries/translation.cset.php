@@ -41,11 +41,11 @@ class pTranslation extends pEntry{
 		// If there is someplace to return to, we better do that.
 		if(isset(pAdress::arg()['return'])){
 			$returnTo = explode(':', pAdress::arg()['return']);
-			$backHref = pUrl('?entry/'.($returnTo[0] == '' ? '' : $returnTo[0].'/').$returnTo[1]);
+			$backHref = p::Url('?entry/'.($returnTo[0] == '' ? '' : $returnTo[0].'/').$returnTo[1]);
 		}
 
 
-		pOut($this->_template->title((new pDataField(null, null, null, 'flag'))->parse($this->_language->read('flag')), $backHref));
+		p::Out($this->_template->title((new pDataField(null, null, null, 'flag'))->parse($this->_language->read('flag')), $backHref));
 
 		// Let's render all the lemma's
 		$this->bindLemma();
@@ -55,7 +55,7 @@ class pTranslation extends pEntry{
 
 		$this->_template->renderLemmas($this->_lemmas->get());
 		
-		pOut("<span class='xsmall'>".$this->_template->renderInfo()."</span>");
+		p::Out("<span class='xsmall'>".$this->_template->renderInfo()."</span>");
 
 	}
 
@@ -82,12 +82,12 @@ class pTranslation extends pEntry{
 	}
 
 	public function parseListItem(){
-		return "<li><span>".($this->_specification != '' ? "<em class='dSpec'>(".$this->_specification.")</em> " : '')."<span href='javascript:void(0);' class='translation trans_".$this->_entry['id']." tooltip'><a href='".pUrl('?entry/translation/'.$this->_entry['real_id'].'/return/:'.pHashId($this->_lemma))."'>".$this->translation."</a></span></span></li>";
+		return "<li><span>".($this->_specification != '' ? "<em class='dSpec'>(".$this->_specification.")</em> " : '')."<span href='javascript:void(0);' class='translation trans_".$this->_entry['id']." tooltip'><a href='".p::Url('?entry/translation/'.$this->_entry['real_id'].'/return/:'.p::HashId($this->_lemma))."'>".$this->translation."</a></span></span></li>";
 	}
 
 	public function parseDescription(){
 		if($this->_entry['description'] != '')
-			return "<div class='desc'>".pMarkdown($this->_entry['description'], false)."</div>";
+			return "<div class='desc'>".p::Markdown($this->_entry['description'], false)."</div>";
 	}
 
 }

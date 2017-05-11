@@ -55,7 +55,7 @@ define("LEMMA_EDIT_STEMS", "Manage stems");
 define("LEMMA_EDIT_IRREGULAR", "Manage irregularities");
 define("LEMMA_EDIT_TRANSLATIONS", "Edit translations");
 define("LEMMA_CLONE_TRANSLATIONS", "Clone translations");
-define("LEMMA_EDIT_TRANSLATIONS_INFO", "If you want to edit translations in another language, you need to <a href'".pUrl("?editorlanguage")."'>change your editor language</a>.");
+define("LEMMA_EDIT_TRANSLATIONS_INFO", "If you want to edit translations in another language, you need to <a href'".p::Url("?editorlanguage")."'>change your editor language</a>.");
 
 
 

@@ -13,9 +13,9 @@ class pHomeTemplate extends pSimpleTemplate{
 	public function renderAll(){
 		// The home search box! Only if needed!
 		if(!(isset(pAdress::arg()['ajax']) and isset(pAdress::arg()['nosearch'])))
-			pOut(new pSearchBox(true));
+			p::Out(new pSearchBox(true));
 
-		pOut("<br/ ><div class='home-margin pEntry'>".pMarkdown(file_get_contents(pFromRoot("static/home.md")), true)."</div><br />");
+		p::Out("<br/ ><div class='home-margin pEntry'>".p::Markdown(file_get_contents(p::FromRoot("static/home.md")), true)."</div><br />");
 	}
 
 }

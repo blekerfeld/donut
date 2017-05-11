@@ -38,7 +38,7 @@ class pSearchHandler extends pHandler{
 
 			var_dump(pAdress::arg());
 
-			return pOut("wiki search is coming soon");
+			return p::Out("wiki search is coming soon");
 
 
 		}		
@@ -80,12 +80,12 @@ class pSearchHandler extends pHandler{
 		ajaxSkip:
 
 			if(count($fetchSearch) == 0)
-				pOut("<div class='small notice'>".(new pIcon('fa-info-circle', 12))." ".DICT_NO_HITS."</div>");
+				p::Out("<div class='small notice'>".(new pIcon('fa-info-circle', 12))." ".DICT_NO_HITS."</div>");
 
-			pOut("<table class='dWordTable'>");
+			p::Out("<table class='dWordTable'>");
 			foreach($fetchSearch as $lemma)
 				$this->parseSearchResults($query, $lemma, $searchlang);
-			pOut('</table>');
+			p::Out('</table>');
 
 			if(isset(pAdress::arg()['ajax']))
 				return true;

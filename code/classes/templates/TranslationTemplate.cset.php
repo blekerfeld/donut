@@ -21,7 +21,7 @@ class pTranslationTemplate extends pEntryTemplate{
 		if($backhref != null)
 			$back = "<a class='back-mini' href='".$backhref."'>".(new pIcon('fa-arrow-left', 12))."</a>";	
 
-		$realTitle = pMarkdown("# ".$back." <strong class='pWord'><span class='native'><a>".$this->_data['translation']."</span></strong>", true);
+		$realTitle = p::Markdown("# ".$back." <strong class='pWord'><span class='native'><a>".$this->_data['translation']."</span></strong>", true);
 
 		$titleSection = new pEntrySection("", '', null, false, true);
 
@@ -33,11 +33,11 @@ class pTranslationTemplate extends pEntryTemplate{
 	}
 
 	public function renderInfo(){
-		return "<span class='small-caps xsmall'>".sprintf(LEMMA_TRANSLATION_ADDED, "<a href='".pUrl('?profile/'.$this->_data['user_id'])."'>".(new pUser($this->_data['user_id']))->read('username')."</a>", pDate($this->_data['created_on']))."</span>";
+		return "<span class='small-caps xsmall'>".sprintf(LEMMA_TRANSLATION_ADDED, "<a href='".p::Url('?profile/'.$this->_data['user_id'])."'>".(new pUser($this->_data['user_id']))->read('username')."</a>", p::Date($this->_data['created_on']))."</span>";
 	}
 
 	public function renderDesc($desc){
-		return pOut(new pEntrySection((new pIcon('fa-info', 12))." ".TRANSLATION_DESC, $desc));
+		return p::Out(new pEntrySection((new pIcon('fa-info', 12))." ".TRANSLATION_DESC, $desc));
 	}
 
 	public function renderLemmas($lemmas){
@@ -52,7 +52,7 @@ class pTranslationTemplate extends pEntryTemplate{
 		
 		$content .= "</ol>";
 
-		return pOut(new pEntrySection($title, $content));
+		return p::Out(new pEntrySection($title, $content));
 	}
 
 }

@@ -22,7 +22,7 @@ class pTableHandler extends pHandler{
 			$pages = '';
 
 
-		pOut("<div class='btCard admin'>
+		p::Out("<div class='btCard admin'>
 			<div class='btTitle'>
 				<i class='fa ".$this->_icon."'></i> ".$this->_surface."
 			</div>
@@ -32,27 +32,27 @@ class pTableHandler extends pHandler{
 		$records = 0;
 		$col_count = 2;
 
-		pOut("<table class='admin'>
+		p::Out("<table class='admin'>
 			<thead>
 			<tr class='title' role='row'><td style='width: 50px'><span class='xsmall'>".DL_ID."</span></td>");
 
 		// Building the table
 		foreach ($this->_dfs->get() as $datafield) {
 			if($datafield->showInTable == true){
-				pOut("<td style='width: ".$datafield->width."'>".$datafield->surface."</td>");
+				p::Out("<td style='width: ".$datafield->width."'>".$datafield->surface."</td>");
 				$col_count++;
 			}
 		}
 
 		// Links
 		if($this->_linked != null){
-			pOut("<td style='width: auto;' colspan='2' class='actions'><i class='fa fa-link'></i> ".DA_TABLE_LINKS."</td>");
+			p::Out("<td style='width: auto;' colspan='2' class='actions'><i class='fa fa-link'></i> ".DA_TABLE_LINKS."</td>");
 			$col_count++;
 		}
 		else
-			pOut("<td class='actions'>".DA_TABLE_ACTIONS."</td>");
+			p::Out("<td class='actions'>".DA_TABLE_ACTIONS."</td>");
 
-		pOut("
+		p::Out("
 			</tr></thead><tbody>");
 
 		foreach($this->_data as $data){
@@ -61,17 +61,17 @@ class pTableHandler extends pHandler{
 			$showID = $data['id'];
 
 			if(isset($this->_activeSection['id_as_hash']) AND $this->_activeSection['id_as_hash'] AND isset($this->_activeSection['hash_app'])){
-				$showID = "<a class='medium tooltip' href='".pUrl('?'.$this->_activeSection['hash_app'].'/'.pHashId($data['id']))."'>".(new pIcon('fa-bookmark-o', 12))." ".pHashId($data['id'])."</a>";
-				$data['id'] = pHashId($data['id']);
+				$showID = "<a class='medium tooltip' href='".p::Url('?'.$this->_activeSection['hash_app'].'/'.p::HashId($data['id']))."'>".(new pIcon('fa-bookmark-o', 12))." ".p::HashId($data['id'])."</a>";
+				$data['id'] = p::HashId($data['id']);
 			}
 
 
-			pOut("<tr class='item_".$real_id ."'><td><span class='xsmall'>".($real_id == 0 ? "<em><strong>".DA_DEFAULT."</em></strong>" : $showID) ."</span></td>");
+			p::Out("<tr class='item_".$real_id ."'><td><span class='xsmall'>".($real_id == 0 ? "<em><strong>".DA_DEFAULT."</em></strong>" : $showID) ."</span></td>");
 
 			// Go through the data fields
 			foreach($this->_dfs->get() as $datafield){
 				if($datafield->showInTable == true){
-					pOut("<td style='width: ".$datafield->width."'>".$datafield->parse($data[$datafield->name])."</td>");
+					p::Out("<td style='width: ".$datafield->width."'>".$datafield->parse($data[$datafield->name])."</td>");
 					$records++;
 				}
 			}
@@ -79,7 +79,7 @@ class pTableHandler extends pHandler{
 			// The links stuff
 			// Links
 			if($this->_linked != null){
-				pOut("<td>");
+				p::Out("<td>");
 				foreach($this->_linked as $key => $link){
 					if(pUser::checkPermission($this->itemPermission(((isset($link->structure[$this->_section]['outgoing_links'][$key]['double_parent'])) ? $this->_section : $key), pStructure::$permission))){
 						$action = new pAction('link-table', "&#x205F; ".$link->structure[$this->_section]['outgoing_links'][$key]['surface'], $link->structure[$this->_section]['outgoing_links'][$key]['icon'], 'small table-link', null, null, ((isset($link->structure[$this->_section]['outgoing_links'][$key]['double_parent'])) ? $this->_section : $key), $link->_app);
@@ -94,34 +94,34 @@ class pTableHandler extends pHandler{
 
 						$action->_surface = $counter.$action->_surface;
 
-						pOut("<span class='tooltip small' title='".(new pIcon($link->structure[$this->_section]['outgoing_links'][$key]['icon'], 8))." ".$link->structure[$this->_section]['outgoing_links'][$key]['surface']."'>".$action->render($data['id'], ((isset($link->structure[$this->_section]['outgoing_links'][$key]['double_parent'])) ? $key : $this->_section)).'</span>');
+						p::Out("<span class='tooltip small' title='".(new pIcon($link->structure[$this->_section]['outgoing_links'][$key]['icon'], 8))." ".$link->structure[$this->_section]['outgoing_links'][$key]['surface']."'>".$action->render($data['id'], ((isset($link->structure[$this->_section]['outgoing_links'][$key]['double_parent'])) ? $key : $this->_section)).'</span>');
 					}
 				}
-				pOut("</td>");
+				p::Out("</td>");
 			}
 
 			// The important actions and such
 			
-			pOut("<td style='text-align: center' class='actions'><a href='javascript:void();' class='btAction actions-holder no-float ttip_actions' data-tooltip-content='#dropdown_".$data['id']."'>".(new pIcon('fa-caret-down', 12))."</a>");
+			p::Out("<td style='text-align: center' class='actions'><a href='javascript:void();' class='btAction actions-holder no-float ttip_actions' data-tooltip-content='#dropdown_".$data['id']."'>".(new pIcon('fa-caret-down', 12))."</a>");
 
-			pOut("		<div class='hide'><div id='dropdown_".$data['id']."' class=''>");
+			p::Out("		<div class='hide'><div id='dropdown_".$data['id']."' class=''>");
 
 			foreach($this->_actions->get() as $action)
 				if(!($action->name == 'remove' AND $real_id == 0))
-					pOut($action->render($data['id']));
-			pOut("</div></div>");
+					p::Out($action->render($data['id']));
+			p::Out("</div></div>");
 			
-			pOut("</td>");
+			p::Out("</td>");
 
-			pOut("</tr>");
+			p::Out("</tr>");
 		}
 
 		if($records == 0)
-			pOut("<tr><td colspan=".$col_count.">".DA_NO_RECORDS."</td>");
+			p::Out("<tr><td colspan=".$col_count.">".DA_NO_RECORDS."</td>");
 
-		pOut("</tbody></table><script>$('.tooltip').tooltipster({animation: 'grow', distance: 0, contentAsHTML: true});</script>");
+		p::Out("</tbody></table><script>$('.tooltip').tooltipster({animation: 'grow', distance: 0, contentAsHTML: true});</script>");
 
-		pOut("</div>
+		p::Out("</div>
 			<div class='btButtonBar'>".$pages.$this->_actionbar->output."</div>
 		</div>");
 		}

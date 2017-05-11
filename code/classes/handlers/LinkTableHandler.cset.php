@@ -35,36 +35,36 @@ class pLinkTableHandler extends pHandler{
 		$col_count = 2;
 		$records = 0;
 
-		pOut("<div class='btCard admin link-table'>
+		p::Out("<div class='btCard admin link-table'>
 			<div class='btTitle'>
 				".(new pIcon($this->_icon, 12))." ".$this->_surface."
 			</div>
-			<div class='btButtonBar up'><a class='btAction wikiEdit' href='".pUrl("?".$this->_app."&".$this->_guests->_data['section_key'])."'>".(new pIcon('fa-arrow-left', 12))." ".BACK."</a>".$pages.$this->_actionbar->output."</div><div class='content'>
+			<div class='btButtonBar up'><a class='btAction wikiEdit' href='".p::Url("?".$this->_app."&".$this->_guests->_data['section_key'])."'>".(new pIcon('fa-arrow-left', 12))." ".BACK."</a>".$pages.$this->_actionbar->output."</div><div class='content'>
 			");
 
 
-		pOut("<div class='btSource'><span class='btLanguage'>".DA_TABLE_LINKS_PARENT.": </span><br />
+		p::Out("<div class='btSource'><span class='btLanguage'>".DA_TABLE_LINKS_PARENT.": </span><br />
 			<span class='btNative'>".$this->_guests->_handler->_data[0][$this->_show_parent]."</span></div>");
 
-		pOut("<div class='btSource'><span class='btLanguage'>".DA_TABLE_LINKS_CHILDREN.": </span></div>");
+		p::Out("<div class='btSource'><span class='btLanguage'>".DA_TABLE_LINKS_CHILDREN.": </span></div>");
 
-		pOut("<table class='admin' style='width:50%;float:left;'>
+		p::Out("<table class='admin' style='width:50%;float:left;'>
 			<thead>
 			<tr class='title' role='row'><td style='width: 10%;'><span class='xsmall'>".DA_TABLE_LINKS_CHILD_ID."</span></td>");
 
 		// Building the table
 		foreach ($this->_dfs->get() as $datafield) {
 			if($datafield->showInTable == true){
-				pOut("<td style='width: ".$datafield->width."'>".$datafield->surface."</td>");
+				p::Out("<td style='width: ".$datafield->width."'>".$datafield->surface."</td>");
 				$col_count++;
 			}
 		}
 
 		// Links
 		if($this->_linked != null)
-			pOut("<td>".DA_TABLE_LINKS."</td>");
+			p::Out("<td>".DA_TABLE_LINKS."</td>");
 
-		pOut("<td>".ACTIONS."</td>
+		p::Out("<td>".ACTIONS."</td>
 			</tr></thead><tbody>");
 
 
@@ -73,11 +73,11 @@ class pLinkTableHandler extends pHandler{
 
 			foreach($this->_passed_data as $key => $item){
 			      if ( $item['id'] == $data[$this->_matchOn] ){
-			      	pOut("<tr class='item_".$data['id']."'><td style='width: auto;max-width: 5px;'><span class='xsmall'>".($item['id'] == 0 ? "<em><strong>".DA_DEFAULT."</em></strong>" : $item['id']) ."</span></td>");
+			      	p::Out("<tr class='item_".$data['id']."'><td style='width: auto;max-width: 5px;'><span class='xsmall'>".($item['id'] == 0 ? "<em><strong>".DA_DEFAULT."</em></strong>" : $item['id']) ."</span></td>");
 				      foreach($this->_dfs->get() as $key_d => $datafield){
 						if($datafield->showInTable == true)
 							if(isset($this->_guests->_data['outgoing_links'][pAdress::arg()['linked']]) AND $datafield->name != $this->_guests->_data['outgoing_links'][pAdress::arg()['linked']]['field'])
-								pOut("<td style='width: ".$datafield->width."'>".$datafield->parse($data[$datafield->name])."</td>");
+								p::Out("<td style='width: ".$datafield->width."'>".$datafield->parse($data[$datafield->name])."</td>");
 							else{
 							
 								// Simple and a little dirty support for double parenting
@@ -88,10 +88,10 @@ class pLinkTableHandler extends pHandler{
 									// Getting the other item we need
 									$this->_guests->_handler->dataModel->getSingleObject($data[$this->_guests->structure[$this->_section]['incoming_links'][$this->_link]['child']]);
 
-									pOut("<td style='width: ".$datafield->width."'>".$datafield->parse($this->_guests->_handler->dataModel->data()->fetchAll()[0]['id'])."</td>");
+									p::Out("<td style='width: ".$datafield->width."'>".$datafield->parse($this->_guests->_handler->dataModel->data()->fetchAll()[0]['id'])."</td>");
 								}
 								else
-									pOut("<td style='width: ".$datafield->width."'>".$datafield->parse($item['id'])."</td>");
+									p::Out("<td style='width: ".$datafield->width."'>".$datafield->parse($item['id'])."</td>");
 							}
 							$records++;
 				   		}
@@ -99,25 +99,25 @@ class pLinkTableHandler extends pHandler{
 			}
 
 			// The important actions and such
-			pOut("<td class='actions'>");
+			p::Out("<td class='actions'>");
 			foreach($this->_actions->get() as $action){
 				if(!($action->name == 'remove' AND $data['id'] == 0))
-					pOut($action->render($data['id'], $this->_link));
+					p::Out($action->render($data['id'], $this->_link));
 			}
-			pOut("</td>");
+			p::Out("</td>");
 
-			pOut("</tr>");
+			p::Out("</tr>");
 		}
 
 		if($records == 0)
-			pOut("<tr><td colspan=".$col_count.">".DA_NO_RECORDS."</td>");
+			p::Out("<tr><td colspan=".$col_count.">".DA_NO_RECORDS."</td>");
 
-		pOut("</tbody></table><br id='cl' />
+		p::Out("</tbody></table><br id='cl' />
 		</thead>");
 
-		pOut("</div>
+		p::Out("</div>
 			<div class='btButtonBar'>
-			<a class='btAction wikiEdit' href='".pUrl("?".$this->_app."/".$this->_guests->_data['section_key'])."'><i class='fa fa-12 fa-arrow-left' ></i> ".BACK."</a>
+			<a class='btAction wikiEdit' href='".p::Url("?".$this->_app."/".$this->_guests->_data['section_key'])."'><i class='fa fa-12 fa-arrow-left' ></i> ".BACK."</a>
 			".$pages.$this->_actionbar->output."</div>
 		</div>");
 		}
