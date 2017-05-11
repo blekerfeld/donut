@@ -48,7 +48,6 @@
       </div>
     </div>
     <div class="outerwrap">
-      <div class="fill_gaps">
         <div class="ulWrap">
           <noscript>
             <div class='notice danger-notice'><i class='fa fa-warning fa-12'></i> This site needs javascript to function, with javascript turned off, most of the functionality won't work!</div>
@@ -67,7 +66,6 @@
               </div>
           </div>
         </div>
-      </div>
     </div>
     <div class='absolute_footer'>
           <img src='<?php echo pUrl('library/images/static/logobw.png'); ?>' />

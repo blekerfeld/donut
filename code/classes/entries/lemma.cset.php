@@ -85,8 +85,6 @@ class pLemma extends pEntry{
 
 		pOut($this->_template->title($this->_type, $this->_class, $this->_subclass));
 
-		pOut($this->_actionbar->output);
-
 		if($this->_translations != null) 
 			pOut($this->_template->parseTranslations($this->_translations));
 
@@ -100,6 +98,8 @@ class pLemma extends pEntry{
 
 		// Let's throw the subentries through their template
 		pOut($this->_template->parseSubEntries($this->_subEntries));
+
+		pOut($this->_actionbar->output);
 	}
 
 	// This function will generate an infostring

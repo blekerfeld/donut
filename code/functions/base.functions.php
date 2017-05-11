@@ -125,7 +125,7 @@
 	}
 
 	function pNoticeBox($icon, $message, $type='notice', $id=''){
-		return '<div class="'.$type.'" id="'.$id.'"><i class="fa '.$icon.'"></i> '.$message.'</div>';
+		return '<div class="'.$type.'" id="'.$id.'"><i class="fa '.$icon.' fa-10"></i> '.$message.'</div>';
 	}
 
 	function pMempty()

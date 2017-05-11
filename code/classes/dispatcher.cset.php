@@ -98,15 +98,14 @@ class pDispatcher {
 		$this->structureObject->load();
 
 		// The section can be optional
-		if($templateArguments[0] != 'section'){
-			if(array_key_exists($this->_urlArguments[1], $this->structureObject->_structure)){
-				// Now we have a section after all
-				$templateArgumentsNew = array(0 => 'section');
-				foreach($templateArguments as $key => $value)
-					$templateArgumentsNew[$key + 1] = $value;
-				$templateArguments = $templateArgumentsNew;
+		if(isset($this->_urlArguments[1], $templateArguments[0]))
+			if($templateArguments[0] != 'section'){
+				if(array_key_exists($this->_urlArguments[1], $this->structureObject->_structure)){
+					// Now we have a section after all
+					$templateArguments = array_combine(range(1, count($templateArguments)), array_values($templateArguments));
+					$templateArguments[0] = 'section';
+				}
 			}
-		}
 		// Optional trailing slashes
 		if(!isset($this->_urlArguments[1]))
 			$this->_urlArguments[1] = '';

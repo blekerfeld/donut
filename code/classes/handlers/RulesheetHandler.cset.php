@@ -19,9 +19,11 @@ class pRulesheetHandler extends pHandler{
 		// First we are calling the parent's constructor (pHandler)
 		call_user_func_array('parent::__construct', func_get_args());
 		// Override the datamodel
+
 		if($this->_section == 'inflections')
 			$table = 'morphology';
-		$this->dataModel = new pRuleDataModel($table, (isset(pAdress::arg()['id']) ? pAdress::arg()['id'] : null));
+
+		$this->dataModel = new pRuleDataModel($this->_activeSection['table'], (isset(pAdress::arg()['id']) ? pAdress::arg()['id'] : null));
 	}
 
 	// This would render the rule list table :)
@@ -62,18 +64,22 @@ class pRulesheetHandler extends pHandler{
 		$links = $this->generateLinksArray();
 		$edit = $this->dataModel->updateRule(pAdress::post()['name'], pAdress::post()['rule'], $links);
 		if($edit == false)
-			echo pNoticeBox('fa-warning', SAVED_EMPTY, 'hide danger-notice errorSave');
-		die('<script>$(".saving").slideUp();'.(($edit == false) ? '$(".errorSave").slideDown();' : '$(".errorSave").slideUp();')."</script>");
+			echo pNoticeBox('fa-warning', SAVED_EMPTY, 'hide warning-notice errorSave');
+		else
+			echo pNoticeBox('fa-check', SAVED, 'hide succes-notice successSave');
+		die('<script>$(".saving").slideUp();'.(($edit == false) ? '$(".errorSave").slideDown();' : '$(".errorSave").slideUp();$(".successSave").slideDown().delay(1500).slideUp();')."</script>");
 	}
 
 	public function ajaxNew(){
 		$links = $this->generateLinksArray();
 		$id = $this->dataModel->newRule(pAdress::post()['name'], pAdress::post()['rule'], $links);
 		if($id == false){
-			echo pNoticeBox('fa-warning', SAVED_EMPTY, 'hide danger-notice errorSave');
-			die('<script>$(".saving").slideUp();'.(($id == false) ? '$(".errorSave").slideDown();' : '')."</script>");
+			echo pNoticeBox('fa-warning', SAVED_EMPTY, 'hide warning-notice errorSave');
+			die('<script>$(".saving").slideUp();'.(($id == false) ? '$(".errorSave").slideDown();' : '$(".errorSave").slideUp();$(".successSave").slideDown().delay(1500).slideUp();')."</script>");
 		}
-		die('<script>$(".errorSave").slideUp();
+		else
+			echo pNoticeBox('fa-check', SAVED, 'hide succes-notice successSave');
+		die('<script>$(".errorSave").slideUp();$(".successSave").slideDown().delay(1500).slideUp();
 			window.location = "'.pUrl('?rulesheet/'.$this->_section.'/edit/'.$id).'";</script>');
 	}
 

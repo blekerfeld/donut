@@ -104,6 +104,7 @@ define('DA_PAGE_X_OF_Y', "Page %s of %s");
 
 
 // Link tables
+define('DA_TABLE_ACTIONS', "Actions");
 define('DA_TABLE_LINKS', "Relations");
 define('DA_TABLE_LINKS_CHILD_ID', "Child ID");
 define('DA_TABLE_LINKS_CHILD', "Child");

@@ -79,10 +79,8 @@ class pSearchHandler extends pHandler{
 
 		ajaxSkip:
 
-			pOut(pMarkdown("# ".new pIcon('format-list-bulleted')." ".DICT_SEARCH_RESULTS." <span class='counter s-13'>".count($fetchSearch)."</span>", true));
-
 			if(count($fetchSearch) == 0)
-				pOut("<div class='danger-notice small'>".(new pIcon('fa-warning', 12))." ".DICT_NO_HITS."</div>");
+				pOut("<div class='small notice'>".(new pIcon('fa-info-circle', 12))." ".DICT_NO_HITS."</div>");
 
 			pOut("<table class='dWordTable'>");
 			foreach($fetchSearch as $lemma)

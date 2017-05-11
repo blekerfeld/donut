@@ -46,11 +46,13 @@ class pTableHandler extends pHandler{
 
 		// Links
 		if($this->_linked != null){
-			pOut("<td style='width: auto;'><i class='fa fa-link'></i> ".DA_TABLE_LINKS."</td>");
+			pOut("<td style='width: auto;' colspan='2' class='actions'><i class='fa fa-link'></i> ".DA_TABLE_LINKS."</td>");
 			$col_count++;
 		}
+		else
+			pOut("<td class='actions'>".DA_TABLE_ACTIONS."</td>");
 
-		pOut("<td></td>
+		pOut("
 			</tr></thead><tbody>");
 
 		foreach($this->_data as $data){
@@ -80,7 +82,7 @@ class pTableHandler extends pHandler{
 				pOut("<td>");
 				foreach($this->_linked as $key => $link){
 					if(pUser::checkPermission($this->itemPermission(((isset($link->structure[$this->_section]['outgoing_links'][$key]['double_parent'])) ? $this->_section : $key), pStructure::$permission))){
-						$action = new pAction('link-table', "&#x205F;".$link->structure[$this->_section]['outgoing_links'][$key]['surface'], $link->structure[$this->_section]['outgoing_links'][$key]['icon'], 'small table-link', null, null, ((isset($link->structure[$this->_section]['outgoing_links'][$key]['double_parent'])) ? $this->_section : $key), $link->_app);
+						$action = new pAction('link-table', "&#x205F; ".$link->structure[$this->_section]['outgoing_links'][$key]['surface'], $link->structure[$this->_section]['outgoing_links'][$key]['icon'], 'small table-link', null, null, ((isset($link->structure[$this->_section]['outgoing_links'][$key]['double_parent'])) ? $this->_section : $key), $link->_app);
 
 						// Counting the links
 						$dataCount = new pDataModel($link->structure[$this->_section]['outgoing_links'][$key]['table']);
@@ -88,29 +90,25 @@ class pTableHandler extends pHandler{
 						$dataCount->setCondition("WHERE ((".$link->structure[$this->_section]['outgoing_links'][$key]['field']." = '".$real_id."'" . ((isset($link->structure[$this->_section]['outgoing_links'][$key]['double_parent'])) ? ") OR (". $link->structure[$this->_section]['outgoing_links'][$key]['double_parent'] . " = '".$real_id."'" : '')."))");
 
 
-
-
 							$counter = "<span class='counter'>".$dataCount->countAll($link->structure[$this->_section]['outgoing_links'][$key]['field'] . " = ".$real_id)."</span>";
 
 						$action->_surface = $counter.$action->_surface;
 
-						pOut("<span class='tooltip' title='".(new pIcon($link->structure[$this->_section]['outgoing_links'][$key]['icon'], 12)).$link->structure[$this->_section]['outgoing_links'][$key]['surface']."'>".$action->render($data['id'], ((isset($link->structure[$this->_section]['outgoing_links'][$key]['double_parent'])) ? $key : $this->_section)).'</span>');
+						pOut("<span class='tooltip small' title='".(new pIcon($link->structure[$this->_section]['outgoing_links'][$key]['icon'], 8))." ".$link->structure[$this->_section]['outgoing_links'][$key]['surface']."'>".$action->render($data['id'], ((isset($link->structure[$this->_section]['outgoing_links'][$key]['double_parent'])) ? $key : $this->_section)).'</span>');
 					}
 				}
 				pOut("</td>");
 			}
 
 			// The important actions and such
-			pOut("<td style='text-align: center'><a href='javascript:void();' class='btAction no-float ttip_actions' data-tooltip-content='#dropdown_".$data['id']."'>".(new pIcon('fa-chevron-down', 10))."</a>");
+			
+			pOut("<td style='text-align: center' class='actions'><a href='javascript:void();' class='btAction actions-holder no-float ttip_actions' data-tooltip-content='#dropdown_".$data['id']."'>".(new pIcon('fa-caret-down', 12))."</a>");
 
 			pOut("		<div class='hide'><div id='dropdown_".$data['id']."' class=''>");
 
-
-
-			foreach($this->_actions->get() as $action){
+			foreach($this->_actions->get() as $action)
 				if(!($action->name == 'remove' AND $real_id == 0))
 					pOut($action->render($data['id']));
-			}
 			pOut("</div></div>");
 			
 			pOut("</td>");

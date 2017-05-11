@@ -17,7 +17,6 @@ return array(
 			'icon' => 'fa-book',
 			'default_permission' => -3,
 		),
-		'dataModel' => 'pRuleDataModel',
 		'inflections' => array(
 			'section_key' => 'inflections',
 			'type' => 'pRulesheetHandler',

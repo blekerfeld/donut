@@ -89,10 +89,9 @@ return array(
 		'page_title' => 'rulesheet',
 		'default_section' => 'inflections',
 		'arguments' => array(
-			0 => 'section',
-			1 => 'action',
-			2 => 'id',
-			3 => 'linked',
+			0 => 'action',
+			1 => 'id',
+			2 => 'linked',
 		),
 		'menu' => 'dictionary-admin',
 	),
