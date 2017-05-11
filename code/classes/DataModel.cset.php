@@ -99,12 +99,12 @@ class pDataModel {
 		$key = 0;
 		if($this->_fields != null)
 			foreach($this->_fields->get() as $field){
-				$valueString[] = pQuote($data[$key]);
+				$valueString[] = p::Quote($data[$key]);
 				$key++;
 			}
 		else
 			foreach($data as $value)
-				$valueString[] = pQuote($value);
+				$valueString[] = p::Quote($value);
 		$this->_valuestring = implode(', ', $valueString);
 	}
 
@@ -137,7 +137,7 @@ class pDataModel {
 
 		foreach ($this->_fields->get() as $field) {
 			if($field->name != 'id')
-				$updateString[] = $field->name."= ".pQuote($data[$key]);
+				$updateString[] = $field->name."= ".p::Quote($data[$key]);
 			$key++; 
 		}
 
@@ -175,7 +175,7 @@ class pDataModel {
 
 		}
 
-		return p::Query("DELETE FROM ".$this->_table." WHERE id = ".$this->_field = " ".pQuote($selective).";");
+		return p::Query("DELETE FROM ".$this->_table." WHERE id = ".$this->_field = " ".p::Quote($selective).";");
 
 	}
 
@@ -207,7 +207,7 @@ class pDataModel {
 
 		p::Query("INSERT INTO ".$this->_table." $fieldString  VALUES (".$this->_valuestring.");");
 
-		return $donut['db']->lastInsertId();
+		return p::$db->lastInsertId();
 	}
 
 	public function changePagination($value){

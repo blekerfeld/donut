@@ -62,7 +62,7 @@ class pRuleDataModel extends pDataModel{
 		if($name == '' OR $rule == '')
 			return false;
 		// First change the basic info
-		$this->prepareForUp::Date(array($name, $rule));
+		$this->prepareForUpdate(array($name, $rule));
 		$this->update();
 		// If this is a rule with links, we need to add any new links, remove any others
 		if(is_array($links)){

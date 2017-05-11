@@ -226,7 +226,7 @@ class pMagicActionForm{
 
 				// Editing
 				if($this->_edit){
-					$this->_handler->dataModel->prepareForUp::Date($values);
+					$this->_handler->dataModel->prepareForUpdate($values);
 					$this->_handler->dataModel->update();
 				}
 				//Adding

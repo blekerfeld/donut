@@ -13,9 +13,6 @@ class pSimpleStructure extends pStructure{
 	private $_ajax, $_section, $_template;
 
 	public function compile(){
-
-		global $donut;
-
 		if(isset(pAdress::arg()['section']))
 			$this->_section = pAdress::arg()['section'];
 		else
@@ -26,7 +23,7 @@ class pSimpleStructure extends pStructure{
 		else
 			die('Could not compile the simple structure, requires a template!');
 
-		$donut['page']['title'] = $this->_page_title;
+		pMainTemplate::setTitle($this->_page_title);
 
 	}
 

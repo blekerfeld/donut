@@ -95,7 +95,6 @@ class pSearchBox extends pTemplatePiece{
 				// We are not sending empty queries
       		}else{
       			$('.pEntry').slideUp();
-      			$('.searchLoad').slideDown();
       			search();
       		}
 
@@ -158,6 +157,7 @@ class pSearchBox extends pTemplatePiece{
 				$('.page').addClass('min');
 				$('.header.dictionary').removeClass('home').addClass('home-search');
       			$('.searchLoad').load('".p::Url('?search/')."' + $('.dictionary-selector').val() + '/ajax/', {'query': $('.word-search').val(), 'exactMatch': $('.checkbox-wholeword').is(':checked')}, function(e){
+      					$('.searchLoad').slideDown();
       					if($('.word-search').val() != ''){
       						window.history.pushState('string', '', '".p::Url("?entry/search/")."' + $('.dictionary-selector').val().toLowerCase() + '/' + $('.word-search').val());
       					}

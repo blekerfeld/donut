@@ -33,7 +33,7 @@ class pRulesheetStructure extends pStructure{
 
 		$this->_parser->compile();
 
-		$donut['page']['title'] = $this->_page_title;
+		pMainTemplate::setTitle($this->_page_title);
 	}
 
 

@@ -13,9 +13,6 @@ class pEntryStructure extends pStructure{
 	protected $_error;
 
 	public function compile(){
-
-		global $donut;
-
 		// If the user requests a section and if it extist
 		if(isset(pAdress::arg()['section']) AND array_key_exists(pAdress::arg()['section'], $this->_structure))
 			$this->_section = pAdress::arg()['section'];
@@ -34,7 +31,7 @@ class pEntryStructure extends pStructure{
 
 		$this->_parser->compile();
 
-		$donut['page']['title'] = $this->_page_title;
+		pMainTemplate::setTitle($this->_page_title);
 	}
 
 
@@ -69,7 +66,7 @@ class pEntryStructure extends pStructure{
 		p::Out($searchBox);
 
 		// Starting with the wrapper
-		p::Out("<div class='pEntry ".(($this->_error != '' OR $this->_error != null) ? 'hasErrors' : '')."'><div class='home-margin'>");
+		p::Out("<br /><div class='pEntry ".(($this->_error != '' OR $this->_error != null) ? 'hasErrors' : '')."'><div class='home-margin'>");
 
 		// If there is an offset, we need to define that
 		if(isset(pAdress::arg()['offset']))

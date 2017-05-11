@@ -10,30 +10,41 @@
 
 	// The big p - the helper class!
 
-// Our dependicies
+// Our friends
 require CONFIG_ROOT_PATH.'/library/assets/php/vendors/str.php';
 require CONFIG_ROOT_PATH.'/library/assets/php/vendors/HashGenerator.php';
 require CONFIG_ROOT_PATH.'/library/assets/php/vendors/Hashids.php';
 
 class p{
 
-	public static $Out = array(), $Header = array(), $db;
+	public static $Out = array(), $Header = array(), $db, $assets;
 
 	public static function init(){
+		self::$assets = require_once p::FromRoot("library/assets.struct.php");
+		// Starting sessions
+		session_start();
 		$filenames = array();
+
+		// Loading third party php assets
+		foreach(self::$assets['php'] as $phpfile)
+			$filenames[] = p::FromRoot('library/assets/php/'.$phpfile);
+
 		foreach (glob(CONFIG_ROOT_PATH."/code/classes/*.cset.php") as $filename)
 			$filenames[] = $filename;
 		foreach (glob(CONFIG_ROOT_PATH."/code/classes/*/*.cset.php") as $filename)
 			$filenames[] = $filename;
 		foreach($filenames as $filename)
-			require_once $filename;
+			if(file_exists($filename))
+				require_once $filename;
 		try {
 			self::$db = new pConnection('mysql:host='.CONFIG_DB_HOST.';dbname='.CONFIG_DB_DATABASE, CONFIG_DB_USER, CONFIG_DB_PASSWORD);
 		} catch (Exception $e) {
 			die("COULD NOT CONNECT TO THE DATABASE! ERROR: ".$e->getMessage());
 		}
-		//Let's set the page title to default
-		pMainTemplate::setTitle(CONFIG_SITE_TITLE);
+		// Rewelcome our previous-session logged in guest
+		pUser::restore();
+		// Loading our locale
+		p::loadLocale(CONFIG_ACTIVE_LOCALE);
 	}
 
 	public static function Query($sql){
@@ -63,15 +74,15 @@ class p{
 			$file = '';
 
 		if(p::StartsWith($url, '?') and CONFIG_REWRITE)
-			$url = CONFIG_ABSOLUTE_PATH. $file .p::Str($url)->replacePrefix('?', '');
+			$url = CONFIG_ABSOLUTE_PATH . '/' . $file .p::Str($url)->replacePrefix('?', '');
 		elseif(p::StartsWith($url, '?') and !CONFIG_REWRITE)
-			$url = CONFIG_ABSOLUTE_PATH.$file.$url;
+			$url = CONFIG_ABSOLUTE_PATH . '/' . $file.$url;
 		elseif(p::StartsWith($url, 'pol://') && $exploded = explode('pol://', $url))
 			$url = p::Url($exploded[1]);
-		elseif(p::StartsWith($url, 'http://') or p::StartsWith($url, 'ftp://') or p::StartsWith($url, 'https://'))
+		elseif(p::StartsWith($url, 'http://') or p::StartsWith($url, 'ftp://') or p::StartsWith($url, 'https://') or p::StartsWith($url, 'mailto://'))
 			$url = $url;
 		else
-			$url = CONFIG_ABSOLUTE_PATH.$url;
+			$url = CONFIG_ABSOLUTE_PATH. '/' . $url;
 		if(!$header)
 			return $url;
 		else
@@ -138,7 +149,7 @@ class p{
 		include_once $language_main_path;
 
 		// Now all other files
-		foreach($donut['lang_sub_files'] as $filename)
+		foreach($transfer['lang_sub_files'] as $filename)
 			include p::FromRoot('library/languages/' . $language . '.' . $filename . '.php');
 			
 		return true;
@@ -161,10 +172,6 @@ class p{
 
 	public function MarkDown($text, $block = true, $examples = true, $num = false){
 	
-		// We need to require the parsedown files, but only once.
-		require_once p::FromRoot('library/assets/php/vendors/parsedown.require.php');
-		require_once p::FromRoot('library/assets/php/vendors/parsedown_extra.require.php');
-
 		// Parsing (@) to numbred examples:
 		if($examples){
 			$exampleCount = 0;

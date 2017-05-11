@@ -10,12 +10,12 @@
 
 class pMainTemplate extends pTemplate{
 
-	protected $_stylesheets, $_scripts, $_assets;
+	protected $_stylesheets, $_scripts;
 
-	public static $title;
+	public static $title = CONFIG_SITE_TITLE;
 
 	public static function setTitle($title){
-		self::$title = $title;
+		self::$title = $title . ' - ' . CONFIG_SITE_TITLE;
 	}
 
 	protected function loadCSS($stylesheet){
@@ -32,10 +32,9 @@ class pMainTemplate extends pTemplate{
 	}
 
 	public function __construct(){
-		$this->_assets = require_once p::FromRoot("library/assets.struct.php");
-		foreach ($this->_assets['css'] as $css)
+		foreach (p::$assets['css'] as $css)
 			$this->loadCSS($css);
-		foreach ($this->_assets['javascript'] as $js)
+		foreach (p::$assets['javascript'] as $js)
 			$this->loadJavascript($js);
 	}
 	
@@ -47,6 +46,7 @@ class pMainTemplate extends pTemplate{
 <!DOCTYPE html>
 <html>
   <head>
+    <title><?php echo self::$title; ?></title>
     <link rel="shortcut icon" href="<?php echo p::Url('library/images/static/app_icon.png'); ?>">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
     <meta name="apple-mobile-web-app-capable" content="yes">
