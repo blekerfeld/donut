@@ -93,23 +93,26 @@ class pRulesheetTemplate extends pTemplate{
 						<div class='left'>
 							".pMarkdown("##### Primary selectors ")."<br />
 							<div class='btSource'><span class='btLanguage'>Lexical categories <em class='small'>(part of speech)</em></span><br />
-							<span class='btNative'><select class='select-lexcat select2' multiple='multiple'>".(new pSelector('types', $this->_data->_links['lexcat'], 'name', true, 'rules', true))->render()."</select></span></div>
+							<span class='btNative'><select class='full-width select-lexcat select2' multiple='multiple'>".(new pSelector('types', $this->_data->_links['lexcat'], 'name', true, 'rules', true))->render()."</select></span></div>
 							<div class='btSource'><span class='btLanguage'>Grammatical categories</span><br />
-							<span class='btNative'><select class='select-gramcat select2' multiple='multiple'>".(new pSelector('classifications', $this->_data->_links['gramcat'], 'name', true, 'rules', true))->render()."</select></span></div>
+							<span class='btNative'><select class='full-width select-gramcat select2' multiple='multiple'>".(new pSelector('classifications', $this->_data->_links['gramcat'], 'name', true, 'rules', true))->render()."</select></span></div>
 							<div class='btSource'><span class='btLanguage'>Grammatical tags</span><br />
-							<span class='btNative'><select class='select-tags select2' multiple='multiple'>".(new pSelector('subclassifications', $this->_data->_links['tag'], 'name', true, 'rules', true))->render()."</select></span></div>
+							<span class='btNative'><select class='full-width select-tags select2' multiple='multiple'>".(new pSelector('subclassifications', $this->_data->_links['tag'], 'name', true, 'rules', true))->render()."</select></span></div>
 						</div>
 						<div class='right'>
 							".pMarkdown("##### Secondary selectors ")."<br />
 							<div class='btSource'><span class='btLanguage'>Inflection tables</span><br />
-							<span class='btNative'><select class='select-tables select2' multiple='multiple'>".(new pSelector('modes', $this->_data->_links['modes'], 'name', true, 'rules', true))->render()."</select></span></div>
+							<span class='btNative'><select class='full-width select-tables select2' multiple='multiple'>".(new pSelector('modes', $this->_data->_links['modes'], 'name', true, 'rules', true))->render()."</select></span></div>
 							<div class='btSource'><span class='btLanguage'>Table headings</span><br />
-							<span class='btNative'><select class='select-headings select2' multiple='multiple'>".(new pSelector('submodes', $this->_data->_links['submodes'], 'name', true, 'rules', true))->render()."</select></span></div>
+							<span class='btNative'><select class='full-width select-headings select2' multiple='multiple'>".(new pSelector('submodes', $this->_data->_links['submodes'], 'name', true, 'rules', true))->render()."</select></span></div>
 							<div class='btSource'><span class='btLanguage'>Table rows</span><br />
-							<span class='btNative'><select class='select-rows select2' multiple='multiple'>".(new pSelector('numbers', $this->_data->_links['numbers'], 'name', true, 'rules', true))->render()."</select></span></div>
+							<span class='btNative'><select class='full-width select-rows select2' multiple='multiple'>".(new pSelector('numbers', $this->_data->_links['numbers'], 'name', true, 'rules', true))->render()."</select></span></div>
 						</div>
-				</div>");
-		pOut("</div><br /><a class='btAction no-float green submit-form'>Click</a><br id='cl' />
+
+				</div><div class='btButtonBar'>
+						<a class='btAction green submit-form'>".(new pIcon('fa-check-circle', 10))." ".SAVE."</a><br id='cl' />
+						</div>");
+		pOut("</div><br />
 		</div></div>
 		<script type='text/javascript'>
 		$('.submit-form').click(function(){

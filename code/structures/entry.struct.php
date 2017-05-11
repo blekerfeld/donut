@@ -47,9 +47,9 @@ return array(
 			'actions_item' => array(
 			),
 			'actions_bar' => array(
-				'discuss' => array('discuss', DA_WORDS_NEW_EXTERN, 'fa-comments', 'lemma-code discussion float-right', null, null, null),
-				'edit' => new pAction('edit', 'edit', 'fa-pencil', 'lemma-code discussion float-right', null, null, 'words', 'dictionary-admin', null, -3),
-				'remove' => new pAction('remove', 'remove', 'fa-times', 'lemma-code discussion float-right', null, null, 'words', 'dictionary-admin', null, -3),
+				'discuss' => array('discuss', "Discuss", 'fa-comments', 'btAction', null, null, null),
+				'edit' => new pAction('edit', 'Edit', 'fa-pencil', 'btAction', null, null, 'words', 'dictionary-admin', null, -3),
+				'remove' => new pAction('remove', 'Delete item', 'fa-times', 'btAction red', null, null, 'words', 'dictionary-admin', null, -3),
 			),
 			'save_strings' => $saveStrings,
 			'subobjects' => array(

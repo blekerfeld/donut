@@ -53,9 +53,18 @@ class pLoginTemplate extends pTemplate{
 		return $output;
 	}
 
-	public function errorMessage(){
-		return pNoticeBox('fa-info-circle fa-12', LOGIN_ERROR, 'danger-notice ajaxMessage')."<script type='text/javascript'>$('.saving').slideUp();$('.ajaxMessage').slideDown();</script>";
+	public function succes(){
+		return pNoticeBox('fa-spinner fa-spin fa-12', LOGIN_SUCCESS, 'succes-notice')."<script type='text/javascript'>$('.saving').slideUp();$('.ajaxMessage').slideDown();</script>";
 	}
+
+	public function errorMessage(){
+		return pNoticeBox('fa-warning fa-12', LOGIN_ERROR, 'danger-notice ajaxMessage')."<script type='text/javascript'>$('.saving').slideUp();$('.ajaxMessage').slideDown();</script>";
+	}
+
+	public function warning(){
+		return pNoticeBox('fa-info-circle fa-12', SAVED_EMPTY, 'warning-notice ajaxMessage')."<script type='text/javascript'>$('.saving').slideUp();$('.ajaxMessage').slideDown();</script>";
+	}
+
 
 
 

@@ -29,12 +29,15 @@ class pAuthStructure extends pStructure{
 
 	protected function logInAjax(){
 
+		if(isset(pAdress::post()['username'], pAdress::post()['password']) AND empty(pAdress::post()['username']) OR empty(pAdress::post()['password']))
+			return pOut($this->_template->warning());
+
 		if(pUser::checkCre(pAdress::post()['username'], pAdress::post()['password'])){
 			(new pUser)->logIn(pAdress::post()['username']);
-			pOut("<script>window.location = '".pUrl('?home')."';</script>");
+			return pOut($this->_template->succes()."<script>window.location = '".pUrl('?home')."';</script>");
 		}
 		else
-			pOut($this->_template->errorMessage());
+			return pOut($this->_template->errorMessage());
 	}
 
 	protected function logOut(){
