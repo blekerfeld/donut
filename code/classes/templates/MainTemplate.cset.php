@@ -32,6 +32,10 @@ class pMainTemplate extends pTemplate{
 		  return MMENU_LOGGEDIN.(pUser::read('longname') != '' ? pUser::read('longname') : pUser::read('username'))." (<a href='".p::Url('?auth/logout')."'>".MMENU_LOGOUT."</a>)";
 	}
 
+  public static function NoticeBox($icon, $message, $type='notice', $id=''){
+    return '<div class="'.$type.'" id="'.$id.'"><i class="fa '.$icon.'"></i> '.$message.'</div>';
+  }
+
 	public function __construct(){
 		foreach (p::$assets['css'] as $css)
 			$this->loadCSS($css);

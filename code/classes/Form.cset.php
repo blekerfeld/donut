@@ -213,7 +213,7 @@ class pMagicActionForm{
 				$empty_error++;
 
 		if($empty_error != 0){
-			p::Out(p::Notice('fa-warning fa-12', $this->_strings[3], 'danger-notice ajaxMessage'));
+			p::Out(pMainTemplate::NoticeBox('fa-warning fa-12', $this->_strings[3], 'danger-notice ajaxMessage'));
 		}
 		else{
 
@@ -235,7 +235,7 @@ class pMagicActionForm{
 					$this->_handler->dataModel->insert();
 				}
 
-				p::Out(p::Notice('fa-check fa-12', $this->_strings[5].". <a href='".p::Url("?".$this->_app."/".$this->_section. (isset($_REQUEST['position']) ? "/offset/".$_REQUEST['position'] : ""))."'>".$this->_strings[6]."</a>", 'succes-notice ajaxMessage'));
+				p::Out(pMainTemplate::NoticeBox('fa-check fa-12', $this->_strings[5].". <a href='".p::Url("?".$this->_app."/".$this->_section. (isset($_REQUEST['position']) ? "/offset/".$_REQUEST['position'] : ""))."'>".$this->_strings[6]."</a>", 'succes-notice ajaxMessage'));
 
 				// If this is not a edit action, we need to reload the form
 				if(!$this->_edit)
@@ -244,7 +244,7 @@ class pMagicActionForm{
 				</script>");
 
 			} catch (Exception $e) {
-				p::Out(p::Notice('fa-warning fa-12', $this->_strings[4], 'danger-notice ajaxMessage'));
+				p::Out(pMainTemplate::NoticeBox('fa-warning fa-12', $this->_strings[4], 'danger-notice ajaxMessage'));
 			}
 
 		}
@@ -261,7 +261,7 @@ class pMagicActionForm{
 		p::Out("<div class='btCard admin'>");
 		p::Out("<div class='btTitle'>".$this->_strings[0]."</div>");
 
-		p::Out(p::Notice('fa-spinner fa-spin fa-12', $this->_strings[2], 'notice saving hide'));
+		p::Out(pMainTemplate::NoticeBox('fa-spinner fa-spin fa-12', $this->_strings[2], 'notice saving hide'));
 
 		// That is where the ajax magic happens:
 		p::Out("<div class='ajaxSave'></div>");
@@ -346,7 +346,7 @@ class pMagicActionForm{
 			// We have to check if the relation already exists
 			if($this->_handler->dataModel->countAll($this->_guestObject->structure[$this->_section]['incoming_links'][$this->_linked]['child'] . " = '" . $this->_handler->_matchOnValue . "' AND " . $this->_guestObject->structure[$this->_section]['incoming_links'][$this->_linked]['parent'] . " = '" . $_REQUEST['admin_form_'.$this->_guestObject->structure[$this->_section]['incoming_links'][$this->_linked]['parent']] . "'")){
 
-				p::Out(p::Notice('fa-info-circle fa-12', DA_TABLE_RELATION_EXIST.". <a href='".p::Url("?".$this->_app."&".$this->_section."&link-table&id=".$this->_linkObject->_data[0]['id']."&linked=".$this->_linked)."'>".$this->_strings[6]."</a>", 'notice ajaxMessage'));
+				p::Out(pMainTemplate::NoticeBox('fa-info-circle fa-12', DA_TABLE_RELATION_EXIST.". <a href='".p::Url("?".$this->_app."&".$this->_section."&link-table&id=".$this->_linkObject->_data[0]['id']."&linked=".$this->_linked)."'>".$this->_strings[6]."</a>", 'notice ajaxMessage'));
 
 			}
 			else{
@@ -362,11 +362,11 @@ class pMagicActionForm{
 				$this->_handler->dataModel->prepareForInsert($values);
 				$this->_handler->dataModel->insert();
 				$this->_handler->dataModel->getSingleObject(1);
-				p::Out(p::Notice('fa-info-circle fa-12', DA_TABLE_RELATION_ADDED.". <a href='".p::Url("?".$this->_app."&".$this->_section."&link-table&id=".$this->_linkObject->data()[0]['id']."&linked=".$this->_linked)."'>".$this->_strings[6]."</a>", 'succes-notice ajaxMessage'));
+				p::Out(pMainTemplate::NoticeBox('fa-info-circle fa-12', DA_TABLE_RELATION_ADDED.". <a href='".p::Url("?".$this->_app."&".$this->_section."&link-table&id=".$this->_linkObject->data()[0]['id']."&linked=".$this->_linked)."'>".$this->_strings[6]."</a>", 'succes-notice ajaxMessage'));
 			}
 		}
 		else
-			p::Out(p::Notice('fa-warning fa-12', $this->_strings[3], 'danger-notice ajaxMessage'));
+			p::Out(pMainTemplate::NoticeBox('fa-warning fa-12', $this->_strings[3], 'danger-notice ajaxMessage'));
 
 		p::Out("<script type='text/javascript'>
 				$('.saving').slideUp(function(){
@@ -381,7 +381,7 @@ class pMagicActionForm{
 		p::Out("<div class='btCard admin link-table'>");
 		p::Out("<div class='btTitle'><i class='fa fa-plus-circle'></i> ".DA_TABLE_NEW_RELATION."<span class='medium'>".$this->_handler->_surface."</span></div>");
 
-		p::Out(p::Notice('fa-spinner fa-spin fa-12', $this->_strings[2], 'notice saving hide'));
+		p::Out(pMainTemplate::NoticeBox('fa-spinner fa-spin fa-12', $this->_strings[2], 'notice saving hide'));
 
 		// That is where the ajax magic happens:
 		p::Out("<div class='ajaxSave'></div>");

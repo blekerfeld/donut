@@ -64,9 +64,9 @@ class pRulesheetHandler extends pHandler{
 		$links = $this->generateLinksArray();
 		$edit = $this->dataModel->updateRule(pAdress::post()['name'], pAdress::post()['rule'], $links);
 		if($edit == false)
-			echo p::Notice('fa-warning', SAVED_EMPTY, 'hide warning-notice errorSave');
+			echo pMainTemplate::NoticeBox('fa-warning', SAVED_EMPTY, 'hide warning-notice errorSave');
 		else
-			echo p::Notice('fa-check', SAVED, 'hide succes-notice successSave');
+			echo pMainTemplate::NoticeBox('fa-check', SAVED, 'hide succes-notice successSave');
 		die('<script>$(".saving").slideUp();'.(($edit == false) ? '$(".errorSave").slideDown();' : '$(".errorSave").slideUp();$(".successSave").slideDown().delay(1500).slideUp();')."</script>");
 	}
 
@@ -74,11 +74,11 @@ class pRulesheetHandler extends pHandler{
 		$links = $this->generateLinksArray();
 		$id = $this->dataModel->newRule(pAdress::post()['name'], pAdress::post()['rule'], $links);
 		if($id == false){
-			echo p::Notice('fa-warning', SAVED_EMPTY, 'hide warning-notice errorSave');
+			echo pMainTemplate::NoticeBox('fa-warning', SAVED_EMPTY, 'hide warning-notice errorSave');
 			die('<script>$(".saving").slideUp();'.(($id == false) ? '$(".errorSave").slideDown();' : '$(".errorSave").slideUp();$(".successSave").slideDown().delay(1500).slideUp();')."</script>");
 		}
 		else
-			echo p::Notice('fa-check', SAVED, 'hide succes-notice successSave');
+			echo pMainTemplate::NoticeBox('fa-check', SAVED, 'hide succes-notice successSave');
 		die('<script>$(".errorSave").slideUp();$(".successSave").slideDown().delay(1500).slideUp();
 			window.location = "'.p::Url('?rulesheet/'.$this->_section.'/edit/'.$id).'";</script>');
 	}
