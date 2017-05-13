@@ -65,13 +65,6 @@ class pDispatcher {
 				p::Out("<div class='home-margin'>".p::Markdown(file_get_contents(p::FromRoot("static/".$this->_urlArguments[0].".md")), true, true, true)."</div>");
 			}
 			// DEBUG MODE ONLY
-			elseif($this->_urlArguments[0] == 'debug' AND file_exists(p::FromRoot("debug.php"))){
-				pAdress::arg($this->_arguments);
-				p::Out("<div class='home-margin'>");
-				require p::FromRoot("debug.php");
-				p::Out("</div>");
-			}
-			// DEBUG MODE ONLY
 			elseif($this->_urlArguments[0] == 'scrap' AND file_exists(p::FromRoot("scrap.php"))){
 				pAdress::arg($this->_arguments);
 				require p::FromRoot("scrap.php");
@@ -82,7 +75,7 @@ class pDispatcher {
 			}
 			else
 				$this->do404();
-			return false;
+			return new pDispatchException;
 		}
 
 		// Generating the structure class name;
@@ -98,7 +91,7 @@ class pDispatcher {
 
 		if(!class_exists($structureType)){
 			$this->do404("<br /> `CLASS $structureType DOES NOT EXIST.`");
-			return false;
+			return new pDispatchException;
 		}
 
 		// Else we need to create the almighty structure
@@ -194,6 +187,15 @@ class pDispatcher {
 
 	public static function structure(){
 		return self::$structure;
+	}
+
+}
+
+class pDispatchException{
+
+	public function dispatch(){
+		// We will just have to do with an empty template then.
+		return (new pMainTemplate);	
 	}
 
 }

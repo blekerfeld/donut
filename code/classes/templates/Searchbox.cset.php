@@ -31,7 +31,7 @@ class pSearchBox extends pTemplatePiece{
 		$output = '<div class="hMobile id_'.$this->_idS.'"><div class="header dictionary '.($this->_home ? 'home' : '').'">
 			<span class="float-right" style="padding-right: 24px;important;display: block;"><span class="wholewordWrap">
 			<input id="wholeword" class="checkbox-wholeword xsmall" name="wholeword" type="checkbox" '.((isset(pAdress::session()['exactMatch']) AND pAdress::session()['exactMatch'] == false) ? '' : 'selected').'>
-        	<label for="wholeword"class="checkbox-wholeword-label small">'.DICT_EXACT_MATCH.'</label></span>
+        	<label for="wholeword" class="checkbox-wholeword-label small">'.DICT_EXACT_MATCH.'</label></span>
 			</span>';
 
 		$output .= new pAlphabet;
@@ -60,7 +60,7 @@ class pSearchBox extends pTemplatePiece{
 		// Time for the fancy script
 		$output = "
 
-		orgTitle = '';
+		orgTitle = '".pMainTemplate::$orgTitle."';
 
 		"; 
 		if(isset(pAdress::arg()['query']) AND isset(pAdress::arg()['dictionary']))

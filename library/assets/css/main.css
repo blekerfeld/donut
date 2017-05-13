@@ -179,9 +179,6 @@ span.tab, div.tab {
 
 .absolute_header {
   padding: 3px;
-  font-family: Libre Franklin;
-  text-transform: uppercase;
-  letter-spacing: 1px;
   padding-left: 10px;  
   color: #333;
   text-decoration: none;
@@ -206,7 +203,7 @@ span.tab, div.tab {
 }
 
 div.logotop{
-  font-size: 8px!important;
+  font-size: 12px!important;
   height: 100%;
   display: inline-block;
   margin-top: 7px;
@@ -240,17 +237,13 @@ a.logotop:hover{
 
 
 div.hStripe{
-    border-bottom: 5px solid #3A3B5B;
+    border-bottom: 4px solid #24292E;
     box-shadow: 0px 1px 3px rgba(100, 100, 100, 0.05);
 }
 
 div.hStripe.min{
   min-height: 3px;
 }
-
-div.top_area{
-    padding-top: 0px;
-} 
 
 div.outerwrap {
 

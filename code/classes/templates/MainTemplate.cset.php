@@ -12,7 +12,7 @@ class pMainTemplate extends pTemplate{
 
 	protected $_stylesheets, $_scripts;
 
-	public static $title = CONFIG_SITE_TITLE;
+	public static $title = CONFIG_SITE_TITLE, $orgTitle = CONFIG_SITE_TITLE;
 
 	public static function setTitle($title){
 		self::$title = $title . ' - ' . CONFIG_SITE_TITLE;
@@ -28,7 +28,8 @@ class pMainTemplate extends pTemplate{
 	}
 
 	protected function userBox(){
-		return MMENU_LOGGEDIN.(pUser::read('longname') != '' ? pUser::read('longname') : pUser::read('username'))." (<a href='".p::Url('?auth/logout')."'>".MMENU_LOGOUT."</a>) – <em>".MMENU_EDITORLANG."<span class='editorlangname'>".(new pLanguage(pUser::read('editor_lang')))->read('name')."</span> (<a href='".p::Url('?editorlanguage')."'>".MMENU_EDITORLANGCHANGE."</a>)</em>";
+    if(pUser::noGuest())
+		  return MMENU_LOGGEDIN.(pUser::read('longname') != '' ? pUser::read('longname') : pUser::read('username'))." (<a href='".p::Url('?auth/logout')."'>".MMENU_LOGOUT."</a>)";
 	}
 
 	public function __construct(){
