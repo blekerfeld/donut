@@ -22,7 +22,7 @@ class pRulesheetStructure extends pStructure{
 			$this->_section = pAdress::arg()['section'];
 		else{
 
-			$this->_error = p::Notice('fa-info-circle fa-12', DA_SECTION_ERROR, 'danger-notice');
+			$this->_error = pMainTemplate::NoticeBox('fa-info-circle fa-12', DA_SECTION_ERROR, 'danger-notice');
 
 			$this->_section = $this->_default_section;
 		}

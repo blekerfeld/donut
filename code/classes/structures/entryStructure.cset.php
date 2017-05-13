@@ -20,7 +20,7 @@ class pEntryStructure extends pStructure{
 
 			// Don't show an error if we are forced to have the search load a search action
 			if(!(isset(pAdress::arg()['query'], pAdress::arg()['dictionary'])))
-				$this->_error = p::Notice('fa-info-circle fa-12', DA_SECTION_ERROR, 'danger-notice');
+				$this->_error = pMainTemplate::NoticeBox('fa-info-circle fa-12', DA_SECTION_ERROR, 'danger-notice');
 
 			$this->_section = $this->_default_section;
 		}
@@ -77,7 +77,7 @@ class pEntryStructure extends pStructure{
 		if(isset(pAdress::arg()['id'])){
 			if(!($this->_parser->runData(is_numeric(pAdress::arg()['id']) ?  pAdress::arg()['id'] : p::HashId(pAdress::arg()['id'], true)[0]))){
 				if(!(isset(pAdress::arg()['query'], pAdress::arg()['dictionary'])))
-					p::Out(p::Notice('fa-info-circle fa-12', ENTRY_NOT_FOUND, 'danger-notice'));
+					p::Out(pMainTemplate::NoticeBox('fa-info-circle fa-12', ENTRY_NOT_FOUND, 'danger-notice'));
 				goto SkipError;
 			}
 		}

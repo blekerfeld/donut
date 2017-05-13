@@ -63,7 +63,7 @@ class pRulesheetTemplate extends pTemplate{
 		if($edit)
 			$data = $this->_data->data()->fetchAll()[0];
 		
-		p::Out(p::Notice('fa-spinner fa-spin fa-12', SAVING, 'notice saving hide rulesheet-margin'));
+		p::Out(pMainTemplate::NoticeBox('fa-spinner fa-spin fa-12', SAVING, 'notice saving hide rulesheet-margin'));
 
 		// That is where the ajax magic happens:
 		p::Out("<div class='ajaxSave rulesheet-margin'></div>");

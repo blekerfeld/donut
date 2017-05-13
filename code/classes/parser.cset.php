@@ -116,7 +116,7 @@ class pParser{
 		if(pUser::checkPermission($this->_permission))
 			return $this->_handler->render();
 		else
-			return p::Out("<div class='btCard minimal admin'>".p::Notice('fa-info-circle fa-12', DA_PERMISSION_ERROR, 'danger-notice')."</div>");
+			return p::Out("<div class='btCard minimal admin'>".pMainTemplate::NoticeBox('fa-info-circle fa-12', DA_PERMISSION_ERROR, 'danger-notice')."</div>");
 	}
 
 	// Passes on the action to the object
@@ -135,7 +135,7 @@ class pParser{
 
 		// Permission check again
 		if(!pUser::checkPermission($this->_permission))
-			return p::Out("<div class='btCard minimal admin'>".p::Notice('fa-info-circle fa-12', DA_PERMISSION_ERROR, 'danger-notice')."</div>");
+			return p::Out("<div class='btCard minimal admin'>".pMainTemplate::NoticeBox('fa-info-circle fa-12', DA_PERMISSION_ERROR, 'danger-notice')."</div>");
 
 		// There are six magic actions that are coordinated by this function:
 		// Those are: new, edit, remove, link-table, link-new, link-remove

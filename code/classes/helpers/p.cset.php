@@ -68,10 +68,6 @@ class p{
 		return true;
 	}
 
-	public static function Query($sql){
-		return self::$db->cacheQuery($sql);
-	}
-
 	public static function Out($input){
 		self::$Out[] = $input;
 	}
@@ -176,12 +172,6 @@ class p{
 		return true;
 	}
 
-	public static function initConfig($db){
-		$settings = $db->query("SELECT * FROM config");
-		while($setting = $settings->fetchObject())
-			define("CONFIG_".$setting->SETTING_NAME, $setting->SETTING_VALUE);
-	}
-
 	public function Escape($value){
 		// Return a proper escaped version of our value
 		return trim(self::$db->quote($value), "'");
@@ -208,11 +198,6 @@ class p{
 		return "<div class='markdown-body ".($num ? 'num' : '')." ".($block ? 'block' : 'inline-block')."'>".$parse->text($text)."</div>";
 	}
 
-	public function CleanCache($section = 'queries', $prefix = ''){
-		foreach(glob(CONFIG_ROOT_PATH . '/cache/' . $section . '/'.$prefix.'*.cache') as $filename)
-			unlink($filename);
-		return true;
-	}
 
 	public static function Highlight($needle, $haystack, $before, $after){
 		return preg_replace('/' . preg_quote($needle) . '/i', $before . '$0' . $after, $haystack);
@@ -296,8 +281,4 @@ class p{
 		return $e;
 	}
 
-
-	public static function Notice($icon, $message, $type='notice', $id=''){
-		return '<div class="'.$type.'" id="'.$id.'"><i class="fa '.$icon.'"></i> '.$message.'</div>';
-	}
 }

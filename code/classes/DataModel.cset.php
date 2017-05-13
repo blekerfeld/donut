@@ -67,7 +67,7 @@ class pDataModel {
 		else
 			$fieldString = $this->_fieldstring;
 
-		$this->_data =  p::Query("SELECT ".$fieldString." FROM ".$this->_table." WHERE id = ".$id." ".$condition." ORDER BY $this->_order LIMIT 1");
+		$this->_data =  p::$db->cacheQuery("SELECT ".$fieldString." FROM ".$this->_table." WHERE id = ".$id." ".$condition." ORDER BY $this->_order LIMIT 1");
 
 		return  $this->_data;
 	}
@@ -84,7 +84,7 @@ class pDataModel {
 		else
 			$fieldString = $this->_fieldstring;
 
-		$this->_data = p::Query("SELECT ".$fieldString." FROM ".$this->_table." ".$this->_condition.(($this->_paginated) ? " ORDER BY $this->_order LIMIT ".$offset.",".$itemsperpage : " ORDER BY $this->_order ".($this->_limit != null ? ' LIMIT '.$this->_limit : '')).";");
+		$this->_data = p::$db->cacheQuery("SELECT ".$fieldString." FROM ".$this->_table." ".$this->_condition.(($this->_paginated) ? " ORDER BY $this->_order LIMIT ".$offset.",".$itemsperpage : " ORDER BY $this->_order ".($this->_limit != null ? ' LIMIT '.$this->_limit : '')).";");
 
 		return  $this->_data;
 	}
@@ -154,7 +154,7 @@ class pDataModel {
 			$selective = $this->_singleId;
 
 		if($selective == 0)
-			return p::Query("DELETE FROM ".$this->_table,";");
+			return p::$db->cacheQuery("DELETE FROM ".$this->_table,";");
 		
 		// This will go through follow_up, to delete any records that need to be gone first. 
 		if(is_array($follow_up)){
@@ -175,13 +175,13 @@ class pDataModel {
 
 		}
 
-		return p::Query("DELETE FROM ".$this->_table." WHERE id = ".$this->_field = " ".p::Quote($selective).";");
+		return p::$db->cacheQuery("DELETE FROM ".$this->_table." WHERE id = ".$this->_field = " ".p::Quote($selective).";");
 
 	}
 
 	public function update(){
 
-		return p::Query("UPDATE ".$this->_table." SET ".$this->_updatestring." WHERE id = '".$this->_updateid."';");
+		return p::$db->cacheQuery("UPDATE ".$this->_table." SET ".$this->_updatestring." WHERE id = '".$this->_updateid."';");
 	}
 
 	public function count(){
@@ -190,7 +190,7 @@ class pDataModel {
 
 	public function countAll(){
 
-		$count = (p::Query("SELECT count(id) AS total FROM ".$this->_table." ".$this->_condition.";"))->fetchObject();
+		$count = (p::$db->cacheQuery("SELECT count(id) AS total FROM ".$this->_table." ".$this->_condition.";"))->fetchObject();
 
 		return $count->total;
 	}
@@ -205,7 +205,7 @@ class pDataModel {
 		else
 			$fieldString = "(".$this->_fieldstring.")";
 
-		p::Query("INSERT INTO ".$this->_table." $fieldString  VALUES (".$this->_valuestring.");");
+		p::$db->cacheQuery("INSERT INTO ".$this->_table." $fieldString  VALUES (".$this->_valuestring.");");
 
 		return p::$db->lastInsertId();
 	}
@@ -223,7 +223,7 @@ class pDataModel {
 	}
 
 	public function customQuery($query){
-		$this->_data = p::Query($query);
+		$this->_data = p::$db->cacheQuery($query);
 		return $this->_data;
 	}
 

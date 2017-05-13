@@ -59,7 +59,7 @@ class pLemmaDataModel extends pDataModel{
     						ELSE 4
 						END DESC, INSTR('".p::Escape(trim($search))."', translations.translation) DESC) AS b ".$limit; 
 
-        $fetch = p::Query($q);
+        $fetch = p::$db->cacheQuery($q);
 
         $noDoubles = array();
 
@@ -96,7 +96,7 @@ class pLemmaDataModel extends pDataModel{
 			$query = "SELECT *, translations.id AS real_id FROM translations INNER JOIN translation_words ON translations.id = translation_words.translation_id WHERE translation_words.word_id = ".$this->_lemma['derivation_of']." $lang_text  Order By language_id DESC;";
 
 
-		$fetch = p::Query($query);
+		$fetch = p::$db->cacheQuery($query);
 
 		foreach($fetch->fetchAll() as $fetched){
 			$translationResult = new pTranslation($fetched, 'translations');
@@ -112,7 +112,7 @@ class pLemmaDataModel extends pDataModel{
 		$results = array();
 
 
-		$fetch = p::Query("SELECT words.id AS word_id, idioms.id AS id, idioms.idiom, idiom_words.keyword, idioms.created_on, idioms.user_id FROM words JOIN idiom_words ON idiom_words.word_id = words.id JOIN idioms ON idioms.id = idiom_words.idiom_id  WHERE words.id = ".$this->_lemma['id'].";");
+		$fetch = p::$db->cacheQuery("SELECT words.id AS word_id, idioms.id AS id, idioms.idiom, idiom_words.keyword, idioms.created_on, idioms.user_id FROM words JOIN idiom_words ON idiom_words.word_id = words.id JOIN idioms ON idioms.id = idiom_words.idiom_id  WHERE words.id = ".$this->_lemma['id'].";");
 
 		foreach($fetch->fetchAll() as $fetched){
 			$idiomResult = new pIdiom($fetched, 'idioms');
