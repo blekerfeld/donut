@@ -17,9 +17,10 @@ define('CONFIG_ISBETA', true);
 define('CONFIG_ROOT_PATH', dirname(__FILE__));
 define('CONFIG_ABSOLUTE_PATH', "http://".$_SERVER['SERVER_NAME']."/donut");
 
-// Internal encodings for string functions
+// We might be dealing with the most crazy symbols evâh, so UTF-8 is needed, like a lot
 mb_internal_encoding("UTF-8");
 mb_regex_encoding("UTF-8");
+header("content-type: text/html; charset=UTF-8");  
 
 // Passing on the responsibilty to the big helper class
 require CONFIG_ROOT_PATH.'/code/classes/helpers/p.cset.php';

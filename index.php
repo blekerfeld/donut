@@ -7,17 +7,11 @@
 
 //	++	File: index.php
 
-// We might be dealing with the most crazy symbols evâh, so UTF-8 is needed, like a lot
-header("content-type: text/html; charset=UTF-8");  
-
 // We need our configuarion file
 require 'config.php';
 
-// Initialize the helper class
-p::init();
-
-// The dispactcher handles the remaining tasks 
-pDispatcher::compile()->dispatch()->render();
+// Initialize by calling p, the big helper
+p::initialize();
 
 // Rest in peace †  
 die();

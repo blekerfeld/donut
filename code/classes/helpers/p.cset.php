@@ -10,41 +10,62 @@
 
 	// The big p - the helper class!
 
-// Our friends
-require CONFIG_ROOT_PATH.'/library/assets/php/vendors/str.php';
-require CONFIG_ROOT_PATH.'/library/assets/php/vendors/HashGenerator.php';
-require CONFIG_ROOT_PATH.'/library/assets/php/vendors/Hashids.php';
-
 class p{
 
 	public static $Out = array(), $Header = array(), $db, $assets;
 
-	public static function init(){
-		self::$assets = require_once p::FromRoot("library/assets.struct.php");
+	public static function initialize(){
+		
+		// Loading the metadata about the HTML, PHP and Javascript assets we are going to use.
+		self::$assets = require_once self::FromRoot("library/assets.struct.php");
+
 		// Starting sessions
 		session_start();
+		
+		// Loading the required files
+		self::loadFiles();
+
+		// Trying the connection to the almighty database, our lord and saviour.
+		try {
+			self::$db = new pConnection('mysql:host='.CONFIG_DB_HOST.';dbname='.CONFIG_DB_DATABASE, CONFIG_DB_USER, CONFIG_DB_PASSWORD);
+		} catch (Exception $e) {
+			die("Donut could not connect to the database - ".$e->getMessage());
+		}
+
+		// Rewelcome our previous-session logged in guest
+		pUser::restore();
+
+		// Loading our locale
+		self::loadLocale(CONFIG_ACTIVE_LOCALE);
+
+		// Calling dispatch
+		// The dispactcher handles the remaining tasks 	
+		pDispatcher::compile()->dispatch()->render();
+	
+	}
+
+	protected function loadFiles(){
+		// The files we are going to include
 		$filenames = array();
 
 		// Loading third party php assets
 		foreach(self::$assets['php'] as $phpfile)
-			$filenames[] = p::FromRoot('library/assets/php/'.$phpfile);
+			$filenames[] = self::FromRoot('library/assets/php/'.$phpfile);
 
+		// The priviledged classes are loaded first
 		foreach (glob(CONFIG_ROOT_PATH."/code/classes/*.cset.php") as $filename)
 			$filenames[] = $filename;
+		// Then the subordinate classes
 		foreach (glob(CONFIG_ROOT_PATH."/code/classes/*/*.cset.php") as $filename)
 			$filenames[] = $filename;
+		// Now it is loading time
 		foreach($filenames as $filename)
 			if(file_exists($filename))
 				require_once $filename;
-		try {
-			self::$db = new pConnection('mysql:host='.CONFIG_DB_HOST.';dbname='.CONFIG_DB_DATABASE, CONFIG_DB_USER, CONFIG_DB_PASSWORD);
-		} catch (Exception $e) {
-			die("COULD NOT CONNECT TO THE DATABASE! ERROR: ".$e->getMessage());
-		}
-		// Rewelcome our previous-session logged in guest
-		pUser::restore();
-		// Loading our locale
-		p::loadLocale(CONFIG_ACTIVE_LOCALE);
+			else
+				die("Donut could not load required file - ".$filename);
+
+		return true;
 	}
 
 	public static function Query($sql){
@@ -73,13 +94,13 @@ class p{
 		if($file == 'index.php')
 			$file = '';
 
-		if(p::StartsWith($url, '?') and CONFIG_REWRITE)
-			$url = CONFIG_ABSOLUTE_PATH . '/' . $file .p::Str($url)->replacePrefix('?', '');
-		elseif(p::StartsWith($url, '?') and !CONFIG_REWRITE)
+		if(self::StartsWith($url, '?') and CONFIG_REWRITE)
+			$url = CONFIG_ABSOLUTE_PATH . '/' . $file .self::Str($url)->replacePrefix('?', '');
+		elseif(self::StartsWith($url, '?') and !CONFIG_REWRITE)
 			$url = CONFIG_ABSOLUTE_PATH . '/' . $file.$url;
-		elseif(p::StartsWith($url, 'pol://') && $exploded = explode('pol://', $url))
-			$url = p::Url($exploded[1]);
-		elseif(p::StartsWith($url, 'http://') or p::StartsWith($url, 'ftp://') or p::StartsWith($url, 'https://') or p::StartsWith($url, 'mailto://'))
+		elseif(self::StartsWith($url, 'pol://') && $exploded = explode('pol://', $url))
+			$url = self::Url($exploded[1]);
+		elseif(self::StartsWith($url, 'http://') or self::StartsWith($url, 'ftp://') or self::StartsWith($url, 'https://') or self::StartsWith($url, 'mailto://'))
 			$url = $url;
 		else
 			$url = CONFIG_ABSOLUTE_PATH. '/' . $url;
@@ -139,7 +160,7 @@ class p{
 			return false;
 
 		// Let's create a variable to make things a little more readable
-		$language_main_path = p::FromRoot('library/languages/' . $language . '.php');
+		$language_main_path = self::FromRoot('library/languages/' . $language . '.php');
 
 		// Does this language exist?
 		if(!file_exists($language_main_path))
@@ -150,7 +171,7 @@ class p{
 
 		// Now all other files
 		foreach($transfer['lang_sub_files'] as $filename)
-			include p::FromRoot('library/languages/' . $language . '.' . $filename . '.php');
+			include self::FromRoot('library/languages/' . $language . '.' . $filename . '.php');
 			
 		return true;
 	}
@@ -167,7 +188,7 @@ class p{
 	}
 
 	function Quote($value){
-		return self::$db->quote(p::Escape($value));
+		return self::$db->quote(self::Escape($value));
 	}
 
 	public function MarkDown($text, $block = true, $examples = true, $num = false){
