@@ -705,7 +705,6 @@ div.hSearch .load-hide{
   margin-bottom: 25px;
   position: relative;
   margin-top: -25px;
-  border-bottom: 1px #e7e7e7 dotted;
 }
 
 
@@ -908,7 +907,7 @@ strong.dWord a:hover {
   padding-left: 7px;
   padding-top: 5px;
   margin-bottom: 5px;
-  border-bottom: 1px solid #F0F1F3
+  border-left: 4px solid transparent;
 }
 
 .dWordTable tr:last-child td .dWordWrapper{
@@ -918,7 +917,7 @@ strong.dWord a:hover {
 
 .dWordWrapper:hover {
   background: linear-gradient(to bottom, rgba(200,200,200,0.05), rgba(200,200,200,0.06));  /* Chrome 10-25, Safari 5.1-6 */
-
+  border-left: 4px solid #eee;
 }
 
 .dWordWrapper a.tooltip, .wordLink.tooltip {
@@ -1457,6 +1456,10 @@ a.lemma-code {
   cursor: pointer;
 }
 
+a.lemma-code.print{
+  opacity: .8;
+}
+
 a.lemma-code.big{
   font-size: 17px;
   display: inline-block;
@@ -1482,7 +1485,7 @@ a.lemma-code i.fa {
 .pSectionWrapper {
   margin-bottom: 10px;
   padding: 10px;
-  box-shadow: 0 4px 10px 0px rgba(0, 0, 0, 0.05);
+  box-shadow: 0 4px 10px 0px rgba(0, 0, 0, 0.02);
   border-radius: 10px 10px 0px 0px;
 }
 

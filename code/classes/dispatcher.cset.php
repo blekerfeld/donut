@@ -13,7 +13,7 @@
 
 class pDispatcher {
 
-	private $_dispatchData, $_magicArguments = array(array('is:result', 'ajax', 'nosearch'), array('offset', 'return', 'position'), array(array('search', 'dictionary', 'query'))), $_urlArguments, $_arguments;
+	private $_dispatchData, $_magicArguments = array(array('is:result', 'ajax', 'nosearch', 'print'), array('offset', 'return', 'position'), array(array('search', 'dictionary', 'query'))), $_urlArguments, $_arguments;
 
 	public $query, $structureObject;
 
@@ -132,6 +132,9 @@ class pDispatcher {
 	public function dispatch(){
 		// Let's render our object and return the template :D
 		$this->structureObject->render();
+		// It might be that we need to call the print template instead...
+		if(isset(pAdress::arg()['print']))
+			return new pPrintTemplate;
 		// Calling the template
 		return new pMainTemplate;
 	}
