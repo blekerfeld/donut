@@ -14,8 +14,6 @@ class pAuthStructure extends pStructure{
 
 	public function compile(){
 
-		global $donut;
-
 		if(isset(pAdress::arg()['section']))
 			$this->_section = pAdress::arg()['section'];
 		else

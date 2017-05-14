@@ -19,10 +19,10 @@ class pDispatcher {
 
 	public static $active, $structure;
 
-	public function __construct($query = null){
+	public function __construct($overrideQueryStringIfEmpty = false){
 		$query = $_SERVER['QUERY_STRING'];
-		if($query == '')
-			$query = 'home';
+		if($overrideQueryStringIfEmpty == true AND $query == '')
+				$query = 'home';
 		$this->query = $query;
 		pAdress::queryString($this->query);		
 		// Let's pack some superglobals inside pAdress
@@ -186,7 +186,15 @@ class pDispatcher {
 	}
 
 	public static function structure(){
+		// If we are not dispatching, we don't have a structure...
+		if(self::$structure == null)
+			// ...therefore we need to load it.
+			self::$structure = require_once p::FromRoot("code/Dispatch.php");
 		return self::$structure;
+	}
+
+	public static function addMenuItem(){
+		$structure = self::structure();
 	}
 
 }

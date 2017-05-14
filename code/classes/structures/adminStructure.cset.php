@@ -15,8 +15,6 @@ class pAdminStructure extends pStructure{
 
 	public function compile(){
 
-		global $donut;
-
 		// If the user requests a section and if it extist
 		if(isset(pAdress::arg()['section']) AND array_key_exists(pAdress::arg()['section'], $this->_structure))
 			$this->_section = pAdress::arg()['section'];

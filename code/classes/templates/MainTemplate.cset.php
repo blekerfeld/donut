@@ -70,7 +70,7 @@ class pMainTemplate extends pTemplate{
             </div>
             <?php if(!pUser::noGuest()){ echo '<a href="'.p::Url('?auth/login').'">'.MMENU_LOGIN.'</a>'; } ?>
         </div>
-        <a class="logotop" href="<?php echo p::Url("?home"); ?>">
+        <a class="siteTitle" href="<?php echo p::Url("?home"); ?>">
         <?php echo p::Markdown(CONFIG_LOGO_TITLE, false); ?></a> 
       </div>
      </div>

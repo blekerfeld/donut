@@ -12,7 +12,12 @@ class pTerminalTemplate extends pSimpleTemplate{
 
 	public function renderAll(){
 		/// Just as simple as that :)
+
+		if(isset(pAdress::arg()['ajax']))
+			die((new pTerminal)->ajax());
+
 		(new pTerminal)->initialState();
+	
 	}
 
 }
