@@ -133,64 +133,67 @@ class pParadigm{
 	protected function findRules($lemma, $heading, $row){
 
 
-		echo "";
+		// First we need to fetch all potatial candidates
 
+		$candidates = $this->_dataModel->customQuery("SELECT DISTINCT morphology_id FROM morphology_modes WHERE mode_id = ".$this->_id." UNION
+		SELECT DISTINCT morphology_id FROM morphology_submodes WHERE submode_id = ".$heading['id']."  UNION
+		SELECT DISTINCT morphology_id FROM morphology_numbers WHERE number_id = ".$row['id']." UNION
+		SELECT DISTINCT morphology_id FROM morphology_lexcat WHERE lexcat_id = ".$lemma->read('type_id')." UNION
+		SELECT DISTINCT morphology_id FROM morphology_gramcat WHERE gramcat_id = ".$lemma->read('classification_id')." UNION
+		SELECT DISTINCT morphology_id FROM morphology_tags WHERE tag_id = ".$lemma->read('subclassification_id').";
+		")->fetchAll();
 
-		return $this->_dataModel->customQuery("
+		$rules = array();
 
-			SELECT DISTINCT m.* FROM morphology AS m
-			JOIN morphology_modes AS mm ON mm.morphology_id = m.id
-			JOIN morphology_submodes AS s ON s.morphology_id = m.id
-			JOIN morphology_numbers AS n ON n.morphology_id = m.id
-			WHERE 
-			((mm.mode_id = ".$this->_id." AND s.submode_id = ".$heading['id'].")) OR
-			(mm.mode_id = ".$this->_id." AND s.submode_id = ".$heading['id']." AND n.number_id = ".$row['id'].")
+		// We need to validate each candidate
+		foreach($candidates as $candidate){
+			$validation = $this->_dataModel->customQuery("SELECT id, morphology_id, mode_id AS selective, 'mode' AS selector FROM morphology_modes WHERE morphology_id = ".$candidate['morphology_id']." UNION
+				SELECT id, morphology_id, submode_id AS selective, 'submode' AS selector FROM morphology_submodes WHERE morphology_id = ".$candidate['morphology_id']."  UNION
+				SELECT id, morphology_id, number_id AS selective, 'number' AS selector FROM morphology_numbers WHERE morphology_id = ".$candidate['morphology_id']." UNION
+				SELECT id, morphology_id, lexcat_id AS selective, 'lexcat' AS selector  FROM morphology_lexcat WHERE morphology_id = ".$candidate['morphology_id']." UNION
+				SELECT id, morphology_id, gramcat_id AS selective, 'gramcat' AS selector  FROM morphology_gramcat WHERE morphology_id = ".$candidate['morphology_id']." UNION
+				SELECT id, morphology_id, tag_id AS selective, 'tag' AS selector  FROM morphology_tags WHERE morphology_id = ".$candidate['morphology_id'].";")->fetchAll();
+			
 
-			UNION
+			// The first step is filtering out the ones that are not true
 
-			SELECT m.* FROM morphology AS m
+			foreach($validation as $key => $validate){
+				if($this->validateRuleSelector($validate, $lemma, $heading, $row) == false)
+					unset($validation[$key]);
+			}
 
-			JOIN gram_groups_members AS gg ON gg.mode_id = ".$this->_id." AND gg.submode_id = ".$heading['id']." AND (gg.number_id = ".$row['id']." OR gg.number_id = 0) AND
-				(gg.type_id = '".$lemma->read('type_id')."' OR gg.type_id = 0) AND
-				(gg.classification_id = '".$lemma->read('classification_id')."' OR gg.classification_id = 0) AND
-				(gg.subclassification_id = '".$lemma->read('subclassification_id')."' OR gg.classification_id = 0)
-			JOIN morphology_gram_groups AS mgg ON mgg.gram_group_id = gg.gram_group_id AND mgg.morphology_id = m.id
+			// Then we are left with the whole condition that should be checked
+			$accepted = array();
+			foreach($validation as $key => $validate)
+				$accepted[] = $this->validateRuleSelector($validate, $lemma, $heading, $row);
 
-			UNION
+			if(!in_array(false, $accepted))
+				$rules[] = 'id = '.$candidate['morphology_id'];
+		}
+ 
+		// Now it is finaly time to fetch the rules
 
-			SELECT m.* FROM morphology AS m
+		// Fail safe
+		if(count($rules) == 0)
+			$rules[] = 'id = -1';
 
-			JOIN lex_groups_members AS lg ON lg.lexcat_id = '".$lemma->read("type_id")."' AND lg.gramcat_id = '".$lemma->read("classification_id")."' AND (lg.tag_id = '".$lemma->read("subclassification_id")."' OR lg.tag_id = 0)
-			JOIN morphology_lex_groups AS mlg ON mlg.lex_group_id = lg.lex_group_id AND mlg.morphology_id = m.id
-
-			UNION
-
-			SELECT m.* FROM morphology AS m
-
-			JOIN morphology_lexcat AS lc ON lc.lexcat_id AND m.id = lc.morphology_id
-
-			WHERE lc.lexcat_id = ".$lemma->read("type_id")."
-
-			UNION
-
-			SELECT m.* FROM morphology AS m
-
-			JOIN morphology_gramcat AS gc ON gc.gramcat_id AND m.id = gc.morphology_id
-
-			WHERE gc.gramcat_id = ".$lemma->read("classification_id")."
-
-			UNION
-
-			SELECT m.* FROM morphology AS m
-
-			JOIN morphology_gramcat AS gc ON gc.gramcat_id AND m.id = gc.morphology_id
-
-			WHERE gc.gramcat_id = ".$lemma->read("subclassification_id")."
-
-			")->fetchAll();
-
+		return $this->_dataModel->customQuery("SELECT * FROM morphology WHERE ".implode(" OR ", $rules).";")->fetchAll();
 
 	}
 
+	protected function validateRuleSelector($validate, $lemma, $heading, $row){
+		if($validate['selector'] == 'mode')
+			return ($this->_id == $validate['selective']);
+		elseif($validate['selector'] == 'submode')
+			return ($heading['id'] == $validate['selective']);
+		elseif($validate['selector'] == 'number')
+			return ($row['id'] == $validate['selective']);
+		elseif($validate['selector'] == 'lexcat')
+			return ($lemma->read('type_id') == $validate['selective']);
+		elseif($validate['selector'] == 'gramcat')
+			return ($lemma->read('classification_id') == $validate['selective']);
+		elseif($validate['selector'] == 'tag')
+			return ($lemma->read('subclassification_id') == $validate['selective']);		
+	}
 
 }
