@@ -29,7 +29,7 @@ class pTerminal{
 				$('.debug.init').keydown(function(e) {
 				    		switch (e.keyCode) {
 				       		 case 13:
-				       			$('.debugLoad-init').load('".p::Url('?debug/ajax')."', {'line': $(this).val()}, function(){
+				       			$('.debugLoad-init').load('".p::Url('?terminal/ajax')."', {'line': $(this).val()}, function(){
 				       				$('.debug.init').prop('disabled', true);
 				       			});
 				   			 }
@@ -50,7 +50,7 @@ class pTerminal{
 			$('.debug').keydown(function(e) {
 			    		switch (e.keyCode) {
 			       		 case 13:
-			       			$('.load".$id."').load('".p::Url('?debug/ajax')."', {'line': $(this).val()}, function(){
+			       			$('.load".$id."').load('".p::Url('?terminal/ajax')."', {'line': $(this).val()}, function(){
 			       				$('.debug.init').prop('disabled', true);
 			       				$('.debug.loaded').addClass('init');
 			       				$('.debugLoad').addClass('debugLoad-init');

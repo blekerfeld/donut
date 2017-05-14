@@ -186,7 +186,7 @@ span.tab, div.tab {
   margin-right: 7%;
   padding-top: 12px;
   padding-right: 10px;
-  padding-bottom: 5px;
+  padding-bottom: 12px;
   padding-left: 10px;
   border-left:solid 1px #e7e7e7;
   border-right:solid 1px #e7e7e7;
@@ -210,27 +210,26 @@ div.logotop{
   float: right;
 }
 
-a.logotop {
+a.siteTitle {
   padding-bottom: 2px;
-  color: #ffffff!important;
+  color:  #292E32;
   font-weight: bold;
   padding: 0px;
   margin-bottom: 0px;
-  font-size: 20px;
+  font-size: 25px;
 } 
 
-a.logotop p{
+a.siteTitle p{
   color:  #292E32;
-    text-transform: capitalize!important;
     margin-bottom: 4px!important;
 }
 
-a.logotop img{
+a.siteTitle img{
   width: 18px;
   height: auto;
 }
 
-a.logotop:hover{
+a.siteTitle:hover{
   border-bottom: 1px dotted snow;
   color: snow;
 }
@@ -713,7 +712,8 @@ div.hSearch .load-hide{
 
 .header.dictionary.home{
   padding: 70px;
-  padding-bottom: 50px!important;
+  padding-bottom: 20px!important;
+  padding-top: 20px!important;
   position: relative;
   border: 1px transparent solid!important;
   background: transparent;
@@ -3053,7 +3053,7 @@ div.debugConsole span.line{
       text-decoration: underline;
      }
 
-     a.logotop{
+     a.siteTitle{
       font-size: 17px;
      }
 

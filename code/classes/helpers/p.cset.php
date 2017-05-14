@@ -14,37 +14,20 @@ class p{
 
 	public static $Out = array(), $Header = array(), $db, $assets;
 
-	public static function initialize(){
+	public static function dispatch($overrideQueryStringIfEmpty = false){
 		
+		return (new pDispatcher($overrideQueryStringIfEmpty))->compile($overrideQueryStringIfEmpty)->dispatch()->render();
+	
+	}
+
+	public static function initialize($overrideQueryStringIfEmpty = false){
+
 		// Loading the metadata about the HTML, PHP and Javascript assets we are going to use.
 		self::$assets = require_once self::FromRoot("library/assets.struct.php");
 
 		// Starting sessions
 		session_start();
-		
-		// Loading the required files
-		self::loadFiles();
 
-		// Trying the connection to the almighty database, our lord and saviour.
-		try {
-			self::$db = new pConnection('mysql:host='.CONFIG_DB_HOST.';dbname='.CONFIG_DB_DATABASE, CONFIG_DB_USER, CONFIG_DB_PASSWORD);
-		} catch (Exception $e) {
-			die("Donut could not connect to the database - ".$e->getMessage());
-		}
-
-		// Rewelcome our previous-session logged in guest
-		pUser::restore();
-
-		// Loading our locale
-		self::loadLocale(CONFIG_ACTIVE_LOCALE);
-
-		// Calling dispatch
-		// The dispactcher handles the remaining tasks 	
-		pDispatcher::compile()->dispatch()->render();
-	
-	}
-
-	protected function loadFiles(){
 		// The files we are going to include
 		$filenames = array();
 
@@ -65,7 +48,19 @@ class p{
 			else
 				die("Donut could not load required file - ".$filename);
 
-		return true;
+		// Trying the connection to the almighty database, our lord and saviour.
+		try {
+			self::$db = new pConnection('mysql:host='.CONFIG_DB_HOST.';dbname='.CONFIG_DB_DATABASE, CONFIG_DB_USER, CONFIG_DB_PASSWORD);
+		} catch (Exception $e) {
+			die("Donut could not connect to the database - ".$e->getMessage());
+		}
+
+		// Loading our locale
+		self::loadLocale(CONFIG_ACTIVE_LOCALE);
+
+		// Rewelcome our previous-session logged in guest
+		pUser::restore();
+
 	}
 
 	public static function Out($input){

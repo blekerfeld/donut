@@ -10,12 +10,13 @@
 
 class pMenuTemplate extends pTemplate{
 
-	protected $_menu, $_meta, $_dispatch, $_permission;
+	protected $_menu, $_meta, $_dispatch, $_permission, $_magicMenu;
 
 	public function __construct(){
 		$dispatch = pDispatcher::structure();
 		$this->_permission = $dispatch['MAGIC_MENU']['default_permission'];
 		$this->_meta = $dispatch['MAGIC_MENU']['items'];
+		$this->_magicMenu = $dispatch['MAGIC_MENU'];
 		unset($dispatch['MAGIC_MENU']);
 		$this->_dispatch = $dispatch;
 		$this->prepareMenu();
@@ -65,6 +66,11 @@ class pMenuTemplate extends pTemplate{
 			}
 		}
 
+		// Any extra simple links?
+		if(isset($this->_magicMenu['simple_links']))
+			foreach($this->_magicMenu['simple_links'] as $link)
+				$output .= "<a class='".(($_SERVER['PHP_SELF'] == CONFIG_FOLDER . '/' . $link['file']) ? 'active' : '')."' href='".p::Url($link['file'])."'>".$link['name']."</a>";
+
 		$output .= "</div><script type='text/javascript'>
 			$('.ttip_menu').tooltipster({animation: 'grow', animationDuration: 100,  distance: 0, contentAsHTML: true, interactive: true, side:'bottom'});
 		</script>";
@@ -85,7 +91,7 @@ class pMenuTemplate extends pTemplate{
 
 	protected function prepareMenu(){
 		// We don't accept double items
-		foreach($this->_dispatch as $key => $item)
+		foreach(@$this->_dispatch as $key => $item)
 			if(isset($item['menu']) && pUser::checkPermission($this->itemPermission($key)))
 				$this->_menu[$item['menu']]['items'][$key] = $item;
 	}

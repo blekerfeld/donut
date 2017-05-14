@@ -13,9 +13,11 @@ define('CONFIG_DB_PASSWORD', '');
 define('CONFIG_DB_DATABASE', 'donut');
 define('CONFIG_REWRITE', true);
 define('CONFIG_FILE', 'index.php');
+define('CONFIG_FORCE_HOME', true);
 define('CONFIG_ISBETA', true);
 define('CONFIG_ROOT_PATH', dirname(__FILE__));
-define('CONFIG_ABSOLUTE_PATH', "http://".$_SERVER['SERVER_NAME']."/donut");
+define('CONFIG_FOLDER', 'donut');
+define('CONFIG_ABSOLUTE_PATH', "http://".$_SERVER['SERVER_NAME']."/".CONFIG_FOLDER);
 
 // We might be dealing with the most crazy symbols evâh, so UTF-8 is needed, like a lot
 mb_internal_encoding("UTF-8");
