@@ -147,6 +147,8 @@ class pParadigm{
 
 		// We need to validate each candidate
 		foreach($candidates as $candidate){
+
+
 			$validation = $this->_dataModel->customQuery("SELECT id, morphology_id, mode_id AS selective, 'mode' AS selector FROM morphology_modes WHERE morphology_id = ".$candidate['morphology_id']." UNION
 				SELECT id, morphology_id, submode_id AS selective, 'submode' AS selector FROM morphology_submodes WHERE morphology_id = ".$candidate['morphology_id']."  UNION
 				SELECT id, morphology_id, number_id AS selective, 'number' AS selector FROM morphology_numbers WHERE morphology_id = ".$candidate['morphology_id']." UNION
@@ -156,18 +158,47 @@ class pParadigm{
 			
 
 			// The first step is filtering out the ones that are not true
-
+			$possibleMatches = array();
 			foreach($validation as $key => $validate){
-				if($this->validateRuleSelector($validate, $lemma, $heading, $row) == false)
-					unset($validation[$key]);
+				$possibleMatches[$validate['selector']][$key] = $validate['selective'];
 			}
 
-			// Then we are left with the whole condition that should be checked
-			$accepted = array();
-			foreach($validation as $key => $validate)
-				$accepted[] = $this->validateRuleSelector($validate, $lemma, $heading, $row);
+			$accepted = false;
 
-			if(!in_array(false, $accepted))
+			foreach($possibleMatches as $keyMatch => $match){
+				if($keyMatch == 'mode'){
+					$accepted = in_array($this->_id, $match);
+					if(!$accepted)
+						break;
+				}
+				elseif($keyMatch == 'submode'){
+					$accepted = in_array($heading['id'], $match);
+					if(!$accepted)
+						break;
+				}
+				elseif($keyMatch == 'number'){
+					$accepted = in_array($row['id'], $match);
+					if(!$accepted)
+						break;
+				}
+				elseif($keyMatch == 'lexcat'){
+					$accepted = in_array($lemma->read('type_id'), $match);
+					if(!$accepted)
+						break;
+				}
+				elseif($keyMatch == 'gramcat'){
+					$accepted = in_array($lemma->read('classification_id'), $match);
+					if(!$accepted)
+						break;
+				}
+				elseif($keyMatch == 'tag'){
+					$accepted = in_array($lemma->read('subclassification_id'), $match);
+					if(!$accepted)
+						break;
+				}
+			}
+
+			if($accepted)
 				$rules[] = 'id = '.$candidate['morphology_id'];
 		}
  
@@ -181,19 +212,19 @@ class pParadigm{
 
 	}
 
-	protected function validateRuleSelector($validate, $lemma, $heading, $row){
-		if($validate['selector'] == 'mode')
-			return ($this->_id == $validate['selective']);
-		elseif($validate['selector'] == 'submode')
-			return ($heading['id'] == $validate['selective']);
-		elseif($validate['selector'] == 'number')
-			return ($row['id'] == $validate['selective']);
-		elseif($validate['selector'] == 'lexcat')
-			return ($lemma->read('type_id') == $validate['selective']);
-		elseif($validate['selector'] == 'gramcat')
-			return ($lemma->read('classification_id') == $validate['selective']);
-		elseif($validate['selector'] == 'tag')
-			return ($lemma->read('subclassification_id') == $validate['selective']);		
+	protected function validateRuleSelector($selector, $selective, $lemma, $heading, $row){
+		if($selector == 'mode')
+			return ($this->_id == $selective);
+		elseif($selector == 'submode')
+			return ($heading['id'] == $selective);
+		elseif($selector == 'number')
+			return ($row['id'] == $selective);
+		elseif($selector == 'lexcat')
+			return ($lemma->read('type_id') == $selective);
+		elseif($selector == 'gramcat')
+			return ($lemma->read('classification_id') == $selective);
+		elseif($selector == 'tag')
+			return ($lemma->read('subclassification_id') == $selective);		
 	}
 
 }

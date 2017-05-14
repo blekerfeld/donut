@@ -1,0 +1,26 @@
+body{
+  font-family: Open Sans, Sans;
+}
+
+.actionbar{
+  display: none;
+}
+.home-margin, .pEntry{
+  margin: 0;
+  padding: 0;
+}
+
+.home-margin{
+  margin-top: -35px;
+}
+
+.float-right{
+  float: right;
+}
+
+table.inflections{
+  width: 30%!important;
+  display: inline-block!important;
+  font-size: 15px;
+  margin: 5px;
+}
