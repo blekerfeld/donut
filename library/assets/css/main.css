@@ -1,5 +1,6 @@
 @import url(https://fonts.googleapis.com/css?family=Righteous|Libre+Franklin|Rubik+Mono+One|Merriweather|Lato|Open+Sans|Raleway);
 @font-face{font-family:Gentium;src:url(vendors/fonts/GenBasR.ttf)}@font-face{font-family:Gentium;src:url(vendors/fonts/GenBasB.ttf);font-weight:700}@font-face{font-family:Gentium;src:url(vendors/fonts/GenBasI.ttf);font-style:italic}
+@font-face{font-family:Kollektif;src:url(vendors/fonts/kollektif.ttf)}
 
 
 /* Basic elements */
@@ -217,11 +218,12 @@ a.siteTitle {
   padding: 0px;
   margin-bottom: 0px;
   font-size: 25px;
+  font-family: Kollektif;
 } 
 
 a.siteTitle p{
   color:  #292E32;
-    margin-bottom: 4px!important;
+  margin-bottom: 4px!important;
 }
 
 a.siteTitle img{
@@ -446,6 +448,7 @@ a.button .fa {
   margin-left: -20px;
   margin-top: 5px;
   margin-right: -20px;
+  margin-bottom: 10px;
   height: 24px;
   background: #fcf893  border-radius: 7px 0px 0px 7px;
   padding-left: 20px;
@@ -453,11 +456,12 @@ a.button .fa {
 
 .alphabetbar a {
   display: inline-block;
+  opacity: .2;
+  transition: opacity .2s;
   text-align: center;
   position: relative;
   z-index: 40px;
   color: ;
-  border-bottom: dotted 1px #c8c8c8;
   min-width: 10px;
   min-height: 10px;
   font-family: Raleway;
@@ -467,6 +471,7 @@ a.button .fa {
   padding-left: 5px;
   padding-right: 5px;
   margin-right: 4px;
+  color: #444;
 }
 
 .alphabetbar a.selected {
@@ -477,8 +482,8 @@ a.button .fa {
 }
 
 .alphabetbar a:hover {
-  color: #14171e;
   background: #5b6170;
+  color: snow;
   opacity: 0.8;
 }
 
@@ -566,7 +571,7 @@ select.pEditorlanguage {
 }
 
 
-.notice, .danger-notice, .succes-notice, .warning-notice{
+.notice, .danger-notice, .succes-notice, .warning-notice, .notice-subtle{
     margin: 10px 0px;
     padding:12px;
 }
@@ -580,10 +585,24 @@ select.pEditorlanguage {
   background-color: #EAF2F4;
 }
 
-.btCard .notice{
+.notice-subtle{
+  color: #333;
+  padding: 0px;
+  font-size: 12px;
+  opacity: .5;
+  cursor: pointer;
+  transition: opacity .3s;
+}
+
+.notice-subtle:hover{
+  opacity: 1;
+}
+
+.btSource .notice, .rulesheetCard .notice{
   border: none;
   font-size: 0.85em;
   margin: 0;
+  margin-bottom: 5px;
 }
 
 .danger-notice{
@@ -613,7 +632,7 @@ select.pEditorlanguage {
 
 input#wordsearch, input#filter, input#searchfilter {
   padding: 9px;
-  font-size: 15px;
+  font-size: 13px;
   text-decoration: none;
   width: 60% - 18px;
   min-width: 100px;
@@ -1313,18 +1332,12 @@ input.nWord, textarea.nWord {
   color: #000!important;
   font-family: Merriweather;
   font-weight: bolder;
-  width: 98%!important;
   display: inline-block;
   margin: 0 auto;
   padding: 18px!important;
   border: rgba(150, 150, 150, 0.1) 1px solid;
-  border-bottom: 1px solid #D26232;
 }
 
-.btCard.editing .nWord{
-  border: rgba(150, 150, 150, 0.4) 1px dashed;
-   border-bottom: 1px solid #D26232;
-}
 
 textarea.nWord.small {
   font-size: 18px;
@@ -2249,6 +2262,7 @@ input.btInput, textarea.btInput {
   padding-right: 0px;
   margin-left: 0px;
   margin-right: 0px;
+  width: 100%;
 }
 div.btSource {
   margin-bottom: 20px;
@@ -2285,6 +2299,10 @@ div.btButtonBar {
   margin-bottom: -20px;
   padding: 5px;
   background: rgba(240,240,240,0.4);
+}
+
+div.btButtonBar.no-min{
+  margin: 0;
 }
 
 div.btButtonBar.up{

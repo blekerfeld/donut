@@ -96,6 +96,20 @@ return array(
 		'menu' => 'dictionary-admin',
 	),
 
+
+	'lemmasheet' => array(
+		'page_title' => 'lemmasheet',
+		'default_section' => 'lemma',
+		'arguments' => array(
+			0 => 'action',
+			1 => 'id',
+			2 => 'linked',
+		),
+		'menu' => 'lemmasheet',
+	),
+
+
+
 	'entry' => array(
 		'page_title' => 'Entry',
 		'default_section' => 'lemma',

@@ -31,7 +31,6 @@ class pPrintTemplate extends pTemplate{
     </script>
   </head>
 	<body class='print markdown-body'>
-      <h5 class='print-title'><?php echo $this->_title; ?></h5>
       <?php echo (new p); ?>
   </body>
  </html><?php

@@ -78,7 +78,8 @@ class pIdiom extends pEntry{
 	}
 
 	public function parseListItem(){
-		$output = '<li><a href="'.p::Url('?entry/example/'.$this->_id.'/return/:'.p::HashId($this->_lemma)).'"><span class="pIdiom native">'.p::Highlight($this->_keyword, p::Markdown($this->text, false), '<span class="pIdiomHighlight">', '</span>').'</a>';
+		$output = '<li><a href="'.p::Url('?entry/example/'.$this->_id.'/return/:'.p::HashId($this->_lemma)).'"><span class="pIdiom native">'. p::Markdown(p::Highlight($this->_keyword, $this->text, '<span class="pIdiomHighlight">', '</span>'), false).'</a>';
+		if($this->_translations != null)
 		foreach($this->_translations as $key => $language){
 			$output .= "<br />(<em>".(new pLanguage($key))->parse()."</em>) ";
 			$translations = array();

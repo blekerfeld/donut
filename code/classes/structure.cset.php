@@ -40,6 +40,28 @@ abstract class pStructure{
 			return self::$permission;
 	}
 
+	public function compile(){
+
+		// If the user requests a section and if it extist
+		if(isset(pAdress::arg()['section']) AND array_key_exists(pAdress::arg()['section'], $this->_structure))
+			$this->_section = pAdress::arg()['section'];
+		else{
+
+			$this->_error = pMainTemplate::NoticeBox('fa-info-circle fa-12', DA_SECTION_ERROR, 'notice');
+
+			$this->_section = $this->_default_section;
+		}
+
+
+		$this->_parser = new pParser($this->_structure, $this->_structure[$this->_section], $this->_app, $this->_permission);
+		;
+
+		$this->_parser->compile();
+
+		pMainTemplate::setTitle($this->_page_title);
+	}
+
+
 	public function load(){
 		try {
 			// Loading the sturcture
@@ -55,14 +77,18 @@ abstract class pStructure{
 				else
 					$this->_structure = $this->_dispatchStructure;
 
+			// Putting the			
 			if(isset($this->_structure['MAGIC_META']))
 				$this->_meta = $this->_structure['MAGIC_META'];
 			else
 				$this->_meta = $this->_structure['metadata'];
+			
 			if(isset($this->_structure['MAGIC_MENU']))
 				$this->_menu = $this->_structure['MAGIC_MENU'];
+			
 			unset($this->_structure['MAGIC_META']);
 			unset($this->_structure['MAGIC_MENU']);
+
 
 			if(isset($this->_meta['default_permission']))
 				self::$permission = $this->_meta['default_permission'];

@@ -75,7 +75,7 @@ class pLemma extends pEntry{
 		global $donut;
 
 		// Setting the page title
-		$donut['page']['title'] = $this->_entry['native']." - ".CONFIG_SITE_TITLE;
+		pMainTemplate::setTitle($this->_entry['native']);
 
 		// For the entry we need all possible bindings
 		$this->bindAll((isset(pAdress::session()['returnLanguage']) ? pAdress::session()['returnLanguage'] : false));
