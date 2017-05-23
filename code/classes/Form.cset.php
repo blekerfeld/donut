@@ -73,7 +73,7 @@ class pMagicField{
 
 class pSelector{
 
-	private $_data = NULL, $_showField = null, $_useTable = false, $_interactive, $_overrideSection;
+	private $_data = NULL, $_showField = null, $_useTable = false, $_interactive, $_overrideSection, $_condition;
 
 	public $dataModel, $value;
 
@@ -83,6 +83,7 @@ class pSelector{
 		$this->value = $value;
 		$this->_interactive = $interactive;
 		$this->_overrideSection = $override_section;
+		$this->_condition = $condition;
 
 		// In case the table name does not match the linked section, which is mostly! :)
 		if($override_section == null && !is_array($data))
@@ -112,6 +113,11 @@ class pSelector{
 
 	// Returns all the <option> elements that are needed
 	public function render(){
+		if($this->_condition != NULL){
+			if(!p::StartsWith($this->_condition, ' WHERE'))
+				$this->_condition = " WHERE ".$this->_condition;
+			$this->dataModel->setCondition($this->_condition);
+		}
 
 		// Fetching the data that we need
 		$this->dataModel->getObjects();

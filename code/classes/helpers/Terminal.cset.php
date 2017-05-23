@@ -140,6 +140,24 @@ class pTerminal{
 		echo $this->nextLine($line);
 	}
 
+	public function ipatest($explode, $line){
+		if(!$this->requireArg($explode, 1, 'ipatest')){
+			echo $this->nextLine($line);
+			return false;
+		}
+		if(isset($explode[2]))
+			$twolc = new pTwolc(array($explode[1]));
+		else
+			$twolc = new pTwolc((new pTwolcRules('phonology_ipa_generation'))->toArray());
+		$twolc->compile();
+		if(isset($explode[2]))
+			echo @$twolc->feed($explode[2])->toDebug()."<br />";
+		else
+			echo @$twolc->feed($explode[1])->toDebug()."<br />";
+		echo $this->nextLine($line);
+	}
+
+
 	public function insert(){
 
 	}

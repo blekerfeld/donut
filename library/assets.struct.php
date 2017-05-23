@@ -20,10 +20,12 @@ return array(
 		'vendors/jquery.elastic.js',
 		'vendors/jquery.smoothstate.js',
 		'smoothstate.js',
+		'jquery.cardtabs.js',
 	),
 	'css' => array(
 		'main.css',
 		'markdown.css',
+		'jquery.cardtabs.css',
 		'vendors/font-awesome.css',
 		'vendors/materialdesignicons.css',
 		'vendors/tooltipster.css',

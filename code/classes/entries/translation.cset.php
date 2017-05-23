@@ -90,4 +90,11 @@ class pTranslation extends pEntry{
 			return "<div class='desc'>".p::Markdown($this->_entry['description'], false)."</div>";
 	}
 
+	public function getInputForm(){
+		if($this->_specification != null OR $this->_specification != '')
+			return $this->translation . '|' . $this->_specification;
+		else
+			return $this->translation;
+	}
+
 }

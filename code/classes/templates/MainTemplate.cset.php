@@ -36,6 +36,12 @@ class pMainTemplate extends pTemplate{
     return '<div class="'.$type.'" id="'.$id.'"><i class="fa '.$icon.'"></i> '.$message.'</div>';
   }
 
+  public function renderMinimal(){
+    echo implode("\n", $this->_stylesheets);
+    echo implode("\n", $this->_scripts);
+    echo (new p);
+  }
+
 	public function __construct(){
 		foreach (p::$assets['css'] as $css)
 			$this->loadCSS($css);
