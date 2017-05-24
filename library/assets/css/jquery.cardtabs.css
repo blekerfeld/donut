@@ -1,6 +1,5 @@
 div.card-tabs-bar{
 	border-bottom: 1px solid #eaecef;
-	background: #fafbfc;
 }
 
 div.card-tabs-bar a{
@@ -8,6 +7,9 @@ div.card-tabs-bar a{
 	padding-bottom: 1px;
 	border: 1px solid transparant;
 	color: #575b66;
+	text-decoration: none;
+	margin-left: 5px;
+	outline: none;
 }
 
 div.card-tabs-bar a:first-child{
@@ -76,23 +78,68 @@ div.card-tabs-stack.inset div[data-tab]{
 	box-shadow: inset 0 0 10px rgba(0,0,0,0.05);
 }
 
-
-
-/*  Dark theme */ 
-div.card-tabs-bar.dark{
-	border-bottom: 1px solid #333;
+/*  Green gray slate */ 
+div.card-tabs-bar.graygreen{
+	border-bottom: 1px solid #e5e5e5;
+		border-radius: 3px;
 }
 
-div.card-tabs-bar.dark a{
+div.card-tabs-bar.graygreen a{
+	padding: 15px;
+	border-radius: 0px;
+	margin: 0;
+	padding-bottom: 10px;
+	margin-bottom: -2px;
+	font-size: 17px;
 }
 
-div.card-tabs-bar.dark a.active{
-	color: snow;
-	background: #333;
-	border-color: #000;
+div.card-tabs-bar.graygreen a.active{
+	background-color: #fafafa;
+	border-top: 4px solid #2CC185;
 }
 
-div.card-tabs-stack.dark div[data-tab]{
-	background: #333;
-	color: white;
+div.card-tabs-stack.graygreen div[data-tab]{
+	padding: 10px;
+	background-color: #fafafa;
+	border: 1px solid #e5e5e5;
+	border-top: none;
+	border-radius: 3px;
+}
+
+
+/*  Wiki */ 
+div.card-tabs-bar.wiki{
+	border-bottom: 1px #A7D7F9 solid
+	border-radius: 0px;
+}
+
+div.card-tabs-bar.wiki a:first-child{
+	border-left: #A7D7F9 1px solid;
+}
+
+div.card-tabs-bar.wiki a{
+	border-radius: 0px;
+	margin: 0;
+	padding-bottom: 10px;
+	margin-bottom: -2px;
+	font-size: 14px;
+	background: #fefefe;
+	background: -moz-linear-gradient(top, #fefefe 0%, #eaf2f8 100%);
+	background: -webkit-linear-gradient(top, #fefefe 0%,#eaf2f8 100%);
+	background: linear-gradient(to bottom, #fefefe 0%,#eaf2f8 100%);
+	border: #A7D7F9 1px solid;
+	border-top: none;
+	border-left: none;
+	border-bottom: 1px #A7D7F9 solid;
+}
+
+div.card-tabs-bar.wiki a.active{
+	border-top: none;
+	background: white;
+	border-bottom: 1px solid white;
+}
+
+div.card-tabs-stack.wiki div[data-tab]{
+	padding: 10px;
+	border: 1px solid #A7D7F9;
 }

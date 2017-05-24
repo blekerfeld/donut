@@ -82,7 +82,7 @@ class pTranslation extends pEntry{
 	}
 
 	public function parseListItem(){
-		return "<li><span>".($this->_specification != '' ? "<em class='dSpec'>(".$this->_specification.")</em> " : '')."<span href='javascript:void(0);' class='translation trans_".$this->_entry['id']." tooltip'><a href='".p::Url('?entry/translation/'.$this->_entry['real_id'].'/return/:'.p::HashId($this->_lemma))."'>".$this->translation."</a></span></span></li>";
+		return "<li><span>".($this->_specification != '' ? "<em class='dSpec'>(".$this->_specification.")</em> " : '')."<span href='javascript:void(0);' class='translation trans_".$this->_entry['id']." tooltip'><strong class='dWordTranslation'><a href='".p::Url('?entry/translation/'.$this->_entry['real_id'].'/return/:'.p::HashId($this->_lemma))."'>".$this->translation."</a></strong></span></span></li>";
 	}
 
 	public function parseDescription(){
@@ -92,7 +92,7 @@ class pTranslation extends pEntry{
 
 	public function getInputForm(){
 		if($this->_specification != null OR $this->_specification != '')
-			return $this->translation . '|' . $this->_specification;
+			return $this->translation . '>' . $this->_specification;
 		else
 			return $this->translation;
 	}

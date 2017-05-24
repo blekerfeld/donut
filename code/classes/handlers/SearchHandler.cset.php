@@ -81,11 +81,9 @@ class pSearchHandler extends pHandler{
 
 			if(count($fetchSearch) == 0)
 				p::Out("<div class='small notice'>".(new pIcon('fa-info-circle', 12))." ".DICT_NO_HITS."</div>");
-
-			p::Out("<table class='dWordTable'>");
+			
 			foreach($fetchSearch as $lemma)
 				$this->parseSearchResults($query, $lemma, $searchlang);
-			p::Out('</table>');
 
 			if(isset(pAdress::arg()['ajax']))
 				return true;

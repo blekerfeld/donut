@@ -41,17 +41,51 @@ class pLemmaSheetDataModel extends pDataModel{
 		foreach($fetch->fetchAll() as $fetched){ 
 			$translationResult = new pTranslation($fetched, 'translations');
 			$translationResult->bindLemma($this->_lemma['id']);
-			$this->_translations[$fetched['language_id']][] = $translationResult;
+			$this->_translations[$fetched['language_id']][$fetched['translation']] = $translationResult;
 		}
 
-		return true;
+		return true; 
 	}
 	
 
-	public function updateTranslations($translations, $language){
+	protected function parseTranslations($translations){
+		$output = array();
+		$exploded = explode('//', $translations);
+		$explodedProper = array();
 
-		var_dump($translations);
+		foreach($exploded as $trans)
+			$explodedProper[] = explode('>', $trans);
 
+		foreach($explodedProper as $trans)
+			if(isset($trans[1]))
+				$output[] = array($trans[0], $trans[1]);
+			else
+				$output[] = array($trans[0]);
+
+		return $output;
+	}
+
+	protected function InsertTranslation($translation, $language){
+		$dM = new pDataModel('translations');
+		$dM->setCondition(" WHERE language_id = $language AND translation = ".p::Quote($translation)."");
+		$dM->getObjects();
+		if($dM->data()->rowCount() == 0){
+			$dM->setCondition('');
+			$dM->prepareForInsert(array($language, $translation, '', date('Y-m-d H:i:s'), pUser::read('id')));
+			$dM->insert();
+			return $this->InsertTranslation($translation, $language);
+		}
+		else
+			return $dM->data()->fetchAll()[0]['id'];
+	}
+
+	public function updateTranslations($input){
+		foreach($input as $language => $translations){
+			foreach($translations as $trans){
+				if(!in_array($this->_translations))
+					return true;
+			}
+		}
 	}
 
 }
