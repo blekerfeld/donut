@@ -44,7 +44,7 @@ class pLemmaDataModel extends pDataModel{
     						WHEN words.native LIKE '".p::Escape(trim($search))."%' THEN 2
     						WHEN words.native LIKE '%".p::Escape(trim($search))."' THEN 3
     						ELSE 4
-						END DESC) AS a UNION ALL SELECT * FROM (SELECT DISTINCT word_id, 1 AS is_inflection, inflection FROM inflection_cache WHERE inflection ".$ww." OR inflection LIKE '".p::Escape($search)."' ORDER BY INSTR('".p::Escape(trim($search))."', inflection) DESC) as b UNION ALL SELECT * FROM (SELECT DISTINCT irregular_word_id AS word_id, 1 AS is_inflection, irregular_override AS inflection FROM inflections WHERE irregular_override ".$ww." ORDER BY INSTR('".p::Escape(trim($search))."', irregular_override) DESC) AS c ".$limit;	
+						END DESC) AS a UNION ALL SELECT * FROM (SELECT DISTINCT word_id, 1 AS is_inflection, inflection FROM inflection_cache WHERE inflection ".$ww." OR inflection LIKE '".p::Escape($search)."' ORDER BY INSTR('".p::Escape(trim($search))."', inflection) DESC) as b UNION ALL SELECT * FROM (SELECT DISTINCT word_id, 1 AS is_inflection, irregular_form AS inflection FROM morphology_irregular WHERE irregular_form ".$ww." ORDER BY INSTR('".p::Escape(trim($search))."', irregular_form) DESC) AS c ".$limit;	
 		else
 			$q = "SELECT * FROM (SELECT DISTINCT translation_words.word_id, 0 AS is_inflection, 0 AS is_alternative, 0 AS inflection, translations.id AS trans_id, translations.translation AS translation
 					FROM words 

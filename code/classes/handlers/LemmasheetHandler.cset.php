@@ -40,20 +40,12 @@ class pLemmasheetHandler extends pHandler{
 	}
 
 	public function ajaxEdit(){
-		var_dump(json_decode(pAdress::post()['translations']));
+		var_dump(json_decode(pAdress::post()['translations'], true));
+		die('<script>$(".saving").slideUp();$(".errorSave").slideUp();$(".successSave").slideDown().delay(1500).slideUp();</script>');
 	}
 
 	public function ajaxNew(){
-		$links = $this->generateLinksArray();
-		$id = $this->dataModel->newRule(pAdress::post()['name'], pAdress::post()['rule'], $links);
-		if($id == false){
-			echo pMainTemplate::NoticeBox('fa-warning', SAVED_EMPTY, 'hide warning-notice errorSave');
-			die('<script>$(".saving").slideUp();'.(($id == false) ? '$(".errorSave").slideDown();' : '$(".errorSave").slideUp();$(".successSave").slideDown().delay(1500).slideUp();')."</script>");
-		}
-		else
-			echo pMainTemplate::NoticeBox('fa-check', SAVED, 'hide succes-notice successSave');
-		die('<script>$(".errorSave").slideUp();$(".successSave").slideDown().delay(1500).slideUp();
-			window.location = "'.p::Url('?rulesheet/'.$this->_section.'/edit/'.$id).'";</script>');
+		
 	}
 
 }

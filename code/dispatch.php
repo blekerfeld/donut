@@ -39,7 +39,7 @@ return array(
 				'name' => MMENU_EDITORMENU." ".(new pIcon('fa-caret-down', 10)),
 				'app' => 'dictionary-admin',
 				'permission' => -4,
-				'class' => 'admin',	
+				'class' => '',	
 				'subitems' => array(
 					'dictionary-admin' => array(
 						'name' => 'Dictionary',
@@ -119,7 +119,7 @@ return array(
 			2 => 'sub_action',
 			3 => 'sub_id'
 		),
-		'menu' => '',
+		'menu' => 'home',
 	),		
 	'search' => array(
 		'page_title' => 'Search',

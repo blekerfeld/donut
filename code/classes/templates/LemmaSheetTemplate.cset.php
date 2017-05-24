@@ -46,25 +46,17 @@ class pLemmaSheetTemplate extends pTemplate{
 			<div class='btCard rulesheetCard'>
 
 			<div class='semanticsTabs'>
-				<div class='card-tabs-bar titles'>
-					<a href='javascript:void();' data-tab='synonyms'>Synonyms</a>
-					<a href='javascript:void();' data-tab='antonyms'>Antonyms</a>
-					<a href='javascript:void();' data-tab='homophones'>Homophones</a>
-					<a href='javascript:void();' data-tab='etyomologies'>Etyomologies</a>
+				<div data-tab='Synonyms'>
+					dit zijn vertalingen.
 				</div>
-				<div class='card-tabs-stack'>
-					<div data-tab='synonyms'>
-						dit zijn vertalingen.
-					</div>
-					<div data-tab='antonyms'>
-						dit zijn vertalingen.
-					</div>
-					<div data-tab='homophones'>
-						dit zijn voorbeelden
-					</div>
-					<div data-tab='etyomologies'>
-						dit zijn voorbeelden
-					</div>
+				<div data-tab='Antonyms'>
+					dit zijn vertalingen.
+				</div>
+				<div data-tab='Homophones'>
+					dit zijn voorbeelden
+				</div>
+				<div data-tab='Etymologies'>
+					dit zijn voorbeelden
 				</div>
 			</div>
 			
@@ -73,23 +65,16 @@ class pLemmaSheetTemplate extends pTemplate{
 		<div class='right'><div class='btCard rulesheetCard'>
 
 			<div class='linksTabs'>
-				<div class='card-tabs-bar titles'>
-					<a href='javascript:void();' data-tab='categories'>Categories</a>
-					<a href='javascript:void();' data-tab='translations'>Translations</a>
-					<a href='javascript:void();' data-tab='examples'>Examples</a>
-					<a href='javascript:void();' data-tab='usagenotes'>Usage notes</a>
-				</div>
-				<div class='card-tabs-stack'>
-					<div data-tab='categories'>
+					<div data-tab='Categories'>
 						<br />
 						<div class='btSource'><span class='btLanguage'>Lexical category <em class='small'>(part of speech)</em></span><br />
-							<span class='btNative'><select class='full-width select-lexcat select2'>".(new pSelector('types', $data['type_id'], 'name', true, 'rules', true))->render()."</select></span></div>
+							<span class='btNative'><select class='full-width select-lexcat select2'>".(new pSelector('types', @$data['type_id'], 'name', true, 'rules', true))->render()."</select></span></div>
 							<div class='btSource'><span class='btLanguage'>Grammatical category</span><br />
-							<span class='btNative'><select class='full-width select-gramcat select2'><option>none</option>".(new pSelector('classifications', $data['classification_id'], 'name', true, 'rules', true))->render()."</select></span></div>
+							<span class='btNative'><select class='full-width select-gramcat select2'><option>none</option>".(new pSelector('classifications', @$data['classification_id'], 'name', true, 'rules', true))->render()."</select></span></div>
 							<div class='btSource'><span class='btLanguage'>Grammatical tag</span><br />
-							<span class='btNative'><select class='full-width select-lexcat select2'><option>none</option>".(new pSelector('subclassifications', $data['subclassification_id'], 'name', true, 'rules', false))->render()."</select></span></div>
+							<span class='btNative'><select class='full-width select-lexcat select2'><option>none</option>".(new pSelector('subclassifications', @$data['subclassification_id'], 'name', true, 'rules', false))->render()."</select></span></div>
 					</div>
-					<div data-tab='translations'>
+					<div data-tab='Translations'>
 						");
 
 
@@ -111,10 +96,10 @@ class pLemmaSheetTemplate extends pTemplate{
 
 		p::Out("
 					</div>
-					<div data-tab='examples'>
+					<div data-tab='Examples'>
 						dit zijn voorbeelden
 					</div>
-					<div data-tab='usagenotes'>
+					<div data-tab='Usage Notes'>
 						dit zijn voorbeelden
 					</div>
 				</div>

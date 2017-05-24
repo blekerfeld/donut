@@ -66,7 +66,7 @@ class pEntryStructure extends pStructure{
 		p::Out($searchBox);
 
 		// Starting with the wrapper
-		p::Out("<br /><div class='pEntry ".(($this->_error != '' OR $this->_error != null) ? 'hasErrors' : '')."'><div class='home-margin'>");
+		p::Out("<div class='pEntry ".(($this->_error != '' OR $this->_error != null) ? 'hasErrors' : '')."'><div class='home-margin'>");
 
 		// If there is an offset, we need to define that
 		if(isset(pAdress::arg()['offset']))
