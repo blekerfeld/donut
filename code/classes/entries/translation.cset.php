@@ -13,8 +13,8 @@
 
 class pTranslation extends pEntry{
 
-	private $_specification = null, $_lemma, $_language;
-	public $language, $translation;
+	private  $_lemma, $_language;
+	public $language, $translation, $_specification;
 
 	public function __construct(){
 		// First we are calling the parent's constructor (pObject)
@@ -31,10 +31,9 @@ class pTranslation extends pEntry{
 
 	// This function is called to render the translation as an entry
 	public function renderEntry(){
-		global $donut;
 
 		// Setting the page title
-		$donut['page']['title'] = $this->_entry['translation']." - ".CONFIG_SITE_TITLE;
+		pMainTemplate::setTitle($this->_entry['translation']);
 
 		$backHref = null;
 
@@ -96,5 +95,36 @@ class pTranslation extends pEntry{
 		else
 			return $this->translation;
 	}
+
+	public static function new($translation, $language, $lookUp = array()){
+		if(isset($lookUp[$translation['trans'].'_'.$language.'_'.$translation['spec']])){
+			return array(false, $lookUp[$translation['trans'].'_'.$language.'_'.$translation['spec']]);
+		}
+		$dM = new pDataModel('translations');
+		$dM->setCondition(" WHERE language_id = $language AND translation = ".p::Quote($translation['trans'])."");
+		$dM->getObjects();
+		if($dM->data()->rowCount() == 0){
+			$dM->setCondition('');
+			$dM->prepareForInsert(array($language, $translation['trans'], '', date('Y-m-d H:i:s'), pUser::read('id')));
+			$dM->insert();
+			return self::new($translation, $language, $lookUp);
+		}
+		else
+			return $dM->data()->fetchAll()[0]['id'];
+	}
+
+
+	public static function finalDelete($ID){
+		// We will check if there are any links left with this translation otherwise the translations will be gone as well
+		$dM = new pDataModel('translation_words');
+		$dM->setCondition(" WHERE translation_id = '".$ID."' ");
+		$dM->getObjects();
+
+		if($dM->data()->rowCount() == 0)
+			$dM->customQuery("DELETE FROM translations WHERE id = ".$ID);
+		else
+			return false;
+	}
+
 
 }

@@ -30,10 +30,23 @@ html, body {
   margin: 0;
   box-sizing: border-box;
   height:100%;
+  background: #f9f9f9;
   padding: 0;
   font-family: Open Sans;
   font-size: 14px;
 }
+
+
+body{
+  display: flex!important;
+  min-height: 100%;
+  flex-direction: column!important;
+}
+
+div.contents{
+  flex: 1;
+}
+
 
 a {
   text-decoration: none;
@@ -205,9 +218,8 @@ a.siteTitle {
   font-size: 20px;
 } 
 
-div.hStripe{
-    border-bottom: 4px solid #24292E;
-    box-shadow: 0px 1px 3px rgba(100, 100, 100, 0.05);
+div.hStripe2{
+    border-bottom: 4px solid #55688A;
 }
 
 div.hStripe.min{
@@ -215,7 +227,9 @@ div.hStripe.min{
 }
 
 div.outerwrap {
-
+  background: white;
+  min-height: 550px;
+  border-bottom:solid 1px #e7e7e7;
 }
 
 .ulWrap {
@@ -225,15 +239,13 @@ div.outerwrap {
 }
 
 .header {
-
   padding: 20px;
   padding-top: 15px;
   padding-bottom: 0px;
   font-size: 16px!important;
   background: #f2f9fc;
-   border-bottom: 1px solid #c9e6f2;;
   color: #333;
-    padding-top: 20px;
+  padding-top: 20px;
   padding-bottom: 10px;
   padding-right: 45px;
   padding-left: 45px;
@@ -251,7 +263,6 @@ div.outerwrap {
   background: rgba(254,254,254, 1);
   height: auto;
   padding-bottom: 20px;
-  min-height: 500px;
 }
 
 .page.min{
@@ -267,13 +278,12 @@ div.outerwrap {
 }
 
 .home-margin{
-  width: 85%;
+  width: 92%;
   margin: 0 auto;
   padding-bottom: 0px;
 }
 
 .absolute_footer {
-  background: -webkit-linear-gradient(top, rgba(240,240,240, 0.05), rgba(254,254,254, 0.05) 50%);;
   margin-bottom: 50px;
   margin-left: 11%;
   margin-right: 11%;
@@ -283,9 +293,9 @@ div.outerwrap {
   padding-top: 10px;
   border-top: 1px solid #d2d4d7;
   text-shadow: 1px 2px 3px #fff, 0 0 0 #000, 1px 4px 6px #fff;
-  opacity: 0.5;
   font-size: 9px;
   color: #333;
+  opacity: .6;
   text-decoration: none;
   letter-spacing: .1em;
   font-family: Libre Franklin;
@@ -304,7 +314,6 @@ div.nav {
   display: inline-block;
   float: left;
   color: #000;
-  background: #fff;
   transition: all .3s;
   padding-left: 10px;
   margin-left: 30px;
@@ -601,13 +610,13 @@ input#wordsearch, input#filter, input#searchfilter {
   width: 60% - 18px;
   min-width: 100px;
   color: #93A7BE;
-  background: #E6ECF2;
 }
 
 a.button.search{
   display: inline-block;
   float: right;
-  color: #41556B;
+  color: #889DB7;
+  border-radius: 5px;
   text-align: center;
   padding: 11PX;
   margin-top: 1px;
@@ -617,8 +626,7 @@ a.button.search{
 }
 
 a.button.search:hover{
-  background: #737F96;
-  color: snow;
+  background: #E6ECF2;
 }
 
 
@@ -629,6 +637,7 @@ div.hSearchResults{
   margin-bottom: -20px;
   transition: transform 3s ease;
   transform: translateY(1px);
+  position: relative;
 }
 
 div.hSearchResult{
@@ -652,9 +661,11 @@ div.hSearch .load-hide{
   font-size: 15px;
   text-decoration: none;
   color: #93A7BE;
-  background: #E6ECF2;
   margin-bottom: 10px;
-  border-radius: 5px;
+  margin-left: -32px;
+  margin-right: -32px;
+  padding-bottom: 15px!important;
+  border-bottom: 1px solid #B3C0D0;
 }
 
 .hSearch input#wordsearch{
@@ -663,13 +674,15 @@ div.hSearch .load-hide{
   margin-top: 1px;
   padding: 9px;
   margin-left: 3px;
-  width: calc(60% - 100px);
+  width: calc(80% - 100px);
   min-width: 300px;
   margin-top: 0px;
   float: left;
-  font-size: 16px;
+  font-family: Libre Franklin;
+  font-size: 18px;
+  padding-top: 9px;
+  background: transparent;
 }
-
 
 .header.dictionary{
   transition: all .3s;
@@ -679,7 +692,6 @@ div.hSearch .load-hide{
   padding-right: 80px;
   padding-bottom: 5px!important;
   padding-top: 10px;
-  border: none;
   margin-bottom: 10px;
   position: relative;
   margin-top: -25px;
@@ -692,27 +704,8 @@ div.hSearch .load-hide{
   padding-bottom: 20px!important;
   padding-top: 20px!important;
   position: relative;
-  border: 1px transparent solid!important;
   background: transparent;
-
-  
 }
-
-.header.dictionary.home.wiki{
-  padding: 20px!important;
-  margin-bottom: 10px;
-  box-shadow: none;
-}
-
-
-
-
-.header.dictionary.home .hSearch .select2-container{
-  font-size: 15px!important;
-  margin-top: 6px;
-}
-
-
 
 .header.dictionary.home .hSearch{
   padding: 15px;
@@ -738,75 +731,26 @@ div.hSearch .load-hide{
   float: right!important;
 }
 
-
-.hSearch .select2-container {
-  font-size: 13px!important;
-  display: inline-block;
-  float:left;
-  width: 30%;
+.hSearch .dictionary-selector{
+  width: 7%;
 }
 
-.header.dictionary.home .hSearch .select2-container{ margin-top: 10px!important;}
-
-.hSearch .select2-container--default .select2-selection--single .select2-selection__arrow {
-    height: 38px!important;
-    position: absolute;
-    top: 1px!important;
-    right: 12px!important;
-    width: 20px;
+.hSearch .dd-container{
+  float: left;
+  margin-top: 3px;
 }
 
-.select2-container--default .select2-selection--single .select2-selection__arrow {
-    height: 27px!important;
-    position: absolute;
-    top: 1px!important;
-    right: 10px!important;
-    width: 20px;
-}
-.hSearch .select2-container--default .select2-selection--single .select2-selection__arrow b {
-    border-color: #8096B2 transparent transparent transparent;
-    border-style: solid;
-    border-width: 5px 4px 0 4px;
-    height: 0;
-    left: 50%;
-    margin-left: -4px;
-    margin-top: -2px;
-    position: absolute;
-    top: 50%;
-    width: 0;
+.hSearch .dd-container a{
+  font-size: 12px;
 }
 
-.hSearch .select2-results__option .select2-results__message{
-  display: none!important;
+.hSearch .dd-container .dd-selected-text{
+  color: #889DB7;
 }
 
-.hSearch .select2-search--dropdown .select2-search__field{
-    display: none!important;
-    background: red;
+.header.dictionary.home .dd-container{
+  margin-top: 12px;
 }
-
-.hSearch .select2-container--default .select2-selection--single{
-  border: none;
-}
-
-.hSearch .select2-search--dropdown{
-  background-color: #f7f7f7!important;
-}
-
-.hSearch .select2-search--dropdown input{
-    background-color: #f7f7f7!important;
-    color: snow!important;
-}
-
-.hSearch .select2-container .select2-selection--single .select2-selection__rendered {
-  background: #E6ECF2!important;
-  border: none;
-  font-weight: bold;
-  font-family: Open Sans;
-  color: #41556B;!important;
-  padding: 5px;
-}
-
 
 input#filter {
   width: 80%;
@@ -880,10 +824,6 @@ strong.dWord a {
   padding: 2px;
 }
 
-.dWordTable{
-  width: 100%;
-  font-size: 12px;
-}
 
 .dWordWrapper {
   padding: 15px;
@@ -893,26 +833,14 @@ strong.dWord a {
   border-left: 4px solid transparent;
 }
 
-.dWordTable tr:last-child td .dWordWrapper{
-  border-bottom: none;
-}
-
-
 .dWordWrapper:hover {
-  background: linear-gradient(to bottom, rgba(200,200,200,0.05), rgba(200,200,200,0.06));  /* Chrome 10-25, Safari 5.1-6 */
-  border-left: 4px solid #eee;
+  background: linear-gradient(to bottom, rgba(200,200,200,0.1), rgba(200,200,200,0.1));  /* Chrome 10-25, Safari 5.1-6 */
 }
 
 .dWordWrapper a.tooltip, .wordLink.tooltip {
   color: #333;
   font-size: 16px;
 }
-
-.dWordWrapper .tooltip {
-  font-family: Lato;
-  font-size: 15px;
-}
-
 
 .dType a.tooltip {
   font-family: Gentium;
@@ -1318,7 +1246,7 @@ input.nWord:invalid {
 
 input.nWord.normal-font{
   font-size: 18px;
-  font-family: Trebuchet MS;
+  font-family: Open Sans;
   color: #333;
   font-weight: normal;
 }
@@ -1326,8 +1254,8 @@ input.nWord.normal-font{
 strong.pWord {
   font-size: 30px;
   cursor: pointer;
-  font-family: Libre Franklin;
   font-weight: bolder;
+  font-family: Merriweather;
 }
 
 span.pDerivationTitle {
@@ -1566,7 +1494,7 @@ a.red-link{
   border-radius: 0px;
   opacity: 0.8;
   color: #f04f48!important;
-  opacity: 0.3;
+  opacity: 1;
 }
 
 a.ttip-sub.red-link{
@@ -2063,9 +1991,6 @@ span.btField {
   font-size: 13px!important;
 }
 input.btInput, textarea.btInput {
-  border-top: none;
-  border-left: none;
-  border-right: none;
   padding-left: 0px;
   padding-right: 0px;
   margin-left: 0px;
@@ -2152,17 +2077,39 @@ a.btAction.blue.page{
   padding: 0;
 }
 
-a.btAction:hover, div.btButtonBar a.btAction.green:hover, div.btButtonBar a.btAction.blue:hover  {
-  background-image: linear-gradient(top, #607193, #576684);
-  background-image: -webkit-linear-gradient(top, #607193, #576684);
+a.btAction:hover, div.btButtonBar a.btAction.green:hover, div.btButtonBar a.btAction.blue:hover, a.btAction.redbt:hover  {
+  background-image: linear-gradient(top, #607193, #576684)!important;
+  background-image: -webkit-linear-gradient(top, #607193, #576684)!important;
   color: snow;
 }
+
 a.btAction.green {
   background-color: #2B8B4A;
   background-image: linear-gradient(top, #21a62e, #2f8f28);
   background-image: -webkit-linear-gradient(top, #21a62e, #2f8f28);
+  border-radius: 5px;
+  padding: 9px;
+  font-size: 17px;
   color: snow;
 }
+
+a.btAction.green.little{
+  font-size: 13px;
+  padding: 4px;
+}
+a.btAction.redbt {
+  background-color: #E8735E;
+  border-radius: 5px;
+  padding: 7px;
+  opacity: .5;
+  font-size: 12px;
+  color: snow!important;
+}
+
+a.btAction.redbt:hover{
+  opacity: 1;
+}
+
 a.btAction.blue{
   background-color: #515763;
   color: snow;
@@ -2485,12 +2432,22 @@ div.rulesheet-header{
 div.rulesheet .left{
   align-items: stretch;
   width: 50%;
+  padding: 10px;
 }
 
 div.rulesheet .right{
   align-items: stretch;
   width: 50%;
-  margin-left: 0px;  
+  margin-left: 0px; 
+  padding: 10px; 
+}
+
+div.mainTabs div[data-tab]{
+  min-height: 400px;
+}
+
+div.rulesheet .right div.semanticsTabs{
+  margin-top: 30px;
 }
 
 div.rulesheet.inner .left{
@@ -2573,8 +2530,8 @@ div.d_admin_menu{
   background: #f9f9f9;
   border-left: 1px solid #e7e7e7;
   border-right: 1px solid #e7e7e7;
-  border-bottom: 1px solid #e7e7e7;
   margin-top: -27px;
+  margin-bottom: -21px;
 }
 
 
@@ -2583,14 +2540,13 @@ div.d_admin_menu a{
   transition: none;
   overflow: hidden;
   -webkit-backface-visibility: hidden;
-  background: rgba(13,21,49,0.8);
   width: 100% - 6px;
   padding: 3px;
   padding-bottom: 5px;
   padding-top: 5px;
   font-size: 15px;
   text-align: center;
-  color: snow;
+  color: #222;
   text-align:center;
   line-height:30px;
   height:44px;
@@ -2599,7 +2555,7 @@ div.d_admin_menu a{
   font-size:18px;
 }
 div.d_admin_menu a.active{
-  background:rgba(123,131,157,1.0);
+    background: #eee;
 }
 
 .tooltipster-content a.ttip-sub.active{
@@ -2639,11 +2595,9 @@ div.d_admin_menu a i.fa{
 }
 
 div.d_admin_menu a:hover{
-  background: white;
-  color: black;
+  background: #ccc;
+  color: #333;
   text-shadow: initial;
-  border-top: 2px solid #575B68;
-  border-bottom: 2px solid #575B68;
 }
 
 
@@ -2677,11 +2631,10 @@ div.debugConsole{
   overflow: scroll;
   background: #111;
   font-family: Consolas;
+  border: 1px solid transparent;
+  border-bottom-right-radius: 5px;
+  border-bottom-left-radius: 5px;
   border-top: 1px black solid;
-  margin-top: -24px;
-  margin-bottom: -20px;
-  margin-left: -15px;
-  margin-right: -15px;
 }
 
 div.debugConsole table *{
@@ -2720,11 +2673,6 @@ div.debugConsole span.line{
     width: 65%;
     float: left;
    }
-
-   .hSearch .select2-container{
-     width: 20%;
-     float: left;
-    }
 
 
    div.ulWrap{
@@ -2891,7 +2839,7 @@ div.debugConsole span.line{
 
      div.d_admin_menu{
       margin-top: -24px;
-      margin-bottom: -20px;
+      margin-bottom: -35px;
       margin-right: -1px;
      }
 
@@ -2901,7 +2849,7 @@ div.debugConsole span.line{
      div.hSearch .load-hide{
       display: none;
       float: none;
-      position: relative;
+      position: absolute;
       top: 0px;
       right: 0px;
     }
@@ -2926,10 +2874,6 @@ div.debugConsole span.line{
     span.wholewordWrap{
       opacity: .4;
     }
-
-.header.dictionary.home .hSearch .select2-container{
-  font-size: 10px!important;
-}
 
   .mobilehide{
     display: none;
@@ -2979,4 +2923,23 @@ table.inflections tr.title td{
   padding-right: 10px;
   padding-bottom: 5px;
   padding-top: 5px;
+}
+
+.fake-browser-ui .frame {
+    display: block;
+    height: 15px;
+    background:  #55688A;
+    border-radius: 5px 5px 0px 0px;
+}
+
+.fake-browser-ui span {
+    height: 8px;
+    width: 8px;
+    border-radius: 8px;
+    background-color: #eee;
+    border: 1px solid #dadada;
+    float: left;
+    margin-top: 3px;
+    margin-left: 4px;
+    margin-right: 3px;
 }

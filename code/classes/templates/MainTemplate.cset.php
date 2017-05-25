@@ -12,7 +12,7 @@ class pMainTemplate extends pTemplate{
 
 	protected $_stylesheets, $_scripts;
 
-	public static $title = CONFIG_SITE_TITLE, $orgTitle = CONFIG_SITE_TITLE;
+	public static $title = CONFIG_SITE_TITLE, $orgTitle = CONFIG_SITE_TITLE, $_searchBoxShown = false;
 
 	public static function setTitle($title){
 		self::$title = $title . ' - ' . CONFIG_SITE_TITLE;
@@ -31,6 +31,10 @@ class pMainTemplate extends pTemplate{
     if(pUser::noGuest())
 		  return (pUser::read('longname') != '' ? pUser::read('longname') : pUser::read('username'))." <a href='".p::Url('?auth/logout')."'>(".MMENU_LOGOUT.")</a>";
 	}
+
+  public static function toggleSearchBox(){
+    self::$_searchBoxShown = true;
+  }
 
   public static function NoticeBox($icon, $message, $type='notice', $id=''){
     return '<div class="'.$type.'" id="'.$id.'"><i class="fa '.$icon.'"></i> '.$message.'</div>';
@@ -67,31 +71,34 @@ class pMainTemplate extends pTemplate{
 		echo implode("\n", $this->_scripts);
 		?>
 	<body class='dashboard'>
-    <div class='hStripe'></div>
-    <div class="top_area">
-      <div class="absolute_header">
-          <div class='user'>
-            <?php echo $this->userBox(); ?>
-            <?php if(!pUser::noGuest()){ echo '<a href="'.p::Url('?auth/login').'">'.MMENU_LOGIN.'</a>'; } ?>
+    <div class='contents'>
+      <div class='hStripe2'></div>
+      <div class='hStripe'></div>
+      <div class="top_area">
+        <div class="absolute_header">
+            <div class='user'>
+              <?php echo $this->userBox(); ?>
+              <?php if(!pUser::noGuest()){ echo '<a href="'.p::Url('?auth/login').'">'.MMENU_LOGIN.'</a>'; } ?>
+            </div>
+            <a class='float-left siteTitle' href="<?php echo p::Url("?home"); ?>">
+              <?php echo CONFIG_LOGO_TITLE; ?></a>
+           <?php echo (new pMenuTemplate); ?><br id="cl" />  
+       </div>
+      <div class="outerwrap"> 
+          <div class="ulWrap">
+            <noscript>
+              <div class='notice danger-notice'><i class='fa fa-warning fa-12'></i> This site needs javascript to function, with javascript turned off, most of the functionality won't work!</div>
+            </noscript>
+            <div class='ajaxOutLoad' id='main'>
+            	<div class='page'>
+              		<div class='inner-page'>
+                			<?php echo (new p); ?>
+              		</div>
+           		</div>
+        		</div>
           </div>
-          <a class='float-left siteTitle' href="<?php echo p::Url("?home"); ?>">
-            <?php echo CONFIG_LOGO_TITLE; ?></a>
-         <?php echo (new pMenuTemplate); ?><br id="cl" />  
-     </div>
-    <div class="outerwrap">
-        <div class="ulWrap">
-          <noscript>
-            <div class='notice danger-notice'><i class='fa fa-warning fa-12'></i> This site needs javascript to function, with javascript turned off, most of the functionality won't work!</div>
-          </noscript>
-          <div class='ajaxOutLoad' id='main'>
-          	<div class='page'>
-            		<div class='inner-page'>
-              			<?php echo (new p); ?>
-            		</div>
-         		</div>
-      		</div>
-        </div>
-  	</div>
+    	</div>
+    </div>
     <div class='absolute_footer'>
     	<img src='<?php echo p::Url('library/images/static/logobw.png'); ?>' />
         <span class='mobilehide'>build 

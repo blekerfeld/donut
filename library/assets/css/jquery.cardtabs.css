@@ -81,7 +81,6 @@ div.card-tabs-stack.inset div[data-tab]{
 /*  Green gray slate */ 
 div.card-tabs-bar.graygreen{
 	border-bottom: 1px solid #e5e5e5;
-		border-radius: 3px;
 }
 
 div.card-tabs-bar.graygreen a{
@@ -103,7 +102,6 @@ div.card-tabs-stack.graygreen div[data-tab]{
 	background-color: #fafafa;
 	border: 1px solid #e5e5e5;
 	border-top: none;
-	border-radius: 3px;
 }
 
 

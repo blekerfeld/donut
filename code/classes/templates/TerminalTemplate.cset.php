@@ -16,8 +16,15 @@ class pTerminalTemplate extends pSimpleTemplate{
 		if(isset(pAdress::arg()['ajax']))
 			die((new pTerminal)->ajax());
 
+		p::Out('
+		<div class="fake-browser-ui">
+		    <div class="frame">
+		        <span></span>
+		        <span></span>
+		        <span></span>
+		    </div>');
 		(new pTerminal)->initialState();
-	
+		p::Out('</div>');
 	}
 
 }

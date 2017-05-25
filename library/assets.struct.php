@@ -11,6 +11,7 @@ return array(
 	'javascript' => array(
 		'index.js',
 		'vendors/jquery.js',
+		'vendors/jquery.ddslick.js',
 		'vendors/jquery.pace.js',
 		'vendors/jquery.tooltipster.js',
 		'vendors/jquery.playsound.js',
@@ -26,6 +27,7 @@ return array(
 		'main.css',
 		'markdown.css',
 		'jquery.cardtabs.css',
+		'vendors/formbase.css',
 		'vendors/font-awesome.css',
 		'vendors/materialdesignicons.css',
 		'vendors/tooltipster.css',

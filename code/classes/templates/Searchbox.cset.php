@@ -10,14 +10,14 @@
 
 class pSearchBox extends pTemplatePiece{
 
-	private $_value = null, $_enableLanguage, $_section = null, $_enableWholeWord, $_enableAlpbabetBar, $_home = false, $_idS;
+	private $_value = null, $_enableLanguage, $_section = null, $_enableWholeWord, $_enableAlphabetBar, $_home = false, $_idS;
 
 	public function __construct($home = false, $language = true, $section = null, $wholeword = true, $alpabetbar = true){
 		$this->_home = $home;
 		$this->_enableLanguage = $language;
 		$this->_section = $section;
 		$this->_enableWholeWord = $wholeword;
-		$this->_enableAlpbabetBar = $alpabetbar;
+		$this->_enableAlphabetBar = $alpabetbar;
 	}
 
 	public function setValue($value){
@@ -26,23 +26,20 @@ class pSearchBox extends pTemplatePiece{
 
 	public function __toString(){
 
+		pMainTemplate::toggleSearchBox();
+
 		$this->_idS = date('s');
 
-		$output = '<div class="hMobile id_'.$this->_idS.'"><div class="header dictionary '.($this->_home ? 'home' : '').'">
-			<span class="float-right" style="padding-right: 24px;important;display: block;"><span class="wholewordWrap">
-			<input id="wholeword" class="checkbox-wholeword xsmall" name="wholeword" type="checkbox" '.((isset(pAdress::session()['exactMatch']) AND pAdress::session()['exactMatch'] == false) ? '' : 'selected').'>
-        	<label for="wholeword" class="checkbox-wholeword-label small">'.DICT_EXACT_MATCH.'</label></span>
-			</span>';
-
-		$output .= new pAlphabet;
+		$output = '<div class="hMobile id_'.$this->_idS.'"><div class="header dictionary '.($this->_home ? 'home' : '').'">';
 
 		$output .= '<div class="hWrap"><div class="hSearch">'.pLanguage::dictionarySelector('dictionary-selector').'
-				<input type="text" id="wordsearch" class="big word-search" placeholder="'.DICT_KEYWORD.'" value="'.$this->_value.'"/><a class="button search  remember search-button float-right" id="searchb" href="javascript:void(0);">' . (new pIcon('fa-search', 12)) . ' '. DICT_SEARCH.'</a>'.new pIcon('fa-spinner fa-spin load-hide', 12).'
+				<input type="text" id="wordsearch" class="big word-search" placeholder="'.DICT_KEYWORD.'" value="'.$this->_value.'"/><a class="button search  remember search-button float-right" id="searchb" href="javascript:void(0);">' . (new pIcon('fa-search', 12)) . ' '. DICT_SEARCH.'</a>
 			<br id="cl" /></div></div>
 			</div>
 			</div>
 			<div class="hSearchResults">
 				<div class="searchLoad"></div>
+								<div class="load-hide hide" style="text-align: center">'.new pIcon('fa-spinner fa-spin', 32).'</div>
 			</div>';
 
 			$hashKey = spl_object_hash($this);
@@ -83,8 +80,10 @@ class pSearchBox extends pTemplatePiece{
 		function callBack(){
 			  if($('.word-search').val() == ''){
 		    	window.history.pushState('string', '', '".p::Url("?".pAdress::queryString())."');
+		    	$('.load-hide').hide();
 		    	$('.page').removeClass('min');
 				$('.searchLoad').slideUp();
+				$('.searchLoad').html('');
 				loadhome();
 				$('.pEntry').slideDown();
 				";
@@ -109,18 +108,8 @@ class pSearchBox extends pTemplatePiece{
 		    },
 		    wait: 100,
 		    highlight: true,
-			    allowSubmit: true,
+			allowSubmit: true,
 		    captureLength: 1	
-		}
-
-		var options2 = {
-		    callback: function (value) {
-		    	$('.word-search').blur();
-		    },
-		    wait: 2000,
-		    highlight: true,
-		    allowSubmit: true,
-		    captureLength: 1
 		}
 
 		$('.word-search').typeWatch( options );
@@ -138,7 +127,6 @@ class pSearchBox extends pTemplatePiece{
 		function loadhome(){
 			";
 
-			// Don't show an error if we are forced to have the search load a search action
 			if((isset(pAdress::arg()['query'], pAdress::arg()['dictionary'])))
 
 				$output .= "$('.pEntry').load('".p::Url('?home/ajax/nosearch')."', {}, function(){
@@ -153,27 +141,32 @@ class pSearchBox extends pTemplatePiece{
 		html = '';
 
 		function search(bypass){
-			window.scrollTo(0, 0);
-			$('.load-hide').show();
-			lock = $('.word-search').val();
-			if(bypass === true || $('.word-search').val().length > 0){
-				$('.page').addClass('min');
-				$('.header.dictionary').removeClass('home').addClass('home-search');
-      			$('.searchLoad').load('".p::Url('?search/')."' + $('.dictionary-selector').val() + '/ajax/', {'query': $('.word-search').val(), 'exactMatch': $('.checkbox-wholeword').is(':checked')}, function(e){
-      					$('.searchLoad').slideDown();
-      					if($('.word-search').val() != ''){
-      						window.history.pushState('string', '', '".p::Url("?entry/search/")."' + $('.dictionary-selector').val().toLowerCase() + '/' + $('.word-search').val());
-      					}
-      					html = e;
-      					$('.load-hide').hide();
-      					document.title = $('.word-search').val() + ' - Searching';
-      			});
-      		}
+			if($('.word-search').val() == ''){
+				return false;
+			}
+			else{
+				window.scrollTo(0, 0);
+				$('.load-hide').slideDown();
+				lock = $('.word-search').val() + $('dictionary-selector').val();
+				if(bypass === true || $('.word-search').val().length > 0){
+					$('.page').addClass('min');
+					$('.header.dictionary').removeClass('home').addClass('home-search');
+	      			$('.searchLoad').load('".p::Url('?search/')."' + $('.dictionary-selector').val() + '/ajax/', {'query': $('.word-search').val(), 'exactMatch': $('.checkbox-wholeword').is(':checked')}, function(e){
+	      					$('.searchLoad').slideDown();
+	      					if($('.word-search').val() != ''){
+	      						window.history.pushState('string', '', '".p::Url("?entry/search/")."' + $('.dictionary-selector').val().toLowerCase() + '/' + $('.word-search').val());
+	      					}
+	      					html = e;
+	      					$('.load-hide').slideUp();
+	      					document.title = $('.word-search').val() + ' - Searching';
+	      			});
+	      		}
+			}
 		}
 
 		$('.hSearch').on('click', function(){
 			if($('.word-search').val() != ''){
-					if($('.word-search').val() != lock){
+					if($('.word-search').val() + $('dictionary-selector').val() != lock){
 						search();
 					}
 					$('.pEntry').slideUp();
@@ -198,21 +191,14 @@ class pSearchBox extends pTemplatePiece{
 
 	
 		$output .= "
-
-		$('.word-search').keydown(function(){
-			$('.load-hide').show();
-		});
-
-		$('.word-search').keyup(function(){
-			$('.load-hide').hide();
-		});
-
 		$('.search-button').click(function(){
 			search(true);
 		});
 
-		$('.dictionary-selector').on('change', function(e) {
-          search();
+		$('.dictionary-selector-selector').on('change', function(e) {
+          	 if($('.word-search').val() != ''){
+          		search();
+        	}
         });
 
 

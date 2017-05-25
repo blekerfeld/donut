@@ -22,6 +22,7 @@ return array(
 			'section_key' => 'lemma',
 			'type' => 'pEntryHandler',
 			'template' => 'pLemmaTemplate',
+			'edit_url' => '?lemmasheet/edit/',
 			'table' => 'words',
 			// Beware: the information fields need to exitst in the structure's datafields array
 			'entry_meta' => array(

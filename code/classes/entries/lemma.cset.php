@@ -78,7 +78,7 @@ class pLemma extends pEntry{
 		pMainTemplate::setTitle($this->_entry['native']);
 
 		// For the entry we need all possible bindings
-		$this->bindAll((isset(pAdress::session()['returnLanguage']) ? pAdress::session()['returnLanguage'] : false));
+		$this->bindAll();
 
 		// The Subentries need to be prepared
 		$this->compileSubEntries();
@@ -98,8 +98,6 @@ class pLemma extends pEntry{
 
 		// Let's throw the subentries through their template
 		p::Out($this->_template->parseSubEntries($this->_subEntries));
-
-		p::Out($this->_actionbar->output);
 	}
 
 	// This function will generate an infostring

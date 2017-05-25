@@ -28,7 +28,7 @@ class pTranslationTemplate extends pEntryTemplate{
 		$titleSection->addInformationElement($flag." ".(new pLanguage($this->_data['language_id']))->parse());
 		$titleSection->addInformationElement(DA_TRANSLATION);
 
-		return $realTitle.$titleSection."<br />";
+		return $realTitle.$titleSection;
 
 	}
 

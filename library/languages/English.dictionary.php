@@ -16,7 +16,7 @@
 define('DICT_TITLE', 'Dictionary');
 define('DICT_READMORE', 'Go to lemma');
 define('DICT_SEARCH', 'Search');
-define('DICT_KEYWORD', 'Keyword');
+define('DICT_KEYWORD', 'Search the dictionary...');
 define('DICT_EXACT_MATCH', 'exact match');
 define('DICT_MATCH', 'Your query yielded %s result.');
 define('DICT_SEARCH_RESULTS', 'Search results');
@@ -46,6 +46,10 @@ define("LEMMA_HOMOPHONES", "Homophones");
 
 // Lemma edit
 define('LEMMA_EDIT', "Edit lemma");
+define('LEMMA_NEW', "New lemma");
+define('LEMMA_VIEW_SHORT', "View");
+define('LEMMA_EDIT_SHORT', "Edit");
+define('LEMMA_DISCUSS_SHORT', "Discuss");
 define('LEMMA_EDIT_MODE', "Edit lemma");
 define('LEMMA_EDIT_BASICS', "Change basic information");
 define('LEMMA_EDIT_DELETE', "Delete Lemma");
@@ -56,20 +60,6 @@ define("LEMMA_EDIT_IRREGULAR", "Manage irregularities");
 define("LEMMA_EDIT_TRANSLATIONS", "Edit translations");
 define("LEMMA_CLONE_TRANSLATIONS", "Clone translations");
 define("LEMMA_EDIT_TRANSLATIONS_INFO", "If you want to edit translations in another language, you need to <a href'".p::Url("?editorlanguage")."'>change your editor language</a>.");
-
-
-
-// Edit basics
-define('LE_BASICS_TITLE', "Edit basic information");
-define('LE_BASICS_WORD', "Word in %s");
-define('LE_BASICS_TYPE', "Part of speech:");
-define('LE_BASICS_CLASSIFICATION', "Classification:");
-define('LE_BASICS_TAGS', "Tag:");
-
-// Edit IPA
-
-define('LE_IPA_TITLE', "Edit IPA transcription");
-define('LE_IPA', "IPA transcription");
 
 
 // Entry

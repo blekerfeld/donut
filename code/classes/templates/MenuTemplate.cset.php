@@ -61,7 +61,7 @@ class pMenuTemplate extends pTemplate{
 						$output .= "'";	
 					}
 					$items++;
-					$output .= ">".(isset($this->_meta[$key]['icon']) ? (new pIcon($this->_meta[$key]['icon'], 8))." " : '').$this->_meta[$key]['name']."</a>";
+					$output .= ">".(isset($this->_meta[$key]['icon']) ? (new pIcon($this->_meta[$key]['icon'], 12))."" : '').$this->_meta[$key]['name']."</a>";
 				}
 			}
 		}
