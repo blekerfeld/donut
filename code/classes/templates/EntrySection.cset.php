@@ -46,7 +46,7 @@ class pEntrySection extends pTemplatePiece{
 
 		$id = spl_object_hash($this);
 
-		$output = "<div ".($this->_closable ? 'class="closable pointer" onClick="$(\'.title_'.$id.'\').toggleClass(\'closed\');$(\'.content_'.$id.'\').slideToggle(\'fast\');$(\'.hideIcon_'.$id.'\').toggle();$(\'.showIcon_'.$id.'\').toggle();"' : '')."><span class='pSectionTitle title_$id $this->_extraClass  ".($this->_closable ? 'closed' : '')."'>";
+		$output = "<div ".($this->_closable ? 'class="closable pointer" onClick="$(\'.title_'.$id.'\').toggleClass(\'closed\');$(\'.content_'.$id.'\').slideToggle(\'fast\');$(\'.showIcon_'.$id.'\').toggle();"' : '')."><span class='pSectionTitle title_$id $this->_extraClass  ".($this->_closable ? 'closed' : '')."'>";
 
 		if($this->_icon != null)
 			$output .= new pIcon($this->_icon, 10)." ";

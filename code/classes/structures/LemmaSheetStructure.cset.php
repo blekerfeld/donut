@@ -37,17 +37,38 @@ class pLemmasheetStructure extends pStructure{
 
 	public function render(){
 
+		$searchBox = new pSearchBox;
+
+		if(isset(pAdress::arg()['is:result'], pAdress::session()['searchQuery']))
+			$searchBox->setValue(pAdress::session()['searchQuery']);
+
+		if(!isset(pAdress::arg()['ajax']))
+			p::Out($searchBox);
+
 		// If there is an offset, we need to define that
 		if(isset(pAdress::arg()['offset']))
 			$this->_parser->setOffset(pAdress::arg()['offset']);
 
-		if(!isset(pAdress::arg()['ajax']))
-			p::Out("<div class='rulesheet-header'>".p::Markdown("## ".$this->_structure[$this->_section]['surface'])."</div><br />");
-			
+		if(!isset(pAdress::arg()['ajax']) && (isset(pAdress::arg()['action']) && pAdress::arg()['action'] == 'edit'))
+			p::Out("<div class='home-margin pEntry'><div class='card-tabs-bar titles'>
+					<a class='ssignore float-right' href='".p::Url('?lemmasheet/new')."'>".LEMMA_NEW."</a>
+					<a class='ssignore' href='".p::Url('?entry/'.pAdress::arg()['id'].(isset(pAdress::arg()['is:result']) ? '/is:result' : ''))."'>".LEMMA_VIEW_SHORT."</a>
+					<a class='active ssignore' href='javascript:void();'>".LEMMA_EDIT_SHORT."</a>
+					<a class='ssignore' href='".p::Url('?entry/'.pAdress::arg()['id'])."/discuss".(isset(pAdress::arg()['is:result']) ? '/is:result' : '')."'>".LEMMA_DISCUSS_SHORT."</a>
+				</div>");
+		elseif(!isset(pAdress::arg()['ajax']))
+			p::Out("<div class='home-margin pEntry'>");
+
+
+
 		// Let's handle the action by the object
 		if(isset(pAdress::arg()['action'])){
 			if(isset(pAdress::arg()['id']))
-				$this->_parser->runData(pAdress::arg()['id']);
+				if(!$this->_parser->runData(pAdress::arg()['id'])){
+					p::Out("<br />".pMainTemplate::NoticeBox('fa-info-circle fa-12', ENTRY_NOT_FOUND, 'danger-notice'));
+					goto skipError;
+				}
+
 			$this->_parser->passOnAction(pAdress::arg()['action']);
 		}
 		else{
@@ -57,6 +78,8 @@ class pLemmasheetStructure extends pStructure{
 				$this->_parser->runData();
 			$this->_parser->render();
 		}
+
+		skipError:
 
 		// Tooltipster time!
 		p::Out("<script type='text/javascript'>

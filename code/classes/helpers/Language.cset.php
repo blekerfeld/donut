@@ -36,7 +36,7 @@ class pLanguage{
 	public static function allActive(){
 
 		$data = (new pDataModel('languages'));
-		$data->setCondition(" WHERE activated = 1");
+		$data->setCondition(" WHERE activated = 1 AND id <> 0");
 		$array = array();
 		foreach($data->getObjects()->fetchAll() as $lang){
 			$array[] = new self($lang['id']);
@@ -50,18 +50,21 @@ class pLanguage{
 
 		$data = (new pDataModel('languages'))->getObjects()->fetchAll();
 
-		$select = '<select class="'.$class.'">';
+		$select = '<input type="hidden" class="'.$class.'" value="'.(isset(pAdress::session()['searchLanguage']) ? pAdress::session()['searchLanguage'] : $data[1]['locale'].'-'.$data[0]['locale']).'"/><select class="'.$class.'-selector">';
 
 		$lang_zero = $data[0];
 
 		foreach($data as $key => $language)
 			if($key > 0)
-				$select .= '<option value="'.$language['locale'].'-'.$lang_zero['locale'].'" '.((isset(pAdress::session()['searchLanguage']) AND (pAdress::session()['searchLanguage'] == $language['locale'].'-'.$lang_zero['locale'])) ? ' selected ' : '').'>'.($language['locale'] != '' ? $language['locale'] : $language['name']).' - '.($lang_zero['locale'] != '' ? $lang_zero['locale'] : $lang_zero['name']).'      　&MediumSpace;</option><option value="'.$lang_zero['locale'].'-'.$language['locale'].'" '.((isset(pAdress::session()['searchLanguage']) AND (pAdress::session()['searchLanguage'] == $lang_zero['locale'].'-'.$language['locale'])) ? ' selected ' : '').'>'.($lang_zero['locale'] != '' ? $lang_zero['locale'] : $lang_zero['name']).' - '.($language['locale'] != '' ? $language['locale'] : $language['name']).'      　&MediumSpace;</option>';
+				$select .= '<option value="'.$language['locale'].'-'.$lang_zero['locale'].'" '.((isset(pAdress::session()['searchLanguage']) AND (pAdress::session()['searchLanguage'] == $language['locale'].'-'.$lang_zero['locale'])) ? ' selected ' : '').'>'.$language['name'].' - '.$lang_zero['name'].'</option><option value="'.$lang_zero['locale'].'-'.$language['locale'].'" '.((isset(pAdress::session()['searchLanguage']) AND (pAdress::session()['searchLanguage'] == $lang_zero['locale'].'-'.$language['locale'])) ? ' selected ' : '').'>'.$lang_zero['name'].' - '.$language['name'].'</option>';
 
 	    
-	  	return $select . '</select><script type="text/javascript">$(".'.$class.'").select2({
-			  placeholder: ""
-			});</script>';
+	  	return $select . '</select><script>$(".'.$class.'-selector").ddslick({
+	    onSelected: function(selectedData){
+	       $(".'.$class.'").val(selectedData.selectedData.value);
+	       $(".'.$class.'").trigger("change");
+	    }   
+	});</script>';
 	}
 
 	private function load($data){

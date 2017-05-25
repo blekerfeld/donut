@@ -39,13 +39,33 @@ class pLemmasheetHandler extends pHandler{
 			p::Out('<script type="text/javascript">$(".lemma-ipa").val("'.@$twolc->feed(pAdress::post()['lemma'])->toSurface().'");</script>');
 	}
 
+	public function ajaxSave($editBool = false){
+		$edit = false;
+
+		while($edit == false){
+			// Let's update the basics
+			$edit = $this->dataModel->Basics(pAdress::post()['native'], pAdress::post()['lexform'], pAdress::post()['ipa'], pAdress::post()['lexcat'], pAdress::post()['gramcat'], pAdress::post()['tags'], $editBool);
+
+			// Let's update the translations
+			$edit = $this->dataModel->updateTranslations(json_decode(pAdress::post()['translations'], true));
+
+		}
+		
+
+		if($edit == false)
+			echo pMainTemplate::NoticeBox('fa-warning', SAVED_ERROR, 'hide warning-notice errorSave');
+		else
+			echo pMainTemplate::NoticeBox('fa-check', SAVED, 'hide succes-notice successSave');
+
+		die('<script>$(".saving").slideUp();'.(($edit == false) ? '$(".errorSave").slideDown();' : '$(".errorSave").slideUp();$(".successSave").slideDown().delay(1500).slideUp();$("#LemmaSheetForm").trigger("reset");$(".tags").val("").html("");')."</script>");
+	}
+
 	public function ajaxEdit(){
-		var_dump(json_decode(pAdress::post()['translations'], true));
-		die('<script>$(".saving").slideUp();$(".errorSave").slideUp();$(".successSave").slideDown().delay(1500).slideUp();</script>');
+		$this->ajaxSave(true);
 	}
 
 	public function ajaxNew(){
-		
+		$this->ajaxSave(false);
 	}
 
 }

@@ -41,10 +41,11 @@ return array(
 				'permission' => -4,
 				'class' => '',	
 				'subitems' => array(
-					'dictionary-admin' => array(
-						'name' => 'Dictionary',
-						'icon' => 'fa-book',
-						'app' => 'dictionary-admin',
+					
+					'new-word' => array(
+						'name' => 'New Lemma',
+						'icon' => 'fa-plus-circle',
+						'app' => 'lemmasheet/new',
 						'permission' => -4,
 					),
 					'rulesheet' => array(
@@ -57,6 +58,12 @@ return array(
 						'name' => 'Terminal',
 						'icon' => 'fa-terminal',
 						'app' => 'terminal',
+						'permission' => -4,
+					),
+					'dictionary-admin' => array(
+						'name' => 'Dictionary settings',
+						'icon' => 'fa-cog',
+						'app' => 'dictionary-admin',
 						'permission' => -4,
 					),
 				),
@@ -98,7 +105,7 @@ return array(
 
 
 	'lemmasheet' => array(
-		'page_title' => 'lemmasheet',
+		'page_title' => 'Lemma editor',
 		'default_section' => 'lemma',
 		'arguments' => array(
 			0 => 'action',
