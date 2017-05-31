@@ -1,0 +1,228 @@
+/* Responsive theming */
+@media only screen and (max-width: 700px) {
+
+   .hSearch a.button.search{
+    display: none;
+   }
+
+   .header.dictionary.home .hSearch input#wordsearch{
+    min-width: 0px;
+    width: 65%;
+    float: left;
+    margin-top: -5px;
+   }
+
+
+   .home-search input#wordsearch, .header.dictionary input#wordsearch{
+    margin-top: -14px;
+      min-width: 0px;
+    width: 65%;
+    float: left;
+   }
+
+
+   div.ulWrap{
+      margin-left: 0px;
+      margin-right: 0px;
+   }
+
+   div.ulWrap.fixed{
+     margin-top: 85px;
+   }
+
+   .hMobile{
+     -webkit-transition: width 0.2s;
+      transition: width 0.2s;
+      margin-bottom: -45px;
+   }
+
+   .hMobile *{
+     -webkit-transition: all 0.2s;
+      transition: all 0.2s;
+   }
+
+   .hMobile .header{
+    opacity: 1; 
+    background: transparent;
+    width: 100%;
+    box-shadow: none;
+    padding: 10px;
+
+   }
+
+   .actionbar{
+    margin-top: 100px;
+    margin: 0 auto;
+    display: block;
+    width: 70%;
+    text-align: center;
+    display: none;
+   }
+
+   .actionbar.float-right{
+    float: none;
+   }
+
+   .hMobile.fixed{
+    width: 100%;
+    z-index: 1000;
+    height: 80px;
+    position: fixed;
+     top: 10px;
+     background: #3A3B5B;!important;
+     margin-top: -12px;
+     margin-left: -16px;
+   }
+
+   .hMobile.fixed .header{
+    opacity: 1; 
+    background: transparent;
+    width: 100%;
+    box-shadow: none;
+    padding: 10px;
+    margin: 0px;
+   }
+
+   .hMobile.fixed .hWrap{
+    padding: 0;
+   }
+
+   .hMobile.fixed .header .hSearch{
+      background: white;  
+   }
+
+   .hMobile.fixed input#wordsearch{
+    font-size: 20px
+   }
+
+   .hSearch{
+    margin: 0;
+    opacity: 1!important;
+   }
+
+   .header.dictionary{
+    opacity: 1!important;
+   }
+
+   .header.dictionary.home{
+    padding: 10px!important;
+   }
+
+   .alphabetbar{
+    display: none;
+   }
+
+   .home-margin{
+    width: 95%;
+   }
+
+   .actionbar{
+    opacity: .5;
+    cursor: pointer;
+    transition: opacity .2s;
+   }
+
+   .actionbar:hover{
+    opacity: 1;
+   }
+
+   .absolute_header{
+      margin-left: 0px;
+      text-align: center;
+      margin-right: 0px;
+   }
+
+     div.logotop{
+      background: #3B3C53;
+      text-align: center;
+      margin-bottom: 10px;
+      color: snow;
+      float: none;
+      display: block;
+      margin: 0 auto;
+      margin-top: -20px;
+      margin-left: -18px;
+      width: calc(100vw + 2px);
+      padding: 5px;
+      margin-bottom: 10px;
+      clear: both;
+     }
+
+     div.nav{
+  
+     }
+
+     input#wordsearch
+     {
+      -webkit-tap-highlight-color: transparent;
+     }
+
+    .header.dictionary.home .hSearch input#wordsearch{
+      font-size: 20px;
+    }
+
+     div.page{
+      padding-top: 35px;
+      min-height: 200px;  
+     }
+
+    .markdown-body{
+      padding-top: 20px;
+     }
+
+     .markdown-body.inline-block{
+      padding-top: 0px;
+     }
+
+     div.logotop a{
+      color: snow;
+      text-decoration: underline;
+     }
+
+     a.siteTitle{
+      font-size: 17px;
+     }
+
+     div.d_admin_menu{
+      margin-top: -24px;
+      margin-bottom: -35px;
+      margin-right: -1px;
+     }
+
+     div.btCard{  
+     }
+
+     div.hSearch .load-hide{
+      display: none;
+      float: none;
+      position: absolute;
+      top: 0px;
+      right: 0px;
+    }
+
+    div.btCard.admin{
+      width: 95%;
+    }
+
+    .absolute_footer{
+      opacity: .2;  
+      margin-bottom: 5px;
+      margin-top: 5px;
+    }
+
+    .absolute_footer img {
+      height: 10px;
+      float: right;
+      opacity: .5;
+      width: auto;
+    }
+
+    span.wholewordWrap{
+      opacity: .4;
+    }
+
+  .mobilehide{
+    display: none;
+  }
+
+}

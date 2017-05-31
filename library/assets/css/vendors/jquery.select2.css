@@ -36,6 +36,8 @@
     cursor: pointer;
     display: block;
     min-height: 32px;
+    padding: 7px;
+    font-size: 15px;
     user-select: none;
     -webkit-user-select: none;
 }
@@ -48,6 +50,7 @@
 }
 .select2-container .select2-search--inline {
     float: left;
+    width: 100%;
 }
 .select2-container .select2-search--inline .select2-search__field {
     box-sizing: border-box;
@@ -199,6 +202,9 @@
 .select2-container--default .select2-selection--multiple {
     background-color: white;
     border: 1px solid #ddd;
+    border-top: none;
+    border-left: none;
+    border-right: none;
     cursor: text;
 }
 .select2-container--default .select2-selection--multiple .select2-selection__rendered {
@@ -262,6 +268,9 @@
 }
 .select2-container--default.select2-container--focus .select2-selection--multiple {
     border: solid #bbb 1px;
+    border-top: none;
+    border-right: none;
+    border-left: none;
     outline: 0;
 }
 .select2-container--default.select2-container--disabled .select2-selection--multiple {
@@ -288,6 +297,7 @@
     outline: 0;
     box-shadow: none;
     -webkit-appearance: textfield;
+
 }
 .select2-container--default .select2-results>.select2-results__options {
     max-height: 200px;

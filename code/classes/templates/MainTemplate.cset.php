@@ -27,6 +27,27 @@ class pMainTemplate extends pTemplate{
 
 	}
 
+  public static function allowTabs(){
+    return "$(document).delegate('.allowtabs', 'keydown', function(e) {
+      var keyCode = e.keyCode || e.which;
+
+      if (keyCode == 9) {
+        e.preventDefault();
+        var start = $(this).get(0).selectionStart;
+        var end = $(this).get(0).selectionEnd;
+
+        // set textarea value to: text before caret + tab + text after caret
+        $(this).val($(this).val().substring(0, start)
+                    + '\t'
+                    + $(this).val().substring(end));
+
+        // put caret at right position again
+        $(this).get(0).selectionStart =
+        $(this).get(0).selectionEnd = start + 1;
+      }
+    });";
+  }
+
 	protected function userBox(){
     if(pUser::noGuest())
 		  return (pUser::read('longname') != '' ? pUser::read('longname') : pUser::read('username'))." <a href='".p::Url('?auth/logout')."'>(".MMENU_LOGOUT.")</a>";

@@ -12,6 +12,16 @@
   outline: none !important;
 }
 
+.noselect {
+  -webkit-touch-callout: none; /* iOS Safari */
+    -webkit-user-select: none; /* Safari */
+     -khtml-user-select: none; /* Konqueror HTML */
+       -moz-user-select: none; /* Firefox */
+        -ms-user-select: none; /* Internet Explorer/Edge */
+            user-select: none; /* Non-prefixed version, currently
+                                  supported by Chrome and Opera */
+}
+
 
  ::-moz-selection {
   background: #7CADDE;
@@ -69,6 +79,11 @@ a:hover {
 p{
   display: inline;
 }
+
+textarea:focus, input:focus {   
+  border-color: rgba(17,39,175, 0.3)!important;
+}
+
 
 /* Basic modifiers*/
 
@@ -1739,63 +1754,9 @@ img.dFlag:hover {
   font-size: 10px!important;
 }
 
-
 .boolean-check, .boolean-ban{
  width: 24px;
  text-align: center; 
-}
-
-.tooltip_templates {
-  display: none;
-}
-
-.hover {
-  display: inline-block;
-  max-width: 25px !important;
-  min-width: 25px !important;
-  width: 25px !important;
-  margin-left: 10px;
-  margin-right: 10px;
-  margin-top: 4px;
-  text-align: center;
-  font-size: 0.75em;
-  font-weight: bold;
-  cursor: pointer;
-  position: absolute;
-  z-index: 1;
-  background: #f6f6f6;
-}
-
-.hover span.hide {
-  display: none !important;
-}
-
-.hover:hover span.hide {
-  margin: 0;
-  display: block !important;
-  font-weight: normal !important;
-  text-align: left;
-  width: 245px;
-  padding: 5px;
-  background-color: inherit;
-  color: inherit;
-}
-
-.hover:hover {
-  z-index: 10;
-}
-
-
-}
-.hover.gray {
-  margin: 0 !important;
-  border-color: #ccc !important;
-  background-color: red;
-}
-.hover.gray span.hide {
-  background-color: #f6f6f6;
-  color: #333;
-  padding: 7px;
 }
 
 /* IPA symbols */
@@ -1823,45 +1784,8 @@ span.ipa:hover {
   background: #4f5352;
   color: #fff;
 }
-.checkbox-wholeword, .radio-wholeword {
-  opacity: 0;
-  position: absolute;
-}
-.checkbox-wholeword, .checkbox-wholeword-label {
-  display: inline-block;
-  vertical-align: middle;
-  margin: 5px;
-  cursor: pointer;
-  font-size: 12px;
-  color: #aaa;
-}
-.checkbox-wholeword-label, .radio-wholeword-label {
-  position: relative;
-}
-.checkbox-wholeword+.checkbox-wholeword-label:before, .radio-wholeword+.radio-wholeword-label:before {
-  content: '';
-  background: #FFF;
-  border: 1px solid #ddd;
-  background-size: cover;
-  display: inline-block;
-  vertical-align: middle;
-  width: 12px;
-  height: 12px;
-  padding: 0px;
-  margin-right: 2px;
-  text-align: center;
-}
-.checkbox-wholeword:checked+.checkbox-wholeword-label:before {
-  content: "✓";
-  padding-top: 0px;
-  line-height: 1.1;
-  color: black;
-  background-size: cover;
-}
 
-.checkbox-wholeword:focus+.checkbox-wholeword-label, .radio-wholeword:focus+.radio-wholeword-label {
-  /* focus style */
-}
+
 .count {
   font-size: 30PX;
   border-radius: 7px;
@@ -2219,187 +2143,6 @@ a.wdTopLink, a.wdTopLink i.fa {
 }
 
 
-.wikiSidebar{
-  float: left;
-  width: 20%;
-  margin-right: 0px;
-}
-
-.wikiSidebar div{
-  background: rgba(230, 230,230, 0.4);
-  padding: 10px;
-}
-
-.wikiSearch{
-  border: rgba(150, 150, 150, 0.1) 1px solid;
-  border-bottom: 3px double #D26232;
-  padding: 10px;
-  font-family: Arial;
-  font-style: italic;
-  font-size: 15px;
-  width: 85%;
-}
-
-.wikiHistory li{
-  margin-bottom: 5px;
-}
-
-.wikiSidebar div a{
-  display: block;
-  background: #fff;
-  border-bottom: 3px white double;
-  padding: 4px;
-  color: #333;
-  font-size: 14px;
-  margin-bottom: 3px;
-}
-
-
-.wikiSidebar div a:hover{
-  border-bottom: 3px double #B04010;
-}
-
-.wikiSidebar div a.orange{
-    border-bottom: 3px double #D26232;
-    background: #B04010;
-    color: white;
-}
-
-.wikiSidebar div a.sub{
-  margin-left: 30px;
-  border-left: 3px double transparent;
-  font-size: 13px;
-}
-
-.wikiSidebar div a.sub.orange{
-  background: #f9f9f9;
-  border: none;
-  color: #333;
-  border-left: 3px double #D26232;
-}
-
-.wikiSidebar div a.sub i.fa{
-  font-size: 12px;
-}
-
-.wikiContent{
-  float: right;
-  width: 80%;
-  padding-left: 40px;
-}
-
-.wikiContent a.lemma-code{
-  background: #B04010;
-  padding: 4px;
-  opacity: 0.8;
-  display: inline-block;
-  color: white;
-  font-size: 10px;
-}
-
-.wikiContent a.lemma-code:hover{
-   opacity: 1;
-}
-
-.wikiContent a.lemma-code.wiki{
-  padding: 2px;
-}
-
-span.wikiTitle{
-  font-family: Merriweather;
-  font-weight: bolder;
-  font-size: 25px;
-  border-bottom: 3px double #ddd;
-  padding-bottom: 5px;
-  display: block;
-}
-
-span.wikiTitle a{
-  color: #444;
-}
-span.wikiTitle a:hover{
-  text-decoration: underline;
-}
-
-.wikiArticleInner h1, .wikiArticleInner h2, .wikiArticleInner h3, .wikiArticleInner h4, .wikiArticleInner h4, .wikiArticleInner h5, .wikiArticleInner h6{
-  font-family: Raleway;
-}
-.wikiArticleInner h1{
-  font-size: 20px;
-  
-}
-.wikiArticleInner h2{
-  font-size: 16px;
-}
-
-.wikiArticleInner ol, .wikiArticleInner ul{
-  margin: 0;
-  padding: 2px;
-  padding-left: 40px;
-  margin-bottom: 7px;
-}
-
-.wikiArticleInner li{
-  list-style: square;
-  margin: 0;
-}
-
-.wikiArticleInner table{
-  width: 80%;
-}
-
-.wikiArticleInner table th{
-  border-bottom: solid #eee 1px;
-  padding: 3px;
-}
-.wikiArticleInner table td, .wikiArticleInner table tr{
-  border: dashed 1px #eee;
-}
-
-ul.wikiHistory li a span.wikiReverted{
-  color: #333;
-  font-size: 10px;
-  text-decoration: underline;
-}
-
-ul.wikiHistory li a span.wikiReverted i.fa{
-  text-decoration: underline;
-}
-
-a.wikiLink.red{
-  color: darkred;
-}
-
-input.wikiEditTitle{
-  background: transparent;
-  border: none!important;
-  border-bottom: solid 1px white!important;
-  width: 80%;
-  color: white;
-}
-
-input.wikiEditSpecification{
-  margin-left: 3px;
-  padding: 2px;
-  width: 60%;
-}
-
-textarea.wikiEditContent{
-  width: 100%;
-  min-height: 500px;
-  border: none;
-  font-family: initial;
-  padding: 10px;
-  border-top: 1px #ccc solid;
-  border-bottom: 1px #ccc solid;
-}
-
-/*TESTING CONSCRIPT SUPPORT*/
-.native, a.tooltip.native, span.native a.tooltip, .wordlink {
-  transition: font-size .3s;
-}
-.native:hover {}
-
 
 /* D_ADMIN
 */ 
@@ -2441,7 +2184,7 @@ div.rulesheet .right{
   margin-left: 0px; 
   padding: 10px; 
 }
-
+  
 div.mainTabs div[data-tab]{
   min-height: 400px;
 }
@@ -2652,235 +2395,6 @@ div.debugConsole span.line{
   display: block;
 }
 
-/* Responsive theming */
-@media only screen and (max-width: 700px) {
-
-   .hSearch a.button.search{
-    display: none;
-   }
-
-   .header.dictionary.home .hSearch input#wordsearch{
-    min-width: 0px;
-    width: 65%;
-    float: left;
-    margin-top: -5px;
-   }
-
-
-   .home-search input#wordsearch, .header.dictionary input#wordsearch{
-    margin-top: -14px;
-      min-width: 0px;
-    width: 65%;
-    float: left;
-   }
-
-
-   div.ulWrap{
-      margin-left: 0px;
-      margin-right: 0px;
-   }
-
-   div.ulWrap.fixed{
-     margin-top: 85px;
-   }
-
-   .hMobile{
-     -webkit-transition: width 0.2s;
-      transition: width 0.2s;
-      margin-bottom: -45px;
-   }
-
-   .hMobile *{
-     -webkit-transition: all 0.2s;
-      transition: all 0.2s;
-   }
-
-   .hMobile .header{
-    opacity: 1; 
-    background: transparent;
-    width: 100%;
-    box-shadow: none;
-    padding: 10px;
-
-   }
-
-   .actionbar{
-    margin-top: 100px;
-    margin: 0 auto;
-    display: block;
-    width: 70%;
-    text-align: center;
-    display: none;
-   }
-
-   .actionbar.float-right{
-    float: none;
-   }
-
-   .hMobile.fixed{
-    width: 100%;
-    z-index: 1000;
-    height: 80px;
-    position: fixed;
-     top: 10px;
-     background: #3A3B5B;!important;
-     margin-top: -12px;
-     margin-left: -16px;
-   }
-
-   .hMobile.fixed .header{
-    opacity: 1; 
-    background: transparent;
-    width: 100%;
-    box-shadow: none;
-    padding: 10px;
-    margin: 0px;
-   }
-
-   .hMobile.fixed .hWrap{
-    padding: 0;
-   }
-
-   .hMobile.fixed .header .hSearch{
-      background: white;  
-   }
-
-   .hMobile.fixed input#wordsearch{
-    font-size: 20px
-   }
-
-   .hSearch{
-    margin: 0;
-    opacity: 1!important;
-   }
-
-   .header.dictionary{
-    opacity: 1!important;
-   }
-
-   .header.dictionary.home{
-    padding: 10px!important;
-   }
-
-   .alphabetbar{
-    display: none;
-   }
-
-   .home-margin{
-    width: 95%;
-   }
-
-   .actionbar{
-    opacity: .5;
-    cursor: pointer;
-    transition: opacity .2s;
-   }
-
-   .actionbar:hover{
-    opacity: 1;
-   }
-
-   .absolute_header{
-      margin-left: 0px;
-      text-align: center;
-      margin-right: 0px;
-   }
-
-     div.logotop{
-      background: #3B3C53;
-      text-align: center;
-      margin-bottom: 10px;
-      color: snow;
-      float: none;
-      display: block;
-      margin: 0 auto;
-      margin-top: -20px;
-      margin-left: -18px;
-      width: calc(100vw + 2px);
-      padding: 5px;
-      margin-bottom: 10px;
-      clear: both;
-     }
-
-     div.nav{
-  
-     }
-
-     input#wordsearch
-     {
-      -webkit-tap-highlight-color: transparent;
-     }
-
-    .header.dictionary.home .hSearch input#wordsearch{
-      font-size: 20px;
-    }
-
-     div.page{
-      padding-top: 35px;
-      min-height: 200px;  
-     }
-
-    .markdown-body{
-      padding-top: 20px;
-     }
-
-     .markdown-body.inline-block{
-      padding-top: 0px;
-     }
-
-     div.logotop a{
-      color: snow;
-      text-decoration: underline;
-     }
-
-     a.siteTitle{
-      font-size: 17px;
-     }
-
-     div.d_admin_menu{
-      margin-top: -24px;
-      margin-bottom: -35px;
-      margin-right: -1px;
-     }
-
-     div.btCard{  
-     }
-
-     div.hSearch .load-hide{
-      display: none;
-      float: none;
-      position: absolute;
-      top: 0px;
-      right: 0px;
-    }
-
-    div.btCard.admin{
-      width: 95%;
-    }
-
-    .absolute_footer{
-      opacity: .2;  
-      margin-bottom: 5px;
-      margin-top: 5px;
-    }
-
-    .absolute_footer img {
-      height: 10px;
-      float: right;
-      opacity: .5;
-      width: auto;
-    }
-
-    span.wholewordWrap{
-      opacity: .4;
-    }
-
-  .mobilehide{
-    display: none;
-  }
-
-}
-
 table.inflections{
   width: 30%;
   float: left;
@@ -2942,4 +2456,14 @@ table.inflections tr.title td{
     margin-top: 3px;
     margin-left: 4px;
     margin-right: 3px;
+}
+
+textarea.gtEditor{
+  width: 100%;
+  border: 1px solid #f4f4f4;
+  padding: 20px;
+  font-size: 15px;
+  font-family: Open Sans;
+  border-radius: 5px;
+min-height: 350px;
 }

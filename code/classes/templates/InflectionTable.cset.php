@@ -15,7 +15,6 @@ class pInflectionTable extends pTemplatePiece {
 
 	public function __construct($twolc, $modeArray, $compiledParadigms){
 
-
 		$mode = $compiledParadigms[$modeArray['id']];
 		$mode_name = $modeArray['name'];
 

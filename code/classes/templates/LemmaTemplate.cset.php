@@ -29,7 +29,7 @@ class pLemmaTemplate extends pEntryTemplate{
 			foreach($languageArray as $translation)
 				$content .= $translation->parseListItem().$translation->parseDescription();
 			$content .= "</ol>";
-			$overAllContent .= new pEntrySection($title, $content, '', true, true, true);
+			$overAllContent .= new pEntrySection($title, $content, '', true, true, true)."<br />";
 		}
 
 		// If there is a session that restricts the shown languages, offer a link that is able cancel that restriction

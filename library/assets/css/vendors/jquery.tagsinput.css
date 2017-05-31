@@ -1,9 +1,9 @@
-div.tagsinput 
+.tagsinput 
 { 
 	border:1px solid #CCC;
 	background: #FFF;
 	padding:0px; 
-	width: 100%; 
+	width: 100%; 	
 	min-height: 32px; 
 	overflow: auto;
 	border-top: none;
@@ -20,6 +20,7 @@ div.tagsinput span.tag, .imitate-tag
 	background-color: #e4e4e4;
     border: 1px solid #ddd;
     border-radius: 0px;
+    font-size: 15px;
     font-family: Open Sans!important;
     font-weight: normal!important;
     cursor: default;
@@ -29,7 +30,6 @@ div.tagsinput span.tag, .imitate-tag
     margin-right: 5px;
     margin-top: 5px;
     padding: 0 5px;
-    font-size: 13px;
 }
 
 span.imitate-tag{
@@ -65,12 +65,16 @@ div.tagsinput input
 	width:300px; 
 	margin:0px; 
 	font-family: Open Sans;
-	font-size: 13px; 
-	border:1px solid transparent; 
+	font-size: 17px; 
+	border: 1px solid transparent;
 	padding:2px; background: transparent; 
 	color: #000; outline:0px;  
 	margin-right:5px; 
 	margin-bottom:5px; 
+}
+
+div.tagsinput input:focus{
+	border: none!important;
 }
 
 div.tagsinput div 

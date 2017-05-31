@@ -1,0 +1,180 @@
+div.select-specify{
+	width: 30%;
+}
+
+div.select-specify div.items-outer{
+	border: 1px rgba(27, 31, 35, 0.05) solid;
+	padding: 5px;
+	border-radius: 5px 5px 0px 0px;
+	border-bottom: none;
+	min-height: 55px;
+}
+
+div.select-specify div.items-outer h3{
+	margin: 0;
+	font-size: 15px;
+	padding-bottom: 2px;
+	padding-left: 2px;
+	display: inline-block;
+}
+
+div.select-specify div.items{
+	border-bottom: 1px dotted #eee;
+	padding-bottom: 10px;
+}
+
+div.select-specify div.items span.placeholder{
+	color: #aaa;
+	padding: 5px; 
+    text-decoration:none; 
+    margin-right: 5px;
+    margin-top: 5px;
+    padding: 0 5px;
+	display: inline-block;
+    -moz-user-select: none; 
+    -ms-user-select: none; 
+    user-select: none;
+}
+
+div.select-specify div.input-bar{
+	background: #f9f9f9;
+	background-image: linear-gradient(-180deg, rgba(250, 251, 252, 0.3) 0%, rgba(250, 251, 252, 0.3) 90%);
+	border: 1px solid rgba(27, 31, 35, 0.1);
+	border-top: 1px solid rgba(27, 31, 35, 0.05);
+	padding: 8px;
+	padding-top: 2px;
+	border-radius: 0px 0px 5px 5px;
+	transition: all .1s;
+	display: flex;
+}
+
+div.select-specify div.input-bar.error{
+	background: #E87377
+}
+
+div.select-specify div.input-bar a.add, div.select-specify div.input-bar a.remove{
+	color: black;
+	background: linear-gradient(rgb(1, 101, 255), rgb(15, 90, 203));
+	font-size: 12px;
+	padding: 5px;
+	border-radius: 5px;
+	display: inline-block;
+	text-decoration: none;
+	font-weight: bold;
+	color: white;
+	opacity: .9;
+	margin-top: 10px;
+	border: 1px solid rgba(15, 90, 203, 0.5);
+	width: auto;
+	margin-right: 3px;
+}
+
+div.select-specify div.input-bar a.remove{
+	display: none;
+	background: linear-gradient(#eee, #e4e4e4);
+	color: #777;
+	opacity: .5;
+	border-color: #ddd;
+}
+
+div.select-specify div.input-bar a.add:hover, div.select-specify div.input-bar a.remove:hover{
+	opacity: 1;
+	text-decoration: underline;
+	border-width: 2px;
+	padding: 4px;
+}
+
+div.select-specify select.proper-select, div.select-specify select.proper-keyword{
+	width: 90%;
+	border: #d1d1d1 1px solid;
+	padding: 5px;
+}
+
+div.select-specify div.input-bar span.value{
+	margin-top: 3px;
+	align-items: stretch;
+	width: 48%;
+ 	display: block;
+ 	color: #aaa;
+	font-size: 13px;
+	align-items: stretch;
+ 	display: block;
+	padding-top: 0px;
+}
+
+
+div.select-specify div.input-bar span.keyword{
+	color: #aaa;
+	font-size: 13px;
+	width: 50%;
+	align-items: stretch;
+ 	display: block;
+	padding-top: 3px;
+}
+
+div.select-specify div.input-bar span.keyword input{
+	width: 100%;
+	border: #d1d1d1 1px solid;
+	padding: 5px;
+}
+
+div.select-specify div.items div.item{
+	display: inline-block;
+	background-color: #e4e4e4;
+    border: 1px solid #ddd;
+    border-radius: 0px;
+    font-size: 15px;
+    font-weight: normal!important;
+    cursor: default;
+    padding: 5px; 
+    text-decoration:none; 
+    margin-right: 5px;
+    margin-top: 5px;
+    padding: 0 5px;
+   	cursor: pointer;
+   	transition: all .1s;
+}
+
+div.select-specify div.items div.item.selected{
+	background: linear-gradient(rgb(1, 101, 255), rgb(15, 90, 203));
+	color: #f9f9f9;
+	border-color: #17436D;
+	border-radius: 3px;
+}
+
+div.select-specify div.items div.item span[role="remove"]{
+	transition: all .3s;
+	font-size: 0px;
+}
+
+div.select-specify div.items div.item.selected span[role="remove"]{
+	font-size: 14px!important;
+}
+
+div.select-specify div.items div.item:hover span[role="remove"]{
+	font-size: 14px;
+}
+
+div.select-specify div.items div.item.selected span.attr{
+	font-size: 11px!important;
+	color: #eee;
+}
+
+div.select-specify div.items div.item span.attr{
+	transition: all .3s;
+	font-size: 0px;
+	color: #666;
+}
+
+div.select-specify div.items div.item span.attr:not(:empty):before{
+	content: '(';
+}
+
+div.select-specify div.items div.item span.attr:not(:empty):after{
+	content: ')';
+}
+
+div.select-specify div.items div.item:hover span.attr{
+	font-size: 11px;
+
+}
