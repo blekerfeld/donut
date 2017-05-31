@@ -152,12 +152,12 @@ class pLemmaSheetTemplate extends pTemplate{
 		$('.catTabs').cardTabs();
 		$('.semanticsTabs').cardTabs();
 		$('.generate-ipa').click(function(){
-			$('.ajaxGenerateIPA').load('".p::Url("?lemmasheet/".$section."/generateipa/ajax")."', {'lemma': $('.lemma-native').val()});
+			$('.ajaxGenerateIPA').load('".p::Url("?editor/".$section."/generateipa/ajax")."', {'lemma': $('.lemma-native').val()});
 		});
 		$('.submit-form').click(function(){
 			$('.errorSave').slideUp();
 			$('.saving').slideDown();
-			$('.ajaxSave').load('".p::Url("?lemmasheet/".$section."/".($edit ? 'edit/'.$data['id'] : 'new')."/ajax")."', {
+			$('.ajaxSave').load('".p::Url("?editor/".$section."/".($edit ? 'edit/'.$data['id'] : 'new')."/ajax")."', {
 				'native': $('.lemma-native').val(),
 				'lexform': $('.lemma-lexform').val(),
 				'ipa': $('.lemma-ipa').val(),

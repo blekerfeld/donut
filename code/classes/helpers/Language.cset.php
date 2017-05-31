@@ -48,7 +48,9 @@ class pLanguage{
 	// Makes it possible to do pLanguage::dictionarySelector($class);
 	public static function dictionarySelector($class){
 
-		$data = (new pDataModel('languages'))->getObjects()->fetchAll();
+		$dM = (new pDataModel('languages'));
+		$dM->setCondition(" WHERE activated = 1 ");
+		$data = $dM->getObjects()->fetchAll();
 
 		$select = '<input type="hidden" class="'.$class.'" value="'.(isset(pAdress::session()['searchLanguage']) ? pAdress::session()['searchLanguage'] : $data[1]['locale'].'-'.$data[0]['locale']).'"/><select class="'.$class.'-selector">';
 
