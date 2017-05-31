@@ -41,11 +41,10 @@ return array(
 				'permission' => -4,
 				'class' => '',	
 				'subitems' => array(
-					
 					'new-word' => array(
 						'name' => 'New Lemma',
 						'icon' => 'fa-plus-circle',
-						'app' => 'lemmasheet/new',
+						'app' => 'editor/new',
 						'permission' => -4,
 					),
 					'rulesheet' => array(
@@ -104,7 +103,7 @@ return array(
 	),
 
 
-	'lemmasheet' => array(
+	'editor' => array(
 		'page_title' => 'Lemma editor',
 		'default_section' => 'lemma',
 		'arguments' => array(
@@ -112,7 +111,8 @@ return array(
 			1 => 'id',
 			2 => 'linked',
 		),
-		'menu' => 'lemmasheet',
+		'menu' => 'editor',
+		'override_structure_type' => 'pLemmasheetStructure',
 	),
 
 

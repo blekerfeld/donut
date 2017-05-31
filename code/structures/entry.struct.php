@@ -22,7 +22,7 @@ return array(
 			'section_key' => 'lemma',
 			'type' => 'pEntryHandler',
 			'template' => 'pLemmaTemplate',
-			'edit_url' => '?lemmasheet/edit/',
+			'edit_url' => '?editor/edit/',
 			'table' => 'words',
 			// Beware: the information fields need to exitst in the structure's datafields array
 			'entry_meta' => array(
@@ -64,6 +64,7 @@ return array(
 		'translation' => array(
 			'section_key' => 'translation',
 			'type' => 'pEntryHandler',
+			'edit_url' => '?editor/translation/edit/',
 			'template' => 'pTranslationTemplate',
 			'table' => 'translations',
 			// Beware: the information fields need to exitst in the structure's datafields array

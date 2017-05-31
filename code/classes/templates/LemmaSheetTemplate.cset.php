@@ -33,7 +33,7 @@ class pLemmaSheetTemplate extends pTemplate{
 
 		p::Out("
 			<form id='LemmaSheetForm'>
-			".($edit ? "<span class='native markdown-body'><h2><strong class='pWord'>".$data['native'].'</strong></h2></span>' : '<span class="markdown-body"><h2>'.LEMMA_NEW.'</h2></span><br />')."<br />
+			".($edit ? "<br /><span class='native markdown-body'><h2><strong class='pWord'>".$data['native'].'</strong></h2></span>' : '<span class="markdown-body"><h2>'.LEMMA_NEW.'</h2></span><br />')."<br />
 			<div class='mainTabs'>
 				<div data-tab='Basic information'>
 					<div class='rulesheet'>
@@ -61,7 +61,8 @@ class pLemmaSheetTemplate extends pTemplate{
 				");
 
 
-		p::Out(pMainTemplate::NoticeBox('fa-info-circle fa-12', "Add as many translations as needed. Existing translations are linked and new ones are created on the fly.", 'notice-subtle')."<br />");
+		p::Out(pMainTemplate::NoticeBox('fa-info-circle fa-12', "Add as many translations as needed. Existing translations are linked and new ones are created on the fly.", 'notice-subtle'));
+		p::Out(pMainTemplate::NoticeBox('fa-info-circle fa-12', "The input format is <span class='imitate-tag'>translation</span> or <span class='imitate-tag'>translation>specification</span>", 'notice-subtle')."<br />");
 	
 		// Languages
 		$languages = pLanguage::allActive();
@@ -77,32 +78,76 @@ class pLemmaSheetTemplate extends pTemplate{
 
 
 		}
-		p::Out(pMainTemplate::NoticeBox('fa-info-circle fa-12', "The input format is <span class='imitate-tag'>translation</span> or <span class='imitate-tag'>translation>specification</span>", 'notice-subtle')."<br />");
+
 
 		p::Out("
 				</div>
 				</div>
 				<div data-tab='Relationships'>
+
+					<div class='rulesheet'>
+						<div class='left'>
+
+					".pMainTemplate::NoticeBox('fa-info-circle fa-12', "Only existing lemmas are allowed!", 'notice-subtle')."
+					<br />
+	
+					<select data-heading='Synonyms' class='select-synonyms' style='width:100%;'>".$this->_data->preloadSpecification('synonyms', '%').(new pSelector('words', null, 'native', true, 'rules', true))->render()."</select>	<br />
+
+					<select data-heading='Antonyms' class='select-antonyms' style='width:100%;'>".$this->_data->preloadSpecification('antonyms', '%').(new pSelector('words', null, 'native', true, 'rules', true))->render()."</select>	<br />
+
+
+					</div><div class='right'>
+					<br /><br /><br />
+					<select data-heading='Homophones' class='select-homophones' style='width:100%;'>".$this->_data->preloadSpecification('homophones', '%').(new pSelector('words', null, 'native', true, 'rules', true))->render()."</select>
+
+					</div></div>
+
+				</div>
+
+				<div data-tab='Examples'>
+					<div style='padding: 10px'><select class='examples-select' data-heading='Examples'>".$this->_data->preloadSpecification('idiom_words')
+					.(new pSelector('idioms', null, 'idiom', true, 'rules', true))->render()."
+					</select></div>
 				</div>
 				<div data-tab='Notes'>
+					<div style='padding: 10px'><textarea class='gtEditor usage-notes elastic allowtabs'>".($edit ? $this->_data->_links['usage_notes'] : '')."</textarea></div>
 				</div>
 			</div>
 		</form>
 ");
-		p::Out("<a class='btAction green submit-form no-float'>".(new pIcon('fa-check-circle', 10))." ".SAVE."</a>");
+		p::Out("<a class='btAction green submit-form no-float'>".SAVE."</a>");
 
 		if($edit)
 			p::Out((new pAction('remove', 'Delete item', 'fa-times', 'btAction no-float redbt', null, null, 'words', 'dictionary-admin', null, -3))->render($data['id']));
 
+		p::Out("<br id='cl' /></div>");
+
+		$hashKey = spl_object_hash($this);
+
+			// Throwing this object's script into a session
+			pAdress::session($hashKey, $this->script($sendLanguages, $section, @$data, $edit));
+
+		p::Out("<script type='text/javascript' src='".p::Url('pol://library/assets/js/jsMover.js.php?key='.$hashKey)."'></script>");
+
 		p::Out("
 			<br id='cl' /></div>
-		<script type='text/javascript'>
+		");
+	}
+
+	protected function script($sendLanguages, $section, $data, $edit){
+		return "
+		var selectScore = '<select><option value=\"0%\">0%</option><option value=\"25%\">25%</option><option value=\"50%\">50%</option><option value=\"75%\">75%</option><option value=\"100%\">100%</option></select>';
+
+		".pMainTemplate::allowTabs()."
 		$('.mainTabs').cardTabs();
 		$('.linksTabs').cardTabs();
 		$('.select2').select2({});
-		$('.select2m').select2({allowClear: true});
+		$('.select2m').select2({allowClear: true, placeholder: '➥ Add lemmas'});
 		$('.tags').tagsInput({
 			'delimiter': '//'
+		});
+		$(document).ready(function(){
+    		$('.elastic').elastic();
 		});
 		$('.catTabs').cardTabs();
 		$('.semanticsTabs').cardTabs();
@@ -110,19 +155,62 @@ class pLemmaSheetTemplate extends pTemplate{
 			$('.ajaxGenerateIPA').load('".p::Url("?lemmasheet/".$section."/generateipa/ajax")."', {'lemma': $('.lemma-native').val()});
 		});
 		$('.submit-form').click(function(){
-					$('.errorSave').slideUp();
-					$('.saving').slideDown();
-					$('.ajaxSave').load('".p::Url("?lemmasheet/".$section."/".($edit ? 'edit/'.$data['id'] : 'new')."/ajax")."', {
-						'native': $('.lemma-native').val(),
-						'lexform': $('.lemma-lexform').val(),
-						'ipa': $('.lemma-ipa').val(),
-						'lexcat': $('.select-lexcat').val(),
-						'gramcat': $('.select-gramcat').val(),
-						'tags': $('.select-tags').val(),
-						'translations': JSON.stringify({".implode(', ', $sendLanguages)."}),
-					});
-				});
-		</script>");
+			$('.errorSave').slideUp();
+			$('.saving').slideDown();
+			$('.ajaxSave').load('".p::Url("?lemmasheet/".$section."/".($edit ? 'edit/'.$data['id'] : 'new')."/ajax")."', {
+				'native': $('.lemma-native').val(),
+				'lexform': $('.lemma-lexform').val(),
+				'ipa': $('.lemma-ipa').val(),
+				'lexcat': $('.select-lexcat').val(),
+				'gramcat': $('.select-gramcat').val(),
+				'tags': $('.select-tags').val(),
+				'translations': JSON.stringify({".implode(', ', $sendLanguages)."}),
+				'usage_notes': $('.usage-notes').val(),
+				'synonyms': $('.select-synonyms').data('storage'),
+				'antonyms': $('.select-antonyms').data('storage'),
+				'homophones': $('.select-homophones').data('storage'),
+				'examples': $('.examples-select').data('storage'),
+			});
+		});
+		$('.examples-select').selectSpecify({
+			'select2': true,
+			'select2options': { width: '90%' },
+			'minheight': '300px',
+			'placeholder': '➥ Add examples',
+		});
+		$('.select-synonyms').selectSpecify({
+			'attributeElement': selectScore,
+			'select2': true,
+			'select2options': { width: '90%' },
+			'itemLabelText': 'Synonym',
+			'removeLabelText': 'Remove',
+			'attributeSurface': 'Score',
+			'saveLabelText': 'Save',
+			'placeholder': '➥ Add synonyms',
+			'width': '100%',
+		});
+		$('.select-antonyms').selectSpecify({
+			'attributeElement': selectScore,
+			'select2': true,
+			'select2options': { width: '90%' },
+			'itemLabelText': 'Antonym',
+			'removeLabelText': 'Remove',
+			'attributeSurface': 'Score',
+			'saveLabelText': 'Save',
+			'placeholder': '➥ Add antonyms',
+			'width': '100%',
+		});
+		$('.select-homophones').selectSpecify({
+			'attributeElement': selectScore,
+			'select2': true,
+			'select2options': { width: '90%' },
+			'itemLabelText': 'Homophone',
+			'removeLabelText': 'Remove',
+			'attributeSurface': 'Score',
+			'saveLabelText': 'Save',
+			'placeholder': '➥ Add homophones',
+			'width': '100%',
+		});";
 	}
 
 	public function renderNew(){

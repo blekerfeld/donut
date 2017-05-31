@@ -34,9 +34,51 @@ class pLemmaSheetDataModel extends pDataModel{
 			$this->_lemma = $this->data()->fetchAll()[0];
 			$this->_translations = array();
 			$this->getTranslations();
+			$subEntries = array(new pEntryDataModel('synonyms', array('word_id_1', 'word_id_2'), 'fa-clone', false, null, 'synonyms'),
+					new pEntryDataModel('antonyms', array('word_id_1', 'word_id_2'), '', false, null, 'antonyms'),
+					new pEntryDataModel('homophones', array('word_id_1', 'word_id_2'), '', false, null, 'homophones'),
+					new pEntryDataModel('homophones', array('word_id_1', 'word_id_2'), '', false, null, 'homophones'),
+					new pEntryDataModel('idiom_words', 'word_id', array('idiom_id', 'keyword'), false, null, 'idiom_words'),
+					);
+			
+			$this->_links['usage_notes'] = $this->usageNotes();
+
+			$this->_links['synonyms'] = array();
+			$this->_links['antonyms'] = array();
+			$this->_links['homophones'] = array();
+			$this->_links['idiom_words'] = array();
+
+			foreach($subEntries as $entry){
+				$entry->setID($this->_lemma['id']);
+				$entry->compile();
+				foreach($entry->data() as $link)
+					if(isset($link['word_id_1'])){
+						if($link['word_id_1'] == $this->_lemma['id']){
+							$this->_links[$entry->_table][$link['word_id_2']]['value'] = $link['word_id_2'];
+							$this->_links[$entry->_table][$link['word_id_2']]['score'] = $link['score'];
+						}
+						else{
+							$this->_links[$entry->_table][$link['word_id_1']]['value'] = $link['word_id_1'];
+							$this->_links[$entry->_table][$link['word_id_1']]['score'] = $link['score'];
+						}
+					}
+					elseif(isset($link['word_id'])){
+						$this->_links[$entry->_table][$link[$entry->icon[0]]]['value'] = $link[$entry->icon[0]];
+						$this->_links[$entry->_table][$link[$entry->icon[0]]]['score'] = $link[$entry->icon[1]];
+					}
+			}
 		}
 	}
 
+
+	public function preloadSpecification($table, $extra = ''){
+		if(!isset($this->_links[$table]))
+			return '';
+		$output = '';
+		foreach($this->_links[$table] as $link)
+			$output .= "<option role='load' data-value='".$link['value']."' data-attr='".$link['score'].$extra."' />";
+		return $output;
+	}
 
 	public function getTranslations(){
 
@@ -95,7 +137,8 @@ class pLemmaSheetDataModel extends pDataModel{
 		}else{
 			$this->prepareForInsert(array($dictForm, $lexForm, $ipa, 0, $lexcat, $gramcat, $tags, null, date('Y-m-d H:i:s'), pUser::read('id')));
 			$this->insert();
-			$this->_lemma = array('id' => p::$db->lastInsertId());
+			// We have to construct this class again, with the id we got
+			$this->__construct('words', p::$db->lastInsertId());
 			return true;
 		}
 	}
@@ -135,6 +178,73 @@ class pLemmaSheetDataModel extends pDataModel{
 		// If we are alive, everything went well
 		return true;
 
+	}
+
+	// Updating the semantic links
+	public function updateLinks($table, $input, $single = false, $field = 'word_id_2', $attribute = 'score'){
+		if($input == '' OR empty($input))
+			return false;
+		foreach($input as $id){
+			// If the link is already there, nothing needs to be done
+			if(!isset($this->_links[$table][$id['value']])){
+				$dM = new pDataModel($table);
+				// Making a link, by default the score is 50
+				if($single)
+					$precent = $id['keyword'];
+				else
+					$precent = substr($id['keyword'], 0, -1);
+
+				$dfs = new pSet;
+				$dfs->add(new pDataField(($single ? 'word_id' : 'word_id_1')));
+				$dfs->add(new pDataField($field));
+				$dfs->add(new pDataField($attribute));
+				$dM->setFields($dfs);
+				$dM->prepareForInsert(array($this->_lemma['id'], $id['value'], $precent));
+				$dM->insert();
+			}
+			unset($this->_links[$table][$id['value']]);
+		}
+		// Links that are left need to be destroyed
+		foreach($this->_links[$table] as $id => $values)
+			if(!$single)
+				$this->customQuery("DELETE FROM $table WHERE (word_id_1 = ".$this->_lemma['id'] . " AND word_id_2 = $id) OR (word_id_2 = ".$this->_lemma['id'] . " AND word_id_1 = $id);");
+			else
+				$this->customQuery("DELETE FROM $table WHERE  (word_id = ".$this->_lemma['id'] . " AND ".$field." = $id);");
+		// If we are alive everthing went very well
+		return true;
+	}
+
+	// Deleting all links if needed
+	public function deleteLinks($table, $single = false){
+		if(!$single)
+			$this->customQuery("DELETE FROM $table WHERE (word_id_1 = ".$this->_lemma['id'].") OR (word_id_2 = ".$this->_lemma['id'].");");
+		else
+			$this->customQuery("DELETE FROM $table WHERE word_id  = ".$this->_lemma['id'].";");
+		return true;
+	}
+
+	// Usage notes
+	public function usageNotes(){
+		$dM = new pDataModel('usage_notes');
+		$dM->setCondition(" WHERE word_id = '".$this->_lemma['id']."' ");
+		$dM->getObjects();
+		if(isset($dM->data()->fetchAll()[1]))
+			return $dM->data()->fetchAll()[1]['note'];
+		else
+			return false;
+	}
+
+	public function updateUsageNotes($text){
+		$dM = new pDataModel('usage_notes');
+		if($this->_links['usage_notes'] == false){
+			$dM->prepareForInsert(array($this->_lemma['id'], date('Y-m-d H:i:s'), date('Y-m-d H:i:s'), pUser::read('id'), $text));
+			$dM->insert();
+		}
+		else{
+			$this->customQuery("UPDATE usage_notes SET note = ".p::Quote($text)." AND last_update = '".date('Y-m-d H:i:s')."' WHERE word_id = ".$this->_lemma['id']);
+		}
+		// If we are still alive, it went very well
+		return true;
 	}
 
 }

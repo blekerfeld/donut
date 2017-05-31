@@ -1,5 +1,5 @@
 <?php
-// 	Donut 				🍩 
+// 	Donut 				🍩
 //	Dictionary Toolkit
 // 		Version a.1
 //		Written by Thomas de Roo
@@ -7,7 +7,7 @@
 
 //	++	File: index.php
 
-// We need our configuarion file
+// We need our configuration file
 require 'config.php';
 
 // Initialize by calling p, the big helper
@@ -17,5 +17,5 @@ p::initialize();
 // CONFIG_FORCE_HOME loads the homepage if no query string is given.
 p::dispatch(CONFIG_FORCE_HOME);
 
-// Rest in peace †  
+// Rest in peace †
 die();
