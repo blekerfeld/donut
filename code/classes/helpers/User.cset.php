@@ -30,7 +30,7 @@ class pUser{
 	}
 
 	public function __destruct(){
-		//self::restore();
+		self::restore();
 	}
 
 	private function load($data){
@@ -48,7 +48,6 @@ class pUser{
 	}
 
 	public static function logIn($id){
-		setcookie('pKeepLogged', $_COOKIE['pKeepLogged'], time()-3600, '/');
 		if(!is_numeric($id)){
 			self::$dataModel->setCondition(" WHERE username = '$id' ");
 			self::$dataModel->getObjects();
@@ -60,13 +59,13 @@ class pUser{
 		self::$dataModel->getSingleObject($id);
 		self::load(self::$dataModel->data()->fetchAll()[0]);
 		$arr = array($id, self::read('password'), self::read('username'));
-		setcookie('pKeepLogged', serialize($arr), time()+5*52*7*24*3600, '/');
+		setcookie('pKeepLogged', serialize($arr), time()+5*52*7*24*3600, '/'.CONFIG_FOLDER);
 	}
 
 	public static function logOut(){
 		unset($_SESSION['pUser']);
 		unset($_SESSION['pUserData']);
-		setcookie('pKeepLogged', $_COOKIE['pKeepLogged'], time()-3600, '/');
+		setcookie('pKeepLogged', $_COOKIE['pKeepLogged'], time()-3600, '/'.CONFIG_FOLDER);
 		self::logIn(0);
 	}
 

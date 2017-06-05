@@ -45,8 +45,14 @@ class pAuthStructure extends pStructure{
 
 	public function render(){
 
-		if($this->_section == 'profile')
-			return p::Out("hoi");
+		if($this->_section == 'profile'){
+			p::Out("<div class='home-margin'>");
+			$template = new pProfileTemplate;
+			$template->renderAll();
+			p::Out("</div>");
+			return false;
+		}
+
 
 		if($this->_section == 'logout')
 			return $this->logOut();

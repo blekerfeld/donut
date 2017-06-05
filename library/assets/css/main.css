@@ -2205,6 +2205,21 @@ div.rulesheet .right{
   margin-left: 0px; 
   padding: 10px; 
 }
+
+div.rulesheet .left-20{
+  align-items: stretch;
+  width: 20%;
+  max-width: 400px;
+  padding: 10px;
+}
+
+div.rulesheet .right-80{
+  align-items: stretch;
+  width: 80%;
+  margin-left: 0px; 
+  padding: 10px; 
+}
+
   
 div.mainTabs div[data-tab]{
   min-height: 400px;
@@ -2488,4 +2503,12 @@ textarea.gtEditor{
   font-family: Open Sans;
   border-radius: 5px;
 min-height: 350px;
+}
+
+img.userAvatar{
+  width: 100%;
+  margin: 10px auto;
+  display: block;
+  height: auto;
+  border-radius: 5px;
 }
