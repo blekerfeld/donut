@@ -56,10 +56,12 @@ class pInflector{
 
 	public function inflectRow($row, $heading){
 
+
+
 		$output = '';
-		
+
 		if(empty($row['rules']))
-			$output = $row['stems'][0];
+			$output = $row['stems'][0][0];
 		else
 			$output = $row['stems'][0][0];
 
@@ -68,7 +70,8 @@ class pInflector{
 			if($row['stems'][$key][0] == $this->_lemma->read('native'))
 				$input = $output;
 			else
-				$input = $row['stems'][$key][0];
+				$input = $row['stems'][$key][0][0];
+
 			// Is this an irregular override?
 			if($row['stems'][$key][1])
 				$output = $input;

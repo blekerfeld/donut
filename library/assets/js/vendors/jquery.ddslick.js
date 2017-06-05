@@ -41,7 +41,7 @@
     ddslickCSS = '<style id="css-ddslick" type="text/css">' +
                 '.dd-select{ border-radius:5px; position:relative; cursor:pointer;}' +
                 '.dd-desc { color:#aaa; display:block; overflow: hidden; font-weight:normal; line-height: 1.4em; }' +
-                '.dd-selected{ overflow:hidden; border-radius: 5px 5px 0px 0px; display:block; padding:10px; font-weight:bold;}' +
+                '.dd-selected{ overflow:hidden; border-radius: 5px 5px 0px 0px; display:block; padding:10px; font-weight:bold; color: #889DB8;}' +
                 '.dd-pointer{ width:0; height:0; position:absolute; right:10px; top:50%; margin-top:-3px;}' +
                 '.dd-pointer-down{ border:solid 5px transparent; border-top:solid 5px #92A6BD; }' +
                 '.dd-pointer-up{border:solid 5px transparent !important; border-bottom:solid 5px #92A6BD !important; margin-top:-8px;}' +

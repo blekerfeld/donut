@@ -229,6 +229,10 @@ jQuery.fn.selectSpecify = function(options){
     doUnselect(e);
   });
 
+  $(selector + ' div.items-outer').click(function(e){
+    doUnselect(e);
+  });
+
   $(selector + ' div.input-bar').click(function(e){
     doUnselect(e);
   });

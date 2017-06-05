@@ -235,6 +235,8 @@ class pTwolcString{
 
 	public function toSurface(){
 		//return $this->_string;
+		if(is_array($this->_string))
+			var_dump($this->_string);
 		return strtolower(str_replace(array('0', '+', '{', '::', '&', '#'), '', $this->_string));
 	}
 

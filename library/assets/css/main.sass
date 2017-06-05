@@ -1,0 +1,2041 @@
+@import url(https://fonts.googleapis.com/css?family=Righteous|Libre+Franklin|Rubik+Mono+One|Merriweather|Lato|Open+Sans|Raleway)
+
+@font-face
+  font-family: Gentium
+  src: url(vendors/fonts/GenBasR.ttf)
+
+
+@font-face
+  font-family: Gentium
+  src: url(vendors/fonts/GenBasB.ttf)
+  font-weight: 700
+
+
+@font-face
+  font-family: Gentium
+  src: url(vendors/fonts/GenBasI.ttf)
+  font-style: italic
+
+
+@font-face
+  font-family: Kollektif
+  src: url(vendors/fonts/kollektif.ttf)
+
+
+/* Basic elements
+
+*/
+
+  box-sizing: inherit
+  -webkit-tap-highlight-color: rgba(255, 255, 255, 0) !important
+  -webkit-focus-ring-color: rgba(255, 255, 255, 0) !important
+  outline: none !important
+  &:before, &:after
+    box-sizing: inherit
+    -webkit-tap-highlight-color: rgba(255, 255, 255, 0) !important
+    -webkit-focus-ring-color: rgba(255, 255, 255, 0) !important
+    outline: none !important
+
+.noselect
+  -webkit-touch-callout: none
+  /* iOS Safari
+  -webkit-user-select: none
+  /* Safari
+  -khtml-user-select: none
+  /* Konqueror HTML
+  -moz-user-select: none
+  /* Firefox
+  -ms-user-select: none
+  /* Internet Explorer/Edge
+  user-select: none
+  /* Non-prefixed version, currently
+   * supported by Chrome and Opera
+
+\::-moz-selection
+  background: #7CADDE
+  color: #fff
+  font-style: italic
+
+\::Selection
+  background: #7CADDE
+  font-style: italic
+  color: #fff
+
+html
+  margin: 0
+  box-sizing: border-box
+  height: 100%
+  background: #f9f9f9
+  padding: 0
+  font-family: Open Sans
+  font-size: 14px
+
+body
+  margin: 0
+  box-sizing: border-box
+  height: 100%
+  background: #f9f9f9
+  padding: 0
+  font-family: Open Sans
+  font-size: 14px
+  display: flex !important
+  min-height: 100%
+  flex-direction: column !important
+
+div.contents
+  flex: 1
+
+a
+  text-decoration: none
+  color: #6D7D91
+  outline: 0
+  transition: color .3s
+  &:hover, &:active, &:focus
+    /* styling for any way a link is about to be used
+  &:hover
+    color: black
+
+p
+  display: inline
+
+textarea:focus, input:focus
+  border-color: rgba(17, 39, 175, 0.3) !important
+
+/* Basic modifiers
+
+.em
+  font-style: italic
+
+.xxxsmall
+  font-size: 6px !important
+  i.fa
+    font-size: 6px !important
+
+.xxsmall
+  font-size: 7px !important
+  i.fa
+    font-size: 7px !important
+
+.xsmall
+  font-size: 9px !important
+  i.fa
+    font-size: 9px !important
+
+.small
+  font-size: 11px !important
+  i.fa
+    font-size: 11px !important
+
+.medium
+  font-size: 13px !important
+
+.counter
+  display: inline-block
+  text-align: center
+  padding-top: 2px
+  font-style: normal !important
+  font-size: 11px
+  background: #eee
+  font-weight: bold
+  color: #666
+  border-radius: 20px
+  min-width: 20px
+  width: auto
+  height: 20px
+  margin-top: -5px
+  &.inherit
+    font-size: inherit
+  &.s-13
+    font-size: 13px
+
+.inline-title
+  font-size: 15px
+  color: #000
+  text-decoration: none
+  text-transform: uppercase
+  letter-spacing: .1em
+  white-space: normal
+  font-weight: 500
+
+.small-caps
+  font-size: 15px
+  color: #000
+  text-decoration: none
+  text-transform: uppercase
+  letter-spacing: .1em
+  white-space: normal
+  font-weight: 500
+  &.title
+    font-size: 16px
+    font-weight: bolder
+    font-family: Trebuchet MS
+
+.no-bottom-margin
+  margin-bottom: 0px !important
+
+span.tab, div.tab
+  display: inline-block
+  padding-left: 15px
+  padding-top: 5px
+
+.float-right
+  float: right !important
+
+.float-left
+  float: left !important
+
+.no-float
+  float: none !important
+
+.max-20
+  width: 20% !important
+  max-width: 20% !important
+  overflow: visible
+
+.left49
+  float: left
+  width: 49%
+
+.right49
+  float: right
+  width: 49%
+
+.row-left
+  float: left
+  width: 33%
+  padding: 1px
+
+.row-right
+  float: right
+  width: 33%
+  padding: 1px
+
+.row-center
+  display: inline-block
+  width: 33%
+  padding: 1px
+
+#cl
+  clear: both
+
+.no-border
+  border: none !important
+
+/* Basic layout elements
+
+.absolute_header
+  padding: 3px
+  padding-left: 10px
+  color: #333
+  text-decoration: none
+  padding-top: 12px
+  padding-right: calc(5% + 20px)
+  padding-left: calc(5% + 20px)
+  border-bottom: solid 1px #e7e7e7
+  background: #f9f9f9
+  padding-bottom: 10px
+  .user
+    float: right
+    font-size: 12px
+    margin-top: 5px
+
+a.siteTitle
+  margin-top: 3px
+  letter-spacing: .05em
+  font-weight: bold
+  color: #252A2E
+  font-family: Kollektif
+  font-size: 20px
+
+div
+  &.hStripe2
+    border-bottom: 4px solid #55688A
+  &.hStripe.min
+    min-height: 3px
+  &.outerwrap
+    background: white
+    min-height: 550px
+    border-bottom: solid 1px #e7e7e7
+
+.ulWrap
+  padding: 0px
+  margin-right: 5%
+  margin-left: 5%
+
+.header
+  padding: 20px
+  padding-top: 15px
+  padding-bottom: 0px
+  font-size: 16px !important
+  background: #f2f9fc
+  color: #333
+  padding-top: 20px
+  padding-bottom: 10px
+  padding-right: 45px
+  padding-left: 45px
+
+.header-icon
+  margin-top: -2px !important
+  float: left
+  margin-right: 5px
+
+.page
+  padding: 0px
+  padding-top: 35px
+  background-position: 10% 10%
+  background: rgba(254, 254, 254, 1)
+  height: auto
+  padding-bottom: 20px
+  &.min
+    min-height: 0px
+
+.inner-page
+  margin: 5px
+  padding: 10px
+  margin-top: -20px
+  padding-bottom: 0px
+  margin-bottom: 0px
+
+.home-margin
+  width: 92%
+  margin: 0 auto
+  padding-bottom: 0px
+
+.absolute_footer
+  margin-bottom: 50px
+  margin-left: 11%
+  margin-right: 11%
+  margin-top: 20px
+  padding: 3px
+  padding-left: 2px
+  padding-top: 10px
+  border-top: 1px solid #d2d4d7
+  text-shadow: 1px 2px 3px #fff, 0 0 0 #000, 1px 4px 6px #fff
+  font-size: 9px
+  color: #333
+  opacity: .6
+  text-decoration: none
+  letter-spacing: .1em
+  font-family: Libre Franklin
+  a
+    color: #333 !important
+    border-color: #333 !important
+
+/* Navigation
+
+div.nav
+  color: #fff
+  display: inline-block
+  float: left
+  color: #000
+  transition: all .3s
+  padding-left: 10px
+  margin-left: 30px
+  a
+    &:first-child
+      margin-left: 0px
+    padding: 3px
+    font-size: 12px
+    background: rgba(240, 245, 248, 0.3)
+    color: #000
+    text-decoration: none
+    letter-spacing: .15em
+    white-space: normal
+    font-weight: 500
+    display: inline-block
+    border-bottom: 3px transparent solid
+    margin-left: 7px
+    &:hover, &.admin:hover
+      border-bottom: 3px solid #607193
+    &.active
+      border-bottom: 3px solid #607193
+      color: #607193
+    &.admin
+      margin-right: 5px
+      font-size: 11px
+      margin-top: 4px
+      border-bottom: 2px solid rgba(142, 39, 47, 0.6)
+      border-radius: 7px 7px 0px 0px
+      padding-left: 6px
+      padding-right: 6px
+      letter-spacing: normal
+      &.active
+        border-bottom: 3px solid #607193
+        font-weight: bolder
+        color: #607193
+
+a
+  &.button, &.buttona
+    padding: 9px
+    font-size: 15px
+    color: white
+    cursor: pointer
+    text-decoration: none
+  &.button
+    &.buttonheader
+      background: #e3e3e3
+      color: #333
+      margin-top: 4px
+      font-size: 12px
+    .fa
+      font-size: 18px
+
+.footer
+  background: radial-gradient(circle, #EAF0F2, #f2f9fc)
+  color: #444
+  padding: 10px
+  padding-left: 10px
+  padding-right: 10px
+  font-size: 12px
+
+.absolute_footer a.tooltip
+  font-family: Open Sans !important
+
+.footer .right
+  float: right
+  margin-right: 10px
+
+.absolute_footer img
+  height: 15px
+  float: right
+  width: auto
+
+.footer a
+  color: #444
+  text-decoration: none
+  &:hover
+    text-decoration: underline
+
+.alphabetbar
+  margin-left: -20px
+  margin-top: 5px
+  margin-right: -20px
+  margin-bottom: 10px
+  height: 24px
+  background: #fcf893
+  border-radius: 7px 0px 0px 7px
+  padding-left: 20px
+  a
+    display: inline-block
+    opacity: .2
+    transition: opacity .2s
+    text-align: center
+    position: relative
+    z-index: 40px
+    min-width: 10px
+    min-height: 10px
+    font-family: Raleway
+    font-size: 10px
+    padding: 2px
+    text-align: center
+    padding-left: 5px
+    padding-right: 5px
+    margin-right: 4px
+    color: #444
+    &.selected
+      opacity: 1
+      background: #5b6170
+      border-bottom: 1px transparent solid
+      color: snow
+    &:hover
+      background: #5b6170
+      color: snow
+      opacity: 0.8
+
+.actionbutton
+  border-radius: 6px
+  background: #eee
+  padding: 3px
+  background: #eee
+  border: 1px solid rgba(155, 155, 155, 0.1)
+  color: #888
+  text-shadow: 0px 1px 2px rgba(50, 50, 50, 0.2)
+  text-decoration: none
+  color: #333
+  font-size: 12px
+  margin-left: 2px
+  margin-right: 2px
+  cursor: pointer !important
+  .fa
+    font-size: 12px
+  i.fa
+
+div.title
+  font-size: 20px
+  font-weight: bolder
+  font-family: Open Sans
+  &.small
+    font-size: 15px
+    margin-bottom: 5px
+
+span.icon-circle
+  display: inline-block
+  border-radius: 50%
+  padding: 12px
+  background: red
+  &.c-8
+    line-height: 0px
+    height: 10px
+    width: 10px
+    font-size: 7px
+  &.c-10
+    line-height: 0px
+    height: 10px
+    width: 10px
+    font-size: 9px
+  &.c-12
+    line-height: 0px
+    height: 12px
+    width: 12px
+    font-size: 11px
+  &.c-15
+    line-height: 0px
+    height: 15px
+    width: 15px
+    font-size: 14px
+  &.c-16
+    line-height: 0px
+    height: 16px
+    width: 16px
+    font-size: 15px
+  &.c-24
+    line-height: 0px
+    height: 24px
+    width: 24px
+    font-size: 22px
+  &.light, &.dark
+    color: white
+    i.fa
+      color: white
+  &.circle-white
+    background: white
+  &.c-orange
+    background: #D85600
+
+.title_header
+  font-size: 24px
+  font-family: 'Raleway'
+  font-weight: bold
+  padding: 20px
+  padding: 0px
+
+select.pEditorlanguage
+  font-size: 20px
+  font-family: 'Raleway'
+  margin-left: 20px
+
+.notice, .danger-notice, .succes-notice, .warning-notice, .notice-subtle
+  margin: 10px 0px
+  padding: 12px
+
+.notice.small, .danger-notice.small, .succes-notice.small, .warning-notice.small
+  padding: 6px
+
+.notice
+  color: #00529B
+  background-color: #EAF2F4
+
+.notice-subtle
+  color: #333
+  padding: 0px
+  font-size: 12px
+  opacity: .5
+  cursor: pointer
+  transition: opacity .3s
+  &:hover
+    opacity: 1
+
+.btSource .notice, .rulesheetCard .notice
+  border: none
+  font-size: 0.85em
+  margin: 0
+  margin-bottom: 5px
+
+.danger-notice
+  color: #D8000C
+  background-color: #FFBABA
+
+.succes-notice
+  color: snow
+  background-color: #289A2A
+
+.warning-notice
+  color: #9F6000
+  background-color: #FEEFB3
+
+.hide
+  display: none
+
+.pointer
+  cursor: pointer
+
+input
+  &#wordsearch, &#filter, &#searchfilter
+    padding: 9px
+    font-size: 13px
+    text-decoration: none
+    width: 60% (-18px)
+    min-width: 100px
+    color: #93A7BE
+
+a.button.search
+  display: inline-block
+  float: right
+  color: #889DB7
+  border-radius: 5px
+  text-align: center
+  padding: 11PX
+  margin-top: 1px
+  margin-left: 2px
+  width: 29%
+  transition: background .3s, color .1s
+  &:hover
+    background: #E6ECF2
+
+div
+  &.hSearchResults
+    transition: max-height .3s
+    width: 100%
+    height: 0px auto
+    margin-bottom: -20px
+    transition: transform 3s ease
+    transform: translateY(1px)
+    position: relative
+  &.hSearchResult
+  &.hSearch .load-hide
+    margin-top: 15px
+    margin-right: 20px
+    display: none
+    float: right
+    position: relative
+
+.hWrap
+  padding-bottom: 10px
+
+.hSearch
+  padding: 9px
+  font-size: 15px
+  text-decoration: none
+  color: #93A7BE
+  margin-bottom: 10px
+  margin-left: -32px
+  margin-right: -32px
+  padding-bottom: 15px !important
+  border-bottom: 1px solid #B3C0D0
+  input#wordsearch
+    border: none
+    display: inline-block
+    margin-top: 1px
+    padding: 9px
+    margin-left: 3px
+    width: calc(80% - 100px)
+    min-width: 300px
+    margin-top: 0px
+    float: left
+    font-family: Libre Franklin
+    font-size: 18px
+    padding-top: 9px
+    background: transparent
+
+.header.dictionary
+  transition: all .3s
+  background: rgba(240, 240, 240, 0.2)
+  box-shadow: 0 4px 10px 0px rgba(190, 197, 200, 0.05)
+  padding-left: 80px
+  padding-right: 80px
+  padding-bottom: 5px !important
+  padding-top: 10px
+  margin-bottom: 10px
+  position: relative
+  margin-top: -25px
+  &.home
+    padding: 70px
+    padding-bottom: 20px !important
+    padding-top: 20px !important
+    position: relative
+    background: transparent
+    .hSearch
+      padding: 15px
+      input#wordsearch
+        font-size: 30px
+      a.button
+        margin-top: 10px
+
+.hSearch
+  .button.search
+    width: 8%
+    min-width: 100px
+    margin-top: 0px
+    padding: 9px
+    padding-top: 8px
+    float: right !important
+  .dictionary-selector
+    width: 7%
+  .dd-container
+    float: left
+    margin-top: 3px
+    a
+      font-size: 12px
+    .dd-selected-text
+      color: #889DB7
+
+.header.dictionary.home .dd-container
+  margin-top: 12px
+
+input
+  &#filter
+    width: 80%
+  &#wordsearch:focus, &#filter:focus
+    color: #222
+  &#wordsearch:not(:placeholder-shown), &#filter:not(:placeholder-shown)
+    color: #222 !important
+
+img.dFlag
+  width: 13px
+  height: auto
+  opacity: 0.6
+  cursor: pointer
+  &:hover
+    opacity: 1
+
+strong
+  &.dWord
+    font-size: 20px
+    cursor: pointer
+    font-weight: bolder
+  &.dWordTranslation a
+    font-size: 13px
+    font-weight: normal
+    color: #444
+    font-family: Open Sans
+    &:hover
+      border-bottom: 1px dotted #555
+
+.moveResults strong.dWord
+  font-size: 14px !important
+
+strong.dWord
+  &:hover
+  a
+    color: #393d47
+
+.dHitTranslation
+  font-family: Libre Franklin
+  font-style: normal
+  font-size: 12px
+  color: #a0a0a0
+
+.dQueryHighlight
+  border-bottom: 4px solid #333
+  color: black
+
+.flaghome
+  width: 200px
+  margin-left: 10px
+  height: auto
+
+#dictionary
+  padding: 2px
+
+.dWordWrapper
+  padding: 15px
+  padding-left: 7px
+  padding-top: 5px
+  margin-bottom: 5px
+  border-left: 4px solid transparent
+  &:hover
+    background: linear-gradient(to bottom, rgba(200, 200, 200, 0.1), rgba(200, 200, 200, 0.1))
+    /* Chrome 10-25, Safari 5.1-6
+  a.tooltip
+    color: #333
+    font-size: 16px
+
+.wordLink.tooltip
+  color: #333
+  font-size: 16px
+
+.dType a.tooltip
+  font-family: Gentium
+  font-style: italic
+  font-size: 12px
+  color: #a0a0a0
+
+em.dSpec
+  font-family: Arial
+  font-size: 13px
+
+span.translation.tooltip a
+  color: #333
+
+.dWordWrapper
+  .tooltip:hover
+    font-style: normal
+  ol
+    margin: 20px
+    margin-top: 3px
+    margin-left: 20px
+    margin-bottom: 0px
+    padding: 0px
+    font-size: 10px
+    vertical-align: top
+    color: #34392A
+    width: 50%
+    li em
+      font-family: Open Sans
+      font-size: 12px
+    span
+      font-size: 16px
+      vertical-align: baseline
+      font-weight: normal
+      color: #333
+
+.pSectionWrapper div.desc, ol div.desc
+  margin: 0px
+  font-size: 13px
+  font-weight: normal
+  font-family: open sans
+  padding: 1px
+  margin-top: 2px
+  background: rgba(140, 140, 140, 0.1)
+  width: auto
+  display: inline-block
+
+.dialogedit
+  position: relative
+  background: #fff
+  display: none
+  margin-top: 14px
+  margin-left: -10px
+  margin-right: -10px
+  margin-bottom: -10px
+  padding: 20px
+
+.dialogaddnew
+  margin: -20px
+  margin-top: 10px
+  margin-bottom: -10px
+  padding: 30px
+
+.round
+  border: 1px solid transparent
+  border-radius: 360px
+
+.dialogedit
+  table tr td:first-child
+    font-size: 14px
+    color: #333
+    font-weight: bold
+    vertical-align: top
+    text-transform: lowercase
+  &:after
+    bottom: 100%
+    left: 3%
+    border: solid transparent
+    content: " "
+    height: 0
+    width: 0
+    position: absolute
+    pointer-events: none
+    border-color: rgba(216, 216, 216, 0)
+    border-bottom-color: #fff
+    border-width: 10px
+    margin-left: -10px
+  .notice
+    margin: -15px
+    margin-bottom: -25px
+
+.dDesc
+  margin-left: 20px
+  font-size: 13px
+  font-family: monospace
+
+.dType
+  font-size: 13px
+
+.dPron
+  font-size: 13px
+  color: grey
+  cursor: pointer
+
+.dInflection
+  font-weight: normal
+  font-size: 13px
+  color: grey
+  strong
+    font-weight: normal
+
+.tooltip
+  border-bottom: dotted 1px lightgray
+
+.table-link
+  font-size: 0 !important
+  display: inline-block
+  color: black
+  width: auto
+  padding: 3px
+
+div.table-links-list
+  max-width: calc(100%)
+  &:hover .tooltip.table-link
+
+.table-link
+  i.fa
+    transition: font-size .3s
+    margin-right: 4px
+  margin: 4px
+  font-size: 0 !important
+  padding: 5px
+  &:hover
+    i.fa
+      color: #4A618E !important
+    span.counter
+      background: #4A618E !important
+      color: white
+
+.tooltip:hover
+  font-weight: bold
+  font-style: italic
+
+a.tooltip
+  color: black
+
+.dTranslation
+  font: tahoma
+  text-decoration: underline
+
+.dPron:hover
+  font-size: 16px
+
+table.admin
+  border-spacing: 0
+  width: 100%
+  margin: 0 auto
+  margin-bottom: 10px
+  tr
+    &:nth-child(even) td
+      background: #F6F8FA
+    td
+      background: #fFFF
+      padding: 6px
+      border-bottom: 1px solid #E1E4E8
+      border-right: #DFE2E5 1px solid
+      &.actions
+        cursor: pointer
+        opacity: .6
+        width: 5%
+        transition: opacity .2s, width .01s
+        a
+          &.actions-holder
+            border-radius: 10px
+            background: transparent
+          &.ttip-sub
+            display: none !important
+            width: 45%
+            font-size: .7em
+            color: #333
+            padding: 2px
+        &:hover a.ttip-sub
+          display: inline-block !important
+        a.ttip-sub
+          &:hover
+            color: snow
+          i.fa
+            font-size: .8em
+        &:hover
+          opacity: 1
+      &:first-child
+        padding: 6px
+    &.title td
+      background: #fff
+      font-weight: bolder
+      border-right: 1px solid #E1E4E8
+      border-bottom: 1px solid #E1E4E8
+    td
+      &:first-child
+        border-left: none
+      &:last-child
+        border-right: none
+    &.title td i.fa
+      font-size: 10px !important
+  &.addword tr.title td
+    font-family: Raleway
+    padding: 9px
+
+.logbox
+  width: 40%
+  padding: 8px
+  margin-top: 7px
+  background: #222
+  color: white
+  border-radius: 10px 10px 0px 0px
+  img
+    border-radius: 4px
+  a
+    color: #f8f8f8
+    &:hover
+      color: #D1D1D1
+
+a.gramcat
+  padding: 3px
+  margin-right: 5px
+  &.active
+    border-radius: 3px
+    background-color: #48C7AB
+    color: #fff
+
+.flipswitch
+  position: relative
+  background: white
+  top: 8px
+  width: 40px
+  height: 20px
+  -webkit-appearance: initial
+  border-radius: 3px
+  -webkit-tap-highlight-color: rgba(0, 0, 0, 0)
+  outline: none
+  font-size: 14px
+  font-family: Trebuchet, Arial, sans-serif
+  font-weight: bold
+  cursor: pointer
+  border: 1px solid #B1C9D8
+  &:after
+    position: absolute
+    top: 8%
+    display: block
+    width: 48%
+    height: 90%
+    background: #fff
+    box-sizing: border-box
+    text-align: center
+    transition: all 0.3s ease-in 0s
+    color: black
+    line-height: 15px
+    border: #3498DB 1px solid
+    border-radius: 3px
+    left: 2%
+    content: "no"
+    background: #E74C3C
+    font: Verdana
+    font-size: 8px
+    border-color: #C0392B
+    color: #FFF
+  &:checked:after
+    left: 53%
+    content: "yes"
+    font-size: 8px
+    border-color: #1E6334
+    color: #e3e3e3
+    background: #2b8b4a
+
+.labelswitch
+  font-size: 12px
+  color: #aaa
+
+.dialog
+  background: white
+  width: 50%
+
+input.nWord
+  font-size: 20px
+  color: #000 !important
+  font-family: Merriweather
+  font-weight: bolder
+  display: inline-block
+  margin: 0 auto
+  padding: 18px !important
+  border: rgba(150, 150, 150, 0.1) 1px solid
+
+textarea.nWord
+  font-size: 20px
+  color: #000 !important
+  font-family: Merriweather
+  font-weight: bolder
+  display: inline-block
+  margin: 0 auto
+  padding: 18px !important
+  border: rgba(150, 150, 150, 0.1) 1px solid
+  &.small
+    font-size: 18px
+    font-family: Trebuchet MS
+    color: #333
+    padding: 10px !important
+    font-weight: normal
+
+input.nWord
+  &:invalid
+    color: #333
+    color: rgb(150, 150, 150)
+    border: rgba(150, 150, 150, 0.2) 1px solid
+  &.normal-font
+    font-size: 18px
+    font-family: Open Sans
+    color: #333
+    font-weight: normal
+
+strong.pWord
+  font-size: 30px
+  cursor: pointer
+  font-weight: bolder
+  font-family: Merriweather
+
+span.pDerivationTitle
+  font-size: 14px
+  span.native a
+    font-weight: bold
+    color: #3a484e !important
+    font-family: Merriweather
+    font-size: 11px
+    &:hover
+      text-decoration: underline
+
+strong
+  &.pDerivationName
+    font-size: 13px
+    font-weight: bold
+  &.pDerivation a
+    font-family: Merriweather
+    font-size: 12px
+    color: #68777d
+    font-weight: normal
+
+img.pImage
+  max-height: 68px
+  cursor: pointer
+  width: auto
+  position: absolute
+  right: 20px
+  opacity: 1
+  top: -20px
+  display: box
+  margin-left: 0px
+  background-color: #f5f5f5
+  border: 1px solid #ddd
+  transition: border-radius .1s, max-height .1s, border .3s
+  border-radius: 7px
+  &.editing
+    border: 1px dashed #d8d8d8
+  &:hover
+    border-radius: 0px
+    border: 1px solid #c9e6f2
+    max-height: 300px
+    opacity: 1
+    padding-left: 0px
+    background: white
+
+strong.pWord a
+  color: #000 !important
+  display: inline-block
+  transition: color .4s
+  padding-bottom: 0px
+  border-bottom: 1px solid transparent
+  &:hover
+    color: #607193 !important
+    border-bottom: solid 1px #ddd
+
+a.back-mini
+  color: #333 !important
+  display: inline-block
+  margin-top: 10px
+  float: left
+  border: none
+  margin-right: 5px
+  padding: 4px
+  border-radius: 360px
+  height: 20px
+  width: 20px
+  line-height: 1px
+  transition: none
+  &.no-marg
+    margin-top: 0px
+    float: none
+  &:hover
+    border-bottom: solid 1px #ddd
+    background: #607193 !important
+    color: snow !important
+
+#tab
+  display: inline-block
+  margin-left: 20px
+
+a.lemma-code
+  color: #000
+  opacity: 0.2
+  font-size: 14px
+  font-family: Consolas, "Liberation Mono", Menlo, Courier, monospace
+  transition: opacity .3s
+  cursor: pointer
+  &.print
+    opacity: .8
+  &.big
+    font-size: 17px
+    display: inline-block
+    margin-top: 10px
+    margin-right: 15px
+  &.discussion
+    margin-right: 10px
+    font-family: Open Sans
+    font-size: 12px
+  &:hover
+    opacity: 1
+    border-bottom: dotted #ccc 1px
+  i.fa
+    font-size: 12px
+
+.pSectionWrapper
+  margin-bottom: 10px
+  padding: 10px
+  border-radius: 10px 10px 0px 0px
+  &.editing
+    background: #fff
+    border-style: dashed
+    border-top: none
+    margin-top: 0px
+
+.pEtymology
+  font-family: Trebuchet MS
+  font-size: 12px
+
+.pNotes
+  padding-top: 0px
+  padding-bottom: 0px
+  font-size: 13PX
+  font-family: Trebuchet MS
+  ul
+    list-style: square
+  p
+    display: normal
+
+span.pCognates
+  font-size: 12px !important
+  a.tooltip
+    font-size: 12px !important
+  strong
+    text-transform: uppercase
+
+.pPron
+  font-size: 13px
+  color: grey
+  cursor: pointer
+  transition: font-size .3s
+  &:hover
+    font-size: 25px
+
+span.pSectionTitle
+  font-size: 29px
+  border-bottom: 1px solid #EEEEF0
+  margin-bottom: 4px
+  color: #939DAD
+  display: block
+  padding: 10px
+  padding-top: 0px
+  padding-bottom: 0px
+  &.first
+    border-radius: 7px
+    box-shadow: none
+    display: inline-block
+    width: auto
+    background-color: transparent
+    border: none !important
+    clear: both
+    line-height: .9
+    padding-left: 0px
+    padding-bottom: 20px
+  em.info
+    font-size: 12px
+    font-family: Merriweather
+    font-style: normal
+  &.extra
+    font-weight: 700
+    color: #333
+    letter-spacing: .075em
+    white-space: normal
+    line-height: normal
+    font-size: 14px
+    padding-left: 10px
+    padding-right: 10px
+    padding-bottom: 5px
+    padding-top: 5px
+
+a
+  &.red-link
+    display: inline-block !important
+    padding: 0px
+    border: none
+    border-radius: 0px
+    opacity: 0.8
+    color: #f04f48 !important
+    opacity: 1
+  &.ttip-sub.red-link
+    border: none !important
+    border-radius: 0px
+    opacity: 0.8
+
+div.ttip_inner
+  background: white
+  border: rgba(0, 0, 0, 0.2) 1px solid
+  padding: 10px
+  min-width: 100px
+  text-shadow: none
+
+.red-link:hover
+  opacity: 1
+
+a.ttip-sub.red-link:hover
+  background: #ddd
+
+.red-link
+
+a.edit-field:hover
+  font-size: 13px !important
+
+.edit-field
+  &:hover
+    padding-right: 0px
+  i.edit
+    opacity: 0.3
+    transition: opacity .3s
+  &:hover i.edit
+    opacity: 1
+
+span.pSectionTitle
+  &.editing.first a.tooltip:hover
+    font-weight: normal !important
+    text-decoration: underline
+    color: #000
+  &.extra.closed
+    margin-bottom: 20px
+    border-bottom: 6px solid #f7f7f7
+
+.pSectionTitle.extra.sub
+  margin-top: 0px
+  box-shadow: none
+  font-size: 10px
+  border-bottom: #e9e9e9 1px dotted
+  padding: 5px
+  padding-left: 10px
+  padding-right: 10px
+  margin: -6px
+  margin-top: 0px
+  margin-bottom: 0px
+  letter-spacing: 0.5px
+  color: #666
+  font-size: 11px
+  border-radius: 0px !important
+  img.flagimage
+    height: 9px
+    width: auto
+
+span.pSectionTitle.extra.sub.editing
+  border: none
+  background: #fff
+  border-bottom: 1px dashed #d8d8d8
+
+.pSectionWrapper
+  strong.label
+    font-size: 14px
+    text-transform: lowercase
+    font-family: initial
+  .notice
+    background: none
+    border: none
+  ol
+    margin: 20px
+    margin-top: 3px
+    margin-left: 15px
+    margin-bottom: 20px
+    padding: 0px
+    font-size: 10px
+    vertical-align: top
+    color: #34392A
+    &:last-child
+      margin-bottom: 0px
+    span
+      font-size: 16px
+      vertical-align: baseline
+      font-weight: normal
+      color: #333
+  p
+    margin: 0
+  ol
+    span p.desc
+      margin: 0px
+      font-size: 80%
+      background: rgba(140, 140, 140, 0.1)
+      width: auto
+      display: inline-block
+      max-width: 30%
+    li span
+      &.pIdiom
+        font-size: 18px
+        font-family: gentium
+      &.pIdiomTranslation
+        font-size: 11px
+        font-family: Trebuchet MS
+      span.pIdiomHighlight
+        cursor: pointer
+        font-weight: bolder
+        font-size: 22px
+      &.pIdiom:hover
+        font-style: italic
+        border-bottom: 1px dotted #333
+      &:hover span.pIdiomHighlight
+        background-color: #FEEFB3
+
+img
+  &.pFlag
+    width: 13px
+    height: auto
+    opacity: 0.9
+  &.dFlag:hover
+    opacity: 1
+
+.pSectionWrapper a
+  &.synonym, &.antonym, &.homophone
+    display: inline-block
+    padding: 1px
+    padding-bottom: 3px
+    margin-right: 10px
+    border-radius: 3px
+    font-weight: bold
+    line-height: 20px
+    color: #6E767A
+    text-align: center
+    border-bottom: 13px solid transparent
+    font-family: Trebuchet MS
+    font-size: 11px
+  &.synonym
+    &.score-25
+      border-color: rgba(200, 220, 230, 0.3)
+    &.score-50
+      border-color: rgba(200, 220, 230, 0.6)
+    &.score-100
+      border-color: rgba(200, 220, 230, 1)
+  &.homophone
+    &.score-25
+      border-color: rgba(226, 186, 200, 0.3)
+    &.score-50
+      border-color: rgba(226, 186, 200, 0.6)
+    &.score-100
+      border-color: rgba(226, 186, 200, 1)
+  &.synonym:hover, &.antonym:hover, &.homohone:hover
+    text-decoration: underline
+    background: rgba(200, 220, 230, 0.2)
+  &.antonym
+    &.score-25
+      border-color: rgba(135, 125, 150, 0.3)
+    &.score-50
+      border-color: rgba(135, 125, 150, 0.6)
+    &.score-100
+      border-color: rgba(135, 125, 150, 1)
+
+.language-status-check, .boolean-check
+  padding: 2px
+  display: inline-block
+  color: #fff
+  background-color: #2B8B4A
+  border-color: #5f8e67
+  font-size: 10px !important
+
+.language-status-times, .boolean-ban
+  padding: 2px
+  display: inline-block
+  color: #fff
+  background-color: rgba(186, 65, 63, 0.2)
+  border-color: #ba413f
+  font-size: 10px !important
+
+.boolean-check, .boolean-ban
+  width: 24px
+  text-align: center
+
+/* IPA symbols
+
+span.ipa
+  display: inline-block
+  padding: 2px
+  margin-right: 1px
+  height: 15px
+  min-width: 15px
+  width: auto
+  background: #d3d3d3
+  cursor: pointer
+  font-family: Open Sans
+  font-size: 12px
+  color: #333
+
+a span.ipa
+  color: #333
+
+span.ipa
+  &.selected
+    background: #333
+    color: #fff
+  &:hover
+    background: #4f5352
+    color: #fff
+
+.count
+  font-size: 30PX
+  border-radius: 7px
+  padding: 15px
+  display: inline-block
+  margin-bottom: 30px
+  letter-spacing: -2px
+  background-color: #f2f9fc
+  border: 1px solid #c9e6f2
+  color: #525E7A
+  &:hover
+
+/* BATCH TRANSLATION
+
+div.btCard
+  margin: 20px auto
+  margin-top: 10px
+  width: 70%
+  padding: 30px
+  background: #fff
+  &.admin
+    width: 95%
+    &.minimal
+      padding: 5px
+      margin: 0 auto
+  &.link-table
+    width: 70%
+  .pages
+    font-size: 11px
+    padding: 4px
+    margin-left: 10px !important
+    margin-right: 2.5%
+    float: right
+    div
+      opacity: 0.4
+      cursor: pointer
+      display: inline-block
+      margin-left: 10px !important
+      margin-right: 10px !important
+      transition: opacity .3s
+      &:hover
+        opacity: .9
+  input
+    padding: 5px
+    border: 1px solid #ddd
+
+.btCard select.selectPage
+  width: auto
+  padding: 0
+  -webkit-appearance: none
+  -moz-appearance: none
+  font-size: 11px
+  border: 1px dotted #555
+
+div
+  &.btCard.editing
+    border: 1px dashed #d8d8d8
+    border-radius: 7px !important
+    width: 80%
+  &.btTitle
+    margin: -15px
+    margin-bottom: 20px
+    font-weight: bolder
+    font-size: 18px
+    color: #4C5B66
+    border-bottom: 1px dotted rgba(67, 90, 110, 0.1)
+    i.fa
+      font-size: 0.85em !important
+  &.btCard
+    &.link-table div.btTitle
+    &.editing div.btTitle
+      border-radius: 7px 7px 0px 0px
+      background-color: #f2f9fc
+      border: 1px dashed #c9e6f2
+      color: black
+  &.btPBAR
+    background: #5E6573
+    min-height: 3px
+    opacity: 0.5
+    margin: 0
+    margin-bottom: 5px
+
+img.btFlag
+  height: 8px
+  width: auto !important
+  opacity: 0.6
+
+span.btLanguage
+  color: #444
+  font-size: 14px
+  opacity: .8
+  font-family: Open Sans !important
+
+div.btCard.admin span.btLanguage
+  color: #333
+
+span.btField
+  color: #000 !important
+  font-size: 13px !important
+
+input.btInput, textarea.btInput
+  padding-left: 0px
+  padding-right: 0px
+  margin-left: 0px
+  margin-right: 0px
+  width: 100%
+
+div
+  &.btSource
+    margin-bottom: 20px
+    select
+      width: 85%
+      font-size: 13px
+      font-family: Open Sans !important
+      &.full-width
+        width: 100%
+    span.btNative
+      color: #444
+      font-size: 25px
+      strong
+        font-family: Gentium
+    a.tooltip
+      font-size: 17px
+      color: #333
+      font-style: italic
+      font-family: Gentium !important
+  &.btButtonBar
+    margin-top: 20px
+    margin-left: -20px
+    margin-right: -20px
+    margin-bottom: -20px
+    padding: 5px
+    &.no-min
+      margin: 0
+    &.up
+      margin: 0px
+      margin-left: -20px
+      margin-top: -10px
+      margin-bottom: 15px
+      margin-right: -20px
+
+a.btAction
+  display: inline-block
+  padding: 6px
+  background: #eee
+  border: 1px solid rgba(155, 155, 155, 0.1)
+  color: #444
+  margin-left: 5px
+  font-size: 11px
+  cursor: pointer
+  float: right
+  &.red-link
+    display: inline-block
+    padding: 6px
+    background: #eee
+    border: 1px solid rgba(155, 155, 155, 0.1)
+    color: #444
+    margin-left: 5px
+    font-size: 11px
+    cursor: pointer
+    float: right
+
+table.admin a.btAction
+  font-size: 11px
+
+a.btAction
+  &.wikiEdit
+    float: left !important
+  &.page
+    float: none !important
+  &.blue.page
+    transition: none !important
+    width: 24px
+    text-align: center
+    padding: 0
+  &:hover
+    background-image: linear-gradient(top, #607193, #576684) !important
+    background-image: -webkit-linear-gradient(top, #607193, #576684) !important
+    color: snow
+
+div.btButtonBar a.btAction
+  &.green:hover, &.blue:hover
+    background-image: linear-gradient(top, #607193, #576684) !important
+    background-image: -webkit-linear-gradient(top, #607193, #576684) !important
+    color: snow
+
+a.btAction
+  &.redbt:hover
+    background-image: linear-gradient(top, #607193, #576684) !important
+    background-image: -webkit-linear-gradient(top, #607193, #576684) !important
+    color: snow
+  &.green
+    background-color: #2B8B4A
+    background-image: linear-gradient(top, #21a62e, #2f8f28)
+    background-image: -webkit-linear-gradient(top, #21a62e, #2f8f28)
+    border-radius: 5px
+    padding: 9px
+    font-size: 17px
+    color: snow
+    &.little
+      font-size: 13px
+      padding: 4px
+  &.redbt
+    background-color: #E8735E
+    border-radius: 5px
+    padding: 7px
+    opacity: .5
+    font-size: 12px
+    color: snow !important
+    &:hover
+      opacity: 1
+  &.blue
+    background-color: #515763
+    color: snow
+    &.disabled
+      background-color: #A9AFBC
+      border: 1px #A9AFBC solid
+      opacity: .2
+      cursor: not-allowed !important
+      &:hover
+        border: 1px #A9AFBC solid
+        color: snow
+
+.wdComments-list
+  border-collapse: separate
+  border-spacing: 10px 50px
+  .wdComment
+    width: 100%
+    margin-top: 10px
+
+.wdComment a.actionbutton
+  font-size: 12px
+  padding: 4px
+  margin-top: 5px !important
+  margin-left: -2px !important
+  display: inline-block
+
+.wdContent
+  background: #fafafa
+  padding: 10px
+  font-family: Trebuchet MS
+  font-size: 14px
+
+.wdUserBar
+  strong.wdUserName
+    font-family: raleway
+    font-size: 12px
+    text-transform: lowercase
+  span
+    &.wdDate
+      color: #666
+      font-size: 12px
+      text-transform: lowercase
+      &::before
+        content: "«"
+        font-size: 10px
+      &::after
+        content: "»"
+        font-size: 10px
+    &.wdPoints
+      font-size: 12px
+      color: #999
+      &::before
+        content: "["
+      &::after
+        content: "]"
+
+.wdContent p
+  display: inline-block
+  margin: 0
+
+a.wdTopLink
+  font-size: 11px
+  color: #222
+  i.fa
+    font-size: 11px
+    color: #222
+
+.wdLinksBar
+  font-size: 12px
+  a
+    color: #777
+    &:hover
+      text-decoration: underline
+
+a.wdTopLink:hover
+  text-decoration: underline
+
+.wdLinksBar a.reply
+  color: #68777d
+  font-weight: bold
+
+.wdComment .children
+  margin-left: 2%
+  padding-left: 20px
+  width: 100%
+  border-left: solid 1px #EFEFEF
+
+.children .wdContent
+  margin-right: 1%
+
+.wdComment .children.bottom
+
+.beta
+  color: #677461
+  font-family: Open Sans
+  font-size: 10px
+
+/* D_ADMIN
+
+div
+  &.d_admin_wrap
+    display: flex
+    margin-right: -15px
+  &.rulesheet
+    display: flex
+    margin-right: -15px
+    padding: 30px
+    padding-top: 0px
+    &.inner
+      padding: 0px
+  &.rulesheet-margin
+    margin-left: 30px
+    margin-right: 30px
+  &.rulesheet-header
+    padding-left: 30px
+    padding-right: 30px
+  &.rulesheet
+    .left
+      align-items: stretch
+      width: 50%
+      padding: 10px
+    .right
+      align-items: stretch
+      width: 50%
+      margin-left: 0px
+      padding: 10px
+  &.mainTabs div[data-tab]
+    min-height: 400px
+  &.rulesheet
+    .right div.semanticsTabs
+      margin-top: 30px
+    &.inner
+      .left
+        padding-right: 10px
+      .right
+        margin-left: 0px
+        padding-left: 10px
+        border-left: 1px dotted #ccc
+
+.btCard.rulesheetCard
+  margin: 0 auto
+  width: 95%
+
+.btInput.Rule
+  width: 100%
+  font-family: Consolas
+  background: #f7f7f7
+  text-align: center
+  color: #333
+  font-size: 20px
+  padding: 10px
+
+div
+  &.rulesheet
+    div
+      &.describeStatement
+        font-size: 13px
+        font-family: Open Sans
+        font-weight: normal !important
+      &.example
+        font-size: 13px
+        font-family: Open Sans
+        font-weight: normal !important
+        background: #f7f7f7
+        margin-top: 10px
+        padding: 5px
+        width: 97%
+        font-size: 14px
+    table.describe
+      width: 100%
+      font-family: Open Sans !important
+      cursor: pointer
+      opacity: .7
+      &:hover
+        opacity: 1
+      td
+        padding-left: 20px
+        padding-right: 20px
+      strong
+        font-family: Open Sans !important
+      tr
+        &:nth-child(even) td
+          background: #eee
+        &:nth-child(odd) td
+          background: #f5f5f5
+        &.title td
+          background: #e0e0e0
+  &.d_admin_menu
+    align-items: stretch
+    max-width: 3.5%
+    min-width: 40px
+    transition: width .2s ease-in, background .2s
+    padding-top: 108px
+    background: #f9f9f9
+    border-left: 1px solid #e7e7e7
+    border-right: 1px solid #e7e7e7
+    margin-top: -27px
+    margin-bottom: -21px
+    a
+      display: block
+      transition: none
+      overflow: hidden
+      -webkit-backface-visibility: hidden
+      width: 100% (-6px)
+      padding: 3px
+      padding-bottom: 5px
+      padding-top: 5px
+      font-size: 15px
+      text-align: center
+      color: #222
+      text-align: center
+      line-height: 30px
+      height: 44px
+      border-top: 2px solid transparent
+      border-bottom: 2px solid transparent
+      font-size: 18px
+      &.active
+        background: #eee
+
+.tooltipster-content a.ttip-sub
+  &.active
+    background: #2B8B4A
+    color: white
+  display: block
+  margin: 5px
+  margin-left: -5px
+  margin-right: -5px
+  padding: 5px
+  color: black
+  &.nav
+    font-size: 13px
+    margin: 0px
+    margin-bottom: 2px
+    padding: 6px
+    border-bottom: 1px solid #eee
+    margin-left: -5px
+    margin-right: -5px
+    i.fa
+      font-size: 10px !important
+
+a.ttip-sub:hover
+  color: snow
+  background: #333
+
+div
+  &.d_admin_menu a
+    i.fa
+      font-size: 24px
+    &:hover
+      background: #ccc
+      color: #333
+      text-shadow: initial
+  &.d_admin
+    width: 100%
+
+.d_admin_header
+  cursor: pointer
+  margin-left: 35px
+  margin-right: 30px
+  border-radius: 8px
+  border: 1px solid transparent
+
+div.debugConsole
+  input
+    border: none
+    background: transparent
+    font-family: Consolas
+    color: white
+    width: 97%
+  color: #fff
+  padding: 40px
+  padding-top: 5px
+  padding-bottom: 5px
+  height: 500px
+  overflow: scroll
+  background: #111
+  font-family: Consolas
+  border: 1px solid transparent
+  border-bottom-right-radius: 5px
+  border-bottom-left-radius: 5px
+  border-top: 1px black solid
+  table
+    *
+      color: snow !important
+    td
+      &::before
+        content: '|'
+      pre
+        &::before, &::after
+          content: "'"
+  span.line
+    margin-bottom: 5px
+    display: block
+
+table.inflections
+  width: 30%
+  float: left
+  font-size: 15px
+  margin: 5px
+  box-shadow: 0px 1px 3px rgba(100, 100, 100, 0.1)
+  td
+    padding: 4px
+  tr.heading td
+    font-size: 14px
+    color: gray
+    border-bottom: 1px solid rgba(94, 101, 115, 0.2)
+    opacity: .7
+  td.row_name
+    border-right: 1px solid rgba(94, 101, 115, 0.2)
+    opacity: .8
+    color: darkgray
+    font-size: 12px
+    width: 40%
+  tr.title td
+    font-size: 29px
+    border-bottom: 1px solid rgba(94, 101, 115, 0.2)
+    padding-bottom: 0px
+    font-weight: 700
+    color: #333
+    text-transform: uppercase
+    letter-spacing: 2px
+    white-space: normal
+    line-height: normal
+    font-size: 12px
+    padding-left: 10px
+    padding-right: 10px
+    padding-bottom: 5px
+    padding-top: 5px
+
+.fake-browser-ui
+  .frame
+    display: block
+    height: 15px
+    background: #55688A
+    border-radius: 5px 5px 0px 0px
+  span
+    height: 8px
+    width: 8px
+    border-radius: 8px
+    background-color: #eee
+    border: 1px solid #dadada
+    float: left
+    margin-top: 3px
+    margin-left: 4px
+    margin-right: 3px
+
+textarea.gtEditor
+  width: 100%
+  border: 1px solid #f4f4f4
+  padding: 20px
+  font-size: 15px
+  font-family: Open Sans
+  border-radius: 5px
+  min-height: 350px

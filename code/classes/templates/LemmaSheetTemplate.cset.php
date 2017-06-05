@@ -33,6 +33,13 @@ class pLemmaSheetTemplate extends pTemplate{
 
 		p::Out("
 			<form id='LemmaSheetForm'>
+			<div class='float-right btStatus'>
+				<input class='hidden-status' type='hidden' value='".($edit ? $data['hidden'] : '0')."' />
+				<select class='select-status btStatus float-right'>
+					<option value='0' ".(($edit && $data['hidden'] == 0) ? 'selected' : '').">Status: Visible</option>
+					<option value='1' ".(($edit && $data['hidden'] == 1) ? 'selected' : '').">Status: Hidden</option>
+				</select>
+			</div>
 			".($edit ? "<br /><span class='native markdown-body'><h2><strong class='pWord'>".$data['native'].'</strong></h2></span>' : '<span class="markdown-body"><h2>'.LEMMA_NEW.'</h2></span><br />')."<br />
 			<div class='mainTabs'>
 				<div data-tab='Basic information'>
@@ -113,7 +120,7 @@ class pLemmaSheetTemplate extends pTemplate{
 					<div style='padding: 10px'><textarea class='gtEditor usage-notes elastic allowtabs'>".($edit ? $this->_data->_links['usage_notes'] : '')."</textarea></div>
 				</div>
 			</div>
-		</form>
+		</form><br />
 ");
 		p::Out("<a class='btAction green submit-form no-float'>".SAVE."</a>");
 
@@ -139,9 +146,17 @@ class pLemmaSheetTemplate extends pTemplate{
 		var selectScore = '<select><option value=\"0%\">0%</option><option value=\"25%\">25%</option><option value=\"50%\">50%</option><option value=\"75%\">75%</option><option value=\"100%\">100%</option></select>';
 
 		".pMainTemplate::allowTabs()."
+
 		$('.mainTabs').cardTabs();
-		$('.linksTabs').cardTabs();
 		$('.select2').select2({});
+
+		$('.select-status').ddslick({
+	    	onSelected: function(selectedData){
+	      		$('.status-hidden').val(selectedData.selectedData.value);
+	       		$('.status-hidden').trigger('.status-hidden');
+	    	}   
+		})
+
 		$('.select2m').select2({allowClear: true, placeholder: '➥ Add lemmas'});
 		$('.tags').tagsInput({
 			'delimiter': '//'
@@ -149,7 +164,6 @@ class pLemmaSheetTemplate extends pTemplate{
 		$(document).ready(function(){
     		$('.elastic').elastic();
 		});
-		$('.catTabs').cardTabs();
 		$('.semanticsTabs').cardTabs();
 		$('.generate-ipa').click(function(){
 			$('.ajaxGenerateIPA').load('".p::Url("?editor/".$section."/generateipa/ajax")."', {'lemma': $('.lemma-native').val()});
@@ -170,6 +184,7 @@ class pLemmaSheetTemplate extends pTemplate{
 				'antonyms': $('.select-antonyms').data('storage'),
 				'homophones': $('.select-homophones').data('storage'),
 				'examples': $('.examples-select').data('storage'),
+				'hidden': $('.hidden-status').val(),
 			});
 		});
 		$('.examples-select').selectSpecify({

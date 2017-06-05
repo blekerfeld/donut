@@ -93,7 +93,6 @@ class pMainTemplate extends pTemplate{
 		?>
 	<body class='dashboard'>
     <div class='contents'>
-      <div class='hStripe2'></div>
       <div class='hStripe'></div>
       <div class="top_area">
         <div class="absolute_header">
