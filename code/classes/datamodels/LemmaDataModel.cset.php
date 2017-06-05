@@ -37,20 +37,30 @@ class pLemmaDataModel extends pDataModel{
 			$ww = "REGEXP '[[:<:]]".trim(p::Escape($search))."[[:>:]]'";
 		else
 			$ww = "LIKE \"%".trim(p::Escape($search))."%\"";
-	
+
+		$extra = '';
+
+		if(!pUser::noGuest())
+			$extra = " (words.hidden = 0) AND ";
+
+
 		if($searchlang == 0)
-			$q = "SELECT * FROM (SELECT DISTINCT id AS word_id, 0 AS is_inflection, 0 as inflection FROM words WHERE native ".$ww." OR native = '".p::Escape($search)."'  ORDER BY CASE
+			$q = "SELECT * FROM (SELECT DISTINCT id AS word_id, 0 AS is_inflection, 0 as inflection FROM words WHERE $extra native ".$ww." OR native = '".p::Escape($search)."'  
+				ORDER BY CASE
     						WHEN words.native = '".p::Escape(trim($search))."' THEN 1
     						WHEN words.native LIKE '".p::Escape(trim($search))."%' THEN 2
     						WHEN words.native LIKE '%".p::Escape(trim($search))."' THEN 3
     						ELSE 4
-						END DESC) AS a UNION ALL SELECT * FROM (SELECT DISTINCT word_id, 1 AS is_inflection, inflection FROM inflection_cache WHERE inflection ".$ww." OR inflection LIKE '".p::Escape($search)."' ORDER BY INSTR('".p::Escape(trim($search))."', inflection) DESC) as b UNION ALL SELECT * FROM (SELECT DISTINCT word_id, 1 AS is_inflection, irregular_form AS inflection FROM morphology_irregular WHERE irregular_form ".$ww." ORDER BY INSTR('".p::Escape(trim($search))."', irregular_form) DESC) AS c ".$limit;	
+						END DESC) AS a 
+				UNION ALL SELECT * FROM (SELECT DISTINCT word_id, 1 AS is_inflection, inflection FROM inflection_cache WHERE inflection ".$ww." OR inflection LIKE '".p::Escape($search)."' ORDER BY INSTR('".p::Escape(trim($search))."', inflection) DESC) as b 
+				
+				UNION ALL SELECT * FROM (SELECT DISTINCT word_id, 1 AS is_inflection, irregular_form AS inflection FROM morphology_irregular WHERE irregular_form ".$ww." ORDER BY INSTR('".p::Escape(trim($search))."', irregular_form) DESC) AS c ".$limit;	
 		else
 			$q = "SELECT * FROM (SELECT DISTINCT translation_words.word_id, 0 AS is_inflection, 0 AS is_alternative, 0 AS inflection, translations.id AS trans_id, translations.translation AS translation
 					FROM words 
 					INNER JOIN translation_words ON translation_words.word_id=words.id 
 					INNER JOIN translations ON translations.id=translation_words.translation_id
-					WHERE translations.translation ".$ww." AND translations.language_id = '".$searchlang."' ORDER BY INSTR('".p::Escape(trim($search))."', translations.translation) DESC) AS a UNION ALL
+					WHERE $extra translations.translation ".$ww." AND translations.language_id = '".$searchlang."' ORDER BY INSTR('".p::Escape(trim($search))."', translations.translation) DESC) AS a UNION ALL
 					SELECT * FROM (SELECT DISTINCT word_id, 0 AS is_inflection, 1 AS is_alternative, alternative, translation_alternatives.translation_id AS trans_id, translations.translation AS translation FROM translation_words INNER JOIN translations ON translations.id = translation_words.translation_id INNER JOIN translation_alternatives WHERE translation_alternatives.alternative ".$ww." AND translation_words.translation_id = translation_alternatives.translation_id AND translations.language_id = '".$searchlang."' ORDER BY 
 						CASE
     						WHEN translations.translation LIKE '".p::Escape(trim($search))."' THEN 1

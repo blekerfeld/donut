@@ -127,15 +127,15 @@ class pLemmaSheetDataModel extends pDataModel{
 	}
 
 
-	public function Basics($dictForm, $lexForm, $ipa, $lexcat, $gramcat, $tags, $update = false){
+	public function Basics($dictForm, $lexForm, $ipa, $lexcat, $gramcat, $tags, $hidden, $update = false){
 		// First change the basic info
 		if(empty($dictForm) OR empty($lexcat) OR empty($gramcat))
 			return false;
 		if($update){
-			$this->prepareForUpdate(array($dictForm, $lexForm, $ipa, 0, $lexcat, $gramcat, $tags, date('Y-m-d H:i:s'), date('Y-m-d H:i:s'), pUser::read('id')));
+			$this->prepareForUpdate(array($dictForm, $lexForm, $ipa, $hidden, $lexcat, $gramcat, $tags, date('Y-m-d H:i:s'), date('Y-m-d H:i:s'), pUser::read('id')));
 			return !(!$this->update());
 		}else{
-			$this->prepareForInsert(array($dictForm, $lexForm, $ipa, 0, $lexcat, $gramcat, $tags, null, date('Y-m-d H:i:s'), pUser::read('id')));
+			$this->prepareForInsert(array($dictForm, $lexForm, $ipa, $hidden, $lexcat, $gramcat, $tags, null, date('Y-m-d H:i:s'), pUser::read('id')));
 			$this->insert();
 			// We have to construct this class again, with the id we got
 			$this->__construct('words', p::$db->lastInsertId());

@@ -38,7 +38,7 @@ class pParadigm{
 				$rules = $this->findRules($lemma, $heading, $row);
 				$output[$heading['id']]['rows']['row_'.$row['id']]['rules'] = $rules;
 				// The lexical form or stem
-				$output[$heading['id']]['rows']['row_'.$row['id']]['stems'] = $this->findIrregularForms($lemma, $rules, $heading, $row);
+				$output[$heading['id']]['rows']['row_'.$row['id']]['stems'] = $this->findIrregularForms($lemma, $heading, $row, $rules);
 				// Aux info
 				$output[$heading['id']]['rows']['row_'.$row['id']]['aux'] = $this->findAux($row, $heading, $lemma);
 			}
@@ -84,53 +84,37 @@ class pParadigm{
 			return $checkGramGroups->fetchAll();
 	}
 
-	protected function findIrregularForms($lemma, $rules, $heading, $row){
+	protected function findIrregularForms($lemma, $heading, $row, $rules){
 
 		$output = array();
-		$rulesLength = count($rules);
+		$irregRules = $this->findRules($lemma, $heading, $row, true);
 
-		// Empty rules still need a stem
-		if(empty($rules))
-			$rules = array(false);
-
-		// First we need to check if there maybe is an irregular form for the whole grammatical group
-
-		$checkGramGroups = $this->_dataModel->customQuery("SELECT i.id, i.irregular_form, i.stem FROM gram_groups_irregular AS i
-			JOIN gram_groups_members gg ON gg.mode_id = ".$this->_id." AND gg.submode_id = ".$heading['id']." AND (gg.number_id = ".$row['id']." OR gg.number_id = 0) AND
-			(gg.type_id = '".$lemma->read('type_id')."' OR gg.type_id = 0) AND
-			(gg.classification_id = '".$lemma->read('classification_id')."' OR gg.classification_id = 0) AND
-			(gg.subclassification_id = '".$lemma->read('subclassification_id')."' OR gg.classification_id = 0)
-			WHERE i.word_id = ".$lemma->read('id')."");
-
-		if($checkGramGroups->rowCount() != 0)
-			$padding = array($checkGramGroups->fetchAll()[0]['irregular_form'], ($checkGramGroups->fetchAll()[0]['stem'] == 0));
-		elseif($lemma->read('lexical_form') != '')
+		if($lemma->read('lexical_form') != '')
 			$padding = array($lemma->read('lexical_form'), false);
 		else
 			$padding = array($lemma->read('native'), false);
 
-		// Now it's time to loop through the rules we have if we can maybe find irregular forms for the rules
+		if(count($rules) == 0)
+			$rules = array(false);
+
+		if(count($irregRules) == 0)
+			$irregRules = array(false);
 
 		foreach($rules as $rule){
-			if($rule == false){
-				$output = $padding;
-				continue;
-			}
-
-			$checkMorphology = $this->_dataModel->customQuery("SELECT i.id, i.irregular_form, i.stem FROM morphology_irregular AS i
-			JOIN morphology AS m ON m.id = i.morphology_id
-			WHERE i.word_id = ".$lemma->read('id')." AND m.id = ".$rule['id']);
-			if($checkMorphology->rowCount() != 0)
-				$output[] = array($checkMorphology->fetchAll()[0]['irregular_form'], ($checkMorphology->fetchAll()[0]['stem'] == 0));
-			else
-				$output[] = $padding;
+			// Now it's time to loop through the rules we have if we can maybe find irregular forms for the rules
+			foreach($irregRules as $irregRule)
+				if($irregRule == false){
+					$output[] = $padding;
+					continue;
+				}
+				else
+					$output[] = array($irregRule['irregular_form'], ($irregRule['is_stem'] == 1));
 		}
-			
-		return $output; 
 
+		return $output; 
 	}
 
-	protected function findRules($lemma, $heading, $row){
+	protected function findRules($lemma, $heading, $row, $irregular = false){
 
 
 		// First we need to fetch all potatial candidates
@@ -208,7 +192,10 @@ class pParadigm{
 		if(count($rules) == 0)
 			$rules[] = 'id = -1';
 
-		return $this->_dataModel->customQuery("SELECT * FROM morphology WHERE ".implode(" OR ", $rules).";")->fetchAll();
+		if(!$irregular)
+			return $this->_dataModel->customQuery("SELECT * FROM morphology WHERE (".implode(" OR ", $rules).") AND is_irregular = 0;")->fetchAll();
+		else
+			return $this->_dataModel->customQuery("SELECT * FROM morphology WHERE (".implode(" OR ", $rules).") AND is_irregular = 1 AND lemma_id = ".$lemma->read('id').";")->fetchAll();
 
 	}
 

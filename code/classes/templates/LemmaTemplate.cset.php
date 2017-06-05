@@ -33,7 +33,7 @@ class pLemmaTemplate extends pEntryTemplate{
 		}
 
 		// If there is a session that restricts the shown languages, offer a link that is able cancel that restriction
-		$showAll = ((isset(pAdress::session()['returnLanguage'])) ? '<a class="xsmall float-right" href="'.p::Url("?entry/".$this->_data['id']."/resetTranslations/").'">'.LEMMA_TRANSLATIONS_RESET.'</a>' : '');
+		$showAll = ((isset(pAdress::session()['returnLanguage'])) ? '<a class="opacity-min float-right" href="'.p::Url("?entry/".$this->_data['id']."/resetTranslations/").'">'.LEMMA_TRANSLATIONS_RESET.'</a>' : '');
 
 		if($justList)
 				return $content;

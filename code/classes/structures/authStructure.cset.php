@@ -45,6 +45,9 @@ class pAuthStructure extends pStructure{
 
 	public function render(){
 
+		if($this->_section == 'profile')
+			return p::Out("hoi");
+
 		if($this->_section == 'logout')
 			return $this->logOut();
 

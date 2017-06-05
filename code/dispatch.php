@@ -41,7 +41,7 @@ return array(
 				'permission' => -4,
 				'class' => '',	
 				'subitems' => array(
-					'new-word' => array(
+					'editor' => array(
 						'name' => 'New Lemma',
 						'icon' => 'fa-plus-circle',
 						'app' => 'editor/new',
@@ -150,6 +150,7 @@ return array(
 		'default_section' => 'login',
 		'arguments' => array(
 			0 => 'section',
+			1 => 'id',
 		),
 		'menu' => '',
 	),

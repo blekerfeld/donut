@@ -44,7 +44,7 @@ class pLemmasheetHandler extends pHandler{
 
 		while($edit == false){
 			// Let's update the basics
-			$edit = $this->dataModel->Basics(pAdress::post()['native'], pAdress::post()['lexform'], pAdress::post()['ipa'], pAdress::post()['lexcat'], pAdress::post()['gramcat'], pAdress::post()['tags'], $editBool);
+			$edit = $this->dataModel->Basics(pAdress::post()['native'], pAdress::post()['lexform'], pAdress::post()['ipa'], pAdress::post()['lexcat'], pAdress::post()['gramcat'], pAdress::post()['tags'], pAdress::post()['hidden'], $editBool);
 
 			// Let's update the translations
 			$edit = $this->dataModel->updateTranslations(json_decode(pAdress::post()['translations'], true));
