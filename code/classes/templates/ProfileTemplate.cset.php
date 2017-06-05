@@ -11,12 +11,24 @@
 
 class pProfileTemplate extends pSimpleTemplate{
 
-	public function renderAll(){
-		// The home search box! Only if needed!
-		if(!(isset(pAdress::arg()['ajax']) and isset(pAdress::arg()['nosearch'])))
-			p::Out(new pSearchBox(true));
+	protected $_user;
 
-		p::Out("<div class='home-margin pEntry'><div style='margin: 0 auto;width:80%'>".p::Markdown(file_get_contents(p::FromRoot("static/home.md")), true)."</div></div><br />");
+	public function __construct(){
+		if(!isset(pAdress::arg()['id']))
+			die();
+		$this->_user = new pUser(pAdress::arg()['id']);
+	}
+
+	public function renderAll(){
+		p::Out("<div class='rulesheet'><div class='left-20' >
+				<img class='userAvatar' src='".p::Url($this->_user->read('avatar'))."' />
+			<div class='markdown-body'>
+				<h3>".(($this->_user->read('longname') != '') ? $this->_user->read('longname') : $this->_user->read('username'))."</h3>
+			</div>
+			</div>
+			<div class='right-80'></div></div>");
+
+		unset($this->_user);
 	}
 
 }
