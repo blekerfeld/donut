@@ -16,12 +16,23 @@ class pProfileTemplate extends pSimpleTemplate{
 	public function __construct(){
 		if(!isset(pAdress::arg()['id']))
 			die();
-		$this->_user = new pUser(pAdress::arg()['id']);
 	}
 
 	public function renderAll(){
+
+		try {
+			$this->_user = new pUser(pAdress::arg()['id']);
+		} catch (Exception $e) {
+			pMainTemplate::setTitle(LOGIN_USERNOTFOUND);
+			p::Out(pMainTemplate::NoticeBox('fa-warning', LOGIN_USERNOTFOUND, 'danger-notice'));
+			return false;
+		}
+
+
+		pMainTemplate::setTitle((($this->_user->read('longname') != '') ? $this->_user->read('longname') . " (".$this->_user->read('username').")" : $this->_user->read('username')));
+
 		p::Out("<div class='rulesheet'><div class='left-20' >
-				<img class='userAvatar' src='".p::Url($this->_user->read('avatar'))."' />
+				<img class='userAvatar' src='".p::Url($this->_user->avatar())."' />
 			<div class='markdown-body'>
 				<h3>".(($this->_user->read('longname') != '') ? $this->_user->read('longname') : $this->_user->read('username'))."</h3>
 			</div>

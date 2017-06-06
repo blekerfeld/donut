@@ -24,7 +24,12 @@ class pUser{
 		// Overwrite the loaded user
 		if(isset($id)){
 			self::$dataModel->getSingleObject($id);
-			return self::load(self::$dataModel->data()->fetchAll()[0]);
+			if(isset(self::$dataModel->data()->fetchAll()[0]))
+				return self::load(self::$dataModel->data()->fetchAll()[0]);
+			else
+				throw new Exception("Error: user could not be loaded", 1);
+		}else{
+			self::restore();
 		}
 		
 	}
@@ -127,6 +132,17 @@ class pUser{
 	public function read($key){
 		if(array_key_exists($key, self::$user))
 			return self::$user[$key];
+		return false;
+	}
+
+	// This will read out the given field
+	public function avatar(){
+		if(self::read('avatar') != '')
+			return p::Url(self::read('avatar'));
+		elseif(self::read('id')  == 0)
+			return p::Url("pol://library/images/static/guest.png");
+		else
+			return p::Url("pol://library/images/static/default_avatar.png");
 		return false;
 	}
 

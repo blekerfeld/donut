@@ -1,0 +1,74 @@
+div.entryThread{
+
+}
+
+div.entryThread img.avatar{
+	width: 10%;
+	max-width: 40px;
+	height: auto;
+	margin: 10px;
+	border-radius: 5px;
+}
+
+div.entryThread div.content{
+	float: right;
+	width: calc(100% - 60px);
+	padding: 10px;
+	padding-left: 0px;
+	padding-top: 10px;
+}
+
+div.entryThread a.username{
+	color: #212121;
+}
+div.entryThread a.username:hover{
+	text-decoration: underline;
+}
+
+div.entryThread div.parent{
+	width: 100%;
+	padding-right: 0px;
+	padding-bottom: 0px;
+}
+
+div.entryThread div.children{
+	margin-left: 5%;
+}
+
+div.entryThread div.children.main{
+	border-bottom: 1px dotted #ededed;
+	padding-bottom: 10px;
+}
+
+div.entryThreadHolder div.entryThread:first-child div.children{
+	border-left: 1px dotted #ededed;
+}
+
+div.entryThread div.children div.parent{
+	border-bottom: 1px dotted #ededed;
+	border-radius: 0px 0px 0px 5px;
+	padding: 0px;
+	padding-top: 10px;
+	padding-left: 20px;
+	margin-left: -3px;
+}
+
+div.entryThread .pSectionTitle.extra{
+	border: 1px dotted #ededed;
+}
+
+div.entryThread .pSectionWrapper{
+	border: 1px dotted #ededed;
+}
+
+div.entryThread div.children div.parent .pSectionWrapper{
+	border-bottom: none;
+	border-radius: 0px;
+}
+
+
+div.entryThread  .pSectionWrapper{
+	margin: 0;
+	background: white;
+	padding: 0;
+}

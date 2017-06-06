@@ -134,7 +134,7 @@ class pLemmaSheetTemplate extends pTemplate{
 			// Throwing this object's script into a session
 			pAdress::session($hashKey, $this->script($sendLanguages, $section, @$data, $edit));
 
-		p::Out("<script type='text/javascript' src='".p::Url('pol://library/assets/js/jsMover.js.php?key='.$hashKey)."'></script>");
+		p::Out("<script type='text/javascript' src='".p::Url('pol://library/assets/js/key.js.php?key='.$hashKey)."'></script>");
 
 		p::Out("
 			<br id='cl' /></div>

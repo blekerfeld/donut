@@ -98,6 +98,7 @@ class pLemma extends pEntry{
 
 		// Let's throw the subentries through their template
 		p::Out($this->_template->parseSubEntries($this->_subEntries));
+
 	}
 
 	// This function will generate an infostring

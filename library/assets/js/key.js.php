@@ -6,7 +6,7 @@
   //    Written by Thomas de Roo
   //    Licensed under MIT
 
-  //  ++  File: jsMover.js.php
+  //  ++  File: \"
 
 header('Content-Type: text/javascript');
 session_start();

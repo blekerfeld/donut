@@ -47,7 +47,7 @@ class pSearchBox extends pTemplatePiece{
 			// Throwing this object's script into a session
 			pAdress::session($hashKey, $this->script());
 
-			$output .= "<script type='text/javascript' src='".p::Url('pol://library/assets/js/jsMover.js.php?key='.$hashKey)."'></script>";
+			$output .= "<script type='text/javascript' src='".p::Url('pol://library/assets/js/key.js.php?key='.$hashKey)."'></script>";
 
 		if(isset(pAdress::arg()['print']))
 			return '';
@@ -141,8 +141,8 @@ class pSearchBox extends pTemplatePiece{
 		html = '';
 
 		function search(bypass){
-			if($('.word-search').val() == ''){
-				return false;
+			if($('.word-search').val() == '' || $('.word-search').val() == ' '){
+				$('.searchLoad').html('');
 			}
 			else{
 				window.scrollTo(0, 0);

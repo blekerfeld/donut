@@ -348,7 +348,6 @@ div.nav a:first-child{
 div.nav a {
   padding: 3px;
   font-size: 12px;
-  background: rgba(240, 245, 248, 0.3);
   color: #000;
   text-decoration: none;
   letter-spacing: .15em;
@@ -630,6 +629,7 @@ input#wordsearch, input#filter, input#searchfilter {
   width: 60% - 18px;
   min-width: 100px;
   color: #93A7BE;
+  transition: all .3s;
 }
 
 a.button.search{
@@ -677,15 +677,9 @@ div.hSearch .load-hide{
 }
 
 .hSearch{
-  padding: 9px;
   font-size: 15px;
   text-decoration: none;
   color: #93A7BE;
-  margin-bottom: 10px;
-  margin-left: -32px;
-  margin-right: -32px;
-  padding-bottom: 15px!important;
-  border-bottom: 1px solid #B3C0D0;
 }
 
 .hSearch input#wordsearch{
@@ -701,30 +695,26 @@ div.hSearch .load-hide{
   font-family: Libre Franklin;
   font-size: 18px;
   padding-top: 9px;
+  color: #fff;
   background: transparent;
 }
 
 .header.dictionary{
   transition: all .3s;
-  background: rgba(240,240,240,0.2);
   box-shadow: 0 4px 10px 0px rgba(190,197,200, 0.05);
-  padding-left: 80px;
-  padding-right: 80px;
-  padding-bottom: 5px!important;
-  padding-top: 10px;
-  margin-bottom: 10px;
+  padding-left: 120px;
+  padding-right: 120px;
+  margin-bottom: 35px;
+  margin-left: -10%;
+  margin-right: -10%;
   position: relative;
   margin-top: -25px;
+  background: #525C7D;
 }
 
 
 
 .header.dictionary.home{
-  padding: 70px;
-  padding-bottom: 20px!important;
-  padding-top: 20px!important;
-  position: relative;
-  background: transparent;
 }
 
 .header.dictionary.home .hSearch{
@@ -777,11 +767,11 @@ input#filter {
 }
 
 input#wordsearch:focus, input#filter:focus {
-  color: #222;
+  color: #fff;
 }
 
 input#wordsearch:not(:placeholder-shown), input#filter:not(:placeholder-shown) {
-  color: #222!important;
+  color: #fff!important;
 }
 
 img.dFlag {
@@ -1414,11 +1404,24 @@ a.lemma-code i.fa {
   border-radius: 0px 0px 5px 5px;
 }
 
-.pSectionWrapper.editing {
-  background: #fff;
-  border-style: dashed;
-  border-top: none;
-  margin-top: 0px;
+.pSectionWrapper div.bottom{
+  display: block;
+  opacity: .6;
+  width: calc(100% + 22px);
+  margin: -11px;
+  margin-top: 11px;
+  border: 1px solid #EDEDED;
+  background: #f9f9f9;
+  border-radius: 0px 0px 5px 5px;
+  color: #333;
+  letter-spacing: .075em;
+  white-space: normal;
+  line-height: normal;
+  font-size: 10px;
+  padding-left: 10px;
+  padding-right: 10px;
+  padding-bottom: 2px;
+  padding-top: 2px;
 }
 
 
@@ -2072,98 +2075,6 @@ a.btAction.blue.disabled:hover{
   color: snow;
 }
 
-.wdComments-list{
-  border-collapse: separate;
-    border-spacing: 10px 50px;  
-}
-
-.wdComments-list .wdComment {
-  width: 100%;
-  margin-top: 10px;
-}
-
-
-.wdComment a.actionbutton {
-  font-size: 12px;
-  padding: 4px;
-  margin-top: 5px!important;
-  margin-left: -2px!important;
-  display: inline-block;
-}
-.wdContent {
-  background: #fafafa;
-  padding: 10px;
-  font-family: Trebuchet MS;
-  font-size: 14px;
-}
-.wdUserBar strong.wdUserName {
-  font-family: raleway;
-  font-size: 12px;
-  text-transform: lowercase;
-}
-.wdUserBar span.wdDate {
-  color: #666;
-  font-size: 12px;
-  text-transform: lowercase;
-}
-.wdUserBar span.wdDate::before {
-  content: "«";
-  font-size: 10px;
-}
-.wdUserBar span.wdDate::after {
-  content: "»";
-  font-size: 10px;
-}
-.wdUserBar span.wdPoints {
-  font-size: 12px;
-  color: #999;
-}
-.wdUserBar span.wdPoints::before {
-  content: "[";
-}
-.wdUserBar span.wdPoints::after {
-  content: "]";
-}
-.wdContent p {
-  display: inline-block;
-  margin: 0;
-}
-a.wdTopLink, a.wdTopLink i.fa {
-  font-size: 11px;
-  color: #222;
-}
-.wdLinksBar {
-  font-size: 12px;
-}
-.wdLinksBar a {
-  color: #777;
-}
-.wdLinksBar a:hover, a.wdTopLink:hover {
-  text-decoration: underline;
-}
-.wdLinksBar a.reply {
-  color: #68777d;
-  font-weight: bold;
-}
-.wdComment .children {
-  margin-left: 2%;
-  padding-left: 20px;
-  width: 100%;
-  border-left: solid 1px #EFEFEF;
-}
-
-.children .wdContent{
-  margin-right: 1%;
-}
-
-.wdComment .children.bottom {}
-.beta {
-  color: #677461;
-  font-family: Open Sans;
-  font-size: 10px;
-}
-
-
 
 /* D_ADMIN
 */ 
@@ -2250,6 +2161,7 @@ div.rulesheet.inner .right{
   background: #f7f7f7;
   text-align: center;
   color: #333;
+  border: 1px #dedede solid;
   font-size: 20px;
   padding: 10px;
 }
