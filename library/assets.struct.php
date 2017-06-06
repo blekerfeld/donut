@@ -28,6 +28,7 @@ return array(
 		'main.css',
 		'mobile.css',
 		'markdown.css',
+		'thread.css',
 		'jquery.cardtabs.css',
 		'jquery.selectspecify.css',
 		'vendors/font-awesome.css',

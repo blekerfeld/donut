@@ -154,6 +154,19 @@ return array(
 		),
 		'menu' => '',
 	),
+
+	'thread' => array(
+		'page_title' => 'Thread',
+		'default_section' => 'tread',
+		'arguments' => array(
+			0 => 'section',
+			1 => 'id',
+			2 => 'action',
+			3 => 'thread_id',
+		),
+		'menu' => '',
+	),
+
 	'terminal' => array(
 		'page_title' => CONFIG_SITE_TITLE,
 		'default_section' => 'terminal',

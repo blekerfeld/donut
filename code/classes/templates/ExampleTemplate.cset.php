@@ -26,7 +26,7 @@ class pExampleTemplate extends pEntryTemplate{
 
 		$titleSection->addInformationElement((new pDataField(null, null, null, 'flag'))->parse((new pLanguage(0))->read('flag'))." ".LEMMA_EXAMPLE);
 
-		return $realTitle.$titleSection."<br /><span class='small-caps xsmall'>".sprintf(LEMMA_TRANSLATION_ADDED, "<a href='".p::Url('?profile/'.$this->_data['user_id'])."'>".(new pUser($this->_data['user_id']))->read('username')."</a>", p::Date($this->_data['created_on']))."</span>";
+		return $realTitle.$titleSection."<br /><span class='small-caps xsmall'>".sprintf(LEMMA_TRANSLATION_ADDED, "<a href='".p::Url('?auth/profile/'.$this->_data['user_id'])."'>".(new pUser($this->_data['user_id']))->read('username')."</a>", p::Date($this->_data['created_on']))."</span>";
 
 	}
 

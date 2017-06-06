@@ -17,10 +17,9 @@ CREATE TABLE `antonyms` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 INSERT INTO `antonyms` (`id`, `word_id_1`, `word_id_2`, `score`) VALUES
-(1, 1,  9,  100),
-(2, 1,  28, 50),
-(3, 78, 25, 0),
-(4, 17, 68, 100);
+(8, 10, 15, 50),
+(9301,  17, 13, 100),
+(9302,  18, 6,  100);
 
 SET NAMES utf8mb4;
 
@@ -53,9 +52,6 @@ CREATE TABLE `audio_words` (
   CONSTRAINT `audio_words_ibfk_2` FOREIGN KEY (`word_id`) REFERENCES `words` (`id`) ON DELETE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
-INSERT INTO `audio_words` (`id`, `word_id`, `audio_file`, `description`) VALUES
-(2, 17, 'kat.ogg',  'The Netherlands'),
-(3, 1,  'https://pkaudio.herokuapp.com/nl-nl/man',  'nl-nl');
 
 DROP TABLE IF EXISTS `classifications`;
 CREATE TABLE `classifications` (
@@ -111,8 +107,8 @@ CREATE TABLE `config` (
 INSERT INTO `config` (`id`, `SETTING_NAME`, `SETTING_VALUE`) VALUES
 (1, 'ENABLE_QUERY_CACHING', '0'),
 (2, 'QC_TIME',  '100000'),
-(3, 'SITE_TITLE', 'Donut Example Dictionary'),
-(4, 'LOGO_TITLE', 'donut */ example*'),
+(3, 'SITE_TITLE', 'Dutch dictionary'),
+(4, 'LOGO_TITLE', 'Dutch dictionary'),
 (5, 'HOMEPAGE', 'home'),
 (6, 'WIKI_ENABLE_HISTORY',  '1'),
 (7, 'WIKI_HISTORY_ONLY_LOGGED', '0'),
@@ -121,7 +117,8 @@ INSERT INTO `config` (`id`, `SETTING_NAME`, `SETTING_VALUE`) VALUES
 (10,  'WIKI_ENABLE_DISCUSSION', '1'),
 (11,  'HOME_TEXT',  '*Welcome to this dictionary*\r\n\r\n\r\nLorem ipsum dolor sit amet, consectetur adipiscing elit. Vestibulum mauris turpis, feugiat non nulla vel, iaculis tincidunt erat. Aenean ac euismod mi. Nullam feugiat felis sed venenatis laoreet. Vestibulum sodales nisl vitae ex dignissim maximus. Nam hendrerit sed dolor et convallis. Phasellus nec ipsum eget eros porttitor accumsan. Duis pretium malesuada dui, vitae lobortis dolor faucibus sit amet. Donec interdum, turpis id pretium interdum, ante eros sagittis elit, vel aliquam elit est vel ex. Nullam nulla risus, fringilla ac posuere ut, convallis pretium magna. Fusce pellentesque quis erat vel dignissim. Curabitur in augue vel nisi laoreet placerat. Phasellus dapibus augue sed ex interdum, vulputate tristique nunc congue. Aenean efficitur sapien at libero tempor efficitur. Pellentesque facilisis posuere leo at elementum. Donec ac lectus nec lorem consequat dictum. Nulla facilisi. '),
 (12,  'SITE_DESC',  ''),
-(13,  'ACTIVE_LOCALE',  'English');
+(13,  'ACTIVE_LOCALE',  'English'),
+(14,  'LOGO_SUB_TITLE', 'Dictionary of the Faulian Language');
 
 DROP TABLE IF EXISTS `derivations`;
 CREATE TABLE `derivations` (
@@ -134,114 +131,6 @@ CREATE TABLE `derivations` (
 INSERT INTO `derivations` (`id`, `name`, `short_name`) VALUES
 (1, 'diminutive', 'dim.'),
 (2, 'pronoun',  'pn.');
-
-DROP TABLE IF EXISTS `discussions`;
-CREATE TABLE `discussions` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `word_id` int(11) NOT NULL,
-  `parent_discussion` int(11) NOT NULL,
-  `user_id` int(11) NOT NULL,
-  `points` int(11) NOT NULL,
-  `content` text CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL,
-  `table_name` varchar(255) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL,
-  `post_date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  `last_update` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00' ON UPDATE CURRENT_TIMESTAMP,
-  PRIMARY KEY (`id`),
-  KEY `user_id` (`user_id`),
-  KEY `word_id` (`word_id`),
-  CONSTRAINT `discussions_ibfk_2` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`),
-  CONSTRAINT `discussions_ibfk_3` FOREIGN KEY (`word_id`) REFERENCES `words` (`id`) ON DELETE CASCADE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
-
-INSERT INTO `discussions` (`id`, `word_id`, `parent_discussion`, `user_id`, `points`, `content`, `table_name`, `post_date`, `last_update`) VALUES
-(4, 1,  3,  2,  0,  'Jaweljawel!',  '', '2017-01-23 02:00:59',  '0000-00-00 00:00:00'),
-(33,  1,  31, 1,  1,  'But I am stupid',  '', '2017-01-23 03:50:01',  '0000-00-00 00:00:00'),
-(35,  32, 0,  1,  1,  'Jij en je, should they be two different lemmas?',  '', '2017-01-23 11:17:47',  '0000-00-00 00:00:00'),
-(36,  32, 35, 1,  1,  'I don\'t know. Would that be useful?', '', '2017-01-23 12:07:05',  '0000-00-00 00:00:00'),
-(39,  10, 38, 1,  1,  'Third level',  '', '2017-01-23 12:27:07',  '0000-00-00 00:00:00'),
-(41,  10, 39, 1,  1,  'Fourth level', '', '2017-01-23 12:27:19',  '0000-00-00 00:00:00'),
-(42,  10, 41, 1,  1,  'Fifth level',  '', '2017-01-23 12:27:26',  '0000-00-00 00:00:00'),
-(43,  10, 42, 1,  1,  'Sixth level',  '', '2017-01-23 12:27:34',  '0000-00-00 00:00:00'),
-(44,  10, 43, 1,  1,  'Seventh level',  '', '2017-01-23 12:27:55',  '0000-00-00 00:00:00'),
-(45,  10, 44, 1,  1,  'Eighth level', '', '2017-01-23 12:28:05',  '0000-00-00 00:00:00'),
-(46,  10, 45, 1,  1,  '9th level',  '', '2017-01-23 13:16:10',  '0000-00-00 00:00:00'),
-(47,  10, 46, 1,  1,  '10th level', '', '2017-01-23 13:16:34',  '0000-00-00 00:00:00'),
-(48,  44, 0,  1,  1,  'First',  '', '2017-01-23 13:50:50',  '0000-00-00 00:00:00'),
-(52,  1,  51, 1,  1,  'Never mind, I don\'t think it\'s that important...', '', '2017-01-23 15:10:18',  '0000-00-00 00:00:00'),
-(58,  1,  57, 1,  1,  'Eventuelt äkta maka.', '', '2017-01-23 16:27:55',  '0000-00-00 00:00:00'),
-(59,  1,  55, 1,  1,  'karl kan va, och kanske även gubbe??', '', '2017-01-23 16:28:40',  '0000-00-00 00:00:00'),
-(60,  1,  59, 1,  1,  'Gubbe i betydelse av \'een oude mannetje\'', '', '2017-01-23 16:28:59',  '0000-00-00 00:00:00'),
-(66,  62, 0,  1,  1,  '**Etymology**\n[[62]] might come from [[maan]] right?',  '', '2017-01-30 00:28:14',  '0000-00-00 00:00:00'),
-(67,  62, 66, 1,  1,  '(heeft niks met [[man]] te doen...)',  '', '2017-01-30 00:39:48',  '0000-00-00 00:00:00'),
-(68,  10, 47, 1,  1,  '11th level', '', '2017-01-30 09:42:29',  '0000-00-00 00:00:00'),
-(69,  61, 0,  1,  1,  'Maybe from [[maand]] ??',  '', '2017-01-30 13:53:57',  '0000-00-00 00:00:00'),
-(70,  16, 0,  1,  1,  'test', '', '2017-01-31 00:21:27',  '2017-01-31 00:25:57'),
-(71,  16, 0,  1,  1,  '', '', '2017-01-31 00:22:40',  '0000-00-00 00:00:00'),
-(72,  16, 0,  1,  1,  'aaa',  '', '2017-01-31 00:22:42',  '0000-00-00 00:00:00'),
-(73,  16, 70, 1,  1,  'vind ik ook [[Qe]]', '', '2017-01-31 00:27:50',  '0000-00-00 00:00:00'),
-(74,  16, 0,  1,  1,  '[[1]]',  '', '2017-01-31 00:31:53',  '0000-00-00 00:00:00'),
-(75,  16, 73, 1,  1,  '[[maan]] [[kat]] [[kater]] [[ao|katers]]', '', '2017-01-31 00:42:26',  '0000-00-00 00:00:00'),
-(76,  7,  0,  1,  1,  '[[Xd|werkte]]',  '', '2017-01-31 01:31:50',  '0000-00-00 00:00:00'),
-(77,  78, 0,  1,  1,  '[[p5m|test]] test',  '', '2017-01-31 02:12:34',  '0000-00-00 00:00:00'),
-(78,  10, 68, 1,  1,  '12th level', '', '2017-02-05 19:40:59',  '0000-00-00 00:00:00'),
-(79,  18, 0,  1,  1,  'Poesje miauw, kom eens gauw, \nik heb lekkere melk voor jou!', '', '2017-02-06 00:28:36',  '0000-00-00 00:00:00'),
-(82,  1,  0,  1,  1,  'man\n',  '', '2017-02-12 15:08:24',  '0000-00-00 00:00:00'),
-(83,  1,  0,  1,  1,  '**HOI**',  '', '2017-02-12 15:10:26',  '0000-00-00 00:00:00'),
-(84,  1,  83, 1,  1,  'OOK HALLO',  '', '2017-02-12 15:10:45',  '0000-00-00 00:00:00'),
-(87,  44, 0,  1,  1,  'test\n', '', '2017-02-18 00:47:46',  '0000-00-00 00:00:00'),
-(89,  44, 87, 1,  1,  '/ ', '', '2017-02-18 00:48:08',  '0000-00-00 00:00:00'),
-(90,  10, 0,  1,  1,  'Test', '', '2017-02-18 13:56:48',  '0000-00-00 00:00:00'),
-(91,  10, 90, 1,  1,  'Test', '', '2017-02-18 13:56:54',  '0000-00-00 00:00:00'),
-(92,  10, 91, 1,  1,  'test', '', '2017-02-18 13:57:03',  '0000-00-00 00:00:00'),
-(93,  10, 0,  1,  1,  '[[Ma]]', '', '2017-02-18 13:57:18',  '0000-00-00 00:00:00'),
-(94,  20, 0,  1,  1,  'This is a test discussion! :)',  '', '2017-02-18 14:05:18',  '0000-00-00 00:00:00'),
-(95,  20, 94, 1,  1,  'Word links are cool! [[YG]] is a type of [[Ma]]',  '', '2017-02-18 14:05:49',  '0000-00-00 00:00:00'),
-(96,  7,  76, 1,  1,  'Discussion threads are cool!', '', '2017-02-18 14:16:21',  '0000-00-00 00:00:00'),
-(97,  7,  96, 1,  1,  ' Word links as well: [[ja]] [[Ma]] [[VX]]',  '', '2017-02-18 14:16:44',  '0000-00-00 00:00:00'),
-(98,  7,  97, 1,  1,  'Oops, VX does not exist',  '', '2017-02-18 14:16:58',  '0000-00-00 00:00:00'),
-(99,  17, 0,  3,  1,  'Meow!!', '', '2017-02-25 17:23:51',  '0000-00-00 00:00:00'),
-(107, 1,  100,  3,  1,  'hoi',  'discussions',  '2017-02-26 00:45:52',  '0000-00-00 00:00:00'),
-(108, 1,  100,  3,  1,  'hoi',  'discussions',  '2017-02-26 00:46:02',  '0000-00-00 00:00:00'),
-(109, 1,  100,  3,  1,  'hoi',  'discussions',  '2017-02-26 00:46:36',  '0000-00-00 00:00:00'),
-(110, 1,  100,  3,  1,  '', 'discussions',  '2017-02-26 00:46:45',  '0000-00-00 00:00:00'),
-(111, 1,  100,  3,  1,  'hoi',  'discussions',  '2017-02-26 00:46:54',  '0000-00-00 00:00:00'),
-(112, 28, 0,  3,  1,  '[[28]]', 'wiki', '2017-03-20 18:57:27',  '0000-00-00 00:00:00'),
-(113, 28, 0,  3,  1,  '[[28]]', 'wiki', '2017-03-20 18:57:31',  '0000-00-00 00:00:00'),
-(114, 28, 0,  3,  1,  '[[28]]  hoi\n',  'wiki', '2017-03-20 18:57:35',  '0000-00-00 00:00:00'),
-(115, 28, 0,  3,  1,  '[[28]]  hoi\n',  'wiki', '2017-03-20 18:57:35',  '0000-00-00 00:00:00'),
-(116, 28, 0,  3,  1,  '[[28]]  hoi\n',  'wiki', '2017-03-20 18:57:35',  '0000-00-00 00:00:00'),
-(117, 28, 0,  3,  1,  '[[28]]  hoi\n',  'wiki', '2017-03-20 18:57:36',  '0000-00-00 00:00:00'),
-(118, 28, 0,  3,  1,  '[[28]]  hoi\n',  'wiki', '2017-03-20 18:57:36',  '0000-00-00 00:00:00'),
-(119, 28, 0,  3,  1,  '[[28]]  hoi\n',  'wiki', '2017-03-20 18:57:38',  '0000-00-00 00:00:00'),
-(120, 28, 0,  3,  1,  '[[28]]  hoi\n',  'wiki', '2017-03-20 18:57:39',  '0000-00-00 00:00:00'),
-(121, 28, 0,  3,  1,  '[[28]]  hoi\n',  'wiki', '2017-03-20 18:57:40',  '0000-00-00 00:00:00'),
-(122, 28, 0,  3,  1,  '[[28]]  hoi\n',  'wiki', '2017-03-20 18:57:42',  '0000-00-00 00:00:00'),
-(123, 28, 0,  3,  1,  '[[28]]  hoi\n',  'wiki', '2017-03-20 18:57:42',  '0000-00-00 00:00:00'),
-(124, 28, 0,  3,  1,  '[[28]]  hoi\n',  'wiki', '2017-03-20 18:58:09',  '0000-00-00 00:00:00'),
-(125, 28, 0,  3,  1,  'hoi\n',  'wiki', '2017-03-20 18:58:12',  '0000-00-00 00:00:00'),
-(126, 28, 0,  3,  1,  'hoi\n',  'wiki', '2017-03-20 18:58:12',  '0000-00-00 00:00:00'),
-(127, 28, 0,  3,  1,  'hoi\n',  'wiki', '2017-03-20 18:58:12',  '0000-00-00 00:00:00'),
-(136, 1,  0,  3,  1,  'man',  'wiki', '2017-03-20 18:59:19',  '0000-00-00 00:00:00'),
-(138, 1,  0,  3,  1,  '[[1]]',  'wiki', '2017-03-20 19:03:36',  '0000-00-00 00:00:00'),
-(139, 1,  136,  1,  1,  'reply',  'wiki', '2017-03-27 20:53:21',  '0000-00-00 00:00:00'),
-(140, 1,  136,  1,  1,  'reply',  'wiki', '2017-03-27 20:53:25',  '0000-00-00 00:00:00'),
-(141, 1,  136,  1,  1,  'reply',  'wiki', '2017-03-27 20:53:27',  '0000-00-00 00:00:00'),
-(142, 1,  136,  1,  1,  'reply',  'wiki', '2017-03-27 20:53:27',  '0000-00-00 00:00:00'),
-(143, 1,  136,  1,  1,  'reply',  'wiki', '2017-03-27 20:53:27',  '0000-00-00 00:00:00'),
-(144, 1,  136,  1,  1,  'reply',  'wiki', '2017-03-27 20:53:27',  '0000-00-00 00:00:00'),
-(145, 1,  136,  1,  1,  'reply',  'wiki', '2017-03-27 20:53:28',  '0000-00-00 00:00:00'),
-(146, 1,  136,  1,  1,  'reply',  'wiki', '2017-03-27 20:53:28',  '0000-00-00 00:00:00'),
-(147, 1,  136,  1,  1,  'reply',  'wiki', '2017-03-27 20:53:28',  '0000-00-00 00:00:00'),
-(148, 1,  136,  1,  1,  'reply',  'wiki', '2017-03-27 20:53:28',  '0000-00-00 00:00:00'),
-(149, 1,  136,  1,  1,  'reply',  'wiki', '2017-03-27 20:53:28',  '0000-00-00 00:00:00'),
-(150, 1,  136,  1,  1,  'reply',  'wiki', '2017-03-27 20:53:28',  '0000-00-00 00:00:00'),
-(151, 1,  136,  1,  1,  'reply',  'wiki', '2017-03-27 20:53:28',  '0000-00-00 00:00:00'),
-(152, 1,  136,  1,  1,  'reply',  'wiki', '2017-03-27 20:53:30',  '0000-00-00 00:00:00'),
-(153, 1,  136,  1,  1,  'reply',  'wiki', '2017-03-27 20:53:30',  '0000-00-00 00:00:00'),
-(154, 1,  136,  1,  1,  'reply',  'wiki', '2017-03-27 20:53:31',  '0000-00-00 00:00:00'),
-(155, 1,  136,  1,  1,  'reply',  'wiki', '2017-03-27 20:53:31',  '0000-00-00 00:00:00'),
-(156, 1,  136,  1,  1,  'reply',  'wiki', '2017-03-27 20:53:43',  '0000-00-00 00:00:00'),
-(157, 1,  136,  1,  1,  'reply',  'wiki', '2017-03-27 20:53:45',  '0000-00-00 00:00:00');
 
 DROP TABLE IF EXISTS `etymology`;
 CREATE TABLE `etymology` (
@@ -256,9 +145,6 @@ CREATE TABLE `etymology` (
   CONSTRAINT `etymology_ibfk_2` FOREIGN KEY (`word_id`) REFERENCES `words` (`id`) ON DELETE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
-INSERT INTO `etymology` (`id`, `word_id`, `cognates_translations`, `cognates_native`, `desc`, `first_attestation`) VALUES
-(1, 1,  '1',  '', 'From Old Dutch man, from Proto-Germanic *mann-, probably ultimately from Proto-Indo-European *man-.',  '900-1000 AD.'),
-(3, 17, '23', '23', 'Herkomst onbekend. Verwant met [[kater]].',  '1162');
 
 DROP TABLE IF EXISTS `gram_groups`;
 CREATE TABLE `gram_groups` (
@@ -294,10 +180,6 @@ CREATE TABLE `gram_groups_aux` (
   CONSTRAINT `gram_groups_aux_ibfk_3` FOREIGN KEY (`mode_id`) REFERENCES `modes` (`id`) ON DELETE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
-INSERT INTO `gram_groups_aux` (`id`, `gram_group_id`, `word_id`, `inflect`, `mode_id`, `placement`) VALUES
-(2, 2,  16, 1,  1,  0),
-(3, 3,  2,  1,  1,  0),
-(4, 4,  16, 1,  1,  0);
 
 DROP TABLE IF EXISTS `gram_groups_irregular`;
 CREATE TABLE `gram_groups_irregular` (
@@ -460,8 +342,6 @@ CREATE TABLE `homophones` (
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
-INSERT INTO `homophones` (`id`, `word_id_1`, `word_id_2`, `score`) VALUES
-(1, 1,  2,  100);
 
 DROP TABLE IF EXISTS `idioms`;
 CREATE TABLE `idioms` (
@@ -478,7 +358,12 @@ INSERT INTO `idioms` (`id`, `idiom`, `user_id`, `created_on`) VALUES
 (1, 'man en vrouw', 1,  '2017-04-17 10:12:53'),
 (2, 'Als kat en hond leven',  1,  '2017-04-17 10:12:53'),
 (3, 'De kat uit de boom kijken',  1,  '2017-04-17 10:12:53'),
-(4, 'Een kat in de zak kopen.', 1,  '2017-04-17 10:12:53');
+(4, 'Een kat in de zak kopen.', 1,  '2017-04-17 10:12:53'),
+(5, 'Ik heb daar wel een mannetje voor.', 0,  '2017-05-15 12:54:49'),
+(6, 'de boot afhouden', 0,  '2017-05-31 18:26:42'),
+(7, 'de boot is aan', 0,  '2017-05-31 18:26:50'),
+(8, 'uit de boot vallen', 0,  '2017-05-31 18:26:59'),
+(9, 'We varen in het weekend met onze boot.', 0,  '2017-05-31 18:27:25');
 
 DROP TABLE IF EXISTS `idiom_translations`;
 CREATE TABLE `idiom_translations` (
@@ -514,11 +399,15 @@ CREATE TABLE `idiom_words` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 INSERT INTO `idiom_words` (`id`, `idiom_id`, `word_id`, `keyword`) VALUES
-(5, 1,  1,  'man'),
-(6, 2,  17, 'kat'),
-(8, 3,  17, 'kat'),
-(9, 4,  17, 'kat'),
-(32,  1,  9,  'vrouw');
+(4, 5,  17, 'mannetje'),
+(5, 1,  17, 'man'),
+(6, 1,  13, 'vrouw'),
+(7, 3,  6,  'kat'),
+(8, 4,  6,  'kat'),
+(9, 6,  9,  'boot'),
+(10,  7,  9,  'boot'),
+(11,  9,  9,  'boot'),
+(12,  8,  9,  'boot');
 
 DROP TABLE IF EXISTS `inflection_cache`;
 CREATE TABLE `inflection_cache` (
@@ -531,37 +420,6 @@ CREATE TABLE `inflection_cache` (
   CONSTRAINT `inflection_cache_ibfk_2` FOREIGN KEY (`word_id`) REFERENCES `words` (`id`) ON DELETE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
-INSERT INTO `inflection_cache` (`id`, `inflection`, `word_id`, `inflection_hash`) VALUES
-(549, 'leuke',  69, 'bbbf8fb3a8cdbd052fa5ce60516f9fac'),
-(552, 'leukere',  69, '31f43dcc0353f362d0ab49b1beb2c7f9'),
-(555, 'leukste',  69, '8c3ff81f1e5941a1889ee15850fea0b6'),
-(558, 'werk', 7,  '8bf73c1e802b8e2a11e970c171f7cb6f'),
-(559, 'werkt',  7,  '07faa339cbdf6c2f5d86aba01f6b37e2'),
-(560, 'werkte', 7,  'ec721811e61b2ea5fa515964ceb95067'),
-(561, 'werkten',  7,  '7839a539755e35dc00b94115f3402515'),
-(562, 'gewerkt',  7,  'd4d21c00f71ddb8db3bc9dceb9e54b15'),
-(563, 'wens', 85, '510f95aa3a9a9ebe7ccfa3cee2e94e49'),
-(564, 'wenst',  85, 'a5e2431ab1e111a2f88cb06f57870c79'),
-(565, 'wenste', 85, '389ee389ebc73ceb480ff4d7fb2effde'),
-(566, 'wensten',  85, '7193ce9211a6b574531724f5154d9fec'),
-(567, 'gewenst',  85, 'a6e22a1b2d2e225c090d07a97122040f'),
-(568, 'jonge',  82, 'f9dfc45f94459e25cec1177959d980ca'),
-(571, 'jongere',  82, 'aea48f06c8b4ede4347036903a90d1f4'),
-(574, 'jongste',  82, '98ef73dcb4b6f5916ad105a42adf8001'),
-(599, 'goede',  29, 'bbbf8fb3a8cdbd052fa5ce60516f9fac'),
-(602, 'betere', 29, '31f43dcc0353f362d0ab49b1beb2c7f9'),
-(605, 'beste',  29, '8c3ff81f1e5941a1889ee15850fea0b6'),
-(606, 'beter',  29, '08a4948d772d85f5f936f2d66445d46c'),
-(607, 'best', 29, 'dddd3245725628985e28c1044dd94bbf'),
-(610, 'winn', 15, '8bf73c1e802b8e2a11e970c171f7cb6f'),
-(611, 'winnt',  15, '07faa339cbdf6c2f5d86aba01f6b37e2'),
-(612, 'winnte', 15, 'ec721811e61b2ea5fa515964ceb95067'),
-(613, 'winnten',  15, '7839a539755e35dc00b94115f3402515'),
-(614, 'gewinnt',  15, 'd4d21c00f71ddb8db3bc9dceb9e54b15'),
-(615, 'leuker', 69, '08a4948d772d85f5f936f2d66445d46c'),
-(616, 'leukst', 69, 'dddd3245725628985e28c1044dd94bbf'),
-(625, 'jonger', 82, '4cd6edb84f9657e55a1f922766f8ef58'),
-(626, 'jongst', 82, '747230e27465321b64d246c67142c0ff');
 
 DROP TABLE IF EXISTS `languages`;
 CREATE TABLE `languages` (
@@ -578,9 +436,9 @@ CREATE TABLE `languages` (
 INSERT INTO `languages` (`id`, `name`, `hidden_native_entry`, `flag`, `activated`, `locale`, `alphabet`) VALUES
 (0, 'Dutch',  0,  'nl', 1,  'NL', ''),
 (1, 'English',  0,  'gb', 1,  'EN', ''),
-(8, 'Polish', 0,  'pl', 1,  'PL', ''),
+(8, 'Polish', 0,  'pl', 0,  'PL', ''),
 (10,  'Swedish',  0,  'se', 1,  'SV', ''),
-(11,  'Hungarian',  0,  'hu', 1,  'HU', '');
+(11,  'Hungarian',  0,  'hu', 0,  'HU', '');
 
 DROP TABLE IF EXISTS `modes`;
 CREATE TABLE `modes` (
@@ -599,7 +457,7 @@ INSERT INTO `modes` (`id`, `name`, `short_name`, `hidden_native_entry`, `mode_ty
 (8, 'Past simple',  'pts.', 0,  1),
 (21,  'Present perfect',  'pre per',  0,  1),
 (22,  'Past perfect', 'pas per',  0,  1),
-(23,  'diminutive', 'dim',  0,  5),
+(23,  'diminutive', 'dim',  0,  2),
 (24,  'Singular', 'sg', 0,  3),
 (25,  'Plural', 'pl.',  0,  3),
 (26,  'Partative',  'part', 0,  4);
@@ -627,7 +485,8 @@ INSERT INTO `mode_apply` (`id`, `mode_id`, `type_id`, `ignore_submodes`) VALUES
 (14,  6,  4,  0),
 (15,  24, 5,  0),
 (16,  25, 5,  0),
-(17,  26, 5,  0);
+(17,  26, 5,  0),
+(18,  23, 1,  0);
 
 DROP TABLE IF EXISTS `mode_types`;
 CREATE TABLE `mode_types` (
@@ -648,25 +507,20 @@ CREATE TABLE `morphology` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `name` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
   `rule` tinytext COLLATE utf8mb4_unicode_ci NOT NULL,
+  `is_irregular` tinyint(4) NOT NULL,
+  `is_stem` tinyint(4) NOT NULL,
+  `irregular_form` tinytext CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL,
+  `lemma_id` tinyint(4) NOT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
-INSERT INTO `morphology` (`id`, `name`, `rule`) VALUES
-(4, 'Plural endings -> phonological variable',  '[-en]&EN;'),
-(5, 'verb, just stem',  '[-en]'),
-(6, 'verb, stem + t', '[-en]t'),
-(7, 'Verb -en plural test', '[-en]-en'),
-(8, 'Nieuwe regel', 'hoi'),
-(9, 'Past participle',  'ge?!^ver+?!^be+?!^ge+[-en]&D'),
-(10,  'Past particple', 'ge?!^ver+?!^ge+?!^be+[-en]&D'),
-(11,  'Past particple', 'ge?!^ver+?!^ge+?!^be+[-en]&D'),
-(12,  'test', '[]en'),
-(13,  'test', 'test'),
-(14,  'test', 'test'),
-(15,  'test2',  '[]test'),
-(16,  'test2',  '[]test'),
-(17,  'test', '[]test'),
-(18,  'wide scope test only nouns', '[]-noun');
+INSERT INTO `morphology` (`id`, `name`, `rule`, `is_irregular`, `is_stem`, `irregular_form`, `lemma_id`) VALUES
+(19,  'Dimunitive suffix rule', '[]&ETJE?$m;&ETJE?$ng:;nkje?$ng;etje?$an;tje?!$m?!$n?!$an?$uin;tje?$VOW;je?&ELSE',  0,  0,  '', 0),
+(20,  '-en meervoud', '[]&EN',  0,  0,  '', 0),
+(21,  'het dimunitief', 'het []', 0,  0,  '', 0),
+(22,  'de dimunitief',  'de []',  0,  0,  '', 0),
+(23,  'een verkleinwoordje',  'een []', 0,  0,  '', 0),
+(24,  'indef sing noun masc 17',  '', 1,  0,  'OVERRIDE!',  17);
 
 DROP TABLE IF EXISTS `morphology_gramcat`;
 CREATE TABLE `morphology_gramcat` (
@@ -680,9 +534,6 @@ CREATE TABLE `morphology_gramcat` (
   CONSTRAINT `morphology_gramcat_ibfk_2` FOREIGN KEY (`gramcat_id`) REFERENCES `classifications` (`id`) ON DELETE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
-INSERT INTO `morphology_gramcat` (`id`, `morphology_id`, `gramcat_id`) VALUES
-(2, 7,  5),
-(4, 16, 2);
 
 DROP TABLE IF EXISTS `morphology_irregular`;
 CREATE TABLE `morphology_irregular` (
@@ -713,11 +564,12 @@ CREATE TABLE `morphology_lexcat` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 INSERT INTO `morphology_lexcat` (`id`, `morphology_id`, `lexcat_id`) VALUES
-(1, 7,  2),
-(3, 12, 1),
-(7, 16, 1),
-(8, 17, 7),
-(9, 18, 1);
+(10,  19, 1),
+(11,  20, 1),
+(12,  21, 1),
+(13,  22, 1),
+(14,  23, 1),
+(15,  24, 1);
 
 DROP TABLE IF EXISTS `morphology_modes`;
 CREATE TABLE `morphology_modes` (
@@ -732,13 +584,20 @@ CREATE TABLE `morphology_modes` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 INSERT INTO `morphology_modes` (`id`, `morphology_id`, `mode_id`) VALUES
-(1, 7,  7);
+(2, 19, 23),
+(3, 20, 1),
+(4, 20, 23),
+(5, 21, 23),
+(6, 22, 23),
+(7, 23, 23),
+(8, 24, 1);
 
 DROP TABLE IF EXISTS `morphology_numbers`;
 CREATE TABLE `morphology_numbers` (
-  `id` int(11) NOT NULL,
+  `id` int(11) NOT NULL AUTO_INCREMENT,
   `morphology_id` int(11) NOT NULL,
   `number_id` int(11) NOT NULL,
+  PRIMARY KEY (`id`),
   KEY `morphology_id` (`morphology_id`),
   KEY `number_id` (`number_id`),
   CONSTRAINT `morphology_numbers_ibfk_1` FOREIGN KEY (`morphology_id`) REFERENCES `morphology` (`id`) ON DELETE CASCADE,
@@ -746,9 +605,11 @@ CREATE TABLE `morphology_numbers` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 INSERT INTO `morphology_numbers` (`id`, `morphology_id`, `number_id`) VALUES
-(1, 7,  11),
-(2, 7,  12),
-(3, 7,  13);
+(1, 20, 3),
+(2, 21, 1),
+(3, 22, 3),
+(4, 23, 1),
+(5, 24, 1);
 
 DROP TABLE IF EXISTS `morphology_submodes`;
 CREATE TABLE `morphology_submodes` (
@@ -763,7 +624,14 @@ CREATE TABLE `morphology_submodes` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 INSERT INTO `morphology_submodes` (`id`, `morphology_id`, `submode_id`) VALUES
-(1, 7,  11);
+(2, 19, 1),
+(3, 19, 2),
+(4, 20, 1),
+(5, 20, 2),
+(6, 21, 2),
+(7, 22, 2),
+(8, 23, 1),
+(9, 24, 1);
 
 DROP TABLE IF EXISTS `morphology_tags`;
 CREATE TABLE `morphology_tags` (
@@ -857,7 +725,9 @@ INSERT INTO `phonology_contexts` (`id`, `name`, `rule`) VALUES
 (30,  'double consonant before endings 2',  'CON.VOW_CON_+.&E=>%%'),
 (31,  'fototje => fotootje',  'CON_VOW_+.tje=>%%'),
 (33,  'double consonant before endings',  '^VOW.VOW_CON_+.^CON=>%%'),
-(34,  'etje => pje if long vowel 2',  '#.VOW.#.CON.+_&ETJE_=>pje');
+(34,  'etje => pje if long vowel 2',  '#.VOW.#.CON.+_&ETJE_=>pje'),
+(35,  'kofschip dental suffix t ',  '[x,k,f,s,c,h,p].+_&2DD_=>tt'),
+(36,  'kofschip dental suffix d', '[^x,k,f,s,c,h,p].+_&2DD_=>dd');
 
 DROP TABLE IF EXISTS `phonology_ipa_generation`;
 CREATE TABLE `phonology_ipa_generation` (
@@ -867,6 +737,8 @@ CREATE TABLE `phonology_ipa_generation` (
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
+INSERT INTO `phonology_ipa_generation` (`id`, `name`, `rule`) VALUES
+(1, '_oo_', '_oo_=>oː');
 
 DROP TABLE IF EXISTS `row_native`;
 CREATE TABLE `row_native` (
@@ -1152,11 +1024,32 @@ CREATE TABLE `synonyms` (
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 INSERT INTO `synonyms` (`id`, `word_id_1`, `word_id_2`, `score`) VALUES
-(1, 1,  10, 50),
-(2, 1,  11, 100),
-(3, 11, 10, 50),
-(7, 17, 18, 100),
-(10,  17, 23, 50);
+(11,  1,  2,  0),
+(18,  17, 12, 50),
+(19,  17, 14, 25),
+(20,  13, 12, 50),
+(21,  9,  10, 75),
+(22,  19, 9,  50);
+
+DROP TABLE IF EXISTS `threads`;
+CREATE TABLE `threads` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `linked_to` int(11) NOT NULL,
+  `section` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `thread_id` int(11) NOT NULL,
+  `content` text CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL,
+  `user_id` int(11) NOT NULL,
+  `post_date` datetime NOT NULL,
+  `update_date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  PRIMARY KEY (`id`),
+  KEY `user_id` (`user_id`),
+  CONSTRAINT `threads_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`) ON DELETE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+INSERT INTO `threads` (`id`, `linked_to`, `section`, `thread_id`, `content`, `user_id`, `post_date`, `update_date`) VALUES
+(1, 17, 'lemma',  0,  'Eerste post',  1,  '2017-06-05 15:24:00',  '2017-06-05 13:24:00'),
+(2, 17, 'lemma',  1,  'Eerste reactie', 1,  '2017-06-05 15:30:02',  '2017-06-05 13:30:02'),
+(3, 17, 'lemma',  2,  'Level 2',  1,  '2017-06-05 16:24:22',  '2017-06-05 14:24:22');
 
 DROP TABLE IF EXISTS `translations`;
 CREATE TABLE `translations` (
@@ -1174,252 +1067,51 @@ CREATE TABLE `translations` (
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 INSERT INTO `translations` (`id`, `language_id`, `translation`, `description`, `created_on`, `user_id`) VALUES
-(1, 10, 'man',  'An adult living being of the male gender', '2017-05-10 22:31:12',  1),
-(2, 1,  'husband',  '', '2017-04-14 21:41:39',  1),
-(3, 1,  'work', '', '2017-04-14 21:41:39',  1),
-(4, 1,  'function', '', '2017-04-14 21:41:39',  1),
-(5, 1,  'woman',  '', '2017-04-14 21:41:39',  1),
-(6, 1,  'wife', '', '2017-04-14 21:41:39',  1),
-(7, 1,  'have', '', '2017-04-14 21:41:39',  1),
-(10,  1,  'he', '', '2017-04-14 21:41:39',  1),
-(11,  1,  'uncle',  '', '2017-04-14 21:41:39',  1),
-(13,  1,  'lose', '', '2017-04-14 21:41:39',  1),
-(15,  1,  'win',  '', '2017-04-14 21:41:39',  1),
-(23,  1,  'cat',  '', '2017-04-14 21:41:39',  1),
-(25,  1,  'pussy',  '', '2017-04-14 21:41:39',  1),
-(26,  1,  'feline', '', '2017-04-14 21:41:39',  1),
-(30,  1,  'vagina', '', '2017-04-14 21:41:39',  1),
-(32,  1,  'kitten', '', '2017-04-14 21:41:39',  1),
-(33,  0,  'persoon',  '', '2017-04-14 21:41:39',  1),
-(34,  1,  'one',  '', '2017-04-14 21:41:39',  1),
-(35,  1,  'everyone', '', '2017-04-14 21:41:39',  1),
-(36,  1,  'tomcat', '', '2017-04-14 21:41:39',  1),
-(38,  1,  'hangover', '', '2017-04-14 21:41:39',  1),
-(39,  1,  'mister', '', '2017-04-14 21:41:39',  1),
-(42,  0,  'mijnheer', '', '2017-04-14 21:41:39',  1),
-(45,  1,  'she',  '', '2017-04-14 21:41:39',  1),
-(48,  1,  'good', '', '2017-04-14 21:41:39',  1),
-(49,  1,  'ice',  '', '2017-04-14 21:41:39',  1),
-(50,  1,  'ice cream',  '', '2017-04-14 21:41:39',  1),
-(51,  1,  'I',  '', '2017-04-14 21:41:39',  1),
-(52,  1,  'you',  '', '2017-04-14 21:41:39',  1),
-(54,  1,  'we', '', '2017-04-14 21:41:39',  1),
-(55,  1,  'potatoe',  '', '2017-04-14 21:41:39',  1),
-(56,  1,  'earth',  '', '2017-04-14 21:41:39',  1),
-(57,  1,  'all',  '', '2017-04-14 21:41:39',  1),
-(58,  1,  'pet',  '', '2017-04-14 21:41:39',  1),
-(72,  1,  'party',  '', '2017-04-14 21:41:39',  1),
-(73,  1,  'feast',  '', '2017-04-14 21:41:39',  1),
-(74,  1,  'celebration',  '', '2017-04-14 21:41:39',  1),
-(79,  1,  'pancake',  '', '2017-04-14 21:41:39',  1),
-(80,  1,  'fool', '', '2017-04-14 21:41:39',  1),
-(81,  1,  'pancake',  '', '2017-04-14 21:41:39',  1),
-(82,  1,  'pancake',  '', '2017-04-14 21:41:39',  1),
-(83,  1,  'pancake',  '', '2017-04-14 21:41:39',  1),
-(86,  1,  'stone',  '', '2017-04-14 21:41:39',  1),
-(87,  1,  'stone',  '', '2017-04-14 21:41:39',  1),
-(88,  1,  'manner', '', '2017-04-14 21:41:39',  1),
-(89,  1,  'way',  '', '2017-04-14 21:41:39',  1),
-(90,  1,  'mood of speech', '', '2017-04-14 21:41:39',  1),
-(91,  1,  'sage', '', '2017-04-14 21:41:39',  1),
-(92,  1,  'wise man', '', '2017-04-14 21:41:39',  1),
-(93,  1,  'nose', '', '2017-04-14 21:41:39',  1),
-(94,  1,  'moon', '', '2017-04-14 21:42:08',  1),
-(95,  1,  'month',  '', '2017-04-14 21:42:08',  1),
-(96,  1,  'bad',  '', '2017-04-14 21:42:08',  1),
-(97,  1,  'lemon',  '', '2017-04-14 21:42:08',  1),
-(98,  1,  'Lithviscian',  '', '2017-04-14 21:42:08',  1),
-(99,  1,  'boy',  '', '2017-04-14 21:42:08',  1),
-(100, 1,  'rain', '', '2017-04-14 21:42:08',  1),
-(101, 1,  'hail', '', '2017-04-14 21:42:08',  1),
-(102, 1,  'picnic', '', '2017-04-14 21:42:08',  1),
-(103, 1,  'dog',  '', '2017-04-14 21:42:08',  1),
-(104, 1,  'hound',  '', '2017-04-14 21:42:08',  1),
-(105, 1,  'pleasant', '', '2017-04-14 21:42:08',  1),
-(106, 1,  'nice', '', '2017-04-14 21:42:08',  1),
-(107, 1,  'enoyable', '', '2017-04-14 21:42:08',  1),
-(108, 1,  'likable',  '', '2017-04-14 21:42:08',  1),
-(109, 1,  'good-looking', '', '2017-04-14 21:42:08',  1),
-(110, 1,  'quote',  '', '2017-04-14 21:42:08',  1),
-(111, 1,  'tree', '', '2017-04-14 21:42:08',  1),
-(112, 1,  'wooden object',  '', '2017-04-14 21:42:08',  1),
-(113, 1,  'pretty', '', '2017-04-14 21:42:08',  1),
-(114, 1,  'beautiful',  '', '2017-04-14 21:42:08',  1),
-(115, 1,  'nice', '', '2017-04-14 21:42:08',  1),
-(116, 1,  'better', '', '2017-04-14 21:42:08',  1),
-(117, 1,  'best', '', '2017-04-14 21:42:08',  1),
-(118, 1,  'bad',  '', '2017-04-14 21:42:08',  1),
-(119, 1,  'worse',  '', '2017-04-14 21:42:08',  1),
-(120, 1,  'worst',  '', '2017-04-14 21:42:08',  1),
-(131, 1,  'book', '', '2017-04-14 21:42:08',  1),
-(132, 1,  'bread',  '', '2017-04-14 21:42:08',  1),
-(198, 8,  'mężczyzna',  '', '2017-04-14 21:42:08',  1),
-(199, 8,  'pan',  '', '2017-04-14 21:42:08',  1),
-(200, 8,  'człowiek', '', '2017-04-14 21:42:08',  1),
-(201, 1,  'a',  '', '2017-04-14 21:42:08',  1),
-(202, 1,  'an', '', '2017-04-14 21:42:08',  1),
-(203, 1,  'cheer',  '', '2017-04-14 21:42:08',  1),
-(204, 1,  'shout',  '', '2017-04-14 21:42:08',  1),
-(205, 1,  'husband',  '', '2017-04-14 21:42:08',  1),
-(206, 1,  'the',  '', '2017-04-14 21:42:08',  1),
-(207, 1,  'little man', '', '2017-04-14 21:42:08',  1),
-(208, 1,  'male', '', '2017-04-14 21:42:08',  1),
-(209, 1,  'guy that preforms odd jobs', '', '2017-04-14 21:42:08',  1),
-(210, 1,  'little cat', '', '2017-04-14 21:42:08',  1),
-(211, 1,  'vice', '', '2017-04-14 21:42:08',  1),
-(212, 8,  'mać',  '', '2017-04-14 21:42:08',  1),
-(213, 8,  'pracować', '', '2017-04-14 21:42:08',  1),
-(214, 8,  'działać',  '', '2017-04-14 21:42:08',  1),
-(215, 8,  'udać się', '', '2017-04-14 21:42:08',  1),
-(216, 8,  'wiwatować',  '', '2017-04-14 21:42:08',  1),
-(217, 8,  'kobieta',  '', '2017-04-14 21:42:08',  1),
-(218, 8,  'żona', '', '2017-04-14 21:42:08',  1),
-(219, 8,  'żona', '', '2017-04-14 21:42:08',  1),
-(220, 8,  'on', '', '2017-04-14 21:42:08',  1),
-(221, 8,  '', '', '2017-04-14 21:42:08',  1),
-(222, 8,  'kot',  '', '2017-04-14 21:42:08',  1),
-(223, 8,  'kot',  '', '2017-04-14 21:42:08',  1),
-(224, 8,  'kot',  '', '2017-04-14 21:42:08',  1),
-(225, 8,  'pochwa', '', '2017-04-14 21:42:08',  1),
-(226, 8,  'kot',  '', '2017-04-14 21:42:08',  1),
-(227, 8,  'kocur',  '', '2017-04-14 21:42:08',  1),
-(228, 8,  'kocurek',  '', '2017-04-14 21:42:08',  1),
-(229, 8,  'pan',  '', '2017-04-14 21:42:08',  1),
-(230, 8,  'ona',  '', '2017-04-14 21:42:08',  1),
-(231, 8,  'kocur',  '', '2017-04-14 21:42:08',  1),
-(232, 8,  'kac',  '', '2017-04-14 21:42:08',  1),
-(233, 1,  'onion',  '', '2017-04-14 21:42:08',  1),
-(234, 8,  'cebula', '', '2017-04-14 21:42:08',  1),
-(235, 8,  'pies', '', '2017-04-14 21:42:08',  1),
-(242, 8,  'ja', '', '2017-04-14 21:42:08',  1),
-(243, 8,  'mnie', '', '2017-04-14 21:42:08',  1),
-(244, 1,  'me', '', '2017-04-14 21:42:08',  1),
-(245, 1,  'I',  '', '2017-04-14 21:42:08',  1),
-(246, 1,  'me', '', '2017-04-14 21:42:08',  1),
-(247, 8,  'dobry',  '', '2017-04-14 21:42:08',  1),
-(248, 8,  'dobrze', '', '2017-04-14 21:42:08',  1),
-(249, 8,  'zdrowy', '', '2017-04-14 21:42:08',  1),
-(250, 8,  'odpowiedni', '', '2017-04-14 21:42:08',  1),
-(251, 8,  'lody', '', '2017-04-14 21:42:08',  1),
-(252, 8,  'ty', '', '2017-04-14 21:42:08',  1),
-(253, 8,  'ty', '', '2017-04-14 21:42:08',  1),
-(254, 8,  'my', '', '2017-04-14 21:42:08',  1),
-(255, 8,  'my', '', '2017-04-14 21:42:08',  1),
-(256, 8,  'ziemniak', '', '2017-04-14 21:42:08',  1),
-(257, 8,  'kartoffel',  '', '2017-04-14 21:42:08',  1),
-(258, 10, 'man',  '', '2017-04-14 21:42:08',  1),
-(259, 10, 'make', '', '2017-04-14 21:42:08',  1),
-(260, 10, 'gubbe',  '', '2017-04-14 21:42:08',  1),
-(261, 10, 'karl', '', '2017-04-14 21:42:08',  1),
-(262, 10, 'en', '', '2017-04-14 21:42:08',  1),
-(263, 10, 'ett',  '', '2017-04-14 21:42:08',  1),
-(264, 10, 'ha', '', '2017-04-14 21:42:08',  1),
-(265, 10, 'jobba',  '', '2017-04-14 21:42:08',  1),
-(266, 10, 'jubla',  '', '2017-04-14 21:42:08',  1),
-(267, 10, 'kvinna', '', '2017-04-14 21:42:08',  1),
-(268, 10, 'make', '', '2017-04-14 21:42:08',  1),
-(269, 10, 'hustru', '', '2017-04-14 21:42:08',  1),
-(270, 10, 'han',  '', '2017-04-14 21:42:08',  1),
-(271, 10, 'farbror',  '', '2017-04-14 21:42:08',  1),
-(272, 10, 'morbror',  '', '2017-04-14 21:42:08',  1),
-(273, 10, 'tappa',  '', '2017-04-14 21:42:08',  1),
-(274, 10, 'förlora',  '', '2017-04-14 21:42:08',  1),
-(275, 10, 'vinna',  '', '2017-04-14 21:42:08',  1),
-(276, 10, 'den',  '', '2017-04-14 21:42:08',  1),
-(277, 10, 'det',  '', '2017-04-14 21:42:08',  1),
-(278, 10, '-en',  '', '2017-04-14 21:42:08',  1),
-(279, 10, '-et',  '', '2017-04-14 21:42:08',  1),
-(280, 10, '-na',  '', '2017-04-14 21:42:08',  1),
-(281, 10, 'katt', '', '2017-04-14 21:42:08',  1),
-(282, 10, 'man',  '', '2017-04-14 21:42:08',  1),
-(283, 10, 'hon',  '', '2017-04-14 21:42:08',  1),
-(284, 10, 'bra',  '', '2017-04-14 21:42:08',  1),
-(285, 10, 'god',  '', '2017-04-14 21:42:08',  1),
-(286, 10, 'is', '', '2017-04-14 21:42:08',  1),
-(287, 10, 'glass',  '', '2017-04-14 21:42:08',  1),
-(288, 10, 'jag',  '', '2017-04-14 21:42:08',  1),
-(289, 10, 'du', '', '2017-04-14 21:42:08',  1),
-(290, 10, 'du', '', '2017-04-14 21:42:08',  1),
-(291, 10, 'vi', '', '2017-04-14 21:42:08',  1),
-(292, 10, 'vi', '', '2017-04-14 21:42:08',  1),
-(293, 10, 'potatis',  '', '2017-04-14 21:42:08',  1),
-(294, 10, 'jord', '', '2017-04-14 21:42:08',  1),
-(295, 10, 'mark', '', '2017-04-14 21:42:08',  1),
-(296, 10, 'alla', '', '2017-04-14 21:42:08',  1),
-(297, 10, 'allt', '', '2017-04-14 21:42:08',  1),
-(298, 10, 'klappa', '', '2017-04-14 21:42:08',  1),
-(299, 10, 'smeka',  '', '2017-04-14 21:42:08',  1),
-(300, 10, 'alla', '', '2017-04-14 21:42:08',  1),
-(301, 10, 'allihopa', '', '2017-04-14 21:42:08',  1),
-(302, 10, 'fest', '', '2017-04-14 21:42:08',  1),
-(303, 10, 'kallas', '', '2017-04-14 21:42:08',  1),
-(304, 10, 'bok',  '', '2017-04-14 21:42:08',  1),
-(305, 10, 'sten', '', '2017-04-14 21:42:08',  1),
-(306, 10, 'sätt', '', '2017-04-14 21:42:08',  1),
-(307, 10, 'viss', '', '2017-04-14 21:42:08',  1),
-(308, 10, 'näsa', '', '2017-04-14 21:42:08',  1),
-(309, 10, 'miss', '', '2017-04-14 21:42:08',  1),
-(310, 10, 'madam',  '', '2017-04-14 21:42:08',  1),
-(311, 10, 'madam',  '', '2017-04-14 21:42:08',  1),
-(312, 10, 'miss', '', '2017-04-14 21:42:08',  1),
-(313, 10, 'madam',  '', '2017-04-14 21:42:08',  1),
-(314, 10, 'miss', '', '2017-04-14 21:42:08',  1),
-(315, 8,  'chleb',  '', '2017-04-14 21:42:08',  1),
-(316, 10, 'kul',  '', '2017-04-14 21:42:08',  1),
-(317, 10, 'rolig',  '', '2017-04-14 21:42:08',  1),
-(318, 10, 'fin',  '', '2017-04-14 21:42:08',  1),
-(319, 10, 'trevlig',  '', '2017-04-14 21:42:08',  1),
-(320, 10, 'snygg',  '', '2017-04-14 21:42:08',  1),
-(321, 10, 'vara', '', '2017-04-14 21:42:08',  1),
-(323, 1,  'miss', '', '2017-04-14 21:42:08',  1),
-(325, 1,  'be', '', '2017-04-14 21:42:08',  1),
-(326, 1,  'laundry',  '', '2017-04-14 21:42:08',  1),
-(327, 1,  'wax',  '', '2017-04-14 21:42:08',  1),
-(328, 1,  'ugly', '', '2017-04-14 21:42:08',  1),
-(329, 1,  'young',  '', '2017-04-14 21:42:08',  1),
-(330, 1,  'young',  '', '2017-04-14 21:42:08',  1),
-(331, 1,  'young',  '', '2017-04-14 21:42:08',  1),
-(332, 1,  'you',  '', '2017-04-14 21:42:08',  1),
-(333, 1,  'you guys', '', '2017-04-14 21:42:08',  1),
-(334, 1,  '', '', '2017-04-14 21:42:08',  1),
-(335, 1,  'they', '', '2017-04-14 21:42:08',  1),
-(336, 1,  'wish', '', '2017-04-14 21:42:08',  1),
-(337, 8,  'dom',  '', '2017-04-14 21:42:08',  1),
-(338, 1,  'house',  '', '2017-04-14 21:42:08',  1),
-(339, 1,  'without',  '', '2017-04-14 21:42:08',  1),
-(340, 10, 'testa',  '', '2017-04-14 21:42:08',  1),
-(341, 10, 'försöka',  '', '2017-04-14 21:42:08',  1),
-(342, 10, '', '', '2017-04-14 21:42:08',  1),
-(343, 0,  'jeden',  '', '2017-04-22 08:00:45',  1),
-(344, 8,  'blablabla',  '', '2017-04-14 21:42:08',  1),
-(345, 8,  'blablabla',  '', '2017-04-14 21:42:08',  1),
-(346, 8,  'man',  '', '2017-04-14 21:42:08',  1),
-(347, 8,  '', '', '2017-04-14 21:42:08',  1),
-(348, 8,  '', '', '2017-04-14 21:42:08',  1),
-(349, 8,  '', '', '2017-04-14 21:42:08',  1),
-(350, 8,  '', '', '2017-04-14 21:42:08',  1),
-(351, 8,  '', '', '2017-04-14 21:42:08',  1),
-(352, 8,  '', '', '2017-04-14 21:42:08',  1),
-(353, 8,  '', '', '2017-04-14 21:42:08',  1),
-(354, 1,  'sheep',  '', '2017-04-14 21:42:08',  1),
-(355, 1,  'test', '', '2017-04-14 21:42:08',  1),
-(356, 0,  '', '', '2017-04-14 21:42:08',  1),
-(357, 1,  'girl', '', '2017-04-14 21:42:08',  1),
-(358, 8,  'balblab',  '', '2017-04-14 21:42:08',  1),
-(359, 8,  '', '', '2017-04-14 21:42:08',  1),
-(360, 8,  '', '', '2017-04-14 21:42:08',  1),
-(361, 8,  '', '', '2017-04-14 21:42:08',  1),
-(362, 8,  '', '', '2017-04-14 21:42:08',  1),
-(363, 8,  '', '', '2017-04-14 21:42:08',  1),
-(364, 8,  '', '', '2017-04-14 21:42:08',  1),
-(365, 8,  '', '', '2017-04-14 21:42:08',  1),
-(366, 8,  '', '', '2017-04-14 21:42:08',  1),
-(367, 8,  '', '', '2017-04-14 21:42:08',  1),
-(368, 8,  '', '', '2017-04-14 21:42:08',  1),
-(369, 1,  'test', '', '2017-04-30 13:43:51',  0),
-(370, 1,  'mug',  '', '2017-05-11 10:21:19',  0),
-(371, 1,  'cup',  '', '2017-05-11 10:22:19',  0),
-(372, 1,  'glass',  '', '2017-05-11 10:22:01',  0);
+(374, 1,  'house',  '', '2017-05-25 16:57:51',  0),
+(375, 1,  'bedroom',  'a place to sleep', '2017-05-25 17:06:55',  1),
+(376, 10, 'sovrum', '', '2017-05-25 17:26:35',  0),
+(378, 1,  'place to sleep', '', '2017-05-25 18:48:31',  1),
+(379, 1,  'drool',  '', '2017-05-25 20:01:27',  1),
+(380, 10, 'dregla', '', '2017-05-25 20:01:27',  1),
+(381, 1,  'save', '', '2017-05-25 20:04:31',  1),
+(382, 10, 'fräsla', '', '2017-05-25 20:04:31',  1),
+(383, 1,  'get rid of', '', '2017-05-25 20:11:14',  1),
+(384, 10, 'lösa', '', '2017-05-25 20:11:14',  1),
+(385, 10, 'bli av med', '', '2017-05-25 20:11:14',  1),
+(386, 1,  'cat',  '', '2017-05-25 20:33:29',  1),
+(387, 10, 'katt', '', '2017-05-25 20:33:29',  1),
+(388, 1,  'dog',  '', '2017-05-25 20:38:01',  1),
+(389, 1,  'hound',  '', '2017-05-25 20:38:01',  1),
+(390, 10, 'hund', '', '2017-05-25 20:38:01',  1),
+(391, 10, 'vove', '', '2017-05-25 20:38:01',  1),
+(392, 1,  'land', '', '2017-05-25 20:40:56',  1),
+(393, 1,  'country',  '', '2017-05-25 20:40:56',  1),
+(394, 10, 'land', '', '2017-05-25 20:40:56',  1),
+(400, 1,  'husband',  '', '2017-05-25 21:24:57',  1),
+(401, 10, 'make', '', '2017-05-25 21:24:57',  1),
+(406, 1,  'child',  '', '2017-05-26 08:53:32',  1),
+(407, 1,  'kid',  '', '2017-05-26 08:53:32',  1),
+(408, 1,  'youngster',  '', '2017-05-26 08:53:32',  1),
+(409, 10, 'barn', '', '2017-05-26 08:53:32',  1),
+(410, 10, 'unge', '', '2017-05-26 08:53:32',  1),
+(411, 1,  'horse',  '', '2017-05-26 10:49:16',  1),
+(412, 10, 'häst', '', '2017-05-26 10:49:16',  1),
+(413, 1,  'donkey', '', '2017-05-26 13:37:38',  1),
+(424, 1,  'woman',  '', '2017-05-31 09:08:27',  1),
+(425, 1,  'wife', '', '2017-05-31 09:08:27',  1),
+(426, 10, 'kvinna', '', '2017-05-31 09:08:27',  1),
+(427, 10, 'hustru', '', '2017-05-31 09:08:27',  1),
+(428, 1,  'man',  '', '2017-05-31 12:45:55',  1),
+(429, 10, 'man',  '', '2017-05-31 12:45:55',  1),
+(434, 1,  'ship', '', '2017-05-31 18:30:28',  1),
+(435, 1,  'boat', '', '2017-05-31 18:30:28',  1),
+(436, 10, 'skep', '', '2017-05-31 18:30:28',  1),
+(437, 10, 'båt',  '', '2017-05-31 18:30:28',  1),
+(438, 1,  'dwelling', '', '2017-06-01 12:44:09',  1),
+(439, 1,  'appartment', '', '2017-06-01 12:44:09',  1),
+(440, 10, 'hus',  '', '2017-06-01 12:44:09',  1),
+(441, 1,  'sail', '', '2017-06-05 15:51:18',  3),
+(442, 10, 'segla',  '', '2017-06-05 15:51:18',  3);
 
 DROP TABLE IF EXISTS `translation_alternatives`;
 CREATE TABLE `translation_alternatives` (
@@ -1431,15 +1123,6 @@ CREATE TABLE `translation_alternatives` (
   CONSTRAINT `translation_alternatives_ibfk_1` FOREIGN KEY (`translation_id`) REFERENCES `translations` (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
-INSERT INTO `translation_alternatives` (`id`, `translation_id`, `alternative`) VALUES
-(1, 1,  'men'),
-(4, 217,  'kobietami'),
-(5, 325,  'been'),
-(6, 325,  'being'),
-(7, 325,  'is'),
-(8, 325,  'was'),
-(9, 325,  'am'),
-(10,  1,  'male');
 
 DROP TABLE IF EXISTS `translation_exceptions`;
 CREATE TABLE `translation_exceptions` (
@@ -1456,29 +1139,6 @@ CREATE TABLE `translation_exceptions` (
   CONSTRAINT `translation_exceptions_ibfk_4` FOREIGN KEY (`word_id`) REFERENCES `words` (`id`) ON DELETE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
-INSERT INTO `translation_exceptions` (`id`, `word_id`, `language_id`, `user_id`) VALUES
-(2, 2,  8,  1),
-(3, 16, 8,  1),
-(4, 20, 8,  1),
-(5, 22, 8,  1),
-(6, 27, 8,  1),
-(7, 19, 10, 1),
-(8, 20, 10, 1),
-(9, 15, 8,  1),
-(10,  15, 8,  1),
-(11,  15, 8,  1),
-(12,  43, 8,  1),
-(13,  43, 8,  1),
-(14,  44, 8,  1),
-(15,  51, 8,  1),
-(16,  51, 8,  1),
-(17,  56, 8,  1),
-(18,  57, 8,  1),
-(19,  58, 8,  1),
-(21,  60, 8,  1),
-(22,  56, 8,  1),
-(23,  61, 8,  1),
-(24,  62, 8,  1);
 
 DROP TABLE IF EXISTS `translation_words`;
 CREATE TABLE `translation_words` (
@@ -1494,203 +1154,54 @@ CREATE TABLE `translation_words` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 INSERT INTO `translation_words` (`id`, `word_id`, `translation_id`, `specification`) VALUES
-(1, 1,  1,  ''),
-(3, 1,  2,  ''),
-(4, 7,  3,  ''),
-(5, 7,  4,  ''),
-(6, 9,  5,  ''),
-(7, 9,  6,  ''),
-(8, 5,  7,  ''),
-(9, 11, 10, ''),
-(12,  15, 15, ''),
-(13,  17, 23, ''),
-(14,  17, 25, 'non-vulgar'),
-(15,  17, 26, ''),
-(16,  18, 23, ''),
-(17,  18, 25, 'both non-vulgar and vulgar'),
-(18,  18, 30, 'vulgar'),
-(19,  19, 32, 'sometimes'),
-(20,  1,  33, 'other meaning'),
-(21,  22, 34, ''),
-(22,  22, 35, 'collective'),
-(23,  23, 36, ''),
-(24,  23, 23, 'male'),
-(25,  23, 38, ''),
-(29,  27, 39, 'jokingly'),
-(58,  28, 45, ''),
-(61,  29, 48, ''),
-(64,  31, 51, ''),
-(65,  32, 52, ''),
-(66,  33, 52, 'unstressed'),
-(67,  34, 54, ''),
-(68,  35, 54, ''),
-(70,  40, 55, ''),
-(71,  41, 56, ''),
-(72,  42, 57, ''),
-(73,  43, 58, ''),
-(74,  44, 35, ''),
-(75,  44, 57, ''),
-(88,  51, 72, ''),
-(89,  51, 73, 'event'),
-(90,  51, 74, 'event'),
-(102, 57, 86, 'small rock'),
-(103, 57, 87, 'uncountable'),
-(104, 58, 88, ''),
-(105, 58, 89, ''),
-(106, 58, 90, ''),
-(109, 60, 93, ''),
-(110, 61, 94, ''),
-(111, 62, 95, ''),
-(113, 64, 97, ''),
-(115, 66, 101,  ''),
-(116, 67, 102,  ''),
-(117, 68, 103,  ''),
-(118, 68, 104,  ''),
-(119, 69, 105,  ''),
-(120, 69, 106,  ''),
-(121, 69, 107,  ''),
-(122, 69, 108,  ''),
-(123, 69, 109,  'about a person'),
-(125, 71, 111,  ''),
-(126, 71, 112,  'pole shaped'),
-(127, 72, 113,  ''),
-(128, 72, 114,  ''),
-(129, 72, 115,  ''),
-(130, 29, 116,  'comperative'),
-(131, 29, 117,  'superlative'),
-(132, 73, 118,  ''),
-(133, 73, 119,  'comperative'),
-(134, 73, 120,  'superlative'),
-(144, 56, 131,  ''),
-(145, 74, 132,  ''),
-(211, 1,  198,  ''),
-(212, 1,  199,  ''),
-(213, 1,  200,  ''),
-(214, 2,  201,  ''),
-(215, 2,  202,  ''),
-(218, 10, 2,  ''),
-(219, 16, 206,  ''),
-(220, 20, 207,  ''),
-(221, 20, 208,  'animal kingdom'),
-(222, 20, 209,  'informal'),
-(223, 24, 210,  ''),
-(225, 5,  212,  ''),
-(226, 7,  213,  'like a job'),
-(227, 7,  214,  'function (like a machine)'),
-(228, 7,  215,  'succeed'),
-(230, 9,  217,  ''),
-(231, 9,  218,  ''),
-(232, 10, 219,  ''),
-(233, 11, 220,  ''),
-(235, 17, 222,  ''),
-(237, 18, 224,  ''),
-(238, 18, 225,  'vulgar'),
-(239, 19, 226,  ''),
-(241, 24, 228,  ''),
-(243, 28, 230,  ''),
-(244, 23, 231,  ''),
-(245, 23, 232,  ''),
-(248, 68, 235,  ''),
-(255, 31, 242,  ''),
-(256, 31, 243,  ''),
-(257, 31, 244,  ''),
-(258, 31, 245,  ''),
-(259, 31, 246,  ''),
-(260, 29, 247,  ''),
-(261, 29, 248,  'interjection'),
-(262, 29, 249,  ''),
-(263, 29, 250,  ''),
-(265, 32, 252,  ''),
-(266, 33, 253,  ''),
-(267, 34, 254,  ''),
-(268, 35, 255,  ''),
-(269, 40, 256,  ''),
-(270, 40, 257,  ''),
-(271, 1,  258,  ''),
-(272, 1,  259,  ''),
-(273, 1,  260,  ''),
-(274, 1,  261,  ''),
-(275, 2,  262,  ''),
-(276, 2,  263,  ''),
-(277, 5,  264,  ''),
-(278, 7,  265,  ''),
-(280, 9,  267,  ''),
-(281, 10, 268,  ''),
-(282, 10, 269,  ''),
-(283, 11, 270,  ''),
-(288, 15, 275,  ''),
-(289, 16, 276,  ''),
-(290, 16, 277,  ''),
-(291, 16, 278,  ''),
-(292, 16, 279,  ''),
-(293, 16, 280,  ''),
-(294, 17, 281,  ''),
-(295, 22, 282,  ''),
-(296, 28, 283,  ''),
-(297, 29, 284,  ''),
-(298, 29, 285,  ''),
-(301, 31, 288,  ''),
-(302, 32, 289,  ''),
-(303, 33, 290,  ''),
-(304, 34, 291,  ''),
-(305, 35, 292,  ''),
-(306, 40, 293,  ''),
-(307, 41, 294,  ''),
-(308, 41, 295,  ''),
-(309, 42, 296,  ''),
-(310, 42, 297,  ''),
-(311, 43, 298,  ''),
-(312, 43, 299,  ''),
-(313, 44, 300,  ''),
-(314, 44, 301,  ''),
-(315, 51, 302,  ''),
-(316, 51, 303,  ''),
-(317, 56, 304,  ''),
-(318, 57, 305,  ''),
-(319, 58, 306,  ''),
-(320, 58, 307,  ''),
-(321, 60, 308,  ''),
-(324, 78, 313,  ''),
-(325, 78, 314,  ''),
-(326, 74, 315,  ''),
-(327, 69, 316,  ''),
-(328, 69, 317,  ''),
-(329, 69, 318,  ''),
-(330, 69, 319,  ''),
-(331, 69, 320,  'about a person'),
-(334, 78, 323,  ''),
-(336, 79, 325,  ''),
-(337, 80, 326,  ''),
-(338, 81, 327,  ''),
-(342, 82, 331,  ''),
-(343, 83, 332,  ''),
-(344, 83, 333,  ''),
-(345, 84, 334,  ''),
-(346, 84, 335,  ''),
-(347, 85, 336,  ''),
-(348, 86, 337,  ''),
-(349, 86, 338,  ''),
-(353, 2,  343,  ''),
-(357, 15, 347,  ''),
-(358, 41, 348,  ''),
-(359, 42, 349,  ''),
-(360, 15, 350,  ''),
-(361, 41, 351,  ''),
-(362, 15, 352,  ''),
-(363, 15, 353,  ''),
-(364, 88, 357,  ''),
-(365, 64, 358,  ''),
-(366, 66, 359,  ''),
-(367, 66, 360,  ''),
-(368, 67, 361,  ''),
-(369, 67, 362,  ''),
-(370, 69, 363,  ''),
-(371, 69, 364,  ''),
-(372, 71, 365,  ''),
-(373, 71, 366,  ''),
-(374, 17, 367,  ''),
-(375, 72, 368,  ''),
-(376, 90, 287,  '');
+(1, 1,  374,  ''),
+(4, 2,  375,  ''),
+(5, 2,  376,  ''),
+(6, 2,  378,  ''),
+(19,  3,  381,  'religious'),
+(20,  3,  382,  'religious'),
+(25,  3,  383,  ''),
+(26,  3,  384,  ''),
+(27,  3,  385,  ''),
+(28,  6,  386,  ''),
+(29,  6,  387,  ''),
+(34,  8,  392,  ''),
+(35,  8,  393,  ''),
+(36,  8,  394,  ''),
+(51,  12, 400,  ''),
+(52,  12, 401,  ''),
+(55,  14, 406,  ''),
+(56,  14, 407,  ''),
+(57,  14, 408,  ''),
+(58,  14, 409,  ''),
+(59,  14, 410,  ''),
+(60,  15, 411,  ''),
+(61,  15, 412,  ''),
+(62,  16, 413,  ''),
+(81,  13, 424,  'female human being'),
+(82,  13, 425,  ''),
+(83,  13, 426,  ''),
+(84,  13, 427,  ''),
+(85,  18, 388,  ''),
+(86,  18, 389,  ''),
+(87,  18, 390,  ''),
+(88,  17, 428,  ''),
+(89,  17, 400,  ''),
+(90,  17, 429,  ''),
+(91,  17, 401,  ''),
+(96,  10, 434,  ''),
+(97,  10, 435,  ''),
+(98,  10, 436,  ''),
+(99,  10, 437,  ''),
+(100, 9,  435,  ''),
+(101, 9,  434,  ''),
+(102, 9,  437,  ''),
+(103, 9,  436,  ''),
+(104, 1,  438,  ''),
+(105, 1,  439,  ''),
+(106, 1,  440,  ''),
+(107, 19, 441,  ''),
+(108, 19, 442,  '');
 
 DROP TABLE IF EXISTS `types`;
 CREATE TABLE `types` (
@@ -1732,7 +1243,22 @@ CREATE TABLE `usage_notes` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 INSERT INTO `usage_notes` (`id`, `word_id`, `last_update`, `created_on`, `user_id`, `note`) VALUES
-(8, 1,  '2017-03-19 15:20:48',  '2017-03-19 15:20:48',  3,  '* The normal plural is *mannen*. The unchanged form man is used after numerals only; it refers to the size of a group rather than a number of individuals. For example: In totaal verloren er 5000 man hun leven in die slag. (“5000 men altogether lost their lives in that battle.”)\\n\\n* Compound words with -man as their last component often take -lieden or -lui in the plural, rather than -mannen. For example: brandweerman ‎(“firefighter”) → brandweerlieden (alongside brandweerlui and brandweermannen).\\n');
+(2, 17, '2017-05-31 09:33:51',  '2017-05-31 09:33:51',  1,  'testtets'),
+(3, 13, '2017-05-31 12:29:50',  '2017-05-31 12:29:50',  1,  ''),
+(4, 12, '2017-05-31 12:32:37',  '2017-05-31 12:32:37',  1,  ''),
+(5, 12, '2017-05-31 12:38:20',  '2017-05-31 12:38:20',  1,  ''),
+(6, 6,  '2017-05-31 12:41:47',  '2017-05-31 12:41:47',  1,  ''),
+(7, 6,  '2017-05-31 12:42:16',  '2017-05-31 12:42:16',  1,  ''),
+(8, 6,  '2017-05-31 12:42:37',  '2017-05-31 12:42:37',  1,  ''),
+(9, 17, '2017-05-31 12:45:55',  '2017-05-31 12:45:55',  1,  ''),
+(10,  9,  '2017-05-31 18:28:14',  '2017-05-31 18:28:14',  1,  ''),
+(11,  9,  '2017-05-31 18:28:45',  '2017-05-31 18:28:45',  1,  ''),
+(12,  10, '2017-05-31 18:29:55',  '2017-05-31 18:29:55',  1,  ''),
+(13,  10, '2017-05-31 18:30:28',  '2017-05-31 18:30:28',  1,  ''),
+(14,  9,  '2017-05-31 18:30:59',  '2017-05-31 18:30:59',  1,  ''),
+(15,  1,  '2017-06-01 12:44:09',  '2017-06-01 12:44:09',  1,  ''),
+(16,  17, '2017-06-03 12:13:05',  '2017-06-03 12:13:05',  1,  ''),
+(17,  19, '2017-06-05 15:51:18',  '2017-06-05 15:51:18',  3,  '');
 
 DROP TABLE IF EXISTS `users`;
 CREATE TABLE `users` (
@@ -1743,17 +1269,18 @@ CREATE TABLE `users` (
   `editor_lang` int(11) NOT NULL,
   `reg_date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   `role` int(11) NOT NULL,
+  `avatar` varchar(255) NOT NULL,
   PRIMARY KEY (`id`),
   KEY `editor_lang` (`editor_lang`),
   CONSTRAINT `users_ibfk_1` FOREIGN KEY (`editor_lang`) REFERENCES `languages` (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
-INSERT INTO `users` (`id`, `longname`, `username`, `password`, `editor_lang`, `reg_date`, `role`) VALUES
-(0, 'Guest',  'guest',  '', 0,  '2017-03-30 22:54:37',  4),
-(1, 'Thomas de Roo',  'blekerfeld', '70674e943bcd2ce395ff619cff93c980f1cec914445cd69a30d612c7988e9966', 8,  '2017-04-09 10:55:33',  0),
-(2, '', 'Charlie',  'd88aad0fd193b6ac9c03db2edddf9d1402956df84e709932dd2c4b70e5dc7f1b', 1,  '2017-02-12 17:41:56',  0),
-(3, 'Mr. Donut',  'donut',  'e69fd784f93f82eb6bf5148f0a0e3f5282df5ac10427ab3d6704799adca95a07', 1,  '2017-03-30 22:46:27',  0),
-(4, 'John Sprinkle',  'sprinkle', 'e69fd784f93f82eb6bf5148f0a0e3f5282df5ac10427ab3d6704799adca95a07', 1,  '2017-04-03 19:27:40',  3);
+INSERT INTO `users` (`id`, `longname`, `username`, `password`, `editor_lang`, `reg_date`, `role`, `avatar`) VALUES
+(0, 'Guest',  'guest',  '', 0,  '2017-03-30 22:54:37',  4,  ''),
+(1, 'Thomas de Roo',  'blekerfeld', '70674e943bcd2ce395ff619cff93c980f1cec914445cd69a30d612c7988e9966', 8,  '2017-06-05 01:07:32',  0,  'https://avatars3.githubusercontent.com/u/13293128?v=3&s=460'),
+(2, '', 'Charlie',  'd88aad0fd193b6ac9c03db2edddf9d1402956df84e709932dd2c4b70e5dc7f1b', 1,  '2017-02-12 17:41:56',  0,  ''),
+(3, 'Mr. Donut',  'donut',  'e69fd784f93f82eb6bf5148f0a0e3f5282df5ac10427ab3d6704799adca95a07', 1,  '2017-03-30 22:46:27',  0,  ''),
+(4, 'John Sprinkle',  'sprinkle', 'e69fd784f93f82eb6bf5148f0a0e3f5282df5ac10427ab3d6704799adca95a07', 1,  '2017-04-03 19:27:40',  3,  '');
 
 DROP TABLE IF EXISTS `words`;
 CREATE TABLE `words` (
@@ -1784,62 +1311,20 @@ CREATE TABLE `words` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 INSERT INTO `words` (`id`, `native`, `lexical_form`, `ipa`, `hidden`, `type_id`, `classification_id`, `subclassification_id`, `derivation_of`, `derivation_type`, `derivation_name`, `derivation_clonetranslations`, `derivation_show_in_title`, `created`, `updated`, `created_by`, `image`) VALUES
-(1, 'man',  '', 'mɑn',  0,  1,  1,  6,  0,  0,  0,  0,  0,  '2017-02-06 00:21:03',  '2017-04-30 17:20:12',  1,  NULL),
-(2, 'een',  '', '', 0,  10, 1,  0,  0,  0,  0,  0,  0,  '2017-02-06 00:21:03',  '2017-02-12 17:39:50',  1,  NULL),
-(5, 'hebben', '', '', 0,  2,  6,  0,  0,  0,  0,  0,  0,  '2017-02-06 00:21:03',  '2017-02-12 17:39:50',  1,  NULL),
-(7, 'werken', '', 'wərkm',  0,  2,  5,  1,  0,  0,  0,  0,  0,  '2017-02-06 00:21:03',  '2017-02-18 14:17:52',  1,  NULL),
-(9, 'vrouw',  '', 'vrɑu̯',  0,  1,  2,  0,  0,  0,  0,  0,  0,  '2017-02-06 00:21:03',  '2017-02-12 17:39:50',  1,  NULL),
-(10,  'echtgenoot', '', 'ɛxtxəˌnot',  0,  1,  1,  0,  0,  0,  0,  0,  0,  '2017-02-06 00:21:03',  '2017-02-12 17:39:50',  1,  NULL),
-(11,  'hij',  '', '', 0,  4,  10, 2,  0,  0,  0,  0,  0,  '2017-02-06 00:21:03',  '2017-02-12 17:39:50',  1,  NULL),
-(15,  'winnen', '', '', 0,  2,  5,  1,  0,  0,  0,  0,  0,  '2017-02-06 00:21:03',  '2017-02-12 17:39:50',  1,  NULL),
-(16,  'de', '', '', 0,  10, 1,  0,  0,  0,  0,  0,  0,  '2017-02-06 00:21:03',  '2017-02-12 17:39:50',  1,  NULL),
-(17,  'kat',  '', 'kɑt',  0,  1,  2,  0,  0,  0,  0,  0,  0,  '2017-02-06 00:21:03',  '2017-02-12 17:39:50',  1,  'kat.png'),
-(18,  'poes', '', 'pus',  0,  1,  2,  0,  0,  0,  0,  0,  0,  '2017-02-06 00:21:03',  '2017-02-12 17:39:50',  1,  NULL),
-(19,  'katje',  '', 'kɑtjə',  0,  1,  3,  0,  17, 0,  1,  1,  1,  '2017-02-06 00:21:03',  '2017-02-12 17:39:50',  1,  NULL),
-(20,  'mannetje', '', 'mɑn.ətjə', 0,  1,  3,  0,  1,  0,  1,  0,  1,  '2017-02-06 00:21:03',  '2017-02-15 23:57:43',  1,  NULL),
-(22,  'men',  '', 'mɛn',  0,  4,  3,  0,  1,  4,  0,  0,  0,  '2017-02-06 00:21:03',  '2017-02-12 17:39:50',  1,  NULL),
-(23,  'kater',  '', 'kaːtə̣r',  0,  1,  1,  0,  17, 1,  0,  0,  0,  '2017-02-06 00:21:03',  '2017-02-12 17:39:50',  1,  NULL),
-(24,  'katertje', '', 'kaːtərtjə',  0,  1,  3,  0,  23, 0,  1,  1,  1,  '2017-02-06 00:21:03',  '2017-02-12 17:39:50',  1,  NULL),
-(27,  'meneertje',  '', '', 0,  1,  3,  0,  25, 0,  1,  0,  1,  '2017-02-06 00:21:03',  '2017-02-12 17:39:50',  1,  NULL),
-(28,  'zij',  '', '', 0,  4,  11, 2,  0,  0,  0,  0,  0,  '2017-02-06 00:21:03',  '2017-02-12 17:39:50',  1,  NULL),
-(29,  'goed', '', 'xut',  0,  5,  13, 4,  0,  0,  0,  0,  0,  '2017-02-06 00:21:03',  '2017-02-12 17:39:50',  1,  NULL),
-(31,  'ik', '', 'ik', 0,  4,  8,  2,  0,  0,  0,  0,  0,  '2017-02-06 00:21:03',  '2017-02-12 17:39:50',  1,  NULL),
-(32,  'jij',  '', 'jɛi̯/, (unstressed) /jə',  0,  4,  9,  2,  0,  0,  0,  0,  0,  '2017-02-06 00:21:03',  '2017-02-12 17:39:50',  1,  NULL),
-(33,  'je', '', '', 0,  4,  9,  2,  32, 4,  0,  0,  1,  '2017-02-06 00:21:03',  '2017-02-12 17:39:50',  1,  NULL),
-(34,  'wij',  '', 'ʋɛi̯', 0,  4,  8,  3,  0,  0,  0,  0,  0,  '2017-02-06 00:21:03',  '2017-02-12 17:39:50',  1,  NULL),
-(35,  'we', '', 'ʋə', 0,  4,  8,  3,  34, 4,  0,  0,  1,  '2017-02-06 00:21:03',  '2017-02-12 17:39:50',  1,  NULL),
-(40,  'aardappel',  '', 'ɑ:rdappəl',  0,  1,  1,  0,  0,  0,  0,  0,  0,  '2017-02-06 00:21:03',  '2017-02-12 17:39:50',  1,  NULL),
-(41,  'aarde',  '', 'ɑ:rdə',  0,  1,  2,  0,  0,  0,  0,  0,  0,  '2017-02-06 00:21:03',  '2017-02-12 17:39:50',  1,  NULL),
-(42,  'alle', '', 'ɑl:ə', 0,  5,  13, 4,  0,  0,  0,  0,  0,  '2017-02-06 00:21:03',  '2017-02-12 17:39:50',  1,  NULL),
-(43,  'aaien',  '', '', 0,  2,  6,  0,  0,  0,  0,  0,  0,  '2017-02-06 00:21:03',  '2017-02-12 17:39:50',  1,  NULL),
-(44,  'allemaal', '', 'llem', 0,  4,  3,  0,  0,  0,  0,  0,  0,  '2017-02-06 00:21:03',  '2017-02-18 00:49:18',  1,  NULL),
-(51,  'feest',  '', '', 0,  1,  3,  0,  0,  0,  0,  0,  0,  '2017-02-06 00:21:03',  '2017-02-12 17:39:50',  1,  NULL),
-(56,  'boek', '', 'buk',  0,  1,  3,  0,  0,  0,  0,  0,  0,  '2017-02-06 00:21:03',  '2017-02-12 17:39:50',  1,  NULL),
-(57,  'steen',  '', 'steː:n', 0,  1,  1,  0,  0,  0,  0,  0,  0,  '2017-02-06 00:21:03',  '2017-02-12 17:39:50',  1,  NULL),
-(58,  'wijze',  '', 'wɛi̯zə', 0,  1,  2,  0,  0,  0,  0,  0,  0,  '2017-02-06 00:21:03',  '2017-02-12 17:39:50',  1,  NULL),
-(60,  'neus', '', 'nøs',  0,  1,  1,  0,  0,  0,  0,  0,  0,  '2017-02-06 00:21:03',  '2017-02-12 17:39:50',  1,  NULL),
-(61,  'maan', '', 'ma:n', 0,  1,  2,  0,  0,  0,  0,  0,  0,  '2017-02-06 00:21:03',  '2017-02-12 17:39:50',  1,  NULL),
-(62,  'maand',  '', 'ma:nt',  0,  1,  2,  0,  0,  0,  0,  0,  0,  '2017-02-06 00:21:03',  '2017-02-12 17:39:50',  1,  NULL),
-(64,  'citroen',  '', 'siˈtrun',  0,  1,  2,  0,  0,  0,  0,  0,  0,  '2017-02-06 00:21:03',  '2017-02-12 17:39:50',  1,  'lemons.jpg'),
-(66,  'hagelen',  '', 'ha:xell:en', 0,  2,  5,  1,  0,  0,  0,  0,  0,  '2017-02-06 00:21:03',  '2017-02-12 17:39:50',  1,  NULL),
-(67,  'picknick', '', '', 0,  1,  1,  0,  0,  0,  0,  0,  0,  '2017-02-06 00:21:03',  '2017-02-12 17:39:50',  1,  NULL),
-(68,  'hond', '', 'hond', 0,  1,  1,  0,  0,  0,  0,  0,  0,  '2017-02-06 00:21:03',  '2017-02-12 17:39:50',  1,  NULL),
-(69,  'leuk', '', 'løːk', 0,  5,  13, 4,  0,  0,  0,  0,  0,  '2017-02-06 00:21:03',  '2017-02-12 17:39:50',  1,  NULL),
-(71,  'boom', '', 'bo:m', 0,  1,  1,  0,  0,  0,  0,  0,  0,  '2017-02-06 00:21:03',  '2017-02-12 17:39:50',  1,  NULL),
-(72,  'mooi', '', 'moːi̯',  0,  5,  13, 0,  0,  0,  0,  0,  0,  '2017-02-06 00:21:03',  '2017-02-12 17:39:50',  1,  NULL),
-(73,  'slecht', '', 'slɛxt',  0,  5,  13, 4,  0,  0,  0,  0,  0,  '2017-02-06 00:21:03',  '2017-02-12 17:39:50',  1,  NULL),
-(74,  'brood',  '', 'bro:d',  0,  1,  3,  0,  0,  0,  0,  0,  0,  '2017-02-06 00:21:03',  '2017-02-12 17:39:50',  1,  NULL),
-(78,  'mevrouw',  '', 'mevrouw',  0,  1,  2,  0,  0,  0,  0,  0,  0,  '2017-02-06 00:21:03',  '2017-02-12 17:39:50',  1,  NULL),
-(79,  'zijn', '', 'zɛi̯n',  0,  2,  6,  0,  0,  0,  0,  0,  0,  '2017-02-06 00:21:03',  '2017-02-12 17:39:50',  1,  NULL),
-(80,  'was',  '', 'ʋɑs',  0,  1,  1,  0,  0,  0,  0,  0,  0,  '2017-02-06 00:21:03',  '2017-02-12 17:39:50',  1,  NULL),
-(81,  'was',  '', 'ʋɑs',  0,  1,  1,  0,  0,  0,  0,  0,  0,  '2017-02-06 00:21:03',  '2017-02-12 17:39:50',  1,  NULL),
-(82,  'jong', '', 'jɔŋ',  0,  5,  1,  4,  0,  0,  0,  0,  0,  '2017-02-06 00:21:03',  '2017-02-12 17:39:50',  1,  NULL),
-(83,  'jullie', '', '', 0,  4,  9,  0,  0,  0,  0,  0,  0,  '2017-02-06 00:21:03',  '2017-02-12 17:39:50',  1,  NULL),
-(84,  'zij',  '', '', 0,  4,  12, 0,  0,  0,  0,  0,  0,  '2017-02-06 00:21:03',  '2017-02-12 17:39:50',  1,  NULL),
-(85,  'wensen', '', '', 0,  2,  5,  0,  0,  0,  0,  0,  0,  '2017-02-06 00:21:03',  '2017-02-12 17:39:50',  1,  NULL),
-(86,  'huis', '', 'ɦœʏ̯s',  0,  1,  3,  0,  0,  0,  0,  0,  0,  '2017-02-12 17:53:05',  '2017-02-12 17:53:39',  NULL, NULL),
-(88,  'meisje', '', 'mɛɪ:sjɛ',  0,  1,  2,  0,  0,  0,  0,  0,  0,  '2017-03-31 20:12:43',  NULL, NULL, NULL),
-(89,  'lezen',  'l&Ezen', 'le:zen', 0,  2,  1,  0,  0,  0,  0,  0,  0,  '2017-04-28 11:26:48',  NULL, NULL, NULL),
-(90,  'beker',  'beker',  'be: . ker',  0,  1,  1,  0,  0,  0,  0,  0,  0,  '2017-05-11 10:21:04',  NULL, NULL, NULL);
+(1, 'huis', '', 'hœy;s',  0,  1,  3,  0,  0,  0,  0,  0,  0,  '2017-06-01 12:44:09',  '2017-06-01 12:44:09',  1,  NULL),
+(2, 'slaapkamer', '', 'sla:pka:mər',  0,  1,  1,  0,  0,  0,  0,  0,  0,  '2017-05-25 19:41:38',  '2017-05-25 19:41:38',  1,  NULL),
+(3, 'verlossen',  '', 'vər.loss.n', 0,  2,  5,  0,  0,  0,  0,  0,  0,  '2017-05-25 20:21:33',  '2017-05-25 20:21:33',  1,  NULL),
+(6, 'kat',  '', 'kɑ:t', 0,  1,  1,  0,  0,  0,  0,  0,  0,  '2017-05-31 12:42:37',  '2017-05-31 12:42:37',  1,  NULL),
+(8, 'land', '', 'lɑnt', 0,  1,  3,  0,  0,  0,  0,  0,  0,  '0000-00-00 00:00:00',  '2017-05-25 20:40:56',  1,  NULL),
+(9, 'boot', '', 'bo:t', 0,  1,  2,  0,  0,  0,  0,  0,  0,  '2017-05-31 18:30:59',  '2017-05-31 18:30:59',  1,  NULL),
+(10,  'schip',  '', 'sxɪp', 0,  1,  3,  0,  0,  0,  0,  0,  0,  '2017-05-31 18:30:28',  '2017-05-31 18:30:28',  1,  NULL),
+(12,  'echtgenoot', '', 'extxɛno:t',  0,  1,  2,  0,  0,  0,  0,  0,  0,  '2017-05-31 12:38:20',  '2017-05-31 12:38:20',  1,  NULL),
+(13,  'vrouw',  '', 'vrau', 0,  1,  2,  0,  0,  0,  0,  0,  0,  '2017-05-31 12:29:50',  '2017-05-31 12:29:50',  1,  NULL),
+(14,  'kind', '', 'kɪnt', 0,  1,  3,  0,  0,  0,  0,  0,  0,  '0000-00-00 00:00:00',  '2017-05-26 08:53:32',  1,  NULL),
+(15,  'paard',  '', 'pa:rt',  0,  1,  3,  0,  0,  0,  0,  0,  0,  '0000-00-00 00:00:00',  '2017-05-26 10:49:16',  1,  NULL),
+(16,  'ezel', '', 'e:zel',  0,  1,  1,  0,  0,  0,  0,  0,  0,  '0000-00-00 00:00:00',  '2017-05-26 13:37:38',  1,  NULL),
+(17,  'man',  '', 'man',  0,  1,  1,  0,  0,  0,  0,  0,  0,  '2017-06-03 12:13:05',  '2017-06-03 12:13:05',  1,  NULL),
+(18,  'hond', '', 'hont', 0,  1,  1,  0,  0,  0,  0,  0,  0,  '0000-00-00 00:00:00',  '2017-05-31 09:14:03',  1,  NULL),
+(19,  'zeilen', '', 'zeilen', 0,  2,  5,  0,  0,  0,  0,  0,  0,  '0000-00-00 00:00:00',  '2017-06-05 15:51:17',  3,  NULL);
 
--- 2017-05-14 00:32:00
+-- 2017-06-06 09:17:28

@@ -37,37 +37,7 @@ class pEntryHandler extends pHandler{
 
 		// Discuss
 		if($action == 'discuss'){
-			p::Out("<div class='wdComments-list'>
-					<div class='wdComment'>
-						<div class='wdContent'>
-							mysql_get_host_info();
-						</div>
-						<div class='children'>
-							<div class='wdComment'>
-								<div class='wdContent'>
-									hoi
-								</div>
-								<div class='children'>
-										<div class='wdComment'>
-								<div class='wdContent'>
-									hoi
-								</div>
-								<div class='children'>
-
-									<div class='wdComment'>
-								<div class='wdContent'>
-									hoi
-								</div>
-								<div class='children'>
-								</div>
-							</div>
-								</div>
-							</div>
-								</div>
-							</div>
-						</div>
-					</div>
-				</div>");
+			p::Out(new pAjaxLoader(p::Url('?thread/'.$this->_section.'/'.pAdress::arg()['id']), true));
 		}
 
 	}

@@ -65,6 +65,7 @@ define('MMENU_LOGOUT', "Log out");
 define('LOGIN_TITLE', "Editor login");
 define('LOGIN_TITLE_SHORT', "Log in");
 define('LOGIN_USERNAME', "Username");
+define('LOGIN_USERNOTFOUND', "User not found");
 define('LOGIN_PASSWORD', "Password");
 define('LOGIN_PROCEED', "Proceed");
 define('LOGIN_ERROR', "Username and/or password are not correct.");
@@ -91,11 +92,11 @@ define('WD_REPLY_EMPTY', "You cannot post an empty reply.");
 define('WD_REPLY_ERROR', "Something went wrong, your reaction is not posted.");
 define('WD_UPVOTE', "upvote");
 define('WD_DOWNVOTE', "downvote");
-define('WD_DELETE', "Delete");
-define('WD_DELETE_CONFIRM', "Are you sure you want to delete this message and all of its underlying comments?");
+define('WD_DELETE', "Remove");
+define('WD_DELETE_CONFIRM', "Are you sure you want to remove this message and all of its underlying comments?");
 define('WD_BACK_TO_THREAD', "Back to thread");
 define('WD_BACK_TO_WORD', "Back to entry");
-define('WD_NO_THREADS', "There are no threads yet");
+define('WD_NO_THREADS', "There are no threads yet, feel free to create a discussion thread.");
 
 
 // Dashboard strings
