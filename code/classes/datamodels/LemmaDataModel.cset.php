@@ -52,7 +52,7 @@ class pLemmaDataModel extends pDataModel{
     						WHEN words.native LIKE '%".p::Escape(trim($search))."' THEN 3
     						ELSE 4
 						END DESC) AS a 
-				UNION ALL SELECT * FROM (SELECT DISTINCT word_id, 1 AS is_inflection, inflection FROM inflection_cache WHERE inflection ".$ww." OR inflection LIKE '".p::Escape($search)."' ORDER BY INSTR('".p::Escape(trim($search))."', inflection) DESC) as b 
+				UNION ALL SELECT * FROM (SELECT DISTINCT lemma_id AS word_id, 1 AS is_inflection, inflected_form FROM lemmatization WHERE inflected_form ".$ww." OR inflected_form LIKE '".p::Escape($search)."' ORDER BY INSTR('".p::Escape(trim($search))."', inflected_form) DESC) as b 
 				
 				UNION ALL SELECT * FROM (SELECT DISTINCT word_id, 1 AS is_inflection, irregular_form AS inflection FROM morphology_irregular WHERE irregular_form ".$ww." ORDER BY INSTR('".p::Escape(trim($search))."', irregular_form) DESC) AS c ".$limit;	
 		else
@@ -76,8 +76,14 @@ class pLemmaDataModel extends pDataModel{
  		if($fetch->rowCount() != 0)
 			while($fetched = $fetch->fetchObject()){
 				$lemmaResult = new pLemma($fetched->word_id, 'words');
+				if(!pUser::checkPermission(-2) OR $lemmaResult->read('hidden') == 1)
+					continue;
 				if(isset($fetched->translation)){
 					$lemmaResult->setHitTranslation($fetched->translation);
+				}
+				else{
+					if($fetched->is_inflection == 1)
+					$lemmaResult->setHitTranslation($fetched->inflection);
 				}
 				$lemmaResult->bindTranslations(($searchlang == 0) ? $returnlang : $searchlang);
 
