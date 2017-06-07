@@ -16,6 +16,7 @@ class pLemmaTemplate extends pEntryTemplate{
 		$overAllContent = "";
 		// Going through the languages
 
+
 		if(empty($translations))
 			return false;
 
@@ -64,10 +65,15 @@ class pLemmaTemplate extends pEntryTemplate{
 	// Requires the type, class and subclass
 	public function title($type, $class, $subclass){
 
+		$back = '';
+		if(isset(pAdress::arg()['is:result']))
+			$back = "<a class='back-mini' onClick='$(\".pEntry\").slideUp();
+        	$(\".searchLoad\").slideDown();callBack();' href='javascript:void();'>".(new pIcon('fa-arrow-left', 12))."</a>";
+
 		//"<a class='' href='javascript:void();'' onclick='window.history.back();'' >".(new pIcon('fa-arrow-left', 12))."</a><strong class='pWord'><span class='native'><a>"
 
 		// Sorry sorry sorry about the long code
-		$realTitle = '<a class="lemma-code float-right big print" href="#">'.(new pIcon('fa-share-alt',12)).'</a><a target="_blank" class="lemma-code float-right big print" href="'.p::Url('?entry/'.p::HashId($this->_data['id'])."/print").'">'.(new pIcon('fa-print', 12)).'</a><a class="lemma-code big float-right ttip" href="'.p::Url('?entry/'.p::HashId($this->_data['id'])).'" title="'.$this->_data['id'].'">'.(new pIcon('fa-bookmark-o', 12)).' '.p::HashId($this->_data['id']).'</a>'.p::Markdown("# <span class='native'><strong class='pWord'><a>".$this->_data['native']."</a></strong></span>".($this->_data['ipa'] != '' ? " <span class='pIpa'>/".$this->_data['ipa']."/</span>" : ''), true);
+		$realTitle = $back.' <a class="lemma-code float-right big print" href="#">'.(new pIcon('fa-share-alt',12)).'</a><a target="_blank" class="lemma-code float-right big print" href="'.p::Url('?entry/'.p::HashId($this->_data['id'])."/print").'">'.(new pIcon('fa-print', 12)).'</a><a class="lemma-code big float-right ttip" href="'.p::Url('?entry/'.p::HashId($this->_data['id'])).'" title="'.$this->_data['id'].'">'.(new pIcon('fa-bookmark-o', 12)).' '.p::HashId($this->_data['id']).'</a>'.p::Markdown("# <span class='native'><strong class='pWord'><a>".$this->_data['native']."</a></strong></span>".($this->_data['ipa'] != '' ? " <span class='pIpa'>/".$this->_data['ipa']."/</span>" : ''), true);
 
 		$titleSection = new pEntrySection("", '', null, false, true);
 

@@ -26,6 +26,7 @@ class pSearchBox extends pTemplatePiece{
 
 	public function __toString(){
 
+		p::Out("<div style='margin-bottom:10px';></div>");
 		pMainTemplate::toggleSearchBox();
 
 		$this->_idS = date('s');
@@ -217,6 +218,10 @@ class pSearchBox extends pTemplatePiece{
           	 if($('.word-search').val() != ''){
           		search();
         	}
+        });
+
+        $('.back-to-search').click(function(){
+        	alert();
         });
 
 

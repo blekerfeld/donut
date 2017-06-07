@@ -11,13 +11,23 @@
 
 class pInflector{
 	
-	protected $_modes, $_tables, $_dataModel, $_lemma, $_compiledParadigms, $_twolc, $_twolcRules, $_auxNesting;
+	protected $_modes, $_tables, $_dataModel, $_lemma, $_compiledParadigms, $_twolc, $_twolcRules, $_auxNesting, $_inflCache, $_dmCache;
 
 	public function __construct($lemma, $twolcRules, $nesting = 0, $auxNesting = 0){
 		if($nesting > 12){
 			die();
 		}
 		$this->_lemma = $lemma;
+
+		// Loading the inflection cache for later use
+		$idM = new pDataModel('lemmatization');
+		$idM->setCondition(" WHERE lemma_id = ".$lemma->read('id'));
+
+		foreach($idM->getObjects()->fetchAll() as $cachedInflection)
+			$this->_inflCache[$cachedInflection['hash']] = $cachedInflection['inflected_form'];
+
+		$this->_dMCache = new pDataModel('lemmatization');
+
 		$this->_dataModel = new pDataModel('modes');
 		$this->_modes = $this->_dataModel->customQuery("SELECT DISTINCT modes.* FROM modes JOIN mode_apply ON modes.id = mode_apply.mode_id WHERE mode_apply.type_id = ".$this->_lemma->read('type_id'))->fetchAll();
 		$this->_compiledParadigms = new pSet;
@@ -38,7 +48,6 @@ class pInflector{
 			$tempArray[$mode['id']] = $paradigm->compile($this->_lemma);
 		}
 
-
 		foreach($this->_modes as $mode){
 			foreach($tempArray[$mode['id']] as $p_key => $paradigm){
 				foreach($paradigm['rows'] as $r_key => $row){
@@ -53,6 +62,8 @@ class pInflector{
 		return $tempArray;
 
 	}
+
+
 
 	public function inflectRow($row, $heading){
 
@@ -80,7 +91,6 @@ class pInflector{
 			}
 		}
 
-		// array()
 
 		// Aux time max nests: 12
 
@@ -115,7 +125,7 @@ class pInflector{
 
 	public function buildMode($mode_array){
 
-		return (new pInflectionTable($this->_twolc, $mode_array, $this->_compiledParadigms));
+		return (new pInflectionTable($this->_dMCache, $this->_lemma, $this->_twolc, $mode_array, $this->_compiledParadigms));
 
 	}
 
