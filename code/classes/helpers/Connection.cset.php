@@ -67,7 +67,7 @@ class pConnection extends PDO{
 			$cache_file_time = filemtime($cache_file);
 
 			// Is the file still valid?
-			 if (time() - $cache_file_time < $cache_time and $donut['db_query_count']--)
+			 if (time() - $cache_file_time < $cache_time)
 			 	return unserialize(file_get_contents($cache_file));
 
 			// If not we need to delete it and be a little recursive...

@@ -120,7 +120,7 @@ class pLemma extends pEntry{
 		$this->_template = new pLemmaTemplate($this->_entry, null);
 
 		if(!($this->_hitTranslation == null))
-			$hitTranslation = '<em class="dHitTranslation">'.p::Highlight($this->_query, $this->_hitTranslation, '<strong class="dQueryHighlight">', '</strong>').'</em> · ';
+			$hitTranslation = '<em class="dHitTranslation">'.p::Highlight($this->_query, $this->_hitTranslation, '<strong class="dQueryHighlight">', '</strong>').'</em> → ';
 		else
 			$hitTranslation = '';
 
@@ -129,8 +129,7 @@ class pLemma extends pEntry{
 		else
 			$linkToWord = $this->renderSimpleLink(true);
 
-		p::Out("<tr class='hSearchResult'>");
-		p::Out('<td><div class="dWordWrapper">'.$hitTranslation.'<strong class="dWord"><span class="native">'.$linkToWord."</span></strong><span class='dType'> · ".$this->generateInfoString()."</span> <br />".$this->_template->parseTranslations($this->_translations, true)."</div></td></tr>");
+		p::Out('<div class="dWordWrapper">'.$hitTranslation.'<strong class="dWord"><span class="native">'.$linkToWord."</span>".($this->_entry['ipa'] != '' ? "<span class='dType'> · </span><span class='pIpa small'>/".$this->_entry['ipa']."/</span>" : '')."</strong><span class='dType'> · ".$this->generateInfoString()."</span> <br />".$this->_template->parseTranslations($this->_translations, true)."</div>");
 	}
 
 

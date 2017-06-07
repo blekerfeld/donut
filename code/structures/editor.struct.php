@@ -34,6 +34,24 @@ return array(
 				'remove' => new pAction('remove', 'remove', 'fa-times', 'lemma-code discussion float-right', null, null, 'words', 'dictionary-admin', null, -3),
 			),
 			'save_strings' => $saveStrings,
+		),
+		'translation' => array(
+			'section_key' => 'translation',
+			'type' => 'pLemmasheetHandler',
+			'template' => 'pLemmasheetTemplate',
+			'table' => 'translations',
+			'icon' => 'fa-font',
+			'surface' => "Inflection",
+			'condition' => false,
+			'items_per_page' => 20,
+			'disable_pagination' => false,
+			'actions_item' => array(
+			),
+			'actions_bar' => array(
+				'edit' => new pAction('edit', 'edit', 'fa-pencil', 'lemma-code discussion float-right', null, null, 'words', 'dictionary-admin', null, -3),
+				'remove' => new pAction('remove', 'remove', 'fa-times', 'lemma-code discussion float-right', null, null, 'words', 'dictionary-admin', null, -3),
+			),
+			'save_strings' => $saveStrings,
 		)
 	
 	);

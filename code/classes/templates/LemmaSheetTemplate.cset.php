@@ -229,11 +229,17 @@ class pLemmaSheetTemplate extends pTemplate{
 	}
 
 	public function renderNew(){
-		return $this->lemmasheetForm($this->activeStructure['section_key']);
+		if($this->activeStructure['section_key'] != 'translation')
+			return $this->lemmasheetForm($this->activeStructure['section_key']);
+		else
+			return $this->translationForm($this->activeStructure['section_key']);
 	}
 
 	public function renderEdit(){
-		return $this->lemmasheetForm($this->activeStructure['section_key'], true);
+		if($this->activeStructure['section_key'] != 'translation')
+			return $this->lemmasheetForm($this->activeStructure['section_key'], true);
+		else
+			return $this->translationForm($this->activeStructure['section_key'], true);
 	}
 
 }

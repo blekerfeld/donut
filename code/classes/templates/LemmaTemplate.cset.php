@@ -29,11 +29,12 @@ class pLemmaTemplate extends pEntryTemplate{
 			foreach($languageArray as $translation)
 				$content .= $translation->parseListItem().$translation->parseDescription();
 			$content .= "</ol>";
-			$overAllContent .= new pEntrySection($title, $content, '', true, true, true)."<br />";
+			$overAllContent .= new pEntrySection($title, $content, '', true, true, true);
 		}
 
-		// If there is a session that restricts the shown languages, offer a link that is able cancel that restriction
-		$showAll = ((isset(pAdress::session()['returnLanguage'])) ? '<a class="opacity-min float-right" href="'.p::Url("?entry/".$this->_data['id']."/resetTranslations/").'">'.LEMMA_TRANSLATIONS_RESET.'</a>' : '');
+		// // If there is a session that restricts the shown languages, offer a link that is able cancel that restriction
+		// $showAll = ((isset(pAdress::session()['returnLanguage'])) ? '<a class="opacity-min float-right" href="'.p::Url("?entry/".$this->_data['id']."/resetTranslations/").'">'.LEMMA_TRANSLATIONS_RESET.'</a>' : '');
+		$showAll = '';
 
 		if($justList)
 				return $content;
@@ -66,7 +67,7 @@ class pLemmaTemplate extends pEntryTemplate{
 		//"<a class='' href='javascript:void();'' onclick='window.history.back();'' >".(new pIcon('fa-arrow-left', 12))."</a><strong class='pWord'><span class='native'><a>"
 
 		// Sorry sorry sorry about the long code
-		$realTitle = '<a class="lemma-code float-right big print" href="#">'.(new pIcon('fa-share-alt',12)).'</a><a target="_blank" class="lemma-code float-right big print" href="'.p::Url('?entry/'.p::HashId($this->_data['id'])."/print").'">'.(new pIcon('fa-print', 12)).'</a><a class="lemma-code big float-right ttip" href="'.p::Url('?entry/'.p::HashId($this->_data['id'])).'" title="'.$this->_data['id'].'">'.(new pIcon('fa-bookmark-o', 12)).' '.p::HashId($this->_data['id']).'</a>'.p::Markdown("# <span class='native'><strong class='pWord'><a>".$this->_data['native']."</a></strong></span>", true);
+		$realTitle = '<a class="lemma-code float-right big print" href="#">'.(new pIcon('fa-share-alt',12)).'</a><a target="_blank" class="lemma-code float-right big print" href="'.p::Url('?entry/'.p::HashId($this->_data['id'])."/print").'">'.(new pIcon('fa-print', 12)).'</a><a class="lemma-code big float-right ttip" href="'.p::Url('?entry/'.p::HashId($this->_data['id'])).'" title="'.$this->_data['id'].'">'.(new pIcon('fa-bookmark-o', 12)).' '.p::HashId($this->_data['id']).'</a>'.p::Markdown("# <span class='native'><strong class='pWord'><a>".$this->_data['native']."</a></strong></span>".($this->_data['ipa'] != '' ? " <span class='pIpa'>/".$this->_data['ipa']."/</span>" : ''), true);
 
 		$titleSection = new pEntrySection("", '', null, false, true);
 
@@ -83,11 +84,14 @@ class pLemmaTemplate extends pEntryTemplate{
 	public function usageNotes($data, $icon){
 		$parsed = '';
 		// Parsing the notes
-		foreach($data as $note)
-			$parsed .= '<div class="pNotes">'.p::Markdown($note['note']).'</div>';
+		foreach($data as $note){
+			if($note['contents'] != '')
+				$parsed .= p::Markdown($note['contents'], false);
+		}
 
 		// Returning the notes in an entry section
-		return new pEntrySection("Usage notes", $parsed, $icon);
+		if($parsed != '')
+			return new pEntrySection("Usage notes", $parsed, $icon);
 
 	}
 
