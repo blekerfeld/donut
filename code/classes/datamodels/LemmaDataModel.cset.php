@@ -79,7 +79,7 @@ class pLemmaDataModel extends pDataModel{
 				if(isset($fetched->translation)){
 					$lemmaResult->setHitTranslation($fetched->translation);
 				}
-				$lemmaResult->bindAll(($searchlang == 0) ? $returnlang : $searchlang);
+				$lemmaResult->bindTranslations(($searchlang == 0) ? $returnlang : $searchlang);
 
 				if(!array_key_exists($fetched->word_id, $results) AND $searchlang == 0)
 					$results[$fetched->word_id] = $lemmaResult;

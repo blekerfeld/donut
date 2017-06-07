@@ -260,23 +260,6 @@ div.outerwrap {
   margin-left: 5%;
 }
 
-.header {
-  padding: 20px;
-  padding-top: 15px;
-  padding-bottom: 0px;
-  font-size: 16px!important;
-  background: #f2f9fc;
-  color: #333;
-  padding-top: 20px;
-  padding-bottom: 10px;
-  padding-right: 45px;
-  padding-left: 45px;
- 
-}
-
-.header-icon{
-  margin-top: -2px!important;float: left;margin-right: 5px;
-}
 
 .page {
   padding: 0px;
@@ -622,157 +605,6 @@ select.pEditorlanguage {
   cursor: pointer;
 }
 
-input#wordsearch, input#filter, input#searchfilter {
-  padding: 9px;
-  font-size: 13px;
-  text-decoration: none;
-  width: 60% - 18px;
-  min-width: 100px;
-  color: #93A7BE;
-  transition: all .3s;
-}
-
-a.button.search{
-  display: inline-block;
-  float: right;
-  color: #889DB7;
-  border-radius: 5px;
-  text-align: center;
-  padding: 11PX;
-  margin-top: 1px;
-  margin-left: 2px;
-  width: 29%;
-  transition: background .3s, color .1s;
-}
-
-a.button.search:hover{
-  background: #E6ECF2;
-}
-
-
-div.hSearchResults{
-  transition: max-height .3s;
-  width: 100%;
-  height: 0px auto;
-  margin-bottom: -20px;
-  transition: transform 3s ease;
-  transform: translateY(1px);
-  position: relative;
-}
-
-div.hSearchResult{
-}
-
-div.hSearch .load-hide{
-  margin-top: 15px;
-  margin-right: 20px;
-  display: none;
-  float: right;
-  position: relative;
-}
-
-
-.hWrap{
-  padding-bottom: 10px;
-}
-
-.hSearch{
-  font-size: 15px;
-  text-decoration: none;
-  color: #93A7BE;
-}
-
-.hSearch input#wordsearch{
-  border: none;
-  display: inline-block;
-  margin-top: 1px;
-  padding: 9px;
-  margin-left: 3px;
-  width: calc(67% - 100px);
-  min-width: 300px;
-  margin-top: 0px;
-  float: left;
-  font-family: Libre Franklin;
-  font-size: 18px;
-  padding-top: 9px;
-  color: #fff;
-  background: transparent;
-}
-
-.header.dictionary{
-  transition: all .3s;
-  box-shadow: 0 4px 10px 0px rgba(190,197,200, 0.05);
-  padding-left: 120px;
-  padding-right: 120px;
-  margin-bottom: 35px;
-  margin-left: -10%;
-  margin-right: -10%;
-  position: relative;
-  margin-top: -25px;
-  background: #525C7D;
-}
-
-
-
-.header.dictionary.home{
-}
-
-.header.dictionary.home .hSearch{
-  padding: 15px;
-}
-
-
-.header.dictionary.home .hSearch input#wordsearch{
-  font-size: 30px;
-}
-
-
-.header.dictionary.home .hSearch a.button{
-  margin-top: 10px;
-}
-
-
-.hSearch .button.search{
-  width: 8%;
-  min-width: 100px;
-  margin-top: 0px;
-  padding: 9px;
-  padding-top: 8px;
-  float: right!important;
-}
-
-.hSearch .dictionary-selector{
-  width: 7%;
-}
-
-.hSearch .dd-container{
-  float: left;
-  margin-top: 3px;
-}
-
-.hSearch .dd-container a{
-  font-size: 12px;
-}
-
-.hSearch .dd-container .dd-selected-text{
-  color: #889DB7;
-}
-
-.header.dictionary.home .dd-container{
-  margin-top: 12px;
-}
-
-input#filter {
-  width: 80%;
-}
-
-input#wordsearch:focus, input#filter:focus {
-  color: #fff;
-}
-
-input#wordsearch:not(:placeholder-shown), input#filter:not(:placeholder-shown) {
-  color: #fff!important;
-}
 
 img.dFlag {
   width: 13px;
@@ -1338,6 +1170,20 @@ strong.pWord a:hover {
   border-bottom: solid 1px #ddd;
 }
 
+span.pIpa{
+  font-family: Arial;
+  color: #555;
+  font-size: 17px;
+  opacity: .45;
+  cursor: pointer;
+  transition: all .3s;
+}
+
+span.pIpa:hover{
+  opacity: 1;
+  font-size: 0.7em!important;
+}
+
 a.back-mini{
   color: #333!important;display: inline-block;margin-top: 10px;float:left;border: none;margin-right: 5px;
  padding: 4px; border-radius: 360px;height: 20px;width:20px;line-height:1px;transition: none;
@@ -1623,7 +1469,7 @@ span.pSectionTitle.extra.sub.editing {
   margin: 20px;
   margin-top: 3px;
   margin-left: 15px;
-  margin-bottom: 20px;
+  margin-bottom: 0px;
   padding: 0px;
   font-size: 10px;
   vertical-align: top;
@@ -1631,7 +1477,7 @@ span.pSectionTitle.extra.sub.editing {
 }
 
 .pSectionWrapper ol:last-child {
-  margin-bottom: 0px;
+  margin-bottom: 5px;
 }
 
 .pSectionWrapper ol span {

@@ -12,11 +12,15 @@ class pMainTemplate extends pTemplate{
 
 	protected $_stylesheets, $_scripts;
 
-	public static $title = CONFIG_SITE_TITLE, $orgTitle = CONFIG_SITE_TITLE, $_searchBoxShown = false;
+	public static $title = CONFIG_SITE_TITLE, $orgTitle = CONFIG_SITE_TITLE, $_searchBoxShown = false, $outside;
 
 	public static function setTitle($title){
 		self::$title = $title . ' - ' . CONFIG_SITE_TITLE;
 	}
+
+  public static function throwOutsidePage($content){
+    self::$outside .= "\n".$content;
+  }
 
 	protected function loadCSS($stylesheet){
 		$this->_stylesheets[] = "<link rel='stylesheet' href='".p::Url('library/assets/css/'.$stylesheet)."'>\n";
@@ -92,7 +96,7 @@ class pMainTemplate extends pTemplate{
 		echo implode("\n", $this->_scripts);
 		?>
 	<body class='dashboard'>
-    <div class='contents'>
+    <div class='contents' id='main'>
       <div class='hStripe'></div>
       <div class="top_area">
         <div class="absolute_header">
@@ -104,18 +108,21 @@ class pMainTemplate extends pTemplate{
               <?php echo CONFIG_LOGO_TITLE; ?></a>
            <?php echo (new pMenuTemplate); ?><br id="cl" />  
        </div>
+      <div class='outside'>
+        <?php echo self::$outside; ?>
+      </div>
       <div class="outerwrap"> 
           <div class="ulWrap">
             <noscript>
               <div class='notice danger-notice'><i class='fa fa-warning fa-12'></i> This site needs javascript to function, with javascript turned off, most of the functionality won't work!</div>
             </noscript>
-            <div class='ajaxOutLoad' id='main'>
-            	<div class='page'>
-              		<div class='inner-page'>
-                			<?php echo (new p); ?>
-              		</div>
-           		</div>
-        		</div>
+
+          	<div class='page'>
+            		<div class='inner-page'>
+              			<?php echo (new p); ?>
+            		</div>
+         		</div>
+
           </div>
     	</div>
     </div>

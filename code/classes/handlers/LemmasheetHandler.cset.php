@@ -20,10 +20,12 @@ class pLemmasheetHandler extends pHandler{
 		call_user_func_array('parent::__construct', func_get_args());
 		// Override the datamodel
 
-		if($this->_section == 'inflections')
-			$table = 'morphology';
 
-		$this->dataModel = new pLemmasheetDataModel($this->_activeSection['table'], (isset(pAdress::arg()['id']) ? pAdress::arg()['id'] : null));
+		if($this->_activeSection['table'] == 'translations'){
+			$this->dataModel = new pDataModel('translations');
+		}
+		else
+			$this->dataModel = new pLemmasheetDataModel($this->_activeSection['table'], (isset(pAdress::arg()['id']) ? pAdress::arg()['id'] : null));
 	}
 
 	// This would render the rule list table :)

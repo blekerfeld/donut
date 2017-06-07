@@ -43,7 +43,7 @@ class pLemmasheetStructure extends pStructure{
 			$searchBox->setValue(pAdress::session()['searchQuery']);
 
 		if(!isset(pAdress::arg()['ajax']))
-			p::Out($searchBox);
+			pMainTemplate::throwOutsidePage($searchBox);
 
 		// If there is an offset, we need to define that
 		if(isset(pAdress::arg()['offset']))

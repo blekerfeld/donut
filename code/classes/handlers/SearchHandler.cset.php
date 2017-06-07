@@ -35,13 +35,11 @@ class pSearchHandler extends pHandler{
 	public function render(){
 
 		if(pAdress::arg()['section'] == 'wiki'){
-
+			// TODO
 			var_dump(pAdress::arg());
-
 			return p::Out("wiki search is coming soon");
-
-
 		}		
+
 
 		$languageQuery = explode('-', pAdress::arg()['section']);
 
@@ -75,9 +73,12 @@ class pSearchHandler extends pHandler{
 
 		$fetchSearch = $lemmaObject->search($searchlang->id, $returnlang->id, $query, $wholeword);
 
+		
 		// If not ajax we need to fancy up a bit here TODO
 
 		ajaxSkip:
+
+			p::Out("<span class='markdown-body'><h3>".(new pIcon('fa-search'))." ".DICT_SEARCH_RESULTS."</h3></span><br />");
 
 			if(count($fetchSearch) == 0)
 				p::Out("<div class='small notice'>".(new pIcon('fa-info-circle', 12))." ".DICT_NO_HITS."</div>");

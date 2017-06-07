@@ -228,21 +228,25 @@ class pLemmaSheetDataModel extends pDataModel{
 		$dM = new pDataModel('usage_notes');
 		$dM->setCondition(" WHERE word_id = '".$this->_lemma['id']."' ");
 		$dM->getObjects();
-		if(isset($dM->data()->fetchAll()[1]))
-			return $dM->data()->fetchAll()[1]['note'];
+		if(isset($dM->data()->fetchAll()[0]))
+			return $dM->data()->fetchAll()[0]['contents'];
 		else
 			return false;
 	}
 
 	public function updateUsageNotes($text){
+		// Deleting the older ones
+
+		if($text == $this->_links['usage_notes'] OR ($text == '' AND $this->_links['usage_notes'] == false))
+			return true;
+		else
+			$this->customQuery("DELETE FROM usage_notes WHERE word_id = ".$this->_lemma['id']);
+
 		$dM = new pDataModel('usage_notes');
-		if($this->_links['usage_notes'] == false){
-			$dM->prepareForInsert(array($this->_lemma['id'], date('Y-m-d H:i:s'), date('Y-m-d H:i:s'), pUser::read('id'), $text));
-			$dM->insert();
-		}
-		else{
-			$this->customQuery("UPDATE usage_notes SET note = ".p::Quote($text)." AND last_update = '".date('Y-m-d H:i:s')."' WHERE word_id = ".$this->_lemma['id']);
-		}
+
+		$dM->prepareForInsert(array($this->_lemma['id'], date('Y-m-d H:i:s'), date('Y-m-d H:i:s'), pUser::read('id'), $text));
+		$dM->insert();
+		
 		// If we are still alive, it went very well
 		return true;
 	}

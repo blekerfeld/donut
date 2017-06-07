@@ -63,7 +63,7 @@ class pEntryStructure extends pStructure{
 		if(isset(pAdress::arg()['is:result'], pAdress::session()['searchQuery']))
 			$searchBox->setValue(pAdress::session()['searchQuery']);
 
-		p::Out($searchBox);
+		pMainTemplate::throwOutsidePage($searchBox);
 
 		// Starting with the wrapper
 		p::Out("<div class='pEntry ".(($this->_error != '' OR $this->_error != null) ? 'hasErrors' : '')."'><div class='home-margin'>");

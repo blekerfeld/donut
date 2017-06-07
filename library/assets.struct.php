@@ -27,6 +27,7 @@ return array(
 	'css' => array(
 		'main.css',
 		'mobile.css',
+		'header.css',
 		'markdown.css',
 		'thread.css',
 		'jquery.cardtabs.css',

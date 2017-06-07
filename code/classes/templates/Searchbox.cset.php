@@ -37,10 +37,13 @@ class pSearchBox extends pTemplatePiece{
 			<br id="cl" /></div></div>
 			</div>
 			</div>
-			<div class="hSearchResults">
+			';
+
+		// To have this in the page then
+		p::Out('<div class="hSearchResults">
 				<div class="searchLoad"></div>
 								<div class="load-hide hide" style="text-align: center">'.new pIcon('fa-spinner fa-spin', 32).'</div>
-			</div>';
+			</div>');
 
 			$hashKey = spl_object_hash($this);
 
@@ -77,14 +80,37 @@ class pSearchBox extends pTemplatePiece{
 		$output .= "
 
 
+		$('.word-search').keyup(function(e){
+			if($(this).val() == ''){
+				loadhome();
+				";
+
+				if((isset(pAdress::arg()['query'], pAdress::arg()['dictionary'])))
+
+				$output .= "$('.pEntry').load('".p::Url('?home/ajax/nosearch')."', {}, function(){
+					window.history.pushState('string', '', '".p::Url("?home")."');
+					$('.header.dictionary').addClass('home');	
+				});
+
+				$('.pEntry').slideDown();
+      			$('.searchLoad').slideUp();
+
+				";
+
+				$output .= "
+			}
+		}	);
+
+
+
 		function callBack(){
 			  if($('.word-search').val() == ''){
+			  	loadhome();
 		    	window.history.pushState('string', '', '".p::Url("?".pAdress::queryString())."');
 		    	$('.load-hide').hide();
 		    	$('.page').removeClass('min');
 				$('.searchLoad').slideUp();
 				$('.searchLoad').html('');
-				loadhome();
 				$('.pEntry').slideDown();
 				";
 
@@ -106,25 +132,17 @@ class pSearchBox extends pTemplatePiece{
 		    callback: function (value) {
 		    	callBack();
 		    },
-		    wait: 100,
+		    wait: 300,
 		    highlight: true,
 			allowSubmit: true,
 		    captureLength: 1	
 		}
 
 		$('.word-search').typeWatch( options );
-		$('.word-search').typeWatch( options2 );
-
-		$('.word-search').keyup(function(e){
-			if(e.keyCode == 8){
-				callBack();
-			}
-			if(e.keyCode == 46){
-				callBack();
-			}
-		}	);
 
 		function loadhome(){
+			
+			$('.word-search').blur().focus();
 			";
 
 			if((isset(pAdress::arg()['query'], pAdress::arg()['dictionary'])))

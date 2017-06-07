@@ -32,10 +32,15 @@ class pMenuTemplate extends pTemplate{
 	protected function checkSubItemPermission($items){
 		$output = false;
 		foreach ($items as $key => $item) {
-			if(isset($item['permission']) AND pUser::checkPermission($item['permission']))
-				$output = true;
+			if(isset($item['permission']))
+				if(pUser::checkPermission($item['permission']))
+					$output = true;
+				else
+					$output = false;
 			elseif(pUser::checkPermission($this->_permission))
 				$output = true;
+			else
+				$output = false;
 		}
 		return $output;
 	}
