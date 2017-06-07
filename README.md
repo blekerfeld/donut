@@ -3,7 +3,7 @@
 
 Donut is a dictionary and grammar toolkit that makes it easy to create and mantain an online dictionary and grammar for any language. It has purposes within descriptive linguistics and language construction.
 
-Please note that Donut is under heavy development, so its structure might change drastically. If you are eager to try out some of the features already, installation goes as follows.
+Please note that Donut is under heavy development, so its structure might change drastically. If you are eager to try out some of the features already, installation goes as follows. The example database is filled with example content of the Dutch language.
 
 Donut is licensed under MIT.
 
@@ -22,6 +22,8 @@ Donut is licensed under MIT.
 **Note**: for now `db.sql` is filled with Dutch example content.
 
 Please note that donut still lacks a lot of features. At this moment you should only install donut if you want to take a look at its progress.
+
+If your host does not allow for .htacces rewriting of urls, simply go to `config.php` and change `define('CONFIG_REWRITE', true);` to `define('CONFIG_REWRITE', false);`.
 
 #### Test account
 **Username**: donut
