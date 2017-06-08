@@ -60,6 +60,10 @@ class pMagicField{
 				
 				p::Out("<select name='".$this->name."'' class='field_".$this->name." ".$this->_field->class."'>".$optional.$this->_field->selectionValues->render()."</select></span>");
 				break;
+
+			case 'markdown':
+				p::Out("<textarea name='".$this->name."'' class='minEditor elastic allowtabs field_".$this->name." ".$this->_field->class."' ></textarea>");
+				break;
 			
 			default:
 				p::Out("<input name='".$this->_field->name."' class='btInput nWord small normal-font field_".$this->name." ".$this->_class."' value='".$this->_value."' />");
@@ -210,7 +214,7 @@ class pMagicActionForm{
 		}
 	}
 
-	public function ajax(){
+	public function ajax($showBack = true){
 
 		// Checking if we have any empty required fields.
 		$empty_error = 0;
@@ -241,7 +245,7 @@ class pMagicActionForm{
 					$this->_handler->dataModel->insert();
 				}
 
-				p::Out(pMainTemplate::NoticeBox('fa-check fa-12', $this->_strings[5].". <a href='".p::Url("?".$this->_app."/".$this->_section. (isset($_REQUEST['position']) ? "/offset/".$_REQUEST['position'] : ""))."'>".$this->_strings[6]."</a>", 'succes-notice ajaxMessage'));
+				p::Out(pMainTemplate::NoticeBox('fa-check fa-12', $this->_strings[5].".".($showBack ? " <a href='".p::Url("?".$this->_app."/".$this->_section. (isset($_REQUEST['position']) ? "/offset/".$_REQUEST['position'] : ""))."'>".$this->_strings[6]."</a>" : ''), 'succes-notice ajaxMessage'));
 
 				// If this is not a edit action, we need to reload the form
 				if(!$this->_edit)
@@ -263,7 +267,7 @@ class pMagicActionForm{
 	}
 
 
-	public function form(){
+	public function form($showBack = true){
 		p::Out("<div class='btCard admin'>");
 		p::Out("<div class='btTitle'>".$this->_strings[0]."</div>");
 
@@ -288,7 +292,7 @@ class pMagicActionForm{
 			$hrefBack = p::Url("?".$this->_app."/".$this->_section.(isset($_REQUEST['position']) ? "/offset/".$_REQUEST['position'] : ""));
 
 		p::Out("<div class='btButtonBar'>
-			<a class='btAction wikiEdit' href='".$hrefBack."'><i class='fa fa-12 fa-arrow-left' ></i> ".BACK."</a>
+			".($showBack ? "<a class='btAction wikiEdit' href='".$hrefBack."'><i class='fa fa-12 fa-arrow-left' ></i> ".BACK."</a>" : "")."
 			<a class='btAction green submit-form not-smooth'><i class='fa fa-12 fa-check-circle'></i> ".$this->_strings[1]."</a><br id='cl'/></div>");
 		p::Out("</div>");
 		$loadValues = array();
@@ -301,7 +305,7 @@ class pMagicActionForm{
 		}
 
 		p::Out("<script type='text/javascript'>
-			".(!(isset($this->_handler->_structure[$this->_section]['disable_enter']) AND $this->_handler->_structure[$this->_section]['disable_enter'] != true) ? "$(window).keydown(function(e) {
+			".(!(isset($this->_handler->_structure[$this->_section]['disable_enter']) AND $this->_handler->_structure[$this->_section]['disable_enter'] != false) ? "$(window).keydown(function(e) {
 			    		switch (e.keyCode) {
 			       		 case 13:
 			       			 $('.submit-form').click();

@@ -72,7 +72,7 @@ class pLemmaSheetTemplate extends pTemplate{
 		p::Out(pMainTemplate::NoticeBox('fa-info-circle fa-12', "The input format is <span class='imitate-tag'>translation</span> or <span class='imitate-tag'>translation>specification</span>", 'notice-subtle')."<br />");
 	
 		// Languages
-		$languages = pLanguage::allActive();
+		$languages = pLanguage::allActive(-1);
 		$sendLanguages = array();
 		foreach($languages as $language){
 			$sendLanguages[] = "'".$language->read('id')."': $('.translations-language-".$language->read('id')."').val()";
@@ -226,6 +226,10 @@ class pLemmaSheetTemplate extends pTemplate{
 			'placeholder': '➥ Add homophones',
 			'width': '100%',
 		});";
+	}
+
+
+	public function translationForm(){
 	}
 
 	public function renderNew(){

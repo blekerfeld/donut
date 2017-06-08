@@ -40,6 +40,7 @@ return array(
 			'type' => 'pLemmasheetHandler',
 			'template' => 'pLemmasheetTemplate',
 			'table' => 'translations',
+			'disable_enter' => true,
 			'icon' => 'fa-font',
 			'surface' => "Inflection",
 			'condition' => false,

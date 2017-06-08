@@ -229,8 +229,9 @@ return array(
 			'disable_pagination' => false,
 			'table' => 'translations',
 			'datafields' => array(
-				new pDataField('translation', DA_TRANSLATION, '67%', 'input', true, true, true),
-				new pDataField('language_id', DA_LANG_1, '10%', 'select', true, true, true, 'small-caps', false, new pSelector('languages', null, 'name', true, 'languages')),
+				new pDataField('translation', DA_TRANSLATION, '20%', 'input', true, true, true),
+				new pDataField('language_id', DA_LANG_1, '5%', 'select', true, true, true, 'small-caps', false, new pSelector('languages', null, 'name', true, 'languages')),
+				new pDataField('description', TRANSLATION_DESC, '40%', 'markdown', true, true, false)
 			),
 			'actions_item' => array(
 				'edit' => $action_edit,
