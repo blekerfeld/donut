@@ -33,10 +33,10 @@ class pLanguage{
 	}
 
 	// Makes it possible to do pLanguage::dictionarySelector($class);
-	public static function allActive(){
+	public static function allActive($notIs = 0){
 
 		$data = (new pDataModel('languages'));
-		$data->setCondition(" WHERE activated = 1 AND id <> 0");
+		$data->setCondition(" WHERE activated = 1 AND id <> ".$notIs);
 		$array = array();
 		foreach($data->getObjects()->fetchAll() as $lang){
 			$array[] = new self($lang['id']);

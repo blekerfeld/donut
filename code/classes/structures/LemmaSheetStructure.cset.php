@@ -49,13 +49,18 @@ class pLemmasheetStructure extends pStructure{
 		if(isset(pAdress::arg()['offset']))
 			$this->_parser->setOffset(pAdress::arg()['offset']);
 
-		if(!isset(pAdress::arg()['ajax']) && (isset(pAdress::arg()['action']) && pAdress::arg()['action'] == 'edit'))
+		if(!isset(pAdress::arg()['ajax']) && (isset(pAdress::arg()['action']) && pAdress::arg()['action'] == 'edit')){
+			if(isset(pAdress::arg()['section']))
+				$section = pAdress::arg()['section'];
+			else
+				$section = 'lemma';
 			p::Out("<div class='home-margin pEntry'><div class='card-tabs-bar titles'>
-					<a class='ssignore float-right' href='".p::Url('?editor/'.(isset(pAdress::arg()['section']) ? pAdress::arg()['section'] : 'lemma').'/new')."'>".LEMMA_NEW."</a>
-					<a class='ssignore' href='".p::Url('?entry/'.pAdress::arg()['id'].(isset(pAdress::arg()['is:result']) ? '/is:result' : ''))."'>".LEMMA_VIEW_SHORT."</a>
+					".($section == 'lemma' ? "<a class='ssignore float-right' href='".p::Url('?editor/'.(isset(pAdress::arg()['section']) ? pAdress::arg()['section'] : 'lemma').'/new')."'>".LEMMA_NEW."</a>" : '')."
+					<a class='ssignore' href='".p::Url('?entry/'.(isset(pAdress::arg()['section']) ? pAdress::arg()['section'].'/' : '').pAdress::arg()['id'].(isset(pAdress::arg()['is:result']) ? '/is:result' : ''))."'>".LEMMA_VIEW_SHORT."</a>
 					<a class='active ssignore' href='javascript:void();'>".LEMMA_EDIT_SHORT."</a>
-					<a class='ssignore' href='".p::Url('?entry/'.pAdress::arg()['id'])."/discuss".(isset(pAdress::arg()['is:result']) ? '/is:result' : '')."'>".LEMMA_DISCUSS_SHORT."</a>
+					<a class='ssignore' href='".p::Url('?entry/'.(isset(pAdress::arg()['section']) ? pAdress::arg()['section'].'/' : '').pAdress::arg()['id'])."/discuss".(isset(pAdress::arg()['is:result']) ? '/is:result' : '')."'>".LEMMA_DISCUSS_SHORT."</a>
 				</div>");
+		}
 		elseif(!isset(pAdress::arg()['ajax']))
 			p::Out("<div class='home-margin pEntry'>");
 

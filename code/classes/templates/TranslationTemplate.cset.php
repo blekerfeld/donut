@@ -21,7 +21,7 @@ class pTranslationTemplate extends pEntryTemplate{
 		if($backhref != null)
 			$back = "<a class='back-mini' href='".$backhref."'>".(new pIcon('fa-arrow-left', 12))."</a>";	
 
-		$realTitle = p::Markdown("# ".$back." <strong class='pWord'><span class='native'><a>".$this->_data['translation']."</span></strong>", true);
+		$realTitle = p::Markdown("# ".$back." <strong class='pWord'><span class='native'><a>".$this->_data['translation']."</a></span></strong>", true);
 
 		$titleSection = new pEntrySection("", '', null, false, true);
 

@@ -252,6 +252,7 @@ div.outerwrap {
   min-height: 550px;
   border-bottom:solid 1px #e7e7e7;
   background: white;
+  box-shadow: 0px 2px 5px 0px rgba(0,0,0,0.1)!important;
 }
 
 .ulWrap {
@@ -2253,14 +2254,21 @@ table.inflections tr.title td{
     margin-right: 3px;
 }
 
-textarea.gtEditor{
+textarea.gtEditor, textarea.minEditor{
   width: 100%;
   border: 1px solid #f4f4f4;
   padding: 20px;
   font-size: 15px;
   font-family: Open Sans;
   border-radius: 5px;
-min-height: 350px;
+  min-height: 350px;
+}
+
+textarea.minEditor{
+  min-height: 100px;
+  border: 1px solid #D1D1D1;
+  border-radius: 0px;
+  padding: 10px;
 }
 
 img.userAvatar{

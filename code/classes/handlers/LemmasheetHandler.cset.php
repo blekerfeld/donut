@@ -22,17 +22,40 @@ class pLemmasheetHandler extends pHandler{
 
 
 		if($this->_activeSection['table'] == 'translations'){
-			$this->dataModel = new pDataModel('translations');
+			$dfs = new pSet;
+			$dfs->add(new pDataField('translation', DA_TRANSLATION, '67%', 'input', true, true, true));
+			$dfs->add(new pDataField('language_id', DA_LANG_1, '10%', 'select', true, true, true, 'small-caps', false, new pSelector('languages', null, 'name', true, 'languages')));
+			$dfs->add(new pDataField('description', TRANSLATION_DESC, '40%', 'markdown', true, true, false));
+			$this->dataModel = new pDataModel('translations', $dfs);
 		}
 		else
 			$this->dataModel = new pLemmasheetDataModel($this->_activeSection['table'], (isset(pAdress::arg()['id']) ? pAdress::arg()['id'] : null));
 	}
 
-	// This would render the rule list table :)
 	public function render(){
-		$this->_template = new pLemmasheetTemplate($this->_data, $this->_structure[$this->_section]);
-	}	
-	
+
+	}
+
+	// This is only the default behaviour of the catchAction, other objects might handle this differently!
+	public function catchAction($action, $template){
+		if($this->_section == 'translation'){
+
+			$this->_activeSection['save_strings'][0] = (new pTranslationTemplate($this->_data[0]))->title((new pDataField(null, null, null, 'flag'))->parse((new pLanguage($this->_data[0]['language_id']))->read('flag')));
+
+			$action = new pMagicActionForm(pAdress::arg()['action'], $this->_activeSection['table'], $this->dataModel->_fields, $this->_activeSection['save_strings'], $this->_app, $this->_section, $this); 
+
+			$action->compile();
+
+			if(isset(pAdress::arg()['ajax']))
+				return $action->ajax(false);
+
+			else
+				return $action->form(false);
+		}
+
+		parent::catchAction($action, $template);
+
+	}
 
 	public function ajaxGenerateIPA(){
 		$twolc = new pTwolc((new pTwolcRules('phonology_ipa_generation'))->toArray());

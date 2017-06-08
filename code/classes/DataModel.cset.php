@@ -134,7 +134,7 @@ class pDataModel {
 		$updateString = array();
 
 		$key = 0;
-		
+
 		foreach ($this->_fields->get() as $field) {
 			if($field->name != 'id')
 				$updateString[] = $field->name."= ".p::Quote($data[$key]);
