@@ -1,0 +1,54 @@
+<?php
+	// 	Donut 				🍩 
+	//	Dictionary Toolkit
+	// 		Version a.1
+	//		Written by Thomas de Roo
+	//		Licensed under MIT
+
+	//	++	File: rulesheet.struct.php
+	// The structure of the rule file system
+
+
+$saveStrings = array(null, SAVE, SAVING, SAVED_EMPTY, SAVED_ERROR, SAVED, SAVE_LINKBACK);
+
+return array(
+		'MAGIC_META' => array(
+			'title' => DA_TITLE,
+			'icon' => 'fa-book',
+			'default_permission' => -3,
+		),
+		'list' => array(
+			'section_key' => 'list',
+			'icon' => 'fa-book',
+			'type' => 'pSetHandler',
+			'template' => 'pTemplate',
+			'table' => 'rulesets',
+			'surface' => "Rules",
+			'condition' => false,
+			'disable_enter' => true,
+			'items_per_page' => 20,
+			'disable_pagination' => false,
+			'editor' => 'rulesheet',
+			'hitOn' => 'ruleset',
+			'sets' => array(
+				'inflection' => array('morphology', 'inflection', 'cards-variant'),
+				'context' => array('phonology_contexts', 'context', 'altimeter'),
+				'ipa' => array('phonology_ipa_generation', 'ipa', 'voice'),
+			),
+			'sets_strings' => array(
+				'inflection' => 'Inflective Rule',
+				'context' => 'Phonological Context Rule',
+				'ipa' => 'IPA Generation Rule',
+			),
+			'sets_fields' => 'id, rule, name, ruleset',
+			'actions_item' => array(
+				'edit' => array('edit', 'edit', 'fa-pencil', 'lemma-code discussion float-right', null, null, 'words', 'dictionary-admin', null, -3),
+			),
+			'actions_bar' => array(
+				'edit' => new pAction('edit', 'edit', 'fa-pencil', 'lemma-code discussion float-right', null, null, 'words', 'dictionary-admin', null, -3),
+				'remove' => new pAction('remove', 'remove', 'fa-times', 'lemma-code discussion float-right', null, null, 'words', 'dictionary-admin', null, -3),
+			),
+			'save_strings' => $saveStrings,
+		),
+			
+	);

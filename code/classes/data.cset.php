@@ -145,6 +145,9 @@ class pDataField{
 			$output = $this->selectionValues->renderText();
 		}
 
+		elseif($this->type == 'markdown')
+			$output = "<span class='".$this->class."'>".p::Markdown($value, false)."</span>";
+
 		else
 			$output = "<span class='".$this->class."'>".$value."</span>";
 

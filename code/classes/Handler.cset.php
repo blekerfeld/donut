@@ -57,8 +57,10 @@ class pHandler{
 	}
 
 	// This is only the default behaviour of the catchAction, other objects might handle this differently!
-	public function catchAction($action, $template){
-		$this->_template = new $template($this->dataModel, $this->_structure[$this->_section]);
+	public function catchAction($action, $template, $arg = null){
+
+
+		$this->_template = new $template(($arg == null ? $this->dataModel : $arg), $this->_structure[$this->_section]);
 		// The different objects might handle this differently, default is looks for methods
 		if(isset(pAdress::arg()['ajax'])){
 			$method = "ajax".ucfirst($action);

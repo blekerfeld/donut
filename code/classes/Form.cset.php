@@ -35,12 +35,14 @@ class pMagicField{
 		if($this->_field->disableOnNull AND $this->_is_null)
 			return false;
 
-		p::Out("<div class='btSource'><span class='btLanguage'>".$this->_field->surface."</span>");
+		if($this->_field->type != 'hidden')
+			p::Out("<div class='btSource'><span class='btLanguage'>".$this->_field->surface."</span>");
 		// If required show an asterisk
-		if($this->_field->required == true)
+		if($this->_field->required == true AND $this->_field->type != 'hidden')
 			p::Out("<span class='xsmall' style='color: darkred;opacity: .3;'>*</span>");
-		p::Out("<br />");
-		p::Out("<span class='btNative'>");
+		if($this->_field->type != 'hidden')
+			p::Out("<br /><span class='btNative'>");
+
 		switch ($this->_field->type) {
 			case 'textarea':
 				p::Out("<textarea name='".$this->_field->name."' class=field_'".$this->_field->name." ".$this->_field->class."'>".$this->_field->_value."</textarea>");
@@ -48,6 +50,28 @@ class pMagicField{
 
 			case 'boolean':
 				p::Out("<select name='".$this->name."' class='field_".$this->name." ".$this->_field->class."'><option value='1' ".($this->value() == 1 ? 'selected' : '').">".DL_ENABLED."</option><option value='0' ".($this->value() == 0 ? 'selected' : '').">".DL_DISABLED."</option></select></span>");
+				break;
+
+			case 'hidden':
+				p::Out("<input type='hidden' name='".$this->_field->name."' class='btInput nWord small normal-font field_".$this->name." ".$this->_class."' value='".(($this->_value != NULL OR $this->_value != '') ? $this->_value : $this->_field->selectionValues)."' />");
+				break; 
+
+			case 'prefix':
+
+				p::Out("<input name='".$this->_field->name."' class='btInput nWord small normal-font field_".$this->name." ".$this->_class."' value='".$this->_value."' />
+					<script type='text/javascript'>
+					if($('.field_".$this->name."').val() == ''){
+						$('.field_".$this->name."').val('".$this->_field->selectionValues."');
+					}
+					$('.field_".$this->name."').keydown(function(e) {
+    					var oldvalue=$(this).val();
+    					var field=this;
+    					setTimeout(function () {
+        					if(field.value.indexOf('".$this->_field->selectionValues."') !== 0) {
+            					$(field).val(oldvalue);
+        					} 
+    					}, 1);
+					});</script>");
 				break;
 
 			case 'select':
@@ -58,7 +82,7 @@ class pMagicField{
 				if($this->_field->required == false)
 					$optional = "<option value='' ".($this->value() == '' ? 'selected' : '')."><em>(".DA_OPTIONAL.")</em></option>";
 				
-				p::Out("<select name='".$this->name."'' class='field_".$this->name." ".$this->_field->class."'>".$optional.$this->_field->selectionValues->render()."</select></span>");
+				p::Out("<select name='".$this->name."'' class='admin_select field_".$this->name." ".$this->_field->class."'>".$optional.$this->_field->selectionValues->render()."</select></span>");
 				break;
 
 			case 'markdown':
@@ -69,7 +93,8 @@ class pMagicField{
 				p::Out("<input name='".$this->_field->name."' class='btInput nWord small normal-font field_".$this->name." ".$this->_class."' value='".$this->_value."' />");
 				break;
 		}
-		p::Out("</span></div>");
+		if($this->_field->type != 'hidden')
+			p::Out("</span></div>");
 	}
 
 }
@@ -193,7 +218,6 @@ class pMagicActionForm{
 		$this->_table = $table;
 		$this->_app = $app;
 		$this->_handler = $object;
-		$this->_action = $this->_handler->getAction($name);
 		$this->_edit = ($this->_name == 'edit');
 		$this->_section = $section;
 		$this->_strings = $strings;
@@ -219,7 +243,7 @@ class pMagicActionForm{
 		// Checking if we have any empty required fields.
 		$empty_error = 0;
 		foreach($this->_fields->get() as $field)
-			if($field->required AND $_REQUEST['admin_form_'.$field->name] == '')
+			if($field->required AND pAdress::post()['admin_form_'.$field->name] == '')
 				$empty_error++;
 
 		if($empty_error != 0){
@@ -229,8 +253,9 @@ class pMagicActionForm{
 
 			// Preparing the values
 			$values = array();
+
 			foreach($this->_fields->get() as $field)
-				$values[] = $_REQUEST['admin_form_'.$field->name];
+				$values[] = pAdress::post()['admin_form_'.$field->name];
 
 			try {
 
@@ -267,8 +292,8 @@ class pMagicActionForm{
 	}
 
 
-	public function form($showBack = true){
-		p::Out("<div class='btCard admin'>");
+	public function form($showBack = true, $forceID = null, $forceBtCard = true){
+		p::Out("<div class='".($forceBtCard ? 'btCard' : 'rulesheet-margin')." admin'>");
 		p::Out("<div class='btTitle'>".$this->_strings[0]."</div>");
 
 		p::Out(pMainTemplate::NoticeBox('fa-spinner fa-spin fa-12', $this->_strings[2], 'notice saving hide'));
@@ -293,7 +318,7 @@ class pMagicActionForm{
 
 		p::Out("<div class='btButtonBar'>
 			".($showBack ? "<a class='btAction wikiEdit' href='".$hrefBack."'><i class='fa fa-12 fa-arrow-left' ></i> ".BACK."</a>" : "")."
-			<a class='btAction green submit-form not-smooth'><i class='fa fa-12 fa-check-circle'></i> ".$this->_strings[1]."</a><br id='cl'/></div>");
+			<a class='btAction green ".($forceBtCard ? '' : 'little ')."submit-form ssignore no-float'><i class='fa fa-12 fa-check-circle'></i> ".$this->_strings[1]."</a><br id='cl'/></div>");
 		p::Out("</div>");
 		$loadValues = array();
 
@@ -305,17 +330,10 @@ class pMagicActionForm{
 		}
 
 		p::Out("<script type='text/javascript'>
-			".(!(isset($this->_handler->_structure[$this->_section]['disable_enter']) AND $this->_handler->_structure[$this->_section]['disable_enter'] != false) ? "$(window).keydown(function(e) {
-			    		switch (e.keyCode) {
-			       		 case 13:
-			       			 $('.submit-form').click();
-			   			 }
-			   		 return; 
-					});" : '')."
-				$('.btCard select').select2();
+				$('#adminForm select').select2();
 				$('.submit-form').click(function(){
 					$('.saving').slideDown();
-					$('.ajaxSave').load('".p::Url("?".$this->_app."/".$this->_section."/".$this->_name.(($this->_edit) ? '/'.$this->_data[0]['id'] : '')."/ajax")."', {
+					$('.ajaxSave').load('".p::Url("?".$this->_app."/".$this->_section."/".$this->_name.(($this->_edit) ? '/'.$this->_data[0]['id'] : '').(($forceID != null) ? '/'.$forceID : '')."/ajax")."', {
 						".implode(", ", $loadValues)."
 					});
 				});
@@ -340,21 +358,21 @@ class pMagicActionForm{
 
 		$empty_error = 0;
 
-		if($_REQUEST['admin_form_'.$this->_guestObject->structure[$this->_section]['incoming_links'][$this->_linked]['parent']] == null){
+		if(pAdress::post()['admin_form_'.$this->_guestObject->structure[$this->_section]['incoming_links'][$this->_linked]['parent']] == null){
 			$empty_error++;
 		}
 
 		if(isset($this->_extra_fields))
 			foreach ($this->_extra_fields as $field)
 				if($field->showInForm && $field->required)
-					if(isset($_REQUEST['admin_form_'.$field->name])AND empty($_REQUEST['admin_form_'.$field->name]))
+					if(isset(pAdress::post()['admin_form_'.$field->name])AND empty(pAdress::post()['admin_form_'.$field->name]))
 						$empty_error++;
 
 
 		if($empty_error == 0){
 
 			// We have to check if the relation already exists
-			if($this->_handler->dataModel->countAll($this->_guestObject->structure[$this->_section]['incoming_links'][$this->_linked]['child'] . " = '" . $this->_handler->_matchOnValue . "' AND " . $this->_guestObject->structure[$this->_section]['incoming_links'][$this->_linked]['parent'] . " = '" . $_REQUEST['admin_form_'.$this->_guestObject->structure[$this->_section]['incoming_links'][$this->_linked]['parent']] . "'")){
+			if($this->_handler->dataModel->countAll($this->_guestObject->structure[$this->_section]['incoming_links'][$this->_linked]['child'] . " = '" . $this->_handler->_matchOnValue . "' AND " . $this->_guestObject->structure[$this->_section]['incoming_links'][$this->_linked]['parent'] . " = '" . pAdress::post()['admin_form_'.$this->_guestObject->structure[$this->_section]['incoming_links'][$this->_linked]['parent']] . "'")){
 
 				p::Out(pMainTemplate::NoticeBox('fa-info-circle fa-12', DA_TABLE_RELATION_EXIST.". <a href='".p::Url("?".$this->_app."&".$this->_section."&link-table&id=".$this->_linkObject->_data[0]['id']."&linked=".$this->_linked)."'>".$this->_strings[6]."</a>", 'notice ajaxMessage'));
 
@@ -367,7 +385,7 @@ class pMagicActionForm{
 					if($field->name == $this->_guestObject->structure[$this->_section]['incoming_links'][$this->_linked]['child'])
 						$values[] = $this->_handler->_matchOnValue;
 					else
-						$values[] = $_REQUEST['admin_form_'.$field->name];
+						$values[] = pAdress::post()['admin_form_'.$field->name];
 
 				$this->_handler->dataModel->prepareForInsert($values);
 				$this->_handler->dataModel->insert();

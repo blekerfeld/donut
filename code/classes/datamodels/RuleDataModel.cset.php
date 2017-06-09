@@ -19,6 +19,7 @@ class pRuleDataModel extends pDataModel{
 		$fields = new pSet;
 		$fields->add(new pDataField('name'));
 		$fields->add(new pDataField('rule'));
+		$fields->add(new pDataField('ruleset'));
 		$this->setFields($fields);
 		if($id != 0){
 			$this->_RuleID = $id;
@@ -37,11 +38,11 @@ class pRuleDataModel extends pDataModel{
 	}
 
 
-	public function newRule($name, $rule, $links = null){
+	public function newRule($name, $rule, $ruleset = 0, $links = null){
 		if($name == '' OR $rule == '')
 			return false;
 		// First insert the rule itself
-		$this->prepareForInsert(array($name, $rule));
+		$this->prepareForInsert(array($name, $rule, $ruleset));
 		$id = $this->insert();
 		// We have to create the links
 		if(is_array($links)){
@@ -58,11 +59,11 @@ class pRuleDataModel extends pDataModel{
 		return $id;
 	}
 
-	public function updateRule($name, $rule, $links = null){
+	public function updateRule($name, $rule, $ruleset = 0, $links = null){
 		if($name == '' OR $rule == '')
 			return false;
 		// First change the basic info
-		$this->prepareForUpdate(array($name, $rule));
+		$this->prepareForUpdate(array($name, $rule, $ruleset));
 		$this->update();
 		// If this is a rule with links, we need to add any new links, remove any others
 		if(is_array($links)){

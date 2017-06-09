@@ -18,7 +18,7 @@ class pTerminal{
 	public function initialState(){
 
 		p::Out("<div class='debugConsole'>");
-		p::Out((new pIcon('fa-terminal', 12))." donut ɑ.1 - terminal ~".pUser::read('username').":".$_SERVER['REMOTE_ADDR']." <br />")	;
+		p::Out((new pIcon('fa-rocket', 12))." donut ɑ.1 - terminal ~".pUser::read('username').":".$_SERVER['REMOTE_ADDR']." <br />")	;
 		p::Out("> <input class='debug init' /><div class='debugLoad-init'></div>");
 		p::Out("</div>");
 		p::Out("<script type='text/javascript'>
@@ -36,6 +36,11 @@ class pTerminal{
 				   		 return; 
 						});
 			</script>");
+	}
+
+	public function ver($arg, $line){
+		echo "<strong>Donut version 0.1 - public alpha.</strong><br />";
+		echo $this->nextLine($line);
 	}
 
 	public function nextLine($line, $prompt = ''){

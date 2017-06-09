@@ -27,7 +27,7 @@ class pEntryHandler extends pHandler{
 
 
 	// This is the internal dispatcher for action of an entry
-	public function catchAction($action, $template = ''){
+	public function catchAction($action, $template = '', $arg = null){
 
 		// reset translations
 		if($action == 'resetTranslations'){

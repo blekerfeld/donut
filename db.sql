@@ -297,21 +297,6 @@ CREATE TABLE `lemmatization` (
   CONSTRAINT `lemmatization_ibfk_1` FOREIGN KEY (`lemma_id`) REFERENCES `words` (`id`) ON DELETE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
-INSERT INTO `lemmatization` (`id`, `inflected_form`, `hash`, `lemma_id`) VALUES
-(65,  'katten', '3_1_1',  6),
-(66,  'de kat', '1_2_1',  6),
-(67,  'de katten',  '3_2_1',  6),
-(68,  'een katje',  '1_1_23', 6),
-(69,  'katjes', '3_1_23', 6),
-(70,  'het katje',  '1_2_23', 6),
-(71,  'de katjes',  '3_2_23', 6),
-(72,  'bootten',  '3_1_1',  9),
-(73,  'de boot',  '1_2_1',  9),
-(74,  'de bootten', '3_2_1',  9),
-(75,  'een bootje', '1_1_23', 9),
-(76,  'bootjes',  '3_1_23', 9),
-(77,  'het bootje', '1_2_23', 9),
-(78,  'de bootjes', '3_2_23', 9);
 
 DROP TABLE IF EXISTS `modes`;
 CREATE TABLE `modes` (
@@ -351,6 +336,7 @@ CREATE TABLE `morphology` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `name` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
   `rule` tinytext COLLATE utf8mb4_unicode_ci NOT NULL,
+  `ruleset` int(11) NOT NULL,
   `is_irregular` tinyint(4) NOT NULL,
   `is_stem` tinyint(4) NOT NULL,
   `irregular_form` tinytext CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL,
@@ -482,6 +468,7 @@ CREATE TABLE `phonology_contexts` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `name` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
   `rule` tinytext COLLATE utf8mb4_unicode_ci NOT NULL,
+  `ruleset` int(11) NOT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
@@ -491,6 +478,7 @@ CREATE TABLE `phonology_ipa_generation` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `name` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
   `rule` tinytext COLLATE utf8mb4_unicode_ci NOT NULL,
+  `ruleset` int(11) NOT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
@@ -507,6 +495,22 @@ CREATE TABLE `row_native` (
   CONSTRAINT `row_native_ibfk_2` FOREIGN KEY (`word_id`) REFERENCES `words` (`id`) ON DELETE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
+
+DROP TABLE IF EXISTS `rulesets`;
+CREATE TABLE `rulesets` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `name` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `parent` int(11) NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+INSERT INTO `rulesets` (`id`, `name`, `parent`) VALUES
+(0, '/rules', -1),
+(3, '/rules/nouns', 0),
+(4, '/rules/nouns/dimunitives', 3),
+(5, '/rules/ipa', 0),
+(13,  '/rules/verbs', 0),
+(14,  '/rules/verbs/regular', 13);
 
 DROP TABLE IF EXISTS `settings_boolean`;
 CREATE TABLE `settings_boolean` (
@@ -773,4 +777,4 @@ CREATE TABLE `words` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 
--- 2017-06-07 13:47:25
+-- 2017-06-09 10:57:53

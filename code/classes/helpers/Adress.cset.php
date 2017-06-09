@@ -26,6 +26,10 @@ class pAdress{
 		return self::$post;
 	}
 
+	public static function changePost($key, $value){
+		return self::$post[$key] = $value;
+	}
+
 	public static function session($set = null, $value = null){
 		if($value != null){
 			$_SESSION[$set] = $value;

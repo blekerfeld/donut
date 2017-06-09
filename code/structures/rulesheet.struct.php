@@ -17,8 +17,8 @@ return array(
 			'icon' => 'fa-book',
 			'default_permission' => -3,
 		),
-		'inflections' => array(
-			'section_key' => 'inflections',
+		'inflection' => array(
+			'section_key' => 'inflection',
 			'type' => 'pRulesheetHandler',
 			'template' => 'pRulesheetTemplate',
 			'table' => 'morphology',
@@ -35,11 +35,29 @@ return array(
 			),
 			'save_strings' => $saveStrings,
 		),
-		'phonology' => array(
-			'section_key' => 'phonology',
+		'context' => array(
+			'section_key' => 'context',
 			'type' => 'pRulesheetHandler',
 			'template' => 'pRulesheetTemplate',
 			'table' => 'phonology_contexts',
+			'icon' => 'fa-font',
+			'surface' => "Inflection",
+			'condition' => false,
+			'items_per_page' => 20,
+			'disable_pagination' => false,
+			'actions_item' => array(
+			),
+			'actions_bar' => array(
+				'edit' => new pAction('edit', 'edit', 'fa-pencil', 'lemma-code discussion float-right', null, null, 'words', 'dictionary-admin', null, -3),
+				'remove' => new pAction('remove', 'remove', 'fa-times', 'lemma-code discussion float-right', null, null, 'words', 'dictionary-admin', null, -3),
+			),
+			'save_strings' => $saveStrings,
+		),
+		'ipa' => array(
+			'section_key' => 'ipa',
+			'type' => 'pRulesheetHandler',
+			'template' => 'pRulesheetTemplate',
+			'table' => 'phonology_ipa_generation',
 			'icon' => 'fa-font',
 			'surface' => "Inflection",
 			'condition' => false,
