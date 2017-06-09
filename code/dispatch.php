@@ -50,7 +50,7 @@ return array(
 					'rulesheet' => array(
 						'name' => 'Rules',
 						'icon' => 'fa-book',
-						'app' => 'rulesheet',
+						'app' => 'rules',
 						'permission' => -4,
 					),
 					'terminal' => array(
@@ -93,11 +93,10 @@ return array(
 
 	'rulesheet' => array(
 		'page_title' => 'rulesheet',
-		'default_section' => 'inflections',
+		'default_section' => 'inflection',
 		'arguments' => array(
 			0 => 'action',
 			1 => 'id',
-			2 => 'linked',
 		),
 		'menu' => 'dictionary-admin',
 	),
@@ -111,8 +110,18 @@ return array(
 			1 => 'id',
 			2 => 'linked',
 		),
-		'menu' => 'editor',
+		'menu' => 'dictionary-admin',
 		'override_structure_type' => 'pLemmasheetStructure',
+	),
+
+	'rules' => array(
+		'page_title' => 'Rules',
+		'default_section' => 'list',
+		'arguments' => array(
+			0 => 'action',
+			1 => 'id',
+		),
+		'menu' => 'dictionary-admin',
 	),
 
 

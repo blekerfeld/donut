@@ -37,7 +37,7 @@ class pTranslationTemplate extends pEntryTemplate{
 	}
 
 	public function renderDesc($desc){
-		return p::Out(new pEntrySection((new pIcon('fa-info', 12))." ".TRANSLATION_DESC, $desc));
+		return p::Out(new pEntrySection((new pIcon('fa-info', 12))." ".TRANSLATION_DESC, p::Markdown($desc, false)));
 	}
 
 	public function renderLemmas($lemmas){

@@ -99,6 +99,13 @@ div.hSearchResults-inner{
     padding: 20px;
 }
 
+div.hSearchResults-inner.padding-5{
+   padding: 3px;
+   padding-top: 20px;
+   padding-bottom: 20px;
+   clear: both;
+}
+
 
 div.hSearchResult{
 }

@@ -80,7 +80,7 @@ class pMainTemplate extends pTemplate{
 	
 
 	public function render(){
-		if(isset(pAdress::arg()['ajax']))
+		if(isset(pAdress::arg()['ajax']) OR isset(pAdress::arg()['ajaxLoad']))
 			return die(new p);
 		?>
 <!DOCTYPE html>

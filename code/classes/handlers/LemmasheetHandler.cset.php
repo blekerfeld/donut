@@ -37,7 +37,7 @@ class pLemmasheetHandler extends pHandler{
 	}
 
 	// This is only the default behaviour of the catchAction, other objects might handle this differently!
-	public function catchAction($action, $template){
+	public function catchAction($action, $template, $arg = null){
 		if($this->_section == 'translation'){
 
 			$this->_activeSection['save_strings'][0] = (new pTranslationTemplate($this->_data[0]))->title((new pDataField(null, null, null, 'flag'))->parse((new pLanguage($this->_data[0]['language_id']))->read('flag')));
@@ -53,7 +53,7 @@ class pLemmasheetHandler extends pHandler{
 				return $action->form(false);
 		}
 
-		parent::catchAction($action, $template);
+		parent::catchAction($action, $template, $arg);
 
 	}
 
