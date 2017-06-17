@@ -13,21 +13,21 @@
 
 	
 // Global admin panel strings
-define('ADMIN_TITLE', "Settings");
-define('ADMIN_PAGE', "Page: ");
-define('ADMIN_USEDWITH', "Used with");
-define('ADMIN_DASHBOARD', "Settings");
-define('ADMIN_DICTIONARY', "Dictionary");
-define('ADMIN_GRAMMAR', "Grammar");
-define('ADMIN_INFL', "Inflections");
-define('ADMIN_PHOORT', "Phonology/ortography");
-define('ADMIN_SETTINGS', "General Settings");
+p::defineLocale('ADMIN_TITLE', "Settings");
+p::defineLocale('ADMIN_PAGE', "Page: ");
+p::defineLocale('ADMIN_USEDWITH', "Used with");
+p::defineLocale('ADMIN_DASHBOARD', "Settings");
+p::defineLocale('ADMIN_DICTIONARY', "Dictionary");
+p::defineLocale('ADMIN_GRAMMAR', "Grammar");
+p::defineLocale('ADMIN_INFL', "Inflections");
+p::defineLocale('ADMIN_PHOORT', "Phonology/ortography");
+p::defineLocale('ADMIN_SETTINGS', "General Settings");
 
 
 // Elementes
-define('ADMIN_ABBREV', "Abbreviation");
+p::defineLocale('ADMIN_ABBREV', "Abbreviation");
 
 // Inflection tables
-define('ADMIN_MANAGETEMPLATES', "Manage templates");
-define('ADMIN_SHOWINGOFTEMPLATE', "Paradigms using the template %s");
-define('ADMIN_SHOWALL', "(show all)");
+p::defineLocale('ADMIN_MANAGETEMPLATES', "Manage templates");
+p::defineLocale('ADMIN_SHOWINGOFTEMPLATE', "Paradigms using the template %s");
+p::defineLocale('ADMIN_SHOWALL', "(show all)");

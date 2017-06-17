@@ -40,7 +40,7 @@ class pLemmaDataModel extends pDataModel{
 
 		$extra = '';
 
-		if(!pUser::noGuest())
+		if(!pUser::noGuest() OR !pUser::checkPermission(-2))
 			$extra = " (words.hidden = 0) AND ";
 
 
@@ -76,8 +76,6 @@ class pLemmaDataModel extends pDataModel{
  		if($fetch->rowCount() != 0)
 			while($fetched = $fetch->fetchObject()){
 				$lemmaResult = new pLemma($fetched->word_id, 'words');
-				if(!pUser::checkPermission(-2) OR $lemmaResult->read('hidden') == 1)
-					continue;
 				if(isset($fetched->translation)){
 					$lemmaResult->setHitTranslation($fetched->translation);
 				}

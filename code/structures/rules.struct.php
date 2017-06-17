@@ -40,6 +40,11 @@ return array(
 				'context' => 'Phonological Context Rule',
 				'ipa' => 'IPA Generation Rule',
 			),
+			'sets_name' => array(
+				'inflection' => 'name',
+				'context' => 'name',
+				'ipa' => 'name',
+			),
 			'sets_fields' => 'id, rule, name, ruleset',
 			'actions_item' => array(
 				'edit' => array('edit', 'edit', 'fa-pencil', 'lemma-code discussion float-right', null, null, 'words', 'dictionary-admin', null, -3),

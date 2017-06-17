@@ -39,6 +39,7 @@ class pRulesheetHandler extends pHandler{
 			p::Out($inflection->describeRule());
 		}
 
+
 	}
 
 	// This is the ajax handler for testing the rule with an example
@@ -48,6 +49,10 @@ class pRulesheetHandler extends pHandler{
 			$twolc = new pTwolc((new pTwolcRules('phonology_contexts'))->toArray());
 			$twolc->compile();
 			p::Out(@$twolc->feed($inflection->inflect(pAdress::post()['lexform']))->toRulesheet());
+		}
+		if($this->_section == 'context' AND isset(pAdress::post()['rule'])){
+			$twolc = new pTwolc((new pTwolcRules('phonology_contexts'))->toArray());
+			echo @$twolc->feed($explode[1])->toDebug()."<br />";
 		}
 	}
 
