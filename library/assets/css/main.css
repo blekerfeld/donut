@@ -556,6 +556,12 @@ select.pEditorlanguage {
   padding: 6px;
 }
 
+.tooltipster-content .notice, .tooltipster-content .danger-notice, .tooltipster-content .succes-notice, .tooltipster-content .warning-notice, .tooltipster-content .notice-subtle{
+  padding: 2px;
+  margin: 0;
+  font-size: 11px!important;
+} 
+
 .notice{
   color: #00529B;
   background-color: #EAF2F4;
@@ -1768,6 +1774,20 @@ span.btLanguage {
   font-family: Open Sans!important;
 }
 
+.tooltipster-inner{
+  min-width: 180px;
+    z-index: -100;
+}
+
+.tooltipster-content span.btLanguage{
+  font-size: 10px;
+}
+
+.tooltipster-content div.miniForm{
+  padding-bottom: 5px;
+  border-bottom: 1px solid #eee;
+}
+
 div.btCard.admin span.btLanguage {
   color: #333;
 }
@@ -1784,6 +1804,10 @@ input.btInput, textarea.btInput {
   width: 100%;
 }
 
+.tooltipster-content .btInput{
+  padding: 3px!important;
+}
+
 div.btStatus{
   margin-top: 10px;
   margin-right: -120px;
@@ -1793,7 +1817,11 @@ div.btStatus{
 
 
 div.btSource {
-  margin-bottom: 20px;
+  margin-bottom: 5px;
+}
+
+.tooltipster-content div.btSource{
+  margin-bottom: 5px;
 }
 
 div.btSource select{
@@ -1887,11 +1915,19 @@ a.btAction.green {
   padding: 9px;
   font-size: 17px;
   color: snow;
+
+
 }
 
 a.btAction.green.little{
   font-size: 13px;
   padding: 4px;
+}
+
+.tooltipster-content a.btAction.green.little{
+  font-size: 10px;
+  padding: 3px;
+  margin: 0;
 }
 a.btAction.redbt {
   background-color: #E8735E;

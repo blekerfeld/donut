@@ -21,7 +21,7 @@ class pSetHandler extends pHandler{
 		call_user_func_array('parent::__construct', func_get_args());
 		// Override the datamodel
 
-		$this->_dataModel = new pDataModel('rulesets');
+		$this->_dataModel = new pDataModel($this->_activeSection['table']);
 
 		// First load all other levels
 
@@ -35,8 +35,11 @@ class pSetHandler extends pHandler{
 
 		// Getting the 'files' aka items
 		$customQuery = array();
-		foreach($this->_activeSection['sets'] AS $set)
-			$customQuery[] = "SELECT ".$this->_activeSection['sets_fields'].", '".$set[1]."' AS set_type FROM  ".$set[0]." WHERE ".$this->_activeSection['hitOn']." = $id";
+		$count = 0;
+		foreach($this->_activeSection['sets'] AS $set){
+			$customQuery[] = "SELECT * FROM (SELECT ".$this->_activeSection['sets_fields'].", '".$set[1]."' AS set_type FROM  ".$set[0]." WHERE ".$this->_activeSection['hitOn']." = $id ORDER BY ".$set[0].".".$this->_activeSection['sets_name'][$set[1]]." ASC) as query_".$count." ";
+			$count++;
+		}
 
 		$this->_rules = $this->_dataModel->customQuery(implode(' UNION ALL ', $customQuery))->fetchAll();
 
@@ -80,10 +83,14 @@ class pSetHandler extends pHandler{
 	public function catchAction($action, $template, $arg = null){
 
 		// Default behaviour
-		if($action != 'new' AND $action != 'edit')
+		if($action != 'new' AND $action != 'edit' AND $action != 'remove')
 			return parent::catchAction($action, $template, $arg);
 
-
+		if($action == 'remove'){
+			$this->dataModel->customQuery("DELETE FROM ".$this->_activeSection['table']." WHERE id = '".pAdress::arg()['id']."' OR parent = '".pAdress::arg()['id']."';");
+			$this->dataModel->remove(0, 0, pAdress::arg()['id']);
+			goto done;
+		}
 
 		// Generating the path
 		$path = "/rules/";
@@ -96,7 +103,9 @@ class pSetHandler extends pHandler{
 			$path = "/".str_replace(':', '/', $path)."/";
 		}
 
-		p::Out("<span class='float-right'><a class='close back-mini' href='javascript:void(0)' onClick=\"$('.form-new').slideUp()\">".(new pIcon('fa-times', 10))."</a></span>");
+
+		$path = p::Str($path)->replacePrefix("//", '/');
+		$path = p::Str($path)->replaceSuffix("//", '/');
 
 		$this->_activeSection['save_strings'][0] = 'New folder in '.$path;
 
@@ -126,9 +135,12 @@ class pSetHandler extends pHandler{
 				pAdress::changePost('admin_form_name', $this->IDtoPath(pAdress::post()['admin_form_parent']) . '/' . pAdress::post()['admin_form_name']);
 				$this->dataModel->setFields($dfs);
 			}
+
+			// Replacing spaces
+			pAdress::changePost('admin_form_name', str_replace(' ', '_', pAdress::post()['admin_form_name']));
 			
 			$explodeName = explode('/', pAdress::post()['admin_form_name']);
-			if($explodeName[max(array_keys($explodeName))] == ''){
+			if(trim($explodeName[max(array_keys($explodeName))]) == ''){
 				echo pMainTemplate::NoticeBox('fa-warning fa-12', 'Folder name cannot be empty.', 'warning-notice ajaxMessage');
 				echo "<script type='text/javascript'>
 				$('.saving').slideUp(function(){
@@ -145,7 +157,8 @@ class pSetHandler extends pHandler{
 				$this->dataModel->customQuery("UPDATE rulesets
 				SET name = Replace(name, '$oldName', '".pAdress::post()['admin_form_name']."');");
 
-			die(p::Url('?'.$this->_app.'/view/'.str_replace('/', ':', pAdress::post()['admin_form_name']), true));
+			done: 
+			die("<script>window.location = window.location</script>");
 		}
 
 		else
@@ -166,5 +179,6 @@ class pSetHandler extends pHandler{
 		return $this->_template->renderTable();
 
 	}
+
 
 }

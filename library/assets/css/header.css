@@ -101,6 +101,7 @@ div.hSearchResults-inner{
 
 div.hSearchResults-inner.padding-5{
    padding: 3px;
+   margin-top: 10px;
    padding-top: 20px;
    padding-bottom: 20px;
    clear: both;

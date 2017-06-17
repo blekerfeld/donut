@@ -13,131 +13,138 @@
 
 
 // Dictionary
-define('DICT_TITLE', 'Dictionary');
-define('DICT_READMORE', 'Go to lemma');
-define('DICT_SEARCH', 'Search');
-define('DICT_KEYWORD', 'Search the dictionary...');
-define('DICT_EXACT_MATCH', 'exact match');
-define('DICT_MATCH', 'Your query yielded %s result.');
-define('DICT_SEARCH_RESULTS', 'Search results');
-define('DICT_NO_HITS', 'Your query yielded no results.');
-define('DICT_NO_QUERY', 'Please provide a search query.');
-define('DICT_MATCHES', 'Your query yielded %s results.');
+p::defineLocale('DICT_TITLE', 'Dictionary');
+p::defineLocale('DICT_READMORE', 'Go to lemma');
+p::defineLocale('DICT_SEARCH', 'Search');
+p::defineLocale('DICT_KEYWORD', 'Search the dictionary...');
+p::defineLocale('DICT_EXACT_MATCH', 'exact match');
+p::defineLocale('DICT_MATCH', 'Your query yielded %s result.');
+p::defineLocale('DICT_SEARCH_RESULTS', 'Search results');
+p::defineLocale('DICT_NO_HITS', 'Your query yielded no results.');
+p::defineLocale('DICT_NO_QUERY', 'Please provide a search query.');
+p::defineLocale('DICT_MATCHES', 'Your query yielded %s results.');
 
 // Lemma information
-define('LEMMA_ERROR', "The requested lemma doesn't exist, please look for errors in the URL.");
-define("LEMMA_INFLECTIONS", "Inflections");
-define("LEMMA_TRANSLATIONS", 'Meaning and translations');
-define("TRANSLATION_LEMMAS", 'Linked entries in %s');
-define("TRANSLATION_DESC", 'Description');
-define("LEMMA_DECLENSION", 'Declension');
-define("LEMMA_EXAMPLES", 'Examples and idiom');
-define("LEMMA_EXAMPLE", 'Example/idiom');
-define("LEMMA_EXAMPLE_IN", 'Example/idiom in %s');
-define("LEMMA_TRANSLATION_INTO", 'Translation into %s');
-define("LEMMA_TRANSLATION_ADDED", 'Translation added by %s on %s');
-define("LEMMA_TRANSLATIONS_INTO", 'Translations into %s');
-define("LEMMA_TRANSLATIONS_MEANINGS", 'Other meanings/alternate forms in %s');
-define("LEMMA_TRANSLATIONS_RESET", 'Show all translations');
-define("LEMMA_USAGE_NOTES", "Usage notes");
-define("LEMMA_ANTONYMS", "Antonyms");
-define("LEMMA_SYNONYMS", "Synonyms");
-define("LEMMA_HOMOPHONES", "Homophones");
+p::defineLocale('LEMMA_ERROR', "The requested lemma doesn't exist, please look for errors in the URL.");
+p::defineLocale("LEMMA_INFLECTIONS", "Inflections");
+p::defineLocale("LEMMA_TRANSLATIONS", 'Meaning and translations');
+p::defineLocale("TRANSLATION_LEMMAS", 'Linked entries in %s');
+p::defineLocale("TRANSLATION_DESC", 'Description');
+p::defineLocale("LEMMA_DECLENSION", 'Declension');
+p::defineLocale("LEMMA_EXAMPLES", 'Examples and idiom');
+p::defineLocale("LEMMA_EXAMPLE", 'Example/idiom');
+p::defineLocale("LEMMA_EXAMPLE_IN", 'Example/idiom in %s');
+p::defineLocale("LEMMA_TRANSLATION_INTO", 'Translation into %s');
+p::defineLocale("LEMMA_TRANSLATION_ADDED", 'Translation added by %s on %s');
+p::defineLocale("LEMMA_TRANSLATIONS_INTO", 'Translations into %s');
+p::defineLocale("LEMMA_TRANSLATIONS_MEANINGS", 'Other meanings/alternate forms in %s');
+p::defineLocale("LEMMA_TRANSLATIONS_RESET", 'Show all translations');
+p::defineLocale("LEMMA_USAGE_NOTES", "Usage notes");
+p::defineLocale("LEMMA_ANTONYMS", "Antonyms");
+p::defineLocale("LEMMA_SYNONYMS", "Synonyms");
+p::defineLocale("LEMMA_HOMOPHONES", "Homophones");
 
 // Lemma edit
-define('LEMMA_EDIT', "Edit lemma");
-define('LEMMA_NEW', "New lemma");
-define('LEMMA_VIEW_SHORT', "View");
-define('LEMMA_EDIT_SHORT', "Edit");
-define('LEMMA_DISCUSS_SHORT', "Discuss");
-define('LEMMA_EDIT_MODE', "Edit lemma");
-define('LEMMA_EDIT_BASICS', "Change basic information");
-define('LEMMA_EDIT_DELETE', "Delete Lemma");
-define('LEMMA_EDIT_DELETE_SURE', "Are you sure you want to delete this lemma?");
+p::defineLocale('LEMMA_EDIT', "Edit lemma");
+p::defineLocale('LEMMA_NEW', "New lemma");
+p::defineLocale('LEMMA_VIEW_SHORT', "View");
+p::defineLocale('LEMMA_EDIT_SHORT', "Edit");
+p::defineLocale('LEMMA_DISCUSS_SHORT', "Discuss");
+p::defineLocale('LEMMA_EDIT_MODE', "Edit lemma");
+p::defineLocale('LEMMA_EDIT_BASICS', "Change basic information");
+p::defineLocale('LEMMA_EDIT_DELETE', "Delete Lemma");
+p::defineLocale('LEMMA_EDIT_DELETE_SURE', "Are you sure you want to delete this lemma?");
 
-define("LEMMA_EDIT_STEMS", "Manage stems");
-define("LEMMA_EDIT_IRREGULAR", "Manage irregularities");
-define("LEMMA_EDIT_TRANSLATIONS", "Edit translations");
-define("LEMMA_CLONE_TRANSLATIONS", "Clone translations");
-define("LEMMA_EDIT_TRANSLATIONS_INFO", "If you want to edit translations in another language, you need to <a href'".p::Url("?editorlanguage")."'>change your editor language</a>.");
+p::defineLocale("LEMMA_EDIT_STEMS", "Manage stems");
+p::defineLocale("LEMMA_EDIT_IRREGULAR", "Manage irregularities");
+p::defineLocale("LEMMA_EDIT_TRANSLATIONS", "Edit translations");
+p::defineLocale("LEMMA_CLONE_TRANSLATIONS", "Clone translations");
 
 
 // Entry
-define('ENTRY_NOT_FOUND', "The entry you requested is not found.");
+p::defineLocale('ENTRY_NOT_FOUND', "The entry you requested is not found.");
 
 
 // D_admin
-define('DA_OPTIONAL', "optional");
-define('DA_DEFAULT', "Default");
-define('DA_PERMISSION_ERROR', "You don't currently have permission to access this section.");
-define('DA_SECTION_ERROR', "The section you requested is not found, the default section is loaded instead.");
-define('DA_TITLE', "Dictionary settings");
-define('DA_EDIT', "Edit item");
-define('DA_EDITING', "Editing the item -");
-define('DA_DELETE', "Delete item");
-define('DA_DELETE_LINK', "Delete link");
-define('DA_DELETE_SURE', "Are you sure you want to delete this item?");
-define('DA_DELETE_SURE_LINK', "Are you sure you want to delete the link between %s and %s? This might remove additional data.");
+p::defineLocale('DA_OPTIONAL', "optional");
+p::defineLocale('DA_DEFAULT', "Default");
+p::defineLocale('DA_PERMISSION_ERROR', "You don't currently have permission to access this section.");
+p::defineLocale('DA_SECTION_ERROR', "The section you requested is not found, the default section is loaded instead.");
+p::defineLocale('DA_TITLE', "Dictionary settings");
+p::defineLocale('DA_EDIT', "Edit item");
+p::defineLocale('DA_EDITING', "Editing the item -");
+p::defineLocale('DA_DELETE', "Delete item");
+p::defineLocale('DA_DELETE_LINK', "Delete link");
+p::defineLocale('DA_DELETE_SURE', "Are you sure you want to delete this item?");
+p::defineLocale('DA_DELETE_SURE_LINK', "Are you sure you want to delete the link between %s and %s? This might remove additional data.");
 // D_admin languges settings
-define('DA_LANG_SURFACE', "Languages");
-define('DA_LANG_1', "Language");
-define('DA_LANG_FLAG', "Flag");
-define('DA_LANG_NAME', "Language name");
-define('DA_LANG_ACTIVATED', "Activated");
-define('DA_LANG_LOCALE', "Language code");
-define('DA_LANG_EDIT', "Edit language");
-define('DA_LANG_NEW', "Add a new language");
+p::defineLocale('DA_LANG_SURFACE', "Languages");
+p::defineLocale('DA_LANG_1', "Language");
+p::defineLocale('DA_LANG_FLAG', "Flag");
+p::defineLocale('DA_LANG_NAME', "Language name");
+p::defineLocale('DA_LANG_ACTIVATED', "Activated");
+p::defineLocale('DA_LANG_LOCALE', "Language code");
+p::defineLocale('DA_LANG_EDIT', "Edit language");
+p::defineLocale('DA_LANG_NEW', "Add a new language");
 
-define('DA_NO_RECORDS', "No records found.");
+p::defineLocale('DA_NO_RECORDS', "No records found.");
 
-define('DA_PAGE_X_OF_Y', "Page %s of %s");
+p::defineLocale('DA_PAGE_X_OF_Y', "Page %s of %s");
 
 
 // Link tables
-define('DA_TABLE_ACTIONS', "Actions");
-define('DA_TABLE_LINKS', "Relations");
-define('DA_TABLE_LINKS_CHILD_ID', "Child ID");
-define('DA_TABLE_LINKS_CHILD', "Child");
-define('DA_TABLE_LINKS_CHILDREN', "Children");
-define('DA_TABLE_LINKS_PARENT', "Parent");
-define('DA_TABLE_LINK_TITLE', "Relational table: %s");
-define('DA_TABLE_NEW_LINK', "New relation");
-define('DA_TABLE_NEW_RELATION', "New relation in ");
-define('DA_TABLE_LINK_KEYWORD', "Keyword");
-define('DA_TABLE_LINK_SPECIFICATION', "Specification");
-define('DA_TABLE_RELATION_EXIST', "This relation already exists.");
-define('DA_TABLE_RELATION_ADDED', "This relation is succesfully created");
+p::defineLocale('DA_TABLE_ACTIONS', "Actions");
+p::defineLocale('DA_TABLE_LINKS', "Relations");
+p::defineLocale('DA_TABLE_LINKS_CHILD_ID', "Child ID");
+p::defineLocale('DA_TABLE_LINKS_CHILD', "Child");
+p::defineLocale('DA_TABLE_LINKS_CHILDREN', "Children");
+p::defineLocale('DA_TABLE_LINKS_PARENT', "Parent");
+p::defineLocale('DA_TABLE_LINK_TITLE', "Relational table: %s");
+p::defineLocale('DA_TABLE_NEW_LINK', "New relation");
+p::defineLocale('DA_TABLE_NEW_RELATION', "New relation in ");
+p::defineLocale('DA_TABLE_LINK_KEYWORD', "Keyword");
+p::defineLocale('DA_TABLE_LINK_SPECIFICATION', "Specification");
+p::defineLocale('DA_TABLE_RELATION_EXIST', "This relation already exists.");
+p::defineLocale('DA_TABLE_RELATION_ADDED', "This relation is succesfully created");
 
-define('DA_ABBR', "Abbreviation");
-define('DA_SUBINFLECTIONS', "Sub-inflections");
+p::defineLocale('DA_ABBR', "Abbreviation");
+p::defineLocale('DA_SUBINFLECTIONS', "Sub-inflections");
 
-define("DA_LEXCAT_TITLE", "Lexical categories");
-define("DA_LEXCAT", "Lexical category");
-define("DA_GRAMCAT", "Grammatical category");
-define("DA_GRAMCAT_TITLE", "Grammatical categories");
-define("DA_GRAMTAG", "Grammatical tag");
-define("DA_GRAMTAGS_TITLE", "Grammatical tags");
+p::defineLocale("DA_LEXCAT_TITLE", "Lexical categories");
+p::defineLocale("DA_LEXCAT", "Lexical category");
+p::defineLocale("DA_GRAMCAT", "Grammatical category");
+p::defineLocale("DA_GRAMCAT_TITLE", "Grammatical categories");
+p::defineLocale("DA_GRAMTAG", "Grammatical tag");
+p::defineLocale("DA_GRAMTAGS_TITLE", "Grammatical tags");
 
 
 // Da titles
-define("DA_TITLE_HOME", "Home");
-define("DA_TITLE_CONTENT", "Content");
-define("DA_TITLE_GRAMMAR", "Grammar");
-define("DA_TITLE_TABLES", "Inflection tables");
-define("DA_TITLE_LANGUAGES", "Languages");
-define("DA_TITLE_PHONOLOGY", "Phonology");
-define("DA_TITLE_ORTOGRAPHY", "Ortography");
-define("DA_TITLE_WORDS", "Words");
-define("DA_TITLE_EXAMPLES", "Idiom and examples");
+p::defineLocale("DA_TITLE_HOME", "Home");
+p::defineLocale("DA_TITLE_CONTENT", "Content");
+p::defineLocale("DA_TITLE_GRAMMAR", "Grammar");
+p::defineLocale("DA_TITLE_TABLES", "Inflection tables");
+p::defineLocale("DA_TITLE_LANGUAGES", "Languages");
+p::defineLocale("DA_TITLE_PHONOLOGY", "Phonology");
+p::defineLocale("DA_TITLE_ORTOGRAPHY", "Ortography");
+p::defineLocale("DA_TITLE_WORDS", "Words");
+p::defineLocale("DA_TITLE_EXAMPLES", "Idiom and examples");
 
 // Da Words
-define("DA_WORDS_NATIVE", "Entry");
-define("DA_WORDS_LEXICAL", "Lexical form for inflection");
-define("DA_WORDS_IPA", "IPA transcription");
-define("DA_WORDS_NEW_EXTERN", "New word ".(new pIcon('fa-external-link', 8)));
+p::defineLocale("DA_WORDS_NATIVE", "Entry");
+p::defineLocale("DA_WORDS_LEXICAL", "Lexical form for inflection");
+p::defineLocale("DA_WORDS_IPA", "IPA transcription");
+p::defineLocale("DA_WORDS_NEW_EXTERN", "New word");
 
-define("DA_TRANSLATIONS", "Translations");
-define("DA_TRANSLATION", "Translation");
+p::defineLocale("DA_TRANSLATIONS", "Translations");
+p::defineLocale("DA_TRANSLATION", "Translation");
 
 // Grammatical tables
-define("DA_HEADINGS", "Headings");
+p::defineLocale("DA_HEADINGS", "Headings");
+
+// Rulesheet 
+p::defineLocale('RS_DELETE_CONFIRM', 'Are you sure you want to delete this rule folder, all of its sub-folders and any rules they might contain?');
+p::defineLocale('', '');
+p::defineLocale('', '');
+
+
+p::defineLocale('', '');

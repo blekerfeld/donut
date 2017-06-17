@@ -293,8 +293,13 @@ class pMagicActionForm{
 
 
 	public function form($showBack = true, $forceID = null, $forceBtCard = true){
-		p::Out("<div class='".($forceBtCard ? 'btCard' : 'rulesheet-margin')." admin'>");
-		p::Out("<div class='btTitle'>".$this->_strings[0]."</div>");
+		if($forceBtCard == true){
+			p::Out("<div class='btCard admin'>");
+			p::Out("<div class='btTitle'>".$this->_strings[0]."</div>");
+		}
+		else{
+			p::Out("<div class='miniForm'>");
+		}
 
 		p::Out(pMainTemplate::NoticeBox('fa-spinner fa-spin fa-12', $this->_strings[2], 'notice saving hide'));
 
@@ -316,10 +321,18 @@ class pMagicActionForm{
 		else
 			$hrefBack = p::Url("?".$this->_app."/".$this->_section.(isset($_REQUEST['position']) ? "/offset/".$_REQUEST['position'] : ""));
 
-		p::Out("<div class='btButtonBar'>
-			".($showBack ? "<a class='btAction wikiEdit' href='".$hrefBack."'><i class='fa fa-12 fa-arrow-left' ></i> ".BACK."</a>" : "")."
-			<a class='btAction green ".($forceBtCard ? '' : 'little ')."submit-form ssignore no-float'><i class='fa fa-12 fa-check-circle'></i> ".$this->_strings[1]."</a><br id='cl'/></div>");
-		p::Out("</div>");
+		if($forceBtCard)
+			p::Out("<div class='btButtonBar'>
+				".($showBack ? "<a class='btAction wikiEdit' href='".$hrefBack."'><i class='fa fa-12 fa-arrow-left' ></i> ".BACK."</a>" : ""));
+
+		p::Out("
+			<a class='btAction green ".($forceBtCard ? '' : 'little ')."submit-form ssignore no-float'><i class='fa fa-12 fa-check-circle'></i> ".$this->_strings[1]."</a>");
+		
+		if($forceBtCard)
+			p::Out("<br id='cl'/></div></div>");
+		else
+			p::Out("</div>");
+	
 		$loadValues = array();
 
 		foreach ($this->_fields->get() as $field){

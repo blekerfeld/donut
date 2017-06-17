@@ -27,7 +27,7 @@ class pAjaxLoader extends pTemplatePiece{
 	public function __toString(){
 
 		$id = spl_object_hash($this);
-		$output = (($this->_loadOnClick == false AND is_array($this->_clickButton)) ? '' : "<a class='ssignore click$id ".$this->_clickButton[0]."'>".$this->_clickButton[1]."</a><br /><br />")."<div id='$id' class='$this->_wrapperclass ".(($this->_loadOnClick == true) ? 'hide ' : '')."'>".(new pIcon('fa-spinner fa-spin', 10))." ".LOADING."</div>".($this->_refresh ? "
+		$output = (($this->_loadOnClick == false AND is_array($this->_clickButton)) ? '' : "<a class='ssignore click$id ".$this->_clickButton[0]."'>".$this->_clickButton[1]."</a><br />")."<div id='$id' class='$this->_wrapperclass ".(($this->_loadOnClick == true) ? 'hide ' : '')."'>".(new pIcon('fa-spinner fa-spin', 10))." ".LOADING."</div>".($this->_refresh ? "
 			<a class='xsmall ajaxRefresh refresh$id' href='javascript:void(0);'>".(new pIcon('fa-refresh'))." Refresh</a>
 		" : "");
 		// Throwing this object's script into a session
@@ -43,13 +43,16 @@ class pAjaxLoader extends pTemplatePiece{
 			$('.refresh$id').click(function(){
 				$('#$id').slideUp().load('".$this->_querystring.(($this->_forceNoAjaxLink == false) ? '/ajax' : "")."').slideDown();
 			});
-				" : "")	
-			."
-			".(($this->_loadOnClick == false) ? "$('#$id').load('".$this->_querystring.(($this->_forceNoAjaxLink == false) ? '/ajax' : "")."');" : "$('.click$id').click(function(){
-				$('#$id').slideUp().load('".$this->_querystring.(($this->_forceNoAjaxLink == false) ? '/ajax' : "")."').slideDown();
-			});")."
+				" : "")."
 
-			";
+			$('#$id').load('".$this->_querystring.(($this->_forceNoAjaxLink == false) ? '/ajax' : '' )."');
+			$('.click$id').click(function(){
+				$('#$id').slideDown();
+			})"
+
+			
+
+			;
 	}
 	
 }

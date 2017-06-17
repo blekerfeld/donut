@@ -12,7 +12,7 @@
 
 class p{
 
-	public static $Out = array(), $Header = array(), $db, $assets;
+	public static $Out = array(), $Header = array(), $db, $assets, $locales;
 
 	public static function dispatch($overrideQueryStringIfEmpty = false){
 		
@@ -164,7 +164,16 @@ class p{
 		foreach($transfer['lang_sub_files'] as $filename)
 			include self::FromRoot('library/languages/' . $language . '.' . $filename . '.php');
 			
+		// Now it's time to define the constants, with a certaint callback!
+		foreach (self::$locales as $key => $value)
+			define($key, htmlspecialchars($value));
+
 		return true;
+	}
+
+
+	public static function defineLocale($key, $value){
+		self::$locales[$key] = $value;
 	}
 
 	public function Escape($value){
