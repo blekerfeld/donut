@@ -16,8 +16,8 @@ class pLemmasheetStructure extends pStructure{
 	public function compile(){
 
 		// If the user requests a section and if it extist
-		if(isset(pAdress::arg()['section']) AND array_key_exists(pAdress::arg()['section'], $this->_structure))
-			$this->_section = pAdress::arg()['section'];
+		if(isset(pRegister::arg()['section']) AND array_key_exists(pRegister::arg()['section'], $this->_structure))
+			$this->_section = pRegister::arg()['section'];
 		else{
 
 			$this->_error = pMainTemplate::NoticeBox('fa-info-circle fa-12', DA_SECTION_ERROR, 'danger-notice');
@@ -39,46 +39,46 @@ class pLemmasheetStructure extends pStructure{
 
 		$searchBox = new pSearchBox;
 
-		if(isset(pAdress::arg()['is:result'], pAdress::session()['searchQuery']))
-			$searchBox->setValue(pAdress::session()['searchQuery']);
+		if(isset(pRegister::arg()['is:result'], pRegister::session()['searchQuery']))
+			$searchBox->setValue(pRegister::session()['searchQuery']);
 
-		if(!isset(pAdress::arg()['ajax']))
+		if(!isset(pRegister::arg()['ajax']))
 			pMainTemplate::throwOutsidePage($searchBox);
 
 		// If there is an offset, we need to define that
-		if(isset(pAdress::arg()['offset']))
-			$this->_parser->setOffset(pAdress::arg()['offset']);
+		if(isset(pRegister::arg()['offset']))
+			$this->_parser->setOffset(pRegister::arg()['offset']);
 
-		if(!isset(pAdress::arg()['ajax']) && (isset(pAdress::arg()['action']) && pAdress::arg()['action'] == 'edit')){
-			if(isset(pAdress::arg()['section']))
-				$section = pAdress::arg()['section'];
+		if(!isset(pRegister::arg()['ajax']) && (isset(pRegister::arg()['action']) && pRegister::arg()['action'] == 'edit')){
+			if(isset(pRegister::arg()['section']))
+				$section = pRegister::arg()['section'];
 			else
 				$section = 'lemma';
 			p::Out("<div class='home-margin pEntry'><div class='card-tabs-bar titles'>
-					".($section == 'lemma' ? "<a class='ssignore float-right' href='".p::Url('?editor/'.(isset(pAdress::arg()['section']) ? pAdress::arg()['section'] : 'lemma').'/new')."'>".LEMMA_NEW."</a>" : '')."
-					<a class='ssignore' href='".p::Url('?entry/'.(isset(pAdress::arg()['section']) ? pAdress::arg()['section'].'/' : '').pAdress::arg()['id'].(isset(pAdress::arg()['is:result']) ? '/is:result' : ''))."'>".LEMMA_VIEW_SHORT."</a>
+					".($section == 'lemma' ? "<a class='ssignore float-right' href='".p::Url('?editor/'.(isset(pRegister::arg()['section']) ? pRegister::arg()['section'] : 'lemma').'/new')."'>".LEMMA_NEW."</a>" : '')."
+					<a class='ssignore' href='".p::Url('?entry/'.(isset(pRegister::arg()['section']) ? pRegister::arg()['section'].'/' : '').pRegister::arg()['id'].(isset(pRegister::arg()['is:result']) ? '/is:result' : ''))."'>".LEMMA_VIEW_SHORT."</a>
 					<a class='active ssignore' href='javascript:void();'>".LEMMA_EDIT_SHORT."</a>
-					<a class='ssignore' href='".p::Url('?entry/'.(isset(pAdress::arg()['section']) ? pAdress::arg()['section'].'/' : '').pAdress::arg()['id'])."/discuss".(isset(pAdress::arg()['is:result']) ? '/is:result' : '')."'>".LEMMA_DISCUSS_SHORT."</a>
+					<a class='ssignore' href='".p::Url('?entry/'.(isset(pRegister::arg()['section']) ? pRegister::arg()['section'].'/' : '').pRegister::arg()['id'])."/discuss".(isset(pRegister::arg()['is:result']) ? '/is:result' : '')."'>".LEMMA_DISCUSS_SHORT."</a>
 				</div>");
 		}
-		elseif(!isset(pAdress::arg()['ajax']))
+		elseif(!isset(pRegister::arg()['ajax']))
 			p::Out("<div class='home-margin pEntry'>");
 
 
 
 		// Let's handle the action by the object
-		if(isset(pAdress::arg()['action'])){
-			if(isset(pAdress::arg()['id']))
-				if(!$this->_parser->runData(pAdress::arg()['id'])){
+		if(isset(pRegister::arg()['action'])){
+			if(isset(pRegister::arg()['id']))
+				if(!$this->_parser->runData(pRegister::arg()['id'])){
 					p::Out("<br />".pMainTemplate::NoticeBox('fa-info-circle fa-12', ENTRY_NOT_FOUND, 'danger-notice'));
 					goto skipError;
 				}
 
-			$this->_parser->passOnAction(pAdress::arg()['action']);
+			$this->_parser->passOnAction(pRegister::arg()['action']);
 		}
 		else{
-			if(isset(pAdress::arg()['id']))
-				$this->_parser->runData(pAdress::arg()['id']);
+			if(isset(pRegister::arg()['id']))
+				$this->_parser->runData(pRegister::arg()['id']);
 			else
 				$this->_parser->runData();
 			$this->_parser->render();

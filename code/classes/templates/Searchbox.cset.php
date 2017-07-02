@@ -26,7 +26,7 @@ class pSearchBox extends pTemplatePiece{
 
 	public function __toString(){
 
-		p::Out("<div style='margin-bottom:10px';></div>");
+		p::Out("<div style='margin-bottom:10px';></div>	");
 		pMainTemplate::toggleSearchBox();
 
 		$this->_idS = date('s');
@@ -34,6 +34,7 @@ class pSearchBox extends pTemplatePiece{
 		$output = '<div class="hMobile id_'.$this->_idS.'"><div class="header dictionary '.($this->_home ? 'home' : '').'">';
 
 		$output .= '<div class="hWrap"><div class="hSearch">'.pLanguage::dictionarySelector('dictionary-selector').'
+
 				<input type="text" id="wordsearch" class="big word-search" placeholder="'.DICT_KEYWORD.'" value="'.$this->_value.'"/><a class="button search  remember search-button float-right" id="searchb" href="javascript:void(0);">' . (new pIcon('fa-search', 12)) . ' '. DICT_SEARCH.'</a>
 			<br id="cl" /></div></div>
 			</div>
@@ -49,11 +50,11 @@ class pSearchBox extends pTemplatePiece{
 			$hashKey = spl_object_hash($this);
 
 			// Throwing this object's script into a session
-			pAdress::session($hashKey, $this->script());
+			pRegister::session($hashKey, $this->script());
 
 			$output .= "<script type='text/javascript' src='".p::Url('pol://library/assets/js/key.js.php?key='.$hashKey)."'></script>";
 
-		if(isset(pAdress::arg()['print']))
+		if(isset(pRegister::arg()['print']))
 			return '';
 
 		return $output;
@@ -67,12 +68,12 @@ class pSearchBox extends pTemplatePiece{
 		orgTitle = '".pMainTemplate::$orgTitle."';
 
 		"; 
-		if(isset(pAdress::arg()['query']) AND isset(pAdress::arg()['dictionary']))
+		if(isset(pRegister::arg()['query']) AND isset(pRegister::arg()['dictionary']))
 			$output .= "
 				$(document).ready(function(){
 					orgTitle = document.title;
-					$('.word-search').val('".pAdress::arg()['query']."');
-					$('.dictionary-selector').val('".strtoupper(pAdress::arg()['dictionary'])."');
+					$('.word-search').val('".pRegister::arg()['query']."');
+					$('.dictionary-selector').val('".strtoupper(pRegister::arg()['dictionary'])."');
 		      		$('.pEntry').slideUp();
       				$('.searchLoad').slideDown();
       				search();
@@ -86,7 +87,7 @@ class pSearchBox extends pTemplatePiece{
 				loadhome();
 				";
 
-				if((isset(pAdress::arg()['query'], pAdress::arg()['dictionary'])))
+				if((isset(pRegister::arg()['query'], pRegister::arg()['dictionary'])))
 
 				$output .= "$('.pEntry').load('".p::Url('?home/ajax/nosearch')."', {}, function(){
 					window.history.pushState('string', '', '".p::Url("?home")."');
@@ -107,7 +108,7 @@ class pSearchBox extends pTemplatePiece{
 		function callBack(){
 			  if($('.word-search').val() == ''){
 			  	loadhome();
-		    	window.history.pushState('string', '', '".p::Url("?".pAdress::queryString())."');
+		    	window.history.pushState('string', '', '".p::Url("?".pRegister::queryString())."');
 		    	$('.load-hide').hide();
 		    	$('.page').removeClass('min');
 				$('.searchLoad').slideUp();
@@ -146,7 +147,7 @@ class pSearchBox extends pTemplatePiece{
 			$('.word-search').blur().focus();
 			";
 
-			if((isset(pAdress::arg()['query'], pAdress::arg()['dictionary'])))
+			if((isset(pRegister::arg()['query'], pRegister::arg()['dictionary'])))
 
 				$output .= "$('.pEntry').load('".p::Url('?home/ajax/nosearch')."', {}, function(){
 					window.history.pushState('string', '', '".p::Url("?home")."');
@@ -196,13 +197,13 @@ class pSearchBox extends pTemplatePiece{
 		});";
 
 
-		if(isset(pAdress::arg()['is:result']))
+		if(isset(pRegister::arg()['is:result']))
 			$output .= "	$('.searchLoad').mouseleave(function(){
 			if(($(window).width() < 700)){
 				$('.searchLoad').slideUp();
 				loadhome();
 				$('.pEntry').slideDown();
-				window.history.pushState('string', '', '".p::Url("?".pAdress::queryString())."');				
+				window.history.pushState('string', '', '".p::Url("?".pRegister::queryString())."');				
 			}
 
 		});

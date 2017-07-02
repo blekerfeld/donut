@@ -6,11 +6,11 @@
 	//		Written by Thomas de Roo
 	//		Licensed under MIT
 
-	//	++	File: adress.cset.php
+	//	++	File: Register.cset.php
 
 // For jQuery style fetching of the url information! :)
-// like this: pAdress::arg()['id'];
-class pAdress{
+// like this: pRegister::arg()['id'];
+class pRegister{
 
 	static $queryString, $arguments, $post, $session;
 

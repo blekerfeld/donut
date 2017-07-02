@@ -26,8 +26,8 @@ class pSetHandler extends pHandler{
 		// First load all other levels
 
 		$id = 0;
-		if(isset(pAdress::arg()['id']))
-			$id = $this->pathToID(pAdress::arg()['id']);
+		if(isset(pRegister::arg()['id']))
+			$id = $this->pathToID(pRegister::arg()['id']);
 
 		// Loading the 'folders' and the items
 		$this->_dataModel->setCondition(" WHERE parent = '".$id."' ");
@@ -44,7 +44,7 @@ class pSetHandler extends pHandler{
 		$this->_rules = $this->_dataModel->customQuery(implode(' UNION ALL ', $customQuery))->fetchAll();
 
 		$this->_dataModel->setCondition(" WHERE id = '".$id."' ");
-		if(!isset(pAdress::arg()['action']) OR pAdress::arg()['action'] != 'new' OR pAdress::arg()['action'] != 'edit')
+		if(!isset(pRegister::arg()['action']) OR pRegister::arg()['action'] != 'new' OR pRegister::arg()['action'] != 'edit')
 			$this->_dataModel->getObjects();
 
 		$this->_template = new pSetTemplate($this);
@@ -87,15 +87,15 @@ class pSetHandler extends pHandler{
 			return parent::catchAction($action, $template, $arg);
 
 		if($action == 'remove'){
-			$this->dataModel->customQuery("DELETE FROM ".$this->_activeSection['table']." WHERE id = '".pAdress::arg()['id']."' OR parent = '".pAdress::arg()['id']."';");
-			$this->dataModel->remove(0, 0, pAdress::arg()['id']);
+			$this->dataModel->customQuery("DELETE FROM ".$this->_activeSection['table']." WHERE id = '".pRegister::arg()['id']."' OR parent = '".pRegister::arg()['id']."';");
+			$this->dataModel->remove(0, 0, pRegister::arg()['id']);
 			goto done;
 		}
 
 		// Generating the path
 		$path = "/rules/";
-		if(isset(pAdress::arg()['id'])){
-			$path = pAdress::arg()['id'];
+		if(isset(pRegister::arg()['id'])){
+			$path = pRegister::arg()['id'];
 			if(p::StartsWith(":", $path))
 				$path = substr($path, 1);
 			if(p::EndsWith(":", $path))
@@ -110,7 +110,7 @@ class pSetHandler extends pHandler{
 		$this->_activeSection['save_strings'][0] = 'New folder in '.$path;
 
 		$dfs = new pSet;
-		$pathID = $this->pathToID((isset(pAdress::arg()['id']) ? pAdress::arg()['id'] : ':rules:'));
+		$pathID = $this->pathToID((isset(pRegister::arg()['id']) ? pRegister::arg()['id'] : ':rules:'));
 
 		if($action == 'new'){
 			$dfs->add(new pDataField('name', "Path", '67%', 'prefix', true, true, true, '', false, $path));
@@ -125,21 +125,21 @@ class pSetHandler extends pHandler{
 			$this->_data[0]['name'] = $explodeName[max(array_keys($explodeName))];
 		}
 
-		$actionForm = new pMagicActionForm(pAdress::arg()['action'], $this->_activeSection['table'], $dfs, $this->_activeSection['save_strings'], $this->_app, $this->_section, $this); 
+		$actionForm = new pMagicActionForm(pRegister::arg()['action'], $this->_activeSection['table'], $dfs, $this->_activeSection['save_strings'], $this->_app, $this->_section, $this); 
 
 		$actionForm->compile();
 
-		if(isset(pAdress::arg()['ajax'])){
+		if(isset(pRegister::arg()['ajax'])){
 
-			if($action == 'edit' AND isset(pAdress::post()['admin_form_name'], pAdress::post()['admin_form_parent'])){
-				pAdress::changePost('admin_form_name', $this->IDtoPath(pAdress::post()['admin_form_parent']) . '/' . pAdress::post()['admin_form_name']);
+			if($action == 'edit' AND isset(pRegister::post()['admin_form_name'], pRegister::post()['admin_form_parent'])){
+				pRegister::changePost('admin_form_name', $this->IDtoPath(pRegister::post()['admin_form_parent']) . '/' . pRegister::post()['admin_form_name']);
 				$this->dataModel->setFields($dfs);
 			}
 
 			// Replacing spaces
-			pAdress::changePost('admin_form_name', str_replace(' ', '_', pAdress::post()['admin_form_name']));
+			pRegister::changePost('admin_form_name', str_replace(' ', '_', pRegister::post()['admin_form_name']));
 			
-			$explodeName = explode('/', pAdress::post()['admin_form_name']);
+			$explodeName = explode('/', pRegister::post()['admin_form_name']);
 			if(trim($explodeName[max(array_keys($explodeName))]) == ''){
 				echo pMainTemplate::NoticeBox('fa-warning fa-12', 'Folder name cannot be empty.', 'warning-notice ajaxMessage');
 				echo "<script type='text/javascript'>
@@ -155,14 +155,14 @@ class pSetHandler extends pHandler{
 			if($action == 'edit')
 				// We would have to change all children as well
 				$this->dataModel->customQuery("UPDATE rulesets
-				SET name = Replace(name, '$oldName', '".pAdress::post()['admin_form_name']."');");
+				SET name = Replace(name, '$oldName', '".pRegister::post()['admin_form_name']."');");
 
 			done: 
 			die("<script>window.location = window.location</script>");
 		}
 
 		else
-			return $actionForm->form(false, (isset(pAdress::arg()['id']) ? pAdress::arg()['id'] : ':rules:'), false);
+			return $actionForm->form(false, (isset(pRegister::arg()['id']) ? pRegister::arg()['id'] : ':rules:'), false);
 
 	
 	}
@@ -170,7 +170,7 @@ class pSetHandler extends pHandler{
 
 	public function render(){
 
-		$action = (isset(pAdress::arg()['action']) ? pAdress::arg()['action'] : 'view');
+		$action = (isset(pRegister::arg()['action']) ? pRegister::arg()['action'] : 'view');
 
 		// If the action is not view, then pass it on
 		if($action != 'view')

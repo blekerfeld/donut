@@ -13,8 +13,8 @@ class pSimpleStructure extends pStructure{
 	private $_ajax, $_section, $_template;
 
 	public function compile(){
-		if(isset(pAdress::arg()['section']))
-			$this->_section = pAdress::arg()['section'];
+		if(isset(pRegister::arg()['section']))
+			$this->_section = pRegister::arg()['section'];
 		else
 			$this->_section = $this->_default_section;
 

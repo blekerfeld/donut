@@ -34,6 +34,10 @@ class pUser{
 		
 	}
 
+	public static function link(){
+		return "<a href='".p::Url('?auth/profile/').self::$id."'>".(self::read('longname') != '' ? self::read('longname') : self::read('username'))."</a>";
+	}
+
 	public function __destruct(){
 		self::restore();
 	}

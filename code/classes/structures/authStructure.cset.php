@@ -14,8 +14,8 @@ class pAuthStructure extends pStructure{
 
 	public function compile(){
 
-		if(isset(pAdress::arg()['section']))
-			$this->_section = pAdress::arg()['section'];
+		if(isset(pRegister::arg()['section']))
+			$this->_section = pRegister::arg()['section'];
 		else
 			$this->_section = $this->_default_section;
 
@@ -27,11 +27,11 @@ class pAuthStructure extends pStructure{
 
 	protected function logInAjax(){
 
-		if(isset(pAdress::post()['username'], pAdress::post()['password']) AND empty(pAdress::post()['username']) OR empty(pAdress::post()['password']))
+		if(isset(pRegister::post()['username'], pRegister::post()['password']) AND empty(pRegister::post()['username']) OR empty(pRegister::post()['password']))
 			return p::Out($this->_template->warning());
 
-		if(pUser::checkCre(pAdress::post()['username'], pAdress::post()['password'])){
-			(new pUser)->logIn(pAdress::post()['username']);
+		if(pUser::checkCre(pRegister::post()['username'], pRegister::post()['password'])){
+			(new pUser)->logIn(pRegister::post()['username']);
 			return p::Out($this->_template->succes()."<script>window.location = '".p::Url('?home')."';</script>");
 		}
 		else
@@ -57,7 +57,7 @@ class pAuthStructure extends pStructure{
 		if($this->_section == 'logout')
 			return $this->logOut();
 
-		if(isset(pAdress::arg()['ajax']))
+		if(isset(pRegister::arg()['ajax']))
 			return $this->logInAjax();
 
 		if(pUser::noGuest())

@@ -23,13 +23,13 @@ class pAdminStructure extends pStructure{
 	private function checkActiveMain($name){
 		if(isset($this->_menu[$name]['items']))
 			foreach($this->_menu[$name]['items'] as $item)
-				if(isset(pAdress::arg()['section']) && pAdress::arg()['section'] == $item['section_key'])
+				if(isset(pRegister::arg()['section']) && pRegister::arg()['section'] == $item['section_key'])
 					return true;
 	}
 
 	private function checkActiveSub($name){
 
-		if(isset(pAdress::arg()['section']) && pAdress::arg()['section'] == $name)
+		if(isset(pRegister::arg()['section']) && pRegister::arg()['section'] == $name)
 			return true;
 
 	}
@@ -45,7 +45,7 @@ class pAdminStructure extends pStructure{
 		foreach($this->_menu as $key => $main){
 			// Permission check
 			if(pUser::checkPermission($this->itemPermission($main['section'])) OR isset($main['items'])){
-				$output .= "<a href='".(isset($main['section']) ? p::Url("?".$this->_app."/".$main['section']) : '')."' class='".(($this->checkActiveMain($key) OR (isset(pAdress::arg()['section'], $main['section']) AND pAdress::arg()['section'] == $main['section'])) ? 'active' : '')." ttip' title='
+				$output .= "<a href='".(isset($main['section']) ? p::Url("?".$this->_app."/".$main['section']) : '')."' class='".(($this->checkActiveMain($key) OR (isset(pRegister::arg()['section'], $main['section']) AND pRegister::arg()['section'] == $main['section'])) ? 'active' : '')." ttip' title='
 					<strong>".htmlspecialchars($main['surface'])."</strong>";
 
 				if(isset($main['items']))
@@ -79,7 +79,7 @@ class pAdminStructure extends pStructure{
 	public function render(){
 
 		// The asynchronous j.a.x. gets to skip a bit 
-		if(isset(pAdress::arg()['ajax']))
+		if(isset(pRegister::arg()['ajax']))
 			goto ajaxSkipOutput;
 
 		// Preparing the menu
@@ -96,28 +96,28 @@ class pAdminStructure extends pStructure{
 			p::Out("<div class='btCard minimal admin'>".$this->_error."</div>");
 
 		// If there is an offset, we need to define that
-		if(isset(pAdress::arg()['offset']))
-			$this->_parser->setOffset(pAdress::arg()['offset']);
+		if(isset(pRegister::arg()['offset']))
+			$this->_parser->setOffset(pRegister::arg()['offset']);
 
 		ajaxSkipOutput:
 		// Let's look for an action, that can not be an id! :D
-		if(isset(pAdress::arg()['action'])){
+		if(isset(pRegister::arg()['action'])){
 
-			if(isset(pAdress::arg()['id']) AND !in_array(pAdress::arg()['action'], array('link-table')))
-				$this->_parser->runData((is_numeric(pAdress::arg()['id']) ?  pAdress::arg()['id'] : p::HashId(pAdress::arg()['id'], true)[0]));
+			if(isset(pRegister::arg()['id']) AND !in_array(pRegister::arg()['action'], array('link-table')))
+				$this->_parser->runData((is_numeric(pRegister::arg()['id']) ?  pRegister::arg()['id'] : p::HashId(pRegister::arg()['id'], true)[0]));
 
-			$this->_parser->action(pAdress::arg()['action'], (boolean)isset(pAdress::arg()['ajax']), ((isset(pAdress::arg()['linked']) ? pAdress::arg()['linked'] : null)));
-			if(isset(pAdress::arg()['ajax']))
+			$this->_parser->action(pRegister::arg()['action'], (boolean)isset(pRegister::arg()['ajax']), ((isset(pRegister::arg()['linked']) ? pRegister::arg()['linked'] : null)));
+			if(isset(pRegister::arg()['ajax']))
 				return true;
 		}
 		else{
-			if(isset(pAdress::arg()['id']))
-				$this->_parser->runData(is_numeric(pAdress::arg()['id']) ?  pAdress::arg()['id'] : p::HashId(pAdress::arg()['id'], true)[0]);
+			if(isset(pRegister::arg()['id']))
+				$this->_parser->runData(is_numeric(pRegister::arg()['id']) ?  pRegister::arg()['id'] : p::HashId(pRegister::arg()['id'], true)[0]);
 			else
 				$this->_parser->runData();
 
 			$this->_parser->render();
-			if(isset(pAdress::arg()['ajax']))
+			if(isset(pRegister::arg()['ajax']))
 				return true;
 		}
 

@@ -98,7 +98,7 @@ class p{
 		if(!$header)
 			return $url;
 		else
-			if(isset(pAdress::arg()['ajax']))
+			if(isset(pRegister::arg()['ajax']))
 				return "<script type='text/javascript'>window.location = '".$url."';</script>";
 		return header("Location:".$url);
 	}

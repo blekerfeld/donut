@@ -79,8 +79,8 @@ class pTerminal{
 	}
 
 	public function ajax(){
-		if(isset(pAdress::post()['line']))
-			$line = pAdress::post()['line']; 
+		if(isset(pRegister::post()['line']))
+			$line = pRegister::post()['line']; 
 		else
 			return false;
 

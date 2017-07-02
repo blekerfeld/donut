@@ -62,7 +62,7 @@ class pHandler{
 
 		$this->_template = new $template(($arg == null ? $this->dataModel : $arg), $this->_structure[$this->_section]);
 		// The different objects might handle this differently, default is looks for methods
-		if(isset(pAdress::arg()['ajax'])){
+		if(isset(pRegister::arg()['ajax'])){
 			$method = "ajax".ucfirst($action);
 			if(method_exists($this, $method))
 				return $this->$method();

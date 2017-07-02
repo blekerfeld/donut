@@ -1,6 +1,7 @@
 @import url(https://fonts.googleapis.com/css?family=Righteous|Libre+Franklin|Rubik+Mono+One|Merriweather|Lato|Open+Sans|Raleway);
 @font-face{font-family:Gentium;src:url(vendors/fonts/GenBasR.ttf)}@font-face{font-family:Gentium;src:url(vendors/fonts/GenBasB.ttf);font-weight:700}@font-face{font-family:Gentium;src:url(vendors/fonts/GenBasI.ttf);font-style:italic}
 @font-face{font-family:Kollektif;src:url(vendors/fonts/kollektif.ttf)}
+@font-face{font-family:Koliko;src:url(vendors/fonts/koliko.ttf)}
 
 
 /* Basic elements */
@@ -122,6 +123,10 @@ textarea:focus, input:focus {
   font-size: 13px!important;
 }
 
+.xmedium {
+  font-size: 20px!important;
+}
+
 .counter {
   display: inline-block;  
   text-align: center;
@@ -219,14 +224,22 @@ span.tab, div.tab {
 .absolute_header {
   padding: 3px;
   padding-left: 10px;  
-  color: #333;
+  color: #cDD3CD;
   text-decoration: none;
   padding-top: 12px;
   padding-right: calc(5% + 20px);
   padding-left: calc(5% + 20px);
-  border-bottom:solid 1px #e7e7e7;
-  background: #f9f9f9;
+  background:  #1B2B34;
   padding-bottom: 10px;
+  box-shadow: 0px 2px 10px 0px rgba(62,69,94,0.35);
+}
+
+.absolute_header a{
+  color: #97ABBE;
+}
+
+.absolute_header a.text{
+  color: #cDD3CD;
 }
 
 .absolute_header .user{
@@ -239,7 +252,7 @@ a.siteTitle {
   margin-top: 3px;
   letter-spacing: .05em;
   font-weight: bold;
-  color: #252A2E;
+  color: #CDD3CD;
   font-family: Kollektif;
   font-size: 20px;
 } 
@@ -332,7 +345,7 @@ div.nav a:first-child{
 div.nav a {
   padding: 3px;
   font-size: 12px;
-  color: #000;
+  color: #D9DDD9;
   text-decoration: none;
   letter-spacing: .15em;
   white-space: normal;
@@ -347,8 +360,8 @@ div.nav a:hover, div.nav a.admin:hover {
 }
 
 div.nav a.active{
-  border-bottom: 3px solid #607193;
-  color: #607193;
+  border-bottom: 3px solid #6699CC;
+  color: #6699CC;
 }
 
 div.nav a.admin{
@@ -2142,7 +2155,7 @@ div.d_admin_menu a.active{
 }
 
 .tooltipster-content a.ttip-sub.active{
-  background: #2B8B4A;
+  background: #3B66D6;
   color: white;
 }
 
@@ -2369,3 +2382,23 @@ table.rules tr td:last-child{
 table.rules span.dType{
   color: #bbb;
 }
+
+.statsEntry{
+  float: left;
+  width: 15%;
+  margin: 5px;
+  text-align: center;
+  padding: 20px;
+  border-radius: 10px;
+  background: #fafafa;
+}
+
+.statsEntry a{
+  color: #111;
+}
+
+.statsHolder{
+  margin: 0 auto;
+  width: 85%;
+}
+

@@ -14,16 +14,16 @@ class pThreadStructure extends pStructure{
 
 	public function compile(){
 
-		if(isset(pAdress::arg()['section']))
-			$this->_section = pAdress::arg()['section'];
+		if(isset(pRegister::arg()['section']))
+			$this->_section = pRegister::arg()['section'];
 		else
 			$this->_section = $this->_default_section;
 
-		if(!isset(pAdress::arg()['id']))
+		if(!isset(pRegister::arg()['id']))
 			die();
 
 		$this->_dataModel = new pDataModel('threads');
-		$this->_dataModel->setCondition(" WHERE section = '".$this->_section."' AND linked_to = '".pAdress::arg()['id']."' ");
+		$this->_dataModel->setCondition(" WHERE section = '".$this->_section."' AND linked_to = '".pRegister::arg()['id']."' ");
 		$this->_dataModel->getObjects();
 
 		foreach($this->_dataModel->data()->fetchAll() as $thread){
@@ -46,9 +46,9 @@ class pThreadStructure extends pStructure{
 	
 	public function render(){
 
-		if(isset(pAdress::arg()['action'], pAdress::arg()['thread_id'])){
-			if(pAdress::arg()['action'] == 'remove'){
-				$this->delete(pAdress::arg()['thread_id']);
+		if(isset(pRegister::arg()['action'], pRegister::arg()['thread_id'])){
+			if(pRegister::arg()['action'] == 'remove'){
+				$this->delete(pRegister::arg()['thread_id']);
 				// TODO: succes message
 			}
 			return false;

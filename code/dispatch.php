@@ -68,6 +68,9 @@ return array(
 				),
 			),
 		),
+		'simple_links' => array(
+
+		),
 	),
 	'home' => array(
 		'page_title' => CONFIG_SITE_TITLE,

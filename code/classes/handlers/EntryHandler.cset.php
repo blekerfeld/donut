@@ -32,22 +32,66 @@ class pEntryHandler extends pHandler{
 		// reset translations
 		if($action == 'resetTranslations'){
 			unset($_SESSION['returnLanguage']);
-			p::Url('?entry/'.pAdress::arg()['id'], true);
+			p::Url('?entry/'.pRegister::arg()['id'], true);
 		}
 
 		// Discuss
 		if($action == 'discuss'){
-			p::Out(new pAjaxLoader(p::Url('?thread/'.$this->_section.'/'.pAdress::arg()['id']), true));
+			p::Out(new pAjaxLoader(p::Url('?thread/'.$this->_section.'/'.pRegister::arg()['id']), true));
+		}
+		if($action == 'rand'){
+			die("hoi");
 		}
 
 	}
 
+	public function statsData($subsection = null, $extra = 50){
+		if($subsection == 'search'){
+			$dM = new pDataModel('search_hits');
+			$dM->customQuery("SELECT count(word_id) AS num_word, word_id, user_id, hit_timestamp FROM search_hits GROUP BY word_id ORDER BY num_word DESC LIMIT $extra");
+			return $dM->data()->fetchAll();
+		}
+		return array();
+	}
+
+	public function renderStats($subsection = null){
+
+
+		// Passing the data on to the template
+		$this->_template = new $this->_activeSection['template']($this->statsData($subsection), $this->_activeSection);
+
+
+
+		if($subsection == 'search')
+			return $this->_template->renderSearch();
+
+		// Render the template
+		return $this->_template->renderAll();
+
+	} 
+
+
+	protected function doRandomEntry(){
+		$dM = new pDataModel('words');
+		$random = $dM->customQuery("SELECT id FROM words ORDER BY RAND() LIMIT 1")->fetchAll()[0];
+		return p::Url('?entry/'.p::HashId($random['id']), true);
+	}
+
 	public function render(){
 
-		if(isset(pAdress::arg()['query'], pAdress::arg()['dictionary']))
+
+		if($this->_section == 'random')
+			return $this->doRandomEntry();
+
+		// Stats gets sent to another function
+		if($this->_section == 'stats' AND isset(pRegister::arg()['id'])){
+			return $this->renderStats(pRegister::arg()['id']);
+		}
+
+		if(isset(pRegister::arg()['query'], pRegister::arg()['dictionary']))
 			return false;
 
-		$this->_actionbar->generate((isset(pAdress::arg()['id'])) ?pAdress::arg()['id'] : -1);
+		$this->_actionbar->generate((isset(pRegister::arg()['id'])) ? pRegister::arg()['id'] : -1);
 
 		// Shortcut to the data
 		$data = $this->dataModel->data()->fetchAll()[0];
@@ -57,13 +101,18 @@ class pEntryHandler extends pHandler{
 
 		// We might pass this job to an object if that is specified in the metadata
 		if(isset($this->_meta['parseAsObject']) AND class_exists($this->_meta['parseAsObject'])){
+		
 			$object = new $this->_meta['parseAsObject']($this->dataModel);
+			
 			$object->setTemplate($this->_template);
-			if(isset($this->_activeSection['subobjects'])){
+			
+			if(isset($this->_activeSection['subobjects']))
 				$object->fillSubEntries($this->_activeSection['subobjects']);
-			}
+			
 			$object->passActionBar($this->_actionbar);
+
 			return $object->renderEntry();
+		
 		}
 	}
 }

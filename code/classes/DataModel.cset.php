@@ -106,6 +106,8 @@ class pDataModel {
 			foreach($data as $value)
 				$valueString[] = p::Quote($value);
 		$this->_valuestring = implode(', ', $valueString);
+
+		return $this;
 	}
 
 	public function changeField($id, $field, $value, $original_value = null){

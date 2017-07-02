@@ -80,14 +80,14 @@ class pMainTemplate extends pTemplate{
 	
 
 	public function render(){
-		if(isset(pAdress::arg()['ajax']) OR isset(pAdress::arg()['ajaxLoad']))
+		if(isset(pRegister::arg()['ajax']) OR isset(pRegister::arg()['ajaxLoad']))
 			return die(new p);
 		?>
 <!DOCTYPE html>
 <html>
   <head>
     <title><?php echo self::$title; ?></title>
-    <link rel="shortcut icon" href="<?php echo p::Url('library/images/static/fav_icon.png'); ?>">
+    <link rel="shortcut icon" href="<?php echo p::Url('library/images/static/favicon.png'); ?>">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="mobile-web-app-capable" content="yes">
@@ -101,11 +101,13 @@ class pMainTemplate extends pTemplate{
       <div class="top_area">
         <div class="absolute_header">
             <div class='user'>
-              <?php echo $this->userBox(); ?>
-              <?php if(!pUser::noGuest()){ echo '<a href="'.p::Url('?auth/login').'">'.MMENU_LOGIN.'</a>'; } ?>
+              <?php echo '<a href="'.p::Url('?entry/random').'" class="small ssignore text">'.(new pIcon('fa-random'))." ".RANDOM.'</a> | '; ?>
+              <?php echo $this->userBox(); ?> 
+              <?php if(!pUser::noGuest()){ echo '<a href="'.p::Url('?auth/login').'">'.MMENU_LOGIN.'</a> '; } ?>
             </div>
-            <a class='float-left siteTitle' href="<?php echo p::Url("?home"); ?>">
-              <?php echo CONFIG_LOGO_TITLE; ?></a>
+            <a class='float-left siteTitle noselect'  href="<?php echo p::Url("?home"); ?>">
+              <span style='font-family: koliko;font-size: 15px;'>[/]</span>  
+              <?php echo CONFIG_LOGO_TITLE; ?></a> 
            <?php echo (new pMenuTemplate); ?><br id="cl" />  
        </div>
       <div class='outside'>

@@ -127,7 +127,7 @@ class pRulesheetTemplate extends pTemplate{
 		<script type='text/javascript'>
 		$('.submit-form').click(function(){
 					$('.saving').slideDown();
-					$('.ajaxSave').load('".p::Url("?rulesheet/".$section."/".($edit ? 'edit/'.$data['id'] : pAdress::arg()['action'])."/ajax")."', {
+					$('.ajaxSave').load('".p::Url("?rulesheet/".$section."/".($edit ? 'edit/'.$data['id'] : pRegister::arg()['action'])."/ajax")."', {
 						".(!in_array($section, array('phonology', 'ipa')) ? "
 						'lexcat': $('.select-lexcat').val(),
 						'gramcat': $('.select-gramcat').val(),

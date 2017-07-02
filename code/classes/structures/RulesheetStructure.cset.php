@@ -18,8 +18,8 @@ class pRulesheetStructure extends pStructure{
 		global $donut;
 
 		// If the user requests a section and if it extist
-		if(isset(pAdress::arg()['section']) AND array_key_exists(pAdress::arg()['section'], $this->_structure))
-			$this->_section = pAdress::arg()['section'];
+		if(isset(pRegister::arg()['section']) AND array_key_exists(pRegister::arg()['section'], $this->_structure))
+			$this->_section = pRegister::arg()['section'];
 		else{
 
 			$this->_error = pMainTemplate::NoticeBox('fa-info-circle fa-12', DA_SECTION_ERROR, 'danger-notice');
@@ -40,21 +40,21 @@ class pRulesheetStructure extends pStructure{
 	public function render(){
 
 		// If there is an offset, we need to define that
-		if(isset(pAdress::arg()['offset']))
-			$this->_parser->setOffset(pAdress::arg()['offset']);
+		if(isset(pRegister::arg()['offset']))
+			$this->_parser->setOffset(pRegister::arg()['offset']);
 
-		if(!isset(pAdress::arg()['ajax']))
+		if(!isset(pRegister::arg()['ajax']))
 			p::Out("<div class='rulesheet-header'>".p::Markdown("## ".$this->_structure[$this->_section]['surface'])."</div><br />");
 			
 		// Let's handle the action by the object
-		if(isset(pAdress::arg()['action'])){
-			if(isset(pAdress::arg()['id']))
-				$this->_parser->runData(pAdress::arg()['id']);
-			$this->_parser->passOnAction(pAdress::arg()['action']);
+		if(isset(pRegister::arg()['action'])){
+			if(isset(pRegister::arg()['id']))
+				$this->_parser->runData(pRegister::arg()['id']);
+			$this->_parser->passOnAction(pRegister::arg()['action']);
 		}
 		else{
-			if(isset(pAdress::arg()['id']))
-				$this->_parser->runData(pAdress::arg()['id']);
+			if(isset(pRegister::arg()['id']))
+				$this->_parser->runData(pRegister::arg()['id']);
 			else
 				$this->_parser->runData();
 			$this->_parser->render();

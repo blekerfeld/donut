@@ -29,7 +29,7 @@ class pLemmasheetHandler extends pHandler{
 			$this->dataModel = new pDataModel('translations', $dfs);
 		}
 		else
-			$this->dataModel = new pLemmasheetDataModel($this->_activeSection['table'], (isset(pAdress::arg()['id']) ? pAdress::arg()['id'] : null));
+			$this->dataModel = new pLemmasheetDataModel($this->_activeSection['table'], (isset(pRegister::arg()['id']) ? pRegister::arg()['id'] : null));
 	}
 
 	public function render(){
@@ -42,11 +42,11 @@ class pLemmasheetHandler extends pHandler{
 
 			$this->_activeSection['save_strings'][0] = (new pTranslationTemplate($this->_data[0]))->title((new pDataField(null, null, null, 'flag'))->parse((new pLanguage($this->_data[0]['language_id']))->read('flag')));
 
-			$action = new pMagicActionForm(pAdress::arg()['action'], $this->_activeSection['table'], $this->dataModel->_fields, $this->_activeSection['save_strings'], $this->_app, $this->_section, $this); 
+			$action = new pMagicActionForm(pRegister::arg()['action'], $this->_activeSection['table'], $this->dataModel->_fields, $this->_activeSection['save_strings'], $this->_app, $this->_section, $this); 
 
 			$action->compile();
 
-			if(isset(pAdress::arg()['ajax']))
+			if(isset(pRegister::arg()['ajax']))
 				return $action->ajax(false);
 
 			else
@@ -60,8 +60,8 @@ class pLemmasheetHandler extends pHandler{
 	public function ajaxGenerateIPA(){
 		$twolc = new pTwolc((new pTwolcRules('phonology_ipa_generation'))->toArray());
 		$twolc->compile();
-		if(isset(pAdress::post()['lemma']))
-			p::Out('<script type="text/javascript">$(".lemma-ipa").val("'.@$twolc->feed(pAdress::post()['lemma'])->toSurface().'");</script>');
+		if(isset(pRegister::post()['lemma']))
+			p::Out('<script type="text/javascript">$(".lemma-ipa").val("'.@$twolc->feed(pRegister::post()['lemma'])->toSurface().'");</script>');
 	}
 
 	public function ajaxSave($editBool = false){
@@ -69,26 +69,26 @@ class pLemmasheetHandler extends pHandler{
 
 		while($edit == false){
 			// Let's update the basics
-			$edit = $this->dataModel->Basics(pAdress::post()['native'], pAdress::post()['lexform'], pAdress::post()['ipa'], pAdress::post()['lexcat'], pAdress::post()['gramcat'], pAdress::post()['tags'], pAdress::post()['hidden'], $editBool);
+			$edit = $this->dataModel->Basics(pRegister::post()['native'], pRegister::post()['lexform'], pRegister::post()['ipa'], pRegister::post()['lexcat'], pRegister::post()['gramcat'], pRegister::post()['tags'], pRegister::post()['hidden'], $editBool);
 
 			// Let's update the translations
-			$edit = $this->dataModel->updateTranslations(json_decode(pAdress::post()['translations'], true));
+			$edit = $this->dataModel->updateTranslations(json_decode(pRegister::post()['translations'], true));
 
 			// All easy lemma links are fixed like this: (synonyms, antonyms and homophones)
 			$links = array('synonyms', 'antonyms', 'homophones');
 			foreach($links as $link)
-				if(isset(pAdress::post()[$link]))
-					$edit = $this->dataModel->updateLinks($link, pAdress::post()[$link]);
+				if(isset(pRegister::post()[$link]))
+					$edit = $this->dataModel->updateLinks($link, pRegister::post()[$link]);
 				else
 					$edit = $this->dataModel->deleteLinks($link);
 
-			if(isset(pAdress::post()['examples']))
-				$edit = $this->dataModel->updateLinks('idiom_words', pAdress::post()['examples'], true, 'idiom_id', 'keyword');
+			if(isset(pRegister::post()['examples']))
+				$edit = $this->dataModel->updateLinks('idiom_words', pRegister::post()['examples'], true, 'idiom_id', 'keyword');
 			else
 				$edit = $this->dataModel->deleteLinks('idiom_words', true);
 
-			if(isset(pAdress::post()['usage_notes']))
-				$edit = $this->dataModel->updateUsageNotes(pAdress::post()['usage_notes']);
+			if(isset(pRegister::post()['usage_notes']))
+				$edit = $this->dataModel->updateUsageNotes(pRegister::post()['usage_notes']);
 
 		}
 		

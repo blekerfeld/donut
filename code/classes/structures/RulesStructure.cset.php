@@ -13,8 +13,8 @@ class pRulesStructure extends pStructure{
 	private $_ajax, $_section, $_template, $_ruleSets;
 
 	public function compile(){
-		if(isset(pAdress::arg()['section']))
-			$this->_section = pAdress::arg()['section'];
+		if(isset(pRegister::arg()['section']))
+			$this->_section = pRegister::arg()['section'];
 		else
 			$this->_section = $this->_default_section;
 
@@ -28,12 +28,12 @@ class pRulesStructure extends pStructure{
 
 	public function render(){
 
-		if(!isset(pAdress::arg()['ajax']) AND !isset(pAdress::arg()['ajaxLoad']))
+		if(!isset(pRegister::arg()['ajax']) AND !isset(pRegister::arg()['ajaxLoad']))
 			p::Out("<div class='rulesheet-header'>".p::Markdown("## ".$this->_structure[$this->_section]['surface'])."</div><br /><div class='rulesheet-margin'>");
 		
 		$this->_parser->render();
 
-		if(!isset(pAdress::arg()['ajax']) AND !isset(pAdress::arg()['ajaxLoad']))
+		if(!isset(pRegister::arg()['ajax']) AND !isset(pRegister::arg()['ajaxLoad']))
 			p::Out("</div>");
 
 	}
