@@ -23,7 +23,7 @@ class pRulesheetHandler extends pHandler{
 		if($this->_section == 'inflections')
 			$table = 'morphology';
 
-		$this->dataModel = new pRuleDataModel($this->_activeSection['table'], (isset(pAdress::arg()['id']) ? pAdress::arg()['id'] : null));
+		$this->dataModel = new pRuleDataModel($this->_activeSection['table'], (isset(pRegister::arg()['id']) ? pRegister::arg()['id'] : null));
 
 	}
 
@@ -34,8 +34,8 @@ class pRulesheetHandler extends pHandler{
 
 	// This is the ajax handler for describing a rule, with help of the respective class
 	public function ajaxDescribe(){
-		if($this->_section == 'inflection' AND isset(pAdress::post()['rule'])){
-			$inflection = new pInflection(pAdress::post()['rule']);
+		if($this->_section == 'inflection' AND isset(pRegister::post()['rule'])){
+			$inflection = new pInflection(pRegister::post()['rule']);
 			p::Out($inflection->describeRule());
 		}
 
@@ -44,13 +44,13 @@ class pRulesheetHandler extends pHandler{
 
 	// This is the ajax handler for testing the rule with an example
 	public function ajaxExample(){
-		if($this->_section == 'inflection' AND isset(pAdress::post()['rule'], pAdress::post()['lexform'])){
-			$inflection = new pInflection(pAdress::post()['rule']);
+		if($this->_section == 'inflection' AND isset(pRegister::post()['rule'], pRegister::post()['lexform'])){
+			$inflection = new pInflection(pRegister::post()['rule']);
 			$twolc = new pTwolc((new pTwolcRules('phonology_contexts'))->toArray());
 			$twolc->compile();
-			p::Out(@$twolc->feed($inflection->inflect(pAdress::post()['lexform']))->toRulesheet());
+			p::Out(@$twolc->feed($inflection->inflect(pRegister::post()['lexform']))->toRulesheet());
 		}
-		if($this->_section == 'context' AND isset(pAdress::post()['rule'])){
+		if($this->_section == 'context' AND isset(pRegister::post()['rule'])){
 			$twolc = new pTwolc((new pTwolcRules('phonology_contexts'))->toArray());
 			echo @$twolc->feed($explode[1])->toDebug()."<br />";
 		}
@@ -58,7 +58,7 @@ class pRulesheetHandler extends pHandler{
 
 	protected function generateLinksArray(){
 		if($this->_section == 'inflection')
-			$links = array('lexcat' => @pAdress::post()['lexcat'], 'gramcat' => @pAdress::post()['gramcat'], 'tag' => @pAdress::post()['tags'], 'modes' => @pAdress::post()['tables'], 'submodes' => @pAdress::post()['headings'], 'numbers' => @pAdress::post()['rows']);
+			$links = array('lexcat' => @pRegister::post()['lexcat'], 'gramcat' => @pRegister::post()['gramcat'], 'tag' => @pRegister::post()['tags'], 'modes' => @pRegister::post()['tables'], 'submodes' => @pRegister::post()['headings'], 'numbers' => @pRegister::post()['rows']);
 		else
 			$links = null;
 
@@ -71,13 +71,13 @@ class pRulesheetHandler extends pHandler{
 
 		if(p::StartsWith($action, 'new')){
 
-			$explode = explode(':', pAdress::arg()['action']);
+			$explode = explode(':', pRegister::arg()['action']);
 			// We will need to check if the ruleset number given is valid;
 			$dM = new pDataModel('rulesets');
 			if($dM->getSingleObject((isset($explode[1]) ? $explode[1] : 0))->rowCount() == 0)
 				return p::Out(pMainTemplate::NoticeBox('fa-warning', 'Ruleset does not exist!', 'danger-notice rulesheet-margin'));
 				
-			if(isset(pAdress::arg()['ajax']))
+			if(isset(pRegister::arg()['ajax']))
 				return $this->ajaxNew((isset($explode[1]) ? $explode[1] : 0));
 
 
@@ -90,7 +90,7 @@ class pRulesheetHandler extends pHandler{
 		if($action == 'edit'){
 			$dM = new pDataModel('rulesets');
 			$dM->getSingleObject((isset($this->_data[0]['ruleset']) ? $this->_data[0]['ruleset'] : 0));
-			if(isset(pAdress::arg()['ajax']))
+			if(isset(pRegister::arg()['ajax']))
 				return $this->ajaxEdit();
 			
 			$template = (new pRulesheetTemplate($this->dataModel, $this->_structure[$this->_section]));
@@ -106,7 +106,7 @@ class pRulesheetHandler extends pHandler{
 
 	public function ajaxEdit(){
 		$links = $this->generateLinksArray();
-		$edit = $this->dataModel->updateRule(pAdress::post()['name'], pAdress::post()['rule'], pAdress::post()['ruleset'], $links);
+		$edit = $this->dataModel->updateRule(pRegister::post()['name'], pRegister::post()['rule'], pRegister::post()['ruleset'], $links);
 		if($edit == false)
 			echo pMainTemplate::NoticeBox('fa-warning', SAVED_EMPTY, 'hide warning-notice errorSave');
 		else
@@ -116,13 +116,13 @@ class pRulesheetHandler extends pHandler{
 
 	public function ajaxRemove(){
 		$ruleset = $this->_data[0]['ruleset'];
-		$this->dataModel->remove(0, 0, pAdress::arg()['id']);
+		$this->dataModel->remove(0, 0, pRegister::arg()['id']);
 		echo "<script>window.location = '".p::Url('?rules/view/'.str_replace('/', ':', $this->dataModel->customQuery("SELECT name FROM rulesets WHERE id = $ruleset")->fetchAll()[0]['name']))."';</script>";
 	}
 
 	public function ajaxNew($id = 0){
 		$links = $this->generateLinksArray();
-		$id = $this->dataModel->newRule(pAdress::post()['name'], pAdress::post()['rule'], $id, $links);
+		$id = $this->dataModel->newRule(pRegister::post()['name'], pRegister::post()['rule'], $id, $links);
 		if($id == false){
 			echo pMainTemplate::NoticeBox('fa-warning', SAVED_EMPTY, 'hide warning-notice errorSave');
 			die('<script>$(".saving").slideUp();'.(($id == false) ? '$(".errorSave").slideDown();' : '$(".errorSave").slideUp();$(".successSave").slideDown().delay(1500).slideUp();')."</script>");

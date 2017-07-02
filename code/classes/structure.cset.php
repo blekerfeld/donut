@@ -43,8 +43,8 @@ abstract class pStructure{
 	public function compile(){
 
 		// If the user requests a section and if it extist
-		if(isset(pAdress::arg()['section']) AND array_key_exists(pAdress::arg()['section'], $this->_structure))
-			$this->_section = pAdress::arg()['section'];
+		if(isset(pRegister::arg()['section']) AND array_key_exists(pRegister::arg()['section'], $this->_structure))
+			$this->_section = pRegister::arg()['section'];
 		else{
 
 			$this->_error = pMainTemplate::NoticeBox('fa-info-circle fa-12', DA_SECTION_ERROR, 'notice');

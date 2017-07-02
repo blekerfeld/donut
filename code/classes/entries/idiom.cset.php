@@ -28,8 +28,8 @@ class pIdiom extends pEntry{
 		$donut['page']['title'] = $this->_entry['idiom']." - ".CONFIG_SITE_TITLE;
 
 		// If there is someplace to return to, we better do that.
-		if(isset(pAdress::arg()['return'])){
-			$returnTo = explode(':', pAdress::arg()['return']);
+		if(isset(pRegister::arg()['return'])){
+			$returnTo = explode(':', pRegister::arg()['return']);
 			$backHref = p::Url('?entry/'.($returnTo[0] == '' ? '' : $returnTo[0].'/').$returnTo[1]);
 		}
 

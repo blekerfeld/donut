@@ -13,7 +13,7 @@ class pTerminalTemplate extends pSimpleTemplate{
 	public function renderAll(){
 		/// Just as simple as that :)
 
-		if(isset(pAdress::arg()['ajax']))
+		if(isset(pRegister::arg()['ajax']))
 			die((new pTerminal)->ajax());
 
 		p::Out('

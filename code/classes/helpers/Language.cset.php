@@ -52,13 +52,13 @@ class pLanguage{
 		$dM->setCondition(" WHERE activated = 1 ");
 		$data = $dM->getObjects()->fetchAll();
 
-		$select = '<input type="hidden" class="'.$class.'" value="'.(isset(pAdress::session()['searchLanguage']) ? pAdress::session()['searchLanguage'] : $data[1]['locale'].'-'.$data[0]['locale']).'"/><select class="'.$class.'-selector">';
+		$select = '<input type="hidden" class="'.$class.'" value="'.(isset(pRegister::session()['searchLanguage']) ? pRegister::session()['searchLanguage'] : $data[1]['locale'].'-'.$data[0]['locale']).'"/><select class="'.$class.'-selector">';
 
 		$lang_zero = $data[0];
 
 		foreach($data as $key => $language)
 			if($key > 0)
-				$select .= '<option value="'.$language['locale'].'-'.$lang_zero['locale'].'" '.((isset(pAdress::session()['searchLanguage']) AND (pAdress::session()['searchLanguage'] == $language['locale'].'-'.$lang_zero['locale'])) ? ' selected ' : '').'>'.$language['name'].' - '.$lang_zero['name'].'</option><option value="'.$lang_zero['locale'].'-'.$language['locale'].'" '.((isset(pAdress::session()['searchLanguage']) AND (pAdress::session()['searchLanguage'] == $lang_zero['locale'].'-'.$language['locale'])) ? ' selected ' : '').'>'.$lang_zero['name'].' - '.$language['name'].'</option>';
+				$select .= '<option value="'.$language['locale'].'-'.$lang_zero['locale'].'" '.((isset(pRegister::session()['searchLanguage']) AND (pRegister::session()['searchLanguage'] == $language['locale'].'-'.$lang_zero['locale'])) ? ' selected ' : '').'>'.$language['name'].' - '.$lang_zero['name'].'</option><option value="'.$lang_zero['locale'].'-'.$language['locale'].'" '.((isset(pRegister::session()['searchLanguage']) AND (pRegister::session()['searchLanguage'] == $lang_zero['locale'].'-'.$language['locale'])) ? ' selected ' : '').'>'.$lang_zero['name'].' - '.$language['name'].'</option>';
 
 	    
 	  	return $select . '</select><script>$(".'.$class.'-selector").ddslick({

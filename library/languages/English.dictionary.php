@@ -138,6 +138,10 @@ p::defineLocale("DA_WORDS_NEW_EXTERN", "New word");
 p::defineLocale("DA_TRANSLATIONS", "Translations");
 p::defineLocale("DA_TRANSLATION", "Translation");
 
+// Stats
+p::defineLocale('STATS_MOSTSEARCH', 'The top %s most-searched words');
+p::defineLocale('STATS_LASTSEARCHBY', 'Last search «%s»');
+
 // Grammatical tables
 p::defineLocale("DA_HEADINGS", "Headings");
 

@@ -25,7 +25,7 @@ class pThreadTemplate extends pTemplate{
 		p::Out($this->newParentForm());
 		p::Out("</div>");
 		// Throwing this object's script into a session
-		pAdress::session($id, $this->javascript($id));
+		pRegister::session($id, $this->javascript($id));
 		p::Out("<script type='text/javascript' src='".p::Url('pol://library/assets/js/key.js.php?key='.$id)."'></script>");
 	}
 
@@ -75,7 +75,7 @@ class pThreadTemplate extends pTemplate{
 	public function javascript($id){
 		return "$('.delete$id').click(function(){
 			if(confirm('".WD_DELETE_CONFIRM."') == true){
-				$('.ajax$id-loader').load('".p::Url("thread/".pAdress::arg()['section']."/".pAdress::arg()['id']."/remove/")."' + $(this).data('deleteid') + '/ajax');
+				$('.ajax$id-loader').load('".p::Url("thread/".pRegister::arg()['section']."/".pRegister::arg()['id']."/remove/")."' + $(this).data('deleteid') + '/ajax');
 				$('.message[data-messageid=\"' + $(this).data('deleteid') + '\"]').fadeOut();
 			}
 		

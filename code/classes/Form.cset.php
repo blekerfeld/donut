@@ -243,7 +243,7 @@ class pMagicActionForm{
 		// Checking if we have any empty required fields.
 		$empty_error = 0;
 		foreach($this->_fields->get() as $field)
-			if($field->required AND pAdress::post()['admin_form_'.$field->name] == '')
+			if($field->required AND pRegister::post()['admin_form_'.$field->name] == '')
 				$empty_error++;
 
 		if($empty_error != 0){
@@ -255,7 +255,7 @@ class pMagicActionForm{
 			$values = array();
 
 			foreach($this->_fields->get() as $field)
-				$values[] = pAdress::post()['admin_form_'.$field->name];
+				$values[] = pRegister::post()['admin_form_'.$field->name];
 
 			try {
 
@@ -371,21 +371,21 @@ class pMagicActionForm{
 
 		$empty_error = 0;
 
-		if(pAdress::post()['admin_form_'.$this->_guestObject->structure[$this->_section]['incoming_links'][$this->_linked]['parent']] == null){
+		if(pRegister::post()['admin_form_'.$this->_guestObject->structure[$this->_section]['incoming_links'][$this->_linked]['parent']] == null){
 			$empty_error++;
 		}
 
 		if(isset($this->_extra_fields))
 			foreach ($this->_extra_fields as $field)
 				if($field->showInForm && $field->required)
-					if(isset(pAdress::post()['admin_form_'.$field->name])AND empty(pAdress::post()['admin_form_'.$field->name]))
+					if(isset(pRegister::post()['admin_form_'.$field->name])AND empty(pRegister::post()['admin_form_'.$field->name]))
 						$empty_error++;
 
 
 		if($empty_error == 0){
 
 			// We have to check if the relation already exists
-			if($this->_handler->dataModel->countAll($this->_guestObject->structure[$this->_section]['incoming_links'][$this->_linked]['child'] . " = '" . $this->_handler->_matchOnValue . "' AND " . $this->_guestObject->structure[$this->_section]['incoming_links'][$this->_linked]['parent'] . " = '" . pAdress::post()['admin_form_'.$this->_guestObject->structure[$this->_section]['incoming_links'][$this->_linked]['parent']] . "'")){
+			if($this->_handler->dataModel->countAll($this->_guestObject->structure[$this->_section]['incoming_links'][$this->_linked]['child'] . " = '" . $this->_handler->_matchOnValue . "' AND " . $this->_guestObject->structure[$this->_section]['incoming_links'][$this->_linked]['parent'] . " = '" . pRegister::post()['admin_form_'.$this->_guestObject->structure[$this->_section]['incoming_links'][$this->_linked]['parent']] . "'")){
 
 				p::Out(pMainTemplate::NoticeBox('fa-info-circle fa-12', DA_TABLE_RELATION_EXIST.". <a href='".p::Url("?".$this->_app."&".$this->_section."&link-table&id=".$this->_linkObject->_data[0]['id']."&linked=".$this->_linked)."'>".$this->_strings[6]."</a>", 'notice ajaxMessage'));
 
@@ -398,7 +398,7 @@ class pMagicActionForm{
 					if($field->name == $this->_guestObject->structure[$this->_section]['incoming_links'][$this->_linked]['child'])
 						$values[] = $this->_handler->_matchOnValue;
 					else
-						$values[] = pAdress::post()['admin_form_'.$field->name];
+						$values[] = pRegister::post()['admin_form_'.$field->name];
 
 				$this->_handler->dataModel->prepareForInsert($values);
 				$this->_handler->dataModel->insert();

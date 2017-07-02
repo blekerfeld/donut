@@ -124,4 +124,55 @@ return array(
 			'save_strings' => $saveStrings,
 		),
 
+		'random' => array(
+			'section_key' => 'random',
+			'type' => 'pEntryHandler',
+			'table' => 'idioms',
+			// Beware: the information fields need to exitst in the structure's datafields array
+			'entry_meta' => array(
+				'title_field' => 'idiom',
+				'parseAsObject' => 'pIdiom',
+			),
+			'surface' => '',
+			'icon' => '',
+			'condition' => false,
+			'items_per_page' => 20,
+			'disable_pagination' => false,
+			'datafields' => array(
+			),
+			'actions_item' => array(
+			),
+			'actions_bar' => array(
+			),
+			'save_strings' => '',
+		),
+
+		'stats' => array(
+			'section_key' => 'stats',
+			'type' => 'pEntryHandler',
+			'table' => 'config',
+			'template' => 'pStatsTemplate',
+			// Beware: the information fields need to exitst in the structure's datafields array
+			'entry_meta' => array(
+				'title_field' => 'idiom',
+				'parseAsObject' => 'pIdiom',
+			),
+			'permission' => 0,
+			'icon' => 'fa-font',
+			'id_as_hash' => true,
+			'hash_app' => 'lemma',
+			'surface' => DA_TITLE_WORDS,
+			'condition' => false,
+			'items_per_page' => 20,
+			'disable_pagination' => false,
+			'datafields' => array(
+			),
+			'actions_item' => array(
+			),
+			'actions_bar' => array(
+				'new' => array('new', DA_WORDS_NEW_EXTERN, 'fa-plus-circle fa-12', 'lemma-code discussion float-right', null, null, p::Url('?addword')),
+			),
+			'save_strings' => $saveStrings,
+		),
+
 	);

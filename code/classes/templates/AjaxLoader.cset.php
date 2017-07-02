@@ -31,7 +31,7 @@ class pAjaxLoader extends pTemplatePiece{
 			<a class='xsmall ajaxRefresh refresh$id' href='javascript:void(0);'>".(new pIcon('fa-refresh'))." Refresh</a>
 		" : "");
 		// Throwing this object's script into a session
-		pAdress::session($id, $this->script($id));
+		pRegister::session($id, $this->script($id));
 		$output .= "<script type='text/javascript' src='".p::Url('pol://library/assets/js/key.js.php?key='.$id)."'></script>";
 
 		return $output;

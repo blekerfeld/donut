@@ -76,7 +76,7 @@ class pLinkTableHandler extends pHandler{
 			      	p::Out("<tr class='item_".$data['id']."'><td style='width: auto;max-width: 5px;'><span class='xsmall'>".($item['id'] == 0 ? "<em><strong>".DA_DEFAULT."</em></strong>" : $item['id']) ."</span></td>");
 				      foreach($this->_dfs->get() as $key_d => $datafield){
 						if($datafield->showInTable == true)
-							if(isset($this->_guests->_data['outgoing_links'][pAdress::arg()['linked']]) AND $datafield->name != $this->_guests->_data['outgoing_links'][pAdress::arg()['linked']]['field'])
+							if(isset($this->_guests->_data['outgoing_links'][pRegister::arg()['linked']]) AND $datafield->name != $this->_guests->_data['outgoing_links'][pRegister::arg()['linked']]['field'])
 								p::Out("<td style='width: ".$datafield->width."'>".$datafield->parse($data[$datafield->name])."</td>");
 							else{
 							

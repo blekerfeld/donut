@@ -13,7 +13,7 @@ class pHomeTemplate extends pSimpleTemplate{
 
 	public function renderAll(){
 		// The home search box! Only if needed!
-		if(!(isset(pAdress::arg()['ajax']) and isset(pAdress::arg()['nosearch'])))
+		if(!(isset(pRegister::arg()['ajax']) and isset(pRegister::arg()['nosearch'])))
 			pMainTemplate::throwOutsidePage(new pSearchBox(true));
 
 		p::Out("<div class='home-margin pEntry'>".p::Markdown(file_get_contents(p::FromRoot("static/home.md")), true)."</div><br />");

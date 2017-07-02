@@ -132,7 +132,7 @@ class pLemmaSheetTemplate extends pTemplate{
 		$hashKey = spl_object_hash($this);
 
 			// Throwing this object's script into a session
-			pAdress::session($hashKey, $this->script($sendLanguages, $section, @$data, $edit));
+			pRegister::session($hashKey, $this->script($sendLanguages, $section, @$data, $edit));
 
 		p::Out("<script type='text/javascript' src='".p::Url('pol://library/assets/js/key.js.php?key='.$hashKey)."'></script>");
 

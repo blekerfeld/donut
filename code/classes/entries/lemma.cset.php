@@ -35,6 +35,18 @@ class pLemma extends pEntry{
 
 			// Make it easier to access the word itself
 			$this->word = $this->_entry['native'];
+
+			// Now we might do some statistics and stuff
+			if(isset(pRegister::arg()['is:result'], pRegister::session()['searchQuery'])){
+
+				if(isset(pRegister::session()['last_hit']) AND pRegister::session()['last_hit'] == date('H').'_'.$this->read('id'))
+					return;
+
+				pRegister::session('last_hit', date('H').'_'.$this->read('id'));
+				$dMSearchHit = new pDataModel('search_hits');
+				$dMSearchHit->prepareForInsert(array($this->read('id'), pUser::read('id'),date('Y-m-d H:i:s')))->insert();
+			}
+
 	}
 
 	// For search results

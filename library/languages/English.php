@@ -26,6 +26,7 @@ p::defineLocale('LANGUAGE_NUMBER_DECIMALS_SEPARATOR', '.');
 p::defineLocale('LANGUAGE_NUMBER_DECIMALS', 2);
 p::defineLocale('LANGUAGE_NUMBER_THOUSANDS_SEPARATOR', ',');
 
+p::defineLocale('RANDOM', "Random entry");
 p::defineLocale('LOADING', "Loading...");
 p::defineLocale('ACTIONS', "Actions");
 p::defineLocale('DL_ID', "ID");
@@ -36,6 +37,8 @@ p::defineLocale('BACK', "Back");
 p::defineLocale('PREVIOUS', "Previous page");
 p::defineLocale('NEXT', "Next page");
 p::defineLocale('SAVE', "Save changes");
+p::defineLocale('TIMES', " times");
+p::defineLocale('TIME', " time");
 p::defineLocale('EDIT', "Edit");
 p::defineLocale('SAVING', "Saving changes...");
 p::defineLocale('SAVED', "Changes succesfully saved");

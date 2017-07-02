@@ -14,14 +14,14 @@ class pProfileTemplate extends pSimpleTemplate{
 	protected $_user;
 
 	public function __construct(){
-		if(!isset(pAdress::arg()['id']))
+		if(!isset(pRegister::arg()['id']))
 			die();
 	}
 
 	public function renderAll(){
 
 		try {
-			$this->_user = new pUser(pAdress::arg()['id']);
+			$this->_user = new pUser(pRegister::arg()['id']);
 		} catch (Exception $e) {
 			pMainTemplate::setTitle(LOGIN_USERNOTFOUND);
 			p::Out(pMainTemplate::NoticeBox('fa-warning', LOGIN_USERNOTFOUND, 'danger-notice'));

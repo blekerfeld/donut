@@ -34,14 +34,14 @@ class pSearchHandler extends pHandler{
 
 	public function render(){
 
-		if(pAdress::arg()['section'] == 'wiki'){
+		if(pRegister::arg()['section'] == 'wiki'){
 			// TODO
-			var_dump(pAdress::arg());
+			var_dump(pRegister::arg());
 			return p::Out("wiki search is coming soon");
 		}		
 
 
-		$languageQuery = explode('-', pAdress::arg()['section']);
+		$languageQuery = explode('-', pRegister::arg()['section']);
 
 		// Fetching the search-language
 		if(isset($languageQuery[0]))
@@ -57,15 +57,15 @@ class pSearchHandler extends pHandler{
 
 		// Let's save the return lang inside a session
 
-		pAdress::session('searchLanguage', $searchlang->read('locale').'-'.$returnlang->read('locale'));
-		pAdress::session('returnLanguage', ($searchlang->read('id') == '0') ? $returnlang->read('id') : $searchlang->read('id'));
+		pRegister::session('searchLanguage', $searchlang->read('locale').'-'.$returnlang->read('locale'));
+		pRegister::session('returnLanguage', ($searchlang->read('id') == '0') ? $returnlang->read('id') : $searchlang->read('id'));
 
 		// The query could have come here by post or by arguments, post has priority
-		$query = (isset(pAdress::post()['query'])) ? pAdress::post()['query'] : ((isset(pAdress::arg()['query'])) ? (isset(pAdress::arg()['query'])) : ''); 
-		$wholeword = (isset(pAdress::post()['exactMatch'])) ? (pAdress::post()['exactMatch'] == 'true') : ((isset(pAdress::arg()['exactMatch'])) ? (pAdress::arg()['exactMatch'] == 'true') : ''); 
+		$query = (isset(pRegister::post()['query'])) ? pRegister::post()['query'] : ((isset(pRegister::arg()['query'])) ? (isset(pRegister::arg()['query'])) : ''); 
+		$wholeword = (isset(pRegister::post()['exactMatch'])) ? (pRegister::post()['exactMatch'] == 'true') : ((isset(pRegister::arg()['exactMatch'])) ? (pRegister::arg()['exactMatch'] == 'true') : ''); 
 
-		pAdress::session('searchQuery', $query);
-		pAdress::session('exactMatch', $wholeword);
+		pRegister::session('searchQuery', $query);
+		pRegister::session('exactMatch', $wholeword);
 
 
 		$lemmaObject = new pLemmaDataModel;
@@ -81,12 +81,12 @@ class pSearchHandler extends pHandler{
 			p::Out("<span class='markdown-body'><h3>".(new pIcon('fa-search'))." ".DICT_SEARCH_RESULTS."</h3></span><br />");
 
 			if(count($fetchSearch) == 0)
-				p::Out("<div class='small notice'>".(new pIcon('fa-info-circle', 12))." ".DICT_NO_HITS."</div>");
+				p::Out("<div class='medium warning-notice'>".(new pIcon('fa-info-circle', 12))." ".DICT_NO_HITS."</div>");
 			
 			foreach($fetchSearch as $lemma)
 				$this->parseSearchResults($query, $lemma, $searchlang);
 
-			if(isset(pAdress::arg()['ajax']))
+			if(isset(pRegister::arg()['ajax']))
 				return true;
 	}
 }

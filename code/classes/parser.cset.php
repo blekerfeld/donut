@@ -169,17 +169,17 @@ class pParser{
 
 				$guests->compile();
 
-				if(isset(pAdress::arg()['id']))
-					$guests->runData(pAdress::arg()['id']);
+				if(isset(pRegister::arg()['id']))
+					$guests->runData(pRegister::arg()['id']);
 
 				$linkTableObject = new pLinkTableHandler($this->structure, 'fa-link',  $this->structure[$this->_data['incoming_links'][$linked]['section']]['surface']."&#x205F; (&#x205F;".DA_TABLE_LINKS_PARENT."&#x205F;) &#x205F; ↔ &#x205F;".$this->_data['surface']." &#x205F;(&#x205F;".DA_TABLE_LINKS_CHILD."&#x205F;)", $this->_data['incoming_links'][$linked]['table'], 0, $dfs, $actions, $action_bar, false, $this->_section, $this->_app);
 
 
-				if(isset(pAdress::arg()['id'])){
-					if(!is_numeric(pAdress::arg()['id']))
-						$id = p::HashId(pAdress::arg()['id'], true)[0];
+				if(isset(pRegister::arg()['id'])){
+					if(!is_numeric(pRegister::arg()['id']))
+						$id = p::HashId(pRegister::arg()['id'], true)[0];
 					else
-						$id = pAdress::arg()['id'];
+						$id = pRegister::arg()['id'];
 
 					// The condition allows for up to two parents
 					$linkTableObject->setCondition("WHERE ((".$this->_data['incoming_links'][$linked]['child']." = '".$id."'" . (
@@ -190,7 +190,7 @@ class pParser{
 				$this->_handler->getData();
 				$linkTableObject->getData();
 				// Passing some very useful information to the linking table
-				$linkTableObject->passData($guests, $linked,$this->_handler->_data, $this->_data['incoming_links'][$linked]['show_parent'], $this->_data['incoming_links'][$linked]['show_child'], $this->_data['incoming_links'][$linked]['parent'], pAdress::arg()['id']);
+				$linkTableObject->passData($guests, $linked,$this->_handler->_data, $this->_data['incoming_links'][$linked]['show_parent'], $this->_data['incoming_links'][$linked]['show_child'], $this->_data['incoming_links'][$linked]['parent'], pRegister::arg()['id']);
 
 				if($name == 'link-table')
 					return $linkTableObject->render();

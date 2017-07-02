@@ -14,7 +14,7 @@ class pLoginTemplate extends pTemplate{
 
 	public function loginForm(){
 		$output = '';
-		$output .= "<div class='btCard admin'>
+		$output .= "<div class='btCard admin' style='width: 400px;'>
 		<div class='btTitle'>".(new pIcon('fa-lock', 12))." ".LOGIN_TITLE."</div>
 		<div class='ajaxChecking'></div>
 		<form id='loginForm'>

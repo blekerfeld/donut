@@ -24,10 +24,10 @@ class pDispatcher {
 		if($overrideQueryStringIfEmpty == true AND $query == '')
 				$query = 'home';
 		$this->query = $query;
-		pAdress::queryString($this->query);		
-		// Let's pack some superglobals inside pAdress
-		pAdress::session($_SESSION);
-		pAdress::post($_POST);
+		pRegister::queryString($this->query);		
+		// Let's pack some superglobals inside pRegister
+		pRegister::session($_SESSION);
+		pRegister::post($_POST);
 		$this->_dispatchData = require_once p::FromRoot("code/Dispatch.php");
 		self::$structure = $this->_dispatchData;
 		unset($this->_dispatchData['META_MENU']);
@@ -61,16 +61,16 @@ class pDispatcher {
 		// We can only create a structure if we have the necessary data!
 		if(!isset($this->_dispatchData[$this->_urlArguments[0]])){
 			if(file_exists(p::FromRoot("static/".$this->_urlArguments[0].".md"))){
-				pAdress::arg($this->_arguments);
+				pRegister::arg($this->_arguments);
 				p::Out("<div class='home-margin'>".p::Markdown(file_get_contents(p::FromRoot("static/".$this->_urlArguments[0].".md")), true, true, true)."</div>");
 			}
 			// DEBUG MODE ONLY
 			elseif($this->_urlArguments[0] == 'scrap' AND file_exists(p::FromRoot("scrap.php"))){
-				pAdress::arg($this->_arguments);
+				pRegister::arg($this->_arguments);
 				require p::FromRoot("scrap.php");
 			}
 			elseif($this->_urlArguments[0] == 'README' AND file_exists(p::FromRoot("README.md"))){
-				pAdress::arg($this->_arguments);
+				pRegister::arg($this->_arguments);
 				p::Out("<div class='home-margin'>".p::Markdown(file_get_contents(p::FromRoot("README.md")), true)."</div>");
 			}
 			else
@@ -122,7 +122,7 @@ class pDispatcher {
 				$countArguments++;
 
 		// Let's bind this information to our static adress
-		pAdress::arg($this->_arguments);
+		pRegister::arg($this->_arguments);
 
 		$this->structureObject->compile();
 
@@ -133,7 +133,7 @@ class pDispatcher {
 		// Let's render our object and return the template :D
 		$this->structureObject->render();
 		// It might be that we need to call the print template instead...
-		if(isset(pAdress::arg()['print']))
+		if(isset(pRegister::arg()['print']))
 			return new pPrintTemplate;
 		// Calling the template
 		return new pMainTemplate;
