@@ -26,6 +26,9 @@ p::defineLocale('LANGUAGE_NUMBER_DECIMALS_SEPARATOR', '.');
 p::defineLocale('LANGUAGE_NUMBER_DECIMALS', 2);
 p::defineLocale('LANGUAGE_NUMBER_THOUSANDS_SEPARATOR', ',');
 
+p::defineLocale('COOKIES_MSG', 'This website uses cookies to ensure you get the best dictionary experience.');
+p::defineLocale('COOKIES_ALRIGHT', 'Got it!');
+
 p::defineLocale('RANDOM', "Random entry");
 p::defineLocale('LOADING', "Loading...");
 p::defineLocale('ACTIONS', "Actions");
