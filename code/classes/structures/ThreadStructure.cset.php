@@ -10,7 +10,7 @@
 
 class pThreadStructure extends pStructure{
 	
-	private $_ajax, $_section, $_template, $_threads, $_threadsByID;
+	public $_section, $_template, $_threads, $_threadsByID;
 
 	public function compile(){
 
@@ -22,11 +22,11 @@ class pThreadStructure extends pStructure{
 		if(!isset(pRegister::arg()['id']))
 			die();
 
-		$this->_dataModel = new pDataModel('threads');
-		$this->_dataModel->setCondition(" WHERE section = '".$this->_section."' AND linked_to = '".pRegister::arg()['id']."' ");
-		$this->_dataModel->getObjects();
+		$this->dataModel = new pDataModel('threads');
+		$this->dataModel->setCondition(" WHERE section = '".$this->_section."' AND linked_to = '".pRegister::arg()['id']."' ");
+		$this->dataModel->getObjects();
 
-		foreach($this->_dataModel->data()->fetchAll() as $thread){
+		foreach($this->dataModel->data()->fetchAll() as $thread){
 			$this->_threads[$thread['thread_id']][] = $thread;
 			$this->_threadsByID[$thread['id']] = $thread;
 		}
@@ -40,18 +40,41 @@ class pThreadStructure extends pStructure{
 	protected function delete($id){
 		// CHECK
 		if(pUser::checkPermission(-4) OR pUser::read('id') == $this->_threadsByID[$id]['user_id'])
-			$this->_dataModel->customQuery("DELETE FROM threads WHERE section = '".$this->_section."' AND ((id = $id) OR (thread_id = $id));");
+			$this->dataModel->customQuery("DELETE FROM threads WHERE section = '".$this->_section."' AND ((id = $id) OR (thread_id = $id));");
 	}
 
 	
 	public function render(){
 
-		if(isset(pRegister::arg()['action'], pRegister::arg()['thread_id'])){
-			if(pRegister::arg()['action'] == 'remove'){
-				$this->delete(pRegister::arg()['thread_id']);
+		if(isset(pRegister::arg()['action'])){
+			if(pRegister::arg()['action'] == 'remove' AND isset(pRegister::arg()['id'])){
+				$this->delete(pRegister::arg()['id']);
 				// TODO: succes message
 			}
-			return false;
+			if(pRegister::arg()['action'] == 'new' OR pRegister::arg()['action'] == 'edit'){
+			$dfs = new pSet;
+			$dfs->add(new pDataField('linked_to', "Linked to", '', 'hidden', true, true, true, '', false, (isset(pRegister::arg()['id']) ? pRegister::arg()['id'] : 0)));
+			$dfs->add(new pDataField('section', "", '', 'hidden', true, true, true, '', false, $this->_section));
+			$dfs->add(new pDataField('thread_id', "Thread ID", '1%', 'hidden', true, true, true, '', false, (isset(pRegister::arg()['thread_id']) ? pRegister::arg()['thread_id'] : 0)));
+			$dfs->add(new pDataField('title', "Title", '67%', 'input', true, true, true, '', false));		
+			$dfs->add(new pDataField('content', "Content", '67%', 'markdown', true, true, true, '', false));		
+			$dfs->add(new pDataField('user_id', "", '', 'hidden', true, true, true, '', false, pUser::read('id')));
+			$dfs->add(new pDataField('post_date', "", '', 'hidden', true, true, true, '', false, "NOW()"));
+			$dfs->add(new pDataField('update_date', "", '', 'hidden', true, true, true, '', false, "NOW()"));
+	
+	
+			$actionForm = new pMagicActionForm(pRegister::arg()['action'], 'threads', $dfs, $this->_meta['save_strings'], $this->_app, $this->_section, $this); 
+
+			$actionForm->compile();
+
+			if(isset(pRegister::arg()['ajax']))
+				return $actionForm->ajax();
+
+			$actionForm->form(false, (isset(pRegister::arg()['id']) ? pRegister::arg()['id'] : 0), false, pRegister::arg()['id']);
+
+			}
+			if(pRegister::arg()['action'] != 'view')
+				return false;
 		}
 
 		p::Out("<div class='home-margin'>".

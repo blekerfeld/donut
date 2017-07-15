@@ -74,7 +74,7 @@ class pMenuTemplate extends pTemplate{
 		// Any extra simple links?
 		if(isset($this->_magicMenu['simple_links']))
 			foreach($this->_magicMenu['simple_links'] as $link)
-				$output .= "<a class='".$link['class']." ".(($_SERVER['PHP_SELF'] == CONFIG_FOLDER . '/' . $link['file']) ? 'active' : '')."' href='".p::Url($link['file'])."'>".$link['name']."</a>";
+				$output .= "<a class='".$link['class ']." ".(($_SERVER['PHP_SELF'] == CONFIG_FOLDER . '/' . $link['file']) ? 'active' : '')."' href='".p::Url($link['file'])."'>".$link['name']."</a>";
 
 		$output .= "</div><script type='text/javascript'>
 			$('.ttip_menu').tooltipster({animation: 'grow', animationDuration: 100,  distance: 0, contentAsHTML: true, interactive: true, side:'bottom'});

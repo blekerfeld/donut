@@ -136,10 +136,9 @@ div.select-specify div.items div.item{
 }
 
 div.select-specify div.items div.item.selected{
-	background: linear-gradient(rgb(1, 101, 255), rgb(15, 90, 203));
+	background: #7D97A5;
 	color: #f9f9f9;
-	border-color: #17436D;
-	border-radius: 3px;
+	border-color: #8B9CA5;
 }
 
 div.select-specify div.items div.item span[role="remove"]{

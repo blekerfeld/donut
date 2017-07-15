@@ -2314,7 +2314,7 @@ table.inflections tr.title td{
 
 textarea.gtEditor, textarea.minEditor{
   width: 100%;
-  border: 1px solid #f4f4f4;
+  border: rgba(150, 150, 150, 0.1) 1px solid;
   padding: 20px;
   font-size: 15px;
   font-family: Open Sans;
@@ -2324,7 +2324,7 @@ textarea.gtEditor, textarea.minEditor{
 
 textarea.minEditor{
   min-height: 100px;
-  border: 1px solid #D1D1D1;
+  border: rgba(150, 150, 150, 0.1) 1px solid;
   border-radius: 0px;
   padding: 10px;
   font-size: 12px;
@@ -2402,3 +2402,37 @@ table.rules span.dType{
   width: 85%;
 }
 
+
+
+@keyframes blink {
+    0% {
+      opacity: .2;
+    }
+    20% {
+      opacity: 1;
+    }
+    100% {
+      opacity: .2;
+    }
+}
+
+p.dots{
+  font-size: 50px;
+  text-align: center;
+  width: 100%;
+}
+
+.dots span {
+    animation-name: blink;
+    animation-duration: 1.4s;
+    animation-iteration-count: infinite;
+    animation-fill-mode: both;
+}
+
+.dots span:nth-child(2) {
+    animation-delay: .2s;
+}
+
+.dots span:nth-child(3) {
+    animation-delay: .4s;
+}

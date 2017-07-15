@@ -21,7 +21,7 @@ class pSetHandler extends pHandler{
 		call_user_func_array('parent::__construct', func_get_args());
 		// Override the datamodel
 
-		$this->_dataModel = new pDataModel($this->_activeSection['table']);
+		$this->dataModel = new pDataModel($this->_activeSection['table']);
 
 		// First load all other levels
 
@@ -30,8 +30,8 @@ class pSetHandler extends pHandler{
 			$id = $this->pathToID(pRegister::arg()['id']);
 
 		// Loading the 'folders' and the items
-		$this->_dataModel->setCondition(" WHERE parent = '".$id."' ");
-		$this->_ruleSets = $this->_dataModel->getObjects()->fetchAll();
+		$this->dataModel->setCondition(" WHERE parent = '".$id."' ");
+		$this->_ruleSets = $this->dataModel->getObjects()->fetchAll();
 
 		// Getting the 'files' aka items
 		$customQuery = array();
@@ -41,11 +41,11 @@ class pSetHandler extends pHandler{
 			$count++;
 		}
 
-		$this->_rules = $this->_dataModel->customQuery(implode(' UNION ALL ', $customQuery))->fetchAll();
+		$this->_rules = $this->dataModel->customQuery(implode(' UNION ALL ', $customQuery))->fetchAll();
 
-		$this->_dataModel->setCondition(" WHERE id = '".$id."' ");
+		$this->dataModel->setCondition(" WHERE id = '".$id."' ");
 		if(!isset(pRegister::arg()['action']) OR pRegister::arg()['action'] != 'new' OR pRegister::arg()['action'] != 'edit')
-			$this->_dataModel->getObjects();
+			$this->dataModel->getObjects();
 
 		$this->_template = new pSetTemplate($this);
 
@@ -54,7 +54,7 @@ class pSetHandler extends pHandler{
 	protected function pathToID($path){
 		if(is_numeric($path))
 			return $path;
-		$dM = $this->_dataModel;
+		$dM = $this->dataModel;
 		// No trailing in names
 		if(p::StartsWith($path, ':'))
 			$path = substr($path, 1);
@@ -71,7 +71,7 @@ class pSetHandler extends pHandler{
 	protected function IDtoPath($id){
 		if(!is_numeric($id))
 			return $id;
-		$dM = $this->_dataModel;
+		$dM = $this->dataModel;
 		$dM->setCondition(" WHERE id = ".p::Quote($id)." ");
 		if(isset($dM->getObjects()->fetchAll()[0]))
 			return $dM->getObjects()->fetchAll()[0]['name'];

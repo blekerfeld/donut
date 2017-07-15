@@ -86,7 +86,7 @@ class pMagicField{
 				break;
 
 			case 'markdown':
-				p::Out("<textarea name='".$this->name."'' class='minEditor elastic allowtabs field_".$this->name." ".$this->_field->class."' ></textarea>");
+				p::Out("<textarea name='".$this->name."'' class='minEditor elastic allowtabs field_".$this->name." ".$this->_field->class."' >".$this->_value."</textarea>");
 				break;
 			
 			default:
@@ -210,7 +210,7 @@ class pSelector{
 
 class pMagicActionForm{
 
-	private $_action, $_fields, $_adminobject, $_data, $_name, $_edit, $_magicfields, $_table, $_strings, $_section, $_app, $_extra_fields, $_linked;
+	private $_action, $_fields, $_adminobject, $_data, $_name, $_edit, $_magicfields, $_table, $_strings, $_section, $_app, $_extra_fields, $_linked, $dataModel;
 
 	public function __construct($name, $table, $fields, $strings, $app, $section, $object){
 		$this->_name = $name;
@@ -218,12 +218,19 @@ class pMagicActionForm{
 		$this->_table = $table;
 		$this->_app = $app;
 		$this->_handler = $object;
+		
 		$this->_edit = ($this->_name == 'edit');
 		$this->_section = $section;
 		$this->_strings = $strings;
 		$this->_magicfields = new pSet;
-		if($this->_edit)
-			$this->_data = $this->_handler->_data;
+		if($this->_edit){
+			// Try the object for data
+			if(isset($this->_handler->_data))
+				$this->_data = $this->_handler->_data;
+			// otherwise try this...
+			else
+				$this->_data = $this->_handler->dataModel->data()->fetchAll();
+		}
 		else
 			$this->_data = array();
 		$this->_name = ($this->_edit ? 'edit' : 'new');
@@ -231,8 +238,9 @@ class pMagicActionForm{
 
 	public function compile(){
 		foreach ($this->_fields->get() as $field) {
-			if($this->_edit)
+			if($this->_edit){
 				$this->_magicfields->add(new pMagicField($field, $this->_data[0][$field->name], ($this->_data[0]['id'] == 0)));
+			}
 			else
 				$this->_magicfields->add(new pMagicField($field));
 		}
@@ -261,7 +269,7 @@ class pMagicActionForm{
 
 				// Editing
 				if($this->_edit){
-					$this->_handler->dataModel->prepareForUpdate($values);
+					$this->_handler->dataModel->prepareForUpdate($values, $this->_data[0]['id'], $this->_fields);
 					$this->_handler->dataModel->update();
 				}
 				//Adding
@@ -292,7 +300,7 @@ class pMagicActionForm{
 	}
 
 
-	public function form($showBack = true, $forceID = null, $forceBtCard = true){
+	public function form($showBack = true, $forceID = null, $forceBtCard = true, $forceFirstID = null){
 		if($forceBtCard == true){
 			p::Out("<div class='btCard admin'>");
 			p::Out("<div class='btTitle'>".$this->_strings[0]."</div>");
@@ -346,7 +354,7 @@ class pMagicActionForm{
 				$('#adminForm select').select2();
 				$('.submit-form').click(function(){
 					$('.saving').slideDown();
-					$('.ajaxSave').load('".p::Url("?".$this->_app."/".$this->_section."/".$this->_name.(($this->_edit) ? '/'.$this->_data[0]['id'] : '').(($forceID != null) ? '/'.$forceID : '')."/ajax")."', {
+					$('.ajaxSave').load('".p::Url("?".$this->_app."/".$this->_section."/".$this->_name.(($this->_edit) ? '/'.(($forceFirstID != null) ? $forceFirstID : $this->_data[0]['id']) : '').(($forceID != null) ? '/'.$forceID : '')."/ajax")."', {
 						".implode(", ", $loadValues)."
 					});
 				});

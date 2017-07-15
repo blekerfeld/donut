@@ -172,8 +172,8 @@ return array(
 		'default_section' => 'tread',
 		'arguments' => array(
 			0 => 'section',
-			1 => 'id',
-			2 => 'action',
+			1 => 'action',
+			2 => 'id',
 			3 => 'thread_id',
 		),
 		'menu' => '',

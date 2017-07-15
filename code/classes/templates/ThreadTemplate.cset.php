@@ -23,7 +23,7 @@ class pThreadTemplate extends pTemplate{
 			p::Out(pMainTemplate::NoticeBox('fa-info-circle', WD_NO_THREADS, 'warning-notice'));
 		p::Out("<br />");
 		if(pUser::checkPermission(-1))
-			p::Out($this->newParentForm());
+			p::Out("");
 		p::Out("</div>");
 		// Throwing this object's script into a session
 		pRegister::session($id, $this->javascript($id));
@@ -64,30 +64,12 @@ class pThreadTemplate extends pTemplate{
 
 	}
 
-	public function newParentForm(){
 
-		$dfs = new pSet;
-
-		$dfs->add(new pDataField('name', "Path", '67%', 'prefix', true, true, true, '', false));
-		$dfs->add(new pDataField('parent', "Parent", '67%', 'hidden', true, true, true, '', false));
-
-
-		$actionForm = new pMagicActionForm(pRegister::arg()['action'], $this->_activeSection['table'], $dfs, $this->_activeSection['save_strings'], $this->_app, $this->_section, $this); 
-
-		$actionForm->compile();
-
-
-		return "<div class='entryThread'>
-			<div class='parent'>
-			".(new pEntrySection('New entry', $actionForm->form(false, (isset(pRegister::arg()['id']) ? pRegister::arg()['id'] : ':rules:'), false)))."
-			</div>
-		</div>";
-	}
 
 	public function javascript($id){
 		return "$('.delete$id').click(function(){
 			if(confirm('".WD_DELETE_CONFIRM."') == true){
-				$('.ajax$id-loader').load('".p::Url("thread/".pRegister::arg()['section']."/".pRegister::arg()['id']."/remove/")."' + $(this).data('deleteid') + '/ajax');
+				$('.ajax$id-loader').load('".p::Url("thread/".pRegister::arg()['section']."/remove/0/".pRegister::arg()['id']."")."' + $(this).data('deleteid') + '/ajax');
 				$('.message[data-messageid=\"' + $(this).data('deleteid') + '\"]').fadeOut();
 			}
 		
