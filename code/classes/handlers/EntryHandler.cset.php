@@ -37,10 +37,7 @@ class pEntryHandler extends pHandler{
 
 		// Discuss
 		if($action == 'discuss'){
-			p::Out(new pAjaxLoader(p::Url('?thread/'.$this->_section.'/'.pRegister::arg()['id']), true));
-		}
-		if($action == 'rand'){
-			die("hoi");
+			p::Out(new pAjaxLoader(p::Url('?thread/'.$this->_section.'/view/'.pRegister::arg()['id'])));
 		}
 
 	}
@@ -59,8 +56,6 @@ class pEntryHandler extends pHandler{
 
 		// Passing the data on to the template
 		$this->_template = new $this->_activeSection['template']($this->statsData($subsection), $this->_activeSection);
-
-
 
 		if($subsection == 'search')
 			return $this->_template->renderSearch();

@@ -17,7 +17,7 @@ class pSetTemplate extends pTemplate{
 	public function renderTable(){
 
 
-		$data = $this->_data->_dataModel->data()->fetchAll()[0];
+		$data = $this->_data->dataModel->data()->fetchAll()[0];
 
 		$newLink = "<a href='javascript:void();' class='float-right action-button ttip_file' title='<div class=\"tooltipster-inner\">
 		<a href=\"javascript:newFolder();\" class=\"new-folder ttip-sub nav\">".(new pIcon('fa-folder', 12))." Folder</a><div class=\"hide loadNewFolder\">".LOADING."</div>";

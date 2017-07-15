@@ -13,25 +13,25 @@
 
 class pEntry{
 
-	public $_id, $_entry, $_dataModel, $_data, $_subEntries, $_template, $_actionbar;
+	public $_id, $_entry, $dataModel, $_data, $_subEntries, $_template, $_actionbar;
 
 	public function __construct($dataModel, $table = ''){
 
 		if(is_a($dataModel, "pDataModel") OR is_subclass_of($dataModel, "pDataModel")){
-			$this->_dataModel = $dataModel;
-			$this->_id = $this->_dataModel->_singleId;
-			$this->_entry = $this->_dataModel->data()->fetchAll()[0];
+			$this->dataModel = $dataModel;
+			$this->_id = $this->dataModel->_singleId;
+			$this->_entry = $this->dataModel->data()->fetchAll()[0];
 		}
 		elseif(is_array($dataModel) ANd $table != ''){
 			$this->_id = $dataModel['id'];
-			$this->_dataModel = new pDataModel($table);
+			$this->dataModel = new pDataModel($table);
 			$this->_entry  = $dataModel;
 		}
 		elseif($table != ''){
-			$this->_dataModel = new pDataModel($table);
+			$this->dataModel = new pDataModel($table);
 			$this->_id = $dataModel;
-			$this->_dataModel->getSingleObject($this->_id);
-			$this->_entry = $this->_dataModel->data()->fetchAll()[0];
+			$this->dataModel->getSingleObject($this->_id);
+			$this->_entry = $this->dataModel->data()->fetchAll()[0];
 		}
 		else
 			return die ("Fatal error creating the entry object");

@@ -11,7 +11,7 @@
 
 class pInflector{
 	
-	protected $_modes, $_tables, $_dataModel, $_lemma, $_compiledParadigms, $_twolc, $_twolcRules, $_auxNesting, $_inflCache, $_dmCache;
+	protected $_modes, $_tables, $dataModel, $_lemma, $_compiledParadigms, $_twolc, $_twolcRules, $_auxNesting, $_inflCache, $_dmCache;
 
 	public function __construct($lemma, $twolcRules, $nesting = 0, $auxNesting = 0){
 		if($nesting > 12){
@@ -28,8 +28,8 @@ class pInflector{
 
 		$this->_dMCache = new pDataModel('lemmatization');
 
-		$this->_dataModel = new pDataModel('modes');
-		$this->_modes = $this->_dataModel->customQuery("SELECT DISTINCT modes.* FROM modes JOIN mode_apply ON modes.id = mode_apply.mode_id WHERE mode_apply.type_id = ".$this->_lemma->read('type_id'))->fetchAll();
+		$this->dataModel = new pDataModel('modes');
+		$this->_modes = $this->dataModel->customQuery("SELECT DISTINCT modes.* FROM modes JOIN mode_apply ON modes.id = mode_apply.mode_id WHERE mode_apply.type_id = ".$this->_lemma->read('type_id'))->fetchAll();
 		$this->_compiledParadigms = new pSet;
 		$this->_twolc = new pTwolc($twolcRules);
 		$this->_twolc->compile();

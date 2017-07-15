@@ -11,18 +11,18 @@
 
 class pParadigm{
 
-	protected $_id, $_data, $_dataModel, $_headings, $_rows;
+	protected $_id, $_data, $dataModel, $_headings, $_rows;
 
 	public function __construct($mode){
 		$this->_data = $mode;
 		$this->_id = $mode['id'];
-		$this->_dataModel = new pDataModel('modes');
+		$this->dataModel = new pDataModel('modes');
 		if(is_numeric($mode)){
-			$this->_data = $this->_dataModel->getSingleObject($mode)->fetchAll()[0];
+			$this->_data = $this->dataModel->getSingleObject($mode)->fetchAll()[0];
 			$this->_id = $mode;
 		}
-		$this->_headings = $this->_dataModel->customQuery("SELECT submodes.* FROM submodes JOIN submode_apply ON submodes.id = submode_apply.submode_id WHERE submode_apply.mode_type_id = ".$this->_data['mode_type_id'])->fetchAll();
-		$this->_rows = $this->_dataModel->customQuery("SELECT numbers.* FROM numbers JOIN number_apply ON numbers.id = number_apply.number_id WHERE number_apply.mode_type_id =  ".$this->_data['mode_type_id'].";")->fetchAll();
+		$this->_headings = $this->dataModel->customQuery("SELECT submodes.* FROM submodes JOIN submode_apply ON submodes.id = submode_apply.submode_id WHERE submode_apply.mode_type_id = ".$this->_data['mode_type_id'])->fetchAll();
+		$this->_rows = $this->dataModel->customQuery("SELECT numbers.* FROM numbers JOIN number_apply ON numbers.id = number_apply.number_id WHERE number_apply.mode_type_id =  ".$this->_data['mode_type_id'].";")->fetchAll();
 	}
 
 	public function compile($lemma){
@@ -57,7 +57,7 @@ class pParadigm{
 
 	protected function findRowNative($row){
 
-		$check = $this->_dataModel->customQuery("SELECT native FROM words JOIN row_native ON row_native.word_id = words.id WHERE row_native.row_id = ".$row['id']);
+		$check = $this->dataModel->customQuery("SELECT native FROM words JOIN row_native ON row_native.word_id = words.id WHERE row_native.row_id = ".$row['id']);
 
 		if($check->rowCount() != 0)
 			$row['name'] = $check->fetchAll()[0]['native'];
@@ -67,7 +67,7 @@ class pParadigm{
 
 	protected function findAux($row, $heading, $lemma){
 
-		$checkGramGroups = $this->_dataModel->customQuery("
+		$checkGramGroups = $this->dataModel->customQuery("
 
 			SELECT aux.word_id AS id, aux.mode_id, aux.placement, aux.inflect FROM gram_groups_aux AS aux
 			JOIN gram_groups_members AS gg ON aux.gram_group_id = gg.gram_group_id
@@ -119,7 +119,7 @@ class pParadigm{
 
 		// First we need to fetch all potatial candidates
 
-		$candidates = $this->_dataModel->customQuery("SELECT DISTINCT morphology_id FROM morphology_modes WHERE mode_id = ".$this->_id." UNION
+		$candidates = $this->dataModel->customQuery("SELECT DISTINCT morphology_id FROM morphology_modes WHERE mode_id = ".$this->_id." UNION
 		SELECT DISTINCT morphology_id FROM morphology_submodes WHERE submode_id = ".$heading['id']."  UNION
 		SELECT DISTINCT morphology_id FROM morphology_numbers WHERE number_id = ".$row['id']." UNION
 		SELECT DISTINCT morphology_id FROM morphology_lexcat WHERE lexcat_id = ".$lemma->read('type_id')." UNION
@@ -133,7 +133,7 @@ class pParadigm{
 		foreach($candidates as $candidate){
 
 
-			$validation = $this->_dataModel->customQuery("SELECT id, morphology_id, mode_id AS selective, 'mode' AS selector FROM morphology_modes WHERE morphology_id = ".$candidate['morphology_id']." UNION
+			$validation = $this->dataModel->customQuery("SELECT id, morphology_id, mode_id AS selective, 'mode' AS selector FROM morphology_modes WHERE morphology_id = ".$candidate['morphology_id']." UNION
 				SELECT id, morphology_id, submode_id AS selective, 'submode' AS selector FROM morphology_submodes WHERE morphology_id = ".$candidate['morphology_id']."  UNION
 				SELECT id, morphology_id, number_id AS selective, 'number' AS selector FROM morphology_numbers WHERE morphology_id = ".$candidate['morphology_id']." UNION
 				SELECT id, morphology_id, lexcat_id AS selective, 'lexcat' AS selector  FROM morphology_lexcat WHERE morphology_id = ".$candidate['morphology_id']." UNION
@@ -193,9 +193,9 @@ class pParadigm{
 			$rules[] = 'id = -1';
 
 		if(!$irregular)
-			return $this->_dataModel->customQuery("SELECT * FROM morphology WHERE (".implode(" OR ", $rules).") AND is_irregular = 0;")->fetchAll();
+			return $this->dataModel->customQuery("SELECT * FROM morphology WHERE (".implode(" OR ", $rules).") AND is_irregular = 0;")->fetchAll();
 		else
-			return $this->_dataModel->customQuery("SELECT * FROM morphology WHERE (".implode(" OR ", $rules).") AND is_irregular = 1 AND lemma_id = ".$lemma->read('id').";")->fetchAll();
+			return $this->dataModel->customQuery("SELECT * FROM morphology WHERE (".implode(" OR ", $rules).") AND is_irregular = 1 AND lemma_id = ".$lemma->read('id').";")->fetchAll();
 
 	}
 

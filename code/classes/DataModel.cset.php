@@ -123,7 +123,7 @@ class pDataModel {
 	}
 
 	// Prepare funcition to prepare the dataModel for new data
-	public function prepareForUpdate($data, $id = -1){
+	public function prepareForUpdate($data, $id = -1, $overwriteFields = null){
 
 		global $donut;
 
@@ -137,7 +137,9 @@ class pDataModel {
 
 		$key = 0;
 
-		foreach ($this->_fields->get() as $field) {
+		$forEachFields = ($overwriteFields != null ? $overwriteFields : $this->_fields);
+
+		foreach ($forEachFields->get() as $field) {
 			if($field->name != 'id')
 				$updateString[] = $field->name."= ".p::Quote($data[$key]);
 			$key++; 
@@ -182,6 +184,8 @@ class pDataModel {
 	}
 
 	public function update(){
+
+		echo "UPDATE ".$this->_table." SET ".$this->_updatestring." WHERE id = '".$this->_updateid."';";
 
 		return p::$db->cacheQuery("UPDATE ".$this->_table." SET ".$this->_updatestring." WHERE id = '".$this->_updateid."';");
 	}
