@@ -78,7 +78,9 @@ class pSearchHandler extends pHandler{
 
 		ajaxSkip:
 
-			p::Out("<span class='markdown-body'><h3>".(new pIcon('fa-search'))." ".DICT_SEARCH_RESULTS."</h3></span><br />");
+			p::Out("<div class='card-tabs-bar titles'>
+				<a class='ssignore' href='javascript:void(0);' onClick='$(\".word-search\").val(\"\");callBack();'>".(new pIcon('fa-arrow-left', 12))."</a>
+				<a class='ssignore active' data-tab=''>".(new pIcon('fa-search', 12))." ".DICT_SEARCH_RESULTS."</a></div><br />");
 
 			if(count($fetchSearch) == 0)
 				p::Out("<div class='medium warning-notice'>".(new pIcon('fa-info-circle', 12))." ".DICT_NO_HITS."</div>");
