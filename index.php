@@ -1,5 +1,5 @@
 <?php
-// 	Donut 				🍩
+// 	Donut
 //	Dictionary Toolkit
 // 		Version a.1
 //		Written by Thomas de Roo
@@ -14,7 +14,6 @@ require 'config.php';
 p::initialize();
 
 // Calling dispatch via the p
-// CONFIG_FORCE_HOME loads the homepage if no query string is given.
 p::dispatch(CONFIG_FORCE_HOME);
 
 // Rest in peace †

@@ -1,7 +1,17 @@
+# Donut a.1 .htacces-file
+
+<IfModule mod_rewrite.c>
+
+    # Tell PHP that the mod_rewrite module is ENABLED.
+    SetEnv HTTP_MOD_REWRITE On
 
     RewriteEngine On
 
-    # Run everything else but real files through index.php
-    RewriteCond %{REQUEST_FILENAME} !-d
-    RewriteCond %{REQUEST_FILENAME} !-f
-    RewriteRule ^(.*)$ index.php/?$1 [L]
+	# Run everything else but real files through index.php
+	RewriteCond %{REQUEST_FILENAME} !-d
+	RewriteCond %{REQUEST_FILENAME} !-f
+	RewriteRule ^(.*)$ index.php/?$1 [L]
+
+</IfModule>
+
+

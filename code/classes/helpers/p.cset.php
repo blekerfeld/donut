@@ -85,9 +85,9 @@ class p{
 		if($file == 'index.php')
 			$file = '';
 
-		if(self::StartsWith($url, '?') and CONFIG_REWRITE)
+		if(self::StartsWith($url, '?') and array_key_exists('HTTP_MOD_REWRITE', $_SERVER))
 			$url = CONFIG_ABSOLUTE_PATH . '/' . $file .self::Str($url)->replacePrefix('?', '');
-		elseif(self::StartsWith($url, '?') and !CONFIG_REWRITE)
+		elseif(self::StartsWith($url, '?') and !array_key_exists('HTTP_MOD_REWRITE', $_SERVER))
 			$url = CONFIG_ABSOLUTE_PATH . '/' . $file.$url;
 		elseif(self::StartsWith($url, 'pol://') && $exploded = explode('pol://', $url))
 			$url = self::Url($exploded[1]);

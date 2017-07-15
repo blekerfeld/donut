@@ -44,7 +44,7 @@ class pSearchBox extends pTemplatePiece{
 		// To have this in the page then
 		p::Out('<div class="hSearchResults">
 				<div class="searchLoad"></div>
-								<div class="load-hide hide" style="text-align: center">'.new pIcon('fa-spinner fa-spin', 32).'</div>
+								<div class="load-hide hide" style="text-align: center">'.pMainTemplate::loadDots().'</div>
 			</div>');
 
 			$hashKey = spl_object_hash($this);
