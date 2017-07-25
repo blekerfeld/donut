@@ -127,6 +127,7 @@ class pDataModel {
 
 		global $donut;
 
+
 		if($id == -1)
 			$id = $this->_singleId;
 		if($this->_fields != null)
@@ -186,6 +187,8 @@ class pDataModel {
 	public function update(){
 
 		return p::$db->cacheQuery("UPDATE ".$this->_table." SET ".$this->_updatestring." WHERE id = '".$this->_updateid."';");
+
+
 	}
 
 	public function count(){

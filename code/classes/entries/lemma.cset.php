@@ -141,7 +141,7 @@ class pLemma extends pEntry{
 		else
 			$linkToWord = $this->renderSimpleLink(true);
 
-		p::Out('<div class="dWordWrapper">'.$hitTranslation.'<strong class="dWord"><span class="native">'.$linkToWord."</span>".($this->_entry['ipa'] != '' ? "<span class='dType'> · </span><span class='pIpa small'>/".$this->_entry['ipa']."/</span>" : '')."</strong><span class='dType'> · ".$this->generateInfoString()."</span> <br />".$this->_template->parseTranslations($this->_translations, true)."</div>");
+		p::Out('<div class="dWordWrapper">'.$hitTranslation.'<strong class="dWord"><span class="native">'.$linkToWord."</span>".($this->_entry['ipa'] != '' ? "<span class='dType'> · </span><span class='pIpa small'>/".$this->_entry['ipa']."/</span>" : '')."</strong><span class='dType'> · ".$this->generateInfoString()."</span> ".($this->_entry['hidden'] == 1 ? "<span class='pExtraInfo'>".(new pIcon('fa-eye-slash', 12))." ".LEMMA_HIDDEN."</span>" : '')." <br />".$this->_template->parseTranslations($this->_translations, true)."</div>");
 	}
 
 

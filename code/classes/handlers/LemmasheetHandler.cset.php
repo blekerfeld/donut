@@ -68,6 +68,8 @@ class pLemmasheetHandler extends pHandler{
 		$edit = false;
 
 		while($edit == false){
+
+
 			// Let's update the basics
 			$edit = $this->dataModel->Basics(pRegister::post()['native'], pRegister::post()['lexform'], pRegister::post()['ipa'], pRegister::post()['lexcat'], pRegister::post()['gramcat'], pRegister::post()['tags'], pRegister::post()['hidden'], $editBool);
 
@@ -90,17 +92,18 @@ class pLemmasheetHandler extends pHandler{
 			if(isset(pRegister::post()['usage_notes']))
 				$edit = $this->dataModel->updateUsageNotes(pRegister::post()['usage_notes']);
 
-			// Prepare the irregular forms 
-			$forms = array();
-			foreach(array('irregular') as $keyReg){
+			if($editBool){
+				// Prepare the irregular forms 
+				$forms = array();
+				foreach(array('irregular') as $keyReg){
 				$forms[$keyReg] = pRegister::post()[$keyReg];
-				foreach($forms[$keyReg] as $key => $form)
+					foreach($forms[$keyReg] as $key => $form)
 					if($form['value'] == '')
 						unset($forms[$keyReg][$key]);
+				}
+
+				$edit = $this->dataModel->updateForms($forms);
 			}
-
-			$edit = $this->dataModel->updateForms($forms);
-
 
 		}
 		
@@ -113,7 +116,7 @@ class pLemmasheetHandler extends pHandler{
 		if(!$editBool)
 			echo '<script>$("#LemmaSheetForm").trigger("reset");</script>';
 
-		die('<script>$(".saving").slideUp();'.(($edit == false) ? '$(".errorSave").slideDown();' : '$(".errorSave").slideUp();$(".successSave").slideDown().delay(1500).slideUp();$(".tags").val("").html("");')."</script>");
+		die('<script>$(".saving").slideUp();'.(($edit == false) ? '$(".errorSave").slideDown();' : '$(".errorSave").slideUp();$(".successSave").slideDown().delay(1500).slideUp();'.($editBool ? 'setTimeout(function(){ window.location = "'.p::Url('?editor/edit/'.pRegister::arg()['id']).'"; }, 1000);' : ''))."</script>");
 	}
 
 	public function ajaxEdit(){

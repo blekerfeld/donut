@@ -142,7 +142,7 @@ class pLemmaSheetDataModel extends pDataModel{
 		if(empty($dictForm) OR empty($lexcat) OR empty($gramcat))
 			return false;
 		if($update){
-			$this->prepareForUpdate(array($dictForm, $lexForm, $ipa, $hidden, $lexcat, $gramcat, $tags, date('Y-m-d H:i:s'), date('Y-m-d H:i:s'), pUser::read('id')));
+			$this->prepareForUpdate(array($dictForm, $lexForm, $ipa, $hidden, $lexcat, $gramcat, $tags, date('Y-m-d H:i:s'), date('Y-m-d H:i:s'), pUser::read('id')), -1, $this->_fields->get());
 			return !(!$this->update());
 		}else{
 			$this->prepareForInsert(array($dictForm, $lexForm, $ipa, $hidden, $lexcat, $gramcat, $tags, null, date('Y-m-d H:i:s'), pUser::read('id')));

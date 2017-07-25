@@ -24,7 +24,7 @@
         keepJSONItemsOnTop: false,
         width: '150px',
         height: null,
-        background: "#E6ECF2",
+        background: "transparent",
         selectText: "#D4D9DD",
         defaultSelectedIndex: null,
         truncateDescription: true,
