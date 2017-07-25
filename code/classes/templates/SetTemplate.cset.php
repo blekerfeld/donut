@@ -96,7 +96,7 @@ class pSetTemplate extends pTemplate{
 
 		$editLink = "<span class='float-right'><a href='javascript:void();' class='ttip_file' title='<div class=\"tooltipster-inner\">
 		<a href=\"javascript:void(0)\" data-toggle=\"0\" data-loaded=\"0\" data-id=\"".$ruleset['id']."\" data-url=\"".p::Url("?".$this->_data->_app.'/'.$this->_data->_section.'/edit/'.str_replace('/', ":", $ruleset['name']).'/ajaxLoad')."\" class=\"ttip-sub nav edit-folder\">".(new pIcon('fa-external-link', 14))." Rename or move</a><div class=\"hide loadEditFolder-".$ruleset['id']."\">".LOADING."</div>
-		<a href=\"javascript:void(0);\" class=\"delete-folder ttip-sub nav\" data-id=\"".$ruleset['id']."\" data-url=\"".p::Url("?".$this->_data->_app.'/'.$this->_data->_section.'/remove/'.$ruleset['id'].'/ajax')."\">".(new pIcon('fa-times', 12))."  Delete</a><div class=\"deleteFolderLoad-".$ruleset['id']."\"></div></div>';><span class='dType'>::</span> ".(new pIcon('fa-caret-down', 12))."</a></span>";
+		<a href=\"javascript:void(0);\" class=\"delete-folder ttip-sub nav\" data-id=\"".$ruleset['id']."\" data-url=\"".p::Url("?".$this->_data->_app.'/'.$this->_data->_section.'/remove/'.$ruleset['id'].'/ajax')."\">".(new pIcon('fa-times', 12))."  Delete</a><div class=\"deleteFolderLoad-".$ruleset['id']."\"></div></div>';><span class='dType'>".(new pIcon('resize-bottom-right'))."</span> ".(new pIcon('fa-caret-down', 12))."</a></span>";
 
 		$output .= "<tr><td style='width: 15px;'>".(new pIcon('fa-folder', 12))."</td>
 						<td style='width: 40%;'>".$this->breakDownName($ruleset['name'], $this->_data->_app, true)."</td>

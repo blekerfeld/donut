@@ -7,22 +7,22 @@
 
 .header.dictionary{
   transition: all .3s;
-  box-shadow: 0 4px 10px 0px rgba(190,197,200, 0.05);
+  border-bottom: #E1E4E8 1px solid;
   padding-left: 120px;
   padding-top: 20px;
   padding-bottom: 10px;
   padding-right: 120px;
   position: relative;
-  background: #2A3A43;
-  box-shadow: 0px 2px 10px 0px rgba(62,69,94,0.35);
+  background: #FAFBFC;
 }
 
-
-.header.dictionary.home{
-}
 
 .header.dictionary.home .hSearch{
   padding: 15px;
+}
+
+.hSearch{
+  padding: 7px;
 }
 
 
@@ -63,7 +63,7 @@
 }
 
 input#wordsearch:focus, input#filter:focus {
-  color: #fff;
+  color: #333;
 }
 
 
@@ -73,7 +73,7 @@ input#wordsearch, input#filter, input#searchfilter {
   text-decoration: none;
   width: 60% - 18px;
   min-width: 100px;
-  color: #93A7BE;
+  color: #333;
   transition: all .3s;
 }
 
@@ -127,7 +127,9 @@ div.hSearch .load-hide{
 .hSearch{
   font-size: 15px;
   text-decoration: none;
-  color: #93A7BE;
+background: white;
+  color: rgb(150, 150, 150);
+  border: rgba(150, 150, 150, 0.2) 1px solid;
 }
 
 .hSearch input#wordsearch{
@@ -143,9 +145,7 @@ div.hSearch .load-hide{
   font-family: Libre Franklin;
   font-size: 18px;
   padding-top: 9px;
-  color: #fff;
   background: transparent;
-  border-bottom: 1px #243854 dotted;
 }
 
 

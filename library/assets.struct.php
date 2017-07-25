@@ -20,6 +20,7 @@ return array(
 		'vendors/jquery.select2.js',
 		'vendors/jquery.elastic.js',
 		'vendors/jquery.smoothstate.js',
+		'vendors/cookieconsent.js',
 		'smoothstate.js',
 		'jquery.cardtabs.js',
 		'jquery.selectspecify.js',
@@ -37,7 +38,8 @@ return array(
 		'vendors/tooltipster.css',
 		'vendors/jquery.select2.css',
 		'vendors/pace.css',
-		'vendors/jquery.tagsinput.css'
+		'vendors/jquery.tagsinput.css',
+		'vendors/cookieconsent.css',
 	),
 	'php' => array(
 		'vendors/str.php',

@@ -35,7 +35,7 @@ class pSearchBox extends pTemplatePiece{
 
 		$output .= '<div class="hWrap"><div class="hSearch">'.pLanguage::dictionarySelector('dictionary-selector').'
 
-				<input type="text" id="wordsearch" class="big word-search" placeholder="'.DICT_KEYWORD.'" value="'.$this->_value.'"/><a class="button search  remember search-button float-right" id="searchb" href="javascript:void(0);">' . (new pIcon('fa-search', 12)) . ' '. DICT_SEARCH.'</a>
+				<input type="text" id="wordsearch" class="big word-search" placeholder="'.DICT_KEYWORD.'" value="'.$this->_value.'"/>
 			<br id="cl" /></div></div>
 			</div>
 			</div>

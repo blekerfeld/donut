@@ -50,11 +50,11 @@ p::defineLocale('LEMMA_NEW', "New lemma");
 p::defineLocale('LEMMA_VIEW_SHORT', "View");
 p::defineLocale('LEMMA_EDIT_SHORT', "Edit");
 p::defineLocale('LEMMA_DISCUSS_SHORT', "Discuss");
+p::defineLocale('LEMMA_DISCUSS_TITLE', "Discussing %s");
 p::defineLocale('LEMMA_EDIT_MODE', "Edit lemma");
 p::defineLocale('LEMMA_EDIT_BASICS', "Change basic information");
 p::defineLocale('LEMMA_EDIT_DELETE', "Delete Lemma");
 p::defineLocale('LEMMA_EDIT_DELETE_SURE', "Are you sure you want to delete this lemma?");
-
 p::defineLocale("LEMMA_EDIT_STEMS", "Manage stems");
 p::defineLocale("LEMMA_EDIT_IRREGULAR", "Manage irregularities");
 p::defineLocale("LEMMA_EDIT_TRANSLATIONS", "Edit translations");
@@ -64,6 +64,22 @@ p::defineLocale("LEMMA_CLONE_TRANSLATIONS", "Clone translations");
 // Entry
 p::defineLocale('ENTRY_NOT_FOUND', "The entry you requested is not found.");
 
+
+// Discussion threads
+// Word dicussion
+p::defineLocale('WD_NEW_THREAD', "New thread");
+p::defineLocale('WD_NEW_THREAD_TITLE', "Submit a new thread");
+p::defineLocale('WD_REPLY', "reply");
+p::defineLocale('WD_REPLY_TITLE', "Replying to a message");
+p::defineLocale('WD_REPLY_PLACEHOLDER', "Write your message.");
+p::defineLocale('WD_REPLY_SEND', "Send");
+p::defineLocale('WD_REPLY_EMPTY', "You cannot post an empty reply.");
+p::defineLocale('WD_EDIT', "Edit");
+p::defineLocale('WD_DELETE', "Remove");
+p::defineLocale('WD_DELETE_CONFIRM', "Are you sure you want to remove this message and all of its underlying comments?");
+p::defineLocale('WD_BACK_TO_THREAD', "Back to thread");
+p::defineLocale('WD_BACK_TO_WORD', "Back to entry");
+p::defineLocale('WD_NO_THREADS', "There are no threads yet, feel free to create a discussion thread.");
 
 // D_admin
 p::defineLocale('DA_OPTIONAL', "optional");

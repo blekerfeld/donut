@@ -54,7 +54,6 @@ class pLemmaSheetTemplate extends pTemplate{
 							<span class='btNative'><input class='btInput nWord small normal-font lemma-ipa' value='".($edit ? $data['ipa'] : '')."'/></span></div>
 						</div>
 						<div class='right'>
-							<span class='markdown-body'><h2>Categories</h2></span><br />
 							<div class='btSource'><span class='btLanguage'>Lexical category <em class='small'>(part of speech)</em></span><br />
 								<span class='btNative'><select class='full-width select-lexcat select2'>".(new pSelector('types', @$data['type_id'], 'name', true, 'rules', true))->render()."</select></span></div>
 								<div class='btSource'><span class='btLanguage'>Grammatical category</span><br />
@@ -118,8 +117,20 @@ class pLemmaSheetTemplate extends pTemplate{
 				</div>
 				<div data-tab='Notes'>
 					<div style='padding: 10px'><textarea class='gtEditor usage-notes elastic allowtabs'>".($edit ? $this->_data->_links['usage_notes'] : '')."</textarea></div>
-				</div>
-			</div>
+				</div>");
+
+		if($edit){
+			p::Out("
+				<div data-tab='Irregular Forms'>");
+
+			//Irregular Forms
+			// The form version of the inflection tables, rendered by the inflector housing in the datamodel
+			p::Out($this->_data->_inflector->render("pIrregularTable"));
+			p::Out("
+				</div>");
+		}
+
+		p::Out("	</div>
 		</form><br />
 ");
 		p::Out("<a class='btAction green submit-form no-float'>".SAVE."</a>");
@@ -169,6 +180,13 @@ class pLemmaSheetTemplate extends pTemplate{
 			$('.ajaxGenerateIPA').load('".p::Url("?editor/".$section."/generateipa/ajax")."', {'lemma': $('.lemma-native').val()});
 		});
 		$('.submit-form').click(function(){
+			arrIrreg = [];
+			$('input.irreg').each(function(){
+				pushThis = {};
+				pushThis['value'] = $(this).val();
+				pushThis['selector'] = $(this).data('id');
+				arrIrreg.push(pushThis);
+			});
 			$('.errorSave').slideUp();
 			$('.saving').slideDown();
 			$('.ajaxSave').load('".p::Url("?editor/".$section."/".($edit ? 'edit/'.$data['id'] : 'new')."/ajax")."', {
@@ -185,6 +203,7 @@ class pLemmaSheetTemplate extends pTemplate{
 				'homophones': $('.select-homophones').data('storage'),
 				'examples': $('.examples-select').data('storage'),
 				'hidden': $('.hidden-status').val(),
+				'irregular': arrIrreg,
 			});
 		});
 		$('.examples-select').selectSpecify({

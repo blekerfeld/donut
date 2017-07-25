@@ -87,6 +87,10 @@ class pLemmaTemplate extends pEntryTemplate{
 
 	}	
 
+	public function discussTitle(){
+		p::Out("<span class='markdown-body'><h2>".sprintf(LEMMA_DISCUSS_TITLE, "<span class='native'><strong class='pWord'><a>".$this->_data['native']."</a></strong></span>")."</h2></span>");
+	}
+
 	public function usageNotes($data, $icon){
 		$parsed = '';
 		// Parsing the notes

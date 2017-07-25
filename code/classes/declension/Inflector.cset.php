@@ -11,23 +11,14 @@
 
 class pInflector{
 	
-	protected $_modes, $_tables, $dataModel, $_lemma, $_compiledParadigms, $_twolc, $_twolcRules, $_auxNesting, $_inflCache, $_dmCache;
+	public $_modes, $_tables, $dataModel, $_lemma, $_compiledParadigms, $_twolc, $_twolcRules, $_auxNesting, $_inflCache, $_dmCache;
 
 	public function __construct($lemma, $twolcRules, $nesting = 0, $auxNesting = 0){
 		if($nesting > 12){
 			die();
 		}
 		$this->_lemma = $lemma;
-
-		// Loading the inflection cache for later use
-		$idM = new pDataModel('lemmatization');
-		$idM->setCondition(" WHERE lemma_id = ".$lemma->read('id'));
-
-		foreach($idM->getObjects()->fetchAll() as $cachedInflection)
-			$this->_inflCache[$cachedInflection['hash']] = $cachedInflection['inflected_form'];
-
 		$this->_dMCache = new pDataModel('lemmatization');
-
 		$this->dataModel = new pDataModel('modes');
 		$this->_modes = $this->dataModel->customQuery("SELECT DISTINCT modes.* FROM modes JOIN mode_apply ON modes.id = mode_apply.mode_id WHERE mode_apply.type_id = ".$this->_lemma->read('type_id'))->fetchAll();
 		$this->_compiledParadigms = new pSet;
@@ -67,14 +58,16 @@ class pInflector{
 
 	public function inflectRow($row, $heading){
 
-
-
 		$output = '';
+		$irregular = false;
 
 		if(empty($row['rules']))
 			$output = $row['stems'][0][0];
 		else
 			$output = $row['stems'][0][0];
+
+		if(isset($row['stems'][0][2]) AND $row['stems'][0][2] == true)
+			$irregular = true;
 
 		foreach($row['rules'] as $key => $rule){
 			$inflection = new pInflection($rule['rule']);
@@ -84,10 +77,14 @@ class pInflector{
 				$input = $row['stems'][$key][0][0];
 
 			// Is this an irregular override?
-			if($row['stems'][$key][1])
+
+			if($row['stems'][$key][1]){
 				$output = $input;
+				$irregular = true;
+			}
 			else{
 				$output = $inflection->inflect($input);
+				$irregular = false;
 			}
 		}
 
@@ -120,14 +117,19 @@ class pInflector{
 
 		aux_end:
 
-		return $output;
+		return array($output, $irregular);
 	}
 
-	public function buildMode($mode_array){
+	public function buildMode($mode_array, $class = "pInflectionTable"){
 
-		return (new pInflectionTable($this->_dMCache, $this->_lemma, $this->_twolc, $mode_array, $this->_compiledParadigms));
+		$table = (new $class($this->_dMCache, $this->_lemma, $this->_twolc, $mode_array, $this->_compiledParadigms));
+
+		// Leaving place for future actions
+
+		return $table;
 
 	}
+
 
 	public function requestSingleInflection($mode_id, $heading_id, $row_id){
 		@$row = $this->_compiledParadigms[$mode_id][$heading_id]['rows']['row_'.$row_id];
@@ -137,12 +139,13 @@ class pInflector{
 			return $this->_lemma->read('native');
 	}
 
-	public function render(){
+	public function render($class = "pInflectionTable"){
 		$output = "<div class='inflector'>";
 		foreach($this->_modes as $mode)
-			$output .= $this->buildMode($mode);
+			$output .= $this->buildMode($mode, $class);
 		return $output."</div>";
 	}
+
 
 
 }

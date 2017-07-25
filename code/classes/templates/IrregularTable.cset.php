@@ -9,7 +9,7 @@
 
 // Used to build an inflection table
 
-class pInflectionTable extends pTemplatePiece {
+class pIrregularTable extends pTemplatePiece {
 
 	private $_output, $_lemma, $_inflCache;
 
@@ -33,9 +33,20 @@ class pInflectionTable extends pTemplatePiece {
 			$output .= "<tr class='heading'><td colspan='2'>".$heading['name']."</td></tr>";
 			foreach($headingHolder['rows'] as $row){
 				// Generating the surface form
-				$surface = ($twolc->feed($row['inflected'][0]))->toSurface();
+				if(!$row['inflected'][1])
+					$form = ($twolc->feed($row['inflected'][0]))->toSurface();
+				else
+					$form = ($twolc->feed($row['inflected'][0]))->toSurface().'* ';
+
+				if($row['inflected'][1])
+					$surface = ($twolc->feed($row['inflected'][0]))->toSurface();
+				else
+					$surface = '';
 				// Outing the surface form
-				$output .= "<tr><td class='row_name'>".$row['self']['name']."</td><td class='row_inflected'>".$surface."</td></tr>";
+
+				$dataID = $modeArray['id'].'-'.$heading['id']."-".$row['self']['id'];
+
+				$output .= "<tr><td class='row_name'>".$row['self']['name']."</td><td class='row_inflected'><span class='small native tooltip' ></span><input id='input$dataID' data-id='".$dataID."' placeholder='".$form."' class='irreg btInput nWord small normal-font padding-1' value='".$surface."' /></td></tr>";
 				// Chaching the surface form
 				$this->cacheInflection($dMCache, $surface, $row, $heading, $modeArray);
 			}

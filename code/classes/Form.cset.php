@@ -248,6 +248,8 @@ class pMagicActionForm{
 
 	public function ajax($showBack = true){
 
+		$exception = false;
+
 		// Checking if we have any empty required fields.
 		$empty_error = 0;
 		foreach($this->_fields->get() as $field)
@@ -288,6 +290,7 @@ class pMagicActionForm{
 
 			} catch (Exception $e) {
 				p::Out(pMainTemplate::NoticeBox('fa-warning fa-12', $this->_strings[4], 'danger-notice ajaxMessage'));
+				$exception = true;
 			}
 
 		}
@@ -297,8 +300,28 @@ class pMagicActionForm{
 				});
 			</script>");
 
+
+		// This will redirect to a defined url, if there is one.
+
+		if(isset($this->_handler->_meta['return'][$this->_section]))
+			$returnUrl = $this->_handler->_meta['return'][$this->_section];
+		elseif(isset($this->_handler->_meta['return']['default']))
+			$returnUrl = $this->_handler->_meta['return']['default'];
+		else
+			return false;
+
+		if($exception == false AND $empty_error == 0)
+			return $this->parseUrlRedirect($returnUrl);
+		else
+			return false;
 	}
 
+
+	protected function parseUrlRedirect($subject){
+		$search = array("SECT", "ACT", "ID", "TID");
+		$replace = array($this->_section, (isset(pRegister::arg()['action']) ? pRegister::arg()['action'] : ''), (isset(pRegister::arg()['id']) ? pRegister::arg()['id'] : ''), (isset(pRegister::arg()['thread_id']) ? pRegister::arg()['thread_id'] : ''));
+		return p::Out("<script type='text/javascript'>window.location = '".p::Url(str_replace($search, $replace, $subject))."';</script>");
+	}
 
 	public function form($showBack = true, $forceID = null, $forceBtCard = true, $forceFirstID = null){
 		if($forceBtCard == true){

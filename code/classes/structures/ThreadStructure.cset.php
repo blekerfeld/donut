@@ -23,7 +23,7 @@ class pThreadStructure extends pStructure{
 			die();
 
 		$this->dataModel = new pDataModel('threads');
-		$this->dataModel->setCondition(" WHERE section = '".$this->_section."' AND linked_to = '".pRegister::arg()['id']."' ");
+		$this->dataModel->setCondition(" WHERE section = '".$this->_section."' AND linked_to = '".pRegister::arg()['id']."' ".(isset(pRegister::arg()['thread_id']) ? " AND id  = ".pRegister::arg()['thread_id'] : ""));
 		$this->dataModel->getObjects();
 
 		foreach($this->dataModel->data()->fetchAll() as $thread){
@@ -46,7 +46,20 @@ class pThreadStructure extends pStructure{
 	
 	public function render(){
 
+
 		if(isset(pRegister::arg()['action'])){
+
+			$searchBox = new pSearchBox;
+
+
+			if(isset(pRegister::arg()['is:result'], pRegister::session()['searchQuery']))
+				$searchBox->setValue(pRegister::session()['searchQuery']);
+	
+			pMainTemplate::throwOutsidePage($searchBox);
+
+			if(!isset(pRegister::arg()['ajax']))
+				p::Out("<div class='home-margin pEntry'>");
+
 			if(pRegister::arg()['action'] == 'remove' AND isset(pRegister::arg()['id'])){
 				$this->delete(pRegister::arg()['id']);
 				// TODO: succes message
@@ -73,6 +86,11 @@ class pThreadStructure extends pStructure{
 			$actionForm->form(false, (isset(pRegister::arg()['id']) ? pRegister::arg()['id'] : 0), false, pRegister::arg()['id']);
 
 			}
+
+
+			if(!isset(pRegister::arg()['ajax']))
+				p::Out("</div>");
+
 			if(pRegister::arg()['action'] != 'view')
 				return false;
 		}
@@ -82,6 +100,8 @@ class pThreadStructure extends pStructure{
 		$this->_template->renderAllMessages()
 
 			."</div>");
+
+
 
 	}
 
