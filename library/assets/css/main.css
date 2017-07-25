@@ -1203,6 +1203,18 @@ span.pIpa{
   transition: all .3s;
 }
 
+span.pExtraInfo{
+  display: inline-block;
+  font-size: 14px;
+  color: #B2B2B2;
+  background: #EFEFEF;
+  font-variant: small-caps;
+  text-transform: lowercase;
+  border-radius: 5px;
+  padding: 5px;
+  margin: 5px;
+}
+
 span.pIpa:hover{
   opacity: 1;
   font-size: 0.7em!important;

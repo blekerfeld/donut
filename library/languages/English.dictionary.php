@@ -26,6 +26,7 @@ p::defineLocale('DICT_MATCHES', 'Your query yielded %s results.');
 
 // Lemma information
 p::defineLocale('LEMMA_ERROR', "The requested lemma doesn't exist, please look for errors in the URL.");
+p::defineLocale('LEMMA_HIDDEN', "Hidden");
 p::defineLocale("LEMMA_INFLECTIONS", "Inflections");
 p::defineLocale("LEMMA_TRANSLATIONS", 'Meaning and translations');
 p::defineLocale("TRANSLATION_LEMMAS", 'Linked entries in %s');

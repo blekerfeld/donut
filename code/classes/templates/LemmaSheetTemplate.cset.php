@@ -163,8 +163,8 @@ class pLemmaSheetTemplate extends pTemplate{
 
 		$('.select-status').ddslick({
 	    	onSelected: function(selectedData){
-	      		$('.status-hidden').val(selectedData.selectedData.value);
-	       		$('.status-hidden').trigger('.status-hidden');
+	      		$('.hidden-status').val(selectedData.selectedData.value);
+	       		$('.hidden-status').trigger('.status-hidden');
 	    	}   
 		})
 
