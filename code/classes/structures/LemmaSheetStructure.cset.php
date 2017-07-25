@@ -45,9 +45,6 @@ class pLemmasheetStructure extends pStructure{
 		if(!isset(pRegister::arg()['ajax']))
 			pMainTemplate::throwOutsidePage($searchBox);
 
-		// If there is an offset, we need to define that
-		if(isset(pRegister::arg()['offset']))
-			$this->_parser->setOffset(pRegister::arg()['offset']);
 
 		if(!isset(pRegister::arg()['ajax']) && (isset(pRegister::arg()['action']) && pRegister::arg()['action'] == 'edit')){
 			if(isset(pRegister::arg()['section']))

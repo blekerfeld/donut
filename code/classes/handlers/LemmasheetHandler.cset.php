@@ -90,6 +90,18 @@ class pLemmasheetHandler extends pHandler{
 			if(isset(pRegister::post()['usage_notes']))
 				$edit = $this->dataModel->updateUsageNotes(pRegister::post()['usage_notes']);
 
+			// Prepare the irregular forms 
+			$forms = array();
+			foreach(array('irregular') as $keyReg){
+				$forms[$keyReg] = pRegister::post()[$keyReg];
+				foreach($forms[$keyReg] as $key => $form)
+					if($form['value'] == '')
+						unset($forms[$keyReg][$key]);
+			}
+
+			$edit = $this->dataModel->updateForms($forms);
+
+
 		}
 		
 		if($edit == false)

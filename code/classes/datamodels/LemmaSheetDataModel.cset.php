@@ -12,11 +12,12 @@
 
 class pLemmaSheetDataModel extends pDataModel{
 
-	public $_links, $_RuleID, $_translations, $_translationsinput, $_transIDLookUp;
+	public $_links, $_RuleID, $_translations, $_translationsinput, $_transIDLookUp, $_inflector;
 
 	public function __construct($table, $id = 0){
 		parent::__construct($table);
 		$dfs = new pSet;
+		// All the important fields of the lemma
 		$dfs->add(new pDataField('native'));
 		$dfs->add(new pDataField('lexical_form'));
 		$dfs->add(new pDataField('ipa'));
@@ -29,27 +30,33 @@ class pLemmaSheetDataModel extends pDataModel{
 		$dfs->add(new pDataField('created_by'));
 		$this->setFields($dfs);
 		if($id != 0){
+			// Loading the lemma
 			$this->_LemmaID = $id;
 			$this->getSingleObject($id);
 			$this->_lemma = $this->data()->fetchAll()[0];
+			// Loading the translations
 			$this->_translations = array();
 			$this->getTranslations();
+
+			// Loading all the subentries
 			$subEntries = array(new pEntryDataModel('synonyms', array('word_id_1', 'word_id_2'), 'fa-clone', false, null, 'synonyms'),
 					new pEntryDataModel('antonyms', array('word_id_1', 'word_id_2'), '', false, null, 'antonyms'),
 					new pEntryDataModel('homophones', array('word_id_1', 'word_id_2'), '', false, null, 'homophones'),
 					new pEntryDataModel('homophones', array('word_id_1', 'word_id_2'), '', false, null, 'homophones'),
 					new pEntryDataModel('idiom_words', 'word_id', array('idiom_id', 'keyword'), false, null, 'idiom_words'),
 					);
-			
+			// Laoding the usage notes
 			$this->_links['usage_notes'] = $this->usageNotes();
-
+			//Preparing some empty arrays
 			$this->_links['synonyms'] = array();
 			$this->_links['antonyms'] = array();
 			$this->_links['homophones'] = array();
 			$this->_links['idiom_words'] = array();
-
+			// Going through the subentries
 			foreach($subEntries as $entry){
+				// Binding this lemma
 				$entry->setID($this->_lemma['id']);
+				// Fetching the data
 				$entry->compile();
 				foreach($entry->data() as $link)
 					if(isset($link['word_id_1'])){
@@ -67,6 +74,9 @@ class pLemmaSheetDataModel extends pDataModel{
 						$this->_links[$entry->_table][$link[$entry->icon[0]]]['score'] = $link[$entry->icon[1]];
 					}
 			}
+			// Creating the inflector
+			$this->_inflector = new pInflector((new pLemma($this->_lemma['id'])), (new pTwolcRules('phonology_contexts'))->toArray());
+			$this->_inflector->compile();
 		}
 	}
 
@@ -141,6 +151,62 @@ class pLemmaSheetDataModel extends pDataModel{
 			$this->__construct('words', p::$db->lastInsertId());
 			return true;
 		}
+	}
+
+	public function updateForms($forms){
+		// Some predefined configuration
+		$config = array(
+			'irregular' => array(
+				'condition' => ' is_irregular = 1 ',
+				'field_1' => 'is_irregular',
+			),
+		);
+		// Going through the forms
+		$workParadigm = $this->_inflector->_compiledParadigms;
+		foreach($forms as $type => $formsInner){
+			foreach($formsInner as $form){
+				// Let's find things by the selector
+				$selector = explode('-', $form['selector']);
+				$row = $workParadigm[$selector[0]][$selector[1]]['rows']['row_'.$selector[2]];
+				// Let's find if if this form already is irregular
+				if(isset($row['stems'][0][2]) AND $row['stems'][0][2] == true){
+					// Let's check if the form is the same or not
+					if($form['value'] != $row['stems'][0][0])
+					// Let's update this shit
+						$this->customQuery("UPDATE morphology SET irregular_form = ".p::Quote($form['value'])." WHERE lemma_id = '".$this->_lemma['id']."' AND id = ".$row['stems'][0][3]." AND ".$config[$type]['condition']);
+				}
+				elseif(isset($row['stems'][0][2]) AND $row['stems'][0][2] == false){
+					
+					$dM = new pDataModel('morphology');
+					$dfs = new pSet;
+					$dfs->add(new pDataField('irregular_form'));
+					$dfs->add(new pDataField('lemma_id'));
+					$dfs->add(new pDataField($config[$type]['field_1']));
+					$dM->setFields($dfs);
+					$dM->prepareForInsert(array($form['value'], $this->_lemma['id'], 1));
+					$idMorph = $dM->insert();
+					$this->customQuery("INSERT INTO morphology_modes VALUES(NULL, $idMorph, $selector[0]);");
+					$this->customQuery("INSERT INTO morphology_submodes VALUES(NULL, $idMorph, $selector[1]);");
+					$this->customQuery("INSERT INTO morphology_numbers VALUES(NULL, $idMorph, $selector[2]);");
+				}
+				unset($workParadigm[$selector[0]][$selector[1]]['rows']['row_'.$selector[2]]);
+			}
+		}
+
+		// Time to go throught the other rows to check whether some irregular forms need to be removed
+		foreach($workParadigm as $mode){
+			foreach($mode as $heading){
+				foreach($heading['rows'] as $row){
+					if(isset($row['stems'][0][2]) AND $row['stems'][0][2] == true)
+						$this->customQuery("DELETE FROM morphology_modes WHERE morphology_id = ".$row['stems'][0][3]);
+						$this->customQuery("DELETE FROM morphology_submodes WHERE morphology_id = ".$row['stems'][0][3]);
+						$this->customQuery("DELETE FROM morphology_numbers WHERE morphology_id = ".$row['stems'][0][3]);
+						// TODO: Also delete the morphology_item if needed
+				}
+			}
+		}
+
+		return true;
 	}
 
 

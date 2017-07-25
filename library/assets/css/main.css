@@ -224,7 +224,7 @@ span.tab, div.tab {
 .absolute_header {
   padding: 3px;
   padding-left: 10px;  
-  color: #cDD3CD;
+  color: snow;
   text-decoration: none;
   padding-top: 12px;
   padding-right: calc(5% + 40px);
@@ -235,11 +235,11 @@ span.tab, div.tab {
 }
 
 .absolute_header a{
-  color: #97ABBE;
+  color: snow;
 }
 
 .absolute_header a.text{
-  color: #cDD3CD;
+  color: snow;
 }
 
 .absolute_header .user{
@@ -252,7 +252,7 @@ a.siteTitle {
   margin-top: 3px;
   letter-spacing: .05em;
   font-weight: bold;
-  color: #CDD3CD;
+  color: snow;
   font-family: Kollektif;
   font-size: 20px;
 } 
@@ -1111,6 +1111,10 @@ input.nWord.normal-font{
   font-family: Open Sans;
   color: #333;
   font-weight: normal;
+}
+
+input.nWord.padding-1{
+  padding: 4px!important;
 }
 
 strong.pWord {

@@ -37,6 +37,12 @@ class pEntryHandler extends pHandler{
 
 		// Discuss
 		if($action == 'discuss'){
+			// Create a template
+			$this->_template = new $this->_activeSection['template']($this->_data[0], $this->_activeSection);
+			// Setting the page title
+			pMainTemplate::setTitle(sprintf(LEMMA_DISCUSS_TITLE, "*".$this->_data[0]['native']."*"));
+			// Title
+			$this->_template->discussTitle();
 			p::Out(new pAjaxLoader(p::Url('?thread/'.$this->_section.'/view/'.pRegister::arg()['id'])));
 		}
 

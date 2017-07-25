@@ -83,26 +83,7 @@ p::defineLocale('BTRANS_TITLE', "Batch translating into ");
 p::defineLocale('BTRANS_TITLE_SINGLE', "Translating into ");
 p::defineLocale('BTRANS_SKIP', "Skip translation ");
 
-// Word dicussion
-p::defineLocale('WD_TITLE', "Discussion");
-p::defineLocale('WD_TITLE_MORE', "Discussing lemma %s");
-p::defineLocale('WD_POINT', "point");
-p::defineLocale('WD_POINTS', "points");
-p::defineLocale('WD_NEW_THREAD', "New thread");
-p::defineLocale('WD_NEW_THREAD_TITLE', "Submit a new thread");
-p::defineLocale('WD_REPLY', "reply");
-p::defineLocale('WD_REPLY_TITLE', "Replying to a message");
-p::defineLocale('WD_REPLY_PLACEHOLDER', "Write your message.");
-p::defineLocale('WD_REPLY_SEND', "Send");
-p::defineLocale('WD_REPLY_EMPTY', "You cannot post an empty reply.");
-p::defineLocale('WD_REPLY_ERROR', "Something went wrong, your reaction is not posted.");
-p::defineLocale('WD_UPVOTE', "upvote");
-p::defineLocale('WD_DOWNVOTE', "downvote");
-p::defineLocale('WD_DELETE', "Remove");
-p::defineLocale('WD_DELETE_CONFIRM', "Are you sure you want to remove this message and all of its underlying comments?");
-p::defineLocale('WD_BACK_TO_THREAD', "Back to thread");
-p::defineLocale('WD_BACK_TO_WORD', "Back to entry");
-p::defineLocale('WD_NO_THREADS', "There are no threads yet, feel free to create a discussion thread.");
+
 
 
 // Dashboard strings

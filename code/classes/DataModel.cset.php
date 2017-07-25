@@ -99,12 +99,12 @@ class pDataModel {
 		$key = 0;
 		if($this->_fields != null)
 			foreach($this->_fields->get() as $field){
-				$valueString[] = p::Quote($data[$key]);
+				$valueString[] = ($data[$key] != 'NOW()' ? p::Quote($data[$key]) : 'NOW()');;
 				$key++;
 			}
 		else
 			foreach($data as $value)
-				$valueString[] = p::Quote($value);
+				$valueString[] = ($value != 'NOW()' ? p::Quote($value) : 'NOW()');
 		$this->_valuestring = implode(', ', $valueString);
 
 		return $this;
@@ -118,7 +118,7 @@ class pDataModel {
 		$fields = new pSet;
 		$fields->add($field);
 		$this->setFields($fields);
-		$this->prepareForUp::Date(array($value), $id);
+		$this->prepareForUpdate(array($value), $id);
 		return $this->update();
 	}
 
@@ -131,7 +131,7 @@ class pDataModel {
 			$id = $this->_singleId;
 		if($this->_fields != null)
 			if(count($data) != count($this->_fields->get()))
-				die("FATAL ERROR from within pDataModel->prepareForUp::Date(..., \$data). \$data does not match the field count of the object!");
+				die("FATAL ERROR from within pDataModel->prepareForUpDate(..., \$data). \$data does not match the field count of the object!");
 		
 		$updateString = array();
 
@@ -139,7 +139,7 @@ class pDataModel {
 
 		$forEachFields = ($overwriteFields != null ? $overwriteFields : $this->_fields);
 
-		foreach ($forEachFields->get() as $field) {
+		foreach ($forEachFields as $field) {
 			if($field->name != 'id')
 				$updateString[] = $field->name."= ".p::Quote($data[$key]);
 			$key++; 
@@ -184,8 +184,6 @@ class pDataModel {
 	}
 
 	public function update(){
-
-		echo "UPDATE ".$this->_table." SET ".$this->_updatestring." WHERE id = '".$this->_updateid."';";
 
 		return p::$db->cacheQuery("UPDATE ".$this->_table." SET ".$this->_updatestring." WHERE id = '".$this->_updateid."';");
 	}

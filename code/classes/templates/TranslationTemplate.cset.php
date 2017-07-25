@@ -32,6 +32,10 @@ class pTranslationTemplate extends pEntryTemplate{
 
 	}
 
+	public function discussTitle(){
+		p::Out("<span class='markdown-body'><h2>".sprintf(LEMMA_DISCUSS_TITLE, "<span class='native'><strong class='pWord'><a>".$this->_data['translation']."</a></strong></span>")."</h2></span>");
+	}
+
 	public function renderInfo(){
 		return "<span class='small-caps xsmall'>".sprintf(LEMMA_TRANSLATION_ADDED, "<a href='".p::Url('?auth/profile/'.$this->_data['user_id'])."'>".(new pUser($this->_data['user_id']))->read('username')."</a>", p::Date($this->_data['created_on']))."</span>";
 	}

@@ -90,9 +90,9 @@ class pParadigm{
 		$irregRules = $this->findRules($lemma, $heading, $row, true);
 
 		if($lemma->read('lexical_form') != '')
-			$padding = array($lemma->read('lexical_form'), false);
+			$padding = array($lemma->read('lexical_form'), false, false, 0);
 		else
-			$padding = array($lemma->read('native'), false);
+			$padding = array($lemma->read('native'), false, false, 0);
 
 		if(count($rules) == 0)
 			$rules = array(false);
@@ -108,7 +108,7 @@ class pParadigm{
 					continue;
 				}
 				else
-					$output[] = array($irregRule['irregular_form'], ($irregRule['is_stem'] == 1));
+					$output[] = array($irregRule['irregular_form'], ($irregRule['is_stem'] == 1), true, $irregRule['id']);
 		}
 
 		return $output; 

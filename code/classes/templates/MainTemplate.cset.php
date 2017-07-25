@@ -99,27 +99,25 @@ class pMainTemplate extends pTemplate{
 		echo implode("\n", $this->_stylesheets);
 		echo implode("\n", $this->_scripts);
 		?>
-    <link rel="stylesheet" type="text/css" href="//cdnjs.cloudflare.com/ajax/libs/cookieconsent2/3.0.3/cookieconsent.min.css" />
-<script src="//cdnjs.cloudflare.com/ajax/libs/cookieconsent2/3.0.3/cookieconsent.min.js"></script>
-<script>
-window.addEventListener("load", function(){
-window.cookieconsent.initialise({
-  "palette": {
-    "popup": {
-      "background": "#1B2B34"
-    },
-    "button": {
-      "background": "#289B2B"
-    }
-  },
-  "showLink": false,
-  "position": "bottom-left",
-  "content": {
-    "message": "<?php echo COOKIES_MSG; ?>",
-    "dismiss": "<?php echo COOKIES_ALRIGHT; ?>"
-  }
-})});
-</script>
+    <script>
+    window.addEventListener("load", function(){
+    window.cookieconsent.initialise({
+      "palette": {
+        "popup": {
+          "background": "#1B2B34"
+        },
+        "button": {
+          "background": "#289B2B"
+        }
+      },
+      "showLink": false,
+      "position": "bottom-left",
+      "content": {
+        "message": "<?php echo COOKIES_MSG; ?>",
+        "dismiss": "<?php echo COOKIES_ALRIGHT; ?>"
+      }
+    })});
+    </script>
   </head>
 	<body class='dashboard'>
     <div class='contents' id='main'>

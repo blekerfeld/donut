@@ -1,21 +1,49 @@
 div.entryThread{
-
+	margin: 10px;
+	margin-right: 0px;
+	margin-left: 0px;
 }
 
 div.entryThread img.avatar{
-	width: 10%;
-	max-width: 40px;
-	height: auto;
-	margin: 10px;
-	border-radius: 5px;
+	height: 20px;
+	width: auto;
+	float: left;
+	border-radius: 10px;
+}
+
+div.entryThread strong.title{
+	display: block;
+	padding: 5px;
+	font-size: 15px;
+	border-bottom: 1px dotted #d4d4d5;
+	margin-bottom: 3px;
+	font-family: Merriweather;
+}
+
+div.entryThread a.buttonTh{
+	color: #000;
+	opacity: .6;
+	transition: all .2s;
+}
+
+div.entryThread a.buttonTh:hover{
+	opacity: 1;
+	color: #24A22D;
+}
+
+div.entryThread span.title{
+	display: block;
+	margin-left: 12px;
+	float: left;
 }
 
 div.entryThread div.content{
-	float: right;
-	width: calc(100% - 60px);
 	padding: 10px;
-	padding-left: 0px;
-	padding-top: 10px;
+}
+
+
+div.entryThread a.buttonTh{
+
 }
 
 div.entryThread a.username{
