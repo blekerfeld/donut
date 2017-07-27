@@ -127,6 +127,10 @@ textarea:focus, input:focus {
   font-size: 20px!important;
 }
 
+.xxmedium {
+  font-size: 25px!important;
+}
+
 .counter {
   display: inline-block;  
   text-align: center;
@@ -1702,8 +1706,9 @@ div.btCard {
   background: #fff;
 }
 
-div.btCard.admin{
-  width: 95%;
+
+div.btCard.proper{
+  box-shadow: 0px 1px 3px rgba(100, 100, 100, 0.3);
 }
 
 div.btCard.admin.minimal{
@@ -1795,7 +1800,7 @@ img.btFlag {
 
 span.btLanguage {
   color: #444;
-  font-size: 14px;
+  font-size: 13px;
   opacity: .8;
   font-family: Open Sans!important;
 }
@@ -1875,11 +1880,12 @@ div.btSource a.tooltip {
   font-family: Gentium!important;
 }
 div.btButtonBar {
-  margin-top: 20px;
+  margin-top: 15px;
   margin-left: -20px;
+  border-top: 1px dotted #ECEEF0;
   margin-right: -20px;
   margin-bottom: -20px;
-  padding: 5px;
+  padding: 8px;
 }
 
 div.btButtonBar.no-min{

@@ -67,8 +67,8 @@ class pLemmaSheetTemplate extends pTemplate{
 				");
 
 
-		p::Out(pMainTemplate::NoticeBox('fa-info-circle fa-12', "Add as many translations as needed. Existing translations are linked and new ones are created on the fly.", 'notice-subtle'));
-		p::Out(pMainTemplate::NoticeBox('fa-info-circle fa-12', "The input format is <span class='imitate-tag'>translation</span> or <span class='imitate-tag'>translation>specification</span>", 'notice-subtle')."<br />");
+		p::Out(pMainTemplate::NoticeBox('fa-info-circle fa-12', BATCH_TR_DESC1, 'notice-subtle'));
+		p::Out(pMainTemplate::NoticeBox('fa-info-circle fa-12', BATCH_TR_DESC1, 'notice-subtle').pMainTemplate::NoticeBox('fa-info-circle fa-12', sprintf(BATCH_TR_DESC2, '<span class="imitate-tag">', '</span>', '<span class="imitate-tag">', '</span>'),  'notice-subtle')."<br />");
 	
 		// Languages
 		$languages = pLanguage::allActive(-1);
