@@ -78,12 +78,6 @@ p::defineLocale('LOGIN_ERROR', "Username and/or password are not correct.");
 p::defineLocale('LOGIN_SUCCESS', "Succesfully logged in, you will be redirected...");
 p::defineLocale('LOGIN_CHECKING', "Trying to log in...");
 
-// Batch translating
-p::defineLocale('BTRANS_TITLE', "Batch translating into ");
-p::defineLocale('BTRANS_TITLE_SINGLE', "Translating into ");
-p::defineLocale('BTRANS_SKIP', "Skip translation ");
-
-
 
 
 // Dashboard strings
