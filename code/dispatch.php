@@ -167,6 +167,17 @@ return array(
 		'menu' => '',
 	),
 
+	'batch' => array(
+		'page_title' => 'Batch translating',
+		'default_section' => 'translate',
+		'arguments' => array(
+			0 => 'section',
+			1 => 'action',
+			2 => 'id',
+		),
+		'menu' => '',
+	),
+
 	'thread' => array(
 		'page_title' => 'Thread',
 		'default_section' => 'tread',

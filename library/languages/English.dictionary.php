@@ -168,4 +168,4 @@ p::defineLocale('', '');
 p::defineLocale('', '');
 
 
-p::defineLocale('', '');
+p::defineLocale('BATCH_CHOOSE_LANGUAGE', 'Choose language');

@@ -54,7 +54,7 @@ class pLemmaDataModel extends pDataModel{
 						END DESC) AS a 
 				UNION ALL SELECT * FROM (SELECT DISTINCT lemma_id AS word_id, 1 AS is_inflection, inflected_form FROM lemmatization WHERE inflected_form ".$ww." OR inflected_form LIKE '".p::Escape($search)."' ORDER BY INSTR('".p::Escape(trim($search))."', inflected_form) DESC) as b 
 				
-				UNION ALL SELECT * FROM (SELECT DISTINCT word_id, 1 AS is_inflection, irregular_form AS inflection FROM morphology_irregular WHERE irregular_form ".$ww." ORDER BY INSTR('".p::Escape(trim($search))."', irregular_form) DESC) AS c ".$limit;	
+				UNION ALL SELECT * FROM (SELECT DISTINCT lemma_id AS word_id, 1 AS is_inflection, irregular_form AS inflection FROM morphology WHERE irregular_form ".$ww." ORDER BY INSTR('".p::Escape(trim($search))."', irregular_form) DESC) AS c ".$limit;	
 		else
 			$q = "SELECT * FROM (SELECT DISTINCT translation_words.word_id, 0 AS is_inflection, 0 AS is_alternative, 0 AS inflection, translations.id AS trans_id, translations.translation AS translation
 					FROM words 
@@ -70,7 +70,6 @@ class pLemmaDataModel extends pDataModel{
 						END DESC, INSTR('".p::Escape(trim($search))."', translations.translation) DESC) AS b ".$limit; 
 
         $fetch = p::$db->cacheQuery($q);
-
         $noDoubles = array();
 
  		if($fetch->rowCount() != 0)

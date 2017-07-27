@@ -88,7 +88,20 @@ class pLemmaSheetTemplate extends pTemplate{
 
 		p::Out("
 				</div>
-				</div>
+				</div>");
+
+		if($edit){
+			p::Out("
+				<div data-tab='Irregular Forms'>");
+
+			//Irregular Forms
+			// The form version of the inflection tables, rendered by the inflector housing in the datamodel
+			p::Out($this->_data->_inflector->render("pIrregularTable"));
+			p::Out("
+				</div>");
+		}
+
+		p::Out("	
 				<div data-tab='Relationships'>
 
 					<div class='rulesheet'>
@@ -117,20 +130,7 @@ class pLemmaSheetTemplate extends pTemplate{
 				</div>
 				<div data-tab='Notes'>
 					<div style='padding: 10px'><textarea class='gtEditor usage-notes elastic allowtabs'>".($edit ? $this->_data->_links['usage_notes'] : '')."</textarea></div>
-				</div>");
-
-		if($edit){
-			p::Out("
-				<div data-tab='Irregular Forms'>");
-
-			//Irregular Forms
-			// The form version of the inflection tables, rendered by the inflector housing in the datamodel
-			p::Out($this->_data->_inflector->render("pIrregularTable"));
-			p::Out("
-				</div>");
-		}
-
-		p::Out("	</div>
+				</div></div>
 		</form><br />
 ");
 		p::Out("<a class='btAction green submit-form no-float'>".SAVE."</a>");

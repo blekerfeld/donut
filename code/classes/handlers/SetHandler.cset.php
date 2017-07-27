@@ -37,7 +37,7 @@ class pSetHandler extends pHandler{
 		$customQuery = array();
 		$count = 0;
 		foreach($this->_activeSection['sets'] AS $set){
-			$customQuery[] = "SELECT * FROM (SELECT ".$this->_activeSection['sets_fields'].", '".$set[1]."' AS set_type FROM  ".$set[0]." WHERE ".$this->_activeSection['hitOn']." = $id ORDER BY ".$set[0].".".$this->_activeSection['sets_name'][$set[1]]." ASC) as query_".$count." ";
+			$customQuery[] = "SELECT * FROM (SELECT ".$this->_activeSection['sets_fields'].", '".$set[1]."' AS set_type FROM  ".$set[0]." WHERE in_set = 1 AND ".$this->_activeSection['hitOn']." = $id ORDER BY ".$set[0].".".$this->_activeSection['sets_name'][$set[1]]." ASC) as query_".$count." ";
 			$count++;
 		}
 

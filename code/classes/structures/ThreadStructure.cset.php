@@ -38,7 +38,7 @@ class pThreadStructure extends pStructure{
 	}
 
 	protected function delete($id){
-		// CHECK
+		// checkdate(month, day, year)
 		if(pUser::checkPermission(-4) OR pUser::read('id') == $this->_threadsByID[$id]['user_id'])
 			$this->dataModel->customQuery("DELETE FROM threads WHERE section = '".$this->_section."' AND ((id = $id) OR (thread_id = $id));");
 	}

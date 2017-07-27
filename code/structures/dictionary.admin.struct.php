@@ -520,10 +520,9 @@ return array(
 			'condition' => false,
 			'items_per_page' => 20,
 			'disable_pagination' => false,
-			'table' => 'modes',
+			'table' => 'submodes',
 			'datafields' => array(
 				new pDataField('name', DA_TRANSLATION, '67%', 'input', true, true, true),
-				new pDataField('mode_type_id', "TEMPLATE", '10%', 'select', true, true, true, 'small-caps', false, new pSelector('mode_types', null, 'name', true, 'table-templates')),
 			),
 			'actions_item' => array(
 				'edit' => $action_edit,
@@ -550,10 +549,9 @@ return array(
 			'condition' => false,
 			'items_per_page' => 20,
 			'disable_pagination' => false,
-			'table' => 'submodes',
+			'table' => 'numbers',
 			'datafields' => array(
 				new pDataField('name', DA_TRANSLATION, '67%', 'input', true, true, true),
-				new pDataField('mode_type_id', "TEMPLATE", '10%', 'select', true, true, true, 'small-caps', false, new pSelector('mode_types', null, 'name', true, 'table-templates')),
 			),
 			'actions_item' => array(
 				'edit' => $action_edit,
