@@ -33,7 +33,7 @@ class pParadigm{
 			$output[$heading['id']]['rows'] = array();
 			foreach($this->_rows as $row ){
 				// The row itself
-				$output[$heading['id']]['rows']['row_'.$row['id']]['self'] = $this->findRowNative($row);
+				$output[$heading['id']]['rows']['row_'.$row['id']]['self'] = $this->findRowNative($row, $heading);
 				// The inflection	
 				$rules = $this->findRules($lemma, $heading, $row);
 				$output[$heading['id']]['rows']['row_'.$row['id']]['rules'] = $rules;
@@ -55,9 +55,9 @@ class pParadigm{
 
 	}
 
-	protected function findRowNative($row){
+	protected function findRowNative($row, $heading){
 
-		$check = $this->dataModel->customQuery("SELECT native FROM words JOIN row_native ON row_native.word_id = words.id WHERE row_native.row_id = ".$row['id']);
+		$check = $this->dataModel->customQuery("SELECT native FROM words JOIN row_native ON row_native.word_id = words.id WHERE row_native.row_id = ".$row['id']." AND row_native.heading_id = ".$heading['id']);
 
 		if($check->rowCount() != 0)
 			$row['name'] = $check->fetchAll()[0]['native'];

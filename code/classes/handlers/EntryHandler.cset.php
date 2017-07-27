@@ -40,7 +40,7 @@ class pEntryHandler extends pHandler{
 			// Create a template
 			$this->_template = new $this->_activeSection['template']($this->_data[0], $this->_activeSection);
 			// Setting the page title
-			pMainTemplate::setTitle(sprintf(LEMMA_DISCUSS_TITLE, "*".$this->_data[0]['native']."*"));
+			pMainTemplate::setTitle(sprintf(LEMMA_DISCUSS_TITLE, "*".(isset($this->_data[0]['native']) ? $this->_data[0]['native'] : (isset($this->_data[0]['translation']) ? $this->_data[0]['translation'] : ''))."*"));
 			// Title
 			$this->_template->discussTitle();
 			p::Out(new pAjaxLoader(p::Url('?thread/'.$this->_section.'/view/'.pRegister::arg()['id'])));

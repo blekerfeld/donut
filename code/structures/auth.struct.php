@@ -5,7 +5,7 @@
 	//		Written by Thomas de Roo
 	//		Licensed under MIT
 
-	//	++	File: dictionary.admin.struct.php
+	//	++	File: auth.struct.php
 	// The structure of the dictionary admin panel
 
 return array(

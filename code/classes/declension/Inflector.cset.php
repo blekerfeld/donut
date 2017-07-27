@@ -11,7 +11,7 @@
 
 class pInflector{
 	
-	public $_modes, $_tables, $dataModel, $_lemma, $_compiledParadigms, $_twolc, $_twolcRules, $_auxNesting, $_inflCache, $_dmCache;
+	public $_modes, $_tables, $dataModel, $_lemma, $_compiledParadigms, $_twolc, $_twolcRules, $_auxNesting, $_inflCache, $_dmCache, $_irregularRows;
 
 	public function __construct($lemma, $twolcRules, $nesting = 0, $auxNesting = 0){
 		if($nesting > 12){
@@ -27,6 +27,7 @@ class pInflector{
 		$this->_twolcRules = $twolcRules;
 		$this->_nesting = $nesting;
 		$this->_auxNesting = $auxNesting;
+		$this->_irregularRows = array();
 	}
 
 	public function compile(){
@@ -74,11 +75,11 @@ class pInflector{
 			if($row['stems'][$key][0] == $this->_lemma->read('native'))
 				$input = $output;
 			else
-				$input = $row['stems'][$key][0][0];
+				$input = $row['stems'][$key][0];
 
 			// Is this an irregular override?
 
-			if($row['stems'][$key][1]){
+			if($row['stems'][$key][2]){
 				$output = $input;
 				$irregular = true;
 			}
@@ -86,10 +87,14 @@ class pInflector{
 				$output = $inflection->inflect($input);
 				$irregular = false;
 			}
+
+			if($irregular == true)
+				$this->_irregularRows[] = $row['self']['id'];
 		}
 
 
 		// Aux time max nests: 12
+
 
 		if($this->_nesting < 12){
 			if($row['aux'] == null)
