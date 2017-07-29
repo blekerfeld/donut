@@ -234,6 +234,10 @@ class pDataModel {
 		return $this->_data;
 	}
 
+	public function cleanCache($table){
+		return p::$db->CleanCache('queries', $table);
+	}
+
 	protected function resultToSingleArray($query, $field){
 		$query = $this->customQuery($query);
 		$array = array();
