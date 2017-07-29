@@ -45,7 +45,13 @@ return array(
 						'name' => 'New Lemma',
 						'icon' => 'fa-plus-circle',
 						'app' => 'editor/new',
-						'permission' => -4,
+						'permission' => -3,
+					),
+					'assistant' => array(
+						'name' => 'Translation assistant',
+						'icon' => 'fa-magic',
+						'app' => 'assistant/translate',
+						'permission' => -2,
 					),
 					'rulesheet' => array(
 						'name' => 'Rules',
@@ -167,15 +173,15 @@ return array(
 		'menu' => '',
 	),
 
-	'batch' => array(
-		'page_title' => 'Batch translating',
+	'assistant' => array(
+		'page_title' => 'Assistant',
 		'default_section' => 'translate',
 		'arguments' => array(
 			0 => 'section',
 			1 => 'action',
 			2 => 'id',
 		),
-		'menu' => '',
+		'menu' => 'dictionary-admin',
 	),
 
 	'thread' => array(

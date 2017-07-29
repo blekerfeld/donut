@@ -33,19 +33,12 @@ class pLemmaSheetTemplate extends pTemplate{
 
 		p::Out("
 			<form id='LemmaSheetForm'>
-			<div class='float-right btStatus'>
-				<input class='hidden-status' type='hidden' value='".($edit ? $data['hidden'] : '0')."' />
-				<select class='select-status btStatus float-right'>
-					<option value='0' ".(($edit && $data['hidden'] == 0) ? 'selected' : '').">Status: Visible</option>
-					<option value='1' ".(($edit && $data['hidden'] == 1) ? 'selected' : '').">Status: Hidden</option>
-				</select>
-			</div>
 			".($edit ? "<br /><span class='native markdown-body'><h2><strong class='pWord'>".$data['native'].'</strong></h2></span>' : '<span class="markdown-body"><h2>'.LEMMA_NEW.'</h2></span><br />')."<br />
 			<div class='mainTabs'>
 				<div data-tab='Basic information'>
 					<div class='rulesheet'>
 						<div class='left'>
-						
+							
 							<div class='btSource'><span class='btLanguage'>Dictionary form <span class='xsmall' style='color: darkred;opacity: 1;'>*</span></span><br />
 							<span class='btNative'><input class='btInput nWord small normal-font lemma-native' value='".($edit ? $data['native'] : '')."'/></span></div>
 							<div class='btSource'><span class='btLanguage'>Lexical form <span class='xsmall' style='color: darkred;opacity: 1;'>".pMainTemplate::NoticeBox('fa-info-circle fa-12', "This optional form is used as base for regular inflection, instead of the dictionary form", 'medium notice-subtle')."</span></span>
@@ -59,7 +52,18 @@ class pLemmaSheetTemplate extends pTemplate{
 								<div class='btSource'><span class='btLanguage'>Grammatical category</span><br />
 								<span class='btNative'><select class='full-width select-gramcat select2'><option>none</option>".(new pSelector('classifications', @$data['classification_id'], 'name', true, 'rules', true))->render()."</select></span></div>
 								<div class='btSource'><span class='btLanguage'>Grammatical tag</span><br />
-								<span class='btNative'><select class='full-width select-tags select2'><option>none</option>".(new pSelector('subclassifications', @$data['subclassification_id'], 'name', true, 'rules', false))->render()."</select></span></div>
+								<span class='btNative'><select class='full-width select-tags select2'><option>none</option>".(new pSelector('subclassifications', @$data['subclassification_id'], 'name', true, 'rules', false))->render()."</select></span><br /><br />
+								
+								<div class=''>
+									<input class='hidden-status' type='hidden' value='".($edit ? $data['hidden'] : '0')."' />
+									<select class='select-status btStatus float-right'>
+										<option value='0' ".(($edit && $data['hidden'] == 0) ? 'selected' : '').">Status: Visible</option>
+										<option value='1' ".(($edit && $data['hidden'] == 1) ? 'selected' : '').">Status: Hidden</option>
+									</select>
+								</div>
+
+								</div>
+
 						</div>
 					</div>
 				</div>
@@ -67,11 +71,9 @@ class pLemmaSheetTemplate extends pTemplate{
 				");
 
 
-		p::Out(pMainTemplate::NoticeBox('fa-info-circle fa-12', BATCH_TR_DESC1, 'notice-subtle'));
-		p::Out(pMainTemplate::NoticeBox('fa-info-circle fa-12', BATCH_TR_DESC1, 'notice-subtle').pMainTemplate::NoticeBox('fa-info-circle fa-12', sprintf(BATCH_TR_DESC2, '<span class="imitate-tag">', '</span>', '<span class="imitate-tag">', '</span>'),  'notice-subtle')."<br />");
 	
 		// Languages
-		$languages = pLanguage::allActive(-1);
+		$languages = pLanguage::allActive();
 		$sendLanguages = array();
 		foreach($languages as $language){
 			$sendLanguages[] = "'".$language->read('id')."': $('.translations-language-".$language->read('id')."').val()";
@@ -84,6 +86,8 @@ class pLemmaSheetTemplate extends pTemplate{
 
 
 		}
+
+		p::Out("<br /><br />".pMainTemplate::NoticeBox('fa-info-circle fa-12', BATCH_TR_DESC1, 'notice-subtle').pMainTemplate::NoticeBox('fa-info-circle fa-12', sprintf(BATCH_TR_DESC2, '<span class="imitate-tag">', '</span>', '<span class="imitate-tag">', '</span>'),  'notice-subtle'));
 
 
 		p::Out("
@@ -129,7 +133,7 @@ class pLemmaSheetTemplate extends pTemplate{
 					</select></div>
 				</div>
 				<div data-tab='Notes'>
-					<div style='padding: 10px'><textarea class='gtEditor usage-notes elastic allowtabs'>".($edit ? $this->_data->_links['usage_notes'] : '')."</textarea></div>
+					<div style='padding: 10px'><textarea placeholde='➥ Add notes...' class='gtEditor usage-notes elastic allowtabs'>".($edit ? $this->_data->_links['usage_notes'] : '')."</textarea></div>
 				</div></div>
 		</form><br />
 ");

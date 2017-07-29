@@ -6,10 +6,10 @@
 	//		Written by Thomas de Roo
 	//		Licensed under MIT
 
-	//	++	File: BatchTemplate.cset.php
+	//	++	File: AsssistantTemplate.cset.php
 
 
-class pBatchTemplate extends pTemplate{
+class pAssistantTemplate extends pTemplate{
 
 	public function renderChooser($id, $text, $values, $name){
 		p::Out("<div class='btCard proper chooser'><div class='btTitle'>$text</div><div class='btSource'>
@@ -64,8 +64,8 @@ class pBatchTemplate extends pTemplate{
 					<textarea placeholder='' class='elastic nWord btInput translations'></textarea>
 				</div><br />
 				<div class='btButtonBar'>
-					<a class='btAction no-float'>".BATCH_TR_UNTRANS."</a>
-					<a class='btAction blue'>".BATCH_CONTINUE."</a>
+					<a class='btAction button-never no-float'>".BATCH_TR_UNTRANS."</a>
+					<a class='btAction button-handle blue'>".BATCH_CONTINUE."</a>
 					<a class='btAction button-skip'>".BATCH_TR_SKIP."</a>
 					<br id='cl' />
 				</div>
@@ -80,7 +80,17 @@ class pBatchTemplate extends pTemplate{
 
 			});
 			$('.button-skip').click(function(){
-				$('.btLoadSide').load('".p::Url('?batch/'.$section.'/skip/ajax')."', {'skip': ".$data['id']."}, function(){
+				$('.btLoadSide').load('".p::Url('?assistant/'.$section.'/skip/ajax')."', {'skip': ".$data['id']."}, function(){
+					serveCard();
+				});
+			});
+			$('.button-never').click(function(){
+				$('.btLoadSide').load('".p::Url('?assistant/'.$section.'/never/ajax')."', {'never': ".$data['id']."}, function(){
+					serveCard();
+				});
+			});
+			$('.button-handle').click(function(){
+				$('.btLoad').load('".p::Url('?assistant/'.$section.'/handle/ajax')."', {'translations': $('.translations').val()}, function(){
 					serveCard();
 				});
 			});
@@ -89,12 +99,25 @@ class pBatchTemplate extends pTemplate{
 		");
 	}
 	
+	public function cardTranslateEmpty($section){
+		p::Out("<div class='btCard transCard proper'>
+				<div class='btTitle'>".BATCH_TRANSLATE."</div>
+				".pMainTemplate::NoticeBox('fa-info-circle fa-12', sprintf(BATCH_TR_EMPTY, '<a href="'.p::Url('?assistant/'.$section).'">', '</a>'),  'notice-subtle')."
+				<div class='btButtonBar'>
+					
+				</div>
+		</div>
+		
+		");
+	}
+
 	public function script($section){
 		return "
+		$('.btChooser').select2();
 		$('.chooser-continue').click(function(){
 			$('.chooser').slideUp();
 			$('.dotsc').slideDown();
-			$('.btLoad').load('".p::Url('?batch/'.$section.'/choose/ajax')."', {'btChooser': $('.btChooser').val()}, function(){
+			$('.btLoad').load('".p::Url('?assistant/'.$section.'/choose/ajax')."', {'btChooser': $('.btChooser').val()}, function(){
 				serveCard(); 
 			});
 
@@ -103,7 +126,7 @@ class pBatchTemplate extends pTemplate{
 			$('.btLoad').slideUp();
 			$('.bottomCard').hide();
 			$('.dotsc').slideDown();
-			$('.btLoad').load('".p::Url('?batch/'.$section.'/serve/ajax')."', {}, function(){
+			$('.btLoad').load('".p::Url('?assistant/'.$section.'/serve/ajax')."', {}, function(){
 				$('.dotsc').slideUp();
 				$('.btLoad').slideDown();
 				$('.bottomCard').show();

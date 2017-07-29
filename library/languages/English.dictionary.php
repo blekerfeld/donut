@@ -169,6 +169,7 @@ p::defineLocale('', '');
 
 
 p::defineLocale('BATCH_CHOOSE_LANGUAGE', 'Choose language');
+p::defineLocale('BATCH_TITLE', 'Assistant');
 p::defineLocale('BATCH_TRANSLATE', 'Translate');
 p::defineLocale('BATCH_CONTINUE', 'Next');
 p::defineLocale('BATCH_TR_UNTRANS', 'Untranslatable');
@@ -176,3 +177,4 @@ p::defineLocale('BATCH_TR_SKIP', 'Skip');
 p::defineLocale('BATCH_TR_PLACEHOLDER', 'Add a translation');
 p::defineLocale('BATCH_TR_DESC1', 'Add as many translations as needed. Existing translations are linked and new ones are created on the fly.');
 p::defineLocale('BATCH_TR_DESC2', 'The input format is %s translation %s or %s translation>specification %s');
+p::defineLocale('BATCH_TR_EMPTY', 'There is nothing left to translate, come back later or %s start over %s to see any skipped items.');

@@ -6,9 +6,9 @@
 	//		Written by Thomas de Roo
 	//		Licensed under MIT
 
-	//	++	File: BatchStructure.cset.php
+	//	++	File: AssistantStructure.cset.php
 
-class pBatchStructure extends pStructure{
+class pAssistantStructure extends pStructure{
 	
 	protected $_error = null;
 
@@ -37,25 +37,14 @@ class pBatchStructure extends pStructure{
 
 	public function render(){
 
-		$searchBox = new pSearchBox;
 
-
-		if(isset(pRegister::arg()['is:result'], pRegister::session()['searchQuery']))
-			$searchBox->setValue(pRegister::session()['searchQuery']);
-	
-
-		pMainTemplate::throwOutsidePage($searchBox);
 
 		// Starting with the wrapper
-		p::Out("<div class='pEntry ".(($this->_error != '' OR $this->_error != null) ? 'hasErrors' : '')."'><div class='home-margin'>");
-
-		// If logged, show tabs
-		if(pUser::noGuest() AND isset($this->_structure[$this->_section]['edit_url'], pRegister::arg()['id']) AND $this->_section != 'stats')
-			p::Out("<div class='card-tabs-bar titles'>
-				<a class='ssignore ".(!isset(pRegister::arg()['action']) ? 'active' : '')."' href='".p::Url("?entry/".$this->_structure[$this->_section]['section_key'].'/'.pRegister::arg()['id'].(isset(pRegister::arg()['is:result']) ? '/is:result' : ''))."'>".LEMMA_VIEW_SHORT."</a>
-				<a class='ssignore' href='".p::Url($this->_structure[$this->_section]['edit_url'].(is_numeric(pRegister::arg()['id']) ?  pRegister::arg()['id'] : p::HashId(pRegister::arg()['id'], true)[0]).(isset(pRegister::arg()['is:result']) ? '/is:result' : ''))."'>".LEMMA_EDIT_SHORT."</a> 
-				<a class='ssignore ".((isset(pRegister::arg()['action']) AND pRegister::arg()['action'] == 'discuss') ? 'active' : '')."'  href='".p::Url('?entry/'.$this->_structure[$this->_section]['section_key'].'/'.(is_numeric(pRegister::arg()['id']) ?  pRegister::arg()['id'] : p::HashId(pRegister::arg()['id'], true)[0]).'/discuss'.(isset(pRegister::arg()['is:result']) ? '/is:result' : ''))."'>".LEMMA_DISCUSS_SHORT."</a>
-			</div><br />");
+		if(!isset(pRegister::arg()['ajax'])){
+		p::Out("<div class='btCard'><span class='markdown-body'><h2>".(new pIcon('assistant'))." ".BATCH_TITLE."</h2></span></div>");
+			p::Out("<div class='pEntry ".(($this->_error != '' OR $this->_error != null) ? 'hasErrors' : '')."'><div class='home-margin'>");
+		}
+	
 
 		// If there is an offset, we need to define that
 		if(isset(pRegister::arg()['offset']))
@@ -86,7 +75,9 @@ class pBatchStructure extends pStructure{
 		SkipError:
 
 		// Ending content
-		p::Out("</div></div>");
+		if(!isset(pRegister::arg()['ajax'])){
+			p::Out("</div></div>");
+		} 
 
 		// Tooltipster time!
 		p::Out("<script type='text/javascript'>

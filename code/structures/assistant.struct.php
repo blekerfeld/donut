@@ -20,7 +20,7 @@ return array(
 		'translate' => array(
 			'section_key' => 'translate',
 			'icon' => 'fa-language',
-			'type' => 'pBatchHandler',
+			'type' => 'pAssistantHandler',
 			'template' => 'pTemplate',
 			'table' => 'words',
 			'surface' => "Batch Translating",

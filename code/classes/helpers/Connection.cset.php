@@ -115,7 +115,7 @@ class pConnection extends PDO{
 
 	}
 
-	protected function CleanCache($section = 'queries', $prefix = ''){
+	public function CleanCache($section = 'queries', $prefix = ''){
 		foreach(glob(CONFIG_ROOT_PATH . '/cache/' . $section . '/'.$prefix.'*.cache') as $filename)
 			unlink($filename);
 		return true;
