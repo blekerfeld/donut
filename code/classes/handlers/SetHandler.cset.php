@@ -62,7 +62,7 @@ class pSetHandler extends pHandler{
 			$path = substr($path, 0, -1);
 		$path = str_replace(':', '/', ":".$path);
 		$dM->setCondition(" WHERE name = ".p::Quote($path)." ");
-		if(isset($dM->getObjects()->fetchAll()[0]))
+		if(array_key_exists(0, $dM->getObjects()->fetchAll()))
 			return $dM->getObjects()->fetchAll()[0]['id'];
 		else
 			return 0;
@@ -73,7 +73,7 @@ class pSetHandler extends pHandler{
 			return $id;
 			$dM = new pDataModel($this->_activeSection['table']);
 		$dM->setCondition(" WHERE id = ".p::Quote($id)." ");
-		if(isset($dM->getObjects()->fetchAll()[0]))
+		if(array_key_exists(0, $dM->getObjects()->fetchAll()))
 			return $dM->getObjects()->fetchAll()[0]['name'];
 		else
 			return '/rules';

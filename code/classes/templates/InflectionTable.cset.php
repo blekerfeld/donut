@@ -33,7 +33,7 @@ class pInflectionTable extends pTemplatePiece {
 			$output .= "<tr class='heading'><td colspan='2'>".$heading['name']."</td></tr>";
 			foreach($headingHolder['rows'] as $row){
 				// Generating the surface form
-				$surface = ($twolc->feed($row['inflected'][0]))->toSurface();
+				$surface = $twolc->feed($row['inflected'][0])->toSurface();
 				// Outing the surface form
 				$output .= "<tr><td class='row_name'>".$row['self']['name']."</td><td class='row_inflected'>".$surface."</td></tr>";
 				// Chaching the surface form

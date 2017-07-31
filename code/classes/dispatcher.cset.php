@@ -28,7 +28,7 @@ class pDispatcher {
 		// Let's pack some superglobals inside pRegister
 		pRegister::session($_SESSION);
 		pRegister::post($_POST);
-		$this->_dispatchData = require_once p::FromRoot("code/Dispatch.php");
+		$this->_dispatchData = require_once p::FromRoot("code/dispatch.php");
 		self::$structure = $this->_dispatchData;
 		unset($this->_dispatchData['META_MENU']);
 	}

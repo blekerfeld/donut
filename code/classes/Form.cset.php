@@ -191,8 +191,8 @@ class pSelector{
 		else{	
 			$this->dataModel->getSingleObject($this->value);
 			if($this->dataModel->count() != 0){
-				pDataField::addToStack($key, ($this->dataModel->data()->fetchAll()[0])[$this->_showField]);
-				$output .= ($this->dataModel->data()->fetchAll()[0])[$this->_showField];
+				pDataField::addToStack($key, $this->dataModel->data()->fetchAll()[0][$this->_showField]);
+				$output .= $this->dataModel->data()->fetchAll()[0][$this->_showField];
 			}
 			else
 				$output .= '';

@@ -217,7 +217,7 @@ class pLemmaSheetDataModel extends pDataModel{
 			$transParsed = $this->parseTranslations($translations);
 			// Inserting or ignoring the stuff that needs to be inserted
 			foreach($transParsed as $trans){
-				$id = pTranslation::new($trans, $language, $this->_transIDLookUp);
+				$id = pTranslation::add($trans, $language, $this->_transIDLookUp);
 				// If the ID is false the link does already exist
 				if(!is_array($id)){
 					$dM = new pDataModel('translation_words');
@@ -294,7 +294,7 @@ class pLemmaSheetDataModel extends pDataModel{
 		$dM = new pDataModel('usage_notes');
 		$dM->setCondition(" WHERE word_id = '".$this->_lemma['id']."' ");
 		$dM->getObjects();
-		if(isset($dM->data()->fetchAll()[0]))
+		if(array_key_exists(0, $dM->data()->fetchAll()))
 			return $dM->data()->fetchAll()[0]['contents'];
 		else
 			return false;
