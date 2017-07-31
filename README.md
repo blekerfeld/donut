@@ -1,5 +1,6 @@
 # Donut Dictionary Toolkit
-#### under construction
+#### Under Construction
+#### Planned release: before January 2018
 
 Donut is a dictionary and grammar toolkit that makes it easy to create and mantain an online dictionary and grammar for any language. It has purposes within descriptive linguistics and language construction.
 
@@ -9,7 +10,7 @@ Donut is licensed under MIT.
 
 ### Requirements
 
-* PHP 5.3+ (ideally PHP 7+)
+* PHP 5.6+ (ideally PHP 7+), might work with PHP 5.4+ (not tested)
 * MySQL or MariaDB-server
 
 ### Installation
