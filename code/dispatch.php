@@ -37,25 +37,24 @@ return array(
 			),
 			'dictionary-admin' => array(
 				'name' => MMENU_EDITORMENU." ".(new pIcon('fa-caret-down', 10)),
-				'app' => 'dictionary-admin',
 				'permission' => -4,
 				'class' => '',	
 				'subitems' => array(
 					'editor' => array(
-						'name' => 'New Lemma',
-						'icon' => 'fa-plus-circle',
+						'name' => 'New lemma entry',
+						'icon' => 'fa-pencil',
 						'app' => 'editor/new',
 						'permission' => -3,
 					),
 					'assistant' => array(
-						'name' => 'Translation assistant',
-						'icon' => 'fa-magic',
+						'name' => 'Assistant',
+						'icon' => 'assistant',
 						'app' => 'assistant/translate',
 						'permission' => -2,
 					),
 					'rulesheet' => array(
-						'name' => 'Rules',
-						'icon' => 'fa-book',
+						'name' => 'Grammar',
+						'icon' => 'dna',
 						'app' => 'rules',
 						'permission' => -4,
 					),
@@ -66,8 +65,8 @@ return array(
 						'permission' => -4,
 					),
 					'dictionary-admin' => array(
-						'name' => 'Dictionary settings',
-						'icon' => 'fa-cog',
+						'name' => 'Management panel',
+						'icon' => 'tune',
 						'app' => 'dictionary-admin',
 						'permission' => -4,
 					),
@@ -125,7 +124,7 @@ return array(
 
 	'rules' => array(
 		'page_title' => 'Rules',
-		'default_section' => 'list',
+		'default_section' => 'browser',
 		'arguments' => array(
 			0 => 'action',
 			1 => 'id',

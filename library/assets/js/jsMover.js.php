@@ -14,6 +14,7 @@ session_start();
 if(!isset($_GET['key']))
   die();
 
-elseif(isset($_SESSION[$_GET['key']]))
+if(isset($_SESSION[$_GET['key']]))
   die(($_SESSION[$_GET['key']]));
-
+else
+	die("void(0);");

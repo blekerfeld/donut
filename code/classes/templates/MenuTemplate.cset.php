@@ -55,7 +55,7 @@ class pMenuTemplate extends pTemplate{
 		foreach($this->_menu as $key => $main){
 			if(isset($this->_meta[$key])){
 				if(pUser::checkPermission($this->itemPermission($key)) OR (isset($this->_meta[$key]['subitems']) AND $this->checkSubItemPermission($this->_meta[$key]['subitems']))){
-					$output .= "<a href='".(isset($this->_meta[$key]['app']) ? p::Url("?".$this->_meta[$key]['app']) : '')."' class=' ".(isset($this->_meta[$key]['class']) ? $this->_meta[$key]['class'] : '')." ".($this->checkActiveMain($key) ? 'active' : '')." ttip_menu'";
+					$output .= "<a href='".(isset($this->_meta[$key]['app']) ? p::Url("?".$this->_meta[$key]['app']) : 'javascript:void(0);')."' class=' ".(isset($this->_meta[$key]['class']) ? $this->_meta[$key]['class'] : '')." ".($this->checkActiveMain($key) ? 'active' : '')." ttip_menu'";
 
 					if(isset($this->_meta[$key]['subitems']) AND $this->checkSubItemPermission($this->_meta[$key]['subitems'])){
 						$output .= " title='";

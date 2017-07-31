@@ -332,7 +332,7 @@ class pMagicActionForm{
 			p::Out("<div class='miniForm'>");
 		}
 
-		p::Out(pMainTemplate::NoticeBox('fa-spinner fa-spin fa-12', $this->_strings[2], 'notice saving hide'));
+		p::Out("<div class='saving hide'>".pMainTemplate::loadDots()."</div>");
 
 		// That is where the ajax magic happens:
 		p::Out("<div class='ajaxSave'></div>");

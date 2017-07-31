@@ -23,6 +23,11 @@
                                   supported by Chrome and Opera */
 }
 
+.disabled{
+  pointer-events: none;
+   cursor: default;
+}
+
 
  ::-moz-selection {
   background: #7CADDE;
@@ -1711,6 +1716,10 @@ div.btCard.proper{
   box-shadow: 0px 1px 3px rgba(100, 100, 100, 0.3);
 }
 
+div.btCard.admin{
+  width: 95%;
+}
+
 div.btCard.admin.minimal{
   padding: 5px;
   margin: 0 auto;
@@ -1886,6 +1895,16 @@ div.btButtonBar {
   margin-right: -20px;
   margin-bottom: -20px;
   padding: 8px;
+}
+
+a.btFloat{
+  color: black;
+  opacity: .2;
+  transition: all .3s;
+}
+
+a.btFloat:hover{
+  opacity: 1;
 }
 
 div.btButtonBar.no-min{
@@ -2426,12 +2445,18 @@ table.rules span.dType{
 @keyframes blink {
     0% {
       opacity: .2;
+      transform: scale(1.0);
+      font-size: 40px;
     }
     20% {
       opacity: 1;
+      transform: scale(2.0);
+      font-size: 70px;
     }
     100% {
       opacity: .2;
+      transform: scale(1.0);
+      font-size: 40px;
     }
 }
 
@@ -2443,9 +2468,10 @@ p.dots{
 
 .dots span {
     animation-name: blink;
-    animation-duration: 1.4s;
+    animation-duration: 3s;
     animation-iteration-count: infinite;
     animation-fill-mode: both;
+
 }
 
 .dots span:nth-child(2) {
