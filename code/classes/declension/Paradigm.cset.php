@@ -67,21 +67,12 @@ class pParadigm{
 
 	protected function findAux($row, $heading, $lemma){
 
-		$checkGramGroups = $this->dataModel->customQuery("
+		$checkAux = $this->findRules($lemma, $heading, $row, true);
 
-			SELECT aux.word_id AS id, aux.mode_id, aux.placement, aux.inflect FROM gram_groups_aux AS aux
-			JOIN gram_groups_members AS gg ON aux.gram_group_id = gg.gram_group_id
-			WHERE gg.mode_id = ".$this->_id." AND gg.submode_id = ".$heading['id']." AND (gg.number_id = ".$row['id']." OR gg.number_id = 0) AND
-			(gg.type_id = '".$lemma->read('type_id')."' OR gg.type_id = 0) AND
-			(gg.classification_id = '".$lemma->read('classification_id')."' OR gg.classification_id = 0) AND
-			(gg.subclassification_id = '".$lemma->read('subclassification_id')."' OR gg.classification_id = 0)
-
-			");
-
-		if($checkGramGroups->rowCount() == 0)
+		if($checkAux->rowCount() == 0)
 			return null;
 		else
-			return $checkGramGroups->fetchAll();
+			return $checkAux->fetchAll();
 	}
 
 	protected function findIrregularForms($lemma, $heading, $row, $rules){
@@ -114,7 +105,7 @@ class pParadigm{
 		return $output; 
 	}
 
-	protected function findRules($lemma, $heading, $row, $irregular = false){
+	protected function findRules($lemma, $heading, $row, $irregular = false, $isAux = false){
 
 
 		// First we need to fetch all potatial candidates
@@ -192,10 +183,13 @@ class pParadigm{
 		if(count($rules) == 0)
 			$rules[] = 'id = -1';
 
-		if(!$irregular)
-			return $this->dataModel->customQuery("SELECT * FROM morphology WHERE (".implode(" OR ", $rules).") AND is_irregular = 0;")->fetchAll();
-		else
+		if($irregular)
 			return $this->dataModel->customQuery("SELECT * FROM morphology WHERE (".implode(" OR ", $rules).") AND is_irregular = 1 AND lemma_id = ".$lemma->read('id').";")->fetchAll();
+			
+		elseif($isAux)
+			return $this->dataModel->customQuery("SELECT * FROM morphology WHERE (".implode(" OR ", $rules).") AND is_aux = 1;")->fetchAll();
+		else
+			return $this->dataModel->customQuery("SELECT * FROM morphology WHERE (".implode(" OR ", $rules).") AND is_irregular = 0;")->fetchAll();			
 
 	}
 

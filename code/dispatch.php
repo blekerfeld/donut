@@ -49,7 +49,7 @@ return array(
 					'assistant' => array(
 						'name' => 'Assistant',
 						'icon' => 'assistant',
-						'app' => 'assistant/translate',
+						'app' => 'assistant',
 						'permission' => -2,
 					),
 					'rulesheet' => array(
@@ -174,7 +174,7 @@ return array(
 
 	'assistant' => array(
 		'page_title' => 'Assistant',
-		'default_section' => 'translate',
+		'default_section' => 'default',
 		'arguments' => array(
 			0 => 'section',
 			1 => 'action',

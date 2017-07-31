@@ -407,23 +407,10 @@ return array(
 			),
 			'save_strings' => $saveStrings,
 			'outgoing_links' => array(
-					'gramcat' => array(
-						'section' => 'gramcat', 
-						'surface' => DA_GRAMCAT_TITLE, 
-						'icon' => 'fa-code-fork', 
-						'table'=> 'classification_apply', 
-						'field' => 'type_id'
-					)
+					
 				),
 			'incoming_links' => array(
-				'gramcat' => array(
-						'section' => 'gramcat',
-						'table' => 'classification_apply',
-						'parent' => 'type_id',
-						'child' => 'classification_id',
-						'show_parent' => 'name',
-						'show_child' => 'name',
-					),
+				
 			),
 		),
 		'gramcat' => array(
@@ -449,30 +436,10 @@ return array(
 			),
 			'save_strings' => $saveStrings,
 			'outgoing_links' => array(
-				'lexcat' => array(
-					'section' => 'lexcat', 
-					'surface' => DA_LEXCAT_TITLE, 
-					'icon' => 'fa-sitemap', 
-					'table'=> 'classification_apply', 
-					'field' => 'classification_id'
-				),
+				
 			),
 			'incoming_links' => array(
-				'lexcat' => array(
-						'section' => 'lexcat',
-						'table' => 'classification_apply',
-						'parent' => 'classification_id',
-						'child' => 'type_id',
-						'show_parent' => 'name',
-						'show_child' => 'name',
-					),
-				'gramtags' => array(
-						'table' => 'subclassification_apply',
-						'parent' => 'classification_id',
-						'child' => 'subclassification_id',
-						'show_parent' => 'name',
-						'show_child' => 'name',
-				),
+				
 			),
 		),
 		'gramtags' => array(
@@ -498,13 +465,7 @@ return array(
 			),
 			'save_strings' => $saveStrings,
 			'outgoing_links' => array(
-				'gramcat' => array(
-					'section' => 'gramcat', 
-					'surface' => DA_GRAMCAT_TITLE, 
-					'icon' => 'fa-code-fork', 
-					'table'=> 'subclassification_apply', 
-					'field' => 'subclassification_id'
-				),
+				
 			),
 		),
 

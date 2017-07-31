@@ -71,7 +71,7 @@ class pRulesheetTemplate extends pTemplate{
 		p::Out("<div class='rulesheet no-padding'>
 			<div class='left'>
 			<div class='btCard rulesheetCard'>
-				<div class='btTitle'>Rule</div>
+				<div class='btTitle'>".RS_RULE_DETAILS."</div>
 				".(!$edit ? pMainTemplate::NoticeBox('fa-info-circle fa-10', RS_RULE_WILL_BE_ADDED.' <strong class="medium">'.$ruleset['name']."</strong>.", 'notice-subtle') : '')."
 				<div class='btSource'><span class='btLanguage'>".RS_NAME." <span class='xsmall' style='color: darkred;opacity: 1;'>*</span></span><br />
 				<span class='btNative'><input class='btInput nWord small normal-font name' value='".($edit ? $data['name'] : '')."'/></span></div>
@@ -91,7 +91,7 @@ class pRulesheetTemplate extends pTemplate{
 						");
 
 		if($edit)
-			p::Out((new pAction('remove', 'Delete item', 'fa-times', 'btAction no-float redbt', null, null, $section, 'rulesheet', null, -3))->render($data['id']));
+			p::Out((new pAction('remove', DA_DELETE, 'fa-times', 'btAction no-float redbt', null, null, $section, 'rulesheet', null, -3))->render($data['id']));
 
 		p::Out("
 						<br id='cl' />
@@ -102,17 +102,17 @@ class pRulesheetTemplate extends pTemplate{
 		if(!in_array($section, array('context', 'ipa')))
 			p::Out("
 			<div class='btCard rulesheetCard'>
-				<div class='btTitle'>Selectors</div>
-					<div class='notice'>".(new pIcon('fa-info-circle', 10))." The combination of the selectors decides when and where the rule is applied.</div><br />
+				<div class='btTitle'>".RS_SCOPE."</div>
+					<div class='notice-subtle'>".(new pIcon('fa-info-circle', 10))." ".RS_SCOPE_DESC."</div><br />
 					<div class='rulesheet inner'>
 						<div class='left'>
-							".p::Markdown("##### Primary selectors ")."<br />
-							<div class='btSource'><span class='btLanguage'>Lexical categories <em class='small'>(part of speech)</em></span><br />
+							".p::Markdown("##### ".RS_PRIMARY_SELECTOR." ")."<br />
+							<div class='btSource'><span class='btLanguage'>".DA_LEXCAT_DESC."</span><br />
 							<span class='btNative'><select class='full-width select-lexcat select2' multiple='multiple'>".(new pSelector('types', $this->_data->_links['lexcat'], 'name', true, 'rules', true))->render()."</select></span></div>
-							<div class='btSource'><span class='btLanguage'>Grammatical categories</span><br />
+							<div class='btSource'><span class='btLanguage'>".DA_GRAMCAT_TITLE."</span><br />
 							<span class='btNative'><select class='full-width select-gramcat select2' multiple='multiple'>".(new pSelector('classifications', $this->_data->_links['gramcat'], 'name', true, 'rules', true))->render()."</select></span></div>
-							<div class='btSource'><span class='btLanguage'>Grammatical tags</span><br />
-							<span class='btNative'><select class='full-width select-tags select2' multiple='multiple'>".(new pSelector('subclassifications', $this->_data->_links['tag'], 'name', true, 'rules', true))->render()."</select></span></div>
+							<div class='btSource'><span class='btLanguage'>".DA_GRAMTAGS_TITLE."</span><br />
+							<span class='btNative'><select class='full-width select-tags select2' multiple='multiple'>".(new pSelector('subclassifications', $this->_data->_links['tag'], 'name', true, 'rules', true))->render()."</select></span><br /><div class='notice-subtle'>".(new pIcon('fa-question-circle', 10))." ".RS_PRIMARY_SELECTORS_DESC."</div></div>
 						</div>
 						<div class='right'>
 							".p::Markdown("##### Secondary selectors ")."<br />

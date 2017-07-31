@@ -84,6 +84,7 @@ p::defineLocale('WD_NO_THREADS', "There are no threads yet, feel free to create 
 
 // Rules and rulesheets
 p::defineLocale('RS_BROWSER', "Browse rules");
+p::defineLocale('RS_RULE_DETAILS', "Rule details");
 p::defineLocale('RS_BY_TABLE', "Rules by table");
 p::defineLocale('RS_DELETE_CONFIRM', 'Are you sure you want to delete this rule folder, all of its sub-folders and any rules they might contain?');
 p::defineLocale('RS_DELETE_CONFIRM_ITEM', 'Are you sure you want to delete this rule?');
@@ -93,6 +94,10 @@ p::defineLocale('RS_NAME', 'Rule name');
 p::defineLocale('RS_RULESET', 'Rule location');
 p::defineLocale('RS_STATEMENT', 'Rule statement');
 p::defineLocale('RS_TEST', 'Rule Tester');
+p::defineLocale('RS_PRIMARY_SELECTOR', 'Primary selectors');
+p::defineLocale('RS_PRIMARY_SELECTORS_DESC', 'Primary selectors are properties of the lemma');
+p::defineLocale('RS_SCOPE', 'Scope selectors');
+p::defineLocale('RS_SCOPE_DESC', 'The scope selectors decide when a rule is applied.');
 
 
 // Inflection describtion
@@ -101,6 +106,20 @@ p::defineLocale('IND_STEM_START', "stem start with");
 p::defineLocale('IND_STEM_NOT_END', "stem does not end with");
 p::defineLocale('IND_STEM_END', "stem ends with");
 p::defineLocale('IND_ELSE', "all other conditions in the rule are not met");
+p::defineLocale('IND_SF', "Stem formation");
+p::defineLocale('IND_SFRONTPLUS', "is added to the front of the input word.");
+p::defineLocale('IND_SFRONTMIN', "is taken away from the begining of the word.");
+p::defineLocale('IND_SENDMIN', "is taken away from the end of the word.");
+p::defineLocale('IND_SENDPLUS', "is added at the end of the input word.");
+p::defineLocale('IND_VARIABLE_REPLACE', 'Variable %s is replaced with');
+p::defineLocale('IND_VARIABLE_GENERATED', 'Generated variables');
+p::defineLocale('IND_SNOCHANGE', 'The stem remains unchanged.');
+p::defineLocale('IND_PREFIXES', 'Prefixes');
+p::defineLocale('IND_SUFFIXES', 'Suffixes');
+p::defineLocale('IND_PX_ADDS', 'This rule adds %s as a prefix if the following conditions are met:');
+p::defineLocale('IND_SX_ADDS', 'This rule adds %s as a suffix if the following conditions are met:');
+p::defineLocale('IND_ALWAYS', 'Always');
+
 
 // D_admin
 p::defineLocale('DA_OPTIONAL', "optional");
@@ -149,10 +168,11 @@ p::defineLocale('DA_SUBINFLECTIONS', "Sub-inflections");
 
 p::defineLocale("DA_LEXCAT_TITLE", "Lexical categories");
 p::defineLocale("DA_LEXCAT", "Lexical category");
+p::defineLocale("DA_LEXCAT_DESC", "Lexical categories (part of speech)");
 p::defineLocale("DA_GRAMCAT", "Grammatical category");
 p::defineLocale("DA_GRAMCAT_TITLE", "Grammatical categories");
-p::defineLocale("DA_GRAMTAG", "Grammatical tag");
-p::defineLocale("DA_GRAMTAGS_TITLE", "Grammatical tags");
+p::defineLocale("DA_GRAMTAG", "Additional tag");
+p::defineLocale("DA_GRAMTAGS_TITLE", "Additional tags");
 
 
 // Da titles
@@ -188,8 +208,12 @@ p::defineLocale('', '');
 
 
 p::defineLocale('BATCH_CHOOSE_LANGUAGE', 'Pick a language');
+p::defineLocale('BATCH_CHOOSE_ASSISTANT', 'What do you want to do?');
 p::defineLocale('BATCH_TITLE', 'Assistant');
+p::defineLocale('BATCH_TITLE_TR', 'Assistant');
 p::defineLocale('BATCH_TRANSLATE', 'Translate');
+p::defineLocale('BATCH_TRANSLATE_LONG', 'Translate lemmas');
+p::defineLocale('BATCH_TRANSLATE_DESC', 'Translate lemmas that don\'t have any translations in a specific language yet.');
 p::defineLocale('BATCH_CONTINUE', 'Next');
 p::defineLocale('BATCH_TR_UNTRANS', 'Untranslatable');
 p::defineLocale('BATCH_TR_SKIP', 'Skip');
@@ -199,6 +223,6 @@ p::defineLocale('BATCH_TR_DESC2', 'The input format is %s translation %s or %s t
 p::defineLocale('BATCH_TR_DESC_START', 'Choose the language you want to be translating into.');
 p::defineLocale('BATCH_TR_EMPTY', 'There is nothing left to translate, come back later or %s start over %s to see any skipped items.');
 p::defineLocale('BATCH_TR_GO_BACK', 'Change language');
-p::defineLocale('BATCH_TR_PER_TRANS', 'Already translated: ');
-p::defineLocale('BATCH_TR_LEFT_TRANS', 'Lemmas left to translate: ');
+p::defineLocale('BATCH_TR_PER_TRANS', ' already translated');
+p::defineLocale('BATCH_TR_LEFT_TRANS', ' left to translate');
 p::defineLocale('BATCH_TR_ALL', 'There ');

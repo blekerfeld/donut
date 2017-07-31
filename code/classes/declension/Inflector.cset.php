@@ -102,14 +102,14 @@ class pInflector{
 
 			foreach($row['aux'] as $key => $aux){
 				$auxLemma = new pLemma($aux['id']);
-				if($aux['inflect'] == 0)
+				if($aux['aux_mode_id'] == 0)
 					$auxInflected = $auxLemma->read('native');
 				else{
 					$tempForce = $row['aux'];
 					unset($tempForce[$key]);
 					$auxInflector = new pInflector($auxLemma, $this->_twolcRules, $this->_nesting + 1);
 					$auxInflector->compile();
-					$auxInflected = $auxInflector->requestSingleInflection($aux['mode_id'], $row['self']['id'], $heading['id']);
+					$auxInflected = $auxInflector->requestSingleInflection($aux['aux_mode_id'], $row['self']['id'], $heading['id']);
 				}
 				if($aux['placement'] == 0){
 					$output = $auxInflected . ' ' . $output;

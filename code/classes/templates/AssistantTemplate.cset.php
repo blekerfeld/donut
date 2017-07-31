@@ -11,6 +11,27 @@
 
 class pAssistantTemplate extends pTemplate{
 
+	public function renderChooserDefault($data){
+
+		p::Out("<div class='btCard proper chooser'><div class='btTitle'>".(new pIcon('fa-question-circle'))." ".BATCH_CHOOSE_ASSISTANT."</div>
+			<div class='btSource'>		
+			<div class='btChooser'>");
+		$count = 0;
+		unset($data['default']);
+		foreach ($data as $key => $structure) {
+			p::Out("<div class='option btOptionDefault' data-role='option' data-value='".$key."'>
+				<span class='btStats normal'>".$structure['desc']."</span>
+				<strong>".$structure['icon']." ".$structure['surface']."</strong><br id='cl' />
+
+				</div>");
+		}
+		p::Out("</div></div>
+
+			</div>");
+
+		
+	}
+
 	public function renderChooserTranslate($data){
 
 		p::Out("<div class='btCard proper chooser'><div class='btTitle'>".BATCH_CHOOSE_LANGUAGE."</div>
@@ -23,7 +44,7 @@ class pAssistantTemplate extends pTemplate{
 				continue;
 			$count++;
 			p::Out("<div class='option btOption' data-role='option' data-value='".$value->read('id')."'>
-				".(new pDataField(null, null, null, 'flag'))->parse($value->read('flag'))." <strong>".$value->read('name')."</strong><br /><span class='dType'>".BATCH_TR_PER_TRANS."<span class='per'>".round((100 - $data[$value->read('id')]['percentage']), 1)."%</span><br />".BATCH_TR_LEFT_TRANS."<span class='per'>".$data[$value->read('id')]['left']."</span></span>
+				<span class='btStats'>".(new pIcon("playlist-check", 18))." "."<span class='per'>".round((100 - $data[$value->read('id')]['percentage']), 1)."%</span> <br />".BATCH_TR_PER_TRANS."</span><span class='btStats'>".(new pIcon("library-books", 17))." <span class='per'>".$data[$value->read('id')]['left']."</span> <br />".BATCH_TR_LEFT_TRANS."</span></span>".(new pDataField(null, null, null, 'flag'))->parse($value->read('flag'))." <strong>".$value->read('name')."</strong><br id='cl' />
 
 				</div>");
 		}
@@ -39,9 +60,12 @@ class pAssistantTemplate extends pTemplate{
 		
 	}
 
-	public function render($section, $data, $ajax = false){
+	public function render($section, $data, $ajax = false, $serveCard = true){
 
-		p::Out("<div class='dotsc hide'>".pMainTemplate::loadDots()."</div><div class='btLoad hide'></div><div class='btLoadSide hide'></div>");
+		p::Out('<div class="assistant">');
+
+		if($ajax == false)
+			p::Out("<div class='dotsc hide'>".pMainTemplate::loadDots()."</div><div class='btLoad hide'></div><div class='btLoadSide hide'></div>");
 
 		// If the session-chooser is already set we just load the first cards
 		if(!isset($_SESSION['btChooser-'.$section])){
@@ -56,7 +80,8 @@ class pAssistantTemplate extends pTemplate{
 		@pRegister::session($hashKey, $this->script($section));
 		p::Out("<script type='text/javascript' src='".p::Url('pol://library/assets/js/key.js.php?key='.$hashKey)."'></script>");
 
-		if(isset($_SESSION['btChooser-'.$section]))
+		if(isset($_SESSION['btChooser-'.$section]) AND $serveCard)
+
 			p::Out("<script type='text/javascript'>serveCard();</script>");
 
 		if($ajax == false){
@@ -65,6 +90,8 @@ class pAssistantTemplate extends pTemplate{
 				$this->$function();
 		}
 		
+
+		p::Out('</div>');
 	}
 
 	public function renderBottomTranslate(){
@@ -135,12 +162,19 @@ class pAssistantTemplate extends pTemplate{
 	public function cardTranslateEmpty($section){
 		p::Out("<div class='btCard transCard proper'>
 				<div class='btTitle'>".BATCH_TRANSLATE."</div>
-				".pMainTemplate::NoticeBox('fa-info-circle fa-12', sprintf(BATCH_TR_EMPTY, '<a href="'.p::Url('?assistant/'.$section).'">', '</a>'),  'notice-subtle')."
+				".pMainTemplate::NoticeBox('fa-info-circle fa-12', sprintf(BATCH_TR_EMPTY, '<a href="javascript:void(0);" class="button-back">', '</a>'),  'notice-subtle')."
 				<div class='btButtonBar'>
 					
 				</div>
 		</div>
-		
+		<script type='text/javascript'>
+		$('.button-back').click(function(){
+				$('.btLoad').load('".p::Url('?assistant/'.$section.'/reset/ajax')."', {'translations': $('.translations').val()}, function(){
+					serveCard();
+				});
+			});
+			
+		</script>
 		");
 	}
 
@@ -155,6 +189,16 @@ class pAssistantTemplate extends pTemplate{
 			});
 
 		});
+
+		$('.btOptionDefault').click(function(){
+			$('.chooser').slideUp();
+			$('.dotsc').slideDown();
+			$('.assistant').load('".p::Url('?assistant/')."' + $(this).data('value') + '/ajaxLoad', {}, function(){
+				
+			});
+
+		});
+
 		function serveCard(){
 			$('.btLoad').slideUp();
 			$('.bottomCard').hide();

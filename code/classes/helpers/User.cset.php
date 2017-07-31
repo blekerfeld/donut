@@ -154,10 +154,6 @@ class pUser{
 		The setting functions
 	*/ 
 
-	public function changeEditorLang($lang_id){
-		return self::$dataModel->changeField(self::$id, (new pDataField('editor_lang')), $lang_id, self::$user['editor_lang']);
-	}
-
 	// This function also contains information on how the username needs to look
 	public function changeUserName($newUserName){
 

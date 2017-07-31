@@ -1819,7 +1819,7 @@ span.btLanguage {
   opacity: .8;
 }
 
-div.btChooser div.btOption{
+div.btChooser div.btOption, div.btChooser div.btOptionDefault{
   cursor: pointer;
   opacity: 0.6;
   padding: 15px;
@@ -1827,7 +1827,34 @@ div.btChooser div.btOption{
   border: #e7e7e7 1px solid;transition: all .3s;
 }
 
-div.btChooser div.btOption:hover{
+div.btChooser div.btOptionDefault{
+  border-top: none;
+  border-left: none;
+  border-right: none;
+}
+
+div.btChooser div.btOption strong, div.btChooser div.btOptionDefault strong{
+  font-size: 1.4em;
+  font-family: Lato;
+}
+div.btChooser span.btStats{
+  display: block;
+  float: right;
+  text-align: center;
+  width: 20%;
+  margin: 10px;
+}
+
+div.btChooser span.btStats.normal{
+  width: 40%;
+  text-align: left;
+}
+
+div.btChooser span.btStats span.per{
+  font-size: 1.2em;
+}
+
+div.btChooser div.btOption:hover, div.btChooser div.btOptionDefault:hover{
   opacity: 1;
   background: #eee;
 }

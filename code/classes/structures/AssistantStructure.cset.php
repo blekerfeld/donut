@@ -40,7 +40,7 @@ class pAssistantStructure extends pStructure{
 
 
 		// Starting with the wrapper
-		if(!isset(pRegister::arg()['ajax'])){
+		if(!isset(pRegister::arg()['ajax']) AND !isset(pRegister::arg()['ajaxLoad'])){
 		p::Out("<div class='btCard'><span class='markdown-body'><h2>".(new pIcon('assistant'))." ".BATCH_TITLE."</h2></span></div>");
 			p::Out("<div class='pEntry ".(($this->_error != '' OR $this->_error != null) ? 'hasErrors' : '')."'><div class='home-margin'>");
 		}
@@ -68,14 +68,14 @@ class pAssistantStructure extends pStructure{
 		else
 			$this->_parser->render();
 
-		if(isset(pRegister::arg()['ajax']))
+		if(isset(pRegister::arg()['ajax']) OR isset(pRegister::arg()['ajaxLoad']))
 			return true;
 
 
 		SkipError:
 
 		// Ending content
-		if(!isset(pRegister::arg()['ajax'])){
+		if(!isset(pRegister::arg()['ajax']) AND !isset(pRegister::arg()['ajaxLoad'])){
 			p::Out("</div></div>");
 		} 
 

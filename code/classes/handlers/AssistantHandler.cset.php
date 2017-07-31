@@ -31,12 +31,16 @@ class pAssistantHandler extends pHandler{
 			return $this->$function();
 	}
 
-	public function renderTranslate(){
+	public function renderDefault(){
+		return $this->_template->render('default', $this->_structure, false, false);
+	}
+
+	public function renderTranslate($ajax = false){
 		$data = array();
 		foreach(pLanguage::allActive() as $lang){
 			$data[$lang->read('id')] = $this->countData($lang->read('id'));
 		}
-		return $this->_template->render($this->_section, $data);
+		return $this->_template->render($this->_section, $data, $ajax);
 	}
 
 	public function getData($id = -1){
@@ -114,7 +118,7 @@ class pAssistantHandler extends pHandler{
 
 	public function serveCardTranslate(){
 		if(!isset($_SESSION['btChooser-translate']))
-			return $this->renderTranslate();
+			return $this->renderTranslate(true);
 		if(isset($this->_data[0]))
 			return $this->_template->cardTranslate($this->_data[0], $this->_section);
 		else{

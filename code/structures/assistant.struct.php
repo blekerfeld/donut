@@ -17,13 +17,13 @@ return array(
 			'icon' => 'fa-list',
 			'default_permission' => -3,
 		),
-		'translate' => array(
-			'section_key' => 'translate',
-			'icon' => 'fa-language',
+		'default' => array(
+			'section_key' => 'default',
+			'icon' => 'fa-circle-o',
 			'type' => 'pAssistantHandler',
 			'template' => 'pTemplate',
-			'table' => 'words',
-			'surface' => "Batch Translating",
+			'table' => 'config',
+			'surface' => "",
 			'condition' => false,
 			'disable_enter' => true,
 			'items_per_page' => 20,
@@ -36,5 +36,24 @@ return array(
 			),
 			'save_strings' => $saveStrings,
 		),
-			
+		'translate' => array(
+			'section_key' => 'translate',
+			'icon' => new pIcon('translate', 24),
+			'type' => 'pAssistantHandler',
+			'template' => 'pTemplate',
+			'table' => 'words',
+			'surface' => BATCH_TRANSLATE_LONG,
+			'desc' => BATCH_TRANSLATE_DESC,
+			'condition' => false,
+			'disable_enter' => true,
+			'items_per_page' => 20,
+			'disable_pagination' => true,
+			'actions_item' => array(
+				
+			),
+			'actions_bar' => array(
+				
+			),
+			'save_strings' => $saveStrings,
+		),
 	);

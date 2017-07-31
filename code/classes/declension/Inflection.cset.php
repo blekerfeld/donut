@@ -191,38 +191,38 @@ class pInflection{
 
 	public function describeRule(){
 		$output =  "<table class='describe'><th><tr class='title'><td>
-		<strong>Stem formation</strong></td></tr></th>";
+		<strong>".IND_SF."</strong></td></tr></th>";
 
 		$overAllVM = array();
 
 		foreach($this->_formStem as $key => $action){
 			if(p::StartsWith($action, '+^'))
-				$output .= "<tr><td>'".substr($action, 2)."' is added to the front of the input word.</td></tr>";
+				$output .= "<tr><td>'".substr($action, 2)."' ".IND_SFRONTPLUS."</td></tr>";
 			elseif(p::StartsWith($action, '+'))
-				$output .= "<tr><td>'".substr($action, 1)."' is added at the end of the input word.</td></tr>";
+				$output .= "<tr><td>'".substr($action, 1)."' ".IND_SENDPLUS."</td></tr>";
 			elseif(p::StartsWith($action, '-^') AND p::StartsWith($stem, substr($action, 2)))
-				$output .= "<tr><td>'".substr($action, 2)."' is taken away from the begining of the word.</td></tr>";
+				$output .= "<tr><td>'".substr($action, 2)."' ".IND_SFRONTMIN."</td></tr>";
 			elseif(p::StartsWith($action, '-'))
-				$output .= "<tr><td>'".substr($action, 1)."' is taken away form the end of the word.</td></tr>";
+				$output .= "<tr><td>'".substr($action, 1)."' ".IND_SENDMIN."</td></tr>";
 			// Base modification
 			elseif(p::StartsWith($action, '&')){
 				@$value = explode('=>', $action)[1];
 				@$name = explode('=>', $action)[0];
 				if(p::StartsWith($value, '&'))
 					$overAllVM[] = substr($value, 1);
-				$output .= "<tr><td>Variable ".p::Markdown("`".$name."`", false)." is replaced with ".p::Markdown("`".$value."`", false)."</td></tr>";
+				$output .= "<tr><td>".sprintf(IND_VARIABLE, p::Markdown("`".$name."`", false))." ".p::Markdown("`".$value."`", false)."</td></tr>";
 			}
 			elseif($key == 0)
-				$output .= "<tr><td>The stem remains unchanged.</td></tr>";
+				$output .= "<tr><td>".IND_SNOCHANGE."</td></tr>";
 		}
 	
 		if($this->_addBefore[0] != ''){
-			$output .= "<tr class='title'><td><strong>Prefixes</strong></td></tr>";
+			$output .= "<tr class='title'><td><strong>".IND_PREFIXES."</strong></td></tr>";
 			foreach($this->_addBefore as $before){
 				$explode = explode('?', $before);
 				if($explode[0] == '')
 					continue;
-				$output .= "<tr><td>".p::Markdown("This rule adds `".$explode[0]."` as a prefix if the following conditions are met:", false)."<br />	";
+				$output .= "<tr><td>".p::Markdown(sprintf(IND_PX_ADDS, "`".$explode[0]."`"), false)."<br />	";
 
 				preg_match("/(?<=&)(.*)/", $explode[0], $vM);
 				$variableMatches = array_unique($vM);
@@ -233,7 +233,7 @@ class pInflection{
 					$output .= $this->describeCondition($condition);
 				}
 				if($cnt == 0)
-					$output .= "Always";
+					$output .= IND_ALWAYS;
 				$output .= "</td></tr>";
 				foreach($variableMatches as $m)
 					$overAllVM[] = $m;
@@ -242,12 +242,12 @@ class pInflection{
 
 
 		if($this->_addAfter[0] != ''){
-			$output .= "<tr class='title'><td><strong>Suffixes</strong></td></tr>";
+			$output .= "<tr class='title'><td><strong>".IND_SUFFIXES."</strong></td></tr>";
 			foreach($this->_addAfter as $before){
 				$explode = explode('?', $before);
 				if($explode[0] == '')
 					continue;
-				$output .= "<tr><td>".p::Markdown("This rule adds `".$explode[0]."` as a suffix if the following conditions are met:", false)." <br />";
+				$output .= "<tr><td>".p::Markdown(sprintf(IND_SX_ADDS, "`".$explode[0]."`"), false)."<br />	";
 				preg_match("/(?<=&)(.*)/", $explode[0], $vM);
 				$variableMatches = array_unique($vM);
 				unset($explode[0]);
@@ -257,7 +257,7 @@ class pInflection{
 					$output .= $this->describeCondition($condition);
 				}
 				if($cnt == 0)
-					$output .= "- Always <br />";
+					$output .= "- ".IND_ALWAYS."<br />";
 				$output .= "</td></tr>";
 				foreach($variableMatches as $m)
 					$overAllVM[] = $m;
@@ -266,7 +266,7 @@ class pInflection{
 
 		$overAllVM = array_unique($overAllVM);
 		if(count($overAllVM) != '0'){
-			$output .= "<tr class='title'><td><strong>Generated variables</strong></td></tr>";
+			$output .= "<tr class='title'><td><strong>".IND_VARIABLE_GENERATED."</strong></td></tr>";
 			$output .= "<tr><td>";
 			$implodeThis = array();
 			foreach($overAllVM as $m){
