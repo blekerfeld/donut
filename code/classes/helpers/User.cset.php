@@ -24,7 +24,7 @@ class pUser{
 		// Overwrite the loaded user
 		if(isset($id)){
 			self::$dataModel->getSingleObject($id);
-			if(isset(self::$dataModel->data()->fetchAll()[0]))
+			if(array_key_exists(0, self::$dataModel->data()->fetchAll()))
 				return self::load(self::$dataModel->data()->fetchAll()[0]);
 			else
 				throw new Exception("Error: user could not be loaded", 1);

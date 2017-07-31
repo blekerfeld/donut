@@ -197,7 +197,7 @@ class pDataModel {
 
 	public function countAll(){
 
-		$count = (p::$db->cacheQuery("SELECT count(id) AS total FROM ".$this->_table." ".$this->_condition.";"))->fetchObject();
+		$count = p::$db->cacheQuery("SELECT count(id) AS total FROM ".$this->_table." ".$this->_condition.";")->fetchObject();
 
 		return $count->total;
 	}

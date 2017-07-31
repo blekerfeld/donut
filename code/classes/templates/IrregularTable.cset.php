@@ -34,12 +34,12 @@ class pIrregularTable extends pTemplatePiece {
 			foreach($headingHolder['rows'] as $row){
 				// Generating the surface form
 				if(!$row['inflected'][1])
-					$form = ($twolc->feed($row['inflected'][0]))->toSurface();
+					$form = $twolc->feed($row['inflected'][0])->toSurface();
 				else
-					$form = ($twolc->feed($row['inflected'][0]))->toSurface().'* ';
+					$form = $twolc->feed($row['inflected'][0])->toSurface().'* ';
 
 				if($row['inflected'][1])
-					$surface = ($twolc->feed($row['inflected'][0]))->toSurface();
+					$surface = $twolc->feed($row['inflected'][0])->toSurface();
 				else
 					$surface = '';
 				// Outing the surface form

@@ -96,7 +96,7 @@ class pTranslation extends pEntry{
 			return $this->translation;
 	}
 
-	public static function new($translation, $language, $lookUp = array()){
+	public static function add($translation, $language, $lookUp = array()){
 		if(isset($lookUp[$translation['trans'].'_'.$language.'_'.$translation['spec']])){
 			return array(false, $lookUp[$translation['trans'].'_'.$language.'_'.$translation['spec']]);
 		}
@@ -107,7 +107,7 @@ class pTranslation extends pEntry{
 			$dM->setCondition('');
 			$dM->prepareForInsert(array($language, $translation['trans'], '', date('Y-m-d H:i:s'), pUser::read('id')));
 			$dM->insert();
-			return self::new($translation, $language, $lookUp);
+			return self::add($translation, $language, $lookUp);
 		}
 		else
 			return $dM->data()->fetchAll()[0]['id'];
