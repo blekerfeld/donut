@@ -11,27 +11,29 @@
 
 class pAssistantTemplate extends pTemplate{
 
-	public function renderChooser($id, $text, $values, $name){
-		p::Out("<div class='btCard proper chooser'><div class='btTitle'>$text</div><div class='btSource'>
+	public function renderChooser($id, $text, $values, $name, $desc){
+		p::Out("<div class='btCard proper chooser'><div class='btTitle'>$text</div>
+			".pMainTemplate::NoticeBox('fa-info-circle fa-12', $desc,  'notice-subtle')."
+			<div class='btSource'>
 			<select class='btInput btChooser'>");
 		foreach($values as $value)
 			p::Out("<option value='".$value->read('id')."'>".$value->read('name')."</option>");
-		p::Out("</select></div><br />
+		p::Out("</select></div>
 			<div class='btButtonBar'>
-				<a class='btAction green no-float chooser-continue'>Continue</a>
+				<a class='btAction green  no-float chooser-continue'>Continue</a>
 			</div>
 			</div>");
 
 		
 	}
 
-	public function render($section, $chooser){
+	public function render($section, $chooser, $ajax = false){
 
 		p::Out("<div class='dotsc hide'>".pMainTemplate::loadDots()."</div><div class='btLoad hide'></div><div class='btLoadSide hide'></div>");
 
 		// If the session-chooser is already set we just load the first cards
 		if(!isset($_SESSION['btChooser-'.$section]))
-			$this->renderChooser($chooser[0], $chooser[1], $chooser[2], $chooser[3]);
+			$this->renderChooser($chooser[0], $chooser[1], $chooser[2], $chooser[3], $chooser[4]);
 	
 		$hashKey = spl_object_hash($this);
 		// Throwing this object's script into a session
@@ -41,9 +43,12 @@ class pAssistantTemplate extends pTemplate{
 		if(isset($_SESSION['btChooser-'.$section]))
 			p::Out("<script type='text/javascript'>serveCard();</script>");
 
-		$function = "renderBottom" . ucfirst($section);
-		if(method_exists($this, $function))
+		if($ajax == false){
+			$function = "renderBottom" . ucfirst($section);
+			if(method_exists($this, $function))
 				$this->$function();
+		}
+		
 	}
 
 	public function renderBottomTranslate(){
@@ -53,11 +58,17 @@ class pAssistantTemplate extends pTemplate{
 	public function cardTranslate($data, $section){
 		$lang0 = new pLanguage(0);
 		$lang1 = new pLanguage(pRegister::session()['btChooser-translate']);
-		p::Out("<div class='btCard transCard proper'>
-				<div class='btTitle'>".BATCH_TRANSLATE."</div>
+		$lemma = new pLemma($data['id']);
+		p::Out("
+			<div class='btCard transCard proper'>
+				<div class='btTitle'>
+				<a class='btFloat float-right button-back ttip' href='javascript:void();'>
+						".(new pIcon('fa-level-up'))." ".BATCH_TR_GO_BACK."
+					</a>
+				".BATCH_TRANSLATE."</div>
 				<div class='btSource'>
 					<span class='btLanguage inline-title small'>".(new pDataField(null, null, null, 'flag'))->parse($lang0->read('flag'))." ".$lang0->read('name')."</span><br /><span class='native'>
-					<strong class='pWord xxmedium'><a>".$data['native']."</a></strong></span>
+					<strong class='pWord xxmedium'><a>".$data['native']."</a></strong></span> ".$lemma->generateInfoString()."
 				</div><br />
 				<div class='btTranslate'>
 					<span class='btLanguage inline-title small'>".(new pDataField(null, null, null, 'flag'))->parse($lang1->read('flag'))." ".$lang1->read('name')."</span><br />
@@ -73,6 +84,7 @@ class pAssistantTemplate extends pTemplate{
 		
 		<script type='text/javascript'>
 			$(document).ready(function(){
+				$('.ttip').tooltipster({animation: 'grow'});
 				$('.translations').tagsInput({
 							'defaultText': '".BATCH_TR_PLACEHOLDER."'
 						});
@@ -91,6 +103,11 @@ class pAssistantTemplate extends pTemplate{
 			});
 			$('.button-handle').click(function(){
 				$('.btLoad').load('".p::Url('?assistant/'.$section.'/handle/ajax')."', {'translations': $('.translations').val()}, function(){
+					serveCard();
+				});
+			});
+			$('.button-back').click(function(){
+				$('.btLoad').load('".p::Url('?assistant/'.$section.'/reset/ajax')."', {'translations': $('.translations').val()}, function(){
 					serveCard();
 				});
 			});

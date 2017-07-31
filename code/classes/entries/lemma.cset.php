@@ -114,10 +114,10 @@ class pLemma extends pEntry{
 	}
 
 	// This function will generate an infostring
-	private function generateInfoString(){
-		$output = "<a href='javascript:void(0);' class='tooltip' title='".$this->_type['name']."'>".$this->_type['short_name']."</a> <a href='javascript:void(0);' class='tooltip' title='".$this->_class['name']."'>".$this->_class['short_name']."</a>";
+	public function generateInfoString(){
+		$output = "<a href='javascript:void(0);' class='tooltip ttip' title='".$this->_type['name']."'>".$this->_type['short_name']."</a> <a href='javascript:void(0);' class='ttip tooltip' title='".$this->_class['name']."'>".$this->_class['short_name']."</a>";
 		if($this->_subclass != null)
-			$output .= "<a href='javascript:void(0);' class='tooltip' title='".$this->_subclass['name']."'>".$this->_subclass['short_name']."</a>";
+			$output .= "<a href='javascript:void(0);' class='tooltip ttip' title='".$this->_subclass['name']."'>".$this->_subclass['short_name']."</a>";
 		return $output;
 	}
 

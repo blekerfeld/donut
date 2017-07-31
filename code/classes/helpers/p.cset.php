@@ -151,7 +151,7 @@ class p{
 			return false;
 
 		// Let's create a variable to make things a little more readable
-		$language_main_path = self::FromRoot('library/languages/' . $language . '.php');
+		$language_main_path = self::FromRoot('library/locales/' . $language . '.php');
 
 		// Does this language exist?
 		if(!file_exists($language_main_path))
@@ -162,7 +162,7 @@ class p{
 
 		// Now all other files
 		foreach($transfer['lang_sub_files'] as $filename)
-			include self::FromRoot('library/languages/' . $language . '.' . $filename . '.php');
+			include self::FromRoot('library/locales/' . $language . '.' . $filename . '.php');
 			
 		// Now it's time to define the constants, with a certaint callback!
 		foreach (self::$locales as $key => $value)

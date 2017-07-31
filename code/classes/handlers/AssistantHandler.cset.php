@@ -26,7 +26,7 @@ class pAssistantHandler extends pHandler{
 
 	// This would render the rule list table :)
 	public function render(){
-		return $this->_template->render($this->_section, array('language', BATCH_CHOOSE_LANGUAGE, pLanguage::allActive(), 'name'));
+		return $this->_template->render($this->_section, array('language', BATCH_CHOOSE_LANGUAGE, pLanguage::allActive(), 'name', BATCH_TR_DESC_START));
 	}
 
 	public function getData($id = -1){
@@ -47,6 +47,28 @@ class pAssistantHandler extends pHandler{
 		return false;
 	}
 
+	public function countData(){
+
+		if($this->_section == 'translate' AND isset(pRegister::session()['btChooser-translate'])){
+	
+			$counter = $this->_dataModel->customQuery("SELECT COUNT(DISTINCT words.id) AS cnt 
+			FROM words
+			JOIN translation_words 
+			JOIN translations ON translations.id = translation_words.translation_id
+			WHERE (translation_words.id IS NULL 
+			OR (translation_words.id IS NOT NULL AND NOT EXISTS (SELECT * FROM translation_words JOIN translations ON translations.id = translation_words.translation_id WHERE translation_words.word_id = words.id AND translations.language_id = ".$_SESSION['btChooser-translate'].")  
+			) AND NOT EXISTS (SELECT * FROM translation_exceptions WHERE word_id = words.id AND language_id = ".$_SESSION['btChooser-translate']." AND user_id = ".pUser::read('id').")) AND  words.id AND  words.id NOT IN ( '" . @implode($_SESSION['btSkip-translate'], "', '") . "' );")->fetchAll()[0];
+
+			return $counter['cnt'];
+		}
+		
+
+		return false;
+
+	}
+	
+
+
 
 	public function catchAction($action, $template, $arg = null){
 		if($action == 'choose' AND isset(pRegister::arg()['ajax'], pRegister::post()['btChooser']))
@@ -59,6 +81,8 @@ class pAssistantHandler extends pHandler{
 			return $this->ajaxHandle();
 		elseif($action == 'never' AND isset(pRegister::arg()['ajax']))
 			return $this->ajaxNever();
+		elseif($action == 'reset' AND isset(pRegister::arg()['ajax']))
+			return $this->ajaxReset();
 		else
 			return parent::catchAction($action, $template, $arg);
 	}
@@ -71,6 +95,8 @@ class pAssistantHandler extends pHandler{
 	}
 
 	public function serveCardTranslate(){
+		if(!isset($_SESSION['btChooser-translate']))
+			return $this->_template->render($this->_section, array('language', BATCH_CHOOSE_LANGUAGE, pLanguage::allActive(), 'name', BATCH_TR_DESC_START), true);
 		if(isset($this->_data[0]))
 			return $this->_template->cardTranslate($this->_data[0], $this->_section);
 		else{
@@ -84,6 +110,11 @@ class pAssistantHandler extends pHandler{
 		$function = "ajaxHandle" . ucfirst($this->_section);
 		if(method_exists($this, $function))
 			return $this->$function();
+	}
+
+	public function ajaxReset(){
+		unset($_SESSION['btChooser-translate']);
+		unset($_SESSION['btSkip-translate']);
 	}
 
 	public function ajaxHandleTranslate(){

@@ -17,8 +17,8 @@ return array(
 			'icon' => 'fa-book',
 			'default_permission' => -3,
 		),
-		'list' => array(
-			'section_key' => 'list',
+		'browser' => array(
+			'section_key' => 'browser',
 			'icon' => 'fa-book',
 			'type' => 'pSetHandler',
 			'template' => 'pTemplate',

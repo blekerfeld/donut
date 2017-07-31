@@ -82,6 +82,12 @@ p::defineLocale('WD_BACK_TO_THREAD', "Back to thread");
 p::defineLocale('WD_BACK_TO_WORD', "Back to entry");
 p::defineLocale('WD_NO_THREADS', "There are no threads yet, feel free to create a discussion thread.");
 
+// Rules and rulesheets
+p::defineLocale('RS_BROWSER', "Browse rules");
+p::defineLocale('RS_BY_TABLE', "Rules by table");
+p::defineLocale('RS_DELETE_CONFIRM', 'Are you sure you want to delete this rule folder, all of its sub-folders and any rules they might contain?');
+p::defineLocale('RS_DELETE_CONFIRM_ITEM', 'Are you sure you want to delete this rule?');
+
 // D_admin
 p::defineLocale('DA_OPTIONAL', "optional");
 p::defineLocale('DA_DEFAULT', "Default");
@@ -163,12 +169,11 @@ p::defineLocale('STATS_LASTSEARCHBY', 'Last search «%s»');
 p::defineLocale("DA_HEADINGS", "Headings");
 
 // Rulesheet 
-p::defineLocale('RS_DELETE_CONFIRM', 'Are you sure you want to delete this rule folder, all of its sub-folders and any rules they might contain?');
 p::defineLocale('', '');
 p::defineLocale('', '');
 
 
-p::defineLocale('BATCH_CHOOSE_LANGUAGE', 'Choose language');
+p::defineLocale('BATCH_CHOOSE_LANGUAGE', 'Pick a language');
 p::defineLocale('BATCH_TITLE', 'Assistant');
 p::defineLocale('BATCH_TRANSLATE', 'Translate');
 p::defineLocale('BATCH_CONTINUE', 'Next');
@@ -177,4 +182,6 @@ p::defineLocale('BATCH_TR_SKIP', 'Skip');
 p::defineLocale('BATCH_TR_PLACEHOLDER', 'Add a translation');
 p::defineLocale('BATCH_TR_DESC1', 'Add as many translations as needed. Existing translations are linked and new ones are created on the fly.');
 p::defineLocale('BATCH_TR_DESC2', 'The input format is %s translation %s or %s translation>specification %s');
+p::defineLocale('BATCH_TR_DESC_START', 'Choose the language you want to be translating into.');
 p::defineLocale('BATCH_TR_EMPTY', 'There is nothing left to translate, come back later or %s start over %s to see any skipped items.');
+p::defineLocale('BATCH_TR_GO_BACK', 'Change language');

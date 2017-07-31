@@ -28,8 +28,14 @@ class pRulesStructure extends pStructure{
 
 	public function render(){
 
+		// If logged, show tabs
 		if(!isset(pRegister::arg()['ajax']) AND !isset(pRegister::arg()['ajaxLoad']))
-			p::Out("<div class='rulesheet-header'>".p::Markdown("## ".$this->_structure[$this->_section]['surface'])."</div><br /><div class='rulesheet-margin'>");
+			p::Out("
+				<div class='card-tabs-bar titles'>
+				<a class='ssignore disabled no-select' href='javascript:void(0);'>".(new pIcon('dna', 14))." Grammar    </a>
+				<a class='ssignore ".(!isset(pRegister::arg()['action']) ? 'active' : '')."' href='".p::Url("?rules")."'>".(new pIcon('folder-multiple', 14))." ".RS_BROWSER."</a>
+				<a class='ssignore' href='".p::Url("?rules")."'>".(new pIcon('view-list', 14))." ".RS_BY_TABLE."</a>
+			</div><br /><div class='rulesheet-margin'>");
 		
 		$this->_parser->render();
 

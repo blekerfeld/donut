@@ -54,7 +54,7 @@ class pSetHandler extends pHandler{
 	protected function pathToID($path){
 		if(is_numeric($path))
 			return $path;
-		$dM = $this->dataModel;
+		$dM = new pDataModel($this->_activeSection['table']);
 		// No trailing in names
 		if(p::StartsWith($path, ':'))
 			$path = substr($path, 1);
@@ -71,7 +71,7 @@ class pSetHandler extends pHandler{
 	protected function IDtoPath($id){
 		if(!is_numeric($id))
 			return $id;
-		$dM = $this->dataModel;
+			$dM = new pDataModel($this->_activeSection['table']);
 		$dM->setCondition(" WHERE id = ".p::Quote($id)." ");
 		if(isset($dM->getObjects()->fetchAll()[0]))
 			return $dM->getObjects()->fetchAll()[0]['name'];

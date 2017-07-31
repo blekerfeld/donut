@@ -18,7 +18,7 @@ class pLoginTemplate extends pTemplate{
 		<div class='btTitle'>".(new pIcon('fa-lock', 12))." ".LOGIN_TITLE."</div>
 		<div class='ajaxChecking'></div>
 		<form id='loginForm'>
-		".pMainTemplate::NoticeBox('fa-spinner fa-spin fa-12', LOGIN_CHECKING, 'notice saving')."
+		<div class='saving hide'>".pMainTemplate::loadDots()."</div>
 		<div class='btSource'><span class='btLanguage'>".LOGIN_USERNAME."</span><br />
 			<span class='btNative'><input class='btInput nWord small normal-font username' /></span></div>
 		<div class='btSource'><span class='btLanguage'>".LOGIN_PASSWORD."</span><br />
@@ -44,7 +44,7 @@ class pLoginTemplate extends pTemplate{
 				$('.login-button').click(function(){
 					$('.saving').slideDown();
 					$('.ajaxMessage').slideUp();
-					$('.ajaxChecking').load('".p::Url("?auth/login/ajax")."', {
+					$('.ajaxChecking').delay(1000).load('".p::Url("?auth/login/ajax")."', {
 						'username': $('.username').val(),
 						'password': $('.password').val(),
 					});
@@ -54,11 +54,11 @@ class pLoginTemplate extends pTemplate{
 	}
 
 	public function succes(){
-		return pMainTemplate::NoticeBox('fa-spinner fa-spin fa-12', LOGIN_SUCCESS, 'succes-notice')."<script type='text/javascript'>$('.saving').slideUp();$('.ajaxMessage').slideDown();</script>";
+		return pMainTemplate::NoticeBox('fa-spinner fa-spin fa-12', LOGIN_SUCCESS, 'succes-notice')."<script type='text/javascript'>$('.saving').delay(1000).slideUp();$('.ajaxMessage').delay(2000).slideDown();</script>";
 	}
 
 	public function errorMessage(){
-		return pMainTemplate::NoticeBox('fa-warning fa-12', LOGIN_ERROR, 'danger-notice ajaxMessage')."<script type='text/javascript'>$('.saving').slideUp();$('.ajaxMessage').slideDown();</script>";
+		return pMainTemplate::NoticeBox('fa-warning fa-12', LOGIN_ERROR, 'danger-notice ajaxMessage')."<script type='text/javascript'>$('.saving').delay(1000).slideUp();$('.ajaxMessage').delay(2000).slideDown();</script>";
 	}
 
 	public function warning(){
