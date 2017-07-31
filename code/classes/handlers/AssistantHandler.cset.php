@@ -24,9 +24,19 @@ class pAssistantHandler extends pHandler{
 		$this->_template = new pAssistantTemplate($this->_section);
 	}
 
-	// This would render the rule list table :)
+
 	public function render(){
-		return $this->_template->render($this->_section, array('language', BATCH_CHOOSE_LANGUAGE, pLanguage::allActive(), 'name', BATCH_TR_DESC_START));
+		$function = "render" . ucfirst($this->_section);
+		if(method_exists($this, $function))
+			return $this->$function();
+	}
+
+	public function renderTranslate(){
+		$data = array();
+		foreach(pLanguage::allActive() as $lang){
+			$data[$lang->read('id')] = $this->countData($lang->read('id'));
+		}
+		return $this->_template->render($this->_section, $data);
 	}
 
 	public function getData($id = -1){
@@ -47,19 +57,27 @@ class pAssistantHandler extends pHandler{
 		return false;
 	}
 
-	public function countData(){
+	public function countData($language = null){
 
-		if($this->_section == 'translate' AND isset(pRegister::session()['btChooser-translate'])){
+		if($this->_section == 'translate' AND ((isset(pRegister::session()['btChooser-translate']) AND $language == null) OR ($language != null))){
 	
-			$counter = $this->_dataModel->customQuery("SELECT COUNT(DISTINCT words.id) AS cnt 
+			$result = array('left' => 0, 'total' => 0, 'percentage' => 0);
+
+			$dM = new pDataModel('words');
+
+
+			$left = $dM->customQuery("SELECT COUNT(DISTINCT words.id) AS cnt 
 			FROM words
 			JOIN translation_words 
 			JOIN translations ON translations.id = translation_words.translation_id
 			WHERE (translation_words.id IS NULL 
-			OR (translation_words.id IS NOT NULL AND NOT EXISTS (SELECT * FROM translation_words JOIN translations ON translations.id = translation_words.translation_id WHERE translation_words.word_id = words.id AND translations.language_id = ".$_SESSION['btChooser-translate'].")  
-			) AND NOT EXISTS (SELECT * FROM translation_exceptions WHERE word_id = words.id AND language_id = ".$_SESSION['btChooser-translate']." AND user_id = ".pUser::read('id').")) AND  words.id AND  words.id NOT IN ( '" . @implode($_SESSION['btSkip-translate'], "', '") . "' );")->fetchAll()[0];
+			OR (translation_words.id IS NOT NULL AND NOT EXISTS (SELECT * FROM translation_words JOIN translations ON translations.id = translation_words.translation_id WHERE translation_words.word_id = words.id AND translations.language_id = ".($language == null ? $_SESSION['btChooser-translate'] : $language).")  
+			) AND NOT EXISTS (SELECT * FROM translation_exceptions WHERE word_id = words.id AND language_id = ".($language == null ? $_SESSION['btChooser-translate'] : $language)." AND user_id = ".pUser::read('id').")) AND  words.id AND  words.id NOT IN ( '" . @implode($_SESSION['btSkip-translate'], "', '") . "' );")->fetchAll()[0];
 
-			return $counter['cnt'];
+			$total = $dM->customQuery("SELECT COUNT(DISTINCT words.id) AS cnt 
+			FROM words")->fetchAll()[0];
+
+			return array('left' => $left['cnt'], 'total' => $total['cnt'], 'percentage' => ($left['cnt'] / $total['cnt']) * 100);
 		}
 		
 
@@ -96,7 +114,7 @@ class pAssistantHandler extends pHandler{
 
 	public function serveCardTranslate(){
 		if(!isset($_SESSION['btChooser-translate']))
-			return $this->_template->render($this->_section, array('language', BATCH_CHOOSE_LANGUAGE, pLanguage::allActive(), 'name', BATCH_TR_DESC_START), true);
+			return $this->renderTranslate();
 		if(isset($this->_data[0]))
 			return $this->_template->cardTranslate($this->_data[0], $this->_section);
 		else{
@@ -123,7 +141,7 @@ class pAssistantHandler extends pHandler{
 		$translations = array($_SESSION['btChooser-translate'] => pRegister::post()['translations']
 			);
 		$dM  = new pLemmaSheetDataModel('words', $this->_data[0]['id']);
-		$dM->updateTranslations($translations);
+		$dM->updateTranslations($translations, true);
 		$dM->cleanCache('words');
 	}
 

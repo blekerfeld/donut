@@ -87,6 +87,20 @@ p::defineLocale('RS_BROWSER', "Browse rules");
 p::defineLocale('RS_BY_TABLE', "Rules by table");
 p::defineLocale('RS_DELETE_CONFIRM', 'Are you sure you want to delete this rule folder, all of its sub-folders and any rules they might contain?');
 p::defineLocale('RS_DELETE_CONFIRM_ITEM', 'Are you sure you want to delete this rule?');
+p::defineLocale('RS_NEW_RULE', 'New Rule');
+p::defineLocale('RS_RULE_WILL_BE_ADDED', 'This rule will be added in ');
+p::defineLocale('RS_NAME', 'Rule name');
+p::defineLocale('RS_RULESET', 'Rule location');
+p::defineLocale('RS_STATEMENT', 'Rule statement');
+p::defineLocale('RS_TEST', 'Rule Tester');
+
+
+// Inflection describtion
+p::defineLocale('IND_STEM_NOT_START', "stem does not start with");
+p::defineLocale('IND_STEM_START', "stem start with");
+p::defineLocale('IND_STEM_NOT_END', "stem does not end with");
+p::defineLocale('IND_STEM_END', "stem ends with");
+p::defineLocale('IND_ELSE', "all other conditions in the rule are not met");
 
 // D_admin
 p::defineLocale('DA_OPTIONAL', "optional");
@@ -185,3 +199,6 @@ p::defineLocale('BATCH_TR_DESC2', 'The input format is %s translation %s or %s t
 p::defineLocale('BATCH_TR_DESC_START', 'Choose the language you want to be translating into.');
 p::defineLocale('BATCH_TR_EMPTY', 'There is nothing left to translate, come back later or %s start over %s to see any skipped items.');
 p::defineLocale('BATCH_TR_GO_BACK', 'Change language');
+p::defineLocale('BATCH_TR_PER_TRANS', 'Already translated: ');
+p::defineLocale('BATCH_TR_LEFT_TRANS', 'Lemmas left to translate: ');
+p::defineLocale('BATCH_TR_ALL', 'There ');

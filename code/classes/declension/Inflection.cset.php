@@ -177,15 +177,15 @@ class pInflection{
 	public function describeCondition($condition){
 		$output = '';
 		if(p::StartsWith($condition, '!^'))
-			$output .= "- stem does not start with '".substr($condition, 2)."' <br/ >";
+			$output .= "- ".IND_STEM_NOT_START." '".substr($condition, 2)."' <br/ >";
 		elseif(p::StartsWith($condition, '!$'))
-			$output .= "- stem does not end with '".substr($condition, 2)."' <br/ >";
+			$output .= "- ".IND_STEM_NOT_END." '".substr($condition, 2)."' <br/ >";
 		elseif(p::StartsWith($condition, '^'))
-			$output .= "- stem starts with '".substr($condition, 1)."' <br/ >";
+			$output .= "- ".IND_STEM_START." '".substr($condition, 1)."' <br/ >";
 		elseif(p::StartsWith($condition, '$'))
-			$output .= "- stem ends with '".substr($condition, 1)."' <br/ >";
+			$output .= "- ".IND_STEM_END." '".substr($condition, 1)."' <br/ >";
 		elseif($condition == '&ELSE')
-			$output .= "- all other conditions in the rule are not met <br/ >";
+			$output .= "- ".IND_ELSE." <br/ >";
 		return $output;
 	}
 

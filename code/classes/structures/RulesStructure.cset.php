@@ -33,7 +33,7 @@ class pRulesStructure extends pStructure{
 			p::Out("
 				<div class='card-tabs-bar titles'>
 				<a class='ssignore disabled no-select' href='javascript:void(0);'>".(new pIcon('dna', 14))." Grammar    </a>
-				<a class='ssignore ".(!isset(pRegister::arg()['action']) ? 'active' : '')."' href='".p::Url("?rules")."'>".(new pIcon('folder-multiple', 14))." ".RS_BROWSER."</a>
+				<a class='ssignore ".((!isset(pRegister::arg()['action']) OR pRegister::arg()['action'] == 'view') ? 'active' : '')."' href='".p::Url("?rules")."'>".(new pIcon('folder-multiple', 14))." ".RS_BROWSER."</a>
 				<a class='ssignore' href='".p::Url("?rules")."'>".(new pIcon('view-list', 14))." ".RS_BY_TABLE."</a>
 			</div><br /><div class='rulesheet-margin'>");
 		

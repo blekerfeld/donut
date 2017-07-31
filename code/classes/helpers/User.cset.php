@@ -42,7 +42,7 @@ class pUser{
 		self::restore();
 	}
 
-	private function load($data){
+	private static function load($data){
 		self::$id = $data['id'];
 		self::$user = $data; 
 		if(!isset($_SESSION['pUserData']))

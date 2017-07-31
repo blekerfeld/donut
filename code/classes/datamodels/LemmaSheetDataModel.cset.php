@@ -210,7 +210,7 @@ class pLemmaSheetDataModel extends pDataModel{
 	}
 
 
-	public function updateTranslations($input){
+	public function updateTranslations($input, $noDelete = false){
 		// For each input field
 		foreach($input as $language => $translations){
 			// Parse the translation string into an array
@@ -230,16 +230,19 @@ class pLemmaSheetDataModel extends pDataModel{
 				}
 			}
 		}
-		// Deleting what is left over needs to be deleted
-		if($this->_translations != null AND !empty($this->_translations)){
-			foreach($this->_translations as $languageHolder){
-				foreach($languageHolder as $translation){
-					$this->customQuery("DELETE FROM translation_words WHERE word_id = ".$this->_lemma['id']." AND translation_id = ".$translation->read('real_id')." AND specification = ".p::Quote($translation->_specification).";");
-					// This will delete the translation if there are no links left.
-					pTranslation::finalDelete($translation->read('real_id'));
-				}
-			}
+		if(!$noDelete){
+			// Deleting what is left over needs to be deleted
+					if($this->_translations != null AND !empty($this->_translations)){
+						foreach($this->_translations as $languageHolder){
+							foreach($languageHolder as $translation){
+								$this->customQuery("DELETE FROM translation_words WHERE word_id = ".$this->_lemma['id']." AND translation_id = ".$translation->read('real_id')." AND specification = ".p::Quote($translation->_specification).";");
+								// This will delete the translation if there are no links left.
+								pTranslation::finalDelete($translation->read('real_id'));
+							}
+						}
+					}	
 		}
+		
 		
 		// If we are alive, everything went well
 		return true;

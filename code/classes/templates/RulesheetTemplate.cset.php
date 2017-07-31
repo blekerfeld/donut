@@ -63,26 +63,29 @@ class pRulesheetTemplate extends pTemplate{
 		if($edit)
 			$data = $this->_data->data()->fetchAll()[0];
 		
-		p::Out(pMainTemplate::NoticeBox('fa-spinner fa-spin fa-12', SAVING, 'notice saving hide rulesheet-margin'));
+		p::Out("<div class='saving hide'>".pMainTemplate::loadDots()."</div>");
 
 		// That is where the ajax magic happens:
 		p::Out("<div class='ajaxSave rulesheet-margin'></div>");
-		p::Out("<div class='rulesheet-margin'><span class='pSectionTitle extra'>".(new pIcon('fa-folder', 12))." <strong>".pSetTemplate::breakDownName($ruleset['name'], 'rules')." ".($edit ? ' → '.new pIcon('fa-file-o' , 12) . " " . $data['name']  : ' → New Rule')."</strong></span><div class='pSectionWrapper'>");
+		p::Out("<div class='rulesheet-margin'><span class='pSectionTitle extra'>".(new pIcon('fa-folder', 12))." <strong>".pSetTemplate::breakDownName($ruleset['name'], 'rules')." ".($edit ? ' → '.new pIcon('fa-file-o' , 12) . " " . $data['name']  : ' → '.RS_NEW_RULE)."</strong></span><div class='pSectionWrapper'>");
 		p::Out("<div class='rulesheet no-padding'>
 			<div class='left'>
 			<div class='btCard rulesheetCard'>
 				<div class='btTitle'>Rule</div>
-				".(!$edit ? pMainTemplate::NoticeBox('fa-info-circle fa-10', ' This rule will be added in <strong class="medium">'.$ruleset['name']."</strong>.", 'notice-subtle') : '')."
-				<div class='btSource'><span class='btLanguage'>Name <span class='xsmall' style='color: darkred;opacity: 1;'>*</span></span><br />
+				".(!$edit ? pMainTemplate::NoticeBox('fa-info-circle fa-10', RS_RULE_WILL_BE_ADDED.' <strong class="medium">'.$ruleset['name']."</strong>.", 'notice-subtle') : '')."
+				<div class='btSource'><span class='btLanguage'>".RS_NAME." <span class='xsmall' style='color: darkred;opacity: 1;'>*</span></span><br />
 				<span class='btNative'><input class='btInput nWord small normal-font name' value='".($edit ? $data['name'] : '')."'/></span></div>
-				".($edit ? "<div class='btSource'><span class='btLanguage'>Ruleset <span class='xsmall' style='color: darkred;opacity: 1;'>*</span></span><br />
+				".($edit ? "<div class='btSource'><span class='btLanguage'>".RS_RULESET."<span class='xsmall' style='color: darkred;opacity: 1;'>*</span></span><br />
 							<span class='btNative'><select class='full-width select-ruleset select2a'>".(new pSelector('rulesets', $data['ruleset'], 'name', true, 'rules', true))->render()."</select></span></div>" : "")."
-				<div class='btSource'><span class='btLanguage'>Statement </span><span class='xsmall' style='color: darkred;opacity: 1;'>*</span><br />
+				<div class='btSource'><span class='btLanguage'>".RS_STATEMENT." </span><span class='xsmall' style='color: darkred;opacity: 1;'>*</span><br />
 				<span class='btNative'><textarea placeholder='prefix [stem] suffix' spellcheck='false' class='btInput Rule elastic allowtabs' id='rule-content'>".($edit ? $data['rule'] : '')."</textarea><div class='describeStatement'></div></span></div>
 				".$this->ruleTypeWatch($section)."
-				<div class='btSource'><span class='btLanguage'>Test rule</span><br />
-				<span class='btNative'><input class='btInput nWord small normal-font' id='example' placeholder='Lexical form'/><div class='example'></div></span></div>
-				".$this->exampleTypeWatch($section)."
+				<br />
+				<div class='btCard full proper'>
+					<div class='btSource'><span class='btLanguage'><strong class='markdown-body'><h2 class='medium'>".RS_TEST."</h2></strong></span><br />
+					<span class='btNative'><input class='btInput nWord small normal-font' id='example' placeholder='Lexical form'/><div class='example'></div></span></div>
+					".$this->exampleTypeWatch($section)."
+				</div>
 				<div class='btButtonBar'>
 						<a class='btAction green submit-form no-float'>".(new pIcon('fa-check-circle', 10))." ".SAVE."</a>
 						");

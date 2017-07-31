@@ -11,29 +11,45 @@
 
 class pAssistantTemplate extends pTemplate{
 
-	public function renderChooser($id, $text, $values, $name, $desc){
-		p::Out("<div class='btCard proper chooser'><div class='btTitle'>$text</div>
-			".pMainTemplate::NoticeBox('fa-info-circle fa-12', $desc,  'notice-subtle')."
-			<div class='btSource'>
-			<select class='btInput btChooser'>");
-		foreach($values as $value)
-			p::Out("<option value='".$value->read('id')."'>".$value->read('name')."</option>");
-		p::Out("</select></div>
-			<div class='btButtonBar'>
-				<a class='btAction green  no-float chooser-continue'>Continue</a>
+	public function renderChooserTranslate($data){
+
+		p::Out("<div class='btCard proper chooser'><div class='btTitle'>".BATCH_CHOOSE_LANGUAGE."</div>
+			".pMainTemplate::NoticeBox('fa-info-circle fa-12', BATCH_TR_DESC_START,  'notice-subtle')."
+			<div class='btSource'>			<div class='btButtonBar'>
+			<div class='btChooser'>");
+		$count = 0;
+		foreach(pLanguage::allActive() as $value){
+			if($data[$value->read('id')]['percentage'] == 0)
+				continue;
+			$count++;
+			p::Out("<div class='option btOption' data-role='option' data-value='".$value->read('id')."'>
+				".(new pDataField(null, null, null, 'flag'))->parse($value->read('flag'))." <strong>".$value->read('name')."</strong><br /><span class='dType'>".BATCH_TR_PER_TRANS."<span class='per'>".round((100 - $data[$value->read('id')]['percentage']), 1)."%</span><br />".BATCH_TR_LEFT_TRANS."<span class='per'>".$data[$value->read('id')]['left']."</span></span>
+
+				</div>");
+		}
+		if($count == 0){
+			p::Out(pMainTemplate::NoticeBox('fa-info-circle fa-12', BATCH_TR_DESC_START,  'notice-subtle'));
+		}
+		p::Out("</div></div>
+
+				
 			</div>
 			</div>");
 
 		
 	}
 
-	public function render($section, $chooser, $ajax = false){
+	public function render($section, $data, $ajax = false){
 
 		p::Out("<div class='dotsc hide'>".pMainTemplate::loadDots()."</div><div class='btLoad hide'></div><div class='btLoadSide hide'></div>");
 
 		// If the session-chooser is already set we just load the first cards
-		if(!isset($_SESSION['btChooser-'.$section]))
-			$this->renderChooser($chooser[0], $chooser[1], $chooser[2], $chooser[3], $chooser[4]);
+		if(!isset($_SESSION['btChooser-'.$section])){
+			$function = "renderChooser" . ucfirst($section);
+			if(method_exists($this, $function))
+				$this->$function($data);
+		}
+			
 	
 		$hashKey = spl_object_hash($this);
 		// Throwing this object's script into a session
@@ -130,11 +146,11 @@ class pAssistantTemplate extends pTemplate{
 
 	public function script($section){
 		return "
-		$('.btChooser').select2();
-		$('.chooser-continue').click(function(){
+		
+		$('.btOption').click(function(){
 			$('.chooser').slideUp();
 			$('.dotsc').slideDown();
-			$('.btLoad').load('".p::Url('?assistant/'.$section.'/choose/ajax')."', {'btChooser': $('.btChooser').val()}, function(){
+			$('.btLoad').load('".p::Url('?assistant/'.$section.'/choose/ajax')."', {'btChooser': $(this).data('value')}, function(){
 				serveCard(); 
 			});
 

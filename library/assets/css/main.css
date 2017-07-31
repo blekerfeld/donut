@@ -1,4 +1,4 @@
-@import url(https://fonts.googleapis.com/css?family=Righteous|Libre+Franklin|Rubik+Mono+One|Merriweather|Lato|Open+Sans|Raleway);
+@import url(https://fonts.googleapis.com/css?family=Righteous|Libre+Franklin|Merriweather|Noto+Sans|Lato|Open+Sans|Raleway);
 @font-face{font-family:Gentium;src:url(vendors/fonts/GenBasR.ttf)}@font-face{font-family:Gentium;src:url(vendors/fonts/GenBasB.ttf);font-weight:700}@font-face{font-family:Gentium;src:url(vendors/fonts/GenBasI.ttf);font-style:italic}
 @font-face{font-family:Kollektif;src:url(vendors/fonts/kollektif.ttf)}
 @font-face{font-family:Koliko;src:url(vendors/fonts/koliko.ttf)}
@@ -48,8 +48,8 @@ html, body {
   height:100%;
   background: #f3f3f3;
   padding: 0;
-  font-family: Open Sans;
-  font-size: 14px;
+  font-family: Noto Sans;
+  font-size: 14.5px;
 }
 
 
@@ -416,7 +416,7 @@ a.button .fa {
 }
 
 .absolute_footer a.tooltip{
-  font-family: Open Sans!important;
+  
 }
 
 .footer .right {
@@ -507,7 +507,7 @@ a.button .fa {
 div.title {
   font-size: 20px;
   font-weight: bolder;
-  font-family: Open Sans;
+
 }
 
 div.title.small {
@@ -653,7 +653,7 @@ strong.dWordTranslation a{
   font-size: 13px;
   font-weight: normal;
   color: #444;
-  font-family: Open Sans;
+  font-family: Noto Sans;
 }
 
 strong.dWordTranslation a:hover{
@@ -743,7 +743,7 @@ span.translation.tooltip a{
 }
 
 .dWordWrapper ol li em {
-  font-family: Open Sans;
+  font-family: Noto Sans;
   font-size: 12px;
 }
 
@@ -758,7 +758,7 @@ span.translation.tooltip a{
   margin: 0px;
   font-size: 13px;
   font-weight: normal;
-  font-family: open sans;
+  font-family: Noto Sans;
   padding: 1px;
   margin-top: 2px;
   background: rgba(140, 140, 140, 0.1);
@@ -1114,7 +1114,7 @@ input.nWord:invalid {
 
 input.nWord.normal-font{
   font-size: 18px;
-  font-family: Open Sans;
+  font-family: Noto Sans;
   color: #333;
   font-weight: normal;
 }
@@ -1270,7 +1270,7 @@ a.lemma-code.big{
 
 a.lemma-code.discussion {
   margin-right: 10px;
-  font-family: Open Sans;
+  font-family: Noto Sans;
   font-size: 12px;
 }
 
@@ -1672,7 +1672,7 @@ span.ipa {
   width: auto;
   background: #d3d3d3;
   cursor: pointer;
-  font-family: Open Sans;
+  font-family: Noto Sans;
   font-size: 12px;
   color: #333;
 }
@@ -1714,6 +1714,12 @@ div.btCard {
 
 div.btCard.proper{
   box-shadow: 0px 1px 3px rgba(100, 100, 100, 0.3);
+}
+
+div.btCard.full{
+  width: 100%;
+  margin: 0;
+  padding: 15px;
 }
 
 div.btCard.admin{
@@ -1811,7 +1817,19 @@ span.btLanguage {
   color: #444;
   font-size: 13px;
   opacity: .8;
-  font-family: Open Sans!important;
+}
+
+div.btChooser div.btOption{
+  cursor: pointer;
+  opacity: 0.6;
+  padding: 15px;
+  margin: 5px;
+  border: #e7e7e7 1px solid;transition: all .3s;
+}
+
+div.btChooser div.btOption:hover{
+  opacity: 1;
+  background: #eee;
 }
 
 .tooltipster-inner{
@@ -1867,7 +1885,7 @@ div.btSource {
 div.btSource select{
   width: 85%;
   font-size: 13px;
-  font-family: Open Sans!important;
+  font-family: Noto Sans!important;
 }
 
 div.btSource select.full-width{
@@ -2111,7 +2129,7 @@ div.rulesheet.inner .right{
 
 div.rulesheet div.describeStatement, div.rulesheet div.example{
   font-size: 13px;
-  font-family: Open Sans;
+  font-family: Noto Sans;
   font-weight: normal!important;
 }
 
@@ -2125,7 +2143,7 @@ div.rulesheet div.example{
 
 table.describe{
   width: 100%;
-  font-family: Open Sans!important;
+  font-family: Noto Sans!important;
   cursor: pointer;
   opacity: .7;
 }
@@ -2140,7 +2158,7 @@ table.describe td{
 }
 
 table.describe strong{
-  font-family: Open Sans!important;
+  font-family: Noto Sans!important;
 }
 
 table.describe tr:nth-child(even) td{
@@ -2355,7 +2373,7 @@ textarea.gtEditor, textarea.minEditor{
   border: rgba(150, 150, 150, 0.1) 1px solid;
   padding: 20px;
   font-size: 15px;
-  font-family: Open Sans;
+  font-family: Noto Sans;
   border-radius: 5px;
   min-height: 350px;
 }

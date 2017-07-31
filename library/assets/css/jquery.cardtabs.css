@@ -19,6 +19,10 @@ div.card-tabs-bar a{
                                   supported by Chrome and Opera */
 }
 
+div.card-tabs-bar a.disabled{
+	opacity: .4;
+}
+
 div.card-tabs-bar a:first-child{
 	margin-left: 10px;
 }

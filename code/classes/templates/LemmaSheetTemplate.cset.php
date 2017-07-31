@@ -54,12 +54,14 @@ class pLemmaSheetTemplate extends pTemplate{
 								<div class='btSource'><span class='btLanguage'>Grammatical tag</span><br />
 								<span class='btNative'><select class='full-width select-tags select2'><option>none</option>".(new pSelector('subclassifications', @$data['subclassification_id'], 'name', true, 'rules', false))->render()."</select></span><br /><br />
 								
-								<div class=''>
-									<input class='hidden-status' type='hidden' value='".($edit ? $data['hidden'] : '0')."' />
-									<select class='select-status btStatus float-right'>
-										<option value='0' ".(($edit && $data['hidden'] == 0) ? 'selected' : '').">Status: Visible</option>
-										<option value='1' ".(($edit && $data['hidden'] == 1) ? 'selected' : '').">Status: Hidden</option>
+								<div class='btSource'>
+									<span class='btLanguage'>Status</span><br />
+									<span class='btNative'>
+									<select class='select-status btStatus select2 float-right'>
+										<option value='0' ".(($edit && $data['hidden'] == 0) ? 'selected' : '').">Visible</option>
+										<option value='1' ".(($edit && $data['hidden'] == 1) ? 'selected' : '').">Hidden</option>
 									</select>
+									</span>
 								</div>
 
 								</div>
@@ -79,8 +81,8 @@ class pLemmaSheetTemplate extends pTemplate{
 			$sendLanguages[] = "'".$language->read('id')."': $('.translations-language-".$language->read('id')."').val()";
 			p::Out("
 
-				<div class='btSource'><span class='btLanguage'><strong>".(new pDataField(null, null, null, 'flag'))->parse($language->read('flag'))." ".$language->read('name')."</strong></span><br />
-							<span class='btNative'><textarea class=' tags full-width translations-language-".$language->read('id')." ' style='width: 100%' >".($edit ? $this->prepareTranslations($language->read('id')) : '')."</textarea></span></div>
+				<div class='btSource'><span class='btLanguage'><span class='xmedium'>".(new pDataField(null, null, null, 'flag'))->parse($language->read('flag'))." ".$language->read('name')."</span></span><br />
+							<span class='btNative'><textarea class=' tags full-width translations-language-".$language->read('id')." ' style='width: 100%' >".($edit ? $this->prepareTranslations($language->read('id')) : '')."</textarea></span></div><br />
 
 				");
 
@@ -165,13 +167,6 @@ class pLemmaSheetTemplate extends pTemplate{
 		$('.mainTabs').cardTabs();
 		$('.select2').select2({});
 
-		$('.select-status').ddslick({
-	    	onSelected: function(selectedData){
-	      		$('.hidden-status').val(selectedData.selectedData.value);
-	       		$('.hidden-status').trigger('.status-hidden');
-	    	}   
-		})
-
 		$('.select2m').select2({allowClear: true, placeholder: '➥ Add lemmas'});
 		$('.tags').tagsInput({
 			'delimiter': '//'
@@ -206,7 +201,7 @@ class pLemmaSheetTemplate extends pTemplate{
 				'antonyms': $('.select-antonyms').data('storage'),
 				'homophones': $('.select-homophones').data('storage'),
 				'examples': $('.examples-select').data('storage'),
-				'hidden': $('.hidden-status').val(),
+				'hidden': $('.select-status').val(),
 				'irregular': arrIrreg,
 			});
 		});
