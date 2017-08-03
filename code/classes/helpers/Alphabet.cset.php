@@ -51,6 +51,33 @@ class pAlphabet{
 		return new self;
 	}
 
+	public static function getByStart($start){
+		if(!self::$_init)
+			self::init();
+		$output = array();
+		foreach(self::$dataModel->data()->fetchAll() as $letter)
+			if(p::StartsWith($letter['grapheme'], $start))
+				$output[] = $letter;
+		return $output;
+	}
+
+	public function getFilter($letter){
+		$alphabet_filter = self::getByStart($letter);
+		$output = array();
+		foreach($alphabet_filter as $alphabet_filter_instance) {
+			if(!(mb_strlen($alphabet_filter_instance['grapheme'], "UTF-8") == mb_strlen($letter, "UTF-8")))
+				$output[] = $alphabet_filter_instance['grapheme'];
+		}
+		return $output;
+	}
+
+	public static function getAll(){
+		// The alphabet needs to be loaded first
+		if(!self::$_init)
+			self::init();
+		return self::$dataModel->data()->fetchAll();
+	}
+
 	private function letterToNum($data) {
 	    if($data == '' or $data == NULL)
 	        return false;
@@ -88,8 +115,8 @@ class pAlphabet{
 		foreach($lemmas as $word){
 
 		  // We have to set the original word
-		  if(!($original_word = @$word->word))
-		  	$original_word = $word->translation;
+		  if(!($original_word = @$word['native']))
+		  	$original_word = $word['translation'];
 
 		  // Before we split the words, we need to loop through the array to sort it
 
@@ -103,8 +130,8 @@ class pAlphabet{
 		    return mb_strlen($b, "UTF-8")  - mb_strlen($a, "UTF-8");
 		  });
 
-		  if(!($word_work_with = str_split_unicode($word->word)))
-		  	$word_work_with = str_split_unicode($word->native);
+		  if(!($word_work_with = str_split_unicode($word['native'])))
+		  	$word_work_with = str_split_unicode($word['native']);
 
 		  foreach($filter as $substr){
 
@@ -199,4 +226,16 @@ class pAlphabet{
 
 	}
 
+}
+
+function str_split_unicode($str, $l = 0) {
+    if ($l > 0) {
+        $ret = array();
+        $len = mb_strlen($str, "UTF-8");
+        for ($i = 0; $i < $len; $i += $l) {
+            $ret[] = mb_substr($str, $i, $l, "UTF-8");
+        }
+        return $ret;
+    }
+    return preg_split("//u", $str, -1, PREG_SPLIT_NO_EMPTY);
 }

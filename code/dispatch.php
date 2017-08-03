@@ -205,4 +205,15 @@ return array(
 		'metadata' => array(),
 		'menu' => 'dictionary-admin',
 	),
+
+	'generate' => array(
+		'page_title' => CONFIG_SITE_TITLE,
+		'default_section' => 'terminal',
+		'arguments' => array(
+		),
+		'override_structure_type' => 'pSimpleStructure',
+		'template' => 'pGenerateTemplate',
+		'metadata' => array(),
+		'menu' => 'dictionary-admin',
+	),
 );

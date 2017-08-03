@@ -35,6 +35,9 @@ class p{
 		foreach(self::$assets['php'] as $phpfile)
 			$filenames[] = self::FromRoot('library/assets/php/'.$phpfile);
 
+		// Composer autoload:
+		$filenames[] = self::FromRoot('library/assets/composer/vendor/autoload.php');
+
 		// The priviledged classes are loaded first
 		foreach (glob(CONFIG_ROOT_PATH."/code/classes/*.cset.php") as $filename)
 			$filenames[] = $filename;
@@ -65,6 +68,12 @@ class p{
 
 	public static function Out($input){
 		self::$Out[] = $input;
+	}
+
+
+
+	public static function Empty(){
+		return self::$Out = array();
 	}
 
 	public static function Header($input){

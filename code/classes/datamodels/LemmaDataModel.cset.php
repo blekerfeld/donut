@@ -105,7 +105,7 @@ class pLemmaDataModel extends pDataModel{
 
 		$results = array();
 		
-		$query = "SELECT *, translations.id AS real_id FROM translations INNER JOIN translation_words ON translations.id = translation_words.translation_id WHERE translation_words.word_id = ".$this->_lemma['derivation_of']." $lang_text  Order By language_id DESC;";
+		$query = "SELECT *, translations.id AS real_id FROM translations INNER JOIN translation_words ON translations.id = translation_words.translation_id WHERE translation_words.word_id = ".$this->_lemma['id']." $lang_text  Order By language_id DESC;";
 
 
 		$fetch = p::$db->cacheQuery($query);

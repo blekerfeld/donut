@@ -67,12 +67,12 @@ class pParadigm{
 
 	protected function findAux($row, $heading, $lemma){
 
-		$checkAux = $this->findRules($lemma, $heading, $row, true);
+		$checkAux = $this->findRules($lemma, $heading, $row, false, true);
 
 		if($checkAux->rowCount() == 0)
 			return null;
 		else
-			return $checkAux->fetchAll();
+			return $checkAux;
 	}
 
 	protected function findIrregularForms($lemma, $heading, $row, $rules){
@@ -187,7 +187,7 @@ class pParadigm{
 			return $this->dataModel->customQuery("SELECT * FROM morphology WHERE (".implode(" OR ", $rules).") AND is_irregular = 1 AND lemma_id = ".$lemma->read('id').";")->fetchAll();
 			
 		elseif($isAux)
-			return $this->dataModel->customQuery("SELECT * FROM morphology WHERE (".implode(" OR ", $rules).") AND is_aux = 1;")->fetchAll();
+			return $this->dataModel->customQuery("SELECT * FROM morphology WHERE (".implode(" OR ", $rules).") AND is_aux = 1;");
 		else
 			return $this->dataModel->customQuery("SELECT * FROM morphology WHERE (".implode(" OR ", $rules).") AND is_irregular = 0;")->fetchAll();			
 

@@ -1,0 +1,8 @@
+{
+	"config": {
+        "vendor-dir": "library/assets/composer/vendor"
+    },
+	"require": {
+		"mpdf/mpdf": "7.0.x-dev"
+	}
+}

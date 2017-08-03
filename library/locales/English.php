@@ -11,7 +11,6 @@
 */
 
 global $transfer;
-
 $transfer['lang_sub_files'] = array('date', 'dictionary');
 	
 
