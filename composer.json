@@ -1,6 +1,6 @@
 {
 	"config": {
-        "vendor-dir": "library/assets/composer/vendor"
+        "vendor-dir": "library/assets/php/vendors"
     },
 	"require": {
 		"mpdf/mpdf": "7.0.x-dev"

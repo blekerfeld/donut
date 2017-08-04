@@ -15,6 +15,7 @@ class pDictionaryPDF{
 	public function __construct(){
 		// instantiate and use the mPDF class
 		$this->_mPDF = new \Mpdf\Mpdf(array('mode' => 'utf-8', 'format' => 'DEMY'));
+		$this->_mPDF->setFooter('{PAGENO}');
 	}
 
 	public function loadCSS($css){
