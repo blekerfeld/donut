@@ -7,5 +7,5 @@ $baseDir = dirname(dirname(dirname(dirname($vendorDir))));
 
 return array(
     '5255c38a0faeba867671b61dfda6d864' => $vendorDir . '/paragonie/random_compat/lib/random.php',
-    'db356362850385d08a5381de2638b5fd' => $vendorDir . '/mpdf/mpdf/src/functions.php',
+    '2aebce9eeba3b7eaea5078d0d4b4c0e6' => $vendorDir . '/blekerfeld/mpdf/src/functions.php',
 );

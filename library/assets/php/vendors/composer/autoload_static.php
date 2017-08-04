@@ -4,11 +4,11 @@
 
 namespace Composer\Autoload;
 
-class ComposerStaticInit8c7bb37b6556c313a036cfcb859b8370
+class ComposerStaticInit21bd025b5bff57d102c70d4842d31002
 {
     public static $files = array (
         '5255c38a0faeba867671b61dfda6d864' => __DIR__ . '/..' . '/paragonie/random_compat/lib/random.php',
-        'db356362850385d08a5381de2638b5fd' => __DIR__ . '/..' . '/mpdf/mpdf/src/functions.php',
+        '2aebce9eeba3b7eaea5078d0d4b4c0e6' => __DIR__ . '/..' . '/blekerfeld/mpdf/src/functions.php',
     );
 
     public static $prefixLengthsPsr4 = array (
@@ -29,7 +29,7 @@ class ComposerStaticInit8c7bb37b6556c313a036cfcb859b8370
         ),
         'Mpdf\\' => 
         array (
-            0 => __DIR__ . '/..' . '/mpdf/mpdf/src',
+            0 => __DIR__ . '/..' . '/blekerfeld/mpdf/src',
         ),
     );
 
@@ -46,9 +46,9 @@ class ComposerStaticInit8c7bb37b6556c313a036cfcb859b8370
     public static function getInitializer(ClassLoader $loader)
     {
         return \Closure::bind(function () use ($loader) {
-            $loader->prefixLengthsPsr4 = ComposerStaticInit8c7bb37b6556c313a036cfcb859b8370::$prefixLengthsPsr4;
-            $loader->prefixDirsPsr4 = ComposerStaticInit8c7bb37b6556c313a036cfcb859b8370::$prefixDirsPsr4;
-            $loader->classMap = ComposerStaticInit8c7bb37b6556c313a036cfcb859b8370::$classMap;
+            $loader->prefixLengthsPsr4 = ComposerStaticInit21bd025b5bff57d102c70d4842d31002::$prefixLengthsPsr4;
+            $loader->prefixDirsPsr4 = ComposerStaticInit21bd025b5bff57d102c70d4842d31002::$prefixDirsPsr4;
+            $loader->classMap = ComposerStaticInit21bd025b5bff57d102c70d4842d31002::$classMap;
 
         }, null, ClassLoader::class);
     }

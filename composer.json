@@ -3,6 +3,6 @@
         "vendor-dir": "library/assets/php/vendors"
     },
 	"require": {
-		"mpdf/mpdf": "7.0.x-dev"
+		"blekerfeld/mpdf": "7.0.x-dev"
 	}
 }

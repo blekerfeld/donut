@@ -1,10 +1,17 @@
+@import url(https://fonts.googleapis.com/css?family=Righteous|Libre+Franklin|Merriweather|Noto+Sans|Lato|Open+Sans|Raleway);
 
 .pbr{
   page-break-before: always;
 }
 
+
 body{
-  font-family: Times;
+  font-family: Dejavu;
+
+}
+
+div.main{
+  border-right: 1px solid #ccc;
 }
 
 .actionbar{
@@ -30,14 +37,12 @@ table.inflections{
   margin: 5px;
 }
 
-      .table {
-          display: table;
-          width: 100%;
-      }
-      .tr {
-          display: table-row;
-      }
-      .td{
-        display: table-cell;
-        width: 50%;
-      }
+strong.dWord span.native a{
+  text-decoration: none;
+}
+
+h3.title{
+  font-size: 35px;
+  font-style: italic;
+  margin-bottom: -20px;
+}

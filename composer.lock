@@ -4,20 +4,20 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "content-hash": "b84c2b809c6cd61afda3bd8c02098344",
+    "content-hash": "2f4983cef54cefb64e7085de39d4a83f",
     "packages": [
         {
-            "name": "mpdf/mpdf",
+            "name": "blekerfeld/mpdf",
             "version": "dev-development",
             "source": {
                 "type": "git",
-                "url": "https://github.com/mpdf/mpdf.git",
-                "reference": "fc9990a316005ee443ea575d39ead0459afdce35"
+                "url": "https://github.com/blekerfeld/mpdf.git",
+                "reference": "201a7b298e11a94f1d13dd175bc5cb595370d795"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/mpdf/mpdf/zipball/fc9990a316005ee443ea575d39ead0459afdce35",
-                "reference": "fc9990a316005ee443ea575d39ead0459afdce35",
+                "url": "https://api.github.com/repos/blekerfeld/mpdf/zipball/201a7b298e11a94f1d13dd175bc5cb595370d795",
+                "reference": "201a7b298e11a94f1d13dd175bc5cb595370d795",
                 "shasum": ""
             },
             "require": {
@@ -65,16 +65,20 @@
                 {
                     "name": "Ian Back",
                     "role": "Developer (retired)"
+                },
+                {
+                    "name": "Thomas de Roo",
+                    "role": "adapter"
                 }
             ],
-            "description": "A PHP class to generate PDF files from HTML with Unicode/UTF-8 and CJK support",
+            "description": "A PHP class to generate PDF files from HTML with Unicode/UTF-8 and CJK support, adapted for donut",
             "homepage": "https://mpdf.github.io",
             "keywords": [
                 "pdf",
                 "php",
                 "utf-8"
             ],
-            "time": "2017-07-13 08:56:08"
+            "time": "2017-08-04 13:04:17"
         },
         {
             "name": "paragonie/random_compat",
@@ -225,7 +229,7 @@
     "aliases": [],
     "minimum-stability": "stable",
     "stability-flags": {
-        "mpdf/mpdf": 20
+        "blekerfeld/mpdf": 20
     },
     "prefer-stable": false,
     "prefer-lowest": false,

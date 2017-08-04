@@ -8,7 +8,6 @@
 
 	//	++	File: TerminalTemplate.cset.php
 
-// reference the Dompdf namespace
 
 
 class pGenerateTemplate extends pSimpleTemplate{
