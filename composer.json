@@ -1,6 +1,6 @@
 {
 	"config": {
-        "vendor-dir": "library/assets/php/vendors"
+        "vendor-dir": "library/assets/composer/vendor"
     },
 	"require": {
 		"blekerfeld/mpdf": "7.0.x-dev",
