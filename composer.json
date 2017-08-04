@@ -1,7 +1,4 @@
 {
-	"config": {
-        "vendor-dir": "library/assets/composer/vendor"
-    },
 	"require": {
 		"blekerfeld/mpdf": "7.0.x-dev",
 		"erusev/parsedown": "^1.6",

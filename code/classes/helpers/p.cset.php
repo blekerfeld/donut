@@ -36,7 +36,7 @@ class p{
 			$filenames[] = self::FromRoot('library/assets/php/'.$phpfile);
 
 		// Composer autoload:
-		$filenames[] = self::FromRoot('library/assets/php/vendors/autoload.php');
+		$filenames[] = self::FromRoot('vendor/autoload.php');
 
 		// The priviledged classes are loaded first
 		foreach (glob(CONFIG_ROOT_PATH."/code/classes/*.cset.php") as $filename)
