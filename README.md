@@ -17,6 +17,7 @@ Donut is licensed under MIT.
 ### Installation
 
 * Clone the git repository to a web server (alternativly just download its contents)
+* Run `composer install` in the donut directory, or download a ready-to-go release of donut (coming soong).
 * Edit config.php to fit your configuaration (database usernames etc.)
 * Import `db.sql` to the database
 * It should work now.
