@@ -11,6 +11,7 @@ Donut is licensed under MIT.
 ### Requirements
 
 * PHP 5.6+ (ideally PHP 7+), might work with PHP 5.4+ (not tested)
+* PHP 7+ if you want to use PDF generation
 * MySQL or MariaDB-server
 
 ### Installation
