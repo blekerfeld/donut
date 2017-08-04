@@ -218,3 +218,4 @@
 -
 -# Donut cache
 -*.cache
+library/assets/composer/vendor
