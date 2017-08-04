@@ -20,6 +20,14 @@ class ComposerStaticInit21bd025b5bff57d102c70d4842d31002
         array (
             'Mpdf\\' => 5,
         ),
+        'H' => 
+        array (
+            'Hashids\\' => 8,
+        ),
+        'D' => 
+        array (
+            'Delight\\Str\\' => 12,
+        ),
     );
 
     public static $prefixDirsPsr4 = array (
@@ -30,6 +38,28 @@ class ComposerStaticInit21bd025b5bff57d102c70d4842d31002
         'Mpdf\\' => 
         array (
             0 => __DIR__ . '/..' . '/blekerfeld/mpdf/src',
+        ),
+        'Hashids\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/hashids/hashids/src',
+        ),
+        'Delight\\Str\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/delight-im/str/src',
+        ),
+    );
+
+    public static $prefixesPsr0 = array (
+        'P' => 
+        array (
+            'ParsedownExtra' => 
+            array (
+                0 => __DIR__ . '/..' . '/erusev/parsedown-extra',
+            ),
+            'Parsedown' => 
+            array (
+                0 => __DIR__ . '/..' . '/erusev/parsedown',
+            ),
         ),
     );
 
@@ -48,6 +78,7 @@ class ComposerStaticInit21bd025b5bff57d102c70d4842d31002
         return \Closure::bind(function () use ($loader) {
             $loader->prefixLengthsPsr4 = ComposerStaticInit21bd025b5bff57d102c70d4842d31002::$prefixLengthsPsr4;
             $loader->prefixDirsPsr4 = ComposerStaticInit21bd025b5bff57d102c70d4842d31002::$prefixDirsPsr4;
+            $loader->prefixesPsr0 = ComposerStaticInit21bd025b5bff57d102c70d4842d31002::$prefixesPsr0;
             $loader->classMap = ComposerStaticInit21bd025b5bff57d102c70d4842d31002::$classMap;
 
         }, null, ClassLoader::class);

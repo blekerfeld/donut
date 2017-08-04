@@ -156,12 +156,12 @@
         "source": {
             "type": "git",
             "url": "https://github.com/blekerfeld/mpdf.git",
-            "reference": "201a7b298e11a94f1d13dd175bc5cb595370d795"
+            "reference": "b208440caac1449f3113bd120119eaed50c54e6d"
         },
         "dist": {
             "type": "zip",
-            "url": "https://api.github.com/repos/blekerfeld/mpdf/zipball/201a7b298e11a94f1d13dd175bc5cb595370d795",
-            "reference": "201a7b298e11a94f1d13dd175bc5cb595370d795",
+            "url": "https://api.github.com/repos/blekerfeld/mpdf/zipball/b208440caac1449f3113bd120119eaed50c54e6d",
+            "reference": "b208440caac1449f3113bd120119eaed50c54e6d",
             "shasum": ""
         },
         "require": {
@@ -183,7 +183,7 @@
             "ext-xml": "Needed mainly for SVG manipulation",
             "ext-zlib": "Needed for compression of embedded resources, such as fonts"
         },
-        "time": "2017-08-04T13:04:17+00:00",
+        "time": "2017-08-04T13:17:23+00:00",
         "type": "library",
         "extra": {
             "branch-alias": {
@@ -223,6 +223,199 @@
             "pdf",
             "php",
             "utf-8"
+        ]
+    },
+    {
+        "name": "erusev/parsedown",
+        "version": "1.6.3",
+        "version_normalized": "1.6.3.0",
+        "source": {
+            "type": "git",
+            "url": "https://github.com/erusev/parsedown.git",
+            "reference": "728952b90a333b5c6f77f06ea9422b94b585878d"
+        },
+        "dist": {
+            "type": "zip",
+            "url": "https://api.github.com/repos/erusev/parsedown/zipball/728952b90a333b5c6f77f06ea9422b94b585878d",
+            "reference": "728952b90a333b5c6f77f06ea9422b94b585878d",
+            "shasum": ""
+        },
+        "require": {
+            "php": ">=5.3.0"
+        },
+        "time": "2017-05-14T14:47:48+00:00",
+        "type": "library",
+        "installation-source": "dist",
+        "autoload": {
+            "psr-0": {
+                "Parsedown": ""
+            }
+        },
+        "notification-url": "https://packagist.org/downloads/",
+        "license": [
+            "MIT"
+        ],
+        "authors": [
+            {
+                "name": "Emanuil Rusev",
+                "email": "hello@erusev.com",
+                "homepage": "http://erusev.com"
+            }
+        ],
+        "description": "Parser for Markdown.",
+        "homepage": "http://parsedown.org",
+        "keywords": [
+            "markdown",
+            "parser"
+        ]
+    },
+    {
+        "name": "delight-im/str",
+        "version": "v2.4.0",
+        "version_normalized": "2.4.0.0",
+        "source": {
+            "type": "git",
+            "url": "https://github.com/delight-im/PHP-Str.git",
+            "reference": "ea3e40132e9d4ce27da337dae6286f2478b15f56"
+        },
+        "dist": {
+            "type": "zip",
+            "url": "https://api.github.com/repos/delight-im/PHP-Str/zipball/ea3e40132e9d4ce27da337dae6286f2478b15f56",
+            "reference": "ea3e40132e9d4ce27da337dae6286f2478b15f56",
+            "shasum": ""
+        },
+        "require": {
+            "ext-mbstring": "*",
+            "php": ">=5.3.0"
+        },
+        "time": "2016-07-27T22:19:41+00:00",
+        "type": "library",
+        "installation-source": "dist",
+        "autoload": {
+            "psr-4": {
+                "Delight\\Str\\": "src/"
+            }
+        },
+        "notification-url": "https://packagist.org/downloads/",
+        "license": [
+            "MIT"
+        ],
+        "description": "Convenient object-oriented operations on strings",
+        "homepage": "https://github.com/delight-im/PHP-Str",
+        "keywords": [
+            "string",
+            "strings"
+        ]
+    },
+    {
+        "name": "hashids/hashids",
+        "version": "2.0.3",
+        "version_normalized": "2.0.3.0",
+        "source": {
+            "type": "git",
+            "url": "https://github.com/ivanakimov/hashids.php.git",
+            "reference": "28889ed83cdc91f4a55637daff0fb5c799eb324e"
+        },
+        "dist": {
+            "type": "zip",
+            "url": "https://api.github.com/repos/ivanakimov/hashids.php/zipball/28889ed83cdc91f4a55637daff0fb5c799eb324e",
+            "reference": "28889ed83cdc91f4a55637daff0fb5c799eb324e",
+            "shasum": ""
+        },
+        "require": {
+            "ext-bcmath": "*",
+            "php": "^5.6.4 || ^7.0"
+        },
+        "require-dev": {
+            "phpunit/phpunit": "^5.6"
+        },
+        "time": "2017-01-01T13:33:33+00:00",
+        "type": "library",
+        "extra": {
+            "branch-alias": {
+                "dev-master": "2.1-dev"
+            }
+        },
+        "installation-source": "dist",
+        "autoload": {
+            "psr-4": {
+                "Hashids\\": "src/"
+            }
+        },
+        "notification-url": "https://packagist.org/downloads/",
+        "license": [
+            "MIT"
+        ],
+        "authors": [
+            {
+                "name": "Ivan Akimov",
+                "email": "ivan@barreleye.com",
+                "homepage": "https://twitter.com/IvanAkimov"
+            },
+            {
+                "name": "Vincent Klaiber",
+                "email": "hello@vinkla.com",
+                "homepage": "https://vinkla.com"
+            }
+        ],
+        "description": "Generate short, unique, non-sequential ids (like YouTube and Bitly) from numbers",
+        "homepage": "http://hashids.org/php",
+        "keywords": [
+            "bitly",
+            "decode",
+            "encode",
+            "hash",
+            "hashid",
+            "hashids",
+            "ids",
+            "obfuscate",
+            "youtube"
+        ]
+    },
+    {
+        "name": "erusev/parsedown-extra",
+        "version": "0.7.1",
+        "version_normalized": "0.7.1.0",
+        "source": {
+            "type": "git",
+            "url": "https://github.com/erusev/parsedown-extra.git",
+            "reference": "0db5cce7354e4b76f155d092ab5eb3981c21258c"
+        },
+        "dist": {
+            "type": "zip",
+            "url": "https://api.github.com/repos/erusev/parsedown-extra/zipball/0db5cce7354e4b76f155d092ab5eb3981c21258c",
+            "reference": "0db5cce7354e4b76f155d092ab5eb3981c21258c",
+            "shasum": ""
+        },
+        "require": {
+            "erusev/parsedown": "~1.4"
+        },
+        "time": "2015-11-01T10:19:22+00:00",
+        "type": "library",
+        "installation-source": "dist",
+        "autoload": {
+            "psr-0": {
+                "ParsedownExtra": ""
+            }
+        },
+        "notification-url": "https://packagist.org/downloads/",
+        "license": [
+            "MIT"
+        ],
+        "authors": [
+            {
+                "name": "Emanuil Rusev",
+                "email": "hello@erusev.com",
+                "homepage": "http://erusev.com"
+            }
+        ],
+        "description": "An extension of Parsedown that adds support for Markdown Extra.",
+        "homepage": "https://github.com/erusev/parsedown-extra",
+        "keywords": [
+            "markdown",
+            "markdown extra",
+            "parsedown",
+            "parser"
         ]
     }
 ]

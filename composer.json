@@ -3,6 +3,10 @@
         "vendor-dir": "library/assets/php/vendors"
     },
 	"require": {
-		"blekerfeld/mpdf": "7.0.x-dev"
+		"blekerfeld/mpdf": "7.0.x-dev",
+		"erusev/parsedown": "^1.6",
+		"hashids/hashids": "^2.0",
+        "delight-im/str": "^2.4",
+		"erusev/parsedown-extra": "^0.7.1"
 	}
 }

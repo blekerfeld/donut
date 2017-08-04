@@ -1,18 +1,24 @@
 <?php
+
 /*
  * PHP-Str (https://github.com/delight-im/PHP-Str)
  * Copyright (c) delight.im (https://www.delight.im/)
  * Licensed under the MIT License (https://opensource.org/licenses/MIT)
  */
+
 namespace Delight\Str;
+
 /** Convenient object-oriented operations on strings */
 final class Str implements \Countable {
+
 	/** The default charset to use if no explicit charset has been provided */
 	const CHARSET_DEFAULT = 'UTF-8';
+
 	/** @var string the raw string backing this instance */
 	private $rawString;
 	/** @var string the charset of the raw string (one of the values listed by `mb_list_encodings`) */
 	private $charset;
+
 	/**
 	 * Constructor
 	 *
@@ -23,6 +29,7 @@ final class Str implements \Countable {
 		$this->rawString = (string) $rawString;
 		$this->charset = (isset($charset) ? $charset : self::CHARSET_DEFAULT);
 	}
+
 	/**
 	 * Static alternative to the constructor for easier chaining
 	 *
@@ -33,6 +40,7 @@ final class Str implements \Countable {
 	public static function from($rawString, $charset = null) {
 		return new static($rawString, $charset);
 	}
+
 	/**
 	 * Variant of the static "constructor" that operates on arrays
 	 *
@@ -42,11 +50,14 @@ final class Str implements \Countable {
 	 */
 	public static function fromArray($rawArray, $charset = null) {
 		$output = array();
+
 		foreach ($rawArray as $rawEntry) {
 			$output[] = new static($rawEntry, $charset);
 		}
+
 		return $output;
 	}
+
 	/**
 	 * Returns whether this string starts with the supplied other string
 	 *
@@ -58,6 +69,7 @@ final class Str implements \Countable {
 	public function startsWith($prefix) {
 		return mb_strpos($this->rawString, $prefix, 0, $this->charset) === 0;
 	}
+
 	/**
 	 * Returns whether this string starts with the supplied other string
 	 *
@@ -69,6 +81,7 @@ final class Str implements \Countable {
 	public function startsWithIgnoreCase($prefix) {
 		return mb_stripos($this->rawString, $prefix, 0, $this->charset) === 0;
 	}
+
 	/**
 	 * Returns whether this string contains the supplied other string
 	 *
@@ -80,6 +93,7 @@ final class Str implements \Countable {
 	public function contains($infix) {
 		return mb_strpos($this->rawString, $infix, 0, $this->charset) !== false;
 	}
+
 	/**
 	 * Returns whether this string contains the supplied other string
 	 *
@@ -91,6 +105,7 @@ final class Str implements \Countable {
 	public function containsIgnoreCase($infix) {
 		return mb_stripos($this->rawString, $infix, 0, $this->charset) !== false;
 	}
+
 	/**
 	 * Returns whether this string ends with the supplied other string
 	 *
@@ -101,8 +116,10 @@ final class Str implements \Countable {
 	 */
 	public function endsWith($suffix) {
 		$other = new Str($suffix, $this->charset);
+
 		return mb_strrpos($this->rawString, $suffix, 0, $this->charset) === ($this->length() - $other->length());
 	}
+
 	/**
 	 * Returns whether this string ends with the supplied other string
 	 *
@@ -113,8 +130,10 @@ final class Str implements \Countable {
 	 */
 	public function endsWithIgnoreCase($suffix) {
 		$other = new Str($suffix, $this->charset);
+
 		return mb_strripos($this->rawString, $suffix, 0, $this->charset) === ($this->length() - $other->length());
 	}
+
 	/**
 	 * Removes all whitespace or the specified characters from both sides of this string
 	 *
@@ -125,6 +144,7 @@ final class Str implements \Countable {
 	public function trim($charactersToRemove = null, $alwaysRemoveWhitespace = null) {
 		return $this->trimInternal('trim', $charactersToRemove, $alwaysRemoveWhitespace);
 	}
+
 	/**
 	 * Removes all whitespace or the specified characters from the start of this string
 	 *
@@ -135,6 +155,7 @@ final class Str implements \Countable {
 	public function trimStart($charactersToRemove = null, $alwaysRemoveWhitespace = null) {
 		return $this->trimInternal('ltrim', $charactersToRemove, $alwaysRemoveWhitespace);
 	}
+
 	/**
 	 * Removes all whitespace or the specified characters from the end of this string
 	 *
@@ -145,6 +166,7 @@ final class Str implements \Countable {
 	public function trimEnd($charactersToRemove = null, $alwaysRemoveWhitespace = null) {
 		return $this->trimInternal('rtrim', $charactersToRemove, $alwaysRemoveWhitespace);
 	}
+
 	/**
 	 * Returns the first character or the specified number of characters from the start of this string
 	 *
@@ -155,6 +177,7 @@ final class Str implements \Countable {
 	public function start($length = null) {
 		return $this->first($length);
 	}
+
 	/**
 	 * Returns the first character or the specified number of characters from the start of this string
 	 *
@@ -165,9 +188,12 @@ final class Str implements \Countable {
 		if ($length === null) {
 			$length = 1;
 		}
+
 		$rawString = mb_substr($this->rawString, 0, $length, $this->charset);
+
 		return new static($rawString, $this->charset);
 	}
+
 	/**
 	 * Returns the last character or the specified number of characters from the end of this string
 	 *
@@ -178,6 +204,7 @@ final class Str implements \Countable {
 	public function end($length = null) {
 		return $this->last($length);
 	}
+
 	/**
 	 * Returns the last character or the specified number of characters from the end of this string
 	 *
@@ -188,10 +215,14 @@ final class Str implements \Countable {
 		if ($length === null) {
 			$length = 1;
 		}
+
 		$offset = $this->length() - $length;
+
 		$rawString = mb_substr($this->rawString, $offset, null, $this->charset);
+
 		return new static($rawString, $this->charset);
 	}
+
 	/**
 	 * Converts this string to lowercase
 	 *
@@ -199,8 +230,10 @@ final class Str implements \Countable {
 	 */
 	public function toLowerCase() {
 		$rawString = mb_strtolower($this->rawString, $this->charset);
+
 		return new static($rawString, $this->charset);
 	}
+
 	/**
 	 * Returns whether this string is entirely lowercase
 	 *
@@ -209,6 +242,7 @@ final class Str implements \Countable {
 	public function isLowerCase() {
 		return $this->equals($this->toLowerCase());
 	}
+
 	/**
 	 * Converts this string to uppercase
 	 *
@@ -216,8 +250,10 @@ final class Str implements \Countable {
 	 */
 	public function toUpperCase() {
 		$rawString = mb_strtoupper($this->rawString, $this->charset);
+
 		return new static($rawString, $this->charset);
 	}
+
 	/**
 	 * Returns whether this string is entirely uppercase
 	 *
@@ -226,6 +262,7 @@ final class Str implements \Countable {
 	public function isUpperCase() {
 		return $this->equals($this->toUpperCase());
 	}
+
 	/**
 	 * Returns whether this string has its first letter written in uppercase
 	 *
@@ -234,6 +271,7 @@ final class Str implements \Countable {
 	public function isCapitalized() {
 		return $this->first()->isUpperCase();
 	}
+
 	/**
 	 * Truncates this string so that it has at most the specified length
 	 *
@@ -244,6 +282,7 @@ final class Str implements \Countable {
 	public function truncate($maxLength, $ellipsis = null) {
 		return $this->truncateInternal($maxLength, $ellipsis, false);
 	}
+
 	/**
 	 * Truncates this string so that it has at most the specified length
 	 *
@@ -256,6 +295,7 @@ final class Str implements \Countable {
 	public function truncateSafely($maxLength, $ellipsis = null) {
 		return $this->truncateInternal($maxLength, $ellipsis, true);
 	}
+
 	/**
 	 * Counts the occurrences of the specified substring in this string
 	 *
@@ -270,6 +310,7 @@ final class Str implements \Countable {
 			return mb_substr_count($this->rawString, $substring, $this->charset);
 		}
 	}
+
 	/**
 	 * Returns the length of this string
 	 *
@@ -278,6 +319,7 @@ final class Str implements \Countable {
 	public function length() {
 		return $this->count();
 	}
+
 	/**
 	 * Removes the specified number of characters from the start of this string
 	 *
@@ -286,8 +328,10 @@ final class Str implements \Countable {
 	 */
 	public function cutStart($length) {
 		$rawString = mb_substr($this->rawString, $length, null, $this->charset);
+
 		return new static($rawString, $this->charset);
 	}
+
 	/**
 	 * Removes the specified number of characters from the end of this string
 	 *
@@ -296,8 +340,10 @@ final class Str implements \Countable {
 	 */
 	public function cutEnd($length) {
 		$rawString = mb_substr($this->rawString, 0, $this->length() - $length, $this->charset);
+
 		return new static($rawString, $this->charset);
 	}
+
 	/**
 	 * Replaces all occurrences of the specified search string with the given replacement
 	 *
@@ -308,6 +354,7 @@ final class Str implements \Countable {
 	public function replace($searchFor, $replaceWith = null) {
 		return $this->replaceInternal('str_replace', $searchFor, $replaceWith);
 	}
+
 	/**
 	 * Replaces all occurrences of the specified search string with the given replacement
 	 *
@@ -320,6 +367,7 @@ final class Str implements \Countable {
 	public function replaceIgnoreCase($searchFor, $replaceWith = null) {
 		return $this->replaceInternal('str_ireplace', $searchFor, $replaceWith);
 	}
+
 	/**
 	 * Replaces the first occurrence of the specified search string with the given replacement
 	 *
@@ -330,6 +378,7 @@ final class Str implements \Countable {
 	public function replaceFirst($searchFor, $replaceWith = null) {
 		return $this->replaceOneInternal('mb_strpos', $searchFor, $replaceWith);
 	}
+
 	/**
 	 * Replaces the first occurrence of the specified search string with the given replacement
 	 *
@@ -342,6 +391,7 @@ final class Str implements \Countable {
 	public function replaceFirstIgnoreCase($searchFor, $replaceWith = null) {
 		return $this->replaceOneInternal('mb_stripos', $searchFor, $replaceWith);
 	}
+
 	/**
 	 * Replaces the specified part in this string only if it starts with that part
 	 *
@@ -357,6 +407,7 @@ final class Str implements \Countable {
 			return $this;
 		}
 	}
+
 	/**
 	 * Replaces the last occurrence of the specified search string with the given replacement
 	 *
@@ -367,6 +418,7 @@ final class Str implements \Countable {
 	public function replaceLast($searchFor, $replaceWith = null) {
 		return $this->replaceOneInternal('mb_strrpos', $searchFor, $replaceWith);
 	}
+
 	/**
 	 * Replaces the last occurrence of the specified search string with the given replacement
 	 *
@@ -379,6 +431,7 @@ final class Str implements \Countable {
 	public function replaceLastIgnoreCase($searchFor, $replaceWith = null) {
 		return $this->replaceOneInternal('mb_strripos', $searchFor, $replaceWith);
 	}
+
 	/**
 	 * Replaces the specified part in this string only if it ends with that part
 	 *
@@ -394,6 +447,7 @@ final class Str implements \Countable {
 			return $this;
 		}
 	}
+
 	/**
 	 * Splits this string into an array of substrings at the specified delimiter
 	 *
@@ -405,8 +459,10 @@ final class Str implements \Countable {
 		if ($limit === null) {
 			$limit = PHP_INT_MAX;
 		}
+
 		return self::fromArray(explode($delimiter, $this->rawString, $limit));
 	}
+
 	/**
 	 * Splits this string into an array of substrings at the specified delimiter pattern
 	 *
@@ -419,11 +475,14 @@ final class Str implements \Countable {
 		if ($limit === null) {
 			$limit = -1;
 		}
+
 		if ($flags === null) {
 			$flags = 0;
 		}
+
 		return self::fromArray(preg_split($delimiterPattern, $this->rawString, $limit, $flags));
 	}
+
 	/**
 	 * Splits this string into its single words
 	 *
@@ -436,16 +495,20 @@ final class Str implements \Countable {
 			// get one entry more than requested
 			$limit += 1;
 		}
+
 		// split the string into words
 		$words = $this->splitByRegex('/[^\\w\']+/u', $limit, PREG_SPLIT_NO_EMPTY);
+
 		// if a limit has been specified
 		if ($limit !== null) {
 			// discard the last entry (which contains the remainder of the string)
 			array_pop($words);
 		}
+
 		// return the words
 		return $words;
 	}
+
 	/**
 	 * Returns the part of this string *before* the *first* occurrence of the search string
 	 *
@@ -455,6 +518,7 @@ final class Str implements \Countable {
 	public function beforeFirst($search) {
 		return $this->sideInternal('mb_strpos', $search, -1);
 	}
+
 	/**
 	 * Returns the part of this string *before* the *last* occurrence of the search string
 	 *
@@ -464,6 +528,7 @@ final class Str implements \Countable {
 	public function beforeLast($search) {
 		return $this->sideInternal('mb_strrpos', $search, -1);
 	}
+
 	/**
 	 * Returns the part of this string between the two specified substrings
 	 *
@@ -475,16 +540,21 @@ final class Str implements \Countable {
 	 */
 	public function between($start, $end) {
 		$beforeStart = mb_strpos($this->rawString, $start, 0, $this->charset);
+
 		$rawString = '';
+
 		if ($beforeStart !== false) {
 			$afterStart = $beforeStart + mb_strlen($start, $this->charset);
 			$beforeEnd = mb_strrpos($this->rawString, $end, $afterStart, $this->charset);
+
 			if ($beforeEnd !== false) {
 				$rawString = mb_substr($this->rawString, $afterStart, $beforeEnd - $afterStart, $this->charset);
 			}
 		}
+
 		return new static($rawString, $this->charset);
 	}
+
 	/**
 	 * Returns the part of this string *after* the *first* occurrence of the search string
 	 *
@@ -494,6 +564,7 @@ final class Str implements \Countable {
 	public function afterFirst($search) {
 		return $this->sideInternal('mb_strpos', $search, 1);
 	}
+
 	/**
 	 * Returns the part of this string *after* the *last* occurrence of the search string
 	 *
@@ -503,6 +574,7 @@ final class Str implements \Countable {
 	public function afterLast($search) {
 		return $this->sideInternal('mb_strrpos', $search, 1);
 	}
+
 	/**
 	 * Matches this string against the specified regular expression (PCRE)
 	 *
@@ -519,6 +591,7 @@ final class Str implements \Countable {
 			return preg_match($regex, $this->rawString, $matches) === 1;
 		}
 	}
+
 	/**
 	 * Returns whether this string matches the other string
 	 *
@@ -528,6 +601,7 @@ final class Str implements \Countable {
 	public function equals($other) {
 		return $this->compareTo($other) === 0;
 	}
+
 	/**
 	 * Returns whether this string matches the other string
 	 *
@@ -539,6 +613,7 @@ final class Str implements \Countable {
 	public function equalsIgnoreCase($other) {
 		return $this->compareToIgnoreCase($other) === 0;
 	}
+
 	/**
 	 * Compares this string to another string lexicographically
 	 *
@@ -554,6 +629,8 @@ final class Str implements \Countable {
 			return strcmp($this->rawString, $other);
 		}
 	}
+
+
 	/**
 	 * Compares this string to another string lexicographically
 	 *
@@ -571,6 +648,7 @@ final class Str implements \Countable {
 			return strcasecmp($this->rawString, $other);
 		}
 	}
+
 	/**
 	 * Escapes this string for safe use in HTML
 	 *
@@ -578,8 +656,10 @@ final class Str implements \Countable {
 	 */
 	public function escapeForHtml() {
 		$rawString = htmlspecialchars($this->rawString, ENT_QUOTES, $this->charset);
+
 		return new static($rawString, $this->charset);
 	}
+
 	/**
 	 * Normalizes all line endings in this string by using a single unified newline sequence (which may be specified manually)
 	 *
@@ -590,9 +670,12 @@ final class Str implements \Countable {
 		if ($newlineSequence === null) {
 			$newlineSequence = "\n";
 		}
+
 		$rawString = preg_replace('/\R/u', $newlineSequence, $this->rawString);
+
 		return new static($rawString, $this->charset);
 	}
+
 	/**
 	 * Reverses this string
 	 *
@@ -601,12 +684,14 @@ final class Str implements \Countable {
 	public function reverse() {
 		if (preg_match_all('/./us', $this->rawString, $matches)) {
 			$rawString = join('', array_reverse($matches[0]));
+
 			return new static($rawString, $this->charset);
 		}
 		else {
 			return $this;
 		}
 	}
+
 	/**
 	 * Turns this string into an acronym (abbreviation)
 	 *
@@ -615,29 +700,38 @@ final class Str implements \Countable {
 	 */
 	public function acronym($excludeLowerCase = null) {
 		$words = $this->words();
+
 		$rawString = '';
+
 		foreach ($words as $word) {
 			if (!$excludeLowerCase || $word->isCapitalized()) {
 				$rawString .= $word->first();
 			}
 		}
+
 		return new static($rawString, $this->charset);
 	}
+
 	public function __toString() {
 		return $this->rawString;
 	}
+
 	private function trimInternal(callable $func, $charactersToRemove = null, $alwaysRemoveWhitespace) {
 		if ($alwaysRemoveWhitespace === null) {
 			$alwaysRemoveWhitespace = false;
 		}
+
 		if ($charactersToRemove === null || $alwaysRemoveWhitespace) {
 			if ($charactersToRemove === null) {
 				$charactersToRemove = '';
 			}
+
 			$charactersToRemove .= " \t\n\r\0\x0B";
 		}
+
 		return $func($this->rawString, $charactersToRemove);
 	}
+
 	private function truncateInternal($maxLength, $ellipsis, $safe) {
 		// if the string doesn't actually need to be truncated for the desired maximum length
 		if ($this->length() <= $maxLength) {
@@ -651,10 +745,13 @@ final class Str implements \Countable {
 				// assume three dots as the default
 				$ellipsis = '...';
 			}
+
 			// calculate the actual maximum length without the ellipsis
 			$maxLength -= mb_strlen($ellipsis, $this->charset);
+
 			// truncate the string to the desired length
 			$rawString = mb_substr($this->rawString, 0, $maxLength, $this->charset);
+
 			// if we don't want to break words
 			if ($safe) {
 				// if the truncated string *does* end *within* a word
@@ -666,19 +763,25 @@ final class Str implements \Countable {
 					}
 				}
 			}
+
 			// return the correctly truncated string together with the ellipsis
 			return new static($rawString . $ellipsis, $this->charset);
 		}
 	}
+
 	private function replaceInternal(callable $func, $searchFor, $replaceWith) {
 		if ($replaceWith === null) {
 			$replaceWith = '';
 		}
+
 		$rawString = $func($searchFor, $replaceWith, $this->rawString);
+
 		return new static($rawString, $this->charset);
 	}
+
 	private function replaceOneInternal(callable $func, $searchFor, $replaceWith) {
 		$pos = $func($this->rawString, $searchFor, 0, $this->charset);
+
 		if ($pos === false) {
 			return $this;
 		}
@@ -686,12 +789,16 @@ final class Str implements \Countable {
 			if ($replaceWith === null) {
 				$replaceWith = '';
 			}
+
 			$rawString = mb_substr($this->rawString, 0, $pos, $this->charset) . $replaceWith . mb_substr($this->rawString, $pos + mb_strlen($searchFor, $this->charset), null, $this->charset);
+
 			return new static($rawString, $this->charset);
 		}
 	}
+
 	private function sideInternal(callable $func, $substr, $direction) {
 		$startPos = $func($this->rawString, $substr, 0, $this->charset);
+
 		if ($startPos !== false) {
 			if ($direction === -1) {
 				$offset = 0;
@@ -701,11 +808,14 @@ final class Str implements \Countable {
 				$offset = $startPos + mb_strlen($substr, $this->charset);
 				$length = null;
 			}
+
 			$rawString = mb_substr($this->rawString, $offset, $length, $this->charset);
 		}
 		else {
 			$rawString = '';
 		}
+
 		return new static($rawString, $this->charset);
 	}
+
 }

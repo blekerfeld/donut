@@ -14,6 +14,7 @@ define('CONFIG_DB_DATABASE', 'donut');
 define('CONFIG_REWRITE', true);
 define('CONFIG_FILE', 'index.php');
 define('CONFIG_FORCE_HOME', true);
+define('CONFIG_HASHID_SALT', "ThereIsYeastInDonutsDidYouKnowThat?");
 define('CONFIG_ISBETA', true);
 define('CONFIG_ROOT_PATH', dirname(__FILE__));
 define('CONFIG_FOLDER', 'donut');

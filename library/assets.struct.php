@@ -42,10 +42,6 @@ return array(
 		'vendors/cookieconsent.css',
 	),
 	'php' => array(
-		'vendors/str.php',
-		'vendors/HashGenerator.php',
-		'vendors/parsedown.require.php',
-		'vendors/parsedown_extra.require.php',
-		'vendors/Hashids.php',
+		
 	),
 );

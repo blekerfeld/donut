@@ -132,7 +132,7 @@ class p{
 
 	public static function HashId($hash, $decode = false){
 
-		$hashid = new Hashids\Hashids("yeastIsACoreIngredientOfDoughnuts");
+		$hashid = new Hashids\Hashids(CONFIG_HASHID_SALT, 0, 'ABDEFGHJKLMNOPRSTUVZabdefghjklmnoprstucz');;
 
 		if($decode){
 			$return = $hashid->decode($hash);
