@@ -25,7 +25,7 @@ Donut is licensed under MIT.
 
 Please note that donut still lacks a lot of features. At this moment you should only install donut if you want to take a look at its progress.
 
-If your host does not allow for .htacces rewriting of urls, simply go to `config.php` and change `define('CONFIG_REWRITE', true);` to `define('CONFIG_REWRITE', false);`.
+If your host does not allow for .htacces rewriting of urls it should be turned of automatically, if that however does not work, simply go to `config.php` and change `define('CONFIG_REWRITE', true);` to `define('CONFIG_REWRITE', false);`.
 
 #### Test account
 **Username**: donut
