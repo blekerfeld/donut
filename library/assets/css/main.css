@@ -616,6 +616,10 @@ select.pEditorlanguage {
     background-color: #289A2A;
 }
 
+.succes-notice a{
+  color: #eee;
+}
+
 .warning-notice{
   color: #9F6000;
   background-color: #FEEFB3;
@@ -1771,11 +1775,7 @@ div.btCard input{
    border: 1px dotted #555;
 }
 
-div.btCard.editing{
-  border: 1px dashed #d8d8d8;
-  border-radius: 7px!important;
-  width: 80%;
-}
+
 div.btTitle {
   margin: -15px;
   margin-bottom: 20px;
@@ -1783,6 +1783,11 @@ div.btTitle {
   font-size: 18px;
   color: #4C5B66;
   border-bottom: 1px dotted rgba(67,90,110,0.1);
+}
+
+.btBlue{
+  color: #5A87B5!important;
+  border-bottom: #98B5D1 1px solid!important;
 }
 
 div.btTitle i.fa{

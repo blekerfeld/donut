@@ -138,7 +138,7 @@ class pDataModel {
 
 		$key = 0;
 
-		$forEachFields = ($overwriteFields != null ? $overwriteFields : $this->_fields);
+		$forEachFields = ($overwriteFields != null ? (is_a($overwriteFields, @pSet) ? $overwriteFields->get() : $overwriteFields) : $this->_fields);
 
 		foreach ($forEachFields as $field) {
 			if($field->name != 'id')

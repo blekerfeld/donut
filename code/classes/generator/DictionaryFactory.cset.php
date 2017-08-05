@@ -87,9 +87,10 @@ class pDictionaryFactory{
 
 	public function addSection($section, $keyN){
 		p::Out("<div style='text-align: center'><h3 class='title'>".strtoupper($section['letter']['grapheme']).$section['letter']['grapheme']."</h3></div>");
-		p::Out("<columns  column-count='2' vAlign='justify' /><div class='main'>");
+		p::Out("<columns  column-count='2' vAlign='justify' />");
 		$count = 0;
 		foreach ($section['lemmas'] as $key => $lemma){
+			p::Out("<div class='main'>");
 			if(isset($_SESSION['generateWords'][$this->_PDF->getPageNum()]['first']))
 				$_SESSION['generateWords'][$this->_PDF->getPageNum()]['last'] = $lemma->read('native');
 			else
@@ -109,12 +110,13 @@ class pDictionaryFactory{
 				}
 			}
 			$count++;
+			p::Out("</div>");
 		}
 		if($count == 0){
 			$_SESSION['generateWords'][$this->_PDF->getPageNum()]['first'] = 'a';
 			$_SESSION['generateWords'][$this->_PDF->getPageNum()]['last'] =  'a';
 		}
-		p::Out("</div><columns  column-count='1' vAlign='justify' />");
+		p::Out("<columns  column-count='1' vAlign='justify' />");
 		$this->_PDF->addSection();
 		if(isset($this->_sections['primary'][$keyN + 1]['letter']['grapheme']))
 			$this->_PDF->setHeader('{WORD1}||{WORD2}');

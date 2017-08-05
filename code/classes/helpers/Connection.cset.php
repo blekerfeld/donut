@@ -25,6 +25,7 @@ class pConnection extends PDO{
 	}
 
 	public function cacheQuery($sql, $force_no_cache = false, $force_no_count = false){
+	
 		// We need the queries hash
 		$table_name = preg_match_all("/\b(FROM|INTO|UPDATE)\b\s*(\w+)/", $sql, $matches);
 

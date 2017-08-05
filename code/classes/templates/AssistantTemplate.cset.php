@@ -13,7 +13,7 @@ class pAssistantTemplate extends pTemplate{
 
 	public function renderChooserDefault($data){
 
-		p::Out("<div class='btCard proper chooser'><div class='btTitle'>".(new pIcon('fa-question-circle'))." ".BATCH_CHOOSE_ASSISTANT."</div>
+		p::Out("<div class='btCard proper chooser'><div class='btTitle btBlue'>".(new pIcon('fa-question-circle'))." ".BATCH_CHOOSE_ASSISTANT."</div>
 			<div class='btSource'>		
 			<div class='btChooser'>");
 		$count = 0;
@@ -118,9 +118,9 @@ class pAssistantTemplate extends pTemplate{
 					<textarea placeholder='' class='elastic nWord btInput translations'></textarea>
 				</div><br />
 				<div class='btButtonBar'>
-					<a class='btAction button-never no-float'>".BATCH_TR_UNTRANS."</a>
-					<a class='btAction button-handle blue'>".BATCH_CONTINUE."</a>
-					<a class='btAction button-skip'>".BATCH_TR_SKIP."</a>
+					<a class='btAction button-never medium no-float'>".BATCH_TR_UNTRANS."</a>
+					<a class='btAction button-skip medium no-float'>".BATCH_TR_SKIP."</a>
+					<a class='btAction button-handle blue medium'>".BATCH_CONTINUE."</a>
 					<br id='cl' />
 				</div>
 		</div>

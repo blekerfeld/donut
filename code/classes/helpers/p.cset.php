@@ -132,7 +132,7 @@ class p{
 
 	public static function HashId($hash, $decode = false){
 
-		$hashid = new Hashids\Hashids(CONFIG_HASHID_SALT, 0, 'ABDEFGHJKLMNOPRSTUVZabdefghjklmnoprstucz');;
+		$hashid = new Hashids\Hashids(CONFIG_HASHID_SALT, 0, 'aAbcheFgiJkLmNoPqRrsTuVvWwyZzb');;
 
 		if($decode){
 			$return = $hashid->decode($hash);
@@ -140,6 +140,7 @@ class p{
 				$return[0] = $return[0];
 			else
 				$return[0] = 0;
+
 
 			return $return;
 		}
