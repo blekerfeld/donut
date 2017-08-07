@@ -542,7 +542,8 @@ return array(
 			'disable_pagination' => false,
 			'table' => 'graphemes',
 			'datafields' => array(
-				new pDataField('grapheme', 'Grapheme', '40%', 'input', true, true, true, '', false),
+				new pDataField('grapheme', 'Lowercase', '40%', 'input', true, true, true, '', false),
+				new pDataField('uppercase', 'Uppercase', '40%', 'input', true, true, false, '', false),
 				new pDataField('in_alphabet', 'In alphabet', '20%', 'boolean', true, true, true, 'tooltip medium em', false),
 			),
 			'actions_item' => array(
@@ -555,6 +556,25 @@ return array(
 			'save_strings' => $saveStrings,
 			'outgoing_links' => array(
 			),
+		),
+
+		'lemma' => array(
+			'section_key' => 'lemma',
+			'type' => 'pLemmasheetHandler',
+			'template' => 'pLemmasheetTemplate',
+			'table' => 'words',
+			'icon' => 'fa-font',
+			'surface' => "Inflection",
+			'condition' => false,
+			'items_per_page' => 20,
+			'disable_pagination' => false,
+			'actions_item' => array(
+			),
+			'actions_bar' => array(
+				'edit' => new pAction('edit', 'edit', 'fa-pencil', 'lemma-code discussion float-right', null, null, 'words', 'dictionary-admin', null, -3),
+				'remove' => new pAction('remove', 'remove', 'fa-times', 'lemma-code discussion float-right', null, null, 'words', 'dictionary-admin', null, -3),
+			),
+			'save_strings' => $saveStrings,
 		),
 
 	);

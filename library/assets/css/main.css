@@ -1690,7 +1690,6 @@ div.btCardHelper{
   position: relative;
   top: 80px;
   left: -50px;
-   box-shadow: 0px 1px 3px rgba(100, 100, 100, 0.3);
    padding: 5px;
    width: 14%;
   float: left;
@@ -2204,40 +2203,39 @@ table.describe tr.title td{
 }
 
 div.d_admin_menu{
-  align-items: stretch;
-  max-width: 3.5%;
-  min-width: 40px;  
   transition: width .2s ease-in, background .2s;
-  padding-top: 108px;
-  background: #f9f9f9;
-  border-left: 1px solid #e7e7e7;
-  border-right: 1px solid #e7e7e7;
-  margin-top: -27px;
-  margin-bottom: -21px;
+  background: #3E4E56;
+  margin-top: -25px;
+  margin-right: calc(-5% - 25px);
+  margin-left: calc(-5% - 25px);
+  padding-left: calc(5% + 42px);
+  padding-right: calc(5% + 42px);
+  padding-top: 3px;
+  padding-bottom: 3px;
+  margin-bottom: 20px;
 }
 
 
 div.d_admin_menu a{
-  display: block;
-  transition: none;
-  overflow: hidden;
-  -webkit-backface-visibility: hidden;
-  width: 100% - 6px;
-  padding: 3px;
-  padding-bottom: 5px;
-  padding-top: 5px;
-  font-size: 15px;
-  text-align: center;
-  color: #222;
-  text-align:center;
-  line-height:30px;
-  height:44px;
-  border-top: 2px solid transparent;
-  border-bottom: 2px solid transparent;
-  font-size:18px;
+  display: inline-block;
+  padding: 5px;
+  margin-top: -3px;
+  margin-bottom: -3px;
+  font-size: 16px;
+  color: snow;
 }
+
+div.d_admin_menu a i{
+  color: #d9ddd9;
+}
+
 div.d_admin_menu a.active{
     background: #eee;
+    color: #333;
+}
+
+div.d_admin_menu a.active i{
+  color: #222!important;
 }
 
 .tooltipster-content a.ttip-sub.active{
@@ -2278,9 +2276,13 @@ div.d_admin_menu a i.fa{
 }
 
 div.d_admin_menu a:hover{
-  background: #ccc;
-  color: #333;
+  background: #0366D6;
+  color: white;
   text-shadow: initial;
+}
+
+div.d_admin_menu a:hover i{
+  color: white;
 }
 
 
@@ -2400,7 +2402,7 @@ table.inflections tr.title td{
 
 textarea.gtEditor, textarea.minEditor{
   width: 100%;
-  border: rgba(150, 150, 150, 0.1) 1px solid;
+   border: rgba(150, 150, 150, 0.1) 1px solid;
   padding: 20px;
   font-size: 15px;
   font-family: Noto Sans;
@@ -2410,7 +2412,7 @@ textarea.gtEditor, textarea.minEditor{
 
 textarea.minEditor{
   min-height: 100px;
-  border: rgba(150, 150, 150, 0.1) 1px solid;
+   border: rgba(150, 150, 150, 0.1) 1px solid;
   border-radius: 0px;
   padding: 10px;
   font-size: 12px;

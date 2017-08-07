@@ -16,9 +16,12 @@ class pLemmaDataModel extends pDataModel{
 
 	public function __construct($id = 0){
 		parent::__construct('words');
-		if($id != 0){
+		if($id != 0 AND is_numeric($id)){
 			$this->getSingleObject($id);
 			$this->_lemma = $this->data()->fetchAll()[0];
+		}
+		elseif(!is_numeric($id)){
+			$this->_lemma = $id;
 		}
 	}
 
@@ -69,11 +72,16 @@ class pLemmaDataModel extends pDataModel{
     						ELSE 4
 						END DESC, INSTR('".p::Escape(trim($search))."', translations.translation) DESC) AS b ".$limit; 
 
+
         $fetch = p::$db->cacheQuery($q);
         $noDoubles = array();
 
  		if($fetch->rowCount() != 0)
 			while($fetched = $fetch->fetchObject()){
+
+				if(isset($noDoubles[$fetched->word_id]))
+					continue;
+
 				$lemmaResult = new pLemma($fetched->word_id, 'words');
 				if((!pUser::noGuest() OR !pUser::checkPermission(-2)) AND $lemmaResult->read('hidden') == '1')
 					break;
@@ -84,6 +92,7 @@ class pLemmaDataModel extends pDataModel{
 					if($fetched->is_inflection == 1)
 					$lemmaResult->setHitTranslation($fetched->inflection);
 				}
+
 				$lemmaResult->bindTranslations(($searchlang == 0) ? $returnlang : $searchlang);
 
 				if(!array_key_exists($fetched->word_id, $results) AND $searchlang == 0)
@@ -91,6 +100,8 @@ class pLemmaDataModel extends pDataModel{
 				if($searchlang != 0 AND !isset($results[$fetched->trans_id]))
 					if(!isset($results[$fetched->translation][$fetched->word_id]))
 						$results[$fetched->translation][$fetched->word_id] = $lemmaResult;
+			
+				$noDoubles[$fetched->word_id] = true;
 			}
 
 		return $results;	
@@ -98,17 +109,18 @@ class pLemmaDataModel extends pDataModel{
 
 	public function getTranslations($lang_id = false){
 
-		if($lang_id == false)
+		if($lang_id === false)
 			$lang_text = "";
 		else
-			$lang_text = " AND language_id = $lang_id";
+			$lang_text = " AND language_id = ".$lang_id;
 
 		$results = array();
 		
+
 		$query = "SELECT *, translations.id AS real_id FROM translations INNER JOIN translation_words ON translations.id = translation_words.translation_id WHERE translation_words.word_id = ".$this->_lemma['id']." $lang_text  Order By language_id DESC;";
 
-
 		$fetch = p::$db->cacheQuery($query);
+
 
 		foreach($fetch->fetchAll() as $fetched){
 			$translationResult = new pTranslation($fetched, 'translations');

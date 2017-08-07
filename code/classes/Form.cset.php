@@ -354,7 +354,7 @@ class pMagicActionForm{
 
 		if($forceBtCard)
 			p::Out("<div class='btButtonBar'>
-				".($showBack ? "<a class='btAction wikiEdit' href='".$hrefBack."'><i class='fa fa-12 fa-arrow-left' ></i> ".BACK."</a>" : ""));
+				".($showBack ? "<a class='btAction no-float' href='".$hrefBack."'><i class='fa fa-12 fa-arrow-left' ></i> ".BACK."</a>" : ""));
 
 		p::Out("
 			<a class='btAction green ".($forceBtCard ? '' : 'little ')."submit-form ssignore no-float'><i class='fa fa-12 fa-check-circle'></i> ".$this->_strings[1]."</a>");
@@ -473,7 +473,7 @@ class pMagicActionForm{
 				(new pMagicField($field))->render();
 
 		p::Out("<div class='btButtonBar'>
-			<a class='btAction wikiEdit' href='".p::Url("?".$this->_app."/".$this->_section."/link-table/".$this->_linkObject->_data[0]['id']."/".$this->_linked)."'><i class='fa fa-12 fa-arrow-left' ></i> ".BACK."</a>
+			<a class='btAction no-float' href='".p::Url("?".$this->_app."/".$this->_section."/link-table/".$this->_linkObject->_data[0]['id']."/".$this->_linked)."'><i class='fa fa-12 fa-arrow-left' ></i> ".BACK."</a>
 			<a class='btAction green submit-form not-smooth'><i class='fa fa-12 fa-check-circle'></i> ".$this->_strings[1]."</a><br id='cl'/></div>");
 		p::Out("</div>");
 

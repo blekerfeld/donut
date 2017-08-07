@@ -55,7 +55,7 @@ class pAdminStructure extends pStructure{
 
 				$items++;
 
-				$output .= "'>".(new pIcon($main['icon'], 24))."</a>";
+				$output .= "'>".(new pIcon($main['icon'], 16))." ".$main['surface']."</a>";
 		}
 
 		}
@@ -85,8 +85,7 @@ class pAdminStructure extends pStructure{
 		// Preparing the menu
 		$this->prepareMenu();
 
-		// Starting with the wrapper
-		p::Out("<div class='d_admin_wrap'><div class='d_admin'>");
+		$this->renderMenu();
 
 				// Header time
 		p::Out("<div class='d_admin_header'>".$this->header()."</div>");
@@ -121,17 +120,15 @@ class pAdminStructure extends pStructure{
 				return true;
 		}
 
-		// Ending content
-		p::Out("</div>");
 
 		// Time for the menu
-		$this->renderMenu();
+		
 
 
 		// Tooltipster time!
 		p::Out("<script type='text/javascript'>
 
-			$('.ttip').tooltipster({animation: 'grow', animationDuration: 100,  distance: 0, contentAsHTML: true, interactive: true, side:'left'});
+			$('.ttip').tooltipster({animation: 'grow', animationDuration: 100,  distance: 0, contentAsHTML: true, interactive: true, side:'bottom'});
 
 			$('.ttip_actions').tooltipster({animation: 'grow', animationDuration: 150,  distance: 0, contentAsHTML: true, interactive: true, side: 'bottom', trigger: 'click'});
 
@@ -144,9 +141,6 @@ class pAdminStructure extends pStructure{
 			}});
 
 			</script>");
-
-		// Ending overall 
-		p::Out("</div>");
 
 	}
 

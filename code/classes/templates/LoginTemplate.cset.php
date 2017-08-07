@@ -54,11 +54,11 @@ class pLoginTemplate extends pTemplate{
 	}
 
 	public function succes(){
-		return pMainTemplate::NoticeBox('fa-spinner fa-spin fa-12', LOGIN_SUCCESS, 'succes-notice')."<script type='text/javascript'>$('.saving').delay(1000).slideUp();$('.ajaxMessage').delay(2000).slideDown();</script>";
+		return ;
 	}
 
 	public function errorMessage(){
-		return pMainTemplate::NoticeBox('fa-warning fa-12', LOGIN_ERROR, 'danger-notice ajaxMessage')."<script type='text/javascript'>$('.saving').delay(1000).slideUp();$('.ajaxMessage').delay(2000).slideDown();</script>";
+		return pMainTemplate::NoticeBox('fa-warning fa-12', LOGIN_ERROR, 'warning-notice ajaxMessage')."<script type='text/javascript'>$('.saving').delay(1000).slideUp();$('.ajaxMessage').delay(2000).slideDown();</script>";
 	}
 
 	public function warning(){

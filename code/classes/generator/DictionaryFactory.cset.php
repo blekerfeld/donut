@@ -55,7 +55,7 @@ class pDictionaryFactory{
 			$this->_sections['primary'][] = $output;
 			// First header shall be correct
 			if($count == 0){
-				$this->_PDF->setHeader('{WORD1}||{WORD2}');
+				$this->_PDF->setHeader('||{WORD1} – {WORD2}');
 				$count++;
 			}
 		}
@@ -124,7 +124,7 @@ class pDictionaryFactory{
 		p::Out("<columns  column-count='1' vAlign='justify' />");
 		$this->_PDF->addSection();
 		if(isset($this->_sections['primary'][$keyN + 1]['letter']['grapheme']))
-			$this->_PDF->setHeader('{WORD1}||{WORD2}');
+			$this->_PDF->setHeader('||{WORD1} – {WORD2}');
 		else
 			$this->_PDF->setHeader(''); 
 	}

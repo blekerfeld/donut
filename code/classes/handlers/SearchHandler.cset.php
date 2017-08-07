@@ -49,7 +49,9 @@ class pSearchHandler extends pHandler{
 		else
 			$searchlang = new pLanguage(1);
 
-		if(isset($languageQuery[1]))
+		if($languageQuery[0] == $languageQuery[1])
+			$returnlang = $searchlang;
+		elseif(isset($languageQuery[1]))
 			$returnlang = new pLanguage(strtoupper($languageQuery[1]));
 		else
 			$returnlang = new pLanguage(0);

@@ -69,6 +69,8 @@ class pAssistantHandler extends pHandler{
 		return $output;
 	}
 
+
+
 	public function countData($language = null){
 
 		if($this->_section == 'translate' AND ((isset(pRegister::session()['btChooser-translate']) AND $language == null) OR ($language != null))){

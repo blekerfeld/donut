@@ -16,7 +16,7 @@ class pEntry{
 	public $_id, $_entry, $dataModel, $_data, $_subEntries, $_template, $_actionbar;
 
 	public function __construct($dataModel, $table = ''){
-
+		
 		if(is_a($dataModel, "pDataModel") OR is_subclass_of($dataModel, "pDataModel")){
 			$this->dataModel = $dataModel;
 			$this->_id = $this->dataModel->_singleId;

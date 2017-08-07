@@ -102,7 +102,6 @@ class pAssistantTemplate extends pTemplate{
 		$lang0 = new pLanguage(0);
 		$lang1 = new pLanguage(pRegister::session()['btChooser-translate']);
 		$lemma = new pLemma($data['word_id']);
-
 		// Building the guideline words
 		$guideLines = $this->_data->getGuideLineWords($data['word_id']);
 		$guideLinesStr = '';
@@ -120,7 +119,6 @@ class pAssistantTemplate extends pTemplate{
 				<span class='btBlue'>".BATCH_OTHER_LANGUAGES."</span><br />
 				".$guideLinesStr."
 			</div>");
-
 		p::Out("
 			<div class='btCard transCard proper'>
 				<div class='btTitle'>

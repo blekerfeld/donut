@@ -27,19 +27,23 @@ class pAuthStructure extends pStructure{
 
 	protected function logInAjax(){
 
+		// Show a warning if things are empty
 		if(isset(pRegister::post()['username'], pRegister::post()['password']) AND empty(pRegister::post()['username']) OR empty(pRegister::post()['password']))
 			return p::Out($this->_template->warning());
-
+		// Show some succes feedback, plus a redirect
 		if(pUser::checkCre(pRegister::post()['username'], pRegister::post()['password'])){
 			(new pUser)->logIn(pRegister::post()['username']);
 			return p::Out($this->_template->succes()."<script>window.location = '".p::Url('?home')."';</script>");
 		}
+		// Show an error message
 		else
 			return p::Out($this->_template->errorMessage());
 	}
 
 	protected function logOut(){
+		// Make an instance of the logged in user, log it out
 		(new pUser)->logOut();	
+		// Back to the login page
 		return p::Url('?auth', true);
 	}
 
@@ -51,12 +55,19 @@ class pAuthStructure extends pStructure{
 
 		if($this->_section == 'profile'){
 			p::Out("<div class='home-margin'>");
-			$template = new pProfileTemplate;
-			$template->renderAll();
+				$template = new pProfileTemplate;
+				$template->renderAll();
 			p::Out("</div>");
 			return false;
 		}
 
+		if($this->_section == 'register'){
+			p::Out("<div class='home-margin'>");
+				$template = new pRegisterTemplate;
+				$template->renderAll();
+			p::Out("</div>");
+			return false;
+		}
 
 		if($this->_section == 'logout')
 			return $this->logOut();

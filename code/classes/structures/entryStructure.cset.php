@@ -76,8 +76,10 @@ class pEntryStructure extends pStructure{
 		// Let's handle the action by the object
 		if(isset(pRegister::arg()['action']) AND @pRegister::arg()['section'] != 'search')
 			$this->_parser->passOnAction(pRegister::arg()['action']);
-		else
+		elseif(isset(pRegister::arg()['id']))
 			$this->_parser->render();
+		else
+			p::Url('', true);
 
 		if(isset(pRegister::arg()['ajax']))
 			return true;

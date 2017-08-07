@@ -148,6 +148,7 @@ class pMainTemplate extends pTemplate{
           </div>
     	</div>
     </div>
+    </div>
     <div class='absolute_footer'>
     	<img src='<?php echo p::Url('library/images/static/logobw.png'); ?>' />
         <span class='mobilehide'>build 

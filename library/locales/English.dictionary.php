@@ -38,7 +38,7 @@ p::defineLocale("LEMMA_EXAMPLE_IN", 'Example/idiom in %s');
 p::defineLocale("LEMMA_TRANSLATION_INTO", 'Translation into %s');
 p::defineLocale("LEMMA_TRANSLATION_ADDED", 'Translation added by %s on %s');
 p::defineLocale("LEMMA_TRANSLATIONS_INTO", 'Translations into %s');
-p::defineLocale("LEMMA_TRANSLATIONS_MEANINGS", 'Other meanings/alternate forms in %s');
+p::defineLocale("LEMMA_TRANSLATIONS_MEANINGS", 'Definitions in %s');
 p::defineLocale("LEMMA_TRANSLATIONS_RESET", 'Show all translations');
 p::defineLocale("LEMMA_USAGE_NOTES", "Usage notes");
 p::defineLocale("LEMMA_ANTONYMS", "Antonyms");

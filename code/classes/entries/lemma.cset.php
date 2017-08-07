@@ -18,20 +18,27 @@ class pLemma extends pEntry{
 
 	// The constructur will call the parent (pEntry) with its arguments and then do a list of aditional tasks...
 	public function __construct($id){
+
 		// First we are calling the parent's constructor
 		parent::__construct($id, 'words');
 
-		$this->_lemmaDataObject = new pLemmaDataModel($this->_id);
+		$this->_lemmaDataObject = new pLemmaDataModel($this->_entry);
 
 		// Getting type (part of speech), classification (grammatical category) and grammatical tag
 			if($this->_entry['type_id'] != 0)
-				$this->_type = (new pDataModel('types', null, false, $this->_entry['type_id']))->data()->fetchAll()[0];
+				$this->_type = pRegister::cacheCallBack('types', $this->_entry['type_id'], function(){
+					return (new pDataModel('types', null, false, $this->_entry['type_id']))->data()->fetchAll()[0];
+				});
 
 			if($this->_entry['classification_id'] != 0)
-				$this->_class = (new pDataModel('classifications', null, false, $this->_entry['classification_id']))->data()->fetchAll()[0];
+				$this->_class = pRegister::cacheCallBack('classifications', $this->_entry['classification_id'], function(){
+					return (new pDataModel('classifications', null, false, $this->_entry['classification_id']))->data()->fetchAll()[0];
+				});
 
 			if($this->_entry['subclassification_id'] != 0)
-				$this->_subclass = (new pDataModel('subclassifications', null, false, $this->_entry['subclassification_id']))->data()->fetchAll()[0];
+				$this->_subclass = pRegister::cacheCallBack('subclassifications', $this->_entry['subclassification_id'], function(){
+					return (new pDataModel('subclassifications', null, false, $this->_entry['subclassification_id']))->data()->fetchAll()[0];
+				});
 
 			// Make it easier to access the word itself
 			$this->word = $this->_entry['native'];

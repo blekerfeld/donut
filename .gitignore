@@ -1,5 +1,5 @@
 -# Donut cache
--*.cache
+*.cache
 library/assets/composer/vendor
 vendor
 .composerlock

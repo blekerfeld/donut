@@ -16,7 +16,7 @@ class pHomeTemplate extends pSimpleTemplate{
 		if(!(isset(pRegister::arg()['ajax']) and isset(pRegister::arg()['nosearch'])))
 			pMainTemplate::throwOutsidePage(new pSearchBox(true));
 
-		p::Out("<div class='home-margin pEntry'>".p::Markdown(file_get_contents(p::FromRoot("static/home.md")), true)."<br />");
+		p::Out("<div class='home-margin pEntry'>".p::Markdown(file_get_contents(p::FromRoot("static/home.md")), true)."<br /></div>");
 	}
 
 }

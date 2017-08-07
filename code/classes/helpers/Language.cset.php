@@ -11,7 +11,7 @@
 class pLanguage{
 
 	public $id, $data, $dataModel; 
-
+	public static $_languageCache = array();
 
 	// This would work only with 'new pLanguage'
 	public function __toString(){
@@ -20,6 +20,8 @@ class pLanguage{
 
 	// Constructure accepts both a language code or a number
 	public function __construct($id){
+		if(isset(self::$_languageCache[$id]))
+			return $this->load(self::$_languageCache[$id]);
 		$this->dataModel = new pDataModel('languages');
 		if(is_numeric($id))
 			$this->dataModel->getSingleObject($id);
@@ -30,6 +32,7 @@ class pLanguage{
 				die("Could not fetch language");
 		}
 		$this->load($this->dataModel->data()->fetchAll()[0]);
+		self::$_languageCache[$id] = $this->dataModel->data()->fetchAll()[0];
 	}
 
 	// Makes it possible to do pLanguage::dictionarySelector($class);
@@ -57,7 +60,7 @@ class pLanguage{
 		$lang_zero = $data[0];
 
 		foreach($data as $key => $language)
-			if($key > 0)
+			
 				$select .= '<option value="'.$language['locale'].'-'.$lang_zero['locale'].'" '.((isset(pRegister::session()['searchLanguage']) AND (pRegister::session()['searchLanguage'] == $language['locale'].'-'.$lang_zero['locale'])) ? ' selected ' : '').'>'.$language['name'].' - '.$lang_zero['name'].'</option><option value="'.$lang_zero['locale'].'-'.$language['locale'].'" '.((isset(pRegister::session()['searchLanguage']) AND (pRegister::session()['searchLanguage'] == $lang_zero['locale'].'-'.$language['locale'])) ? ' selected ' : '').'>'.$lang_zero['name'].' - '.$language['name'].'</option>';
 
 	    

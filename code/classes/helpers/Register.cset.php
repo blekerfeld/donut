@@ -12,12 +12,26 @@
 // like this: pRegister::arg()['id'];
 class pRegister{
 
-	static $queryString, $arguments, $post, $session;
+	static $queryString, $arguments, $post, $session, $objectcache;
 
 	public static function arg($set = null){
 		if($set != null)
 			return self::$arguments = $set;
 		return self::$arguments;
+	}
+
+	public static function cacheAway($section, $id, $object){
+		self::$objectcache[$section][$id] = $object;
+	}
+
+	public static function cache($section){
+		return self::$objectcache[$section];
+	}
+
+	public function cacheCallBack($section, $id, $function){
+		if(!isset(self::$objectcache[$section][$id]))
+			self::$objectcache[$section][$id] = $function();
+		return self::$objectcache[$section][$id];
 	}
 
 	public static function post($set = null){

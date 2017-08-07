@@ -10,6 +10,8 @@
 
 class pConnection extends PDO{
 
+	protected $_queryCount, $_internCache = array(), $_internLog = array();
+
 	public function __construct(){
 		call_user_func_array('parent::__construct', func_get_args());
 		// UTF-8, bardzo proszę
@@ -24,8 +26,26 @@ class pConnection extends PDO{
 			define("CONFIG_".$setting->SETTING_NAME, $setting->SETTING_VALUE);
 	}
 
+	public function showCount(){
+		return $this->_queryCount;
+	}
+
+	public function log(){
+		return $this->_internLog;
+	}
+
+
 	public function cacheQuery($sql, $force_no_cache = false, $force_no_count = false){
-	
+
+		$trace = debug_backtrace();
+		$functions = array();
+		foreach($trace as $traceIns)
+			$functions[] = $traceIns['class'].'::'.$traceIns['function'].': -'.$traceIns['file'].':'.$traceIns['line'];
+
+		$this->_internLog[] = array($functions, $sql);
+
+		$this->_queryCount++;
+
 		// We need the queries hash
 		$table_name = preg_match_all("/\b(FROM|INTO|UPDATE)\b\s*(\w+)/", $sql, $matches);
 
