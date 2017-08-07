@@ -45,6 +45,10 @@ class pAuthStructure extends pStructure{
 
 	public function render(){
 
+		// Since no parser is used, the permission check needs to be done here
+		if(!pUser::checkPermission($this->_permission))
+			return p::Out("<div class='btCard minimal admin'>".pMainTemplate::NoticeBox('fa-info-circle fa-12', DA_PERMISSION_ERROR, 'danger-notice')."</div>");
+
 		if($this->_section == 'profile'){
 			p::Out("<div class='home-margin'>");
 			$template = new pProfileTemplate;

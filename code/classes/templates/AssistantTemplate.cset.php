@@ -101,7 +101,26 @@ class pAssistantTemplate extends pTemplate{
 	public function cardTranslate($data, $section){
 		$lang0 = new pLanguage(0);
 		$lang1 = new pLanguage(pRegister::session()['btChooser-translate']);
-		$lemma = new pLemma($data['id']);
+		$lemma = new pLemma($data['word_id']);
+
+		// Building the guideline words
+		$guideLines = $this->_data->getGuideLineWords($data['word_id']);
+		$guideLinesStr = '';
+		foreach($guideLines as $key => $languageK){
+			$language = new pLanguage($key);
+			$guideLinesStr .= '<strong>'.(new pDataField(null, null, null, 'flag'))->parse($language->read('flag'));
+			$items = array();
+			foreach($languageK as $item)
+				$items[] = $item['translation'];
+			$guideLinesStr .= " ".implode(', ', $items);
+		}
+
+		if($guideLinesStr != '')
+			p::Out("<div class='btCardHelper'>
+				<span class='btBlue'>".BATCH_OTHER_LANGUAGES."</span><br />
+				".$guideLinesStr."
+			</div>");
+
 		p::Out("
 			<div class='btCard transCard proper'>
 				<div class='btTitle'>
@@ -129,18 +148,19 @@ class pAssistantTemplate extends pTemplate{
 			$(document).ready(function(){
 				$('.ttip').tooltipster({animation: 'grow'});
 				$('.translations').tagsInput({
-							'defaultText': '".BATCH_TR_PLACEHOLDER."'
+							'defaultText': '".BATCH_TR_PLACEHOLDER."',
+							'delimiter': '//',
 						});
 				$('.translations').elastic();
 
 			});
 			$('.button-skip').click(function(){
-				$('.btLoadSide').load('".p::Url('?assistant/'.$section.'/skip/ajax')."', {'skip': ".$data['id']."}, function(){
+				$('.btLoadSide').load('".p::Url('?assistant/'.$section.'/skip/ajax')."', {'skip': ".$data['word_id']."}, function(){
 					serveCard();
 				});
 			});
 			$('.button-never').click(function(){
-				$('.btLoadSide').load('".p::Url('?assistant/'.$section.'/never/ajax')."', {'never': ".$data['id']."}, function(){
+				$('.btLoadSide').load('".p::Url('?assistant/'.$section.'/never/ajax')."', {'never': ".$data['word_id']."}, function(){
 					serveCard();
 				});
 			});

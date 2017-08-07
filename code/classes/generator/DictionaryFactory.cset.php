@@ -10,13 +10,17 @@
 
 class pDictionaryFactory{
 
-	protected $_titlePage, $_primaryLanguage = 0, $_secondaryLanguage = 1, $_PDF, $_filename, $_sections;
+	protected $_titlePage, $_primaryLanguage = 0, $_secondaryLanguage = 14, $_PDF, $_filename, $_sections;
 
-	public function __construct($filename = 'dictionary'){
+	public function __construct($filename = 'dictionary', $sLang = 1, $pLang = 0){
 		// Create a new pdf-helper
 		$this->_PDF = new pDictionaryPDF($filename);
 		// Set filename
 		$this->_filename = $filename;
+
+		// Languages
+		$this->_secondaryLanguage = $sLang;
+
 		// Reset page-header session, this thing will keep track of which lemma-collection on which page (Like bus - butter)
 		$_SESSION['generateWords'] = array();
 	}
@@ -28,13 +32,14 @@ class pDictionaryFactory{
 		$this->getPrimaryData();
 		$count = 0;
 		foreach($this->_sections['primary'] as $keyN => $section){
+			if(!empty($section['lemmas']))
 			$this->addSection($section, $keyN);
 		}
 		// Correct header setting
 		for ($i=$this->_PDF->getPageNum(); $i > 0 ; $i--) { 
 			if(!isset($_SESSION['generateWords'][$i])){
-				$_SESSION['generateWords'][$i]['first'] = 'test';
-				$_SESSION['generateWords'][$i]['last'] = 'test';
+				$_SESSION['generateWords'][$i]['first'] = '';
+				$_SESSION['generateWords'][$i]['last'] = '';
 			}
 		}
 	}
@@ -50,7 +55,7 @@ class pDictionaryFactory{
 			$this->_sections['primary'][] = $output;
 			// First header shall be correct
 			if($count == 0){
-				$this->_PDF->setHeader('{WORD1} - {WORD2}');
+				$this->_PDF->setHeader('{WORD1}||{WORD2}');
 				$count++;
 			}
 		}
@@ -66,7 +71,7 @@ class pDictionaryFactory{
 		foreach ($filter as $filterInstance)
 			$filterString .= " AND native NOT LIKE '".$filterInstance."%'";
 		
-		$words = (new pDataModel('words'))->customQuery("SELECT id, native FROM words WHERE hidden = 0 AND native LIKE '".$letter."%' ".$filterString .";")->fetchAll(); 
+		$words = (new pDataModel('words'))->customQuery("SELECT words.id, words.native FROM words JOIN translation_words, translations WHERE translations.language_id = ".$this->_secondaryLanguage." AND translation_words.translation_id = translations.id AND translation_words.word_id = words.id AND words.hidden = 0 AND words.native LIKE '".$letter."%' ".$filterString .";")->fetchAll(); 
 
 		// Sort the whole thing
 		$words = pAlphabet::sort($words);

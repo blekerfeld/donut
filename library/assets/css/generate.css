@@ -37,8 +37,9 @@ table.inflections{
   margin: 5px;
 }
 
-strong.dWord span.native a{
-  text-decoration: none;
+div.dWordWrapper a{
+  text-decoration: none!important;
+  color: black!important;
 }
 
 h3.title{

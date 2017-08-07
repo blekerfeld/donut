@@ -1178,18 +1178,6 @@ img.pImage {
 }
 
 
-img.pImage.editing{
-  border: 1px dashed #d8d8d8;
-}
-
-img.pImage:hover {
-  border-radius: 0px;
-  border: 1px solid #c9e6f2;
-  max-height: 300px;
-  opacity: 1;
-  padding-left: 0px;
-  background: white;
-}
 
 strong.pWord a {
   color: #000!important;
@@ -1460,11 +1448,7 @@ a.edit-field:hover{
    opacity: 1;
 }
 
-span.pSectionTitle.editing.first a.tooltip:hover{
-  font-weight: normal!important;
-  text-decoration: underline;
-  color: #000;
-}
+
 
 
 span.pSectionTitle.extra.closed {
@@ -1492,12 +1476,6 @@ span.pSectionTitle.extra.closed {
 .pSectionTitle.extra.sub img.flagimage{
   height: 9px;
   width: auto;
-}
-
-span.pSectionTitle.extra.sub.editing {
-  border: none;
-  background: #fff;
-  border-bottom: 1px dashed #d8d8d8;
 }
 
 .pSectionWrapper strong.label {
@@ -1707,6 +1685,36 @@ span.ipa:hover {
 .count:hover {}
 
 /* BATCH TRANSLATION */
+
+div.btCardHelper{
+  position: relative;
+  top: 80px;
+  left: -50px;
+   box-shadow: 0px 1px 3px rgba(100, 100, 100, 0.3);
+   padding: 5px;
+   width: 14%;
+  float: left;
+  background: #fff;
+  opacity: .3;
+  transition: opacity .3s;
+  cursor: pointer;
+}
+
+div.btCardHelper:hover{
+  opacity: 1;
+}
+
+div.btCardHelper strong{
+  font-weight: normal;
+  color: #444;
+}
+
+div.btCardHelper span.btBlue{
+  display: inline-block;
+  margin-bottom: 10px;
+  color: #222!important;
+}
+
 div.btCard {
   margin: 20px auto;
   margin-top: 10px;
@@ -1798,12 +1806,6 @@ div.btCard.link-table div.btTitle{
   
 }
 
-div.btCard.editing div.btTitle{
-  border-radius: 7px 7px 0px 0px;
-  background-color: #f2f9fc;
-   border: 1px dashed #c9e6f2;
-  color: black;
-}
 div.btPBAR {
   background: #5E6573;
   min-height: 3px;
@@ -1979,16 +1981,12 @@ a.btAction, a.btAction.red-link{
   font-size: 11px;
   cursor: pointer;
   float: right;
+  font-weight: normal;
+  border-radius: 5px;
+  padding: 9px;
+  font-size: 17px;
 }
 
-
-table.admin a.btAction{
-  font-size: 11px;
-}
-
-a.btAction.wikiEdit{
-  float: left!important;
-}
 
 a.btAction.page{
   float: none!important;
@@ -2044,7 +2042,7 @@ a.btAction.redbt:hover{
 }
 
 a.btAction.blue{
-  background-color: #515763;
+  background: #3B66D6;
   color: snow;
 }
 

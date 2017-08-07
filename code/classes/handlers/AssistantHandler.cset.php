@@ -21,7 +21,7 @@ class pAssistantHandler extends pHandler{
 		// Override the datamodel
 		$this->_dataModel = null;
 		//Template
-		$this->_template = new pAssistantTemplate($this->_section);
+		$this->_template = new pAssistantTemplate($this, $this->_section);
 	}
 
 
@@ -48,7 +48,7 @@ class pAssistantHandler extends pHandler{
 		if($this->_section == 'translate' AND isset(pRegister::session()['btChooser-translate'])){
 			$this->_dataModel = new pDataModel('words');
 	
-			$this->_data = $this->_dataModel->customQuery("SELECT DISTINCT words.id, words.native, words.classification_id, words.type_id, words.subclassification_id 
+			$this->_data = $this->_dataModel->customQuery("SELECT DISTINCT words.id AS word_id, words.native, words.classification_id, words.type_id, words.subclassification_id 
 			FROM words
 			JOIN translation_words 
 			JOIN translations ON translations.id = translation_words.translation_id
@@ -59,6 +59,14 @@ class pAssistantHandler extends pHandler{
 		
 
 		return false;
+	}
+
+	public function getGuideLineWords($lemma_id){
+		$output = array();
+		$data = (new pDataModel('words'))->customQuery("SELECT translations.translation, translations.language_id, translation_words.* FROM translations JOIN translation_words WHERE translations.id = translation_words.translation_id AND translation_words.word_id = $lemma_id;"); 
+		foreach ($data->fetchAll() as $result) 
+			$output[$result['language_id']][] = $result; 
+		return $output;
 	}
 
 	public function countData($language = null){
@@ -144,7 +152,7 @@ class pAssistantHandler extends pHandler{
 			return $_SESSION['btSkip-'.$this->_section][] = $this->_data[0]['id'];
 		$translations = array($_SESSION['btChooser-translate'] => pRegister::post()['translations']
 			);
-		$dM  = new pLemmaSheetDataModel('words', $this->_data[0]['id']);
+		$dM  = new pLemmaSheetDataModel('words', $this->_data[0]['word_id']);
 		$dM->updateTranslations($translations, true);
 		$dM->cleanCache('words');
 	}

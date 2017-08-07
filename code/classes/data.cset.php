@@ -132,7 +132,7 @@ class pDataField{
 
 	
 		if($this->type == 'flag')
-			$output = "<img class='$this->class flagimage' src='".(trim($value) == '' ? p::Url('pol://library/images/flags/undef.png') : p::Url('pol://library/images/flags/'.$value.'.png'))."' />";
+			$output = "<img class='$this->class flagimage' src='".(trim($value) == '' ? p::Url('pol://library/images/flags/undef.png') : p::Url('pol://library/images/flags/'.$value))."' />";
 		
 		elseif($this->type == 'image')
 			$output = "<img class='$this->class' src='".$value."' />";

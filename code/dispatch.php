@@ -213,7 +213,9 @@ return array(
 		),
 		'override_structure_type' => 'pSimpleStructure',
 		'template' => 'pGenerateTemplate',
-		'metadata' => array(),
+		'metadata' => array(
+			'default_permission' => -4,
+		),
 		'menu' => 'dictionary-admin',
 	),
 );

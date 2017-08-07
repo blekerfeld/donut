@@ -44,7 +44,7 @@ class pDictionaryPDF{
 		// This will empty the p-output, but save what we need.
 		$newP = new p; 
 		$this->_sections[] = (string)$newP;
-		$this->_mPDF->WriteHTML((string)$newP,  0, false, true);
+		$this->_mPDF->WriteHTML(str_replace(array('<a', '</a>'), array('<span', '</span>'), (string)$newP),  0, false, true);
 		p::Empty();
 	}
 

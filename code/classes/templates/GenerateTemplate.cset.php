@@ -15,7 +15,7 @@ class pGenerateTemplate extends pSimpleTemplate{
 	public function renderAll(){
 		/// Just as simple as that :)
 
-		$dF = new pDictionaryFactory;
+		$dF = new pDictionaryFactory('Dictionary', (isset(pRegister::arg()['language']) ? pRegister::arg()['language'] : 1));
 		$dF->compile();
 		$dF->produce();
 

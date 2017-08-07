@@ -208,6 +208,7 @@ p::defineLocale('', '');
 
 
 p::defineLocale('BATCH_CHOOSE_LANGUAGE', 'Pick a language');
+p::defineLocale('BATCH_OTHER_LANGUAGES', 'In other languages');
 p::defineLocale('BATCH_CHOOSE_ASSISTANT', 'What do you want to do?');
 p::defineLocale('BATCH_TITLE', 'Assistant');
 p::defineLocale('BATCH_TITLE_TR', 'Assistant');

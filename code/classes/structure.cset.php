@@ -18,7 +18,7 @@ interface pIntStructure{
 
 abstract class pStructure{
 
-	public $_name, $_meta, $_type, $_structure, $_menu, $_menu_content, $_default_section, $_page_title, $_app, $_permission = 0, $_dispatchStructure;
+	public $_name, $_meta, $_type, $_structure, $_menu, $_menu_content, $_default_section, $_page_title, $_app, $_permission, $_dispatchStructure;
 
 	public static $permission;
 
@@ -91,9 +91,9 @@ abstract class pStructure{
 
 
 			if(isset($this->_meta['default_permission']))
-				self::$permission = $this->_meta['default_permission'];
+				$this->_permission = $this->_meta['default_permission'];
 			else
-				self::$permission = 0;
+				$this->_permission = 0;
 
 		} catch (Exception $e) {
 			die();

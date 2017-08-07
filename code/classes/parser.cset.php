@@ -112,6 +112,7 @@ class pParser{
 	}
 
 	public function render(){
+
 		// We can only render if we are allowed to 
 		if(pUser::checkPermission($this->_permission))
 			return $this->_handler->render();

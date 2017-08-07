@@ -104,7 +104,7 @@ return array(
 				'remove' => $action_remove,
 			),
 			'actions_bar' => array(
-				'new' => array('new', DA_WORDS_NEW_EXTERN, 'fa-plus-circle fa-12', 'btAction wikiEdit', null, null, 
+				'new' => array('new', DA_WORDS_NEW_EXTERN, 'fa-plus-circle fa-12', 'btAction no-float small', null, null, 
 				),
 			),
 			'save_strings' => $saveStrings,
@@ -238,7 +238,7 @@ return array(
 				'remove' => $action_remove,
 			),
 			'actions_bar' => array(
-				'new' => array('new', "New translations", 'fa-plus-circle fa-12', 'btAction wikiEdit', null, null, null),
+				'new' => array('new', "New translations", 'fa-plus-circle fa-12', 'btAction no-float small', null, null, null),
 			),
 			'save_strings' => $saveStrings,
 			'outgoing_links' => array(
@@ -283,7 +283,7 @@ return array(
 				'remove' => $action_remove,
 			),
 			'actions_bar' => array(
-				'new' => array('new', DA_LANG_NEW, 'fa-plus-circle fa-12', 'btAction wikiEdit', null, null),
+				'new' => array('new', DA_LANG_NEW, 'fa-plus-circle fa-12', 'btAction no-float small', null, null),
 			),
 			'save_strings' => $saveStrings,
 			'outgoing_links' => array(
@@ -329,7 +329,7 @@ return array(
 				'remove' => $action_remove,
 			),
 			'actions_bar' => array(
-				'new' => array('new', DA_LANG_NEW, 'fa-plus-circle fa-12', 'btAction wikiEdit', null, null),
+				'new' => array('new', DA_LANG_NEW, 'fa-plus-circle fa-12', 'btAction no-float small', null, null),
 			),
 			'save_strings' => $saveStrings,
 			'outgoing_links' => array(
@@ -377,7 +377,7 @@ return array(
 				'remove' => $action_remove,
 			),
 			'actions_bar' => array(
-				'new' => array('new', DA_LANG_NEW, 'fa-plus-circle', 'btAction wikiEdit', null, null),
+				'new' => array('new', DA_LANG_NEW, 'fa-plus-circle', 'btAction no-float small', null, null),
 			),
 			'save_strings' => $saveStrings,
 			'outgoing_links' => array(),
@@ -403,7 +403,7 @@ return array(
 				'remove' => $action_remove,
 			),
 			'actions_bar' => array(
-				'new' => array('new', 'Add category', 'fa-plus-circle fa-12', 'btAction wikiEdit', null, null),
+				'new' => array('new', 'Add category', 'fa-plus-circle fa-12', 'btAction no-float small', null, null),
 			),
 			'save_strings' => $saveStrings,
 			'outgoing_links' => array(
@@ -432,7 +432,7 @@ return array(
 				'remove' => $action_remove,
 			),
 			'actions_bar' => array(
-				array('new', 'Add category', 'fa-plus-circle fa-12', 'btAction wikiEdit', null, null),
+				array('new', 'Add category', 'fa-plus-circle fa-12', 'btAction no-float small', null, null),
 			),
 			'save_strings' => $saveStrings,
 			'outgoing_links' => array(
@@ -461,7 +461,7 @@ return array(
 				'remove' => $action_remove,
 			),
 			'actions_bar' => array(
-				array('new', 'Add category', 'fa-plus-circle fa-12', 'btAction wikiEdit', null, null),
+				array('new', 'Add category', 'fa-plus-circle fa-12', 'btAction no-float small', null, null),
 			),
 			'save_strings' => $saveStrings,
 			'outgoing_links' => array(
@@ -490,7 +490,7 @@ return array(
 				'remove' => $action_remove,
 			),
 			'actions_bar' => array(
-				'new' => array('new', "New translations", 'fa-plus-circle fa-12', 'btAction wikiEdit', null, null, null),
+				'new' => array('new', "New translations", 'fa-plus-circle fa-12', 'btAction no-float small', null, null, null),
 			),
 			'save_strings' => $saveStrings,
 			'outgoing_links' => array(
@@ -519,7 +519,7 @@ return array(
 				'remove' => $action_remove,
 			),
 			'actions_bar' => array(
-				'new' => array('new', "New translations", 'fa-plus-circle fa-12', 'btAction wikiEdit', null, null, null),
+				'new' => array('new', "New translations", 'fa-plus-circle fa-12', 'btAction no-float small', null, null, null),
 			),
 			'save_strings' => $saveStrings,
 			'outgoing_links' => array(
@@ -550,7 +550,7 @@ return array(
 				'remove' => $action_remove,
 			),
 			'actions_bar' => array(
-				array('new', 'Add category', 'fa-plus-circle fa-12', 'btAction wikiEdit', null, null),
+				array('new', 'Add category', 'fa-plus-circle fa-12', 'btAction no-float small', null, null),
 			),
 			'save_strings' => $saveStrings,
 			'outgoing_links' => array(
