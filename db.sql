@@ -73,18 +73,15 @@ CREATE TABLE `config` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 INSERT INTO `config` (`id`, `SETTING_NAME`, `SETTING_VALUE`) VALUES
-(1, 'ENABLE_QUERY_CACHING', '0'),
+(1, 'ENABLE_QUERY_CACHING', '1'),
 (2, 'QC_TIME',  '100000'),
 (3, 'SITE_TITLE', 'donut.'),
 (4, 'LOGO_TITLE', 'donut.'),
 (5, 'HOMEPAGE', 'home'),
-(6, 'WIKI_ENABLE_HISTORY',  '1'),
-(7, 'WIKI_HISTORY_ONLY_LOGGED', '0'),
-(8, 'WIKI_ALLOW_GUEST_EDITING', '1'),
-(9, 'WIKI_ALLOW_DISCUSSION_GUEST',  '0'),
-(10,  'WIKI_ENABLE_DISCUSSION', '1'),
 (12,  'SITE_DESC',  ''),
-(13,  'ACTIVE_LOCALE',  'English');
+(13,  'ACTIVE_LOCALE',  'English'),
+(14,  'ENABLE_REGISTER',  '1'),
+(15,  'REGISTER_DEFAULT_ROLE',  '3');
 
 DROP TABLE IF EXISTS `etymology`;
 CREATE TABLE `etymology` (
@@ -103,6 +100,7 @@ DROP TABLE IF EXISTS `graphemes`;
 CREATE TABLE `graphemes` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `grapheme` varchar(255) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL,
+  `uppercase` varchar(255) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL DEFAULT '',
   `in_alphabet` int(11) NOT NULL DEFAULT '1',
   `ipa` varchar(8) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL,
   `quality` varchar(8) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL,
@@ -111,34 +109,27 @@ CREATE TABLE `graphemes` (
   KEY `grapheme` (`grapheme`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
-INSERT INTO `graphemes` (`id`, `grapheme`, `in_alphabet`, `ipa`, `quality`, `sorter`) VALUES
-(12,  'a',  1,  '', '', 1),
-(13,  'b',  1,  '', '', 2),
-(14,  'c',  1,  '', '', 3),
-(15,  'd',  1,  '', '', 4),
-(16,  'e',  1,  '', '', 5),
-(17,  'f',  1,  '', '', 6),
-(18,  'g',  1,  '', '', 7),
-(19,  'h',  1,  '', '', 8),
-(20,  'i',  1,  '', '', 9),
-(21,  'j',  1,  '', '', 10),
-(22,  'k',  1,  '', '', 11),
-(23,  'l',  1,  '', '', 12),
-(24,  'm',  1,  '', '', 13),
-(25,  'n',  1,  '', '', 14),
-(26,  'o',  1,  '', '', 15),
-(27,  'p',  1,  '', '', 16),
-(28,  'q',  1,  '', '', 17),
-(29,  'r',  1,  '', '', 18),
-(30,  's',  1,  '', '', 19),
-(31,  't',  1,  '', '', 20),
-(32,  'u',  1,  '', '', 21),
-(33,  'v',  1,  '', '', 22),
-(34,  'w',  1,  '', '', 23),
-(35,  'x',  1,  '', '', 24),
-(36,  'y',  1,  '', '', 26),
-(37,  'z',  1,  '', '', 27),
-(38,  'ij', 1,  '', '1',  27);
+INSERT INTO `graphemes` (`id`, `grapheme`, `uppercase`, `in_alphabet`, `ipa`, `quality`, `sorter`) VALUES
+(41,  'a',  'A',  1,  '', '', 0),
+(42,  'b',  'B',  1,  '', '', 0);
+
+DELIMITER ;;
+
+CREATE TRIGGER `graphemes_uc` BEFORE INSERT ON `graphemes` FOR EACH ROW
+BEGIN
+  IF (NEW.uppercase IS NULL OR NEW.uppercase = '') THEN
+    SET NEW.uppercase = UCASE(NEW.grapheme);
+  END IF;
+END;;
+
+CREATE TRIGGER `graphemes_bu` BEFORE UPDATE ON `graphemes` FOR EACH ROW
+BEGIN
+  IF (NEW.uppercase IS NULL OR NEW.uppercase = '') THEN
+    SET NEW.uppercase = UCASE(NEW.grapheme);
+  END IF;
+END;;
+
+DELIMITER ;
 
 DROP TABLE IF EXISTS `graphemes_groups`;
 CREATE TABLE `graphemes_groups` (
@@ -214,7 +205,8 @@ INSERT INTO `idioms` (`id`, `idiom`, `user_id`, `created_on`) VALUES
 (8, 'uit de boot vallen', 0,  '2017-05-31 18:26:59'),
 (9, 'We varen in het weekend met onze boot.', 0,  '2017-05-31 18:27:25'),
 (10,  'Het mannatje bouwt een nest.', 0,  '2017-06-07 14:33:33'),
-(11,  'Man, man, man, wat een weer',  0,  '2017-06-09 01:07:14');
+(11,  'Man, man, man, wat een weer',  0,  '2017-06-09 01:07:14'),
+(12,  'Maak dat de kat wijs', 0,  '2017-08-07 13:13:44');
 
 DROP TABLE IF EXISTS `idiom_translations`;
 CREATE TABLE `idiom_translations` (
@@ -263,12 +255,14 @@ INSERT INTO `idiom_words` (`id`, `idiom_id`, `word_id`, `keyword`) VALUES
 (15,  5,  22, 'heb'),
 (17,  5,  26, 'mannetje'),
 (18,  3,  34, 'boom'),
-(1401,  1,  17, 'man');
+(1401,  1,  17, 'man'),
+(1402,  12, 6,  'kat');
 
 DROP TABLE IF EXISTS `languages`;
 CREATE TABLE `languages` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `name` varchar(255) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL,
+  `showname` varchar(255) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL,
   `hidden_native_entry` int(11) NOT NULL,
   `flag` varchar(255) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL,
   `activated` int(11) NOT NULL,
@@ -277,10 +271,10 @@ CREATE TABLE `languages` (
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
-INSERT INTO `languages` (`id`, `name`, `hidden_native_entry`, `flag`, `activated`, `locale`, `alphabet`) VALUES
-(0, 'Dutch',  0,  'nl.png', 1,  'NL', ''),
-(1, 'English',  0,  'gb.png', 1,  'EN', ''),
-(14,  'Norwegian',  0,  'no.png', 1,  'NO', '');
+INSERT INTO `languages` (`id`, `name`, `showname`, `hidden_native_entry`, `flag`, `activated`, `locale`, `alphabet`) VALUES
+(0, 'Dutch',  'Dutch',  0,  'nl.png', 1,  'NL', ''),
+(1, 'English',  'En.',  0,  'gb.png', 1,  'EN', ''),
+(14,  'Norwegian',  'No. Bokmål', 0,  'no.png', 1,  'NO', '');
 
 DROP TABLE IF EXISTS `lemmatization`;
 CREATE TABLE `lemmatization` (
@@ -294,13 +288,6 @@ CREATE TABLE `lemmatization` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 INSERT INTO `lemmatization` (`id`, `inflected_form`, `hash`, `lemma_id`) VALUES
-(65,  'katten', '3_1_1',  6),
-(66,  'de kat', '1_2_1',  6),
-(67,  'de katten',  '3_2_1',  6),
-(68,  'een katje',  '1_1_23', 6),
-(69,  'katjes', '3_1_23', 6),
-(70,  'het katje',  '1_2_23', 6),
-(71,  'de katjes',  '3_2_23', 6),
 (87,  'mannetjes',  '3_1_1',  26),
 (88,  'de mannetje',  '1_2_1',  26),
 (89,  'de mannetjes', '3_2_1',  26),
@@ -405,13 +392,6 @@ INSERT INTO `lemmatization` (`id`, `inflected_form`, `hash`, `lemma_id`) VALUES
 (376, 'hondjes',  '3_1_23', 18),
 (377, 'het hondje', '1_2_23', 18),
 (378, 'de hondjes', '3_2_23', 18),
-(399, 'maneschijnnen',  '3_1_1',  42),
-(400, 'de maneschijn',  '1_2_1',  42),
-(401, 'de maneschijnnen', '3_2_1',  42),
-(402, 'een maneschijnje', '1_1_23', 42),
-(403, 'maneschijnjes',  '3_1_23', 42),
-(404, 'het maneschijnje', '1_2_23', 42),
-(405, 'de maneschijnjes', '3_2_23', 42),
 (413, 'blauwwen', '3_1_1',  45),
 (414, 'de blauw', '1_2_1',  45),
 (415, 'de blauwwen',  '3_2_1',  45),
@@ -431,7 +411,21 @@ INSERT INTO `lemmatization` (`id`, `inflected_form`, `hash`, `lemma_id`) VALUES
 (454, 'een ezelje', '1_1_23', 16),
 (455, 'ezeljes',  '3_1_23', 16),
 (456, 'het ezelje', '1_2_23', 16),
-(457, 'de ezeljes', '3_2_23', 16);
+(457, 'de ezeljes', '3_2_23', 16),
+(458, 'echtgenootten',  '3_1_1',  12),
+(459, 'de echtgenoot',  '1_2_1',  12),
+(460, 'de echtgenootten', '3_2_1',  12),
+(461, 'een echtgenootje', '1_1_23', 12),
+(462, 'echtgenootjes',  '3_1_23', 12),
+(463, 'het echtgenootje', '1_2_23', 12),
+(464, 'de echtgenootjes', '3_2_23', 12),
+(479, 'katten', '3_1_1',  6),
+(480, 'de kat', '1_2_1',  6),
+(481, 'de katten',  '3_2_1',  6),
+(482, 'een katje',  '1_1_23', 6),
+(483, 'katjes', '3_1_23', 6),
+(484, 'het katje',  '1_2_23', 6),
+(485, 'de katjes',  '3_2_23', 6);
 
 DROP TABLE IF EXISTS `modes`;
 CREATE TABLE `modes` (
@@ -3286,7 +3280,39 @@ INSERT INTO `search_hits` (`id`, `word_id`, `user_id`, `hit_timestamp`) VALUES
 (2455,  19, 3,  '2017-08-07 09:44:55'),
 (2456,  9,  3,  '2017-08-07 09:44:57'),
 (2457,  21, 3,  '2017-08-07 09:45:41'),
-(2458,  16, 1,  '2017-08-07 10:36:47');
+(2458,  16, 1,  '2017-08-07 10:36:47'),
+(2459,  26, 1,  '2017-08-07 11:05:30'),
+(2460,  17, 1,  '2017-08-07 11:05:30'),
+(2461,  26, 1,  '2017-08-07 11:05:56'),
+(2462,  17, 1,  '2017-08-07 11:05:57'),
+(2463,  1,  1,  '2017-08-07 12:02:32'),
+(2464,  2,  1,  '2017-08-07 12:02:32'),
+(2465,  26, 1,  '2017-08-07 14:10:35'),
+(2466,  17, 1,  '2017-08-07 14:10:35'),
+(2467,  26, 1,  '2017-08-07 14:17:44'),
+(2468,  17, 1,  '2017-08-07 14:19:16'),
+(2469,  26, 1,  '2017-08-07 14:19:40'),
+(2470,  17, 1,  '2017-08-07 14:19:40'),
+(2471,  26, 1,  '2017-08-07 16:02:28'),
+(2472,  17, 1,  '2017-08-07 16:02:28'),
+(2473,  12, 1,  '2017-08-07 16:15:41'),
+(2474,  13, 1,  '2017-08-07 16:15:41'),
+(2475,  6,  1,  '2017-08-07 16:16:09'),
+(2476,  18, 1,  '2017-08-07 16:16:10'),
+(2477,  6,  1,  '2017-08-07 16:16:12'),
+(2478,  18, 1,  '2017-08-07 16:16:26'),
+(2479,  6,  1,  '2017-08-07 16:16:29'),
+(2480,  18, 1,  '2017-08-07 16:16:44'),
+(2481,  9,  1,  '2017-08-07 23:05:30'),
+(2482,  10, 1,  '2017-08-07 23:05:31'),
+(2483,  19, 1,  '2017-08-07 23:05:31'),
+(2484,  9,  1,  '2017-08-07 23:05:32'),
+(2485,  17, 1,  '2017-08-08 19:22:45'),
+(2486,  26, 1,  '2017-08-08 19:22:45'),
+(2487,  13, 1,  '2017-08-08 19:22:45'),
+(2488,  42, 1,  '2017-08-09 23:16:15'),
+(2489,  1,  1,  '2017-08-10 00:32:41'),
+(2490,  2,  1,  '2017-08-10 00:32:41');
 
 DROP TABLE IF EXISTS `subclassifications`;
 CREATE TABLE `subclassifications` (
@@ -3476,7 +3502,8 @@ INSERT INTO `translations` (`id`, `language_id`, `translation`, `description`, `
 (543, 14, 'jeg',  '', '2017-08-07 07:53:45',  3),
 (544, 14, 'meg',  '', '2017-08-07 07:53:45',  3),
 (545, 1,  'donkey', '', '2017-08-07 08:37:05',  1),
-(546, 1,  'ass',  '', '2017-08-07 08:37:05',  1);
+(546, 1,  'ass',  '', '2017-08-07 08:37:05',  1),
+(2001,  0,  'knaagdier',  '', '2017-08-09 21:25:17',  1);
 
 DROP TABLE IF EXISTS `translation_alternatives`;
 CREATE TABLE `translation_alternatives` (
@@ -3581,7 +3608,7 @@ INSERT INTO `translation_words` (`id`, `word_id`, `translation_id`, `specificati
 (229, 21, 543,  ''),
 (230, 21, 544,  ''),
 (231, 16, 545,  ''),
-(232, 16, 546,  'a bit vulgar');
+(232, 16, 546,  'bit vulgar');
 
 DROP TABLE IF EXISTS `types`;
 CREATE TABLE `types` (
@@ -3673,9 +3700,9 @@ INSERT INTO `words` (`id`, `native`, `lexical_form`, `ipa`, `hidden`, `type_id`,
 (1, 'huis', '', 'hœy;s',  0,  1,  3,  0,  '2017-06-01 12:44:09',  '2017-06-01 12:44:09',  1,  NULL),
 (2, 'slaapkamer', '', 'sla:pka:mər',  0,  1,  1,  0,  '2017-05-25 19:41:38',  '2017-05-25 19:41:38',  1,  NULL),
 (3, 'verlossen',  '', 'vər.loss.n', 1,  2,  5,  0,  '2017-07-27 10:39:04',  '2017-07-27 10:39:04',  1,  NULL),
-(6, 'kat',  '', 'kɑ:t', 0,  1,  1,  0,  '2017-05-31 12:42:37',  '2017-05-31 12:42:37',  1,  NULL),
+(6, 'kat',  '', 'kɑ:t', 0,  1,  1,  0,  '2017-08-07 14:16:42',  '2017-08-07 14:16:42',  1,  NULL),
 (8, 'land', '', 'lɑnt', 0,  1,  3,  0,  '0000-00-00 00:00:00',  '2017-05-25 20:40:56',  1,  NULL),
-(9, 'boot', '', 'bo:t', 0,  1,  2,  0,  '2017-08-07 07:45:04',  '2017-08-07 07:45:04',  3,  NULL),
+(9, 'boot', '', 'bo:t', 0,  1,  2,  0,  '2017-08-07 21:05:47',  '2017-08-07 21:05:47',  1,  NULL),
 (10,  'schip',  '', 'sxɪp', 0,  1,  3,  0,  '2017-08-04 13:59:43',  '2017-08-04 13:59:43',  1,  NULL),
 (12,  'echtgenoot', '', 'extxɛno:t',  0,  1,  2,  0,  '2017-05-31 12:38:20',  '2017-05-31 12:38:20',  1,  NULL),
 (13,  'vrouw',  '', 'vrau', 0,  1,  2,  0,  '2017-07-02 11:30:37',  '2017-07-02 11:30:37',  1,  NULL),
@@ -3702,7 +3729,7 @@ INSERT INTO `words` (`id`, `native`, `lexical_form`, `ipa`, `hidden`, `type_id`,
 (38,  'meisje', '', 'meisje', 0,  1,  1,  0,  '0000-00-00 00:00:00',  '2017-07-25 20:27:14',  1,  NULL),
 (39,  'kussen', '', 'kussen', 0,  1,  3,  0,  '0000-00-00 00:00:00',  '2017-07-25 20:28:15',  1,  NULL),
 (40,  'appel',  '', 'ap.əl',  0,  1,  1,  0,  '0000-00-00 00:00:00',  '2017-08-04 08:37:17',  1,  NULL),
-(42,  'maneschijn', '', 'ma:nəsxɛi:n',  0,  1,  1,  0,  '2017-08-04 14:02:00',  '2017-08-04 14:02:00',  1,  NULL),
+(42,  'maneschijn', '', 'ma:nəsxɛi:n',  0,  1,  1,  0,  '2017-08-09 21:18:27',  '2017-08-09 21:18:27',  1,  NULL),
 (43,  'rood', '', 'ro:t', 0,  5,  1,  0,  '0000-00-00 00:00:00',  '2017-08-04 14:02:43',  1,  NULL),
 (45,  'blauw',  '', 'blauw',  0,  1,  1,  0,  '0000-00-00 00:00:00',  '2017-08-04 14:03:19',  1,  NULL),
 (46,  'geel', '', 'xe:l', 0,  5,  1,  0,  '0000-00-00 00:00:00',  '2017-08-04 14:03:57',  1,  NULL),
@@ -3713,4 +3740,4 @@ INSERT INTO `words` (`id`, `native`, `lexical_form`, `ipa`, `hidden`, `type_id`,
 (51,  'motorboot',  '', 'mo:tərbo:t', 0,  1,  1,  0,  '0000-00-00 00:00:00',  '2017-08-06 08:48:19',  3,  NULL),
 (52,  'maancyclus', '', 'ma:nsikləs', 0,  1,  1,  0,  '0000-00-00 00:00:00',  '2017-08-06 08:50:15',  3,  NULL);
 
--- 2017-08-07 08:45:25
+-- 2017-08-09 22:33:03

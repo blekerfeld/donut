@@ -28,9 +28,9 @@ class pRegister{
 		return self::$objectcache[$section];
 	}
 
-	public function cacheCallBack($section, $id, $function){
+	public function cacheCallBack($section, $id, $function, $arg = array()){
 		if(!isset(self::$objectcache[$section][$id]))
-			self::$objectcache[$section][$id] = $function();
+			self::$objectcache[$section][$id] = call_user_func_array($function, $arg);
 		return self::$objectcache[$section][$id];
 	}
 

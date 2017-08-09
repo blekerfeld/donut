@@ -87,8 +87,6 @@ class pAdminStructure extends pStructure{
 
 		$this->renderMenu();
 
-				// Header time
-		p::Out("<div class='d_admin_header'>".$this->header()."</div>");
 
 		// Showing an error if there is one set.
 		if($this->_error != null)

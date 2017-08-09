@@ -69,13 +69,13 @@ class pLemmaSheetTemplate extends pTemplate{
 						</div>
 					</div>
 				</div>
-				<div data-tab='Translations'><div style='padding: 25px;padding-top: 10px;'>
+				<div data-tab='Translations and definitions'><div style='padding: 25px;padding-top: 10px;'>
 				");
 
 
 	
 		// Languages
-		$languages = pLanguage::allActive();
+		$languages = pLanguage::allActive(-1);
 		$sendLanguages = array();
 		foreach($languages as $language){
 			$sendLanguages[] = "'".$language->read('id')."': $('.translations-language-".$language->read('id')."').val()";

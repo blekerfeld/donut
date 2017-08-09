@@ -35,7 +35,6 @@ class pLanguage{
 		self::$_languageCache[$id] = $this->dataModel->data()->fetchAll()[0];
 	}
 
-	// Makes it possible to do pLanguage::dictionarySelector($class);
 	public static function allActive($notIs = 0){
 
 		$data = (new pDataModel('languages'));
@@ -55,21 +54,20 @@ class pLanguage{
 		$dM->setCondition(" WHERE activated = 1 ");
 		$data = $dM->getObjects()->fetchAll();
 
-		$select = '<input type="hidden" class="'.$class.'" value="'.(isset(pRegister::session()['searchLanguage']) ? pRegister::session()['searchLanguage'] : $data[1]['locale'].'-'.$data[0]['locale']).'"/><select class="'.$class.'-selector">';
+		$select = '<select class="'.$class.'">';
 
 		$lang_zero = $data[0];
 
+		$select .= '<option value="'.$lang_zero['locale'].'-'.$lang_zero['locale'].'" '.((isset(pRegister::session()['searchLanguage']) AND (pRegister::session()['searchLanguage'] == $lang_zero['locale'].'-'.$lang_zero['locale'])) ? ' selected ' : '').'>'.$lang_zero['showname'].'</option>';
+
 		foreach($data as $key => $language)
-			
-				$select .= '<option value="'.$language['locale'].'-'.$lang_zero['locale'].'" '.((isset(pRegister::session()['searchLanguage']) AND (pRegister::session()['searchLanguage'] == $language['locale'].'-'.$lang_zero['locale'])) ? ' selected ' : '').'>'.$language['name'].' - '.$lang_zero['name'].'</option><option value="'.$lang_zero['locale'].'-'.$language['locale'].'" '.((isset(pRegister::session()['searchLanguage']) AND (pRegister::session()['searchLanguage'] == $lang_zero['locale'].'-'.$language['locale'])) ? ' selected ' : '').'>'.$lang_zero['name'].' - '.$language['name'].'</option>';
+			if($language['id'] > 0)
+				$select .= '<option value="'.$language['locale'].'-'.$lang_zero['locale'].'" '.((isset(pRegister::session()['searchLanguage']) AND (pRegister::session()['searchLanguage'] == $language['locale'].'-'.$lang_zero['locale'])) ? ' selected ' : '').'>'.$language['showname'].'/'.$lang_zero['showname'].'</option><option value="'.$lang_zero['locale'].'-'.$language['locale'].'" '.((isset(pRegister::session()['searchLanguage']) AND (pRegister::session()['searchLanguage'] == $lang_zero['locale'].'-'.$language['locale'])) ? ' selected ' : '').'>'.$lang_zero['showname'].'/'.$language['showname'].'</option>';
 
 	    
-	  	return $select . '</select><script>$(".'.$class.'-selector").ddslick({
-	    onSelected: function(selectedData){
-	       $(".'.$class.'").val(selectedData.selectedData.value);
-	       $(".'.$class.'").trigger("change");
-	    }   
-	});</script>';
+	  	return $select . '</select><script>$(".'.$class.'").selectorTabs({"afterclick": function(){
+	  			doSearch(false);
+	  	}});</script>';
 	}
 
 	private function load($data){

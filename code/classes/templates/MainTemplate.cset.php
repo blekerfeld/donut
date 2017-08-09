@@ -26,6 +26,10 @@ class pMainTemplate extends pTemplate{
 		$this->_stylesheets[] = "<link rel='stylesheet' href='".p::Url('library/assets/css/'.$stylesheet)."'>\n";
 	}
 
+  public static function loadDots(){
+    return "<div class='center'><p class='dots'><span>.</span><span>.</span><span>.</span></p></div>";
+  }
+
 	protected function loadJavascript($url){
 		$this->_scripts[] = "<script type='text/javascript' src='".p::Url('library/assets/js/'.$url)."'></script>\n";
 

@@ -81,7 +81,7 @@ class pTranslation extends pEntry{
 	}
 
 	public function parseListItem(){
-		return "<li><span>".($this->_specification != '' ? "<em class='dSpec'>(".$this->_specification.")</em> " : '')."<span href='javascript:void(0);' class='translation trans_".$this->_entry['id']." tooltip'><strong class='dWordTranslation'><a href='".p::Url('?entry/translation/'.$this->_entry['real_id'].'/return/:'.p::HashId($this->_lemma))."'>".$this->translation."</a></strong></span></span></li>";
+		return "<li><span>".($this->_specification != '' ? "<em class='dSpec'>(".$this->_specification.")</em> " : '')."<span href='javascript:void(0);' class='translation trans_".$this->_entry['id']." ".($this->_entry['language_id'] == 0 ? 'native' : '')." tooltip'><strong class='dWordTranslation'><a href='".p::Url('?entry/translation/'.$this->_entry['real_id'].'/return/:'.p::HashId($this->_lemma))."'>".$this->translation."</a></strong></span></span></li>";
 	}
 
 	public function parseDescription(){
@@ -100,6 +100,11 @@ class pTranslation extends pEntry{
 		if(isset($lookUp[$translation['trans'].'_'.$language.'_'.$translation['spec']])){
 			return array(false, $lookUp[$translation['trans'].'_'.$language.'_'.$translation['spec']]);
 		}
+
+		// We need a correction of some kind?
+		if($language === 0)
+			$language = '0';
+
 		$dM = new pDataModel('translations');
 		$dM->setCondition(" WHERE language_id = $language AND translation = ".p::Quote($translation['trans'])."");
 		$dM->getObjects();

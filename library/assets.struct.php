@@ -23,6 +23,7 @@ return array(
 		'vendors/cookieconsent.js',
 		'smoothstate.js',
 		'jquery.cardtabs.js',
+		'jquery.selectortabs.js',
 		'jquery.selectspecify.js',
 	),
 	'css' => array(

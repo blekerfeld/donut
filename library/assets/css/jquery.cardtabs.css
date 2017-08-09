@@ -19,6 +19,23 @@ div.card-tabs-bar a{
                                   supported by Chrome and Opera */
 }
 
+div.card-tabs-bar.selectorTabs{
+	margin-bottom: 10px;
+	margin-top: 5px;
+	font-size: 13px;
+}
+
+div.card-tabs-bar.selectorTabs a{
+	opacity: .4;
+
+	transition: opacity 0.1s ease;  
+}
+
+div.card-tabs-bar.selectorTabs a:hover, div.card-tabs-bar.selectorTabs a.active{
+	opacity: 1;
+}
+
+
 div.card-tabs-bar a.disabled{
 	opacity: .4;
 }
@@ -34,7 +51,7 @@ div.card-tabs-bar a:hover{
 div.card-tabs-bar a.active{
 	border: 1px solid #eaecef;
 	border-bottom: none;
-	display: inline-block;
+	
 	color: black;
 	font-weight: bold;
 	border-radius: 4px 4px 0px 0px;

@@ -180,7 +180,8 @@ class pAssistantTemplate extends pTemplate{
 	public function cardTranslateEmpty($section){
 		p::Out("<div class='btCard transCard proper'>
 				<div class='btTitle'>".BATCH_TRANSLATE."</div>
-				".pMainTemplate::NoticeBox('fa-info-circle fa-12', sprintf(BATCH_TR_EMPTY, '<a href="javascript:void(0);" class="button-back">', '</a>'),  'notice-subtle')."
+				<div class='center'><span class='inline-icon'>".(new pIcon('translate', 30))."</span>
+				".pMainTemplate::NoticeBox('', sprintf(BATCH_TR_EMPTY, '<br />', '<a href="javascript:void(0);" class="button-back">', '</a>'),  'notice-subtle xmedium')."</div>
 				<div class='btButtonBar'>
 					
 				</div>

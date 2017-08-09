@@ -78,7 +78,7 @@ class pRulesheetTemplate extends pTemplate{
 				".($edit ? "<div class='btSource'><span class='btLanguage'>".RS_RULESET."<span class='xsmall' style='color: darkred;opacity: 1;'>*</span></span><br />
 							<span class='btNative'><select class='full-width select-ruleset select2a'>".(new pSelector('rulesets', $data['ruleset'], 'name', true, 'rules', true))->render()."</select></span></div>" : "")."
 				<div class='btSource'><span class='btLanguage'>".RS_STATEMENT." </span><span class='xsmall' style='color: darkred;opacity: 1;'>*</span><br />
-				<span class='btNative'><textarea ".($section == 'context' ? "placeholder='[left-context]_[find]_[right-context]=>[replace]'" : ($section == 'inflection' ? "placeholder='prefix [stem] suffix'" : "placeholder='prefix [stem] suffix'" ))." spellcheck='false' class='btInput Rule elastic allowtabs' id='rule-content'>".($edit ? $data['rule'] : '')."</textarea><div class='describeStatement'></div></span></div>
+				<span class='btNative'><textarea ".($section == 'inflection' ? "placeholder='prefix [stem] suffix'" : "placeholder='[context]_[find]_[context]=>[replace]'")." spellcheck='false' class='btInput Rule elastic allowtabs' id='rule-content'>".($edit ? $data['rule'] : '')."</textarea><div class='describeStatement'></div></span></div>
 				".$this->ruleTypeWatch($section)."
 				<br />
 				<div class='btCard full proper'>

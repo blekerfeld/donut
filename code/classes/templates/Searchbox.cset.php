@@ -76,7 +76,7 @@ class pSearchBox extends pTemplatePiece{
 					$('.dictionary-selector').val('".strtoupper(pRegister::arg()['dictionary'])."');
 		      		$('.pEntry').slideUp();
       				$('.searchLoad').slideDown();
-      				doSearch();
+      				doSearch(false);
 				});";
 
 		$output .= "
@@ -125,7 +125,7 @@ class pSearchBox extends pTemplatePiece{
 				// We are not sending empty queries
       		}else{
       			$('.pEntry').slideUp();
-      			doSearch();
+      			doSearch(false);
       		}
 
 		}
@@ -187,7 +187,7 @@ class pSearchBox extends pTemplatePiece{
 		$('.hSearch').on('click', function(){
 			if($('.word-search').val() != ''){
 					if($('.word-search').val() + $('dictionary-selector').val() != lock){
-						doSearch();
+						doSearch(false);
 					}
 					$('.pEntry').slideUp();
 					$('.searchLoad').slideDown();
@@ -217,7 +217,7 @@ class pSearchBox extends pTemplatePiece{
 
 		$('.dictionary-selector-selector').on('change', function(e) {
           	 if($('.word-search').val() != ''){
-          		doSearch();
+          		doSearch(false);
         	}
         });
 

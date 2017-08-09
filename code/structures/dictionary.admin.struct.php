@@ -368,6 +368,7 @@ return array(
 			'table' => 'languages',
 			'datafields' => array(
 				new pDataField('name', DA_LANG_NAME, '40%', 'input', true, true, true),
+				new pDataField('showname', DA_LANG_SHOWNAME, '40%', 'input', true, true, true),
 				new pDataField('flag', DA_LANG_FLAG, '5%', 'flag', true, true, false, '', false),
 				new pDataField('activated', DA_LANG_ACTIVATED, '10%', 'boolean', true, true, true, '', true),
 				new pDataField('locale', DA_LANG_LOCALE, '10%', 'input', true, true, false, '', false),

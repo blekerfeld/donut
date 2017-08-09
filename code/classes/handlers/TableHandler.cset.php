@@ -26,7 +26,7 @@ class pTableHandler extends pHandler{
 			<div class='btTitle'>
 				<i class='fa ".$this->_icon."'></i> ".$this->_surface."
 			</div>
-			<div class='btButtonBar up'>".$pages.$this->_actionbar->output."</div><div class='content'>
+			<div class='btButtonBar no-border up'>".$pages.$this->_actionbar->output."</div><div class='content'>
 			");
 
 		$records = 0;
@@ -122,7 +122,7 @@ class pTableHandler extends pHandler{
 		p::Out("</tbody></table><script>$('.tooltip').tooltipster({animation: 'grow', distance: 0, contentAsHTML: true});</script>");
 
 		p::Out("</div>
-			<div class='btButtonBar'>".$pages.$this->_actionbar->output."</div>
+			<div class='btButtonBar no-border'>".$pages.$this->_actionbar->output."</div>
 		</div>");
 		}
 }
