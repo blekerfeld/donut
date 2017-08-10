@@ -1,10 +1,7 @@
 <?php
-	// 	Donut 				🍩 
-	//	Dictionary Toolkit
-	// 		Version a.1
-	//		Written by Thomas de Roo
-	//		Licensed under MIT
-
+// 	Donut: dictionary toolkit 
+// 	version 0.1
+// 	Thomas de Roo - MIT License
 	//	++		File: pParadigm.class.php
 
 // The data model for a paradigm 
@@ -14,6 +11,7 @@ class pParadigm{
 	protected $_id, $_data, $dataModel, $_headings, $_rows;
 
 	public function __construct($mode){
+
 		$this->_data = $mode;
 		$this->_id = $mode['id'];
 		$this->dataModel = new pDataModel('modes');
@@ -21,8 +19,61 @@ class pParadigm{
 			$this->_data = $this->dataModel->getSingleObject($mode)->fetchAll()[0];
 			$this->_id = $mode;
 		}
-		$this->_headings = $this->dataModel->customQuery("SELECT submodes.* FROM submodes JOIN submode_apply ON submodes.id = submode_apply.submode_id WHERE submode_apply.mode_type_id = ".$this->_data['mode_type_id'])->fetchAll();
-		$this->_rows = $this->dataModel->customQuery("SELECT numbers.* FROM numbers JOIN number_apply ON numbers.id = number_apply.number_id WHERE number_apply.mode_type_id =  ".$this->_data['mode_type_id'].";")->fetchAll();
+
+		$headings = $this->dataModel->customQuery("SELECT submodes.* FROM submodes JOIN submode_apply ON submodes.id = submode_apply.submode_id WHERE submode_apply.mode_type_id = ".$this->_data['mode_type_id'])->fetchAll();
+
+		foreach($headings as $heading)
+			$this->_headings[$heading['id']] = $heading;
+
+		$rows = $this->dataModel->customQuery("SELECT numbers.* FROM numbers JOIN number_apply ON numbers.id = number_apply.number_id WHERE number_apply.mode_type_id =  ".$this->_data['mode_type_id'].";")->fetchAll();
+
+		foreach($rows as $row)
+			$this->_rows[$row['id']] = $row;
+	}
+
+	
+	public function updateHeadings($headingIDs){
+
+		$workHeadings = $this->_headings;
+		$dM = new pDataModel('submode_apply');
+
+		foreach($headingIDs as $headingID){
+			if($workHeadings == null OR !isset($workHeadings[$headingID])){
+				$dM->prepareForInsert(array($headingID, $this->_data['mode_type_id']));
+				$dM->insert();
+			}elseif(isset($workHeadings[$headingID]))
+				unset($workHeadings[$headingID]);
+
+		}
+
+		if($workHeadings != null){
+			// The rest needs to be deleted then
+			foreach($workHeadings as $heading){
+				$dM->customQuery("DELETE FROM submode_apply WHERE mode_type_id = '".$this->_data['mode_type_id']."' AND submode_id = '".$heading['id']."'");
+			}
+		}
+	}
+
+	public function updateRows($rowIDs){
+
+		$workRows = $this->_rows;
+		$dM = new pDataModel('number_apply');
+
+		foreach($rowIDs as $rowID){
+			if($workRows == null OR !isset($workRows[$rowID])){
+				$dM->prepareForInsert(array($rowID, $this->_data['mode_type_id']));
+				$dM->insert();
+			}elseif(isset($workRows[$rowID]))
+				unset($workRows[$rowID]);
+
+		}
+
+		if($workRows != null){
+			// The rest needs to be deleted then
+			foreach($workRows as $row){
+				$dM->customQuery("DELETE FROM number_apply WHERE mode_type_id = '".$this->_data['mode_type_id']."' AND number_id = '".$row['id']."'");
+			}
+		}
 	}
 
 	public function compile($lemma){
