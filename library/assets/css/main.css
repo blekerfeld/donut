@@ -13,6 +13,7 @@
   outline: none !important;
 }
 
+
 .noselect {
   -webkit-touch-callout: none; /* iOS Safari */
     -webkit-user-select: none; /* Safari */
@@ -2529,3 +2530,4 @@ p.dots{
 .dots span:nth-child(3) {
     animation-delay: .4s;
 }
+

@@ -109,6 +109,16 @@ return array(
 		'menu' => 'dictionary-admin',
 	),
 
+	'tablesheet' => array(
+		'page_title' => 'tablesheet',
+		'default_section' => 'tablesheet',
+		'arguments' => array(
+			0 => 'action',
+			1 => 'id',
+		),
+		'menu' => 'dictionary-admin',
+	),
+
 
 	'editor' => array(
 		'page_title' => 'Lemma editor',

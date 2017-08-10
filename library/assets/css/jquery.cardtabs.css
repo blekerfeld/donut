@@ -23,16 +23,32 @@ div.card-tabs-bar.selectorTabs{
 	margin-bottom: 0px;
 	border-bottom: none;
 	border-top: 1px solid #eaecef;
-	margin-top: 10px;
 	font-size: 13px;
+}
+
+.hSearch div.card-tabs-bar.selectorTabs{
+	border-top: none;
 }
 
 div.card-tabs-bar.selectorTabs a{
 	opacity: .4;
 	display: inline-block;
+	padding: 15px;
 	padding-top: 5px;
+	padding-bottom: 5px;
 	transition: opacity 0.1s ease;  
 	margin-top: -1px;
+	border-color: #eaecef;
+}
+
+
+div.card-tabs-bar.selectorTabs a.active{
+	transition: border-color .3s ease;
+}
+
+
+div.card-tabs-bar.selectorTabs a.active.wordsearch{
+	border-color: rgba(17,39,175, 0.3)!important;
 }
 
 div.card-tabs-bar.selectorTabs a.active{     border: 1px solid #eaecef;

@@ -396,8 +396,7 @@ return array(
 			'datafields' => array(
 				new pDataField('name', 'Category name', 'auto', 'input', true, true, true, 'small-caps medium', false),
 				new pDataField('short_name', DA_ABBR, 'auto', 'input', true, true, true, 'tooltip medium em', false),
-				new pDataField('inflect_classifications', DA_SUBINFLECTIONS, 'auto', 'boolean', true, true, true, '', false),
-				new pDataField('inflect_not', 'Non-inflective', 'auto', 'boolean', true, true, true, '', false),
+				new pDataField('inflect_not', 'Disable inflections', 'auto', 'boolean', true, true, true, '', false),
 			),
 			'actions_item' => array(
 				'edit' => $action_edit,
