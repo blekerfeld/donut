@@ -1,12 +1,9 @@
 <?php
 
-	// 	Donut 				🍩 
-	//	Dictionary Toolkit
-	// 		Version a.1
-	//		Written by Thomas de Roo
-	//		Licensed under MIT
-
-	//	++	File: example.class.php
+// 	Donut: dictionary toolkit 
+// 	version 0.1
+// 	Thomas de Roo - MIT License
+//	++	File: example.class.php
 
 
 // This represents an example, please note that the input of this class can only come from a lemma data object

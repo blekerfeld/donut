@@ -1,12 +1,9 @@
 <?php
 
-	// 	Donut 				🍩 
-	//	Dictionary Toolkit
-	// 		Version a.1
-	//		Written by Thomas de Roo
-	//		Licensed under MIT
-
-	//	++	File: icon.class.php
+// 	Donut: dictionary toolkit 
+// 	version 0.1
+// 	Thomas de Roo - MIT License
+//	++	File: icon.class.php
 
 class pIcon extends pTemplatePiece{
 

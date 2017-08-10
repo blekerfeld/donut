@@ -1,10 +1,7 @@
 <?php
-	// 	Donut 				🍩 
-	//	Dictionary Toolkit
-	// 		Version a.1
-	//		Written by Thomas de Roo
-	//		Licensed under MIT
-
+// 	Donut: dictionary toolkit 
+// 	version 0.1
+// 	Thomas de Roo - MIT License
 	//	++		File: terminal.class.php
 	// Some handy commands for debuging and such
 

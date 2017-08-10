@@ -1,11 +1,8 @@
 <?php
-	// 	Donut 				🍩 
-	//	Dictionary Toolkit
-	// 		Version a.1
-	//		Written by Thomas de Roo
-	//		Licensed under MIT
-
-	//	++	File: dictionary.admin.struct.php
+// 	Donut: dictionary toolkit 
+// 	version 0.1
+// 	Thomas de Roo - MIT License
+//	++	File: dictionary.admin.struct.php
 	// The structure of the dictionary admin panel
 
 return array(

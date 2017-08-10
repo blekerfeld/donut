@@ -1,12 +1,9 @@
 <?php
 
-	// 	Donut 				🍩 
-	//	Dictionary Toolkit
-	// 		Version a.1
-	//		Written by Thomas de Roo
-	//		Licensed under MIT
-
-	//	++	File: entryDataModel.class.php
+// 	Donut: dictionary toolkit 
+// 	version 0.1
+// 	Thomas de Roo - MIT License
+//	++	File: entryDataModel.class.php
 
 class pEntryDataModel extends pDataModel{
 

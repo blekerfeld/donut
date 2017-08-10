@@ -1,18 +1,15 @@
 <?php
 
-	// 	Donut 				🍩 
-	//	Dictionary Toolkit
-	// 		Version a.1
-	//		Written by Thomas de Roo
-	//		Licensed under MIT
-
-	//	++	File: TableSheetDataModel.class.php
+// 	Donut: dictionary toolkit 
+// 	version 0.1
+// 	Thomas de Roo - MIT License
+//	++	File: TableSheetDataModel.class.php
 
 
 
 class pTableSheetDataModel extends pDataModel{
 
-	public $_links, $_RuleID;
+	public $_links, $_ModeID;
 
 	public function __construct($table, $id = 0){
 		parent::__construct($table);
@@ -23,18 +20,9 @@ class pTableSheetDataModel extends pDataModel{
 		$fields->add(new pDataField('in_set'));
 		$this->setFields($fields);
 		if($id != 0){
-			$this->_RuleID = $id;
+			$this->_ModeID = $id;
 			$this->getSingleObject($id);
 			$this->_rule = $this->data()->fetchAll()[0];
-			// We need to get all links if we are dealing with a morphological rule, that is
-			if($this->_table == 'morphology'){
-				$this->_links['gramcat'] = $this->resultToSingleArray("SELECT gramcat_id FROM morphology_gramcat WHERE morphology_id = '".$id."';", 'gramcat_id');
-				$this->_links['lexcat'] = $this->resultToSingleArray("SELECT lexcat_id FROM morphology_lexcat WHERE morphology_id = '".$id."';", 'lexcat_id');
-				$this->_links['tag'] = $this->resultToSingleArray("SELECT tag_id FROM morphology_tags WHERE morphology_id = '".$id."';", 'tag_id');
-				$this->_links['modes'] = $this->resultToSingleArray("SELECT mode_id FROM morphology_modes WHERE morphology_id = '".$id."';", 'mode_id');
-				$this->_links['submodes'] = $this->resultToSingleArray("SELECT submode_id FROM morphology_submodes WHERE morphology_id = '".$id."';", 'submode_id');
-				$this->_links['numbers'] = $this->resultToSingleArray("SELECT number_id FROM morphology_numbers WHERE morphology_id = '".$id."';", 'number_id');
-			}
 		}
 	}
 
