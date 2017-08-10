@@ -12,6 +12,13 @@
     margin-top: 10px;
    }
 
+   .selector-tabs-bar{
+      display: none!important;
+   }
+
+   select.selector-tabs-orginial{
+    display: inline;
+   }
 
    .home-search input#wordsearch, .header.dictionary input#wordsearch{
     margin-top: -14px;

@@ -19,9 +19,11 @@ jQuery.fn.selectorTabs = function(options){
 
 	// Initializing
 	var htmlInner = $(this).html();
-	var stack = $('<div />').addClass('card-tabs-bar selectorTabs ' + selectorID);
+	var stack = $('<div />').addClass('card-tabs-bar selector-tabs-bar selectorTabs ' + selectorID);
 
 	var activeValue = $(selector + " option:selected").attr('value');
+
+	$(selector).addClass('selector-tabs-orginial');
 
 	$(selector).children('option').each(function(){
 

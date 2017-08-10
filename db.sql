@@ -73,7 +73,7 @@ CREATE TABLE `config` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 INSERT INTO `config` (`id`, `SETTING_NAME`, `SETTING_VALUE`) VALUES
-(1, 'ENABLE_QUERY_CACHING', '1'),
+(1, 'ENABLE_QUERY_CACHING', '0'),
 (2, 'QC_TIME',  '100000'),
 (3, 'SITE_TITLE', 'donut.'),
 (4, 'LOGO_TITLE', 'donut.'),
@@ -111,7 +111,31 @@ CREATE TABLE `graphemes` (
 
 INSERT INTO `graphemes` (`id`, `grapheme`, `uppercase`, `in_alphabet`, `ipa`, `quality`, `sorter`) VALUES
 (41,  'a',  'A',  1,  '', '', 0),
-(42,  'b',  'B',  1,  '', '', 0);
+(42,  'b',  'B',  1,  '', '', 0),
+(43,  'c',  'C',  1,  '', '', 0),
+(44,  'd',  'D',  1,  '', '', 0),
+(45,  'e',  'E',  1,  '', '', 0),
+(46,  'f',  'F',  1,  '', '', 0),
+(47,  'g',  'G',  1,  '', '', 0),
+(48,  'h',  'H',  1,  '', '', 0),
+(49,  'i',  'I',  1,  '', '', 0),
+(50,  'j',  'J',  1,  '', '', 0),
+(51,  'k',  'K',  1,  '', '', 0),
+(52,  'l',  'L',  1,  '', '', 0),
+(53,  'm',  'M',  1,  '', '', 0),
+(54,  'n',  'N',  1,  '', '', 0),
+(55,  'o',  'O',  1,  '', '', 0),
+(56,  'p',  'P',  1,  '', '', 0),
+(57,  'q',  'Q',  1,  '', '', 0),
+(58,  'r',  'R',  1,  '', '', 0),
+(59,  's',  'S',  1,  '', '', 0),
+(60,  't',  'T',  1,  '', '', 0),
+(61,  'u',  'U',  1,  '', '', 0),
+(62,  'v',  'V',  1,  '', '', 0),
+(63,  'w',  'W',  1,  '', '', 0),
+(64,  'x',  'X',  1,  '', '', 0),
+(65,  'y',  'Y',  1,  '', '', 0),
+(66,  'z',  'Z',  1,  '', '', 0);
 
 DELIMITER ;;
 
@@ -434,60 +458,21 @@ CREATE TABLE `modes` (
   `short_name` varchar(255) NOT NULL,
   `hidden_native_entry` int(11) NOT NULL,
   `mode_type_id` int(11) NOT NULL,
-  PRIMARY KEY (`id`)
+  PRIMARY KEY (`id`),
+  KEY `mode_type_id` (`mode_type_id`),
+  CONSTRAINT `modes_ibfk_1` FOREIGN KEY (`mode_type_id`) REFERENCES `types` (`id`) ON DELETE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 INSERT INTO `modes` (`id`, `name`, `short_name`, `hidden_native_entry`, `mode_type_id`) VALUES
-(1, 'normal form',  'nom',  0,  2),
-(6, 'object form',  'acc.', 0,  2),
-(7, 'present simple', 'ps.',  0,  1),
-(8, 'Past simple',  'pts.', 0,  1),
-(21,  'Present perfect',  'pre per',  0,  1),
-(22,  'Past perfect', 'pas per',  0,  1),
-(23,  'diminutive', 'dim',  0,  2),
+(1, 'normal form',  'nom',  0,  1),
+(6, 'object form',  'acc.', 0,  1),
+(7, 'present simple', 'ps.',  0,  2),
+(8, 'Past simple',  'pts.', 0,  2),
+(21,  'Present perfect',  'pre per',  0,  2),
+(22,  'Past perfect', 'pas per',  0,  2),
+(23,  'diminutive', 'dim',  0,  1),
 (24,  'Singular', 'sg', 0,  3),
-(25,  'Plural', 'pl.',  0,  3),
-(26,  'Partative',  'part', 0,  4);
-
-DROP TABLE IF EXISTS `mode_apply`;
-CREATE TABLE `mode_apply` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `mode_id` int(11) NOT NULL,
-  `type_id` int(11) NOT NULL,
-  `ignore_submodes` int(11) NOT NULL,
-  PRIMARY KEY (`id`),
-  KEY `mode_id` (`mode_id`),
-  KEY `type_id` (`type_id`),
-  CONSTRAINT `mode_apply_ibfk_1` FOREIGN KEY (`mode_id`) REFERENCES `modes` (`id`) ON DELETE CASCADE,
-  CONSTRAINT `mode_apply_ibfk_2` FOREIGN KEY (`type_id`) REFERENCES `types` (`id`) ON DELETE CASCADE
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
-
-INSERT INTO `mode_apply` (`id`, `mode_id`, `type_id`, `ignore_submodes`) VALUES
-(1, 1,  1,  0),
-(2, 1,  3,  0),
-(3, 1,  4,  0),
-(5, 1,  10, 0),
-(6, 1,  11, 0),
-(8, 7,  2,  0),
-(14,  6,  4,  0),
-(15,  24, 5,  0),
-(16,  25, 5,  0),
-(17,  26, 5,  0),
-(18,  23, 1,  0);
-
-DROP TABLE IF EXISTS `mode_types`;
-CREATE TABLE `mode_types` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `name` varchar(255) NOT NULL,
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
-
-INSERT INTO `mode_types` (`id`, `name`) VALUES
-(1, 'verbal'),
-(2, 'noun case'),
-(3, 'adjectival case'),
-(4, 'single conjugation type'),
-(5, 'noun mode');
+(25,  'Plural', 'pl.',  0,  3);
 
 DROP TABLE IF EXISTS `morphology`;
 CREATE TABLE `morphology` (
@@ -704,20 +689,18 @@ CREATE TABLE `number_apply` (
   KEY `number_id` (`number_id`),
   KEY `type_id` (`mode_type_id`),
   CONSTRAINT `number_apply_ibfk_1` FOREIGN KEY (`number_id`) REFERENCES `numbers` (`id`) ON DELETE CASCADE,
-  CONSTRAINT `number_apply_ibfk_2` FOREIGN KEY (`mode_type_id`) REFERENCES `mode_types` (`id`)
+  CONSTRAINT `number_apply_ibfk_2` FOREIGN KEY (`mode_type_id`) REFERENCES `types` (`id`) ON DELETE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 INSERT INTO `number_apply` (`id`, `number_id`, `mode_type_id`) VALUES
-(25,  1,  2),
-(28,  8,  3),
-(29,  9,  3),
-(30,  10, 3),
-(33,  1,  4),
-(34,  3,  4),
-(35,  3,  2),
-(36,  11, 1),
-(37,  12, 1),
-(38,  13, 1);
+(25,  1,  1),
+(28,  8,  5),
+(29,  9,  5),
+(30,  10, 5),
+(35,  3,  1),
+(36,  11, 2),
+(37,  12, 2),
+(38,  13, 2);
 
 DROP TABLE IF EXISTS `phonology_contexts`;
 CREATE TABLE `phonology_contexts` (
@@ -3312,7 +3295,9 @@ INSERT INTO `search_hits` (`id`, `word_id`, `user_id`, `hit_timestamp`) VALUES
 (2487,  13, 1,  '2017-08-08 19:22:45'),
 (2488,  42, 1,  '2017-08-09 23:16:15'),
 (2489,  1,  1,  '2017-08-10 00:32:41'),
-(2490,  2,  1,  '2017-08-10 00:32:41');
+(2490,  2,  1,  '2017-08-10 00:32:41'),
+(2491,  26, 1,  '2017-08-10 14:14:14'),
+(2492,  17, 1,  '2017-08-10 14:14:14');
 
 DROP TABLE IF EXISTS `subclassifications`;
 CREATE TABLE `subclassifications` (
@@ -3339,24 +3324,21 @@ CREATE TABLE `submodes` (
   `name` varchar(255) NOT NULL,
   `short_name` varchar(255) NOT NULL,
   `hidden_native_entry` varchar(255) NOT NULL,
-  `mode_type_id` int(11) NOT NULL,
-  PRIMARY KEY (`id`),
-  KEY `mode_type_id` (`mode_type_id`),
-  CONSTRAINT `submodes_ibfk_1` FOREIGN KEY (`mode_type_id`) REFERENCES `mode_types` (`id`)
+  PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
-INSERT INTO `submodes` (`id`, `name`, `short_name`, `hidden_native_entry`, `mode_type_id`) VALUES
-(1, 'indefinite', 'indef',  '0',  2),
-(2, 'definite', 'def',  '0',  2),
-(3, 'strong', 'str.', '0',  3),
-(4, 'weak', 'wk.',  '0',  2),
-(5, 'First person', '', 'DV', 1),
-(6, 'Second person',  '', '0',  1),
-(7, 'Third Person', '', '0',  1),
-(8, 'conjugation',  'sg conj p',  ' ',  4),
-(9, 'conjugation',  'sg pn',  '0',  4),
-(10,  'singular', 'sg.',  '0',  1),
-(11,  'plural', 'pl', '0',  1);
+INSERT INTO `submodes` (`id`, `name`, `short_name`, `hidden_native_entry`) VALUES
+(1, 'indefinite', 'indef',  '0'),
+(2, 'definite', 'def',  '0'),
+(3, 'strong', 'str.', '0'),
+(4, 'weak', 'wk.',  '0'),
+(5, 'First person', '', 'DV'),
+(6, 'Second person',  '', '0'),
+(7, 'Third Person', '', '0'),
+(8, 'conjugation',  'sg conj p',  ' '),
+(9, 'conjugation',  'sg pn',  '0'),
+(10,  'singular', 'sg.',  '0'),
+(11,  'plural', 'pl', '0');
 
 DROP TABLE IF EXISTS `submode_apply`;
 CREATE TABLE `submode_apply` (
@@ -3367,17 +3349,16 @@ CREATE TABLE `submode_apply` (
   KEY `type_id` (`mode_type_id`),
   KEY `submode_id` (`submode_id`),
   CONSTRAINT `submode_apply_ibfk_2` FOREIGN KEY (`submode_id`) REFERENCES `submodes` (`id`) ON DELETE CASCADE,
-  CONSTRAINT `submode_apply_ibfk_3` FOREIGN KEY (`mode_type_id`) REFERENCES `mode_types` (`id`)
+  CONSTRAINT `submode_apply_ibfk_3` FOREIGN KEY (`mode_type_id`) REFERENCES `types` (`id`) ON DELETE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 INSERT INTO `submode_apply` (`id`, `submode_id`, `mode_type_id`) VALUES
-(20,  1,  2),
+(20,  1,  1),
 (21,  3,  3),
-(22,  8,  4),
-(23,  4,  3),
-(27,  2,  2),
-(28,  10, 1),
-(29,  11, 1);
+(23,  4,  5),
+(27,  2,  1),
+(28,  10, 2),
+(29,  11, 2);
 
 DROP TABLE IF EXISTS `synonyms`;
 CREATE TABLE `synonyms` (
@@ -3503,7 +3484,8 @@ INSERT INTO `translations` (`id`, `language_id`, `translation`, `description`, `
 (544, 14, 'meg',  '', '2017-08-07 07:53:45',  3),
 (545, 1,  'donkey', '', '2017-08-07 08:37:05',  1),
 (546, 1,  'ass',  '', '2017-08-07 08:37:05',  1),
-(2001,  0,  'knaagdier',  '', '2017-08-09 21:25:17',  1);
+(2001,  0,  'knaagdier',  '', '2017-08-09 21:25:17',  1),
+(2002,  1,  'båt',  '', '2017-08-10 09:49:20',  1);
 
 DROP TABLE IF EXISTS `translation_alternatives`;
 CREATE TABLE `translation_alternatives` (
@@ -3608,7 +3590,8 @@ INSERT INTO `translation_words` (`id`, `word_id`, `translation_id`, `specificati
 (229, 21, 543,  ''),
 (230, 21, 544,  ''),
 (231, 16, 545,  ''),
-(232, 16, 546,  'bit vulgar');
+(232, 16, 546,  'bit vulgar'),
+(236, 9,  2002, '');
 
 DROP TABLE IF EXISTS `types`;
 CREATE TABLE `types` (
@@ -3740,4 +3723,4 @@ INSERT INTO `words` (`id`, `native`, `lexical_form`, `ipa`, `hidden`, `type_id`,
 (51,  'motorboot',  '', 'mo:tərbo:t', 0,  1,  1,  0,  '0000-00-00 00:00:00',  '2017-08-06 08:48:19',  3,  NULL),
 (52,  'maancyclus', '', 'ma:nsikləs', 0,  1,  1,  0,  '0000-00-00 00:00:00',  '2017-08-06 08:50:15',  3,  NULL);
 
--- 2017-08-09 22:33:03
+-- 2017-08-10 12:22:18

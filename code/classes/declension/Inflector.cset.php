@@ -20,7 +20,7 @@ class pInflector{
 		$this->_lemma = $lemma;
 		$this->_dMCache = new pDataModel('lemmatization');
 		$this->dataModel = new pDataModel('modes');
-		$this->_modes = $this->dataModel->customQuery("SELECT DISTINCT modes.* FROM modes JOIN mode_apply ON modes.id = mode_apply.mode_id WHERE mode_apply.type_id = ".$this->_lemma->read('type_id'))->fetchAll();
+		$this->_modes = $this->dataModel->customQuery("SELECT DISTINCT * FROM modes WHERE modes.mode_type_id = ".$this->_lemma->read('type_id'))->fetchAll();
 		$this->_compiledParadigms = new pSet;
 		$this->_twolc = new pTwolc($twolcRules);
 		$this->_twolc->compile();

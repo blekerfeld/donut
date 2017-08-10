@@ -91,7 +91,7 @@ class pDictionaryFactory{
 
 
 	public function addSection($section, $keyN){
-		p::Out("<div style='text-align: center'><h3 class='title'>".strtoupper($section['letter']['grapheme']).$section['letter']['grapheme']."</h3></div>");
+		p::Out("<div style='text-align: center'><h3 class='title'>".$section['letter']['uppercase'].$section['letter']['grapheme']."</h3></div>");
 		p::Out("<columns  column-count='2' vAlign='justify' />");
 		$count = 0;
 		foreach ($section['lemmas'] as $key => $lemma){

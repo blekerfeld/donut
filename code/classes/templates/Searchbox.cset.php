@@ -33,10 +33,10 @@ class pSearchBox extends pTemplatePiece{
 
 		$output = '<div class="hMobile id_'.$this->_idS.'"><div class="header dictionary '.($this->_home ? 'home' : '').'">';
 
-		$output .= '<div class="hWrap"><div class="hSearch">'.pLanguage::dictionarySelector('dictionary-selector').'
+		$output .= '<div class="hWrap"><div class="hSearch">
 
 				<input type="text" id="wordsearch" class="big word-search" placeholder="'.DICT_KEYWORD.'" value="'.$this->_value.'"/>
-			<br id="cl" /></div></div>
+			<br id="cl" />'.pLanguage::dictionarySelector('dictionary-selector').'</div></div>
 			</div>
 			</div>
 			';
