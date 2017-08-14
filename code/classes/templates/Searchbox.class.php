@@ -23,7 +23,6 @@ class pSearchBox extends pTemplatePiece{
 
 	public function __toString(){
 
-		p::Out("<div style='margin-bottom:10px';></div>	");
 		pMainTemplate::toggleSearchBox();
 
 		$lang_zero = new pLanguage(0);
@@ -34,7 +33,7 @@ class pSearchBox extends pTemplatePiece{
 
 		$output .= '<div class="hWrap"><div class="hSearch">
 
-				<input  type="text" id="wordsearch" class="big word-search '.(p::StartsWith(pRegister::session()['searchLanguage'], $lang_zero->read('locale')) ? 'native' : '').'" placeholder="'.DICT_KEYWORD.'" value="'.$this->_value.'"/>
+				<input  type="text" id="wordsearch" class="big word-search '.(((isset(pRegister::session()['searchLanguage']) AND p::StartsWith(pRegister::session()['searchLanguage'], $lang_zero->read('locale'))) OR (!isset(pRegister::session()['searchLanguage']) AND CONFIG_ENABLE_DEFINITIONS == 1)) ? 'native' : '').'" placeholder="'.DICT_KEYWORD.'" value="'.$this->_value.'"/>
 			<br id="cl" />'.pLanguage::dictionarySelector('dictionary-selector').'</div></div>
 			</div>
 			</div>
@@ -142,8 +141,6 @@ class pSearchBox extends pTemplatePiece{
 		$('.word-search').typeWatch( options );
 
 		function loadhome(){
-			
-			$('.word-search').blur().focus();
 			";
 
 			if((isset(pRegister::arg()['query'], pRegister::arg()['dictionary'])))
@@ -225,14 +222,24 @@ class pSearchBox extends pTemplatePiece{
         });
 
 
+
+
         $(document).ready(function(){
 
+        
         	$('.word-search').focusin(function(){
         		$('.hSearch .card-tabs-bar.selectorTabs a.active').addClass('wordsearch');
+
+        			$('.hSearch .selectorTabs').slideDown();
+  
+     			
         	});
 
         	$('.word-search').blur(function(){
         		$('.hSearch .card-tabs-bar.selectorTabs a.active').removeClass('wordsearch');
+     				if(!$('.header.dictionary').is(':hover')){
+        			$('.hSearch .selectorTabs').slideUp();
+        		}
         	});
  
    			 $(window).scroll(function(){

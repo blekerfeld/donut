@@ -8,9 +8,9 @@
 
 class pAssistantTemplate extends pTemplate{
 
-	public function renderChooserDefault($data){
+	public function renderChooserDefault($data, $section = ''){
 
-		p::Out("<div class='btCard proper chooser'><div class='btTitle btBlue'>".(new pIcon('fa-question-circle'))." ".BATCH_CHOOSE_ASSISTANT."</div>
+		p::Out("<div class='btCard proper chooser'><div class='btTitle'>".(new pIcon('fa-question-circle'))." ".BATCH_CHOOSE_ASSISTANT."</div>
 			<div class='btSource'>		
 			<div class='btChooser'>");
 		$count = 0;
@@ -29,26 +29,25 @@ class pAssistantTemplate extends pTemplate{
 		
 	}
 
-	public function renderChooserTranslate($data){
-
-		p::Out("<div class='btCard proper chooser'><div class='btTitle'>".BATCH_CHOOSE_LANGUAGE."</div>
+	public function renderChooserTranslate($data, $section = ''){
+		$count = 0;
+		$output = "<div class='btCard proper chooser'><div class='btTitle'>".BATCH_CHOOSE_LANGUAGE."</div>
 			".pMainTemplate::NoticeBox('fa-info-circle fa-12', BATCH_TR_DESC_START,  'notice-subtle')."
 			<div class='btSource'>			<div class='btButtonBar'>
-			<div class='btChooser'>");
-		$count = 0;
+			<div class='btChooser'>";
 		foreach(pLanguage::allActive() as $value){
 			if($data[$value->read('id')]['percentage'] == 0)
 				continue;
 			$count++;
-			p::Out("<div class='option btOption' data-role='option' data-value='".$value->read('id')."'>
+			$output .= "<div class='option btOption' data-role='option' data-value='".$value->read('id')."'>
 				<span class='btStats'>".(new pIcon("playlist-check", 18))." "."<span class='per'>".round((100 - $data[$value->read('id')]['percentage']), 1)."%</span> <br />".BATCH_TR_PER_TRANS."</span><span class='btStats'>".(new pIcon("library-books", 17))." <span class='per'>".$data[$value->read('id')]['left']."</span> <br />".BATCH_TR_LEFT_TRANS."</span></span>".(new pDataField(null, null, null, 'flag'))->parse($value->read('flag'))." <strong>".$value->read('name')."</strong><br id='cl' />
 
-				</div>");
+				</div>";
 		}
 		if($count == 0){
-			p::Out(pMainTemplate::NoticeBox('fa-info-circle fa-12', BATCH_TR_DESC_START,  'notice-subtle'));
+			return $this->cardTranslateEmpty($section);
 		}
-		p::Out("</div></div>
+		p::Out($output."</div></div>
 
 				
 			</div>
@@ -68,7 +67,7 @@ class pAssistantTemplate extends pTemplate{
 		if(!isset($_SESSION['btChooser-'.$section])){
 			$function = "renderChooser" . ucfirst($section);
 			if(method_exists($this, $function))
-				$this->$function($data);
+				$this->$function($data, $section);
 		}
 			
 	
@@ -109,11 +108,11 @@ class pAssistantTemplate extends pTemplate{
 			$items = array();
 			foreach($languageK as $item)
 				$items[] = $item['translation'];
-			$guideLinesStr .= " ".implode(', ', $items);
+			$guideLinesStr .= " ".implode(', ', $items)."<br />";
 		}
 
 		if($guideLinesStr != '')
-			p::Out("<div class='btCardHelper'>
+			p::Out("<div class='btCardHelper' style='display: none'>
 				<span class='btBlue'>".BATCH_OTHER_LANGUAGES."</span><br />
 				".$guideLinesStr."
 			</div>");
@@ -176,7 +175,7 @@ class pAssistantTemplate extends pTemplate{
 	}
 	
 	public function cardTranslateEmpty($section){
-		p::Out("<div class='btCard transCard proper'>
+		p::Out("<div class='btCard btCardEmpty transCard proper'>
 				<div class='btTitle'>".BATCH_TRANSLATE."</div>
 				<div class='center'><span class='inline-icon'>".(new pIcon('translate', 30))."</span>
 				".pMainTemplate::NoticeBox('', sprintf(BATCH_TR_EMPTY, '<br />', '<a href="javascript:void(0);" class="button-back">', '</a>'),  'notice-subtle xmedium')."</div>
@@ -186,6 +185,8 @@ class pAssistantTemplate extends pTemplate{
 		</div>
 		<script type='text/javascript'>
 		$('.button-back').click(function(){
+				$('.btCardEmpty').hide();
+				$('.bottomCard').hide();
 				$('.btLoad').load('".p::Url('?assistant/'.$section.'/reset/ajax')."', {'translations': $('.translations').val()}, function(){
 					serveCard();
 				});
@@ -224,6 +225,7 @@ class pAssistantTemplate extends pTemplate{
 				$('.dotsc').slideUp();
 				$('.btLoad').slideDown();
 				$('.bottomCard').show();
+				$('.btCardHelper').hide().attr('style', '').slideDown();
 			});
 		};
 		";

@@ -3,7 +3,7 @@
 // 	Donut: dictionary toolkit 
 // 	version 0.1
 // 	Thomas de Roo - MIT License
-//	++	File: p.class.php
+//	++	File:p.class.php
 
 	// The big p - the helper class!
 

@@ -189,6 +189,8 @@ class pLemmaSheetDataModel extends pDataModel{
 					$this->customQuery("INSERT INTO morphology_modes VALUES(NULL, $idMorph, $selector[0]);");
 					$this->customQuery("INSERT INTO morphology_submodes VALUES(NULL, $idMorph, $selector[1]);");
 					$this->customQuery("INSERT INTO morphology_numbers VALUES(NULL, $idMorph, $selector[2]);");
+					if(isset($selector[3]))
+						$this->customQuery("INSERT INTO morphology_columns VALUES(NULL, $idMorph, $selector[3]);");
 				}
 				unset($workParadigm[$selector[0]][$selector[1]]['rows']['row_'.$selector[2]]);
 			}
@@ -196,12 +198,15 @@ class pLemmaSheetDataModel extends pDataModel{
 
 		// Time to go throught the other rows to check whether some irregular forms need to be removed
 		foreach($workParadigm as $mode){
-			foreach($mode as $heading){
+			foreach($mode as $key => $heading){
+				if($key == 'columns')
+					continue;
 				foreach($heading['rows'] as $row){
 					if(isset($row['stems'][0][2]) AND $row['stems'][0][2] == true)
 						$this->customQuery("DELETE FROM morphology_modes WHERE morphology_id = ".$row['stems'][0][3]);
 						$this->customQuery("DELETE FROM morphology_submodes WHERE morphology_id = ".$row['stems'][0][3]);
 						$this->customQuery("DELETE FROM morphology_numbers WHERE morphology_id = ".$row['stems'][0][3]);
+						$this->customQuery("DELETE FROM morphology_columns WHERE morphology_id = ".$row['stems'][0][3]);
 						// TODO: Also delete the morphology_item if needed
 				}
 			}

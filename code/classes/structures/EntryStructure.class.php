@@ -36,11 +36,9 @@ class pEntryStructure extends pStructure{
 
 		$searchBox = new pSearchBox;
 
-
 		if(isset(pRegister::arg()['is:result'], pRegister::session()['searchQuery']))
 			$searchBox->setValue(pRegister::session()['searchQuery']);
 	
-
 		pMainTemplate::throwOutsidePage($searchBox);
 
 		// Starting with the wrapper
@@ -75,8 +73,8 @@ class pEntryStructure extends pStructure{
 			$this->_parser->passOnAction(pRegister::arg()['action']);
 		elseif(isset(pRegister::arg()['id']))
 			$this->_parser->render();
-		else
-			p::Url('', true);
+		elseif(in_array($this->_section, array('stats', 'random')))
+			$this->_parser->render();
 
 		if(isset(pRegister::arg()['ajax']))
 			return true;

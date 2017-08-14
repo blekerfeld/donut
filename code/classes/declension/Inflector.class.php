@@ -17,7 +17,7 @@ class pInflector{
 		$this->_lemma = $lemma;
 		$this->_dMCache = new pDataModel('lemmatization');
 		$this->dataModel = new pDataModel('modes');
-		$this->_modes = $this->dataModel->customQuery("SELECT DISTINCT * FROM modes WHERE modes.mode_type_id = ".$this->_lemma->read('type_id'))->fetchAll();
+		$this->_modes = $this->dataModel->customQuery("SELECT DISTINCT * FROM modes WHERE modes.type_id = ".$this->_lemma->read('type_id'))->fetchAll();
 		$this->_compiledParadigms = new pSet;
 		$this->_twolc = new pTwolc($twolcRules);
 		$this->_twolc->compile();
@@ -39,8 +39,22 @@ class pInflector{
 
 		foreach($this->_modes as $mode){
 			foreach($tempArray[$mode['id']] as $p_key => $paradigm){
+				// Well, we won't be needing those
+				if($p_key == 'columns')
+					continue;	
 				foreach($paradigm['rows'] as $r_key => $row){
-					$tempArray[$mode['id']][$p_key]['rows'][$r_key]['inflected'] = $this->inflectRow($row, $paradigm['heading']);
+
+					// Let's look if we have columns
+					if(!empty($tempArray[$mode['id']][$p_key]['rows'][$r_key]['columns'])){
+						$tempArray[$mode['id']][$p_key]['rows'][$r_key]['inflected'] = array();
+						foreach($tempArray[$mode['id']][$p_key]['rows'][$r_key]['columns'] as $column)
+							$tempArray[$mode['id']][$p_key]['rows'][$r_key]['inflected'][$column['id']] = $this->inflectRow($row, $paradigm['heading'], $column);
+					}
+					else{
+						// Other wise we'll just stick with a single inflection
+						$tempArray[$mode['id']][$p_key]['rows'][$r_key]['inflected'] = $this->inflectRow($row, $paradigm['heading']);
+					}
+				
 				}
 			}
 		}
@@ -54,7 +68,8 @@ class pInflector{
 
 
 
-	public function inflectRow($row, $heading){
+	public function inflectRow($row, $heading, $column = null){
+
 
 		$output = '';
 		$irregular = false;
@@ -68,6 +83,9 @@ class pInflector{
 			$irregular = true;
 
 		foreach($row['rules'] as $key => $rule){
+			if(!empty($row['columns']) AND $column != NULL AND !$this->checkRuleRowColumn($rule, $row, $column))
+				continue;
+
 			$inflection = new pInflection($rule['rule']);
 			if($row['stems'][$key][0] == $this->_lemma->read('native'))
 				$input = $output;
@@ -129,6 +147,23 @@ class pInflector{
 		// Leaving place for future actions
 
 		return $table;
+
+	}
+
+	public function checkRuleRowColumn($rule, $row, $column){
+
+		// If there is an record in morphology_numbers + morphology_columns for this rule, then we are good to go
+
+		$dM = new pDataModel('morphology');
+		$firstCheck = $dM->customQuery("SELECT m.id FROM morphology AS m INNER JOIN morphology_numbers AS mn
+			INNER JOIN morphology_columns AS mc WHERE mn.morphology_id = m.id AND mc.morphology_id = m.id AND m.id = ".$rule['id']." AND mc.column_id = ".$column['id']." AND mn.number_id = ".$row['self']['id']." LIMIT 1;")->rowCount();
+		if($firstCheck == 1)
+			return true;
+		elseif($firstCheck == 0 AND $dM->customQuery("SELECT m.id FROM morphology AS m INNER JOIN morphology_numbers AS mn
+			INNER JOIN morphology_columns AS mc WHERE mn.morphology_id = m.id AND mc.morphology_id = m.id AND m.id = ".$rule['id']." AND mn.number_id = ".$row['self']['id']." LIMIT 1;")->rowCount() == 0)
+			return true;
+		else
+			return false;
 
 	}
 

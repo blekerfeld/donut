@@ -29,7 +29,7 @@ return array(
 		'default_permission' => 0,
 		'items' => array(
 			'home' => array(
-				'name' => MMENU_DICTIONARY,
+				'name' => (new pIcon('fa-book', 12))." ".MMENU_DICTIONARY,
 				'app' => 'home',
 			),
 			'dictionary-admin' => array(
@@ -110,8 +110,9 @@ return array(
 		'page_title' => 'tablesheet',
 		'default_section' => 'tablesheet',
 		'arguments' => array(
-			0 => 'action',
-			1 => 'id',
+			0 => 'id',
+			1 => 'action',
+			2 => 'table_id',
 		),
 		'menu' => 'dictionary-admin',
 	),

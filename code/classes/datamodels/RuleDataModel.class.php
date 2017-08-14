@@ -31,6 +31,7 @@ class pRuleDataModel extends pDataModel{
 				$this->_links['modes'] = $this->resultToSingleArray("SELECT mode_id FROM morphology_modes WHERE morphology_id = '".$id."';", 'mode_id');
 				$this->_links['submodes'] = $this->resultToSingleArray("SELECT submode_id FROM morphology_submodes WHERE morphology_id = '".$id."';", 'submode_id');
 				$this->_links['numbers'] = $this->resultToSingleArray("SELECT number_id FROM morphology_numbers WHERE morphology_id = '".$id."';", 'number_id');
+				$this->_links['columns'] = $this->resultToSingleArray("SELECT column_id FROM morphology_columns WHERE morphology_id = '".$id."';", 'column_id');
 			}
 		}
 	}

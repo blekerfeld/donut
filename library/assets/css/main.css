@@ -49,10 +49,9 @@ html, body {
   height:100%;
   background: #f3f3f3;
   padding: 0;
-  font-family: Noto Sans;
-  font-size: 14.5px;
+  font-family: Noto Sans, Calibri, Sans;
+  font-size: 15px;
 }
-
 
 body{
   display: flex!important;
@@ -279,7 +278,7 @@ a.siteTitle {
 
 
 div.outerwrap {
-  min-height: 550px;
+  min-height: 500px;
   border-bottom:solid 1px #e7e7e7;
   background: white;
   box-shadow: 0px 2px 5px 0px rgba(0,0,0,0.1)!important;
@@ -314,7 +313,7 @@ div.outerwrap {
 }
 
 .home-margin{
-  width: 92%;
+  width: 96%;
   margin: 0 auto;
   padding-bottom: 0px;
 }
@@ -377,8 +376,8 @@ div.nav a:hover, div.nav a.admin:hover {
 }
 
 div.nav a.active{
-  border-bottom: 3px solid #6699CC;
-  color: #6699CC;
+  border-bottom: 3px solid #3B66D6;
+  color: white;
 }
 
 div.nav a.admin{
@@ -603,7 +602,7 @@ select.pEditorlanguage {
   font-size: 12px;
   opacity: .5;
   cursor: pointer;
-  transition: opacity .3s;
+  transition: opacity .3s, font-size: .05s;
 }
 
 .notice-subtle:hover{
@@ -771,12 +770,11 @@ span.translation.tooltip a{
 
 .pSectionWrapper div.desc, ol div.desc {
   margin: 0px;
-  font-size: 13px;
+  font-size: 14px;
   font-weight: normal;
   font-family: Noto Sans;
   padding: 1px;
   margin-top: 2px;
-  background: rgba(140, 140, 140, 0.1);
   width: auto;
   display: inline-block;
 }
@@ -1288,11 +1286,9 @@ a.lemma-code i.fa {
 
 .pSectionWrapper {
   margin-bottom: 10px;
+  border-radius: 4px;
+  border: 1px solid #eaecef;
   padding: 10px;
-  border-radius: ;
-  border: 1px solid #EDEDED;
-  border-top: 0px;
-  border-radius: 0px 0px 5px 5px;
 }
 
 .pSectionWrapper div.bottom{
@@ -1370,6 +1366,7 @@ span.pSectionTitle {
   padding: 10px;
   padding-top: 0px;
   padding-bottom: 0px;
+
 }
 
 span.pSectionTitle.first {
@@ -1387,25 +1384,29 @@ span.pSectionTitle.first {
 
 span.pSectionTitle em.info {
   font-size: 12px;
+
   font-family: Merriweather;
   font-style: normal;
 }
 
 span.pSectionTitle.extra {
-  font-weight: 700;
-  color: #333;
   letter-spacing: .075em;
   white-space: normal;
   line-height: normal;
-  font-size: 14px;
-  padding-left: 10px;
-  padding-right: 10px;
-  padding-bottom: 5px;
-  padding-top: 5px;
-  border: 1px solid #EDEDED;
-  background: #f9f9f9;
-  margin-bottom: -1px;
-  border-radius: 5px 5px 0px 0px;
+  font-weight: bolder;
+  font-size: 16px;
+  font-weight: bold;
+  color: black;
+  border-bottom: 1px dotted rgba(67,90,110,0.1);
+  display: inline-block;
+  padding: 7.5px;
+  transition: opacity 0.1s ease;  
+  border: 1px solid #eaecef;
+  border-bottom: none;
+  border-radius: 4px 4px 0px 0px;
+  margin-top: -1px;
+  margin-bottom: -8px;
+  background: #fff;
 }
 
 a.red-link{
@@ -1464,7 +1465,8 @@ a.edit-field:hover{
 
 span.pSectionTitle.extra.closed {
   margin-bottom: 20px;
-  border-bottom: 6px solid #EDEDED;
+  border-bottom-width: 1px;
+  border-bottom-style: solid;
 }
 
 .pSectionTitle.extra.sub {
@@ -1699,13 +1701,14 @@ span.ipa:hover {
 
 div.btCardHelper{
   position: relative;
-  top: 80px;
-  left: -50px;
+  top:52px;
+  right: 0px;
+  display: none;
    padding: 5px;
    width: 14%;
   float: left;
   background: #fff;
-  opacity: .3;
+  opacity: .6;
   transition: opacity .3s;
   cursor: pointer;
 }
@@ -1735,7 +1738,8 @@ div.btCard {
 
 
 div.btCard.proper{
-  box-shadow: 0px 1px 3px rgba(100, 100, 100, 0.3);
+   border: rgba(150, 150, 150, 0.2) 1px solid;
+   border-radius: 4px;
 }
 
 div.btCard.full{
@@ -2112,6 +2116,20 @@ div.rulesheet .left{
   padding: 10px;
 }
 
+div.rulesheet div.card-tabs-bar.vertical{
+  align-items: stretch!important;
+  width: 15%;
+  padding: 10px;
+}
+
+div.rulesheet div.tablesheet{
+  width: 85%;
+  align-items: stretch!important;
+  padding-left: 30px;
+  border: 1px solid #eaecef;
+  border-left: none;
+}
+
 div.rulesheet.no-padding .left, div.rulesheet.no-padding .right{
   padding: 2px;
 }
@@ -2341,26 +2359,49 @@ table.inflections{
   float: left;
   font-size: 15px;
   margin: 5px;
-  box-shadow: 0px 1px 3px rgba(100, 100, 100, 0.1);
+ 
+  border: rgba(150, 150, 150, 0.2) 1px solid;
+   border-radius: 4px;
+   padding: 7px;
+}
+
+table.inflections tr td:last-child{
+  border-right: none!important;
 }
 
 table.inflections td{
   padding: 4px;
+  background: white;
+  font-family: Libre Franklin, sans-serif;
 }
 
 table.inflections tr.heading td{
-  font-size: 14px;
-  color: gray;
-   border-bottom: 1px solid rgba(94,101,115, 0.2);
+  font-size: 15px;
+  color: #3B66D6;
+  border-bottom: 3px solid #3B66D6;
   opacity: .7;
 }
 
+table.inflections tr.columns_row td.named{
+   border-bottom: 1px solid rgba(94,101,115, 0.1);
+   border-right: 1px solid rgba(94,101,115, 0.05);
+}
+
 table.inflections td.row_name{
-   border-right: 1px solid rgba(94,101,115, 0.2);
-   opacity: .8;
-   color: darkgray;
-   font-size: 12px;
+   border-right: 1px solid rgba(94,101,115, 0.1);
+   opacity: 1;
+   color: #333
+   font-size: 13px;
    width: 40%;
+}
+
+table.inflections td.row_inflected{
+  color: black;
+  font-size: 16px;
+}
+
+table.inflections td.row_inflected.with_column{
+   border-right: 1px solid rgba(94,101,115, 0.1);
 }
 
 table.inflections tr.title td{

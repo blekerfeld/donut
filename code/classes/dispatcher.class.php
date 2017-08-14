@@ -61,11 +61,6 @@ class pDispatcher {
 				pRegister::arg($this->_arguments);
 				p::Out("<div class='home-margin'>".p::Markdown(file_get_contents(p::FromRoot("static/".$this->_urlArguments[0].".md")), true, true, true)."</div>");
 			}
-			// DEBUG MODE ONLY
-			elseif($this->_urlArguments[0] == 'scrap' AND file_exists(p::FromRoot("scrap.php"))){
-				pRegister::arg($this->_arguments);
-				require p::FromRoot("scrap.php");
-			}
 			elseif($this->_urlArguments[0] == 'README' AND file_exists(p::FromRoot("README.md"))){
 				pRegister::arg($this->_arguments);
 				p::Out("<div class='home-margin'>".p::Markdown(file_get_contents(p::FromRoot("README.md")), true)."</div>");

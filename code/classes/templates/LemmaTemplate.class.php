@@ -85,7 +85,7 @@ class pLemmaTemplate extends pEntryTemplate{
 	}	
 
 	public function discussTitle(){
-		p::Out("<span class='markdown-body'><h2>".sprintf(LEMMA_DISCUSS_TITLE, "<span class='native'><strong class='pWord'><a>".$this->_data->_entry['native']."</a></strong></span>")."</h2></span>");
+		p::Out("<span class='markdown-body'><h2>".sprintf(LEMMA_DISCUSS_TITLE, "<span class='native'><strong class='pWord'><a>".$this->_data['native']."</a></strong></span>")."</h2></span>");
 	}
 
 	public function usageNotes($data, $icon){
@@ -121,7 +121,7 @@ class pLemmaTemplate extends pEntryTemplate{
 
 	public function renderSearchResult($searchlang = 0){
 		if(!($this->_data->_hitTranslation == null))
-			$hitTranslation = '<em class="dHitTranslation">'.p::Highlight($this->_data->_query, $this->_data->_hitTranslation, '<strong class="dQueryHighlight">', '</strong>').'</em> → ';
+			$hitTranslation = '<em class="dHitTranslation">'.p::Highlight($this->_data->_query, $this->_data->_hitTranslation, '<strong class="dQueryHighlight">', '</strong>').'</em> '.(new pIcon('arrow-right').' ');
 		else
 			$hitTranslation = '';
 

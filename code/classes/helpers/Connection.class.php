@@ -34,12 +34,14 @@ class pConnection extends PDO{
 
 	public function cacheQuery($sql, $force_no_cache = false, $force_no_count = false){
 
+
 		$trace = debug_backtrace();
 		$functions = array();
 		foreach($trace as $traceIns)
 			$functions[] = $traceIns['class'].'::'.$traceIns['function'].': -'.$traceIns['file'].':'.$traceIns['line'];
 
 		$this->_internLog[] = array($functions, $sql);
+		//var_dump(array($sql, $functions));
 
 		$this->_queryCount++;
 

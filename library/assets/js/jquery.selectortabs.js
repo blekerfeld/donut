@@ -27,7 +27,7 @@ jQuery.fn.selectorTabs = function(options){
 
 	$(selector).children('option').each(function(){
 
-		stack.append($('<a />').addClass('ts-option').attr('href', 'javascript:void();').attr('data-value', $(this).val()).append($(this).html()));
+		stack.append($('<a />').addClass('ts-option ssignore').attr('href', 'javascript:void();').attr('data-value', $(this).val()).append($(this).html()));
 	});
 
 	// Select the active value

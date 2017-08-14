@@ -17,6 +17,7 @@ return array(
 		'vendors/jquery.select2.js',
 		'vendors/jquery.elastic.js',
 		'vendors/jquery.smoothstate.js',
+		'vendors/jquery.checkboxes-1.2.0.min.js',
 		'vendors/cookieconsent.js',
 		'smoothstate.js',
 		'jquery.cardtabs.js',

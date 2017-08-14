@@ -14,11 +14,11 @@ return array(
 			'icon' => 'fa-book',
 			'default_permission' => -3,
 		),
-		'inflection' => array(
-			'section_key' => 'inflection',
+		'tablesheet' => array(
+			'section_key' => 'tablesheet',
 			'type' => 'pTablesheetHandler',
 			'template' => 'pTableTemplate',
-			'table' => 'modes',
+			'table' => 'types',
 			'icon' => 'fa-font',
 			'surface' => "Inflection",
 			'condition' => false,

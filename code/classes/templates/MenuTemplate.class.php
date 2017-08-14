@@ -74,7 +74,7 @@ class pMenuTemplate extends pTemplate{
 				$output .= "<a class='".$link['class ']." ".(($_SERVER['PHP_SELF'] == CONFIG_FOLDER . '/' . $link['file']) ? 'active' : '')."' href='".p::Url($link['file'])."'>".$link['name']."</a>";
 
 		$output .= "</div><script type='text/javascript'>
-			$('.ttip_menu').tooltipster({animation: 'grow', animationDuration: 100,  distance: 0, contentAsHTML: true, interactive: true, side:'bottom'});
+			$('.ttip_menu').tooltipster({animation: 'grow', animationDuration: 100,  distance: 0, contentAsHTML: true, interactive: true, side:'bottom', trigger: 'click'});
 		</script>";
 		
 		if($items == 0)

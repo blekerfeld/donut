@@ -55,7 +55,7 @@ class pRulesheetHandler extends pHandler{
 
 	protected function generateLinksArray(){
 		if($this->_section == 'inflection')
-			$links = array('lexcat' => @pRegister::post()['lexcat'], 'gramcat' => @pRegister::post()['gramcat'], 'tag' => @pRegister::post()['tags'], 'modes' => @pRegister::post()['tables'], 'submodes' => @pRegister::post()['headings'], 'numbers' => @pRegister::post()['rows']);
+			$links = array('lexcat' => @pRegister::post()['lexcat'], 'gramcat' => @pRegister::post()['gramcat'], 'tag' => @pRegister::post()['tags'], 'modes' => @pRegister::post()['tables'], 'submodes' => @pRegister::post()['headings'], 'columns' => @pRegister::post()['columns'], 'numbers' => @pRegister::post()['rows']);
 		else
 			$links = null;
 

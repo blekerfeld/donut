@@ -21,20 +21,40 @@ class pInflectionTable extends pTemplatePiece {
 		$dMCache->setCondition("");
 
 		$mode = $compiledParadigms[$modeArray['id']];
+		$columns = $mode['columns'];
+		unset($mode['columns']);
 		$mode_name = $modeArray['name'];
 
-		$output = "<div class='inflections_mode_wrap'><table class='inflections'><tr class='title'><td colspan='2'>".$mode_name."</td></tr>";
+		$output = "<div class='inflections_mode_wrap'><table class='inflections'><tr class='title'><td colspan='".(!empty($columns) ? count($columns) + 1 : 2)."'>".$mode_name."</td></tr>";
 
 		foreach($mode as $headingHolder){
 			$heading = $headingHolder['heading'];
-			$output .= "<tr class='heading'><td colspan='2'>".$heading['name']."</td></tr>";
+			$output .= "<tr class='heading'><td colspan='".(!empty($heading['columns']) ? count($heading['columns']) + 1 : 2)."'>".$heading['name']."</td></tr>";
+			if(!empty($heading['columns'])){
+				$output .= "<tr class='columns_row'><td></td>";
+				foreach($heading['columns'] as $column)
+					$output .= "<td class='named'>".$column['name']."</td>";
+				$output .= "</tr>";
+			}
+
 			foreach($headingHolder['rows'] as $row){
 				// Generating the surface form
-				$surface = $twolc->feed($row['inflected'][0])->toSurface();
-				// Outing the surface form
-				$output .= "<tr><td class='row_name'>".$row['self']['name']."</td><td class='row_inflected'>".$surface."</td></tr>";
-				// Chaching the surface form
-				$this->cacheInflection($dMCache, $surface, $row, $heading, $modeArray);
+				if(empty($row['columns'])){
+					
+					$surface = $twolc->feed($row['inflected'][0])->toSurface();
+					// Outing the surface form
+					$output .= "<tr><td class='row_name'>".$row['self']['name']."</td><td class='row_inflected'>".$surface."</td></tr>";
+					$this->cacheInflection($dMCache, $surface, $row, $heading, $modeArray);
+				}
+				else{
+					$output .= "<tr><td class='row_name'>".$row['self']['name']."</td>";
+					foreach($row['columns'] as $column){
+						$surface = $twolc->feed($row['inflected'][$column['id']][0])->toSurface();
+						$output .= "<td class='row_inflected with_column'>".$surface."</td>";
+					}
+					$output .= "</tr>";
+					$this->cacheInflection($dMCache, $surface, $row, $heading, $modeArray);
+				}
 			}
 		}
 

@@ -72,11 +72,11 @@ class pEntryHandler extends pHandler{
 	protected function doRandomEntry(){
 		$dM = new pDataModel('words');
 		$random = $dM->customQuery("SELECT id FROM words ORDER BY RAND() LIMIT 1")->fetchAll()[0];
+		echo "hoi!";
 		return p::Url('?entry/'.p::HashId($random['id']), true);
 	}
 
 	public function render(){
-
 
 		if($this->_section == 'random')
 			return $this->doRandomEntry();
@@ -85,6 +85,7 @@ class pEntryHandler extends pHandler{
 		if($this->_section == 'stats' AND isset(pRegister::arg()['id'])){
 			return $this->renderStats(pRegister::arg()['id']);
 		}
+
 
 		if(isset(pRegister::arg()['query'], pRegister::arg()['dictionary']))
 			return false;

@@ -119,6 +119,8 @@ class pRulesheetTemplate extends pTemplate{
 							<span class='btNative'><select class='full-width select-headings select2' multiple='multiple'>".(new pSelector('submodes', $this->_data->_links['submodes'], 'name', true, 'rules', true))->render()."</select></span></div>
 							<div class='btSource'><span class='btLanguage'>Table rows</span><br />
 							<span class='btNative'><select class='full-width select-rows select2' multiple='multiple'>".(new pSelector('numbers', $this->_data->_links['numbers'], 'name', true, 'rules', true))->render()."</select></span></div>
+							<div class='btSource'><span class='btLanguage'>Table columns (<em>suborindate to rows</em>)</span><br />
+							<span class='btNative'><select class='full-width select-columns select2' multiple='multiple'>".(new pSelector('columns', $this->_data->_links['columns'], 'name', true, 'rules', true))->render()."</select></span></div>
 						</div>
 
 				</div>");
@@ -134,6 +136,7 @@ class pRulesheetTemplate extends pTemplate{
 						'tags': $('.select-tags').val(),
 						'rows': $('.select-rows').val(),
 						'headings': $('.select-headings').val(),
+						'columns': $('.select-columns').val(),
 						'tables': $('.select-tables').val()," : "")."
 						'rule': $('#rule-content').val(),
 						'name': $('.name').val(),

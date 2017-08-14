@@ -146,17 +146,6 @@ return array(
 					),
 				),
 			'incoming_links' => array(
-				'examples' => array(
-						'section' => 'examples',
-						'table' => 'idiom_words',
-						'parent' => 'word_id',
-						'child' => 'idiom_id',
-						'fields' => array(
-								(new pDataField('keyword', DA_TABLE_LINK_KEYWORD)),
-							),
-						'show_parent' => 'idiom',
-						'show_child' => 'native',
-				),
 				'translations' => array(
 						'section' => 'translations',
 						'table' => 'translation_words',
@@ -407,7 +396,15 @@ return array(
 					
 				),
 			'incoming_links' => array(
-				
+				'headings' => array(
+						'section' => 'headings',
+						'table' => 'submode_apply',
+						'parent' => 'mode_type_id',
+						'child' => 'submode_id',
+						'fields' => array(),
+						'show_parent' => 'name',
+						'show_child' => 'name',
+				),
 			),
 		),
 		'gramcat' => array(
@@ -480,7 +477,8 @@ return array(
 			'disable_pagination' => false,
 			'table' => 'submodes',
 			'datafields' => array(
-				new pDataField('name', DA_TRANSLATION, '67%', 'input', true, true, true),
+				new pDataField('name', DA_TRANSLATION, '45%', 'input', true, true, true),
+				new pDataField('short_name', DA_TRANSLATION, '20%', 'input', true, true, true),
 			),
 			'actions_item' => array(
 				'edit' => $action_edit,
@@ -491,6 +489,13 @@ return array(
 			),
 			'save_strings' => $saveStrings,
 			'outgoing_links' => array(
+				'lexcat' => array(
+						'section' => 'lexcat', 
+						'surface' => "Lexical categories", 
+						'icon' => 'fa-sitemap', 
+						'table'=> 'submode_apply', 
+						'field' => 'submode_id'
+					),
 					
 				),
 			'incoming_links' => array(

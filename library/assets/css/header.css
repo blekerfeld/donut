@@ -7,11 +7,12 @@
 
 .header.dictionary{
   transition: all .3s;
-  padding-left: 120px;
   padding-top: 15px;
   padding-bottom: 10px;
-  padding-right: 120px;
+  padding-right: calc(5% + 40px);
+  padding-left: calc(5% + 40px);
   position: relative;
+  
   background: #FAFBFC;
   border-bottom: rgba(150, 150, 150, 0.2) 1px solid;
 }
@@ -28,13 +29,17 @@
   padding-left: 0px;
 }
 
+.header.dictionary.home .hSearch input#wordsearch{
+  padding: 20px;
+}
+
 .hSearch{
   padding: 0px;
 }
 
 
 .header.dictionary.home .hSearch input#wordsearch{
-  font-size: 30px;
+  font-size: 24px;
 }
 
 
@@ -71,15 +76,7 @@ input#wordsearch:focus, input#filter:focus {
 }
 
 
-input#wordsearch, input#filter, input#searchfilter {
-  padding: 9px;
-  font-size: 13px;
-  text-decoration: none;
-  width: 60% - 18px;
-  min-width: 100px;
-  color: #333;
-  transition: all .3s;
-}
+
 
 a.button.search{
   display: inline-block;
@@ -131,25 +128,29 @@ div.hSearch .load-hide{
 .hSearch{
   font-size: 15px;
   text-decoration: none;
-background: white;
+  padding: 0px!important;
   color: rgb(150, 150, 150);
   
 }
 
 .hSearch input#wordsearch{
   border: none;
+  border-radius: 4px;
+    transition: all .3s;
   display: inline-block;
   margin-top: 1px;
-  padding: 15px;
+  padding: 10px;
+  background: white;
+  margin: 0px;
   width: 100%;
-  min-width: 300px;
   margin-top: 0px;
   float: left;
   font-family: Noto Sans;
   font-size: 18px;
   border: rgba(150, 150, 150, 0.2) 1px solid;
-  background: transparent;
 }
+
+
 
 
 
@@ -273,3 +274,31 @@ margin-left:5px;
 position:relative;
 }
 
+.header.dictionary div.card-tabs-bar.selectorTabs{
+  display: none;
+}
+
+.header.dictionary.home div.card-tabs-bar.selectorTabs{
+  display: none;
+}
+
+.header.dictionary div.card-tabs-bar.selectorTabs a{
+  font-size: 12px;
+  padding: 5px;
+
+}
+
+.header.dictionary.home div.card-tabs-bar.selectorTabs a{
+  font-size: 13px;
+  padding: 15px;
+  padding-top: 5px;
+  padding-bottom: 5px;
+}
+
+.header.dictionary.home div.card-tabs-bar.selectorTabs a.active{
+  color: black;
+}
+
+.hSearch div.card-tabs-bar.selectorTabs{
+  border-top: none;
+}

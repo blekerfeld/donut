@@ -16,7 +16,7 @@
 p::defineLocale('DICT_TITLE', 'Dictionary');
 p::defineLocale('DICT_READMORE', 'Go to lemma');
 p::defineLocale('DICT_SEARCH', 'Search');
-p::defineLocale('DICT_KEYWORD', 'Search the dictionary...');
+p::defineLocale('DICT_KEYWORD', 'Search dictionary...');
 p::defineLocale('DICT_EXACT_MATCH', 'exact match');
 p::defineLocale('DICT_MATCH', 'Your query yielded %s result.');
 p::defineLocale('DICT_SEARCH_RESULTS', 'Search results');

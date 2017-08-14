@@ -55,11 +55,15 @@ class pLanguage{
 
 		$lang_zero = $data[0];
 
-		$select .= '<option data-native="1" value="'.$lang_zero['locale'].'-'.$lang_zero['locale'].'" '.((isset(pRegister::session()['searchLanguage']) AND (pRegister::session()['searchLanguage'] == $lang_zero['locale'].'-'.$lang_zero['locale'])) ? ' selected ' : '').'>'.$lang_zero['showname'].'</option>';
+		if(CONFIG_ENABLE_DEFINITIONS == 1)
+			$select .= '<option data-native="1" value="'.$lang_zero['locale'].'-'.$lang_zero['locale'].'" '.((isset(pRegister::session()['searchLanguage']) AND (pRegister::session()['searchLanguage'] == $lang_zero['locale'].'-'.$lang_zero['locale'])) ? ' selected ' : '').'>'.$lang_zero['showname'].'</option>';
 
-		foreach($data as $key => $language)
+		$i = 0;
+		foreach($data as $key => $language){
 			if($language['id'] > 0)
-				$select .= '<option data-native="0" value="'.$language['locale'].'-'.$lang_zero['locale'].'" '.((isset(pRegister::session()['searchLanguage']) AND (pRegister::session()['searchLanguage'] == $language['locale'].'-'.$lang_zero['locale'])) ? ' selected ' : '').'>'.$language['showname'].'/'.$lang_zero['showname'].'</option><option  data-native="1" value="'.$lang_zero['locale'].'-'.$language['locale'].'" '.((isset(pRegister::session()['searchLanguage']) AND (pRegister::session()['searchLanguage'] == $lang_zero['locale'].'-'.$language['locale'])) ? ' selected ' : '').'>'.$lang_zero['showname'].'/'.$language['showname'].'</option>';
+				$select .= '<option data-native="0" value="'.$language['locale'].'-'.$lang_zero['locale'].'" '.((isset(pRegister::session()['searchLanguage']) AND (pRegister::session()['searchLanguage'] == $language['locale'].'-'.$lang_zero['locale'])) ? ' selected ' : ($i === 0 ? ' selected ' : '')).'>'.$language['showname'].' → '.$lang_zero['showname'].'</option><option  data-native="1" value="'.$lang_zero['locale'].'-'.$language['locale'].'" '.((isset(pRegister::session()['searchLanguage']) AND (pRegister::session()['searchLanguage'] == $lang_zero['locale'].'-'.$language['locale'])) ? ' selected ' : '').'>'.$lang_zero['showname'].' → '.$language['showname'].'</option>';
+			$i++;
+		}
 
 	    
 	  	return $select . '</select><script>$(".'.$class.'").selectorTabs({"afterclick": function(){

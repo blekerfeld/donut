@@ -38,7 +38,10 @@ class pAssistantStructure extends pStructure{
 
 		// Starting with the wrapper
 		if(!isset(pRegister::arg()['ajax']) AND !isset(pRegister::arg()['ajaxLoad'])){
-		p::Out("<div class='btCard'><span class='markdown-body'><h2>".(new pIcon('assistant'))." ".BATCH_TITLE."</h2></span></div>");
+	
+			$searchBox = new pSearchBox;
+			pMainTemplate::throwOutsidePage($searchBox);
+
 			p::Out("<div class='pEntry ".(($this->_error != '' OR $this->_error != null) ? 'hasErrors' : '')."'><div class='home-margin'>");
 		}
 	

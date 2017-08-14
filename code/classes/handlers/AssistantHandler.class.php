@@ -125,7 +125,7 @@ class pAssistantHandler extends pHandler{
 
 	public function serveCardTranslate(){
 		if(!isset($_SESSION['btChooser-translate']))
-			return $this->renderTranslate(true);
+			return $this->renderTranslate(true, $this->_section);
 		if(isset($this->_data[0]))
 			return $this->_template->cardTranslate($this->_data[0], $this->_section);
 		else{

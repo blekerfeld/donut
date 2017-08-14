@@ -5,9 +5,22 @@
     display: none;
    }
 
-   .header.dictionary.home .hSearch input#wordsearch{
+    .header.dictionary{
+      padding: 10px!important;
+      margin-bottom: 40px;
+    }
+
+
+    .header.dictionary.home{
+      padding: 10px!important;
+      margin-bottom: 10px;
+    }
+
+   .header.dictionary .hSearch input#wordsearch{
     min-width: 0px;
-    width: 65%;
+    width: 100%;
+    margin: 0;
+    padding: 5px!important;
     float: left;
     margin-top: 10px;
    }
@@ -20,17 +33,13 @@
     display: inline;
    }
 
-   .home-search input#wordsearch, .header.dictionary input#wordsearch{
-    margin-top: -14px;
-      min-width: 0px;
-    width: 65%;
-    float: left;
-   }
+
 
 
    div.ulWrap{
       margin-left: 0px;
       margin-right: 0px;
+      padding-top: 30px;
    }
 
    div.ulWrap.fixed{
@@ -53,6 +62,7 @@
     background: transparent;
     width: 100%;
     box-shadow: none;
+
     padding: 10px;
 
    }
@@ -75,28 +85,26 @@
     z-index: 1000;
     height: 80px;
     position: fixed;
-     top: 10px;
-     background: #3A3B5B;!important;
-     margin-top: -12px;
-     margin-left: -16px;
+     top: 0px;
+
+    background: #FAFBFC;
+    border-bottom: 1px #E6E7E8 solid;
    }
 
    .hMobile.fixed .header{
     opacity: 1; 
+    border: none;
     background: transparent;
     width: 100%;
     box-shadow: none;
-    padding: 10px;
     margin: 0px;
+
    }
 
    .hMobile.fixed .hWrap{
     padding: 0;
    }
 
-   .hMobile.fixed .header .hSearch{
-      background: white;  
-   }
 
    .hMobile.fixed input#wordsearch{
     font-size: 20px
@@ -196,7 +204,9 @@
       margin-right: -1px;
      }
 
-     div.btCard{  
+     div.btCard{ 
+      width: 100%!important;
+      margin: 0px!important;
      }
 
      div.hSearch .load-hide{

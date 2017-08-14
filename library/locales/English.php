@@ -39,6 +39,7 @@ p::defineLocale('BACK', "Back");
 p::defineLocale('PREVIOUS', "Previous page");
 p::defineLocale('NEXT', "Next page");
 p::defineLocale('SAVE', "Save changes");
+p::defineLocale('ADD_ITEM', "Add item");
 p::defineLocale('TIMES', " times");
 p::defineLocale('TIME', " time");
 p::defineLocale('EDIT', "Edit");
