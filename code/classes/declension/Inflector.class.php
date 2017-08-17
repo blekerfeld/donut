@@ -17,7 +17,7 @@ class pInflector{
 		$this->_lemma = $lemma;
 		$this->_dMCache = new pDataModel('lemmatization');
 		$this->dataModel = new pDataModel('modes');
-		$this->_modes = $this->dataModel->customQuery("SELECT DISTINCT * FROM modes WHERE modes.type_id = ".$this->_lemma->read('type_id'))->fetchAll();
+		$this->_modes = $this->dataModel->complexQuery("SELECT DISTINCT * FROM modes WHERE modes.type_id = ".$this->_lemma->read('type_id'))->fetchAll();
 		$this->_compiledParadigms = new pSet;
 		$this->_twolc = new pTwolc($twolcRules);
 		$this->_twolc->compile();
@@ -73,14 +73,13 @@ class pInflector{
 
 		$output = '';
 		$irregular = false;
-
-		if(empty($row['rules']))
-			$output = $row['stems'][0][0];
-		else
-			$output = $row['stems'][0][0];
+		$output = $row['stems'][0][0];
 
 		if(isset($row['stems'][0][2]) AND $row['stems'][0][2] == true)
 			$irregular = true;
+
+		if($irregular AND $column != NULL AND !in_array($column['id'], $row['stems'][0][4]))
+			$output = $row['stems'][0][5][0];
 
 		foreach($row['rules'] as $key => $rule){
 			if(!empty($row['columns']) AND $column != NULL AND !$this->checkRuleRowColumn($rule, $row, $column))
@@ -155,11 +154,11 @@ class pInflector{
 		// If there is an record in morphology_numbers + morphology_columns for this rule, then we are good to go
 
 		$dM = new pDataModel('morphology');
-		$firstCheck = $dM->customQuery("SELECT m.id FROM morphology AS m INNER JOIN morphology_numbers AS mn
+		$firstCheck = $dM->complexQuery("SELECT m.id FROM morphology AS m INNER JOIN morphology_numbers AS mn
 			INNER JOIN morphology_columns AS mc WHERE mn.morphology_id = m.id AND mc.morphology_id = m.id AND m.id = ".$rule['id']." AND mc.column_id = ".$column['id']." AND mn.number_id = ".$row['self']['id']." LIMIT 1;")->rowCount();
 		if($firstCheck == 1)
 			return true;
-		elseif($firstCheck == 0 AND $dM->customQuery("SELECT m.id FROM morphology AS m INNER JOIN morphology_numbers AS mn
+		elseif($firstCheck == 0 AND $dM->complexQuery("SELECT m.id FROM morphology AS m INNER JOIN morphology_numbers AS mn
 			INNER JOIN morphology_columns AS mc WHERE mn.morphology_id = m.id AND mc.morphology_id = m.id AND m.id = ".$rule['id']." AND mn.number_id = ".$row['self']['id']." LIMIT 1;")->rowCount() == 0)
 			return true;
 		else

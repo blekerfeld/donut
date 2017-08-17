@@ -17,7 +17,7 @@ return array(
 		'tablesheet' => array(
 			'section_key' => 'tablesheet',
 			'type' => 'pTablesheetHandler',
-			'template' => 'pTableTemplate',
+			'template' => 'pTablesheetTemplate',
 			'table' => 'types',
 			'icon' => 'fa-font',
 			'surface' => "Inflection",

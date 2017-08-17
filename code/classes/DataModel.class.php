@@ -228,7 +228,7 @@ class pDataModel {
 		$this->_joined[] = array('table' => $table, 'field' => $field);
 	}
 
-	public function customQuery($query){
+	public function complexQuery($query){
 		$this->_data = p::$db->cacheQuery($query);
 		return $this->_data;
 	}
@@ -238,7 +238,7 @@ class pDataModel {
 	}
 
 	protected function resultToSingleArray($query, $field){
-		$query = $this->customQuery($query);
+		$query = $this->complexQuery($query);
 		$array = array();
 		foreach($query->fetchAll() as $result)
 			$array[] = $result[$field];

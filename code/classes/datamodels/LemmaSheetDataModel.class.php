@@ -156,6 +156,9 @@ class pLemmaSheetDataModel extends pDataModel{
 
 	public function updateForms($forms){
 		// Some predefined configuration
+
+		var_dump($forms);
+
 		$config = array(
 			'irregular' => array(
 				'condition' => ' is_irregular = 1 ',
@@ -163,18 +166,22 @@ class pLemmaSheetDataModel extends pDataModel{
 			),
 		);
 		// Going through the forms
+		$unset = array();
 		$workParadigm = $this->_inflector->_compiledParadigms;
+
 		foreach($forms as $type => $formsInner){
 			foreach($formsInner as $form){
 				// Let's find things by the selector
+	
 				$selector = explode('-', $form['selector']);
+				
 				$row = $workParadigm[$selector[0]][$selector[1]]['rows']['row_'.$selector[2]];
 				// Let's find if if this form already is irregular
 				if(isset($row['stems'][0][2]) AND $row['stems'][0][2] == true){
 					// Let's check if the form is the same or not
 					if($form['value'] != $row['stems'][0][0])
 					// Let's update this shit
-						$this->customQuery("UPDATE morphology SET irregular_form = ".p::Quote($form['value'])." WHERE lemma_id = '".$this->_lemma['id']."' AND id = ".$row['stems'][0][3]." AND ".$config[$type]['condition']);
+						$this->complexQuery("UPDATE morphology SET irregular_form = ".p::Quote($form['value'])." WHERE lemma_id = '".$this->_lemma['id']."' AND id = ".$row['stems'][0][3]." AND ".$config[$type]['condition']);
 				}
 				elseif(isset($row['stems'][0][2]) AND $row['stems'][0][2] == false){
 					
@@ -186,15 +193,20 @@ class pLemmaSheetDataModel extends pDataModel{
 					$dM->setFields($dfs);
 					$dM->prepareForInsert(array($form['value'], $this->_lemma['id'], 1));
 					$idMorph = $dM->insert();
-					$this->customQuery("INSERT INTO morphology_modes VALUES(NULL, $idMorph, $selector[0]);");
-					$this->customQuery("INSERT INTO morphology_submodes VALUES(NULL, $idMorph, $selector[1]);");
-					$this->customQuery("INSERT INTO morphology_numbers VALUES(NULL, $idMorph, $selector[2]);");
+					$this->complexQuery("INSERT INTO morphology_modes VALUES(NULL, $idMorph, $selector[0]);");
+					$this->complexQuery("INSERT INTO morphology_submodes VALUES(NULL, $idMorph, $selector[1]);");
+					$this->complexQuery("INSERT INTO morphology_numbers VALUES(NULL, $idMorph, $selector[2]);");
 					if(isset($selector[3]))
-						$this->customQuery("INSERT INTO morphology_columns VALUES(NULL, $idMorph, $selector[3]);");
+						$this->complexQuery("INSERT INTO morphology_columns VALUES(NULL, $idMorph, $selector[3]);");
 				}
-				unset($workParadigm[$selector[0]][$selector[1]]['rows']['row_'.$selector[2]]);
+
+				$unset[] = $selector;
 			}
 		}
+
+		// Unsetting the ones that are not needed...
+		foreach($unset as $selector)
+			unset($workParadigm[$selector[0]][$selector[1]]['rows']['row_'.$selector[2]]);
 
 		// Time to go throught the other rows to check whether some irregular forms need to be removed
 		foreach($workParadigm as $mode){
@@ -203,10 +215,10 @@ class pLemmaSheetDataModel extends pDataModel{
 					continue;
 				foreach($heading['rows'] as $row){
 					if(isset($row['stems'][0][2]) AND $row['stems'][0][2] == true)
-						$this->customQuery("DELETE FROM morphology_modes WHERE morphology_id = ".$row['stems'][0][3]);
-						$this->customQuery("DELETE FROM morphology_submodes WHERE morphology_id = ".$row['stems'][0][3]);
-						$this->customQuery("DELETE FROM morphology_numbers WHERE morphology_id = ".$row['stems'][0][3]);
-						$this->customQuery("DELETE FROM morphology_columns WHERE morphology_id = ".$row['stems'][0][3]);
+						$this->complexQuery("DELETE FROM morphology_modes WHERE morphology_id = ".$row['stems'][0][3]);
+						$this->complexQuery("DELETE FROM morphology_submodes WHERE morphology_id = ".$row['stems'][0][3]);
+						$this->complexQuery("DELETE FROM morphology_numbers WHERE morphology_id = ".$row['stems'][0][3]);
+						$this->complexQuery("DELETE FROM morphology_columns WHERE morphology_id = ".$row['stems'][0][3]);
 						// TODO: Also delete the morphology_item if needed
 				}
 			}
@@ -241,7 +253,7 @@ class pLemmaSheetDataModel extends pDataModel{
 					if($this->_translations != null AND !empty($this->_translations)){
 						foreach($this->_translations as $languageHolder){
 							foreach($languageHolder as $translation){
-								$this->customQuery("DELETE FROM translation_words WHERE word_id = ".$this->_lemma['id']." AND translation_id = ".$translation->read('real_id')." AND specification = ".p::Quote($translation->_specification).";");
+								$this->complexQuery("DELETE FROM translation_words WHERE word_id = ".$this->_lemma['id']." AND translation_id = ".$translation->read('real_id')." AND specification = ".p::Quote($translation->_specification).";");
 								// This will delete the translation if there are no links left.
 								pTranslation::finalDelete($translation->read('real_id'));
 							}
@@ -282,9 +294,9 @@ class pLemmaSheetDataModel extends pDataModel{
 		// Links that are left need to be destroyed
 		foreach($this->_links[$table] as $id => $values)
 			if(!$single)
-				$this->customQuery("DELETE FROM $table WHERE (word_id_1 = ".$this->_lemma['id'] . " AND word_id_2 = $id) OR (word_id_2 = ".$this->_lemma['id'] . " AND word_id_1 = $id);");
+				$this->complexQuery("DELETE FROM $table WHERE (word_id_1 = ".$this->_lemma['id'] . " AND word_id_2 = $id) OR (word_id_2 = ".$this->_lemma['id'] . " AND word_id_1 = $id);");
 			else
-				$this->customQuery("DELETE FROM $table WHERE  (word_id = ".$this->_lemma['id'] . " AND ".$field." = $id);");
+				$this->complexQuery("DELETE FROM $table WHERE  (word_id = ".$this->_lemma['id'] . " AND ".$field." = $id);");
 		// If we are alive everthing went very well
 		return true;
 	}
@@ -292,9 +304,9 @@ class pLemmaSheetDataModel extends pDataModel{
 	// Deleting all links if needed
 	public function deleteLinks($table, $single = false){
 		if(!$single)
-			$this->customQuery("DELETE FROM $table WHERE (word_id_1 = ".$this->_lemma['id'].") OR (word_id_2 = ".$this->_lemma['id'].");");
+			$this->complexQuery("DELETE FROM $table WHERE (word_id_1 = ".$this->_lemma['id'].") OR (word_id_2 = ".$this->_lemma['id'].");");
 		else
-			$this->customQuery("DELETE FROM $table WHERE word_id  = ".$this->_lemma['id'].";");
+			$this->complexQuery("DELETE FROM $table WHERE word_id  = ".$this->_lemma['id'].";");
 		return true;
 	}
 
@@ -315,7 +327,7 @@ class pLemmaSheetDataModel extends pDataModel{
 		if($text == $this->_links['usage_notes'] OR ($text == '' AND $this->_links['usage_notes'] == false))
 			return true;
 		else
-			$this->customQuery("DELETE FROM usage_notes WHERE word_id = ".$this->_lemma['id']);
+			$this->complexQuery("DELETE FROM usage_notes WHERE word_id = ".$this->_lemma['id']);
 
 		$dM = new pDataModel('usage_notes');
 
