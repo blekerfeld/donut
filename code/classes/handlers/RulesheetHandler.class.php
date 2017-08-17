@@ -114,7 +114,7 @@ class pRulesheetHandler extends pHandler{
 	public function ajaxRemove(){
 		$ruleset = $this->_data[0]['ruleset'];
 		$this->dataModel->remove(0, 0, pRegister::arg()['id']);
-		echo "<script>window.location = '".p::Url('?rules/view/'.str_replace('/', ':', $this->dataModel->complexQuery("SELECT name FROM rulesets WHERE id = $ruleset")->fetchAll()[0]['name']))."';</script>";
+		echo "<script>window.location = '".p::Url('?rules/view/'.str_replace('/', ':', $this->dataModel->customQuery("SELECT name FROM rulesets WHERE id = $ruleset")->fetchAll()[0]['name']))."';</script>";
 	}
 
 	public function ajaxNew($id = 0){

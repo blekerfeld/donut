@@ -31,14 +31,14 @@ class pSetHandler extends pHandler{
 		$this->_ruleSets = $this->dataModel->getObjects()->fetchAll();
 
 		// Getting the 'files' aka items
-		$complexQuery = array();
+		$customQuery = array();
 		$count = 0;
 		foreach($this->_activeSection['sets'] AS $set){
-			$complexQuery[] = "SELECT * FROM (SELECT ".$this->_activeSection['sets_fields'].", '".$set[1]."' AS set_type FROM  ".$set[0]." WHERE in_set = 1 AND ".$this->_activeSection['hitOn']." = $id ORDER BY ".$set[0].".".$this->_activeSection['sets_name'][$set[1]]." ASC) as query_".$count." ";
+			$customQuery[] = "SELECT * FROM (SELECT ".$this->_activeSection['sets_fields'].", '".$set[1]."' AS set_type FROM  ".$set[0]." WHERE in_set = 1 AND ".$this->_activeSection['hitOn']." = $id ORDER BY ".$set[0].".".$this->_activeSection['sets_name'][$set[1]]." ASC) as query_".$count." ";
 			$count++;
 		}
 
-		$this->_rules = $this->dataModel->complexQuery(implode(' UNION ALL ', $complexQuery))->fetchAll();
+		$this->_rules = $this->dataModel->customQuery(implode(' UNION ALL ', $customQuery))->fetchAll();
 
 		$this->dataModel->setCondition(" WHERE id = '".$id."' ");
 		if(!isset(pRegister::arg()['action']) OR pRegister::arg()['action'] != 'new' OR pRegister::arg()['action'] != 'edit')
@@ -84,7 +84,7 @@ class pSetHandler extends pHandler{
 			return parent::catchAction($action, $template, $arg);
 
 		if($action == 'remove'){
-			$this->dataModel->complexQuery("DELETE FROM ".$this->_activeSection['table']." WHERE id = '".pRegister::arg()['id']."' OR parent = '".pRegister::arg()['id']."';");
+			$this->dataModel->customQuery("DELETE FROM ".$this->_activeSection['table']." WHERE id = '".pRegister::arg()['id']."' OR parent = '".pRegister::arg()['id']."';");
 			$this->dataModel->remove(0, 0, pRegister::arg()['id']);
 			goto done;
 		}
@@ -151,7 +151,7 @@ class pSetHandler extends pHandler{
 		
 			if($action == 'edit')
 				// We would have to change all children as well
-				$this->dataModel->complexQuery("UPDATE rulesets
+				$this->dataModel->customQuery("UPDATE rulesets
 				SET name = Replace(name, '$oldName', '".pRegister::post()['admin_form_name']."');");
 
 			done: 

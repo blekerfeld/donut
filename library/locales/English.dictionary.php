@@ -140,7 +140,6 @@ p::defineLocale('DA_LANG_FLAG', "Flag");
 p::defineLocale('DA_LANG_NAME', "Language name");
 p::defineLocale('DA_LANG_SHOWNAME', "Selector name");
 p::defineLocale('DA_LANG_ACTIVATED', "Activated");
-p::defineLocale('DA_LANG_COLOR', "Display colour");
 p::defineLocale('DA_LANG_LOCALE', "Language code");
 p::defineLocale('DA_LANG_EDIT', "Edit language");
 p::defineLocale('DA_LANG_NEW', "Add a new language");

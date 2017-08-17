@@ -67,7 +67,7 @@ class pIrregularTable extends pTemplatePiece {
 						if(!$row['inflected'][$column['id']][1])
 							$form = $twolc->feed($row['inflected'][$column['id']][0])->toSurface();
 						else
-							$form = $twolc->feed($row['inflected'][$column['id']][0])->toSurface();
+							$form = $twolc->feed($row['inflected'][$column['id']][0])->toSurface().'* ';
 
 						if($row['inflected'][$column['id']][1])
 							$surface = $twolc->feed($row['inflected'][$column['id']][0])->toSurface();

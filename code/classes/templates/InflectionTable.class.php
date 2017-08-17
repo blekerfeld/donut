@@ -49,7 +49,6 @@ class pInflectionTable extends pTemplatePiece {
 				else{
 					$output .= "<tr><td class='row_name'>".$row['self']['name']."</td>";
 					foreach($row['columns'] as $column){
-						
 						$surface = $twolc->feed($row['inflected'][$column['id']][0])->toSurface();
 						$output .= "<td class='row_inflected with_column'>".$surface."</td>";
 					}
@@ -69,9 +68,9 @@ class pInflectionTable extends pTemplatePiece {
 		if(isset($this->_inflCache[$hash]) AND $this->_inflCache[$hash] == $inflection)
 			return false;
 		elseif(isset($this->_inflCache[$hash]))
-			$dM->complexQuery("DELETE FROM lemmatization WHERE lemma_id = ".$this->_lemma->read('id') . " AND hash = '".$hash."'");
+			$dM->customQuery("DELETE FROM lemmatization WHERE lemma_id = ".$this->_lemma->read('id') . " AND hash = '".$hash."'");
 		if($inflection != $this->_lemma->read('native') AND $inflection != $this->_lemma->read('lexical_form'))
-			return $dM->complexQuery("INSERT INTO lemmatization VALUES(NULL, ".p::Quote($inflection).", '".$hash."', '".$this->_lemma->read('id')."');");
+			return $dM->customQuery("INSERT INTO lemmatization VALUES(NULL, ".p::Quote($inflection).", '".$hash."', '".$this->_lemma->read('id')."');");
 		return false;
 	}
 

@@ -39,6 +39,9 @@ class pTablesheetStructure extends pStructure{
 		// If there is an offset, we need to define that
 		if(isset(pRegister::arg()['offset']))
 			$this->_parser->setOffset(pRegister::arg()['offset']);
+
+		if(!isset(pRegister::arg()['ajax']))
+			p::Out("<div class='rulesheet-header'>".p::Markdown("## ".$this->_structure[$this->_section]['surface'])."</div><br />");
 			
 		// Let's handle the action by the object
 		if(isset(pRegister::arg()['action'])){

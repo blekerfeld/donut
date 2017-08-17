@@ -123,7 +123,7 @@ class pTranslation extends pEntry{
 		$dM->getObjects();
 
 		if($dM->data()->rowCount() == 0)
-			$dM->complexQuery("DELETE FROM translations WHERE id = ".$ID);
+			$dM->customQuery("DELETE FROM translations WHERE id = ".$ID);
 		else
 			return false;
 	}

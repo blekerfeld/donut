@@ -1,8 +1,8 @@
-@import url(https://fonts.googleapis.com/css?family=Libre+Franklin|Merriweather|Lato|Open+Sans|Raleway);
+@import url(https://fonts.googleapis.com/css?family=Righteous|Libre+Franklin|Merriweather|Noto+Sans|Lato|Open+Sans|Raleway);
 @font-face{font-family:Gentium;src:url(vendors/fonts/GenBasR.ttf)}@font-face{font-family:Gentium;src:url(vendors/fonts/GenBasB.ttf);font-weight:700}@font-face{font-family:Gentium;src:url(vendors/fonts/GenBasI.ttf);font-style:italic}
 @font-face{font-family:Kollektif;src:url(vendors/fonts/kollektif.ttf)}
 @font-face{font-family:Koliko;src:url(vendors/fonts/koliko.ttf)}
-@font-face{font-family:'Noto Sans UI';src:url(vendors/fonts/NotoSansUI-Italic.woff) format('woff'),url(vendors/fonts/NotoSansUI-Italic.ttf) format('truetype');font-weight:400;font-style:italic}@font-face{font-family:'Noto Sans UI';src:url(vendors/fonts/NotoSansUI-Bold.woff) format('woff'),url(vendors/fonts/NotoSansUI-Bold.ttf) format('truetype');font-weight:700;font-style:normal}@font-face{font-family:'Noto Sans';src:url(vendors/fonts/NotoSans.woff) format('woff'),url(vendors/fonts/NotoSans.ttf) format('truetype');font-weight:400;font-style:normal}@font-face{font-family:'Noto Sans';src:url(vendors/fonts/NotoSans-Italic.woff) format('woff'),url(vendors/fonts/NotoSans-Italic.ttf) format('truetype');font-weight:400;font-style:italic}@font-face{font-family:'Noto Sans UI';src:url(vendors/fonts/NotoSansUI.woff) format('woff'),url(vendors/fonts/NotoSansUI.ttf) format('truetype');font-weight:400;font-style:normal}@font-face{font-family:'Noto Sans UI';src:url(vendors/fonts/NotoSansUI-BoldItalic.woff) format('woff'),url(vendors/fonts/NotoSansUI-BoldItalic.ttf) format('truetype');font-weight:700;font-style:italic}@font-face{font-family:'Noto Sans';src:url(vendors/fonts/NotoSans-Bold.woff) format('woff'),url(vendors/fonts/NotoSans-Bold.ttf) format('truetype');font-weight:700;font-style:normal}@font-face{font-family:'Noto Sans';src:url(vendors/fonts/NotoSans-BoldItalic.woff) format('woff'),url(vendors/fonts/NotoSans-BoldItalic.ttf) format('truetype');font-weight:700;font-style:italic}
+
 
 /* Basic elements */
 
@@ -245,21 +245,16 @@ span.tab, div.tab {
   padding-left: 10px;  
   color: snow;
   text-decoration: none;
-  padding-top: 16px;
+  padding-top: 12px;
   padding-right: calc(5% + 40px);
   padding-left: calc(5% + 40px);
   background:  #1B2B34;
-  padding-bottom: 13px;
-  border-bottom: 3px solid #263D49;
+  padding-bottom: 10px;
   box-shadow: 0px 2px 10px 0px rgba(62,69,94,0.35);
 }
 
 .absolute_header a{
   color: snow;
-}
-
-.absolute_header a:hover{
-  color: #3B66D6!important;
 }
 
 .absolute_header a.text{
@@ -280,10 +275,6 @@ a.siteTitle {
   font-family: Kollektif;
   font-size: 20px;
 } 
-
-a.siteTitle:hover{
-  color: #eee!important;
-}
 
 
 div.outerwrap {
@@ -381,8 +372,7 @@ div.nav a {
 }
 
 div.nav a:hover, div.nav a.admin:hover {
-  border-bottom: 3px solid #D9DDD9;
-  color: snow!important;
+  border-bottom: 3px solid #607193;
 }
 
 div.nav a.active{
@@ -1404,8 +1394,7 @@ span.pSectionTitle.extra {
   white-space: normal;
   line-height: normal;
   font-weight: bolder;
-  font-size: 15px;
-  font-family: Raleway;
+  font-size: 16px;
   font-weight: bold;
   color: black;
   border-bottom: 1px dotted rgba(67,90,110,0.1);
@@ -1742,7 +1731,7 @@ div.btCardHelper span.btBlue{
 div.btCard {
   margin: 20px auto;
   margin-top: 10px;
-  width: 90%;
+  width: 70%;
   padding: 30px;
   background: #fff;
 }
@@ -2583,9 +2572,3 @@ p.dots{
     animation-delay: .4s;
 }
 
-
-.colorfield{
-  display: block;
-  width: 100px;
-  height: 20px;
-}

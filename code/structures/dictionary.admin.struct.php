@@ -358,7 +358,6 @@ return array(
 				new pDataField('flag', DA_LANG_FLAG, '5%', 'flag', true, true, false, '', false),
 				new pDataField('activated', DA_LANG_ACTIVATED, '10%', 'boolean', true, true, true, '', true),
 				new pDataField('locale', DA_LANG_LOCALE, '10%', 'input', true, true, false, '', false),
-				new pDataField('color', DA_LANG_COLOR, '10%', 'color', true, true, false, '', false),
 			),
 			'actions_item' => array(
 				'edit' => $action_edit,

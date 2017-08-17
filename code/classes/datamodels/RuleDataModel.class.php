@@ -81,7 +81,7 @@ class pRuleDataModel extends pDataModel{
 			if(!empty($this->_links)){
 				foreach($this->_links as $key => $deleteArray){
 					foreach($deleteArray as $deleteLink){
-						$this->complexQuery("DELETE FROM morphology_".$key." WHERE morphology_id = '".$this->_singleId."' AND ".$key."_id = '".$deleteLink."'");
+						$this->customQuery("DELETE FROM morphology_".$key." WHERE morphology_id = '".$this->_singleId."' AND ".$key."_id = '".$deleteLink."'");
 					}
 				}
 			}

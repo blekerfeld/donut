@@ -43,7 +43,7 @@ class pEntrySection extends pTemplatePiece{
 
 		$id = spl_object_hash($this);
 
-		$output = "<div ".($this->_closable ? 'class="closable"' : '')."><span class='pSectionTitle title_$id $this->_extraClass  ".($this->_closable ? 'closed pointer' : '')."' ".($this->_closable ? 'onClick="$(\'.title_'.$id.'\').toggleClass(\'closed\');$(\'.content_'.$id.'\').slideToggle(\'fast\');$(\'.showIcon_'.$id.'\').toggle();$(\'.hideIcon_'.$id.'\').toggle();"' : '').">";
+		$output = "<div ".($this->_closable ? 'class="closable pointer" onClick="$(\'.title_'.$id.'\').toggleClass(\'closed\');$(\'.content_'.$id.'\').slideToggle(\'fast\');$(\'.showIcon_'.$id.'\').toggle();"' : '')."><span class='pSectionTitle title_$id $this->_extraClass  ".($this->_closable ? 'closed' : '')."'>";
 
 		if($this->_icon != null)
 			$output .= new pIcon($this->_icon, 10)." ";
@@ -52,7 +52,7 @@ class pEntrySection extends pTemplatePiece{
 			$output .= $this->_title;
 
 		if($this->_closable)
-			$output .= ' <span class="showIcon_'.$id.'">'.(new pIcon('fa-chevron-down', 16)).'</span>';
+			$output .= ' <span class="showIcon_'.$id.'">'.(new pIcon('fa-chevron-down', 12)).'</span><span class="hideIcon_'.$id.' hide">'.(new pIcon('fa-chevron-up', 12)).'</span>';
 
 		if($this->_title != '')
 			$output .= "<br />";

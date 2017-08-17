@@ -127,7 +127,7 @@ class pMainTemplate extends pTemplate{
               <?php if(!pUser::noGuest()){ echo '<a href="'.p::Url('?auth/login').'">'.MMENU_LOGIN.'</a> '; } ?>
             </div>
             <a class='float-left siteTitle noselect'  href="<?php echo p::Url("?home"); ?>">
-              <span style='font-family: koliko;font-size: 15px;'>[<?php echo CONFIG_LOGO_SYMBOL; ?>]</span>  
+              <span style='font-family: koliko;font-size: 15px;'>[/]</span>  
               <?php echo CONFIG_LOGO_TITLE; ?></a> 
            <?php echo (new pMenuTemplate); ?><br id="cl" />  
        </div>

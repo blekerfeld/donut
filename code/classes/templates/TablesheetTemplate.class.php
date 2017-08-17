@@ -9,12 +9,10 @@
 class pTablesheetTemplate extends pTemplate{
 
 	public function tablesheetForm($edit){
-		
-		// The lexical category
-		$type = $this->_data->dataModel->data()->fetchAll()[0];
-	
-	
-		p::Out("<div class='rulesheet-header'>".p::Markdown("## ".ucfirst($type['name'])." - inflection tables")."</div><br />");
+		if($edit)
+			$data = $this->_data->data()->fetchAll()[0];
+		else
+			$data = null;
 
 		p::Out("
 			<div class='rulesheet'>
@@ -24,22 +22,10 @@ class pTablesheetTemplate extends pTemplate{
 				
 		// Going through the tables
 		foreach($this->_data->_tables as $table)
-			p::Out("<a href='".p::Url('?tablesheet/'.$this->_data->id.'/edit/'.$table['id'])."' class='".(($edit AND isset(pRegister::arg()['table_id']) AND pRegister::arg()['table_id'] == $table['id']) ? 'active' : '')."'>".ucfirst($table['name'])."</a>");
+			p::Out("<a href='javascript:void(0)' class='".(($edit AND isset(pRegister::arg()['table_id']) AND pRegister::arg()['table_id'] == $table['id']) ? 'active' : '')."'>".$table['name']."</a>");
 
 		p::Out("</div><div class='tablesheet'>
-			<div class='rulesheet'>
-			<div class='left'>
-				<div class='btCard full'>
-					<div class='btTitle'>Table set-up</div>
-				</div>
-				
-			</div>
-			<div class='right'>
-				<div class='btCard full'>
-					<div class='btTitle'>Table preview</div>
-				</div>
-			</div>
-			</div>
+
 		");
 
 		p::Out("</div>

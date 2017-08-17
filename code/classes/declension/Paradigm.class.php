@@ -2,13 +2,13 @@
 // 	Donut: dictionary toolkit 
 // 	version 0.1
 // 	Thomas de Roo - MIT License
-//	++		File: Paradigm.class.php
+	//	++		File: pParadigm.class.php
 
-// Paradigm: represents an inflectional system
+// The data model for a paradigm 
 
 class pParadigm{
 
-	protected $_id, $_data, $dataModel, $_headings, $_rows, $_columns;
+	protected $_id, $_data, $dataModel, $_headings, $_rows;
 
 	public function __construct($mode){
 
@@ -20,20 +20,12 @@ class pParadigm{
 			$this->_id = $mode;
 		}
 
-		$headings = $this->dataModel->complexQuery("SELECT submodes.* FROM submodes JOIN submode_apply ON submodes.id = submode_apply.submode_id WHERE submode_apply.mode_id = ".$this->_data['id'])->fetchAll();
+		$headings = $this->dataModel->customQuery("SELECT submodes.* FROM submodes JOIN submode_apply ON submodes.id = submode_apply.submode_id WHERE submode_apply.mode_id = ".$this->_data['id'])->fetchAll();
 
 		foreach($headings as $heading)
 			$this->_headings[$heading['id']] = $heading;
 
-		// Create a dummy heading if none found
-		if(empty($this->_headings))
-			$this->_headings['-1'] = array(
-				'id' => '-1',
-				'name' => '',
-				'short_name' => '',
-			);
-
-		$rows = $this->dataModel->complexQuery("SELECT numbers.* FROM numbers JOIN number_apply ON numbers.id = number_apply.number_id WHERE number_apply.mode_id =  ".$this->_data['id'].";")->fetchAll();
+		$rows = $this->dataModel->customQuery("SELECT numbers.* FROM numbers JOIN number_apply ON numbers.id = number_apply.number_id WHERE number_apply.mode_id =  ".$this->_data['id'].";")->fetchAll();
 
 		foreach($rows as $row)
 			$this->_rows[$row['id']] = $row;
@@ -57,7 +49,7 @@ class pParadigm{
 		if($workHeadings != null){
 			// The rest needs to be deleted then
 			foreach($workHeadings as $heading){
-				$dM->complexQuery("DELETE FROM submode_apply WHERE mode_id = '".$this->_data['mode_id']."' AND submode_id = '".$heading['id']."'");
+				$dM->customQuery("DELETE FROM submode_apply WHERE mode_id = '".$this->_data['mode_id']."' AND submode_id = '".$heading['id']."'");
 			}
 		}
 	}
@@ -79,7 +71,7 @@ class pParadigm{
 		if($workRows != null){
 			// The rest needs to be deleted then
 			foreach($workRows as $row){
-				$dM->complexQuery("DELETE FROM number_apply WHERE mode_id = '".$this->_data['mode_id']."' AND number_id = '".$row['id']."'");
+				$dM->customQuery("DELETE FROM number_apply WHERE mode_id = '".$this->_data['mode_id']."' AND number_id = '".$row['id']."'");
 			}
 		}
 	}
@@ -89,8 +81,6 @@ class pParadigm{
 
 		// Gettins the columns in case we need them
 		$columns = $this->findColumns();
-		$this->_columns = $columns;
-
 		$output['columns'] = $columns;
 		if($this->_headings != null)
 		foreach($this->_headings as $heading){
@@ -117,7 +107,7 @@ class pParadigm{
 
 	protected function findColumns(){
 
-		return $this->dataModel->complexQuery("SELECT DISTINCT(columns.id), columns.* FROM columns JOIN column_apply WHERE mode_id = ".$this->_id)->fetchAll();
+		return $this->dataModel->customQuery("SELECT DISTINCT(columns.id), columns.* FROM columns JOIN column_apply WHERE mode_id = ".$this->_id)->fetchAll();
 
 	}
 
@@ -131,7 +121,7 @@ class pParadigm{
 
 	protected function findRowNative($row, $heading){
 
-		$check = $this->dataModel->complexQuery("SELECT native FROM words JOIN row_native ON row_native.word_id = words.id WHERE row_native.row_id = ".$row['id']." AND row_native.heading_id = ".$heading['id']);
+		$check = $this->dataModel->customQuery("SELECT native FROM words JOIN row_native ON row_native.word_id = words.id WHERE row_native.row_id = ".$row['id']." AND row_native.heading_id = ".$heading['id']);
 
 		if($check->rowCount() != 0)
 			$row['name'] = $check->fetchAll()[0]['native'];
@@ -173,18 +163,10 @@ class pParadigm{
 					continue;
 				}
 				else
-					$output[] = array($irregRule['irregular_form'], ($irregRule['is_stem'] == 1), true, $irregRule['id'], $this->findIrregularFormsColumns($irregRule['id']), $padding);
+					$output[] = array($irregRule['irregular_form'], ($irregRule['is_stem'] == 1), true, $irregRule['id']);
 		}
 
 		return $output; 
-	}
-
-	protected function findIrregularFormsColumns($ruleID){
-		$ids = $this->dataModel->complexQuery("SELECT column_id AS id FROM morphology_columns AS mc WHERE mc.morphology_id = $ruleID");
-		$output = array();
-		foreach($ids->fetchAll() as $id)
-			$output[] = $id['id'];
-		return $output;
 	}
 
 	protected function findRules($lemma, $heading, $row, $irregular = false, $isAux = false){
@@ -192,7 +174,7 @@ class pParadigm{
 
 		// First we need to fetch all potatial candidates
 
-		$candidates = $this->dataModel->complexQuery("SELECT DISTINCT morphology_id FROM morphology_modes WHERE mode_id = ".$this->_id." UNION
+		$candidates = $this->dataModel->customQuery("SELECT DISTINCT morphology_id FROM morphology_modes WHERE mode_id = ".$this->_id." UNION
 		SELECT DISTINCT morphology_id FROM morphology_submodes WHERE submode_id = ".$heading['id']."  UNION
 		SELECT DISTINCT morphology_id FROM morphology_numbers WHERE number_id = ".$row['id']." UNION
 		SELECT DISTINCT morphology_id FROM morphology_lexcat WHERE lexcat_id = ".$lemma->read('type_id')." UNION
@@ -206,7 +188,7 @@ class pParadigm{
 		foreach($candidates as $candidate){
 
 
-			$validation = $this->dataModel->complexQuery("SELECT id, morphology_id, mode_id AS selective, 'mode' AS selector FROM morphology_modes WHERE morphology_id = ".$candidate['morphology_id']." UNION
+			$validation = $this->dataModel->customQuery("SELECT id, morphology_id, mode_id AS selective, 'mode' AS selector FROM morphology_modes WHERE morphology_id = ".$candidate['morphology_id']." UNION
 				SELECT id, morphology_id, submode_id AS selective, 'submode' AS selector FROM morphology_submodes WHERE morphology_id = ".$candidate['morphology_id']."  UNION
 				SELECT id, morphology_id, number_id AS selective, 'number' AS selector FROM morphology_numbers WHERE morphology_id = ".$candidate['morphology_id']." UNION
 				SELECT id, morphology_id, lexcat_id AS selective, 'lexcat' AS selector  FROM morphology_lexcat WHERE morphology_id = ".$candidate['morphology_id']." UNION
@@ -266,12 +248,12 @@ class pParadigm{
 			$rules[] = 'id = -1';
 
 		if($irregular)
-			return $this->dataModel->complexQuery("SELECT * FROM morphology WHERE (".implode(" OR ", $rules).") AND is_irregular = 1 AND lemma_id = ".$lemma->read('id').";")->fetchAll();
+			return $this->dataModel->customQuery("SELECT * FROM morphology WHERE (".implode(" OR ", $rules).") AND is_irregular = 1 AND lemma_id = ".$lemma->read('id').";")->fetchAll();
 			
 		elseif($isAux)
-			return $this->dataModel->complexQuery("SELECT * FROM morphology WHERE (".implode(" OR ", $rules).") AND is_aux = 1;");
+			return $this->dataModel->customQuery("SELECT * FROM morphology WHERE (".implode(" OR ", $rules).") AND is_aux = 1;");
 		else
-			return $this->dataModel->complexQuery("SELECT * FROM morphology WHERE (".implode(" OR ", $rules).") AND is_irregular = 0;")->fetchAll();			
+			return $this->dataModel->customQuery("SELECT * FROM morphology WHERE (".implode(" OR ", $rules).") AND is_irregular = 0;")->fetchAll();			
 
 	}
 
