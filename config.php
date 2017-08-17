@@ -24,4 +24,4 @@ mb_regex_encoding("UTF-8");
 header("content-type: text/html; charset=UTF-8");  
 
 // Passing on the responsibilty to the big helper class
-require CONFIG_ROOT_PATH . '/code/classes/helpers/p.class.php';
+require CONFIG_ROOT_PATH . '/code/classes/helpers/main.class.php';

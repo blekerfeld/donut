@@ -68,7 +68,7 @@ class pDictionaryFactory{
 		foreach ($filter as $filterInstance)
 			$filterString .= " AND native NOT LIKE '".$filterInstance."%'";
 		
-		$words = (new pDataModel('words'))->customQuery("SELECT words.id, words.native FROM words JOIN translation_words, translations WHERE translations.language_id = ".$this->_secondaryLanguage." AND translation_words.translation_id = translations.id AND translation_words.word_id = words.id AND words.hidden = 0 AND words.native LIKE '".$letter."%' ".$filterString .";")->fetchAll(); 
+		$words = (new pDataModel('words'))->complexQuery("SELECT words.id, words.native FROM words JOIN translation_words, translations WHERE translations.language_id = ".$this->_secondaryLanguage." AND translation_words.translation_id = translations.id AND translation_words.word_id = words.id AND words.hidden = 0 AND words.native LIKE '".$letter."%' ".$filterString .";")->fetchAll(); 
 
 		// Sort the whole thing
 		$words = pAlphabet::sort($words);

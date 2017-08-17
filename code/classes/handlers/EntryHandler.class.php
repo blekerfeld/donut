@@ -48,7 +48,7 @@ class pEntryHandler extends pHandler{
 	public function statsData($subsection = null, $extra = 50){
 		if($subsection == 'search'){
 			$dM = new pDataModel('search_hits');
-			$dM->customQuery("SELECT count(word_id) AS num_word, word_id, user_id, hit_timestamp FROM search_hits GROUP BY word_id ORDER BY num_word DESC LIMIT $extra");
+			$dM->complexQuery("SELECT count(word_id) AS num_word, word_id, user_id, hit_timestamp FROM search_hits GROUP BY word_id ORDER BY num_word DESC LIMIT $extra");
 			return $dM->data()->fetchAll();
 		}
 		return array();
@@ -71,7 +71,7 @@ class pEntryHandler extends pHandler{
 
 	protected function doRandomEntry(){
 		$dM = new pDataModel('words');
-		$random = $dM->customQuery("SELECT id FROM words ORDER BY RAND() LIMIT 1")->fetchAll()[0];
+		$random = $dM->complexQuery("SELECT id FROM words ORDER BY RAND() LIMIT 1")->fetchAll()[0];
 		echo "hoi!";
 		return p::Url('?entry/'.p::HashId($random['id']), true);
 	}

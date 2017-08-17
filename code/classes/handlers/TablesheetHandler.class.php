@@ -15,12 +15,12 @@ class pTablesheetHandler extends pHandler{
 	public function __construct(){
 		// First we are calling the parent's constructor (pHandler)
 		call_user_func_array('parent::__construct', func_get_args());
-		
+
+
 		// Getting the tables (modes)
 		$dM = new pDataModel('modes');
 		$dM->setCondition(" WHERE type_id = ".pRegister::arg()['id']);
 		$this->_tables = $dM->getObjects()->fetchAll();
-
 
 	}
 
@@ -41,6 +41,8 @@ class pTablesheetHandler extends pHandler{
 				return $this->_template->renderNew();
 		}
 		if($action == 'edit'){
+			if(!isset(pRegister::arg()['ajax']))
+				return $this->_template->renderEdit();
 		}
 
 		// Other actions are handled as default

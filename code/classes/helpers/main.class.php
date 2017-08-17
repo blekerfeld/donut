@@ -7,6 +7,7 @@
 
 	// The big p - the helper class!
 
+
 class p{
 
 	public static $Out = array(), $Header = array(), $db, $assets, $locales;
@@ -293,3 +294,4 @@ class p{
 	}
 
 }
+

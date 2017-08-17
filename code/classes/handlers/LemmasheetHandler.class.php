@@ -113,7 +113,7 @@ class pLemmasheetHandler extends pHandler{
 		if(!$editBool)
 			echo '<script>$("#LemmaSheetForm").trigger("reset");</script>';
 
-		die('<script>$(".saving").slideUp();'.(($edit == false) ? '$(".errorSave").slideDown();' : '$(".errorSave").slideUp();$(".successSave").slideDown().delay(1500).slideUp();'.($editBool ? 'setTimeout(function(){ window.location = "'.p::Url('?editor/edit/'.pRegister::arg()['id']).'"; }, 1000);' : ''))."</script>");
+			die('<script>$(".saving").slideUp();'.(($edit == false) ? '$(".errorSave").slideDown();' : '$(".errorSave").slideUp();$(".successSave").slideDown().delay(1500).slideUp();'.($editBool ? 'setTimeout(function(){ window.location = "'.p::Url('?editor/edit/'.pRegister::arg()['id']).'"; }, 1000);' : ''))."</script>");
 	}
 
 	public function ajaxEdit(){
