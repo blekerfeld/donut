@@ -1,8 +1,9 @@
 <?php
-// 	Donut: dictionary toolkit 
-// 	version 0.1
-// 	Thomas de Roo - MIT License
-	//	++		File: terminal.class.php
+// Donut: open source dictionary toolkit
+// version    0.11-dev
+// author     Thomas de Roo
+// license    MIT
+// file:      File: terminal.class.php
 	// Some handy commands for debuging and such
 
 class pTerminal{
@@ -15,7 +16,7 @@ class pTerminal{
 	public function initialState(){
 
 		p::Out("<div class='debugConsole'>");
-		p::Out((new pIcon('fa-rocket', 12))." donut ɑ.1 - terminal ~".pUser::read('username').":".$_SERVER['REMOTE_ADDR']." <br />")	;
+		p::Out("[/] donut 0.11 - terminal ~".pUser::read('username').":".$_SERVER['REMOTE_ADDR']." <br />Logged in as: ".constant("LOGIN_USERG_".pUser::read('role'))."<br /><br />");
 		p::Out("> <input class='debug init' /><div class='debugLoad-init'></div>");
 		p::Out("</div>");
 		p::Out("<script type='text/javascript'>
@@ -35,8 +36,20 @@ class pTerminal{
 			</script>");
 	}
 
+	public function shell($arg, $line){
+		if(!$this->requireArg($arg, 1, 'shell')){
+			echo $this->nextLine($line);
+			return false;
+		}
+		echo shell_exec($arg[1]);
+
+		echo $this->nextLine($line);
+	}
+
 	public function ver($arg, $line){
-		echo "<strong>Donut version 0.1 - public alpha.</strong><br />";
+		$head = file_get_contents(sprintf('.git/refs/heads/%s', 'master'));
+		echo "<strong>donut version 0.11 </strong><br />";
+		echo "<em>build ".substr($head, 0, 7)."</em><br />";
 		echo $this->nextLine($line);
 	}
 

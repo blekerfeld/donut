@@ -1,9 +1,9 @@
 <?php
-
-// 	Donut: dictionary toolkit 
-// 	version 0.1
-// 	Thomas de Roo - MIT License
-//	++	File: MainTemplate.class.php
+// Donut: open source dictionary toolkit
+// version    0.11-dev
+// author     Thomas de Roo
+// license    MIT
+// file:      MainTemplate.class.php
 
 class pMainTemplate extends pTemplate{
 
@@ -152,10 +152,10 @@ class pMainTemplate extends pTemplate{
     </div>
     <div class='absolute_footer'>
     	<img src='<?php echo p::Url('library/images/static/logobw.png'); ?>' />
-        <span class='mobilehide'>build 
+        <span class='mobilehide'> 
          <?php 
           $head = file_get_contents(sprintf('.git/refs/heads/%s', 'master'));
-          echo "<a href='https://github.com/blekerfeld/donut/commit/$head' class='tooltip'><i class='fa fa-github fa-10'></i>".substr($head, 0, 7)."</a>"; 
+          echo "<a href='https://github.com/blekerfeld/donut/commit/$head' class='tooltip'><i class='fa fa-github fa-10'></i> /donut</a> 0.11"; 
         ?> – </span> 
         <span class=''>&copy; 2017 Thomas de Roo </span><br />
     </div>

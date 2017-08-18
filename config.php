@@ -1,9 +1,9 @@
 <?php
-// 	Donut: dictionary toolkit 
-// 	version 0.1
-// 	Thomas de Roo - MIT License
-
-//	++	File:  config.php
+// Donut: open source dictionary toolkit
+// version    0.11-dev
+// author     Thomas de Roo
+// license    MIT
+// file:      config.php
 
 define('CONFIG_DB_HOST', 'localhost');
 define('CONFIG_DB_USER', 'root');

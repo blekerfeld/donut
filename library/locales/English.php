@@ -77,6 +77,11 @@ p::defineLocale('LOGIN_PROCEED', "Proceed");
 p::defineLocale('LOGIN_ERROR', "Username and/or password are not correct.");
 p::defineLocale('LOGIN_SUCCESS', "Succesfully logged in, you will be redirected...");
 p::defineLocale('LOGIN_CHECKING', "Trying to log in...");
+p::defineLocale('LOGIN_USERG_0', "Administrator");
+p::defineLocale('LOGIN_USERG_1', "Editor");
+p::defineLocale('LOGIN_USERG_2', "Translator");
+p::defineLocale('LOGIN_USERG_3', "User");
+p::defineLocale('LOGIN_USERG_4', "Guest");
 
 
 

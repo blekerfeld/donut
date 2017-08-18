@@ -1,9 +1,9 @@
 <?php
-
-// 	Donut: dictionary toolkit 
-// 	version 0.1
-// 	Thomas de Roo - MIT License
-//	++	File: datamodel.class.php
+// Donut: open source dictionary toolkit
+// version    0.11-dev
+// author     Thomas de Roo
+// license    MIT
+// file:      datamodel.class.php
 
 class pDataModel {
 
