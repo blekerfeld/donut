@@ -159,29 +159,21 @@ class p{
 			return false;
 
 		// Let's create a variable to make things a little more readable
-		$language_main_path = self::FromRoot('library/locales/' . $language . '.php');
+		$languagePath = self::FromRoot('library/locales/' . strtolower($language) . '.json');
 
 		// Does this language exist?
-		if(!file_exists($language_main_path))
+		if(!file_exists($languagePath))
 			return die("Language files were not found.");
 
-		// It does exists, let's load the main file
-		include_once $language_main_path;
+		// Let's load the locale
+		self::$locales = json_decode(file_get_contents($languagePath), true); 
 
-		// Now all other files
-		foreach($transfer['lang_sub_files'] as $filename)
-			include self::FromRoot('library/locales/' . $language . '.' . $filename . '.php');
-			
 		// Now it's time to define the constants, with a certaint callback!
-		foreach (self::$locales as $key => $value)
-			define($key, htmlspecialchars($value));
+		foreach (self::$locales['strings'] as $stringholder)
+			foreach($stringholder as $key => $value)
+				define($key, htmlspecialchars($value));
 
 		return true;
-	}
-
-
-	public static function defineLocale($key, $value){
-		self::$locales[$key] = $value;
 	}
 
 	public function Escape($value){
