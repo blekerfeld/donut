@@ -10,7 +10,7 @@
 
 class pDispatcher {
 
-	private $_dispatchData, $_magicArguments = array(array('is:result', 'ajax', 'ajaxLoad', 'nosearch', 'print'), array('offset', 'return', 'position', 'language'), array(array('search', 'dictionary', 'query'))), $_urlArguments, $_arguments;
+	private $_dispatchData, $_magicArguments = array(array('is:result', 'ajax', 'ajaxLoad', 'nosearch', 'print'), array('offset', 'return', 'position', 'language', 'token'), array(array('search', 'dictionary', 'query'))), $_urlArguments, $_arguments;
 
 	public $query, $structureObject;
 

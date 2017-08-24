@@ -58,6 +58,8 @@ class pMainTemplate extends pTemplate{
 		  return (pUser::read('longname') != '' ? pUser::read('longname') : pUser::read('username'))." <a href='".p::Url('?auth/logout')."'>(".MMENU_LOGOUT.")</a>";
 	}
 
+  
+
   public static function toggleSearchBox(){
     self::$_searchBoxShown = true;
   }
@@ -151,13 +153,16 @@ class pMainTemplate extends pTemplate{
     </div>
     </div>
     <div class='absolute_footer'>
-    	<img src='<?php echo p::Url('library/images/static/logobw.png'); ?>' />
-        <span class='mobilehide'> 
+      
+      <img src='<?php echo p::Url('library/images/static/logobw.png'); ?>' />
+      <span class='mobilehide'> 
+        <span class='float-left'>
+         
          <?php 
           $head = file_get_contents(sprintf('.git/refs/heads/%s', 'master'));
-          echo "<a href='https://github.com/blekerfeld/donut/commit/$head' class='tooltip'><i class='fa fa-github fa-10'></i> /donut</a> 0.11"; 
-        ?> – </span> 
-        <span class=''>&copy; 2017 Thomas de Roo </span><br />
+          echo "<a href='https://github.com/blekerfeld/donut/commit/$head' class='tooltip'><i class='fa fa-github fa-10'></i> /donut</a> 0.11-dev"; 
+        ?><br />&copy; 2017 Thomas de Roo</span><span class='float-right'>
+         </span></span><br />
     </div>
   </body>
  </html><?php

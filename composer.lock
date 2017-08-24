@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "content-hash": "6340e205cf2d2a914df29af1babdff63",
+    "content-hash": "df8eb5d447e11ec3c2b1f98253ba00de",
     "packages": [
         {
             "name": "blekerfeld/mpdf",
@@ -12,12 +12,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/blekerfeld/mpdf.git",
-                "reference": "b208440caac1449f3113bd120119eaed50c54e6d"
+                "reference": "cfc1b780509e3bd46c9ddbe187aca068bd062690"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/blekerfeld/mpdf/zipball/b208440caac1449f3113bd120119eaed50c54e6d",
-                "reference": "b208440caac1449f3113bd120119eaed50c54e6d",
+                "url": "https://api.github.com/repos/blekerfeld/mpdf/zipball/cfc1b780509e3bd46c9ddbe187aca068bd062690",
+                "reference": "cfc1b780509e3bd46c9ddbe187aca068bd062690",
                 "shasum": ""
             },
             "require": {
@@ -78,7 +78,7 @@
                 "php",
                 "utf-8"
             ],
-            "time": "2017-08-04 13:17:23"
+            "time": "2017-08-10 13:04:04"
         },
         {
             "name": "delight-im/str",
@@ -115,6 +115,53 @@
                 "strings"
             ],
             "time": "2016-07-27T22:19:41+00:00"
+        },
+        {
+            "name": "eoghanobrien/php-simple-mail",
+            "version": "1.7.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/eoghanobrien/php-simple-mail.git",
+                "reference": "0fd0eb6f4766aee69cf991484e61b2b832fa6614"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/eoghanobrien/php-simple-mail/zipball/0fd0eb6f4766aee69cf991484e61b2b832fa6614",
+                "reference": "0fd0eb6f4766aee69cf991484e61b2b832fa6614",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=5.2.0"
+            },
+            "require-dev": {
+                "phpunit/phpunit": "~4.8",
+                "squizlabs/php_codesniffer": "~2.8"
+            },
+            "type": "library",
+            "autoload": {
+                "classmap": [
+                    "class.simple_mail.php"
+                ]
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Eoghan O'Brien",
+                    "email": "eoghan@eoghanobrien.com",
+                    "homepage": "http://www.eoghanobrien.com",
+                    "role": "Developer"
+                }
+            ],
+            "description": "Provides a simple, chainable wrapper for creating and sending emails using the PHP mail() function.",
+            "homepage": "https://github.com/eoghanobrien/php-simple-mail",
+            "keywords": [
+                "email",
+                "php5"
+            ],
+            "time": "2017-02-17T07:32:04+00:00"
         },
         {
             "name": "erusev/parsedown",

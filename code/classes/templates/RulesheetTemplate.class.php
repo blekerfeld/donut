@@ -70,11 +70,11 @@ class pRulesheetTemplate extends pTemplate{
 			<div class='btCard rulesheetCard'>
 				<div class='btTitle'>".RS_RULE_DETAILS."</div>
 				".(!$edit ? pMainTemplate::NoticeBox('fa-info-circle fa-10', RS_RULE_WILL_BE_ADDED.' <strong class="medium">'.$ruleset['name']."</strong>.", 'notice-subtle') : '')."
-				<div class='btSource'><span class='btLanguage'>".RS_NAME." <span class='xsmall' style='color: darkred;opacity: 1;'>*</span></span><br />
+				<div class='btSource'><span class='btLanguage'>".RS_NAME." <span class='xsmall darkred'>*</span></span></span><br />
 				<span class='btNative'><input class='btInput nWord small normal-font name' value='".($edit ? $data['name'] : '')."'/></span></div>
-				".($edit ? "<div class='btSource'><span class='btLanguage'>".RS_RULESET."<span class='xsmall' style='color: darkred;opacity: 1;'>*</span></span><br />
+				".($edit ? "<div class='btSource'><span class='btLanguage'>".RS_RULESET."<span class='xsmall darkred'>*</span></span></span><br />
 							<span class='btNative'><select class='full-width select-ruleset select2a'>".(new pSelector('rulesets', $data['ruleset'], 'name', true, 'rules', true))->render()."</select></span></div>" : "")."
-				<div class='btSource'><span class='btLanguage'>".RS_STATEMENT." </span><span class='xsmall' style='color: darkred;opacity: 1;'>*</span><br />
+				<div class='btSource'><span class='btLanguage'>".RS_STATEMENT." </span><span class='xsmall darkred'>*</span></span><br />
 				<span class='btNative'><textarea ".($section == 'inflection' ? "placeholder='prefix [stem] suffix'" : "placeholder='[context]_[find]_[context]=>[replace]'")." spellcheck='false' class='btInput Rule elastic allowtabs' id='rule-content'>".($edit ? $data['rule'] : '')."</textarea><div class='describeStatement'></div></span></div>
 				".$this->ruleTypeWatch($section)."
 				<br />

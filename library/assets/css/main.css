@@ -104,6 +104,10 @@ textarea:focus, input:focus {
 
 /* Basic modifiers*/
 
+.darkred{
+  color: darkred;
+}
+
 .em{
   font-style: italic;
 }
@@ -288,9 +292,8 @@ a.siteTitle:hover{
 
 div.outerwrap {
   min-height: 500px;
-  border-bottom:solid 1px #e7e7e7;
+  border-bottom: rgba(150, 150, 150, 0.2) 1px solid;
   background: white;
-  box-shadow: 0px 2px 5px 0px rgba(0,0,0,0.1)!important;
 }
 
 .ulWrap {
@@ -328,21 +331,21 @@ div.outerwrap {
 }
 
 .absolute_footer {
-  margin-bottom: 50px;
-  margin-left: 11%;
-  margin-right: 11%;
-  margin-top: 20px;
-  padding: 3px;
-  padding-left: 2px;
-  padding-top: 10px;
+  margin-right: calc(5% + 40px);
+  margin-left: calc(5% + 40px);
+  padding-top: 5px;
+  margin-top: 10px;
+  margin-bottom: 45px;
   border-top: 1px solid #d2d4d7;
   text-shadow: 1px 2px 3px #fff, 0 0 0 #000, 1px 4px 6px #fff;
+  line-height: 1.8em;
   font-size: 9px;
   color: #333;
-  opacity: .6;
+  opacity: .5;
   text-decoration: none;
   letter-spacing: .1em;
   font-family: Libre Franklin;
+  padding-bottom: 20px;
 }
 
 .absolute_footer a{
@@ -446,6 +449,7 @@ a.button .fa {
 
 .absolute_footer img {
   height: 15px;
+  margin-top: 10px;
   float: right;
   width: auto;
 }
@@ -623,7 +627,7 @@ select.pEditorlanguage {
   border: none;
   font-size: 0.85em;
   margin: 0;
-  margin-bottom: 5px;
+
 }
 
 .danger-notice{
@@ -1852,8 +1856,10 @@ img.btFlag {
 
 span.btLanguage {
   color: #444;
-  font-size: 13px;
+  font-size: 15px;
   opacity: .8;
+  display: inline-block;
+  margin-bottom: 5px;
 }
 
 div.btChooser div.btOption, div.btChooser div.btOptionDefault{
@@ -1940,6 +1946,7 @@ div.btStatus{
 
 div.btSource {
   margin-bottom: 5px;
+  display: block;
 }
 
 .tooltipster-content div.btSource{

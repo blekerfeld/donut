@@ -36,11 +36,11 @@ class pLemmaSheetTemplate extends pTemplate{
 					<div class='rulesheet'>
 						<div class='left'>
 							
-							<div class='btSource'><span class='btLanguage'>Dictionary form <span class='xsmall' style='color: darkred;opacity: 1;'>*</span></span><br />
+							<div class='btSource'><span class='btLanguage'>Dictionary form <span class='xsmall darkred'>*</span></span></span><br />
 							<span class='btNative'><input class='btInput nWord small normal-font lemma-native' value='".($edit ? $data['native'] : '')."'/></span></div>
 							<div class='btSource'><span class='btLanguage'>Lexical form <span class='xsmall' style='color: darkred;opacity: 1;'>".pMainTemplate::NoticeBox('fa-info-circle fa-12', "This optional form is used as base for regular inflection, instead of the dictionary form", 'medium notice-subtle')."</span></span>
 							<span class='btNative'><input class='btInput nWord small normal-font lemma-lexform' value='".($edit ? $data['lexical_form'] : '')."'/></span></div>
-							<div class='btSource'><span class='btLanguage'><a class='generate-ipa float-right small' href='javascript:void();' tabindex='-1'>[ generate IPA ]</a> IPA transcription <span class='xsmall' style='color: darkred;opacity: 1;'>*</span></span><br /><span class='ajaxGenerateIPA'></span>
+							<div class='btSource'><span class='btLanguage'><a class='generate-ipa float-right small' href='javascript:void();' tabindex='-1'>[ generate IPA ]</a> IPA transcription <span class='xsmall darkred'>*</span></span></span><br /><span class='ajaxGenerateIPA'></span>
 							<span class='btNative'><input class='btInput nWord small normal-font lemma-ipa' value='".($edit ? $data['ipa'] : '')."'/></span></div>
 						</div>
 						<div class='right'>

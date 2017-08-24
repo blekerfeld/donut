@@ -41,7 +41,15 @@
          "ERROR_404_MESSAGE":"We are sorry, the page or file you requested could not be found.",
          "SAVED_ERROR":"An error occured while saving",
          "SAVED_EMPTY":"Please submit all required information.",
-         "ENTRY_NOT_FOUND":"The entry you requested is not found."
+         "ENTRY_NOT_FOUND":"The entry you requested is not found.",
+         "LOGIN_ERROR":"Username and/or password are not correct.",
+         "LOGIN_ERROR_ACTIVATED":"This account is not activated yet. Please check your mail for the activation link or contact the server administrator.",
+         "LOGIN_ERROR_BANNED":"Your account has been deactivated by the server administrator.",
+         "AUTH_REGISTER_EMPTY":"Please fill out all required information in order to register.",
+         "AUTH_REGISTER_PASSWORD":"The passwords don't match.",
+         "AUTH_REGISTER_PASSWORD2":"Your password is not strong enough.",
+         "AUTH_REGISTER_MAIL":"This e-mail adress is already in use.",
+         "AUTH_ACTIVATE_ERROR":"Your activation code is not valid, a new activation link has been e-mailed to the mail adress you signed up with." 
       },
       "date":{
          "DATE_TODAY":"Today",
@@ -100,7 +108,7 @@
          "MMENU_EDITORLANG":"Editor language: ",
          "MMENU_EDITORLANGCHANGE":"Change",
          "MMENU_LOGGEDIN":"Welcome, \t",
-         "MMENU_LOGIN":"Editor log in",
+         "MMENU_LOGIN":"Log in",
          "MMENU_LOGOUT":"Log out"
       },
       "auth_login":{
@@ -108,13 +116,12 @@
          "LOGIN_TITLE_SHORT":"Log in",
          "LOGIN_REGISTER_SHORT":"Sign up",
          "LOGIN_USERNAME":"Username",
+         "LOGIN_MAIL":"E-mail adress",
+         "LOGIN_FULLNAME":"Full name",
          "LOGIN_USERNOTFOUND":"User not found",
          "LOGIN_PASSWORD":"Password",
          "LOGIN_PASSWORD_REPEAT":"Repeat password",
          "LOGIN_PROCEED":"Proceed",
-         "LOGIN_ERROR":"Username and/or password are not correct.",
-         "LOGIN_ERROR_ACTIVATED":"This account is not activated yet. Please check your mail for the activation link or contact the server administrator.",
-         "LOGIN_ERROR_BANNED":"Your account has been deactivated by the server administrator.",
          "LOGIN_SUCCESS":"Succesfully logged in, you will be redirected...",
          "LOGIN_CHECKING":"Trying to log in...",
          "LOGIN_USERG_0":"Administrator",
@@ -122,8 +129,13 @@
          "LOGIN_USERG_2":"Translator",
          "LOGIN_USERG_3":"User",
          "LOGIN_USERG_4":"Guest",
+         "AUTH_ACTIVATE_SUCCES":"Your account has been activated. You are now able to log in.",
          "AUTH_REGISTER_TITLE":"Register a new account",
-         "AUTH_REGISTER_LOGIN":"Register"
+         "AUTH_REGISTER_LOGIN":"Log in details",
+         "AUTH_REGISTER_SUCCES":"Your account has been created, you can now log in.",
+         "AUTH_REGISTER_ACTIVATE1":"Your account has been created, but you cannot log in yet. Please check your mail for the activation link.",
+         "AUTH_REGISTER_ACTIVATE2":"Your account has been created, but you cannot log in yet, it needs to get activated by the server adminstrator.",
+         "AUTH_REGISTER_PERSONAL":"Personal information"
       },
       "dictionary":{
          "DICT_TITLE":"Dictionary",
@@ -308,6 +320,12 @@
          "BATCH_TR_PER_TRANS":" already translated",
          "BATCH_TR_LEFT_TRANS":" left to translate",
          "BATCH_TR_ALL":"There "
+      },
+      "mail":{
+         "MAIL_UNFOLLOW":"No longer intressed in recieving mails? Log into your account to disable notifications. ",
+         "MAIL_ACTIVATE_ACCOUNT":"Activate your account",
+         "MAIL_ACTIVATE_ACCOUNT_MSG":"Dear %s, <br /><br /> Please verify your identity by clicking on the link below: <br /> %s <br /><br /> Kind regards, <br /> the %s team"
+         
       }
    }
 }

@@ -3,18 +3,16 @@
 // 	Donut: dictionary toolkit 
 // 	version 0.1
 // 	Thomas de Roo - MIT License
-//	++	File:p.class.php
-
-	// The big p - the helper class!
+//	++	File:Main.class.php
 
 
-class p{
+class Donut{
 
 	public static $Out = array(), $Header = array(), $db, $assets, $locales;
 
-	public static function dispatch($overrideQueryStringIfEmpty = false){
+	public static function dispatch($overrideQueryStringIfEmpty = true){
 		
-		return (new pDispatcher($overrideQueryStringIfEmpty))->compile($overrideQueryStringIfEmpty)->dispatch()->render();
+		return (new pDispatcher($overrideQueryStringIfEmpty))->compile($overrideQueryStringIfEmpty)->dispatch();
 	
 	}
 
@@ -28,10 +26,6 @@ class p{
 
 		// The files we are going to include
 		$filenames = array();
-
-		// Loading third party php assets
-		foreach(self::$assets['php'] as $phpfile)
-			$filenames[] = self::FromRoot('library/assets/php/'.$phpfile);
 
 		// Composer autoload:
 		$filenames[] = self::FromRoot('vendor/autoload.php');
@@ -62,13 +56,13 @@ class p{
 		// Rewelcome our previous-session logged in guest
 		pUser::restore();
 
+		return new self;
+
 	}
 
 	public static function Out($input){
 		self::$Out[] = $input;
 	}
-
-
 
 	public static function Empty(){
 		return self::$Out = array();
@@ -171,7 +165,7 @@ class p{
 		// Now it's time to define the constants, with a certaint callback!
 		foreach (self::$locales['strings'] as $stringholder)
 			foreach($stringholder as $key => $value)
-				define($key, htmlspecialchars($value));
+				define($key, $value);
 
 		return true;
 	}
@@ -287,3 +281,7 @@ class p{
 
 }
 
+// Alias
+class p extends Donut{
+
+}

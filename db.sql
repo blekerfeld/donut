@@ -23,6 +23,17 @@ INSERT INTO `antonyms` (`id`, `word_id_1`, `word_id_2`, `score`) VALUES
 (9302,  18, 6,  100),
 (9994,  17, 13, 100);
 
+DROP TABLE IF EXISTS `bans`;
+CREATE TABLE `bans` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `user_id` int(11) NOT NULL,
+  `untill` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00' ON UPDATE CURRENT_TIMESTAMP,
+  PRIMARY KEY (`id`),
+  KEY `user_id` (`user_id`),
+  CONSTRAINT `bans_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`) ON DELETE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
+
 DROP TABLE IF EXISTS `classifications`;
 CREATE TABLE `classifications` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
@@ -115,7 +126,12 @@ INSERT INTO `config` (`id`, `SETTING_NAME`, `SETTING_VALUE`) VALUES
 (14,  'ENABLE_REGISTER',  '1'),
 (15,  'REGISTER_DEFAULT_ROLE',  '3'),
 (16,  'ENABLE_DEFINITIONS', '1'),
-(17,  'LOGO_SYMBOL',  '/');
+(17,  'LOGO_SYMBOL',  '/'),
+(18,  'MAIL_FROM',  'noreply@localhost'),
+(19,  'ENABLE_ACTIVATION_MAIL', '1'),
+(20,  'ENABLE_TOS', '1'),
+(21,  'MAIL_FROM_NAME', 'Donut dictionary'),
+(22,  'REGISTER_ADMIN_ACTIVATION',  '0');
 
 DROP TABLE IF EXISTS `etymology`;
 CREATE TABLE `etymology` (
@@ -509,6 +525,18 @@ INSERT INTO `lemmatization` (`id`, `inflected_form`, `hash`, `lemma_id`) VALUES
 (613, 'geelst', '1_-1_26',  46),
 (614, 'geelst', '3_-1_26',  46),
 (615, 'mannen', '3_1_1',  17);
+
+DROP TABLE IF EXISTS `log`;
+CREATE TABLE `log` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `identifier` int(11) NOT NULL,
+  `user_id` int(11) NOT NULL,
+  `timestamp` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  PRIMARY KEY (`id`),
+  KEY `user_id` (`user_id`),
+  CONSTRAINT `log_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`) ON DELETE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
 
 DROP TABLE IF EXISTS `modes`;
 CREATE TABLE `modes` (
@@ -4010,7 +4038,13 @@ INSERT INTO `search_hits` (`id`, `word_id`, `user_id`, `hit_timestamp`) VALUES
 (3115,  13, 1,  '2017-08-18 01:46:07'),
 (3116,  17, 1,  '2017-08-18 01:47:00'),
 (3117,  26, 1,  '2017-08-18 01:47:00'),
-(3118,  13, 1,  '2017-08-18 01:47:00');
+(3118,  13, 1,  '2017-08-18 01:47:00'),
+(3119,  26, 1,  '2017-08-23 19:48:43'),
+(3120,  17, 1,  '2017-08-23 19:48:44'),
+(3121,  17, 3,  '2017-08-24 14:09:50'),
+(3122,  26, 3,  '2017-08-24 14:09:50'),
+(3123,  13, 3,  '2017-08-24 14:09:50'),
+(3124,  17, 3,  '2017-08-24 14:09:56');
 
 DROP TABLE IF EXISTS `subclassifications`;
 CREATE TABLE `subclassifications` (
@@ -4414,15 +4448,41 @@ CREATE TABLE `users` (
   `reg_date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   `role` int(11) NOT NULL,
   `avatar` varchar(255) NOT NULL,
+  `activated` int(11) NOT NULL,
+  `might_be_banned` int(11) NOT NULL,
+  `email` varchar(255) NOT NULL,
+  `disable_notifications` int(11) NOT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
-INSERT INTO `users` (`id`, `longname`, `username`, `password`, `reg_date`, `role`, `avatar`) VALUES
-(0, 'Guest',  'guest',  '', '2017-03-30 22:54:37',  4,  ''),
-(1, 'Thomas de Roo',  'blekerfeld', '70674e943bcd2ce395ff619cff93c980f1cec914445cd69a30d612c7988e9966', '2017-06-05 01:07:32',  0,  'https://avatars3.githubusercontent.com/u/13293128?v=3&s=460'),
-(2, '', 'Charlie',  'd88aad0fd193b6ac9c03db2edddf9d1402956df84e709932dd2c4b70e5dc7f1b', '2017-02-12 17:41:56',  0,  ''),
-(3, 'Mr. Donut',  'donut',  'e69fd784f93f82eb6bf5148f0a0e3f5282df5ac10427ab3d6704799adca95a07', '2017-03-30 22:46:27',  0,  ''),
-(4, 'John Sprinkle',  'sprinkle', 'e69fd784f93f82eb6bf5148f0a0e3f5282df5ac10427ab3d6704799adca95a07', '2017-04-03 19:27:40',  3,  '');
+INSERT INTO `users` (`id`, `longname`, `username`, `password`, `reg_date`, `role`, `avatar`, `activated`, `might_be_banned`, `email`, `disable_notifications`) VALUES
+(0, 'Guest',  'guest',  '', '2017-08-24 12:04:51',  4,  '', 1,  0,  'niet@veel.com',  0),
+(1, 'Thomas de Roo',  'blekerfeld', '70674e943bcd2ce395ff619cff93c980f1cec914445cd69a30d612c7988e9966', '2017-08-24 12:04:51',  0,  'https://avatars3.githubusercontent.com/u/13293128?v=3&s=460',  1,  0,  'niet@veel.com',  0),
+(2, '', 'Charlie',  'd88aad0fd193b6ac9c03db2edddf9d1402956df84e709932dd2c4b70e5dc7f1b', '2017-08-24 12:04:51',  0,  '', 1,  0,  'niet@veel.com',  0),
+(3, 'Mr. Donut',  'donut',  'e69fd784f93f82eb6bf5148f0a0e3f5282df5ac10427ab3d6704799adca95a07', '2017-08-24 12:04:51',  0,  '', 1,  0,  'niet@veel.com',  0),
+(7, '', 'john', '747ffbddca004ed79297765268861c58dbbb82313153ebe0de48dca67e3be912', '2017-08-24 12:34:40',  3,  '', 1,  0,  'jsparkle@localhost', 0);
+
+DROP TABLE IF EXISTS `user_activation`;
+CREATE TABLE `user_activation` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `user_id` int(11) NOT NULL,
+  `untill` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  `token` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
+  `ipadress` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
+  PRIMARY KEY (`id`),
+  KEY `user_id` (`user_id`),
+  CONSTRAINT `user_activation_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`) ON DELETE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
+INSERT INTO `user_activation` (`id`, `user_id`, `untill`, `token`, `ipadress`) VALUES
+(14,  0,  '2017-08-27 11:35:57',  '823739yP:0', '::1'),
+(15,  0,  '2017-08-27 11:35:57',  '823739yP:0', '::1'),
+(16,  0,  '2017-08-27 11:36:00',  '823738yP:0', '::1'),
+(17,  0,  '2017-08-27 11:36:29',  '8237bcyP:0', '::1'),
+(18,  0,  '2017-08-27 11:36:33',  '82377eyP:0', '::1'),
+(19,  1,  '2017-08-27 11:37:47',  '87426bkA:1', '::1'),
+(20,  0,  '2017-08-27 12:25:32',  'b658a2yP:0', '::1'),
+(21,  0,  '2017-08-27 12:27:04',  'b658b7yP:0', '::1');
 
 DROP TABLE IF EXISTS `words`;
 CREATE TABLE `words` (
@@ -4496,4 +4556,4 @@ INSERT INTO `words` (`id`, `native`, `lexical_form`, `ipa`, `hidden`, `type_id`,
 (63,  'leuk', '', 'lø:k', 0,  5,  0,  0,  '0000-00-00 00:00:00',  '2017-08-15 22:06:34',  1,  NULL),
 (64,  'geil', '', 'xɛi:l',  0,  5,  0,  0,  '0000-00-00 00:00:00',  '2017-08-15 22:21:54',  1,  NULL);
 
--- 2017-08-17 23:52:09
+-- 2017-08-24 12:35:12

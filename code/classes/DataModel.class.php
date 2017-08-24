@@ -38,14 +38,17 @@ class pDataModel {
 	// Might have been through 3 functions already, but yeah, it is how it is.
 	public function setCondition($condition){
 		$this->_condition = $condition;
+		return $this;
 	}
 
 	public function setLimit($limit){
 		$this->_limit = $limit;
+		return $this;
 	}
 
 	public function setOrder($order){
 		$this->_order = $order;
+		return $this;
 	}
 
 	public function getSingleObject($id){

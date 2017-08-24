@@ -34,7 +34,6 @@ class pConnection extends PDO{
 
 	public function cacheQuery($sql, $force_no_cache = false, $force_no_count = false){
 
-
 		$trace = debug_backtrace();
 		$functions = array();
 		foreach($trace as $traceIns)

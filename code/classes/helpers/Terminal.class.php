@@ -41,7 +41,8 @@ class pTerminal{
 			echo $this->nextLine($line);
 			return false;
 		}
-		echo shell_exec($arg[1]);
+
+		echo shell_exec(implode(" ", $arg))."<br />";
 
 		echo $this->nextLine($line);
 	}

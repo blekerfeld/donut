@@ -4,6 +4,7 @@
 		"erusev/parsedown": "^1.6",
 		"hashids/hashids": "^2.0",
         "delight-im/str": "^2.4",
-		"erusev/parsedown-extra": "^0.7.1"
+		"erusev/parsedown-extra": "^0.7.1",
+		"eoghanobrien/php-simple-mail": "^1.7"
 	}
 }

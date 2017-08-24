@@ -53,6 +53,7 @@ class pUser{
 			return ((4 + $minus) == 4 OR (4 + $minus) < 4);
 	}
 
+	// This function assumes the user in question exists, it returns false only if the user is banned.
 	public static function logIn($id){
 		if(!is_numeric($id)){
 			self::$dataModel->setCondition(" WHERE username = '$id' ");
@@ -66,6 +67,11 @@ class pUser{
 		self::load(self::$dataModel->data()->fetchAll()[0]);
 		$arr = array($id, self::read('password'), self::read('username'));
 		setcookie('pKeepLogged', serialize($arr), time()+5*52*7*24*3600, '/'.CONFIG_FOLDER);
+		if(self::read('might_be_banned') == 1 AND self::checkBanned()){
+			self::logOut();
+			return false;
+		}
+		return true;
 	}
 
 	public static function logOut(){
@@ -107,6 +113,10 @@ class pUser{
 
 					if(self::$dataModel->data()->rowCount() == 1){
 						self::load(self::$dataModel->data()->fetchAll()[0]);
+						if(self::read('might_be_banned') == 1 AND self::checkBanned()){
+							self::showBanWarning();
+							return self::logOut();
+						}
 						return $_SESSION['pUser'] = $userInfo[0];
 					}
 
@@ -123,7 +133,6 @@ class pUser{
 			// If nothing happend then we are a guest and we have to log in to the guest account
 			self::$dataModel->setCondition("");
 			self::$dataModel->getSingleObject(0);
-
 			return self::load(self::$dataModel->data()->fetchAll()[0]);
 
 	}
@@ -134,6 +143,10 @@ class pUser{
 		if(array_key_exists($key, self::$user))
 			return self::$user[$key];
 		return false;
+	}
+
+	public function spew(){
+		return self::$user;
 	}
 
 	// This will read out the given field
@@ -168,8 +181,21 @@ class pUser{
 
 	}
 
-	private function checkStrengthPassword($password){
-		return (strlen($password) < 8 OR preg_match("#[0-9]+#", $password) OR preg_match("#[a-zA-Z]+#", $password));
+	public static function activate($token, $ip){
+		$getToken = (new pDataModel('user_activation'))->setCondition(" WHERE token = ".p::Quote($token)." AND ipadress = ".p::Quote($ip)." AND untill > NOW() ")->setLimit("1")->getObjects();
+		if($getToken->rowCount() == 0)
+			return false;
+		else
+			self::$dataModel->complexQuery("UPDATE users SET activated = 1 WHERE id = ".$getToken->fetchAll()[0]['user_id']."; DELETE FROM user_activation WHERE user_id = ".$getToken->fetchAll()[0]['user_id'].";");
+		return true;
+	}
+
+	public function instantActivate($id){
+		self::$dataModel->complexQuery("UPDATE users SET activated = 1 WHERE id = $id");
+	}
+
+	public function checkStrengthPassword($password){
+		return ( (strlen($password) < 8) OR (preg_match("#[0-9]+#", $password)) OR (preg_match("#[a-zA-Z]+#", $password)));
 	}
 
 	public function changePassword($password){
@@ -187,13 +213,19 @@ class pUser{
 		return self::$dataModel->changeField(self::$id, (new pDataField('role')), 4 + $minus);
 	}
 
+	public function checkBanned(){
+		return (new pDataModel('bans'))->setCondition(" WHERE user_id = ".self::$id." AND untill > NOW() ")->getObjects()->rowCount() == 1;
+	}
+
+	public function mailUnique($mail){
+		return (new pDataModel('users'))->setCondition(" WHERE email = ".p::Quote($mail)." ")->getObjects()->rowCount() == 0;
+	}
+
 	public function checkCre($username, $password){
 		self::$dataModel->setCondition(" WHERE username = '".$username."' AND password = '".p::Hash($password)."'");
-		if(self::$dataModel->getObjects()->rowCount() == 1)
-			return true;
-		return false;
+		return self::$dataModel->getObjects();
 	}
 	
-
+	
 }
 
