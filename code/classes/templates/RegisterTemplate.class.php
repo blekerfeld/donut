@@ -20,20 +20,22 @@ class pRegisterTemplate extends pSimpleTemplate{
 		p::Out("<div class='btCard admin' style='width: 800px;'>
 					<div class='btRegister_inner'>
 						<div class='btTitle'>".(new pIcon('account-edit'))." ".AUTH_REGISTER_TITLE."</div>
-						<div class='dotsc hide'>".pMainTemplate::loadDots()."</div>
-						<div class='ajaxLoad'></div>						
+						<div class='btForm'>
+						<div class='dotsc hide'>".pMainTemplate::loadDots()."</div>	
+						<div class='ajaxLoad'></div>			
 						<div class='btSource'><span class='btLanguage'>".LOGIN_USERNAME.": <span class='xsmall darkred'>*</span></span><br />
-						<span class='btNative'><input class='btInput nWord small normal-font username' /></span></div>
+						<span class='btNative'><input class='btInput nWord medium  normal-font username' /></span></div>
 						<div class='btSource'><span class='btLanguage'>".LOGIN_PASSWORD.": <span class='xsmall darkred'>*</span></span><br />
-						<span class='btNative'><input class='btInput nWord small normal-font password' type='password' /></span></div>
+						<span class='btNative'><input class='btInput nWord medium  normal-font password' type='password' /></span></div>
 						<div class='btSource'><span class='btLanguage'>".LOGIN_PASSWORD_REPEAT.": <span class='xsmall darkred'>*</span></span><br />
-						<span class='btNative'><input class='btInput nWord small normal-font password2' type='password' /></span></div>
+						<span class='btNative'><input class='btInput nWord medium  normal-font password2' type='password' /></span></div>
 						<div class='btSource'><span class='btLanguage'>".LOGIN_MAIL.": <span class='xsmall darkred'>*</span></span><br />
-						<span class='btNative'><input class='btInput nWord small normal-font email' /></span></div>
+						<span class='btNative'><input class='btInput nWord medium  normal-font email' /></span></div>
 						<div class='btSource'><span class='btLanguage'>".LOGIN_FULLNAME.": </span><br />
-						<span class='btNative'><input class='btInput nWord small normal-font name' /></span></div><br />
+						<span class='btNative'><input class='btInput nWord medium normal-font fullname' /></span></div>
+						</div>
 						<div class='btButtonBar'>
-						<a  class='btAction medium green no-float not-smooth register-button'>".(new pIcon('account-edit', 12))." ".LOGIN_REGISTER_SHORT."</a>
+						<a  class='btAction medium green no-float not-smooth register-button'>".(new pIcon('account-edit', 12))." ".LOGIN_REGISTER_SHORT."</a> ".STR_OR." <a href='".p::Url('?auth/login')."'>".LOGIN_TITLE_IMP."</a>
 			
 		</div>
 					</div>
@@ -60,13 +62,16 @@ class pRegisterTemplate extends pSimpleTemplate{
 		return pMainTemplate::NoticeBox('fa-info-circle fa-12', AUTH_REGISTER_EMPTY, 'warning-notice ajaxMessage hide')."<script type='text/javascript'>$('.saving').slideUp();$('.ajaxMessage').slideDown();</script>";
 	}
 	public function warningPassword(){
-		return pMainTemplate::NoticeBox('fa-info-circle fa-12', AUTH_REGISTER_PASSWORD, 'warning-notice ajaxMessage hide')."<script type='text/javascript'>$('.saving').slideUp();$('.ajaxMessage').slideDown();</script>";
+		return pMainTemplate::NoticeBox('fa-warning fa-12', AUTH_REGISTER_PASSWORD, 'danger-notice ajaxMessage hide')."<script type='text/javascript'>$('.saving').slideUp();$('.ajaxMessage').slideDown();</script>";
+	}
+	public function warningUsername(){
+		return pMainTemplate::NoticeBox('fa-warning fa-12', AUTH_REGISTER_USERNAME, 'danger-notice ajaxMessage hide')."<script type='text/javascript'>$('.saving').slideUp();$('.ajaxMessage').slideDown();</script>";
 	}
 	public function warningPassword2(){
-		return pMainTemplate::NoticeBox('fa-info-circle fa-12', AUTH_REGISTER_PASSWORD2, 'warning-notice ajaxMessage hide')."<script type='text/javascript'>$('.saving').slideUp();$('.ajaxMessage').slideDown();</script>";
+		return pMainTemplate::NoticeBox('fa-warning fa-12', AUTH_REGISTER_PASSWORD2, 'danger-notice ajaxMessage hide')."<script type='text/javascript'>$('.saving').slideUp();$('.ajaxMessage').slideDown();</script>";
 	}
 	public function warningMail(){
-		return pMainTemplate::NoticeBox('fa-info-circle fa-12', AUTH_REGISTER_MAIL, 'warning-notice ajaxMessage hide')."<script type='text/javascript'>$('.saving').slideUp();$('.ajaxMessage').slideDown();</script>";
+		return pMainTemplate::NoticeBox('fa-warning fa-12', AUTH_REGISTER_MAIL, 'danger-notice ajaxMessage hide')."<script type='text/javascript'>$('.saving').slideUp();$('.ajaxMessage').slideDown();</script>";
 	}
 
 }

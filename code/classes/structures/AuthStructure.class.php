@@ -41,6 +41,10 @@ class pAuthStructure extends pStructure{
 			p::Out($this->_template->warningMail());
 			$error = true;
 		}
+		if(!pUser::usernameUnique(pRegister::post()['username'])){
+			p::Out($this->_template->warningUsername());
+			$error = true;
+		}
 		if($error == false){
 			$data = pRegister::post();
 			$userID = (new pDataModel('users'))->prepareForInsert(array((isset($data['fullname']) ? $data['fullname'] : ''), $data['username'], p::Hash($data['password']), date("Y-m-d H:i:s"), CONFIG_REGISTER_DEFAULT_ROLE, '', '0', '0', $data['email'], '0'))->insert();

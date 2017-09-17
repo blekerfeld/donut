@@ -9,7 +9,8 @@
 
 class pParadigm{
 
-	protected $_id, $_data, $dataModel, $_headings, $_rows, $_columns;
+	protected $_id, $dataModel;
+	public  $_data, $_headings, $_rows, $_columns;
 
 	public function __construct($mode){
 
@@ -38,6 +39,16 @@ class pParadigm{
 
 		foreach($rows as $row)
 			$this->_rows[$row['id']] = $row;
+
+		$columns = $this->dataModel->complexQuery("SELECT columns.* FROM columns JOIN column_apply ON columns.id = column_apply.column_id WHERE column_apply.mode_id =  ".$this->_data['id'].";")->fetchAll();
+
+		foreach($columns as $column)
+			$this->_columns[$column['id']] = $column;
+	}
+
+
+	public static function preview($name, $headings, $rows, $columns){
+		return p::Out(new pPreviewTable($name, explode('//', $headings), explode('//', $rows), explode('//', $columns)));
 	}
 
 	
@@ -85,6 +96,28 @@ class pParadigm{
 		}
 	}
 
+	public function updateColumns($columnIDs){
+
+		$workColumns = $this->_columns;
+		$dM = new pDataModel('column_apply');
+
+		foreach($columnIDs as $columnID){
+			if($workColumns == null OR !isset($workColumns[$columnID])){
+				$dM->prepareForInsert(array($columnID, $this->_data['mode_id']));
+				$dM->insert();
+			}elseif(isset($workColumns[$columnID]))
+				unset($workColumns[$columnID]);
+
+		}
+
+		if($workColumns != null){
+			// The rest needs to be deleted then
+			foreach($workColumns as $column){
+				$dM->complexQuery("DELETE FROM column_apply WHERE mode_id = '".$this->_data['mode_id']."' AND column_id = '".$column['id']."'");
+			}
+		}
+	}
+
 	public function compile($lemma){
 		$output = array();
 
@@ -94,23 +127,24 @@ class pParadigm{
 
 		$output['columns'] = $columns;
 		if($this->_headings != null)
-		foreach($this->_headings as $heading){
-			$output[$heading['id']]['heading'] = $heading;
-			$output[$heading['id']]['heading']['columns'] = $columns;
-			$output[$heading['id']]['rows'] = array();
-			foreach($this->_rows as $row ){
-				// The row itself
-				$output[$heading['id']]['rows']['row_'.$row['id']]['self'] = $this->findRowNative($row, $heading);
-				// The inflection	
-				$rules = $this->findRules($lemma, $heading, $row);
-				$output[$heading['id']]['rows']['row_'.$row['id']]['rules'] = $rules;
-				$output[$heading['id']]['rows']['row_'.$row['id']]['columns'] = $columns;
-				// The lexical form or stem
-				$output[$heading['id']]['rows']['row_'.$row['id']]['stems'] = $this->findIrregularForms($lemma, $heading, $row, $rules);
-				// Aux info
-				$output[$heading['id']]['rows']['row_'.$row['id']]['aux'] = $this->findAux($row, $heading, $lemma);
+			foreach($this->_headings as $heading){
+				$output[$heading['id']]['heading'] = $heading;
+				$output[$heading['id']]['heading']['columns'] = $columns;
+				$output[$heading['id']]['rows'] = array();
+				if($this->_rows != null)
+					foreach($this->_rows as $row ){
+						// The row itself
+						$output[$heading['id']]['rows']['row_'.$row['id']]['self'] = $this->findRowNative($row, $heading);
+						// The inflection	
+						$rules = $this->findRules($lemma, $heading, $row);
+						$output[$heading['id']]['rows']['row_'.$row['id']]['rules'] = $rules;
+						$output[$heading['id']]['rows']['row_'.$row['id']]['columns'] = $columns;
+						// The lexical form or stem
+						$output[$heading['id']]['rows']['row_'.$row['id']]['stems'] = $this->findIrregularForms($lemma, $heading, $row, $rules);
+						// Aux info
+						$output[$heading['id']]['rows']['row_'.$row['id']]['aux'] = $this->findAux($row, $heading, $lemma);
+					}
 			}
-		}
 
 
 		return $output;

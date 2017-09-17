@@ -1,5 +1,10 @@
+
 div.card-tabs-bar{
 	border-bottom: 1px solid #eaecef;
+}
+
+div.card-tabs-bar.selectorTabs{
+	border-top: 1px solid #eaecef!important;
 }
 
 div.card-tabs-bar a{
@@ -22,7 +27,7 @@ div.card-tabs-bar a{
 div.card-tabs-bar.selectorTabs{
 	margin-bottom: 0px;
 	border-bottom: none;
-	border-top: 1px solid #eaecef;
+	border-top: 1px solid;
 	font-size: 13px;
 }
 
@@ -73,25 +78,57 @@ div.card-tabs-bar.vertical a.active, div.card-tabs-bar.vertical a.dotted.active{
 
 
 
-div.card-tabs-bar.selectorTabs a.active{
+div.card-tabs-bar.selectorTabs a.active, div.card-tabs-bar.selectorTabs-h a.active{
 	transition: border-color .3s ease;
 }
 
 
-div.card-tabs-bar.selectorTabs a.active.wordsearch{
+a.active.wordsearch{
 	border-color: rgba(17,39,175, 0.3)!important;
 }
 
 div.card-tabs-bar.selectorTabs a.active{     border: 1px solid #eaecef;
-border-top: none;     border-radius: 0px 0px 4px 4px; }
+border-top: none;     border-radius: 0px 0px 5px 5px; }
 
 div.card-tabs-bar.selectorTabs a:hover, div.card-tabs-bar.selectorTabs a.active{
 	opacity: 1;
 }
 
 
-div.card-tabs-bar a.disabled{
+div.card-tabs-bar a.disabled, div.card-tabs-bar a.gray{
 	opacity: .4;
+}
+
+div.card-tabs-bar a.em:hover{
+	color: #000!important;
+	background: #eee!important;
+	border: 1px solid #ddd!important;
+	border-bottom: 0!important;
+	padding: 8px;
+	padding-bottom: 0px;
+	opacity: 1;
+	padding-top: 3px;
+	border-radius: 4px 4px 0px 0px;
+	cursor: pointer;
+}
+
+div.card-tabs-bar a.emS{
+	padding: 10px;
+	padding-bottom: 0px!important;
+	padding-top: 3px;
+	margin: 0!important;
+	border-radius: 4px 4px 0px 0px;
+}
+
+div.card-tabs-bar a.emS:hover{
+	color: #000!important;
+	background: #eee!important;
+	border: 1px solid #ddd!important;
+	border-bottom: 0!important;
+	opacity: 1;
+	padding: 9px;
+	margin: 0!important;
+	padding-top: 3px;
 }
 
 div.card-tabs-bar a:first-child{
@@ -102,13 +139,22 @@ div.card-tabs-bar a:hover{
 	text-decoration: underline;
 }
 
+div.card-tabs-bar a{
+	border-color: #eaeaea;
+}
+
+div.card-tabs-bar.reverse a.active{
+	background: #000!important;
+	color: white!important;
+}
+
 div.card-tabs-bar a.active{
-	border: 1px solid #eaecef;
+	border: 1px solid #eaeaea;
 	border-bottom: none;
 	
 	color: black;
 	font-weight: bold;
-	border-radius: 4px 4px 0px 0px;
+	border-radius: 5px 5px 0px 0px;
 	padding-top: 6px;
 	margin-bottom: -10px;
 	background: #fff;
@@ -118,6 +164,18 @@ div.card-tabs-bar a.active:hover{
 	text-decoration: none;
 }
 
+div.card-tabs-bar a.titles{
+	font-size: 17px!important;
+}
+
+div.card-tabs-bar a.titles.no-margin{
+	margin: 0!important;
+}
+
+div.card-tabs-bar a.titles.no-margin-left{
+	margin-left: 0!important;
+}
+
 div.card-tabs-bar.titles{
 	margin-top: -10px;
 }
@@ -125,6 +183,47 @@ div.card-tabs-bar.titles{
 div.card-tabs-bar.titles a{
 	font-size: 17px;
 }
+
+div.card-tabs-bar.titles.italic a.active{
+	font-size: 17px;
+	margin: 0!important;
+}
+
+div.card-tabs-bar.titles.italic a.active span{
+	border-bottom: 1px dashed  #eaeaea;
+}
+
+
+div.card-tabs-bar.pEntry{
+	margin-top: -50px;
+	margin-left: calc(-20px);
+}
+
+
+
+div.card-tabs-bar.pEntry-fix, div.card-tabs-bar.above{
+	margin-top: -40px;
+	margin-left: calc(-20px);
+}
+
+div.card-tabs-bar.x{
+	margin-left: -10px;
+}
+
+div.card-tabs-bar.y{
+	margin-left: -7px;
+}
+
+div.card-tabs-bar.pEntry-fix-50{
+	margin-top: -51px;
+	margin-bottom: 15px;
+}
+
+div.card-tabs-bar.pEntry-fix-60{
+	margin-top: -60px;
+	margin-bottom: 15px;
+}
+
 
 div.card-tabs-stack div[data-tab]{
 	display: none;
@@ -176,7 +275,7 @@ div.card-tabs-bar.graygreen a{
 
 div.card-tabs-bar.graygreen a.active{
 	background-color: #fafafa;
-	border-top: 4px solid #2CC185;
+	border-top: #333 solid #2CC185;
 }
 
 div.card-tabs-stack.graygreen div[data-tab]{

@@ -47,10 +47,10 @@ html, body {
   margin: 0;
   box-sizing: border-box;
   height:100%;
-  background: #f3f3f3;
+  background: #EDF0F1;
   padding: 0;
   font-family: Noto Sans, Calibri, Sans;
-  font-size: 15px;
+  font-size: 16px;
 }
 
 body{
@@ -113,31 +113,44 @@ textarea:focus, input:focus {
 }
 
 .xxxsmall, .xxxsmall i.fa {
-  font-size: 6px!important;
-}
-
-.xxsmall, .xxsmall i.fa {
   font-size: 7px!important;
 }
 
+.xxsmall, .xxsmall i.fa {
+  font-size: 8px!important;
+}
+
 .xsmall, .xsmall i.fa {
-  font-size: 9px!important;
+  font-size: 10px!important;
 }
 
 .small, .small i.fa {
-  font-size: 11px!important;
+  font-size: 12px!important;
+}
+
+.monospace{
+  font-family: monospace!important;
+}
+
+.notosans{
+  font-family: Noto Sans!important;
 }
 
 .medium {
-  font-size: 13px!important;
+  font-size: 14px!important;
+}
+
+
+.mmedium {
+  font-size: 15px!important;
 }
 
 .xmedium {
-  font-size: 20px!important;
+  font-size: 21px!important;
 }
 
 .xxmedium {
-  font-size: 25px!important;
+  font-size: 26px!important;
 }
 
 .center{
@@ -146,12 +159,20 @@ textarea:focus, input:focus {
   text-align: center;
 }
 
+.inline-block{
+  display: inline-block!important;
+}
+
+.padding-left-40{
+  padding-left: 40px!important;
+}
+
 .counter {
   display: inline-block;  
   text-align: center;
   padding-top: 2px;
   font-style: normal!important;
-  font-size: 11px;
+  font-size: 12px;
   background: #eee;
   font-weight: bold;
   color: #666;
@@ -167,11 +188,11 @@ textarea:focus, input:focus {
 }
 
 .counter.s-13{
-  font-size: 13px;
+  font-size: 14px;
 }
 
 .inline-title, .small-caps {
-  font-size: 15px;
+  font-size: 16px;
   color: #000;
   text-decoration: none;
   text-transform: uppercase;
@@ -180,8 +201,12 @@ textarea:focus, input:focus {
   font-weight: 500;
 }
 
+.hide-partly{
+  opacity: .7;
+}
+
 .small-caps.title {
-  font-size: 16px;
+  font-size: 17px;
   font-weight: bolder;
   font-family: Trebuchet MS;
 }
@@ -210,6 +235,15 @@ span.tab, div.tab {
 
 .no-border{
   border: none!important;
+  resize: none!important;
+}
+
+.no-margin{
+  margin: 0!important;
+}
+
+.margin-bottom-10{
+  margin-bottom: 10px!important;
 }
 
 .max-20 {
@@ -244,70 +278,33 @@ span.tab, div.tab {
 
 /* Basic layout elements*/
 
-.absolute_header {
-  padding: 3px;
-  padding-left: 10px;  
-  color: snow;
-  text-decoration: none;
-  padding-top: 16px;
-  padding-right: calc(5% + 40px);
-  padding-left: calc(5% + 40px);
-  background:  #1B2B34;
-  padding-bottom: 13px;
-  border-bottom: 3px solid #263D49;
-  box-shadow: 0px 2px 10px 0px rgba(62,69,94,0.35);
-}
-
-.absolute_header a{
-  color: snow;
-}
-
-.absolute_header a:hover{
-  color: #3B66D6!important;
-}
-
-.absolute_header a.text{
-  color: snow;
-}
-
-.absolute_header .user{
-  float: right;
-  font-size: 12px;
-  margin-top: 5px;
-}
-
-a.siteTitle {
-  margin-top: 3px;
-  letter-spacing: .05em;
-  font-weight: bold;
-  color: snow;
-  font-family: Kollektif;
-  font-size: 20px;
-} 
-
-a.siteTitle:hover{
-  color: #eee!important;
-}
-
 
 div.outerwrap {
+  margin-top: 45px;
   min-height: 500px;
-  border-bottom: rgba(150, 150, 150, 0.2) 1px solid;
+  border: rgba(150, 150, 150, 0.2) 1px solid;
   background: white;
+  margin-bottom: 0px;
+  padding-top: 10px;
+  border-radius: 4px;
+}
+
+div.outerwrap.no-border{
+  border: none!important;
+  background: none!important;
+  padding: 0!important;
 }
 
 .ulWrap {
   padding: 0px;
-  margin-right: 5%;
-  margin-left: 5%;
+
 }
 
 
 .page {
   padding: 0px;
-  padding-top: 35px;
+  padding-top: 15px;
   background-position: 10% 10%;
-  background: rgba(254,254,254, 1); 
   height: auto;
   padding-bottom: 20px;
 }
@@ -325,21 +322,25 @@ div.outerwrap {
 }
 
 .home-margin{
-  width: 96%;
+  width: 98%;
   margin: 0 auto;
+  padding-top: 10px;
   padding-bottom: 0px;
 }
 
+div.pEntry-inner{
+  padding: 12px;
+  padding-top: 5px;
+}
+
 .absolute_footer {
-  margin-right: calc(5% + 40px);
-  margin-left: calc(5% + 40px);
   padding-top: 5px;
   margin-top: 10px;
   margin-bottom: 45px;
   border-top: 1px solid #d2d4d7;
   text-shadow: 1px 2px 3px #fff, 0 0 0 #000, 1px 4px 6px #fff;
   line-height: 1.8em;
-  font-size: 9px;
+  font-size: 10px;
   color: #333;
   opacity: .5;
   text-decoration: none;
@@ -359,20 +360,23 @@ div.outerwrap {
 div.nav {
   color: #fff;
   display: inline-block;
-  float: left;
   color: #000;
   transition: all .3s;
   padding-left: 10px;
   margin-left: 30px;
+  margin-top: -16px;
+  margin-bottom: -13px;
 }
 
 div.nav a:first-child{
-  margin-left: 0px;
+  margin-left: -20px;
 }
 
 div.nav a {
-  padding: 3px;
-  font-size: 12px;
+  padding: 10px;
+  padding-top: 16px;
+  padding-bottom: 13px;
+  font-size: 13px;
   color: #D9DDD9;
   text-decoration: none;
   letter-spacing: .15em;
@@ -395,7 +399,7 @@ div.nav a.active{
 
 div.nav a.admin{
   margin-right: 5px;
-  font-size:11px;
+  font-size:12px;
   margin-top: 4px;
   border-bottom: 2px solid rgba(142,39,47,0.6);
   border-radius: 7px 7px 0px 0px;
@@ -412,7 +416,7 @@ div.nav a.admin.active{
 
 a.button, a.buttona {
   padding: 9px;
-  font-size: 15px;
+  font-size: 16px;
   color: white;
   cursor: pointer;
   text-decoration: none;
@@ -422,11 +426,11 @@ a.button.buttonheader {
   background: #e3e3e3;
   color: #333;
   margin-top: 4px;
-  font-size: 12px;
+  font-size: 13px;
 }
 
 a.button .fa {
-  font-size: 18px;
+  font-size: 19px;
 }
 
 .footer {
@@ -435,7 +439,7 @@ a.button .fa {
   padding: 10px;
   padding-left: 10px;
   padding-right: 10px;  
-  font-size: 12px;
+  font-size: 13px;
 }
 
 .absolute_footer a.tooltip{
@@ -484,7 +488,7 @@ a.button .fa {
   min-width: 10px;
   min-height: 10px;
   font-family: Raleway;
-  font-size: 10px;
+  font-size: 11px;
   padding: 2px;
   text-align: center;
   padding-left: 5px;
@@ -516,26 +520,26 @@ a.button .fa {
   text-shadow: 0px 1px 2px rgba(50, 50, 50, 0.2);
   text-decoration: none;
   color: #333;
-  font-size: 12px;
+  font-size: 13px;
   margin-left: 2px;
   margin-right: 2px;
   cursor: pointer!important;
 }
 
 .actionbutton .fa {
-  font-size: 12px;
+  font-size: 13px;
 }
 
 .actionbutton i.fa {}
 
 div.title {
-  font-size: 20px;
+  font-size: 21px;
   font-weight: bolder;
 
 }
 
 div.title.small {
-  font-size: 15px;
+  font-size: 16px;
   margin-bottom: 5px;
 }
 
@@ -576,23 +580,18 @@ span.icon-circle.c-orange{
 
 
 .title_header {
-  font-size: 24px;
+  font-size: 25px;
   font-family: 'Raleway';
   font-weight: bold;
   padding: 20px;
   padding: 0px;
 }
 
-select.pEditorlanguage {
-  font-size: 20px;
-  font-family: 'Raleway';
-  margin-left: 20px;
-}
 
-
-.notice, .danger-notice, .succes-notice, .warning-notice, .notice-subtle{
+.notice, .danger-notice, .succes-notice, .warning-notice, .notice-subtle, .hint-notice{
     margin: 10px 0px;
     padding:12px;
+    border-radius: 5px;
 }
 
 .notice.small, .danger-notice.small, .succes-notice.small, .warning-notice.small{
@@ -602,7 +601,7 @@ select.pEditorlanguage {
 .tooltipster-content .notice, .tooltipster-content .danger-notice, .tooltipster-content .succes-notice, .tooltipster-content .warning-notice, .tooltipster-content .notice-subtle{
   padding: 2px;
   margin: 0;
-  font-size: 11px!important;
+  font-size: 12px!important;
 } 
 
 .notice{
@@ -613,7 +612,7 @@ select.pEditorlanguage {
 .notice-subtle{
   color: #333;
   padding: 0px;
-  font-size: 12px;
+  font-size: 13px;
   opacity: .5;
   cursor: pointer;
   transition: opacity .3s, font-size: .05s;
@@ -631,8 +630,15 @@ select.pEditorlanguage {
 }
 
 .danger-notice{
-    color: #D8000C;
-    background-color: #FFBABA;
+   background-color: #F5E4E6 !important; 
+    color: #DD4552 !important;
+    border: 1px dashed #F0B1B7;
+}
+
+.hint-notice{
+  background: #F9FDFF!important;
+  color: #353F44!important;
+  border: dashed #C2CDD0 1px;
 }
 
 .succes-notice{
@@ -645,8 +651,9 @@ select.pEditorlanguage {
 }
 
 .warning-notice{
-  color: #9F6000;
-  background-color: #FEEFB3;
+  color: #7D643F;
+  background-color: #FFFDE5;
+  border: 1px dashed #DED1BF;
 }
 
 
@@ -672,13 +679,14 @@ img.dFlag:hover {
 }
 
 strong.dWord {
-  font-size: 20px;
+  font-size: 22px;
   cursor: pointer;
+  font-family: Merriweather;
   font-weight: bolder;
 }
 
 strong.dWordTranslation a{
-  font-size: 13px;
+  font-size: 14px;
   font-weight: normal;
   color: #444;
   font-family: Noto Sans;
@@ -689,7 +697,7 @@ strong.dWordTranslation a:hover{
 }
 
 .moveResults strong.dWord {
-  font-size: 14px!important;
+  font-size: 15px!important;
 }
 
 strong.dWord:hover {}
@@ -701,7 +709,7 @@ strong.dWord a {
 .dHitTranslation{
   font-family: Libre Franklin;
   font-style: normal;
-  font-size: 12px;
+  font-size: 13px;
   color: #a0a0a0;
 }
 
@@ -735,19 +743,19 @@ strong.dWord a {
 
 .dWordWrapper a.tooltip, .wordLink.tooltip {
   color: #333;
-  font-size: 16px;
+  font-size: 17px;
 }
 
 .dType a.tooltip {
   font-family: Gentium;
   font-style: italic;
-  font-size: 12px;
+  font-size: 13px;
   color: #a0a0a0;
 }
 
 em.dSpec{
   font-family: Arial;
-  font-size: 13px;
+  font-size: 14px;
 }
 
 span.translation.tooltip a{
@@ -764,7 +772,7 @@ span.translation.tooltip a{
   margin-left: 20px;
   margin-bottom: 0px;
   padding: 0px;
-  font-size: 10px;
+  font-size: 11px;
   vertical-align: top;
   color: #34392A;
   width: 50%;
@@ -772,11 +780,11 @@ span.translation.tooltip a{
 
 .dWordWrapper ol li em {
   font-family: Noto Sans;
-  font-size: 12px;
+  font-size: 14px;
 }
 
 .dWordWrapper ol span {
-  font-size: 16px;
+  font-size: 17px;
   vertical-align: baseline;
   font-weight: normal;
   color: #333;
@@ -784,7 +792,7 @@ span.translation.tooltip a{
 
 .pSectionWrapper div.desc, ol div.desc {
   margin: 0px;
-  font-size: 14px;
+  font-size: 15px;
   font-weight: normal;
   font-family: Noto Sans;
   padding: 1px;
@@ -818,7 +826,7 @@ span.translation.tooltip a{
 }
 
 .dialogedit table tr td:first-child {
-  font-size: 14px;
+  font-size: 15px;
   color: #333;
   font-weight: bold;
   vertical-align: top;
@@ -847,23 +855,23 @@ span.translation.tooltip a{
 
 .dDesc {
   margin-left: 20px;
-  font-size: 13px;
+  font-size: 14px;
   font-family: monospace;
 }
 
 .dType {
-  font-size: 13px;
+  font-size: 14px;
 }
 
 .dPron {
-  font-size: 13px;
+  font-size: 14px;
   color: grey;
   cursor: pointer;
 }
 
 .dInflection {
   font-weight: normal;
-  font-size: 13px;
+  font-size: 14px;
   color: grey;
 }
 
@@ -914,13 +922,15 @@ div.table-links-list:hover .tooltip.table-link{
   color: white;
 }
 
-.tooltip:hover {
-  font-weight: bold;
-  font-style: italic;
+
+
+.tooltip {
+  transition: color .2s ease-in!important;
 }
 
-a.tooltip {
-  color: black;
+.tooltip:hover {
+  cursor: pointer;
+  color: #CC6561!important;
 }
 
 .dTranslation {
@@ -929,7 +939,7 @@ a.tooltip {
 }
 
 .dPron:hover {
-  font-size: 16px;
+  font-size: 17px;
 }
 
 
@@ -968,7 +978,7 @@ table.admin tr td.actions a.actions-holder{
 table.admin tr td.actions a.ttip-sub{
   display: none!important;
   width: 45%;
-  font-size: .7em;
+  font-size: .8em;
   color: #333;
   padding: 2px;
 }
@@ -1010,7 +1020,7 @@ table.admin tr td:last-child{
 }
 
 table.admin tr.title td i.fa{
-  font-size: 10px!important;
+  font-size: 11px!important;
 }
 
 
@@ -1061,7 +1071,7 @@ a.gramcat.active {
   border-radius: 3px;
   -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
   outline: none;
-  font-size: 14px;
+  font-size: 15px;
   font-family: Trebuchet, Arial, sans-serif;
   font-weight: bold;
   cursor: pointer;
@@ -1089,7 +1099,7 @@ a.gramcat.active {
   content: "no";
   background: #E74C3C;
   font: Verdana;
-  font-size: 8px;
+  font-size: 9px;
   border-color: #C0392B;
   color: #FFF;
 }
@@ -1097,14 +1107,14 @@ a.gramcat.active {
 .flipswitch:checked:after {
   left: 53%;
   content: "yes";
-  font-size: 8px;
+  font-size: 9px;
   border-color: #1E6334;
   color: #e3e3e3;
   background: #2b8b4a;
 }
 
 .labelswitch {
-  font-size: 12px;
+  font-size: 13px;
   color: #aaa;
 }
 
@@ -1114,19 +1124,19 @@ a.gramcat.active {
 }
 
 input.nWord, textarea.nWord {
-  font-size: 20px;
+  font-size: 21px;
   color: #000!important;
   font-family: Merriweather;
   font-weight: bolder;
   display: inline-block;
   margin: 0 auto;
   padding: 18px!important;
-  border: rgba(150, 150, 150, 0.1) 1px solid;
+  border: #ddd 1px solid;
 }
 
 
 textarea.nWord.small {
-  font-size: 18px;
+  font-size: 19px;
   font-family: Trebuchet MS;
   color: #333;
   padding: 10px!important;
@@ -1157,6 +1167,10 @@ strong.pWord {
   font-family: Merriweather;
 }
 
+strong.pWord.example{
+  font-size: 18px;
+}
+
 span.pDerivationTitle {
   font-size: 14px;
 }
@@ -1165,7 +1179,7 @@ span.pDerivationTitle span.native a {
   font-weight: bold;
   color: #3a484e!important;
   font-family: Merriweather;
-  font-size: 11px;
+  font-size: 12px;
 }
 
 span.pDerivationTitle span.native a:hover {
@@ -1211,7 +1225,7 @@ strong.pWord a {
 }
 
 strong.pWord a:hover {
-  color: #607193!important;
+  color: #1D57CD!important;
   border-bottom: solid 1px #ddd;
 }
 
@@ -1397,8 +1411,7 @@ span.pSectionTitle.first {
 }
 
 span.pSectionTitle em.info {
-  font-size: 12px;
-
+  font-size: 16px;
   font-family: Merriweather;
   font-style: normal;
 }
@@ -1408,9 +1421,8 @@ span.pSectionTitle.extra {
   white-space: normal;
   line-height: normal;
   font-weight: bolder;
-  font-size: 15px;
-  font-family: Raleway;
-  font-weight: bold;
+  font-size: 13px;
+  font-family: Libre Franklin;
   color: black;
   border-bottom: 1px dotted rgba(67,90,110,0.1);
   display: inline-block;
@@ -1419,8 +1431,8 @@ span.pSectionTitle.extra {
   border: 1px solid #eaecef;
   border-bottom: none;
   border-radius: 4px 4px 0px 0px;
-  margin-top: -1px;
-  margin-bottom: -8px;
+  margin-top: -0px;
+  margin-bottom: -2px;
   background: #fff;
 }
 
@@ -1715,15 +1727,12 @@ span.ipa:hover {
 /* BATCH TRANSLATION */
 
 div.btCardHelper{
-  position: relative;
-  top:52px;
-  right: 0px;
-  display: none;
-   padding: 5px;
-   width: 14%;
   float: left;
-  background: #fff;
-  opacity: .6;
+  display: none;   padding: 5px;
+   width: 14%;
+  opacity: .4;
+  margin-left: -50px;
+  margin-top: 27px;
   transition: opacity .3s;
   cursor: pointer;
 }
@@ -1748,13 +1757,25 @@ div.btCard {
   margin-top: 10px;
   width: 90%;
   padding: 30px;
-  background: #fff;
+  
+}
+
+div.btCard.no-padding{
+  padding: 0!important;
+  margin-bottom: 0px;
 }
 
 
 div.btCard.proper{
    border: rgba(150, 150, 150, 0.2) 1px solid;
    border-radius: 4px;
+   background: #fff;
+}
+
+div.btCard.bt{
+  width: 80%;
+  border-radius: 7px;
+  padding: 45px;
 }
 
 div.btCard.full{
@@ -1823,8 +1844,12 @@ div.btTitle {
   margin-bottom: 20px;
   font-weight: bolder;
   font-size: 18px;
-  color: #4C5B66;
-  border-bottom: 1px dotted rgba(67,90,110,0.1);
+  color: #0F0F0E;
+  border-bottom: 1px solid #e9e9e9;
+}
+
+div.btForm{
+  
 }
 
 .btBlue{
@@ -1855,19 +1880,25 @@ img.btFlag {
 
 
 span.btLanguage {
-  color: #444;
-  font-size: 15px;
-  opacity: .8;
+   color: #000;
+  font-size: 16px;
+  opacity: 1;
+  border-bottom: #ddd dashed 1px;
   display: inline-block;
-  margin-bottom: 5px;
+  margin-bottom: 10px;
 }
 
 div.btChooser div.btOption, div.btChooser div.btOptionDefault{
   cursor: pointer;
-  opacity: 0.6;
-  padding: 15px;
+  opacity: 1;
+  padding: 5px;
+  padding-top: 0px;
+  padding-left: 20px;
+  background: #f8f8f8;
+  border-radius: 5px;
   margin: 5px;
-  border: #e7e7e7 1px solid;transition: all .3s;
+  margin-bottom: 10px;
+  transition: all .3s;
 }
 
 div.btChooser div.btOptionDefault{
@@ -1916,9 +1947,7 @@ div.btChooser div.btOption:hover, div.btChooser div.btOptionDefault:hover{
   border-bottom: 1px solid #eee;
 }
 
-div.btCard.admin span.btLanguage {
-  color: #333;
-}
+
 
 span.btField {
   color: #000!important;
@@ -1943,6 +1972,12 @@ div.btStatus{
   cursor: pointer;
 }
 
+div.btTopField{
+  padding: 10px;
+  padding-left: 30px;
+  padding-right: 10px;
+  margin-right: 20px;
+}
 
 div.btSource {
   margin-bottom: 5px;
@@ -2024,6 +2059,11 @@ a.btAction, a.btAction.red-link{
   font-size: 17px;
 }
 
+a.btAction.small{
+  padding: 6px;
+  margin-bottom: 10px;
+}
+
 
 a.btAction.page{
   float: none!important;
@@ -2036,12 +2076,16 @@ a.btAction.blue.page{
   padding: 0;
 }
 
-a.btAction:hover, div.btButtonBar a.btAction.green:hover, div.btButtonBar a.btAction.blue:hover, a.btAction.redbt:hover  {
-  background-image: linear-gradient(top, #607193, #576684)!important;
-  background-image: -webkit-linear-gradient(top, #607193, #576684)!important;
+a.btAction:hover, a.btAction.green:hover, a.btAction.redbt:hover  {
+  background: #3B66D6;
   color: snow;
+  text-decoration: underline;
 }
 
+a.btAction.blue:hover{
+  background: #eee;
+  color: black;
+}
 
 a.btAction.green {
   background-color: #2B8B4A;
@@ -2255,39 +2299,22 @@ table.describe tr.title td{
 }
 
 div.d_admin_menu{
-  transition: width .2s ease-in, background .2s;
-  border-bottom: 2px solid #EAF2F4;
-    background: #FAFBFC;
-  margin-top: -25px;
-  margin-right: calc(-5% - 25px);
-  margin-left: calc(-5% - 25px);
-  padding-left: calc(5% + 42px);
-  padding-right: calc(5% + 42px);
-  padding-top: 3px;
-  padding-bottom: 3px;
+  margin-top: -42px!important;
+  float: left;
 }
-
-
 div.d_admin_menu a{
-  display: inline-block;
-  padding: 5px;
-  margin-top: -3px;
-  margin-bottom: -3px;
-  font-size: 16px;
-  color: #1B2B34;
+  padding-bottom: 4px!important;
 }
 
-
-div.d_admin_menu a.active{
-  background: #0366D6;
-  color: white;
-  text-shadow: initial;
+div.d_top_margin{
+  margin-top: -52px!important;
+  float: left;
+  margin-left: -20px;
+}
+div.d_top_margin a{
+  padding-bottom: 4px!important;
 }
 
-div.d_admin_menu a:hover{
-    background: #1B2B34;
-    color: #eee;
-}
 
 
 
@@ -2340,21 +2367,19 @@ div.debugConsole input{
   font-family: Consolas;
   color: white;
   width: 97%;
+  font-size: 15px;
 }
 
 div.debugConsole{
   color: #fff;
   padding: 40px;
-  padding-top: 5px;
-  padding-bottom: 5px;
   height: 500px;
   overflow: scroll;
+  padding-top: 5px;
+  padding-bottom: 5px;
   background: #111;
   font-family: Consolas;
-  border: 1px solid transparent;
-  border-bottom-right-radius: 5px;
-  border-bottom-left-radius: 5px;
-  border-top: 1px black solid;
+  margin: -0.5px;
 }
 
 div.debugConsole table *{
@@ -2383,6 +2408,10 @@ table.inflections{
    padding: 7px;
 }
 
+table.inflections.preview{
+  width: 100%;
+}
+
 table.inflections tr td:last-child{
   border-right: none!important;
 }
@@ -2395,9 +2424,9 @@ table.inflections td{
 
 table.inflections tr.heading td{
   font-size: 15px;
-  color: #3B66D6;
-  border-bottom: 3px solid #3B66D6;
-  opacity: .7;
+  color: #CC6561;
+  border-bottom: 1px solid #CC6561;
+  opacity: 1;
 }
 
 table.inflections tr.columns_row td.named{
@@ -2439,19 +2468,26 @@ table.inflections tr.title td{
   padding-top: 5px;
 }
 
+
+.fake-browser-ui{
+  background: #fff;
+  padding-bottom: 3px;
+}
+
 .fake-browser-ui .frame {
     display: block;
-    height: 15px;
-    background:  #55688A;
-    border-radius: 5px 5px 0px 0px;
+    height: 10px;
+    background: #000;
+    border: 1px solid #eaeaea;
+    margin: -1px;
 }
 
 .fake-browser-ui span {
     height: 8px;
     width: 8px;
     border-radius: 8px;
-    background-color: #eee;
-    border: 1px solid #dadada;
+    background-color: #ccc;
+    border: 1px solid #aaaaaa;
     float: left;
     margin-top: 3px;
     margin-left: 4px;
@@ -2569,7 +2605,7 @@ table.rules span.dType{
 }
 
 p.dots{
-  font-size: 50px;
+  font-size: 10px;
   text-align: center;
   width: 100%;  
 }

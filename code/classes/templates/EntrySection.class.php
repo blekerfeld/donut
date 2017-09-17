@@ -7,9 +7,9 @@
 
 class pEntrySection extends pTemplatePiece{
 
-	private $_title, $_content, $_forceNoContent, $_informationElements = array(), $_icon, $_closable;
+	private $_title, $_content, $_forceNoContent, $_informationElements = array(), $_icon, $_closable, $_iconsize;
 
-	public function __construct($title, $content, $icon = null, $extra = true,  $forceNoContent = false, $sub = false, $closable = false){
+	public function __construct($title, $content, $icon = null, $extra = true,  $forceNoContent = false, $sub = false, $closable = false, $_iconsize = 10){
 		$this->_title = $title;
 		$this->_icon = $icon;
 		if($extra)
@@ -23,6 +23,7 @@ class pEntrySection extends pTemplatePiece{
 		$this->_forceNoContent = $forceNoContent;
 		$this->_content = $content;
 		$this->_closable = $closable;
+		$this->_iconsize = $_iconsize;
 	}
 
 	public function addInformationElement($information, $class ='', $link = null){
@@ -41,18 +42,18 @@ class pEntrySection extends pTemplatePiece{
 
 	public function __toString(){
 
-		$id = spl_object_hash($this);
+		$id = sha1(spl_object_hash($this).rand(0,5));
 
 		$output = "<div ".($this->_closable ? 'class="closable"' : '')."><span class='pSectionTitle title_$id $this->_extraClass  ".($this->_closable ? 'closed pointer' : '')."' ".($this->_closable ? 'onClick="$(\'.title_'.$id.'\').toggleClass(\'closed\');$(\'.content_'.$id.'\').slideToggle(\'fast\');$(\'.showIcon_'.$id.'\').toggle();$(\'.hideIcon_'.$id.'\').toggle();"' : '').">";
 
 		if($this->_icon != null)
-			$output .= new pIcon($this->_icon, 10)." ";
+			$output .= new pIcon($this->_icon)." ";
 
 		if($this->_title != '')
 			$output .= $this->_title;
 
 		if($this->_closable)
-			$output .= ' <span class="showIcon_'.$id.'">'.(new pIcon('fa-chevron-down', 16)).'</span>';
+			$output .= ' <span class="showIcon_'.$id.'">'.(new pIcon('chevron-down')).'</span>';
 
 		if($this->_title != '')
 			$output .= "<br />";

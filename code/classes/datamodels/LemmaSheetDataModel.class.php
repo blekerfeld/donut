@@ -9,7 +9,7 @@
 
 class pLemmaSheetDataModel extends pDataModel{
 
-	public $_links, $_RuleID, $_translations, $_translationsinput, $_transIDLookUp, $_inflector;
+	public $_links, $_LemmaID, $_translations, $_translationsinput, $_transIDLookUp, $_inflector;
 
 	public function __construct($table, $id = 0){
 		parent::__construct($table);
@@ -30,7 +30,10 @@ class pLemmaSheetDataModel extends pDataModel{
 			// Loading the lemma
 			$this->_LemmaID = $id;
 			$this->getSingleObject($id);
-			$this->_lemma = $this->data()->fetchAll()[0];
+			if($this->data()->fetchAll())
+				$this->_lemma = $this->data()->fetchAll()[0];
+			else
+				return false;
 			// Loading the translations
 			$this->_translations = array();
 			$this->getTranslations();
@@ -156,8 +159,6 @@ class pLemmaSheetDataModel extends pDataModel{
 
 	public function updateForms($forms){
 		// Some predefined configuration
-
-		var_dump($forms);
 
 		$config = array(
 			'irregular' => array(

@@ -13,10 +13,9 @@ class pSetTemplate extends pTemplate{
 
 	public function renderTable(){
 
+		$data = $this->_data->_properData;
 
-		$data = $this->_data->dataModel->data()->fetchAll()[0];
-
-		$newLink = "<a href='javascript:void();' class='btAction blue no-float action-button ttip_file' title='<div class=\"tooltipster-inner\">
+		$newLink = "<a href='javascript:void();' class='btAction small blue no-float action-button ttip_file' title='<div class=\"tooltipster-inner\">
 		<a href=\"javascript:newFolder();\" class=\"new-folder ttip-sub nav\">".(new pIcon('fa-folder', 12))." Folder</a><div class=\"hide loadNewFolder\">".LOADING."</div>";
 						foreach($this->_data->_activeSection['sets'] as $set){
 								$newLink .= "<a href=\"".p::Url("?".$this->_data->_activeSection['editor'].'/'.$set[1].'/new:'.$data['id'])."\" class=\"ttip-new-item ttip-sub nav\">".(new pIcon($set[2], 12))." ". htmlspecialchars($this->_data->_activeSection['sets_strings'][$set[1]])."</a>";
@@ -26,11 +25,13 @@ class pSetTemplate extends pTemplate{
 		$newLink .= "><span class='dType'><strong>".ADD_ITEM." ".(new pIcon('fa-caret-down', 10))."</strong></span></a>";
 
 
-		p::Out("<span class='pSectionTitle extra'>".(new pIcon('fa-folder', 12))." <strong>".$this->breakDownName($data['name'], $this->_data->_app)."</strong></span><div class='pSectionWrapper'><table class='rules'>
+		p::Out("<div class='rulesheet-margin'><br /><span class='float-right small'><br />".$newLink."</span><br /><span class='pSectionTitle extra medium notosans'>".(new pIcon('fa-folder', 12))." <strong>".$this->breakDownName($data['name'], $this->_data->_app)."</strong></span><div class='pSectionWrapper'><table class='rules'>
 					");
 		// One level up
+
+
 		if($data['parent'] != -1){
-			p::Out("<tr><td style='width:15px;'></td><td><a href='".p::Url('?'.$this->_data->_app.'/view/'.str_replace('/', ":", dirname($data['name'])))."'>...</a></td><td></td></tr>");
+			p::Out("<tr><td style='width:15px;'></td><td colspan='4'><a href='".p::Url('?'.$this->_data->_app.'/browser/view/'.str_replace('/', ":", dirname($data['name'])))."'>..</a></td></tr>");
 		}
 
 		p::Out($this->renderFolders());
@@ -41,7 +42,11 @@ class pSetTemplate extends pTemplate{
 			p::Out("<tr><td style='width:15px;'></td><td><span class='dType'>".DA_NO_RECORDS."</span></td><td></td></tr>");
 
 
-		p::Out("</table></div>".$newLink."<a href='javascript:void()' class='bulk-delete btAction no-float redbt red-link'>Delete selected</a><script type='text/javascript'>
+
+
+		p::Out("</table></div>".$newLink."<a href='javascript:void()' class='bulk-delete btAction no-float redbt red-link'>Delete selected</a>
+			</div>
+			<script type='text/javascript'>
 			$('table.rules').checkboxes('range', true);
 			$('a.bulk-delete').click(function(){
 				var checkedItems = []
@@ -143,7 +148,7 @@ class pSetTemplate extends pTemplate{
 			$size = 0;
 		}
 		foreach($explode as $subname){
-			$output .= "<a href='".p::Url('?'.$app.'/view/'.($last ? str_replace('/', ':', $name) : $string.$subname.":"))."'>".($last ? '' : '/')."$subname</a>";
+			$output .= "<a href='".p::Url('?'.$app.'/browser/view/'.($last ? str_replace('/', ':', $name) : $string.$subname.":"))."'>".($last ? '' : '/')."$subname</a>";
 			$string .= $subname.":";
 			if($size > 1 AND $count != $size - 1)
 				$output .=" → ";

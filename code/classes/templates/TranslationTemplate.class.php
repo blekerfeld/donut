@@ -14,11 +14,8 @@ class pTranslationTemplate extends pEntryTemplate{
 
 		//"<a class='' href='javascript:void();'' onclick='window.history.back();'' >".(new pIcon('fa-arrow-left', 12))."</a><strong class='pWord'><span class='native'><a>"
 
-		$back = '';
-		if($backhref != null)
-			$back = "<a class='back-mini' href='".$backhref."'>".(new pIcon('fa-arrow-left', 12))."</a>";	
-
-		$realTitle = p::Markdown("# ".$back." <strong class='pWord'><span class='native'><a>".$this->_data['translation']."</a></span></strong>", true);
+		
+		$realTitle = p::Markdown("#<strong class='pWord'><span class='native'><a>".$this->_data['translation']."</a></span></strong>", true);
 
 		$titleSection = new pEntrySection("", '', null, false, true);
 
@@ -34,7 +31,7 @@ class pTranslationTemplate extends pEntryTemplate{
 	}
 
 	public function renderInfo(){
-		return "<span class='small-caps xsmall'>".sprintf(LEMMA_TRANSLATION_ADDED, "<a href='".p::Url('?auth/profile/'.$this->_data['user_id'])."'>".(new pUser($this->_data['user_id']))->read('username')."</a>", p::Date($this->_data['created_on']))."</span>";
+		return "<span class='small hide-partly'>".sprintf(LEMMA_TRANSLATION_ADDED, "<a href='".p::Url('?auth/profile/'.$this->_data['user_id'])."'>".(new pUser($this->_data['user_id']))->read('username')."</a>", p::Date($this->_data['created_on']))."</span>";
 	}
 
 	public function renderDesc($desc){

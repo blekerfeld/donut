@@ -28,11 +28,13 @@ class pDataModel {
 		else{
 			$this->_fieldstring = "";
 		}
+		return $this;
 	}
 
 	public function setFields($fields){
 		$this->_fields = $fields;
 		$this->generateFieldString();
+		return $this;
 	}
 
 	// Might have been through 3 functions already, but yeah, it is how it is.
@@ -49,6 +51,11 @@ class pDataModel {
 	public function setOrder($order){
 		$this->_order = $order;
 		return $this;
+	}
+
+
+	public static function getRecord($table, $id){
+		return p::$db->cacheQuery("SELECT * FROM ".$table." WHERE id = ".$id." ORDER BY 1 LIMIT 1")->fetchAll()[0];
 	}
 
 	public function getSingleObject($id){

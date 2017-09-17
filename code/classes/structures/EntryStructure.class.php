@@ -7,8 +7,6 @@
 
 class pEntryStructure extends pStructure{
 	
-	protected $_error = null;
-
 	public function compile(){
 		// If the user requests a section and if it extist
 		if(isset(pRegister::arg()['section']) AND array_key_exists(pRegister::arg()['section'], $this->_structure))
@@ -23,7 +21,7 @@ class pEntryStructure extends pStructure{
 		}
 
 
-		$this->_parser = new pParser($this->_structure, $this->_structure[$this->_section], $this->_app, $this->_permission);
+		$this->_parser = new pParser($this);
 		;
 
 		$this->_parser->compile();
@@ -35,26 +33,40 @@ class pEntryStructure extends pStructure{
 	public function render(){
 
 		$searchBox = new pSearchBox;
+		$searchBox->enablePentry();
 
-		if(isset(pRegister::arg()['is:result'], pRegister::session()['searchQuery']))
-			$searchBox->setValue(pRegister::session()['searchQuery']);
+
+		if(isset(pRegister::arg()['is:result'], pRegister::freshSession()['searchQuery']))
+			$searchBox->setValue(pRegister::freshSession()['searchQuery']);
 	
 		pMainTemplate::throwOutsidePage($searchBox);
 
 		// Starting with the wrapper
-		p::Out("<div class='pEntry ".(($this->_error != '' OR $this->_error != null) ? 'hasErrors' : '')."'><div class='home-margin'>");
+
+		if(!isset(pRegister::arg()['ajax']) AND !isset(pRegister::arg()['ajaxLoad']))
+			p::Out("<div class='pEntry ".(($this->_error != '' OR $this->_error != null) ? 'hasErrors' : '')."'><div class='home-margin'>");
 
 		// If logged, show tabs
-		if(pUser::noGuest() AND isset($this->_structure[$this->_section]['edit_url'], pRegister::arg()['id']) AND $this->_section != 'stats')
-			p::Out("<div class='card-tabs-bar titles'>
-				<a class='ssignore ".(!isset(pRegister::arg()['action']) ? 'active' : '')."' href='".p::Url("?entry/".$this->_structure[$this->_section]['section_key'].'/'.pRegister::arg()['id'].(isset(pRegister::arg()['is:result']) ? '/is:result' : ''))."'>".LEMMA_VIEW_SHORT."</a>
-				<a class='ssignore' href='".p::Url($this->_structure[$this->_section]['edit_url'].(is_numeric(pRegister::arg()['id']) ?  pRegister::arg()['id'] : p::HashId(pRegister::arg()['id'], true)[0]).(isset(pRegister::arg()['is:result']) ? '/is:result' : ''))."'>".LEMMA_EDIT_SHORT."</a> 
-				<a class='ssignore ".((isset(pRegister::arg()['action']) AND pRegister::arg()['action'] == 'discuss') ? 'active' : '')."'  href='".p::Url('?entry/'.$this->_structure[$this->_section]['section_key'].'/'.(is_numeric(pRegister::arg()['id']) ?  pRegister::arg()['id'] : p::HashId(pRegister::arg()['id'], true)[0]).'/discuss'.(isset(pRegister::arg()['is:result']) ? '/is:result' : ''))."'>".LEMMA_DISCUSS_SHORT."</a>
-			</div><br />");
+		if(pUser::noGuest() AND isset($this->_structure[$this->_section]['edit_url'], pRegister::arg()['id']) AND $this->_section != 'stats' AND !isset(pRegister::arg()['ajax']) AND !isset(pRegister::arg()['ajaxLoad']))
+
+			p::Out((new pTabBar(MMENU_DICTIONARY, 'fa-book', true, 'titles pEntry-fix-50'))->addSearch()->addHome()
+				->addLink('view', LEMMA_VIEW_SHORT, p::Url("?entry/".$this->_structure[$this->_section]['section_key'].'/'.pRegister::arg()['id'].(isset(pRegister::arg()['is:result']) ? '/is:result' : '')), (!isset(pRegister::arg()['action'])))
+				->addLink('edit', LEMMA_EDIT_SHORT, p::Url($this->_structure[$this->_section]['edit_url'].(is_numeric(pRegister::arg()['id']) ?  pRegister::arg()['id'] : p::HashId(pRegister::arg()['id'], true)[0]).(isset(pRegister::arg()['is:result']) ? '/is:result' : '')), false)
+				->addLink('discuss', LEMMA_DISCUSS_SHORT, p::Url('?entry/'.$this->_structure[$this->_section]['section_key'].'/'.(is_numeric(pRegister::arg()['id']) ?  pRegister::arg()['id'] : p::HashId(pRegister::arg()['id'], true)[0]).'/discuss'.(isset(pRegister::arg()['is:result']) ? '/is:result' : '')), ((isset(pRegister::arg()['action']) AND pRegister::arg()['action'] == 'discuss')))
+			);
+
+
+		if(!pUser::noGuest() AND isset(pRegister::arg()['id']) AND !isset(pRegister::arg()['ajaxLoad']) AND !isset(pRegister::arg()['ajax']))
+			p::Out((new pTabBar(MMENU_DICTIONARY, 'fa-book', true, 'titles pEntry-fix-50'))->addSearch()
+				->addLink('view', LEMMA_VIEW_SHORT, p::Url("?entry/".$this->_structure[$this->_section]['section_key'].'/'.pRegister::arg()['id'].(isset(pRegister::arg()['is:result']) ? '/is:result' : '')), (!isset(pRegister::arg()['action']))));
 
 		// If there is an offset, we need to define that
 		if(isset(pRegister::arg()['offset']))
 			$this->_parser->setOffset(pRegister::arg()['offset']);
+
+
+		if(!isset(pRegister::arg()['ajax']) AND !isset(pRegister::arg()['ajaxLoad']))
+			p::Out("<div class='pEntry-inner'>");
 
 		ajaxSkipOutput:
 
@@ -76,14 +88,15 @@ class pEntryStructure extends pStructure{
 		elseif(in_array($this->_section, array('stats', 'random')))
 			$this->_parser->render();
 
-		if(isset(pRegister::arg()['ajax']))
-			return true;
-
+		
+		if(!isset(pRegister::arg()['ajax']) AND !isset(pRegister::arg()['ajaxLoad']))
+			p::Out("</div>");
 
 		SkipError:
 
 		// Ending content
-		p::Out("</div></div>");
+		if(!isset(pRegister::arg()['ajax']) AND !isset(pRegister::arg()['ajaxLoad']))
+			p::Out("</div></div>");
 
 		// Tooltipster time!
 		p::Out("<script type='text/javascript'>

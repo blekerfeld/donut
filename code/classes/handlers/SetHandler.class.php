@@ -9,7 +9,7 @@
 
 class pSetHandler extends pHandler{
 
-	public $_template, $_rulesheetModel;
+	public $_template, $_rulesheetModel, $_ID;
 
 	// Constructor needs to set up the template as well
 	public function __construct(){
@@ -25,6 +25,7 @@ class pSetHandler extends pHandler{
 		$id = 0;
 		if(isset(pRegister::arg()['id']))
 			$id = $this->pathToID(pRegister::arg()['id']);
+
 
 		// Loading the 'folders' and the items
 		$this->dataModel->setCondition(" WHERE parent = '".$id."' ");
@@ -43,6 +44,9 @@ class pSetHandler extends pHandler{
 		$this->dataModel->setCondition(" WHERE id = '".$id."' ");
 		if(!isset(pRegister::arg()['action']) OR pRegister::arg()['action'] != 'new' OR pRegister::arg()['action'] != 'edit')
 			$this->dataModel->getObjects();
+
+		$this->_ID = $id;
+		$this->_properData = (new pDataModel('rulesets'))->setCondition(" WHERE id =  ".$this->_ID)->getObjects()->fetchAll()[0];
 
 		$this->_template = new pSetTemplate($this);
 
@@ -78,6 +82,9 @@ class pSetHandler extends pHandler{
 
 
 	public function catchAction($action, $template, $arg = null){
+
+		if($action == 'view')
+			return $this->render();
 
 		// Default behaviour
 		if($action != 'new' AND $action != 'edit' AND $action != 'remove')
@@ -172,6 +179,7 @@ class pSetHandler extends pHandler{
 		// If the action is not view, then pass it on
 		if($action != 'view')
 			return $this->catchAction($action, 'pSetTemplate', $this);
+
 
 		return $this->_template->renderTable();
 

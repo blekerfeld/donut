@@ -36,8 +36,10 @@ class Donut{
 		// Then the subordinate classes
 		foreach (glob(CONFIG_ROOT_PATH."/code/classes/*/*.class.php") as $filename)
 			$filenames[] = $filename;
+		foreach (glob(CONFIG_ROOT_PATH."/code/classes/*/*/*.class.php") as $filename)
+			$filenames[] = $filename;
 		// Now it is loading time
-		foreach($filenames as $filename)
+		foreach(array_unique($filenames) as $filename)
 			if(file_exists($filename))
 				require_once $filename;
 			else
@@ -191,7 +193,7 @@ class Donut{
 			}, $text);
 		}
 
-		$parse = new ParsedownExtra;
+		$parse = new pMDParser;
 
 		return "<div class='markdown-body ".($num ? 'num' : '')." ".($block ? 'block' : 'inline-block')."'>".$parse->text($text)."</div>";
 	}

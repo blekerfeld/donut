@@ -86,6 +86,8 @@ class pLemma extends pEntry{
 		
 		global $donut;
 
+
+
 		// Setting the page title
 		pMainTemplate::setTitle($this->_entry['native']);
 
@@ -96,6 +98,8 @@ class pLemma extends pEntry{
 		$this->compileSubEntries();
 
 		p::Out($this->_template->title($this->_type, $this->_class, $this->_subclass));
+
+		p::Out($this->_template->renderInfo());
 
 		if($this->_translations != null) 
 			p::Out($this->_template->parseTranslations($this->_translations));
@@ -110,6 +114,7 @@ class pLemma extends pEntry{
 
 		// Let's throw the subentries through their template
 		p::Out($this->_template->parseSubEntries($this->_subEntries));
+
 
 	}
 
@@ -137,6 +142,7 @@ class pLemma extends pEntry{
 	}
 
 	public function renderStatus(){
+		var_dump($this);
 		return ($this->_entry['hidden'] == 1 ? "<span class='pExtraInfo'>".(new pIcon('fa-eye-slash', 12))." ".LEMMA_HIDDEN."</span>" : '');
 	}
 

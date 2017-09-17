@@ -28,8 +28,6 @@ return array(
 			'actions_item' => array(
 			),
 			'actions_bar' => array(
-				'edit' => new pAction('edit', 'edit', 'fa-pencil', 'lemma-code discussion float-right', null, null, 'words', 'dictionary-admin', null, -3),
-				'remove' => new pAction('remove', 'remove', 'fa-times', 'lemma-code discussion float-right', null, null, 'words', 'dictionary-admin', null, -3),
 			),
 			'save_strings' => $saveStrings,
 		),

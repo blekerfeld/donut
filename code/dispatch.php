@@ -32,9 +32,10 @@ return array(
 			'home' => array(
 				'name' => (new pIcon('fa-book', 12))." ".MMENU_DICTIONARY,
 				'app' => 'home',
+				'class' => 'ssignore',
 			),
 			'dictionary-admin' => array(
-				'name' => MMENU_EDITORMENU." ".(new pIcon('fa-caret-down', 10)),
+				'name' => MMENU_EDITORMENU." ".(new pIcon('chevron-down')),
 				'permission' => -4,
 				'class' => '',	
 				'subitems' => array(
@@ -53,7 +54,7 @@ return array(
 					'rulesheet' => array(
 						'name' => 'Grammar',
 						'icon' => 'dna',
-						'app' => 'rules',
+						'app' => 'grammar/browser',
 						'permission' => -4,
 					),
 					'terminal' => array(
@@ -81,6 +82,7 @@ return array(
 		'arguments' => array(
 		),
 		'override_structure_type' => 'pSimpleStructure',
+		'permission' => 999,
 		'template' => 'pHomeTemplate',
 		'metadata' => array(),
 		'menu' => 'home',
@@ -107,15 +109,16 @@ return array(
 		'menu' => 'dictionary-admin',
 	),
 
-	'tablesheet' => array(
+	'grammar' => array(
 		'page_title' => 'tablesheet',
 		'default_section' => 'tablesheet',
 		'arguments' => array(
-			0 => 'id',
-			1 => 'action',
+			0 => 'action',
+			1 => 'id',
 			2 => 'table_id',
 		),
 		'menu' => 'dictionary-admin',
+		'override_structure_type' => 'pTablesheetStructure',
 	),
 
 
@@ -130,17 +133,6 @@ return array(
 		'menu' => 'dictionary-admin',
 		'override_structure_type' => 'pLemmasheetStructure',
 	),
-
-	'rules' => array(
-		'page_title' => 'Rules',
-		'default_section' => 'browser',
-		'arguments' => array(
-			0 => 'action',
-			1 => 'id',
-		),
-		'menu' => 'dictionary-admin',
-	),
-
 
 
 	'entry' => array(
@@ -163,6 +155,7 @@ return array(
 		),
 		'menu' => '',
 	),	
+
 	'docs' => array(
 		'page_title' => 'Documentation',
 		'default_section' => 'docs',
@@ -171,6 +164,7 @@ return array(
 		),
 		'menu' => '',
 	),	
+
 	'auth' => array(
 		'page_title' => 'Login',
 		'default_section' => 'login',
@@ -210,6 +204,7 @@ return array(
 		'arguments' => array(
 		),
 		'override_structure_type' => 'pSimpleStructure',
+		'permission' => -4,
 		'template' => 'pTerminalTemplate',
 		'metadata' => array(),
 		'menu' => 'dictionary-admin',
@@ -221,6 +216,7 @@ return array(
 		'arguments' => array(
 		),
 		'override_structure_type' => 'pSimpleStructure',
+		'permission' => -4,
 		'template' => 'pGenerateTemplate',
 		'metadata' => array(
 			'default_permission' => -4,

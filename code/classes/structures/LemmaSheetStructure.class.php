@@ -6,35 +6,12 @@
 // file:      admin.structure.class.php
 
 class pLemmasheetStructure extends pStructure{
-	
-
-	private $_error = null;
-
-	public function compile(){
-
-		// If the user requests a section and if it extist
-		if(isset(pRegister::arg()['section']) AND array_key_exists(pRegister::arg()['section'], $this->_structure))
-			$this->_section = pRegister::arg()['section'];
-		else{
-
-			$this->_error = pMainTemplate::NoticeBox('fa-info-circle fa-12', DA_SECTION_ERROR, 'danger-notice');
-
-			$this->_section = $this->_default_section;
-		}
-
-
-		$this->_parser = new pParser($this->_structure, $this->_structure[$this->_section], $this->_app, $this->_permission);
-		;
-
-		$this->_parser->compile();
-
-		pMainTemplate::setTitle($this->_page_title);
-	}
-
-
+		
 	public function render(){
 
 		$searchBox = new pSearchBox;
+		if((isset(pRegister::arg()['action']) && (pRegister::arg()['action'] == 'edit' OR pRegister::arg()['action'] == 'new')))
+			$searchBox->enablePentry();
 
 		if(isset(pRegister::arg()['is:result'], pRegister::session()['searchQuery']))
 			$searchBox->setValue(pRegister::session()['searchQuery']);
@@ -42,21 +19,26 @@ class pLemmasheetStructure extends pStructure{
 		if(!isset(pRegister::arg()['ajax']))
 			pMainTemplate::throwOutsidePage($searchBox);
 
+		if(!isset(pRegister::arg()['ajax']))
+			p::Out("<div class='home-margin pEntry'>");
 
 		if(!isset(pRegister::arg()['ajax']) && (isset(pRegister::arg()['action']) && pRegister::arg()['action'] == 'edit')){
 			if(isset(pRegister::arg()['section']))
 				$section = pRegister::arg()['section'];
 			else
 				$section = 'lemma';
-			p::Out("<div class='home-margin pEntry'><div class='card-tabs-bar titles'>
-					".($section == 'lemma' ? "<a class='ssignore float-right' href='".p::Url('?editor/'.(isset(pRegister::arg()['section']) ? pRegister::arg()['section'] : 'lemma').'/new')."'>".LEMMA_NEW."</a>" : '')."
-					<a class='ssignore' href='".p::Url('?entry/'.(isset(pRegister::arg()['section']) ? pRegister::arg()['section'].'/' : '').pRegister::arg()['id'].(isset(pRegister::arg()['is:result']) ? '/is:result' : ''))."'>".LEMMA_VIEW_SHORT."</a>
-					<a class='active ssignore' href='javascript:void();'>".LEMMA_EDIT_SHORT."</a>
-					<a class='ssignore' href='".p::Url('?entry/'.(isset(pRegister::arg()['section']) ? pRegister::arg()['section'].'/' : '').pRegister::arg()['id'])."/discuss".(isset(pRegister::arg()['is:result']) ? '/is:result' : '')."'>".LEMMA_DISCUSS_SHORT."</a>
-				</div>");
+			p::Out((new pTabBar('Editor', 'lead-pencil', true, 'titles pEntry-fix-50 x'))->addSearch()
+				->addLink('view', LEMMA_VIEW_SHORT, p::Url("?entry/".$this->_structure[$this->_section]['section_key'].'/'.pRegister::arg()['id'].(isset(pRegister::arg()['is:result']) ? '/is:result' : '')), false)
+				->addLink('edit', LEMMA_EDIT_SHORT, p::Url('?editor/'.$this->_section.'/edit/'.(is_numeric(pRegister::arg()['id']) ?  pRegister::arg()['id'] : p::HashId(pRegister::arg()['id'], true)[0]).(isset(pRegister::arg()['is:result']) ? '/is:result' : '')), true)
+				->addLink('discuss', LEMMA_DISCUSS_SHORT, p::Url('?entry/'.$this->_structure[$this->_section]['section_key'].'/'.(is_numeric(pRegister::arg()['id']) ?  pRegister::arg()['id'] : p::HashId(pRegister::arg()['id'], true)[0]).'/discuss'.(isset(pRegister::arg()['is:result']) ? '/is:result' : '')), false)
+			);
 		}
-		elseif(!isset(pRegister::arg()['ajax']))
-			p::Out("<div class='home-margin pEntry'>");
+		elseif(!isset(pRegister::arg()['ajax'])){
+			// Tab bar for new
+			
+			if((isset(pRegister::arg()['action']) && pRegister::arg()['action'] == 'new'))
+				p::Out((new pTabBar('Editor', 'lead-pencil', true, 'titles pEntry-fix-50'))->addSearch()->addLink('n', 'New Lemma', null, true)."<br />");
+		}
 
 
 
@@ -75,13 +57,14 @@ class pLemmasheetStructure extends pStructure{
 				$this->_parser->runData(pRegister::arg()['id']);
 			else
 				$this->_parser->runData();
+
 			$this->_parser->render();
 		}
 
 		skipError:
 
 		// Tooltipster time!
-		p::Out("<script type='text/javascript'>
+		p::Out("</div><script type='text/javascript'>
 
 			$('.ttip').tooltipster({animation: 'grow', animationDuration: 100,  distance: 0, contentAsHTML: true, interactive: true, side:'left'});
 

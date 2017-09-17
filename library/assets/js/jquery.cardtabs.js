@@ -12,15 +12,16 @@ jQuery.fn.cardTabs = function(options){
 
 	var settings = $.extend({
         theme: '',
+        class: ''
      }, options );
 
 	// Initializing
 	var htmlInner = $(this).html();
 	var stack = $('<div />').addClass('card-tabs-stack').html(htmlInner);
-	var bar = $('<div />').addClass('card-tabs-bar titles');
+	var bar = $('<div />').addClass('card-tabs-bar titles ' + settings.class);
 
 	$('.' + mainClass).children('div[data-tab]').each(function(){
-		bar.append($('<a />').attr('href', 'javascript:void();').data('tab', $(this).data('tab')).append($(this).data('tab')));
+		bar.append($('<a />').attr('href', 'javascript:void();').data('tab', $(this).data('tab')).append($('<span />').append($(this).data('tab'))));
 	});
 
 	$('.' + mainClass).html('').append(bar).append(stack);

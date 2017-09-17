@@ -5,6 +5,15 @@ body{
 .actionbar{
   display: none;
 }
+
+.hide-partly{
+  display: none;
+}
+
+.card-tabs-bar{
+  display: none!important;
+}
+
 .home-margin, .pEntry{
   margin: 0;
   padding: 0;

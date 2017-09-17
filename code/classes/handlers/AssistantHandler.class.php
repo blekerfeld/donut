@@ -23,6 +23,7 @@ class pAssistantHandler extends pHandler{
 
 
 	public function render(){
+		pMainTemplate::setNoBorder();
 		$function = "render" . ucfirst($this->_section);
 		if(method_exists($this, $function))
 			return $this->$function();

@@ -7,9 +7,6 @@
 
 class pAdminStructure extends pStructure{
 	
-
-	protected $_error = null;
-
 	public function prepareMenu(){
 		// We don't accept double items
 		foreach($this->_structure as $item)
@@ -34,8 +31,8 @@ class pAdminStructure extends pStructure{
 	public function renderMenu(){
 
 		// Starting the menu
-		$output = "<div class='d_admin_menu'>
-				<div class='stack'>";
+		$output = "<div class='card-tabs-bar d_admin_menu titles above'>
+				<div class='stack'><a class='ssignore disabled no-select' href='javascript:void(0);'>".(new pIcon('tune', 14))." Management panel</a>";
 
 		$items = 0;
 
@@ -52,7 +49,7 @@ class pAdminStructure extends pStructure{
 
 				$items++;
 
-				$output .= "'>".(new pIcon($main['icon'], 16))." ".$main['surface']."</a>";
+				$output .= "'>".(new pIcon($main['icon'], 16))." ".$main['surface'].(isset($main['items']) ? " ".(new pIcon('fa-caret-down', 14)) : '')."</a>";
 		}
 
 		}
