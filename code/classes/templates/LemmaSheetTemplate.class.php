@@ -23,21 +23,23 @@ class pLemmaSheetTemplate extends pTemplate{
 		if($edit)
 			$data = $this->_data->data()->fetchAll()[0];
 		
-		p::Out(pMainTemplate::NoticeBox('fa-spinner fa-spin fa-12', SAVING, 'notice saving hide'));
+		p::Out("<div class='saving hide loaddots'>".pMainTemplate::loadDots()."</div>");
 
 		// That is where the ajax magic happens:
 		p::Out("<div class='ajaxSave'></div>");
 
-		p::Out("
+		
+
+		p::Out("<div class='pEntry'>
 			<form id='LemmaSheetForm'>
-			".($edit ? "<br /><span class='native markdown-body'><h2><strong class='pWord'>".$data['native'].'</strong></h2></span>' : '<span class="markdown-body"><h2>'.LEMMA_NEW.'</h2></span><br />')."<br />
+			".($edit ? "<span class='native markdown-body'><h2><strong class='pWord xxmedium'>".$data['native'].'</strong></h2></span><br />' : '')."
 			<div class='mainTabs'>
 				<div data-tab='Basic information'>
 					<div class='rulesheet'>
 						<div class='left'>
 							
 							<div class='btSource'><span class='btLanguage'>Dictionary form <span class='xsmall darkred'>*</span></span></span><br />
-							<span class='btNative'><input class='btInput nWord small normal-font lemma-native' value='".($edit ? $data['native'] : '')."'/></span></div>
+							<span class='btNative'><input class='btInput nWord small normal-font lemma-native' value='".($edit ? $data['native'] : (isset(pRegister::arg()['pre-filled']) ? urldecode(pRegister::arg()['pre-filled']) : ''))."'/></span></div>
 							<div class='btSource'><span class='btLanguage'>Lexical form <span class='xsmall' style='color: darkred;opacity: 1;'>".pMainTemplate::NoticeBox('fa-info-circle fa-12', "This optional form is used as base for regular inflection, instead of the dictionary form", 'medium notice-subtle')."</span></span>
 							<span class='btNative'><input class='btInput nWord small normal-font lemma-lexform' value='".($edit ? $data['lexical_form'] : '')."'/></span></div>
 							<div class='btSource'><span class='btLanguage'><a class='generate-ipa float-right small' href='javascript:void();' tabindex='-1'>[ generate IPA ]</a> IPA transcription <span class='xsmall darkred'>*</span></span></span><br /><span class='ajaxGenerateIPA'></span>
@@ -78,7 +80,7 @@ class pLemmaSheetTemplate extends pTemplate{
 			$sendLanguages[] = "'".$language->read('id')."': $('.translations-language-".$language->read('id')."').val()";
 			p::Out("
 
-				<div class='btSource'><span class='btLanguage'><span class='xmedium'>".(new pDataField(null, null, null, 'flag'))->parse($language->read('flag'))." ".$language->read('name')."</span></span><br />
+				<div class='btSource'><span class='btLanguage'><span class='medium'><strong>".(new pDataField(null, null, null, 'flag'))->parse($language->read('flag'))." ".$language->read('name')."</strong></span></span><br />
 							<span class='btNative'><textarea class=' tags full-width translations-language-".$language->read('id')." ' style='width: 100%' >".($edit ? $this->prepareTranslations($language->read('id')) : '')."</textarea></span></div><br />
 
 				");
@@ -86,7 +88,7 @@ class pLemmaSheetTemplate extends pTemplate{
 
 		}
 
-		p::Out("<br /><br />".pMainTemplate::NoticeBox('fa-info-circle fa-12', BATCH_TR_DESC1, 'notice-subtle').pMainTemplate::NoticeBox('fa-info-circle fa-12', sprintf(BATCH_TR_DESC2, '<span class="imitate-tag">', '</span>', '<span class="imitate-tag">', '</span>'),  'notice-subtle'));
+		p::Out("".pMainTemplate::NoticeBox('fa-info-circle fa-12', BATCH_TR_DESC1, 'notice-subtle').pMainTemplate::NoticeBox('fa-info-circle fa-12', sprintf(BATCH_TR_DESC2, '<span class="imitate-tag">', '</span>', '<span class="imitate-tag">', '</span>'),  'notice-subtle'));
 
 
 		p::Out("
@@ -134,7 +136,7 @@ class pLemmaSheetTemplate extends pTemplate{
 				<div data-tab='Notes'>
 					<div style='padding: 10px'><textarea placeholde='➥ Add notes...' class='gtEditor usage-notes elastic allowtabs'>".($edit ? $this->_data->_links['usage_notes'] : '')."</textarea></div>
 				</div></div>
-		</form><br />
+		</form></div><br />
 ");
 		p::Out("<a class='btAction green submit-form no-float'>".SAVE."</a>");
 
@@ -161,7 +163,7 @@ class pLemmaSheetTemplate extends pTemplate{
 
 		".pMainTemplate::allowTabs()."
 
-		$('.mainTabs').cardTabs();
+		$('.mainTabs').cardTabs({'class': 'italic'});
 		$('.select2').select2({});
 
 		$('.select2m').select2({allowClear: true, placeholder: '➥ Add lemmas'});

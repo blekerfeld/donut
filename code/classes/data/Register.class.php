@@ -44,11 +44,15 @@ class pRegister{
 	public static function session($set = null, $value = null){
 		if($value != null){
 			$_SESSION[$set] = $value;
-			return self::$session[$set] = $value;
+			return self::$session = $_SESSION;
 		}
 		if($set != null)
 			return self::$session = $set;
 		return self::$session;
+	}
+
+	public static function freshSession(){
+		return $_SESSION;
 	}
 
 	public static function queryString($set = null){

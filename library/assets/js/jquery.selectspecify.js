@@ -92,7 +92,7 @@ jQuery.fn.selectSpecify = function(options){
         .append($('<span/>').addClass('value').html(valueText))
         .append(' ')
         .append($('<span/>').addClass('attr').html(attr))
-        .append($('<span/>').attr('role', 'remove').attr('id', currentID).append(' x '))
+        .append($('<span/>').attr('role', 'remove').attr('id', currentID).append('<i class="fa fa-times fa-12 hide"></i>'))
     );
     currentID++;
     $(selector + ' .items').on('click', 'div.item span[role="remove"]', function(){

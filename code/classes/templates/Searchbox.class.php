@@ -9,12 +9,16 @@ class pSearchBox extends pTemplatePiece{
 
 	private $_value = null, $_enableLanguage, $_section = null, $_enableWholeWord, $_enableAlphabetBar, $_home = false, $_idS;
 
-	public function __construct($home = false, $language = true, $section = null, $wholeword = true, $alpabetbar = true){
+	public function __construct($home = false, $language = true, $section = null, $wholeword = true, $alpabetbar = false){
 		$this->_home = $home;
 		$this->_enableLanguage = $language;
 		$this->_section = $section;
 		$this->_enableWholeWord = $wholeword;
 		$this->_enableAlphabetBar = $alpabetbar;
+	}
+
+	public function enablePentry(){
+		return $this->_enableAlphabetBar = true;
 	}
 
 	public function setValue($value){
@@ -29,23 +33,26 @@ class pSearchBox extends pTemplatePiece{
 
 		$this->_idS = date('s');
 
-		$output = '<div class="hMobile id_'.$this->_idS.'"><div class="header dictionary '.($this->_home ? 'home' : '').'">';
+		$output = '<div class="hMobile id_'.$this->_idS.'"><div class="header dictionary '.($this->_enableAlphabetBar ? 'pentry ' : '').($this->_home ? 'home' : '').'">';
 
 		$output .= '<div class="hWrap"><div class="hSearch">
-
+				'.pLanguage::dictionarySelector('dictionary-selector').'
 				<input  type="text" id="wordsearch" class="big word-search '.(((isset(pRegister::session()['searchLanguage']) AND p::StartsWith(pRegister::session()['searchLanguage'], $lang_zero->read('locale'))) OR (!isset(pRegister::session()['searchLanguage']) AND CONFIG_ENABLE_DEFINITIONS == 1)) ? 'native' : '').'" placeholder="'.DICT_KEYWORD.'" value="'.$this->_value.'"/>
-			<br id="cl" />'.pLanguage::dictionarySelector('dictionary-selector').'</div></div>
+			</div><br id="cl" /></div>
 			</div>
 			</div>
 			';
 
 		// To have this in the page then
 		p::Out('<div class="hSearchResults">
+			'."<div class='hSearchtitle hide'><div class='card-tabs-bar titles pEntry-fix'>
+			
+			</div><br />".'</div>
 				<div class="searchLoad"></div>
 								<div class="load-hide hide" style="text-align: center">'.new pIcon('fa-spinner fa-spin', 32).'</div>
 			</div>');
 
-			$hashKey = spl_object_hash($this);
+			$hashKey = sha1(spl_object_hash($this)."sb");
 
 			// Throwing this object's script into a session
 			pRegister::session($hashKey, $this->script());
@@ -74,6 +81,7 @@ class pSearchBox extends pTemplatePiece{
 					$('.dictionary-selector').val('".strtoupper(pRegister::arg()['dictionary'])."');
 		      		$('.pEntry').slideUp();
       				$('.searchLoad').slideDown();
+      				$('.hSearchtitle').show();
       				doSearch(false);
 				});";
 
@@ -89,12 +97,13 @@ class pSearchBox extends pTemplatePiece{
 
 				$output .= "$('.pEntry').load('".p::Url('?home/ajax/nosearch')."', {}, function(){
 					window.history.pushState('string', '', '".p::Url("?home")."');
-					$('.header.dictionary').addClass('home');	
+					$('.header.dictionary').addClass('home').removeClass('home-search');	
 				});
 
 				$('.pEntry').slideDown();
+				".($this->_home ? : "$('div.dictionary.header').removeClass('pentry');")."
       			$('.searchLoad').slideUp();
-
+      			$('.hSearchtitle').hide();
 				";
 
 				$output .= "
@@ -110,12 +119,16 @@ class pSearchBox extends pTemplatePiece{
 		    	$('.load-hide').hide();
 		    	$('.page').removeClass('min');
 				$('.searchLoad').slideUp();
+				$('.hSearchtitle').hide();
 				$('.searchLoad').html('');
 				$('.pEntry').slideDown();
+				".($this->_home ? "$('div.dictionary.header').removeClass('pentry');" : "$('div.dictionary.header').addClass('pentry');")."
+				lock = '';
+				searchLock = '';
 				";
 
 		if($this->_home)
-			$output .= "$('.header.dictionary').addClass('home');";
+			$output .= "$('.header.dictionary').addClass('home').removeClass('home-search');";
 
 		$output .= "
 				document.title = orgTitle;
@@ -147,7 +160,7 @@ class pSearchBox extends pTemplatePiece{
 
 				$output .= "$('.pEntry').load('".p::Url('?home/ajax/nosearch')."', {}, function(){
 					window.history.pushState('string', '', '".p::Url("?home")."');
-					$('.header.dictionary').addClass('home');	
+					$('.header.dictionary').addClass('home').removeClass('home-search').removeClass('pentry');	
 				});";
 
 		$output .= "
@@ -157,8 +170,10 @@ class pSearchBox extends pTemplatePiece{
 		html = '';
 
 		function doSearch(bypass){
+			$('div.dictionary.header').removeClass('pentry');
 			if($('.word-search').val() == '' || $('.word-search').val() == ' '){
 				$('.searchLoad').html('');
+				$('.hSearchtitle').hide();
 			}
 			else{
 				window.scrollTo(0, 0);
@@ -169,6 +184,7 @@ class pSearchBox extends pTemplatePiece{
 					$('.header.dictionary').removeClass('home').addClass('home-search');
 	      			$('.searchLoad').load('".p::Url('?search/')."' + $('.dictionary-selector').val() + '/ajax/', {'query': $('.word-search').val(), 'exactMatch': $('.checkbox-wholeword').is(':checked')}, function(e){
 	      					$('.searchLoad').slideDown();
+	      					$('.hSearchtitle').show();
 	      					if($('.word-search').val() != ''){
 	      						window.history.pushState('string', '', '".p::Url("?entry/search/")."' + $('.dictionary-selector').val().toLowerCase() + '/' + $('.word-search').val());
 	      					}
@@ -187,7 +203,7 @@ class pSearchBox extends pTemplatePiece{
 					}
 					$('.pEntry').slideUp();
 					$('.searchLoad').slideDown();
-				
+					$('.hSearchtitle').show();
 			}
 
 		});";
@@ -197,8 +213,10 @@ class pSearchBox extends pTemplatePiece{
 			$output .= "	$('.searchLoad').mouseleave(function(){
 			if(($(window).width() < 700)){
 				$('.searchLoad').slideUp();
+				$('.hSearchtitle').show();
 				loadhome();
 				$('.pEntry').slideDown();
+				".($this->_home ? : "$('div.dictionary.header').removeClass('pentry');")."
 				window.history.pushState('string', '', '".p::Url("?".pRegister::queryString())."');				
 			}
 
@@ -228,18 +246,15 @@ class pSearchBox extends pTemplatePiece{
 
         
         	$('.word-search').focusin(function(){
-        		$('.hSearch .card-tabs-bar.selectorTabs a.active').addClass('wordsearch');
+        		$('.hSearch .card-tabs-bar.selectorTabs-h a.active').addClass('wordsearch');
 
-        			$('.hSearch .selectorTabs').slideDown();
-  
+     
      			
         	});
 
         	$('.word-search').blur(function(){
-        		$('.hSearch .card-tabs-bar.selectorTabs a.active').removeClass('wordsearch');
-     				if(!$('.header.dictionary').is(':hover')){
-        			$('.hSearch .selectorTabs').slideUp();
-        		}
+        		$('.hSearch .card-tabs-bar.selectorTabs-h a.active').removeClass('wordsearch');
+ 
         	});
  
    			 $(window).scroll(function(){

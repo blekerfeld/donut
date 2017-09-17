@@ -30,11 +30,12 @@ class pIdiom extends pEntry{
 			$backHref = p::Url('?entry/'.($returnTo[0] == '' ? '' : $returnTo[0].'/').$returnTo[1]);
 		}
 
-		p::Out($this->_template->title($backHref));
+		p::Out($this->_template->title());
 
 		// Let's render all the lemma's
 		$this->bindLemma();
 		$this->_template->renderLemmas($this->_lemmas->get());
+		p::Out($this->_template->renderInfo());
 		
 	}
 

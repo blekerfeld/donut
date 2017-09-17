@@ -46,12 +46,10 @@ return array(
 			'actions_item' => array(
 			),
 			'actions_bar' => array(
-				'discuss' => array('discuss', "Discuss", 'fa-comments', 'btAction', null, null, null),
-				'edit' => new pAction('edit', 'Edit', 'fa-pencil', 'btAction', null, null, 'words', 'dictionary-admin', null, -3),
-				'remove' => new pAction('remove', 'Delete item', 'fa-times', 'btAction red', null, null, 'words', 'dictionary-admin', null, -3),
 			),
 			'save_strings' => $saveStrings,
 			'subobjects' => array(
+				new pEntryDataModel('etymology', 'word_id', 'dna', false, null, 'renderEtymology'),
 				new pEntryDataModel('usage_notes', 'word_id', 'fa-info', false, null, 'usageNotes'),
 				new pEntryDataModel('synonyms', array('word_id_1', 'word_id_2'), 'fa-clone', false, null, 'synonyms'),
 				new pEntryDataModel('antonyms', array('word_id_1', 'word_id_2'), 'fa-venus-mars', false, null, 'antonyms'),
@@ -98,6 +96,7 @@ return array(
 			'section_key' => 'example',
 			'type' => 'pEntryHandler',
 			'template' => 'pExampleTemplate',
+			'edit_url' => '?editor/example/edit/',
 			'table' => 'idioms',
 			// Beware: the information fields need to exitst in the structure's datafields array
 			'entry_meta' => array(
@@ -128,8 +127,8 @@ return array(
 			'table' => 'idioms',
 			// Beware: the information fields need to exitst in the structure's datafields array
 			'entry_meta' => array(
-				'title_field' => 'idiom',
-				'parseAsObject' => 'pIdiom',
+				'title_field' => '',
+				'parseAsObject' => '',
 			),
 			'surface' => '',
 			'icon' => '',
@@ -152,8 +151,8 @@ return array(
 			'template' => 'pStatsTemplate',
 			// Beware: the information fields need to exitst in the structure's datafields array
 			'entry_meta' => array(
-				'title_field' => 'idiom',
-				'parseAsObject' => 'pIdiom',
+				'title_field' => '',
+				'parseAsObject' => '',
 			),
 			'permission' => 0,
 			'icon' => 'fa-font',

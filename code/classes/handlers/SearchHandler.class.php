@@ -66,7 +66,6 @@ class pSearchHandler extends pHandler{
 		pRegister::session('searchQuery', $query);
 		pRegister::session('exactMatch', $wholeword);
 
-
 		$lemmaObject = new pLemmaDataModel;
 
 
@@ -77,12 +76,13 @@ class pSearchHandler extends pHandler{
 
 		ajaxSkip:
 
-			p::Out("<div class='mobilehide card-tabs-bar titles'>
-				<a class='ssignore' href='javascript:void(0);' onClick='$(\".word-search\").val(\"\");callBack();'>".(new pIcon('fa-arrow-left', 12))."</a>
-				<a class='ssignore active' data-tab=''>".(new pIcon('fa-search', 12))." ".DICT_SEARCH_RESULTS."</a></div><br />");
 
-			if(count($fetchSearch) == 0)
-				p::Out("<div class='medium warning-notice'>".(new pIcon('fa-info-circle', 12))." ".DICT_NO_HITS."</div>");
+			if(count($fetchSearch) == 0){
+				unset($_SESSION['searchQuery']);
+				p::Out("<div class='medium warning-notice'><strong>".(new pIcon('fa-info-circle', 12))." ".DICT_NO_HITS_T."</strong><br /> ".sprintf(DICT_NO_HITS, "<strong>".$query."</strong>")."</div>");
+				if(pUser::noGuest() AND pUser::checkPermission((int)CONFIG_PERMISSION_CREATE_LEMMAS))
+					p::Out(pMainTemplate::NoticeBox('fa-info-circle', DICT_SEARCH_HINT_1."<a class='ssignore' href='".p::Url('?editor/new/pre-filled/'.urlencode($query))."'>".DICT_SEARCH_HINT_2."</a>", 'hint-notice medium'));
+			}
 			
 			foreach($fetchSearch as $lemma)
 				$this->parseSearchResults($query, $lemma, $searchlang);

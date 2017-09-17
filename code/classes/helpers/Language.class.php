@@ -66,7 +66,14 @@ class pLanguage{
 		}
 
 	    
-	  	return $select . '</select><script>$(".'.$class.'").selectorTabs({"afterclick": function(){
+	  	return $select . '</select>'."\n".'<script>$(".'.$class.'").selectorTabs({"class":"selectorTabs-h wordsearch", 
+	  		"back": true,
+	  		"goback": function(){
+	  			$(".word-search").val("");callBack();
+	  		},
+	  		"backIcon": "'.(str_replace('"', '\'', new pIcon('arrow-left'))).'",
+	  		"title": "'.(str_replace('"', '\'', new pIcon('magnify'))).' '.DICT_SEARCH.'",
+	  		"afterclick": function(){
 	  			doSearch(false);
 	  			var act = $(".'.$class.' option:selected").attr("data-native");
 	  			if(act == 1){

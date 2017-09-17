@@ -221,6 +221,10 @@ class pUser{
 		return (new pDataModel('users'))->setCondition(" WHERE email = ".p::Quote($mail)." ")->getObjects()->rowCount() == 0;
 	}
 
+	public function usernameUnique($username){
+		return (new pDataModel('users'))->setCondition(" WHERE username = ".p::Quote($username)." ")->getObjects()->rowCount() == 0;
+	}
+
 	public function checkCre($username, $password){
 		self::$dataModel->setCondition(" WHERE username = '".$username."' AND password = '".p::Hash($password)."'");
 		return self::$dataModel->getObjects();

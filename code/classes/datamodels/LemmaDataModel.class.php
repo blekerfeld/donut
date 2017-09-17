@@ -55,7 +55,7 @@ class pLemmaDataModel extends pDataModel{
     						ELSE 4
 						END DESC) AS a 
 				UNION ALL
-            SELECT * FROM (SELECT DISTINCT translation_words.word_id as word_id, 0 as is_inflection, 0 as inflection FROM translation_words JOIN translations WHERE ".$extra." translations.translation ".$ww." AND translations.language_id = 0 AND translation_words.translation_id = translations.id ORDER BY CASE
+            SELECT * FROM (SELECT DISTINCT translation_words.word_id as word_id, 0 as is_inflection, 0 as inflection FROM translation_words JOIN translations WHERE translations.translation ".$ww." AND translations.language_id = 0 AND translation_words.translation_id = translations.id ORDER BY CASE
     						WHEN translations.translation = '".p::Escape(trim($search))."' THEN 1
     						WHEN translations.translation LIKE '".p::Escape(trim($search))."%' THEN 2
     						WHEN translations.translation LIKE '%".p::Escape(trim($search))."' THEN 3
@@ -82,7 +82,7 @@ class pLemmaDataModel extends pDataModel{
 					INNER JOIN translation_words ON translation_words.word_id=words.id 
 					INNER JOIN translations ON translations.id=translation_words.translation_id
 					WHERE $extra translations.translation ".$ww." AND translations.language_id = '".$searchlang."' ORDER BY INSTR('".p::Escape(trim($search))."', translations.translation) DESC) AS a UNION ALL
-					SELECT * FROM (SELECT DISTINCT word_id, 0 AS is_inflection, 1 AS is_alternative, alternative, translation_alternatives.translation_id AS trans_id, translations.translation AS translation FROM translation_words INNER JOIN translations ON translations.id = translation_words.translation_id INNER JOIN translation_alternatives WHERE  $extra translation_alternatives.alternative ".$ww." AND translation_words.translation_id = translation_alternatives.translation_id AND translations.language_id = '".$searchlang."' ORDER BY 
+					SELECT * FROM (SELECT DISTINCT word_id, 0 AS is_inflection, 1 AS is_alternative, alternative, translation_alternatives.translation_id AS trans_id, translations.translation AS translation FROM translation_words INNER JOIN translations ON translations.id = translation_words.translation_id INNER JOIN translation_alternatives WHERE  translation_alternatives.alternative ".$ww." AND translation_words.translation_id = translation_alternatives.translation_id AND translations.language_id = '".$searchlang."' ORDER BY 
 						CASE
     						WHEN translations.translation LIKE '".p::Escape(trim($search))."' THEN 1
     						WHEN translations.translation LIKE '".p::Escape(trim($search))."%' THEN 2

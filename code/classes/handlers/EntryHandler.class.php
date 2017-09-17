@@ -43,6 +43,10 @@ class pEntryHandler extends pHandler{
 			p::Out(new pAjaxLoader(p::Url('?thread/'.$this->_section.'/view/'.pRegister::arg()['id'])));
 		}
 
+		if($action == 'proper'){
+			return $this->render(true);
+		}
+
 	}
 
 	public function statsData($subsection = null, $extra = 50){
@@ -76,7 +80,7 @@ class pEntryHandler extends pHandler{
 		return p::Url('?entry/'.p::HashId($random['id']), true);
 	}
 
-	public function render(){
+	public function render($proper = false){
 
 		if($this->_section == 'random')
 			return $this->doRandomEntry();
@@ -110,8 +114,11 @@ class pEntryHandler extends pHandler{
 			
 			$object->passActionBar($this->_actionbar);
 
-			return $object->renderEntry();
-		
+			if($proper)
+				return $object->renderEntry();
+			else
+				return p::Out(new pAjaxLoader(p::Url('?entry/'.$this->_section.'/'.pRegister::arg()['id'].'/proper')));
+
 		}
 	}
 }

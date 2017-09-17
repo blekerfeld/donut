@@ -16,7 +16,7 @@ class pTerminal{
 	public function initialState(){
 
 		p::Out("<div class='debugConsole'>");
-		p::Out("[/] donut 0.11 - terminal ~".pUser::read('username').":".$_SERVER['REMOTE_ADDR']." <br />Logged in as: ".constant("LOGIN_USERG_".pUser::read('role'))."<br /><br />");
+		p::Out("[/] donut 0.11-dev // terminal ~".pUser::read('username').":".$_SERVER['REMOTE_ADDR']." <br />Logged in as: ".constant("LOGIN_USERG_".pUser::read('role'))."<br /><br />");
 		p::Out("> <input class='debug init' /><div class='debugLoad-init'></div>");
 		p::Out("</div>");
 		p::Out("<script type='text/javascript'>
@@ -49,7 +49,7 @@ class pTerminal{
 
 	public function ver($arg, $line){
 		$head = file_get_contents(sprintf('.git/refs/heads/%s', 'master'));
-		echo "<strong>donut version 0.11 </strong><br />";
+		echo "<strong>donut version 0.11-dev </strong><br />";
 		echo "<em>build ".substr($head, 0, 7)."</em><br />";
 		echo $this->nextLine($line);
 	}

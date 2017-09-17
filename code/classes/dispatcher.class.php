@@ -10,7 +10,7 @@
 
 class pDispatcher {
 
-	private $_dispatchData, $_magicArguments = array(array('is:result', 'ajax', 'ajaxLoad', 'nosearch', 'print'), array('offset', 'return', 'position', 'language', 'token'), array(array('search', 'dictionary', 'query'))), $_urlArguments, $_arguments;
+	private $_dispatchData, $_magicArguments = array(array('is:result', 'ajax', 'ajaxLoad', 'nosearch', 'print'), array('offset', 'return', 'position', 'language', 'token', 'pre-filled'), array(array('search', 'dictionary', 'query'))), $_urlArguments, $_arguments;
 
 	public $query, $structureObject;
 
@@ -82,12 +82,14 @@ class pDispatcher {
 
 
 		if(!class_exists($structureType)){
-			$this->do404("<br /> `CLASS $structureType DOES NOT EXIST.`");
-			return new pDispatchException;
+			$this->structureObject = new pStructure($structureName[0], (isset($structureName[1]) ? $structureName[1] : ''), $this->_urlArguments[0], $this->_dispatchData[$this->_urlArguments[0]]['default_section'], $this->_dispatchData[$this->_urlArguments[0]]['page_title'], $this->_dispatchData[$this->_urlArguments[0]]);
+		}
+		else{
+			// Else we need to create the almighty structure
+			$this->structureObject = new $structureType($structureName[0], (isset($structureName[1]) ? $structureName[1] : ''), $this->_urlArguments[0], $this->_dispatchData[$this->_urlArguments[0]]['default_section'], $this->_dispatchData[$this->_urlArguments[0]]['page_title'], $this->_dispatchData[$this->_urlArguments[0]]);
 		}
 
-		// Else we need to create the almighty structure
-		$this->structureObject = new $structureType($structureName[0], (isset($structureName[1]) ? $structureName[1] : ''), $this->_urlArguments[0], $this->_dispatchData[$this->_urlArguments[0]]['default_section'], $this->_dispatchData[$this->_urlArguments[0]]['page_title'], $this->_dispatchData[$this->_urlArguments[0]]);
+		
 
 		// Let's prepare our structureObject a little, so that we can access the full structure here
 		$this->structureObject->load();
@@ -132,8 +134,16 @@ class pDispatcher {
 	}
 
 	protected function do404($extra = ''){
-		p::Out("<div class='home-margin'>".p::Markdown("# ".(new pIcon('fa-warning'))." ".ERROR_404_TITLE."\n".
-				ERROR_404_MESSAGE."\n".$extra)."</div>");
+		pMainTemplate::setNoBorder();
+		p::Out("<div class='danger-notice'><strong>".(new pIcon('fa-warning'))." ".ERROR_404_TITLE."</strong><br /><br />".
+				ERROR_404_MESSAGE."</div>");
+	}
+
+	public static function abortError($message){
+		pMainTemplate::setNoBorder();
+		p::Out("<div class='danger-notice'><strong>".(new pIcon('fa-warning'))." ".ERROR_TITLE."</strong><br /><br />".
+				$message."</div>");
+		return new pDispatchException;
 	}
 
 	protected function takeApartSingle($arg){

@@ -14,16 +14,33 @@ jQuery.fn.selectorTabs = function(options){
         theme: '',
         afterclick: function(){
         	return;
-        }
+        },
+        goback: function(){
+        	return
+        },
+        back: false,
+        backIcon: '',
+        class: 'selectorTabs',
+        title: '',
      }, options );
 
 	// Initializing
 	var htmlInner = $(this).html();
-	var stack = $('<div />').addClass('card-tabs-bar selector-tabs-bar selectorTabs ' + selectorID);
+	var stack = $('<div />').addClass('card-tabs-bar selector-tabs-bar ' + settings.class + ' ' + selectorID);
 
 	var activeValue = $(selector + " option:selected").attr('value');
 
 	$(selector).addClass('selector-tabs-orginial');
+
+
+	if(settings.back == true){
+		stack.append($('<a />').addClass('ssignore gray st-back titles no-margin emS').attr('href', 'javascript:void();').append(settings.backIcon).click(function(){
+				settings.goback();
+		}));
+	}
+
+	stack.append($('<a />').addClass('ssignore disabled titles no-margin-left').attr('href', 'javascript:void();').append(settings.title));
+	
 
 	$(selector).children('option').each(function(){
 

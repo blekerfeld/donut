@@ -10,7 +10,7 @@ class pAssistantTemplate extends pTemplate{
 
 	public function renderChooserDefault($data, $section = ''){
 
-		p::Out("<div class='btCard proper chooser'><div class='btTitle'>".(new pIcon('fa-question-circle'))." ".BATCH_CHOOSE_ASSISTANT."</div>
+		p::Out("<div class='btCard proper bt chooser'><div class='btTitle'>".(new pIcon('fa-question-circle'))." ".BATCH_CHOOSE_ASSISTANT."</div>
 			<div class='btSource'>		
 			<div class='btChooser'>");
 		$count = 0;
@@ -18,7 +18,7 @@ class pAssistantTemplate extends pTemplate{
 		foreach ($data as $key => $structure) {
 			p::Out("<div class='option btOptionDefault' data-role='option' data-value='".$key."'>
 				<span class='btStats normal'>".$structure['desc']."</span>
-				<strong>".$structure['icon']." ".$structure['surface']."</strong><br id='cl' />
+				<span style='display:inline-block;margin-top:14px;'><strong>".$structure['icon']." ".$structure['surface']."</strong></span><br id='cl' />
 
 				</div>");
 		}
@@ -31,7 +31,7 @@ class pAssistantTemplate extends pTemplate{
 
 	public function renderChooserTranslate($data, $section = ''){
 		$count = 0;
-		$output = "<div class='btCard proper chooser'><div class='btTitle'>".BATCH_CHOOSE_LANGUAGE."</div>
+		$output = "<div class='btCard proper bt chooser'><div class='btTitle'>".BATCH_CHOOSE_LANGUAGE."</div>
 			".pMainTemplate::NoticeBox('fa-info-circle fa-12', BATCH_TR_DESC_START,  'notice-subtle')."
 			<div class='btSource'>			<div class='btButtonBar'>
 			<div class='btChooser'>";
@@ -40,7 +40,7 @@ class pAssistantTemplate extends pTemplate{
 				continue;
 			$count++;
 			$output .= "<div class='option btOption' data-role='option' data-value='".$value->read('id')."'>
-				<span class='btStats'>".(new pIcon("playlist-check", 18))." "."<span class='per'>".round((100 - $data[$value->read('id')]['percentage']), 1)."%</span> <br />".BATCH_TR_PER_TRANS."</span><span class='btStats'>".(new pIcon("library-books", 17))." <span class='per'>".$data[$value->read('id')]['left']."</span> <br />".BATCH_TR_LEFT_TRANS."</span></span>".(new pDataField(null, null, null, 'flag'))->parse($value->read('flag'))." <strong>".$value->read('name')."</strong><br id='cl' />
+				<span class='btStats'>".(new pIcon("playlist-check", 18))." "."<span class='per'>".round((100 - $data[$value->read('id')]['percentage']), 1)."%</span> <br />".BATCH_TR_PER_TRANS."</span><span class='btStats'>".(new pIcon("library-books", 17))." <span class='per'>".$data[$value->read('id')]['left']."</span> <br />".BATCH_TR_LEFT_TRANS."</span></span><br />".(new pDataField(null, null, null, 'flag'))->parse($value->read('flag'))." <strong>".$value->read('name')."</strong><br id='cl' />
 
 				</div>";
 		}
@@ -57,6 +57,7 @@ class pAssistantTemplate extends pTemplate{
 	}
 
 	public function render($section, $data, $ajax = false, $serveCard = true){
+
 
 		p::Out('<div class="assistant">');
 
@@ -91,7 +92,7 @@ class pAssistantTemplate extends pTemplate{
 	}
 
 	public function renderBottomTranslate(){
-		return p::Out("<div class='btCard bottomCard'>".pMainTemplate::NoticeBox('fa-info-circle fa-12', BATCH_TR_DESC1 . " " . sprintf(BATCH_TR_DESC2, '<span class="imitate-tag">', '</span>', '<span class="imitate-tag">', '</span>'),  'notice-subtle')."</div>");
+		return p::Out("<div class='btCard bt bottomCard'>".pMainTemplate::NoticeBox('fa-info-circle fa-12', BATCH_TR_DESC1 . " " . sprintf(BATCH_TR_DESC2, '<span class="imitate-tag">', '</span>', '<span class="imitate-tag">', '</span>'),  'notice-subtle')."</div>");
 	}
 
 	public function cardTranslate($data, $section){
@@ -117,7 +118,7 @@ class pAssistantTemplate extends pTemplate{
 				".$guideLinesStr."
 			</div>");
 		p::Out("
-			<div class='btCard transCard proper'>
+			<div class='btCard transCard proper bt'>
 				<div class='btTitle'>
 				<a class='btFloat float-right button-back ttip' href='javascript:void();'>
 						".(new pIcon('fa-level-up'))." ".BATCH_TR_GO_BACK."
@@ -175,7 +176,7 @@ class pAssistantTemplate extends pTemplate{
 	}
 	
 	public function cardTranslateEmpty($section){
-		p::Out("<div class='btCard btCardEmpty transCard proper'>
+		p::Out("<div class='btCard btCardEmpty transCard proper bt'>
 				<div class='btTitle'>".BATCH_TRANSLATE."</div>
 				<div class='center'><span class='inline-icon'>".(new pIcon('translate', 30))."</span>
 				".pMainTemplate::NoticeBox('', sprintf(BATCH_TR_EMPTY, '<br />', '<a href="javascript:void(0);" class="button-back">', '</a>'),  'notice-subtle xmedium')."</div>

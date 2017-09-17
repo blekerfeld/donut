@@ -13,18 +13,18 @@ class pLoginTemplate extends pTemplate{
 		$output = '';
 		$output .= "<div class='btCard admin' style='width: 400px;'>
 		<div class='btTitle'>".(new pIcon('account-key'))." ".LOGIN_TITLE."</div>
-		<div class='ajaxChecking'></div>
-		<form id='loginForm'>
 		<div class='saving hide loaddots'>".pMainTemplate::loadDots()."</div>
+		<div class='btForm'>
+		<div class='ajaxChecking'></div>
 		<div class='btSource'><span class='btLanguage'>".LOGIN_USERNAME." <span class='xsmall darkred'>*</span></span><br />
-			<span class='btNative'><input class='btInput nWord small normal-font username' /></span></div>
+			<span class='btNative'><input class='btInput nWord medium  normal-font username' /></span></div>
 		<div class='btSource'><span class='btLanguage'>".LOGIN_PASSWORD."<span class='xsmall darkred'>*</span></span><br />
-			<span class='btNative'><input class='btInput nWord small normal-font password' type='password'/></span></div>
+			<span class='btNative'><input class='btInput nWord medium  normal-font password' type='password'/></span></div>
+		</div>
 		<div class='btButtonBar'>
 			".(CONFIG_ENABLE_REGISTER ? "<a href='".p::Url('?auth/register')."' class='btAction medium blue no-float not-smooth'>".(new pIcon('account-edit', 12))." ".LOGIN_REGISTER_SHORT."</a>" : '')."
 			<a class='btAction green login-button not-smooth'>".(new pIcon('fa-sign-in', 12))." ".LOGIN_TITLE_SHORT."</a><br id='cl' />
 		</div>
-		</form>
 		</div>
 		";
 
@@ -56,7 +56,7 @@ class pLoginTemplate extends pTemplate{
 	}
 
 	public function errorMessage(){
-		return pMainTemplate::NoticeBox('fa-warning fa-12', LOGIN_ERROR, 'warning-notice ajaxMessage')."<script type='text/javascript'>$('.saving').delay(1000).slideUp();$('.ajaxMessage').delay(2000).slideDown();</script>";
+		return pMainTemplate::NoticeBox('fa-warning fa-12', LOGIN_ERROR, 'danger-notice ajaxMessage')."<script type='text/javascript'>$('.saving').delay(1000).slideUp();$('.ajaxMessage').delay(2000).slideDown();</script>";
 	}
 
 	public function errorMessageNotActivated(){

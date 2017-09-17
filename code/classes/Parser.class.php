@@ -8,24 +8,28 @@
 
 class pParser{
 
-	public $_section, $_app, $_data, $_paginated = true, $_condition, $_offset, $_handler, $structure, $_permission;
+	public $_section, $_app, $_data, $_paginated = true, $_condition, $_offset, $_handler, $structure, $_permission, $_parent;
 
 	static public $stApp, $stSection;
 
-	public function __construct($structure, $data, $app = 'dictionary-admin'){
-		$this->structure = $structure;
-		$this->_app = $app;
-		$this->_section = $data['section_key'];
-		$this->_data =  $data;
-		self::$stApp = $app;
-		self::$stSection = $data['section_key'];
+	public function __construct($st){
+
+
+		$this->structure = $st->_structure;
+		$this->_app = $st->_app;
+		$this->_section = $st->_structure[$st->_section]['section_key'];
+		$this->_data =  $st->_structure[$this->_section];
+		$this->_tabs = $st->_tabs;
+		$this->_parent = $st;
 
 		// Loading the permission
 		if(isset($this->structure[$this->_section]['permission']))
 				$this->_permission = $this->structure[$this->_section]['permission'];
 		else
 			// The default permission
-			$this->_permission = pStructure::$permission;
+			$this->_permission = $this->structure['permission'];
+
+		unset($this->structure['permission']);
 	}
 
 	// Used to switch off the pagination if needed
@@ -88,7 +92,8 @@ class pParser{
 			$this->_actionbar->add($pAction);
 		}
 
-		$this->_handler = new $this->_data['type']($this->structure, $this->_data['icon'], $this->_data['surface'], $this->_data['table'], $this->_data['items_per_page'], $this->_fields, $this->_actions, $this->_actionbar, $this->_paginated, $this->_section, $this->_app);
+			
+		$this->_handler = new $this->_data['type']($this);
 		
 		$this->setCondition((isset($this->_data['condition']) ? $this->_data['condition'] : ''));
 		
@@ -113,14 +118,19 @@ class pParser{
 		// We can only render if we are allowed to 
 		if(pUser::checkPermission($this->_permission))
 			return $this->_handler->render();
-		else
+		else{
 			return p::Out("<div class='btCard minimal admin'>".pMainTemplate::NoticeBox('fa-info-circle fa-12', DA_PERMISSION_ERROR, 'danger-notice')."</div>");
+		}
 	}
 
 	// Passes on the action to the object
 	public function passOnAction($action){
+
 		if(pUser::checkPermission($this->_permission))
 			return $this->_handler->catchAction($action, $this->_data['template']);
+		else{
+			return p::Out("<br />".pMainTemplate::NoticeBox('fa-info-circle fa-12', DA_PERMISSION_ERROR_ACTION, 'danger-notice'));
+		}
 	}
 
 	// Allias function
@@ -138,6 +148,7 @@ class pParser{
 		// There are six magic actions that are coordinated by this function:
 		// Those are: new, edit, remove, link-table, link-new, link-remove
 
+	
 		// Link table
 
 
@@ -261,7 +272,11 @@ class pParser{
 
 	// This is used to be able to get to the active section and action from within other classes
 	public static function getApp(){
-		
+		return self::$stApp;	
+	}
+
+	public static function getSection(){
+		return self::$stSection;	
 	}
 
 }

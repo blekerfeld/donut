@@ -6,8 +6,10 @@
    }
 
     .header.dictionary{
-      padding: 10px!important;
+      padding: 5px!important;
       margin-bottom: 40px;
+      margin-left: 2px;
+      margin-right: 2px;
     }
 
 
@@ -145,6 +147,12 @@
       margin-left: 0px;
       text-align: center;
       margin-right: 0px;
+      padding: 5px!important;
+   }
+
+   .outerwrap{
+    margin: 5px!important;
+    padding-top: 0px;
    }
 
      div.logotop{

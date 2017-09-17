@@ -44,7 +44,7 @@ class pThreadStructure extends pStructure{
 	public function render(){
 
 		// Since no parser is used, the permission check needs to be done here
-		if(!pUser::checkPermission($this->_permission))
+		if(!pUser::checkPermission($this->_meta['permission'][$this->_section]))
 			return p::Out("<div class='btCard minimal admin'>".pMainTemplate::NoticeBox('fa-info-circle fa-12', DA_PERMISSION_ERROR, 'danger-notice')."</div>");
 
 		if(isset(pRegister::arg()['action'])){
@@ -54,7 +54,15 @@ class pThreadStructure extends pStructure{
 
 			if(isset(pRegister::arg()['is:result'], pRegister::session()['searchQuery']))
 				$searchBox->setValue(pRegister::session()['searchQuery']);
-	
+		
+			$searchBox->enablePentry();
+
+			if(!isset(pRegister::arg()['ajax']) AND !isset(pRegister::arg()['ajaxLoad']))
+				p::Out((new pTabBar(MMENU_DICTIONARY, 'fa-book', true, 'titles y'))->addSearch()
+					->addLink('view', LEMMA_VIEW_SHORT, p::Url("?entry/".$this->_section.'/'.pRegister::arg()['id'].(isset(pRegister::arg()['is:result']) ? '/is:result' : '')), false)
+					->addLink('edit', LEMMA_EDIT_SHORT, p::Url('?editor/'.$this->_section.'/edit/'.(is_numeric(pRegister::arg()['id']) ?  pRegister::arg()['id'] : p::HashId(pRegister::arg()['id'], true)[0]).(isset(pRegister::arg()['is:result']) ? '/is:result' : '')), false)
+					->addLink('discuss', LEMMA_DISCUSS_SHORT, p::Url('?entry/'.$this->_section.'/'.(is_numeric(pRegister::arg()['id']) ?  pRegister::arg()['id'] : p::HashId(pRegister::arg()['id'], true)[0]).'/discuss'.(isset(pRegister::arg()['is:result']) ? '/is:result' : '')), true));
+
 			pMainTemplate::throwOutsidePage($searchBox);
 
 			if(!isset(pRegister::arg()['ajax']))

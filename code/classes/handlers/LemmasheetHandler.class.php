@@ -25,8 +25,14 @@ class pLemmasheetHandler extends pHandler{
 			$dfs->add(new pDataField('description', TRANSLATION_DESC, '40%', 'markdown', true, true, false));
 			$this->dataModel = new pDataModel('translations', $dfs);
 		}
-		else
-			$this->dataModel = new pLemmasheetDataModel($this->_activeSection['table'], (isset(pRegister::arg()['id']) ? pRegister::arg()['id'] : null));
+		else{
+			try {
+				$this->dataModel = new pLemmasheetDataModel($this->_activeSection['table'], (isset(pRegister::arg()['id']) ? pRegister::arg()['id'] : null));
+			} catch (Exception $e) {
+				return false;
+			}
+			
+		}
 	}
 
 	public function render(){
@@ -109,6 +115,9 @@ class pLemmasheetHandler extends pHandler{
 		else
 			echo pMainTemplate::NoticeBox('fa-check', SAVED, 'hide succes-notice successSave');
 
+
+		// Some logging
+		pLogbook::write(!$editBool ? 'new_lemma' : 'edit_lemma', $this->dataModel->_LemmaID);
 
 		if(!$editBool)
 			echo '<script>$("#LemmaSheetForm").trigger("reset");</script>';

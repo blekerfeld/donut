@@ -4,7 +4,7 @@
 // author     Thomas de Roo
 // license    MIT
 // file:      rulesheet.struct.php
-	// The structure of the rule file system
+	// The structure of the rulesheet
 
 
 $saveStrings = array(null, SAVE, SAVING, SAVED_EMPTY, SAVED_ERROR, SAVED, SAVE_LINKBACK);
@@ -14,6 +14,7 @@ return array(
 			'title' => DA_TITLE,
 			'icon' => 'fa-book',
 			'default_permission' => -3,
+			'tabs' => new pTabBar('Grammar','dna'),
 		),
 		'browser' => array(
 			'section_key' => 'browser',
@@ -21,7 +22,7 @@ return array(
 			'type' => 'pSetHandler',
 			'template' => 'pTemplate',
 			'table' => 'rulesets',
-			'surface' => "Rules",
+			'surface' => "Browse Rules",
 			'condition' => false,
 			'disable_enter' => true,
 			'items_per_page' => 20,
@@ -52,6 +53,41 @@ return array(
 				'remove' => new pAction('remove', 'remove', 'fa-times', 'lemma-code discussion float-right', null, null, 'words', 'dictionary-admin', null, -3),
 			),
 			'save_strings' => $saveStrings,
+			'show_tab' => true,
 		),
-			
+		'tablesheet' => array(
+			'section_key' => 'tablesheet',
+			'type' => 'pTablesheetHandler',
+			'template' => 'pTablesheetTemplate',
+			'table' => 'types',
+			'icon' => 'fa-font',
+			'surface' => "Manage grammar tables",
+			'condition' => false,
+			'items_per_page' => 20,
+			'disable_pagination' => false,
+			'actions_item' => array(
+			),
+			'actions_bar' => array(
+			),
+			'save_strings' => $saveStrings,
+			'show_tab' => true,
+		),
+		'preview' => array(
+			'section_key' => 'preview',
+			'type' => 'pTablesheetHandler',
+			'template' => 'pTablesheetTemplate',
+			'table' => 'types',
+			'icon' => 'fa-font',
+			'surface' => "Inflection",
+			'condition' => false,
+			'items_per_page' => 20,
+			'disable_pagination' => false,
+			'actions_item' => array(
+			),
+			'actions_bar' => array(
+			),
+			'save_strings' => $saveStrings,
+		),
+
+	
 	);

@@ -135,10 +135,19 @@ div.select-specify div.items div.item{
    	transition: all .1s;
 }
 
-div.select-specify div.items div.item.selected{
-	background: #7D97A5;
+div.select-specify div.items div.item.selected, div.select-specify div.items div.item:hover{
+	background: #3B66D6;
 	color: #f9f9f9;
-	border-color: #8B9CA5;
+	border-color: #5A7FDC;
+	border-radius: 4px;
+}
+
+div.select-specify div.items div.item.selected{
+	border-color: rgba(126, 239, 104, 0.8);
+  box-shadow: 0 1px 1px rgba(0, 0, 0, 0.075) inset, 0 0 8px rgba(59,102,214, 1);
+  border-color: rgba(59,102,214,1);
+  border-radius: 4px;
+  outline: 0 none;
 }
 
 div.select-specify div.items div.item span[role="remove"]{
@@ -165,12 +174,16 @@ div.select-specify div.items div.item span.attr{
 	color: #666;
 }
 
+div.select-specify div.items div.item:hover span.attr{
+	color: white;
+}
+
 div.select-specify div.items div.item span.attr:not(:empty):before{
 	content: '(';
 }
 
 div.select-specify div.items div.item span.attr:not(:empty):after{
-	content: ')';
+	content: ') ';
 }
 
 div.select-specify div.items div.item:hover span.attr{

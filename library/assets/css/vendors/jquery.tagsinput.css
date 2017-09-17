@@ -1,6 +1,6 @@
 .tagsinput 
 { 
-	border:1px solid #CCC;
+	border: 1px solid #DDD;
 	background: #FFF;
 	padding:0px; 
 	width: 100%; 	
@@ -32,6 +32,14 @@ div.tagsinput span.tag, .imitate-tag
     padding: 0 5px;
 }
 
+div.tagsinput span.tag:hover{
+	background: #3B66D6;
+	color: #f9f9f9;
+	border-color: #5A7FDC;
+	cursor: pointer;
+	border-radius: 4px;
+}
+
 span.imitate-tag{
 	float: none!important;
 	display: inline-block;
@@ -60,12 +68,17 @@ div.tagsinput span.tag a
 	text-decoration:none; font-size: 11px;
 } 
 
+div.tagsinput span.tag:hover a{
+	color: white;
+	font-weight: bolder;
+} 
+
 div.tagsinput input 
 {
 	width:300px; 
 	margin:0px; 
-	font-family: Open Sans;
-	font-size: 17px; 
+	font-family: Noto Sans, Open Sans, calibri, sans-serif;
+	font-size: 15px; 
 	border: 1px solid transparent;
 	padding:2px; background: transparent; 
 	color: #000; outline:0px;  

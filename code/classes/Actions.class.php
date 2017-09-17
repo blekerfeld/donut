@@ -16,7 +16,11 @@ class pAction{
 
 		if($this->_override != null)
 			return $this->_override;
-		return p::Url('?'.$this->_app.'/'.$this->_section.'/'.$this->name.(($id != -1) ? '/'.$id : '').($linked != false ? '/'.$linked.'/' : '').(($ajax != 0) ? '/ajax': '').(isset(pRegister::arg()['offset']) ? "/position/".pRegister::arg()['offset'] : ""));
+		return p::Url('?'.$this->_app.'/'
+			.$this->_section.'/'.
+			$this->name.(($id != -1) ? '/'.
+			$id : '').($linked != false ? '/'.$linked.'/' : '').(($ajax != 0) ? '/ajax': '').
+		(isset(pRegister::arg()['offset']) ? "/position/".pRegister::arg()['offset'] : ""));
 	}
 
 	public function setOverride($override){

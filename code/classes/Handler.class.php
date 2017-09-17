@@ -10,30 +10,34 @@
 // ↓ Object
 class pHandler{
 
-	public $_icon, $_surface, $_data, $_dfs, $dataModel, $_section, $_app, $_actions, $_actionbar, $_paginated, $_offset, $_itemsperpage, $_condition = '', $_total, $_number_of_pages, $_linked = null, $_structure, $_order = '1', $id, $_activeSection;
+	public $_icon, $_surface, $_data, $_dfs, $dataModel, $_section, $_app, $_actions, $_actionbar, $_paginated, $_offset, $_itemsperpage, $_condition = '', $_total, $_number_of_pages, $_linked = null, $_structure, $_order = '1', $id, $_activeSection, $_tabs;
 
-	public function __construct($structure, $icon, $surface, $table, $itemsperpage, $dfs, $actions, $actionbar, $paginated, $section, $app = 'dictionary-admin'){
-		$this->_structure = $structure;
-		$this->_surface = $surface;
-		$this->_icon = $icon;
+	public function __construct($parent){
+		$this->_parent = $parent;
 
-		$this->_dfs = $dfs;
-		$this->_actions = $actions;
-		$this->_actionbar = new pActionBar($actionbar);
+		$this->_structure = $parent->structure;
+		$this->_surface = $parent->_data['surface'];
+		$this->_icon = $parent->_data['icon'];
 
-		$this->_paginated = $paginated;
+		$this->_dfs = $parent->_fields;
+		$this->_actions = $parent->_actions;
+		$this->_actionbar = new pActionBar($parent->_actionbar);
+
+		$this->_paginated = $parent->_paginated;
 		$this->_offset = 0;
-		$this->_itemsperpage = $itemsperpage;
+		$this->_itemsperpage = $parent->_data['items_per_page'];
+
+		$this->_tabs = $parent->_parent->_tabs;
 
 		// If there are none data fields specified, we need to get all.
 		if(empty($this->_dfs->get()))
 			$this->_dfs = null;
 
-		$this->dataModel = new pDataModel($table, $this->_dfs, $this->_paginated);
+		$this->dataModel = new pDataModel($parent->_data['table'], $this->_dfs, $this->_paginated);
 		
 		$this->_total = $this->dataModel->countAll();
-		$this->_section = $section;
-		$this->_app = $app;
+		$this->_section = $parent->_section;
+		$this->_app = $parent->_app;
 
 		$this->_activeSection = $this->_structure[$this->_section];
 	} 

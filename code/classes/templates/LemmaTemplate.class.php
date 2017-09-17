@@ -9,6 +9,13 @@
 
 class pLemmaTemplate extends pEntryTemplate{
 
+
+	public function renderInfo(){
+		if(pUser::noGuest() OR CONFIG_ALWAYS_SHOW_LAST_UPDATE == 1)
+			return "<span class='small hide-partly float-right'>« <em> ".sprintf(LEMMA_WORD_ADDED, "<a href='".p::Url('?auth/profile/'.$this->_data['created_by'])."'>".(new pUser($this->_data['created_by']))->read('username')."</a>", p::Date($this->_data['created']))."</em> »</span>";
+	}
+
+
 	public function parseTranslations($translations, $justList = false){
 		$overAllContent = "";
 		// Going through the languages
@@ -30,8 +37,6 @@ class pLemmaTemplate extends pEntryTemplate{
 			$overAllContent .= new pEntrySection($title, $content, '', true, true, true);
 		}
 
-		// // If there is a session that restricts the shown languages, offer a link that is able cancel that restriction
-		// $showAll = ((isset(pRegister::session()['returnLanguage'])) ? '<a class="opacity-min float-right" href="'.p::Url("?entry/".$this->_data->_entry['id']."/resetTranslations/").'">'.LEMMA_TRANSLATIONS_RESET.'</a>' : '');
 		$showAll = '';
 
 		if($justList)
@@ -62,15 +67,11 @@ class pLemmaTemplate extends pEntryTemplate{
 	// Requires the type, class and subclass
 	public function title($type, $class, $subclass){
 
-		$back = '';
-		if(isset(pRegister::arg()['is:result']))
-			$back = "<a class='back-mini' onClick='$(\".pEntry\").slideUp();
-        	$(\".searchLoad\").slideDown();callBack();' href='javascript:void();'>".(new pIcon('fa-arrow-left', 12))."</a>";
 
 		//"<a class='' href='javascript:void();'' onclick='window.history.back();'' >".(new pIcon('fa-arrow-left', 12))."</a><strong class='pWord'><span class='native'><a>"
 
 		// Sorry sorry sorry about the long code
-		$realTitle = $back.' <a class="lemma-code float-right big print" href="#">'.(new pIcon('fa-share-alt',12)).'</a><a target="_blank" class="lemma-code float-right big print" href="'.p::Url('?entry/'.p::HashId($this->_data['id'])."/print").'">'.(new pIcon('fa-print', 12)).'</a><a class="lemma-code big float-right ttip" href="'.p::Url('?entry/'.p::HashId($this->_data['id'])).'" title="'.$this->_data['id'].'">'.(new pIcon('fa-bookmark-o', 12)).' '.p::HashId($this->_data['id']).'</a>'.p::Markdown("# <span class='native'><strong class='pWord'><a class='native'>".$this->_data['native']."</a></strong></span>".($this->_data['ipa'] != '' ? " <span class='pIpa'>/".$this->_data['ipa']."/</span>" : '').($this->_data['hidden'] == 1 ? "<span class='pExtraInfo'>".(new pIcon('fa-eye-slash', 12))." ".LEMMA_HIDDEN."</span>" : ''), true);
+		$realTitle = ' <a class="lemma-code float-right big print" href="#">'.(new pIcon('fa-share-alt',12)).'</a><a target="_blank" class="lemma-code float-right big print" href="'.p::Url('?entry/'.p::HashId($this->_data['id'])."/print").'">'.(new pIcon('fa-print', 12)).'</a><a class="lemma-code big float-right ttip" href="'.p::Url('?entry/'.p::HashId($this->_data['id'])).'" title="'.$this->_data['id'].'">'.(new pIcon('fa-bookmark-o', 12)).' '.p::HashId($this->_data['id']).'</a>'.p::Markdown("# <span class='native'><strong class='pWord'><a class='native'>".$this->_data['native']."</a></strong></span>".($this->_data['ipa'] != '' ? " <span class='pIpa'>/".$this->_data['ipa']."/</span>" : '').($this->_data['hidden'] == 1 ? "<span class='pExtraInfo'>".(new pIcon('fa-eye-slash', 12))." ".LEMMA_HIDDEN."</span>" : '')." ", true);
 
 		$titleSection = new pEntrySection("", '', null, false, true);
 
@@ -98,7 +99,7 @@ class pLemmaTemplate extends pEntryTemplate{
 
 		// Returning the notes in an entry section
 		if($parsed != '')
-			return new pEntrySection("Usage notes", $parsed, $icon);
+			return new pEntrySection(LEMMA_USAGE_NOTES, $parsed, $icon);
 
 	}
 
@@ -130,7 +131,9 @@ class pLemmaTemplate extends pEntryTemplate{
 		else
 			$linkToWord = $this->_data->renderSimpleLink(true);
 
-		p::Out('<div class="dWordWrapper">'.$hitTranslation.'<strong class="dWord"><span class="native">'.$linkToWord."</span>".($this->_data->_entry['ipa'] != '' ? "<span class='dType'> · </span><span class='pIpa small'>/".$this->_data->_entry['ipa']."/</span>" : '')."</strong><span class='dType'> · ".$this->_data->generateInfoString()."</span> ".($this->_data->_entry['hidden'] == 1 ? "<span class='pExtraInfo'>".(new pIcon('fa-eye-slash', 12))." ".LEMMA_HIDDEN."</span>" : '')." <br />".$this->parseTranslations($this->_data->_translations, true)."</div>");
+
+		p::Out('<div class="dWordWrapper">'.$hitTranslation.'<strong class="dWord"><span class="native">'.$linkToWord."</span>".($this->_data->_entry['ipa'] != '' ? "<span class='dType'> · </span><span class='pIpa small'>/".$this->_data->_entry['ipa']."/</span>" : '')."</strong><span class='dType'> · ".$this->_data->generateInfoString()."</span> ".($this->_data->_entry['hidden'] == 1 ? "<span class='pExtraInfo'>".(new pIcon('fa-eye-slash', 12))." ".LEMMA_HIDDEN."</span>" : '')."
+			".((count($this->_data->_translations) == 0 AND (pUser::checkPermission(-2))) ? "<span class='pExtraInfo'>".(new pIcon('fa-warning', 12))." ".LEMMA_NEED_TRANSLATIONS."</span>" : '')." <br />".$this->parseTranslations($this->_data->_translations, true)."</div>");
 	}
 
 	public function parseListItem($entry){
@@ -144,6 +147,13 @@ class pLemmaTemplate extends pEntryTemplate{
 
 	public function homophones($data, $icon){
 		return $this->synonyms($data, $icon, 'homophone');
+	}
+
+	public function renderEtymology($data, $icon){
+		$content = "";
+		foreach($data as $ety)
+			$content .= '<span class="markdown-body"><h5><em>'.sprintf(LEMMA_ETYMOLOGY_FA, "<span class='tooltip'>".$ety['first_attestation']."</span>").'</em></h5></span><span class="mmedium">'.p::Markdown($ety['desc']).'</span>';
+		return new pEntrySection(LEMMA_ETYMOLOGY, $content, 'chart-timeline', true,  false, false, true, 'inherit');
 	}
 
 }

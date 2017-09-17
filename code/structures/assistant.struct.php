@@ -17,6 +17,7 @@ return array(
 		),
 		'default' => array(
 			'section_key' => 'default',
+			'permission' => -3,
 			'icon' => 'fa-circle-o',
 			'type' => 'pAssistantHandler',
 			'template' => 'pTemplate',
@@ -36,6 +37,7 @@ return array(
 		),
 		'translate' => array(
 			'section_key' => 'translate',
+			'permission' => -3,
 			'icon' => new pIcon('translate', 24),
 			'type' => 'pAssistantHandler',
 			'template' => 'pTemplate',

@@ -11,7 +11,10 @@ class pIcon extends pTemplatePiece{
 
 	public function __construct($icon, $size = 'inherit', $classes = ''){
 		$this->_icon = $icon;
-		$this->_size = $size;
+		if($size != 'inherit')
+			$this->_size = $size."px";
+		else
+			$this->_size = $size;
 		$this->_classes = $classes;
 	}
 
@@ -19,7 +22,7 @@ class pIcon extends pTemplatePiece{
 		if(p::StartsWith($this->_icon, 'fa-'))
 			$icon = "<i class=\"fa ".$this->_icon." ".$this->_classes." fa-".$this->_size."\"></i>";
 		else
-			$icon = "<i class=\"mdi mdi-".$this->_icon." ".$this->_classes."\" style=\"font-size: ".$this->_size."px\"></i>";
+			$icon = "<i class=\"mdi mdi-".$this->_icon." ".$this->_classes."\" style=\"font-size: ".$this->_size."\"></i>";
 
 		return $icon;
 	}

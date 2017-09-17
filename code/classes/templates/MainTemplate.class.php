@@ -9,26 +9,59 @@ class pMainTemplate extends pTemplate{
 
 	protected $_stylesheets, $_scripts;
 
-	public static $title = CONFIG_SITE_TITLE, $orgTitle = CONFIG_SITE_TITLE, $_searchBoxShown = false, $outside;
+	public static $title = CONFIG_SITE_TITLE, $orgTitle = CONFIG_SITE_TITLE, $_searchBoxShown = false, $outside, $no_border = false;
 
 	public static function setTitle($title){
 		self::$title = $title . ' - ' . CONFIG_SITE_TITLE;
 	}
+
+  public static function setNoBorder(){
+    self::$no_border = true;
+  }
 
   public static function throwOutsidePage($content){
     self::$outside .= "\n".$content;
   }
 
 	protected function loadCSS($stylesheet){
-		$this->_stylesheets[] = "<link rel='stylesheet' href='".p::Url('library/assets/css/'.$stylesheet)."'>\n";
+		$this->_stylesheets[] = "<link rel='stylesheet' href='".p::Url('library/assets/css/'.$stylesheet)."'>";
 	}
 
-  public static function loadDots(){
-    return "<div class='center'><p class='dots'><span>.</span><span>.</span><span>.</span></p></div>";
+  protected function pageWidthCSS(){
+    $hashKey = spl_object_hash($this);
+    // Throwing this object's script into a session
+    pRegister::session($hashKey, "
+      .absolute_header{
+        padding-right: calc(".CONFIG_PAGE_MARGIN."% + 40px);
+        padding-left: calc(".CONFIG_PAGE_MARGIN."% + 40px);
+      }
+
+      .header.dictionary.home-search{
+        margin-right: calc(".CONFIG_PAGE_MARGIN."% + 45px);
+      }
+
+      .header{
+        padding-right: calc(".CONFIG_PAGE_MARGIN."% + 40px);
+        padding-left: calc(".CONFIG_PAGE_MARGIN."% + 40px);
+      }
+      .outerwrap{
+        margin-left: calc(".CONFIG_PAGE_MARGIN."% + 40px);
+        margin-right: calc(".CONFIG_PAGE_MARGIN."% + 40px);
+      }
+      .absolute_footer{
+        margin-right: calc(".CONFIG_PAGE_MARGIN."% + 40px);
+        margin-left: calc(".CONFIG_PAGE_MARGIN."% + 40px);
+      }
+    ");
+    return "<link rel='stylesheet' href='".p::Url('pol://library/assets/css/key.css.php?key='.$hashKey)."'>";
+  }
+
+  public static function loadDots($class = 'center'){
+    return "<div class='$class'><p class='dots'><span>.</span><span>.</span><span>.</span></p></div>";
   }
 
 	protected function loadJavascript($url){
-		$this->_scripts[] = "<script type='text/javascript' src='".p::Url('library/assets/js/'.$url)."'></script>\n";
+		$this->_scripts[] = "<script type='text/javascript' src='".p::Url('library/assets/js/'.$url)."'></script>";
 
 	}
 
@@ -83,8 +116,10 @@ class pMainTemplate extends pTemplate{
 	
 
 	public function render(){
+    // if(empty(p::$Out))
+    //   p::Url('?', true);
 		if(isset(pRegister::arg()['ajax']) OR isset(pRegister::arg()['ajaxLoad']))
-			return die(new p);
+			return die(new Donut);
 		?>
 <!DOCTYPE html>
 <html>
@@ -95,8 +130,9 @@ class pMainTemplate extends pTemplate{
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="mobile-web-app-capable" content="yes">
 		<?php
-		echo implode("\n", $this->_stylesheets);
-		echo implode("\n", $this->_scripts);
+		echo implode("", $this->_stylesheets);
+		echo implode("", $this->_scripts);
+    echo $this->pageWidthCSS();   
 		?>
     <script>
     window.addEventListener("load", function(){
@@ -129,14 +165,15 @@ class pMainTemplate extends pTemplate{
               <?php if(!pUser::noGuest()){ echo '<a href="'.p::Url('?auth/login').'">'.MMENU_LOGIN.'</a> '; } ?>
             </div>
             <a class='float-left siteTitle noselect'  href="<?php echo p::Url("?home"); ?>">
-              <span style='font-family: koliko;font-size: 15px;'>[<?php echo CONFIG_LOGO_SYMBOL; ?>]</span>  
+              <span style='font-family: koliko;font-size: 15px;'><?php echo CONFIG_LOGO_SYMBOL; ?></span>  
               <?php echo CONFIG_LOGO_TITLE; ?></a> 
            <?php echo (new pMenuTemplate); ?><br id="cl" />  
        </div>
+     </div>
       <div class='outside'>
         <?php echo self::$outside; ?>
       </div>
-      <div class="outerwrap"> 
+      <div class=<?php echo "'".(self::$no_border ? 'no-border' : '')." outerwrap'"; ?>> 
           <div class="ulWrap">
             <noscript>
               <div class='notice danger-notice'><i class='fa fa-warning fa-12'></i> This site needs javascript to function, with javascript turned off, most of the functionality won't work!</div>
@@ -144,7 +181,7 @@ class pMainTemplate extends pTemplate{
 
           	<div class='page'>
             		<div class='inner-page'>
-              			<?php echo (new p); ?>
+              			<?php echo (new Donut); ?>
             		</div>
          		</div>
 

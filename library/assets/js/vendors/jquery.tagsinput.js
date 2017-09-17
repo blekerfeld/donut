@@ -101,7 +101,7 @@
                         $('<a>', {
                             href  : '#',
                             title : 'Removing tag',
-                            text  : 'x'
+                            html  : '<i class="fa fa-times fa-12"></i>',
                         }).click(function () {
                             return $('#' + id).removeTag(escape(value));
                         })
@@ -186,6 +186,7 @@
       'unique':true,
       removeWithBackspace:true,
       placeholderColor:'#666666',
+      placeholder:'➥ Add translations',
       autosize: true,
       comfortZone: 20,
       inputPadding: 6*2
@@ -220,7 +221,7 @@
 			var markup = '<div id="'+id+'_tagsinput" class="tagsinput"><div id="'+id+'_addTag">';
 			
 			if (settings.interactive) {
-				markup = markup + '<input id="'+id+'_tag" value="" data-default="➥ Add translations" />';
+				markup = markup + '<input id="'+id+'_tag" value="" data-default="'+settings.placeholder+'" />';
 			}
 			
 			markup = markup + '</div><div class="tags_clear"></div></div>';
@@ -304,6 +305,7 @@
 				//Delete last tag on backspace
 				data.removeWithBackspace && $(data.fake_input).bind('keydown', function(event)
 				{
+
 					if(event.keyCode == 8 && $(this).val() == '')
 					{
 						 event.preventDefault();
