@@ -20,8 +20,8 @@
          "DL_DISABLED":"Disabled",
          "DL_OPTIONAL":"Optional",
          "BACK":"Back",
-         "PREVIOUS":"Previous page",
-         "NEXT":"Next page",
+         "PREVIOUS":"Previous",
+         "NEXT":"Next",
          "SAVE":"Save changes",
          "ADD_ITEM":"Add item",
          "TIMES":" times",
@@ -98,6 +98,7 @@
          "DATE_PREPOSITION_TIME":" at "
       },
       "main_menu":{
+         "MMENU_HOME":"Homepage",
          "MMENU_DICTIONARY":"Dictionary",
          "MMENU_DICTIONARYADMIN":"Dictionary settings",
          "MMENU_SETTINGS":"Settings",
@@ -112,9 +113,11 @@
          "MMENU_EDITORLANGCHANGE":"Change",
          "MMENU_LOGGEDIN":"Welcome, \t",
          "MMENU_LOGIN":"Log in",
+         "MMENU_LOGINSU":"Log in or sign up",
          "MMENU_LOGOUT":"Log out"
       },
       "auth_login":{
+         "LOGIN_GREETINGS":"Greetings, guest, ",
          "LOGIN_TITLE":"Log in",
          "LOGIN_TITLE_IMP":"Log in",
          "LOGIN_TITLE_SHORT":"Log in",
@@ -286,13 +289,18 @@
          "DA_TABLE_RELATION_ADDED":"This relation is succesfully created",
          "DA_ABBR":"Abbreviation",
          "DA_SUBINFLECTIONS":"Sub-inflections",
-         "DA_LEXCAT_TITLE":"Lexical categories",
-         "DA_LEXCAT":"Lexical category",
-         "DA_LEXCAT_DESC":"Lexical categories (part of speech)",
-         "DA_GRAMCAT":"Grammatical category",
-         "DA_GRAMCAT_TITLE":"Grammatical categories",
+         "DA_LEXCAT_TITLE":"Lemma classes",
+         "DA_LEXCAT":"Lemma class",
+         "DA_LEXCAT_NAME":"Class name",
+         "DA_LEXCAT_ENABLE_I":"Declension",
+         "DA_LEXCAT_ADD":"New word class",
+         "DA_LEXCAT_DESC":"Word class",
+         "DA_GRAMCAT":"Grammatical class",
+         "DA_GRAMCAT_NAME":"Class name",
+         "DA_GRAMCAT_TITLE":"Grammatical classes",
          "DA_GRAMTAG":"Additional tag",
          "DA_GRAMTAGS_TITLE":"Additional tags",
+         "DA_GRAMTAGS_NAME":"Tag",
          "DA_TITLE_HOME":"Home",
          "DA_TITLE_CONTENT":"Content",
          "DA_TITLE_GRAMMAR":"Grammar",
@@ -308,7 +316,7 @@
          "DA_WORDS_NEW_EXTERN":"New word",
          "DA_TRANSLATIONS":"Translations",
          "DA_TRANSLATION":"Translation",
-         "DA_HEADINGS":"Headings"
+         "DA_HEADINGS":"Sections"
       },
       "stats":{
          "STATS_MOSTSEARCH":"The top %s most-searched words",
@@ -343,15 +351,18 @@
          
       },
       "tablesheet":{
+         "TS_TITLE_TAB":"Grammar tables",
          "TS_COLUMNS":"Columns",
          "TS_COLUMNS_ADD":"Add columns",
          "TS_ROWS":"Rows",
          "TS_ROWS_ADD":"Add rows",
-         "TS_HEADINGS":"Headings",
-         "TS_HEADINGS_ADD":"Add headings",
+         "TS_HEADINGS":"Sections",
+         "TS_HEADINGS_ADD":"Add sections",
          "TS_TABLE_SETUP":"Table set-up",
          "TS_TABLE_PREVIEW":"Preview table",
-         "TS_OPTIONAL":" (optional)"
+         "TS_RANDOM_EXAMPLE":"Random example",
+         "TS_OPTIONAL":" (optional)",
+         "TS_NO_ROWS_YET":"No rows yet"
       }
    }
 }

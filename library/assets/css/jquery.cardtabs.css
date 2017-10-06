@@ -204,6 +204,7 @@ div.card-tabs-bar.pEntry{
 div.card-tabs-bar.pEntry-fix, div.card-tabs-bar.above{
 	margin-top: -40px;
 	margin-left: calc(-20px);
+	border-bottom: none;
 }
 
 div.card-tabs-bar.x{
@@ -214,14 +215,34 @@ div.card-tabs-bar.y{
 	margin-left: -7px;
 }
 
+div.card-tabs-bar.pEntry-fix-20{
+	margin-top: -10px!important;
+	margin-bottom: -10px!important;
+	border-bottom: none;
+}
+
 div.card-tabs-bar.pEntry-fix-50{
-	margin-top: -51px;
+	margin-top: -50px;
+	margin-bottom: 15px;
+	border-bottom: none;
+}
+
+div.card-tabs-bar.pEntry-fix-56{
+	margin-top: -55.5px;
+	border-bottom: none;
 	margin-bottom: 15px;
 }
 
 div.card-tabs-bar.pEntry-fix-60{
 	margin-top: -60px;
 	margin-bottom: 15px;
+	border-bottom: none;
+}
+
+div.card-tabs-bar.pEntry-fix-70{
+	margin-top: -70px;
+	margin-bottom: 15px;
+	border-bottom: none;
 }
 
 
