@@ -12,7 +12,8 @@
 }
 
 .pace .pace-progress {
-  border-bottom: #22A22C 5px solid;
+  height: 10px;
+  background-color: #2B8B4A; 
   opacity: 1;
   position: fixed;
   z-index: 2000;

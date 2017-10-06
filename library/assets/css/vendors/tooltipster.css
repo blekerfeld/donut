@@ -199,39 +199,33 @@
 .tooltipster-sidetip .tooltipster-box {
 	border-radius: 4px;
 	padding: 20px;
-	border: 1px solid rgba(155, 155, 155, 0.1);
+	border: 1px solid #e0e0e0;
 	color: #444!important;
 	background: #fff!important;
-	box-shadow: 0px 2px 5px 0px rgba(0,0,0,0.2)!important;
-	text-shadow: 0px 1px 2px rgba(50, 50, 50, 0.2);
 }
 
 .tooltipster-sidetip.tooltipster-bottom .tooltipster-box {
 	margin-top: 8px;
 	padding: 5px;
-	box-shadow: rgba(0, 0, 0, 0.1) 0 0px 3px;
 }
 
 .tooltipster-sidetip.tooltipster-left .tooltipster-box {
 	margin-right: 8px;
 	padding: 5px;
-	box-shadow: rgba(0, 0, 0, 0.1) 0 0px 3px;
 }
 
 .tooltipster-sidetip.tooltipster-right .tooltipster-box {
 	margin-left: 8px;
 	padding: 5px;
-	box-shadow: rgba(0, 0, 0, 0.1) 0 0px 3px;
 }
 
 .tooltipster-sidetip.tooltipster-top .tooltipster-box {
 	margin-bottom: 8px;
 	padding: 5px;
-	box-shadow: rgba(0, 0, 0, 0.1) 0 0px 3px;
 }
 
 .tooltipster-sidetip .tooltipster-content {
-	color: #888;
+	color: #111;
 	line-height: 18px;
 }
 

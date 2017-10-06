@@ -6,7 +6,7 @@
 // file:      index.php
 
 // We need this file...
-require 'config.php';
+require 'Configuration.php';
 
 // Doing our thing...
 Donut::initialize()->dispatch()->render();

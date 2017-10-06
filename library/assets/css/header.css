@@ -1,278 +1,325 @@
-
-.absolute_header {
-  padding: 3px;
-  padding-left: 10px;  
-  color: snow;
-  text-decoration: none;
-  padding-top: 20px;
-  background:  #111b21;
-  padding-bottom: 13px;
-  box-shadow: 0px 2px 10px 0px rgba(62,69,94,0.4);
+.absolute_header
+{
+  background:#111b21;
+  color:#FFFAFA;
+  padding:20px 3px 13px 10px;
+  text-decoration:none;
+  padding-top: 10px;
 }
 
-.absolute_header a{
-  color: snow;
+.absolute_header.entry{
+   box-shadow:0;
 }
 
-.absolute_header a:hover{
-  color: #3B66D6!important;
+.absolute_header a
+{
+  color:#FFFAFA;
 }
 
-.absolute_header a.text{
-  color: snow;
+.absolute_header a.text
+{
+  color:#FFFAFA;
 }
 
-.absolute_header .user{
-  float: right;
-  font-size: 12px;
-  margin-top: 5px;
+.absolute_header .user
+{
+  float:right;
+  font-size:12px;
+  margin-top:5px;
 }
 
-a.siteTitle {
-  margin-top: 1px;
-  font-weight: bold;
-  color: snow;
-  font-size: 17px;
-} 
-
-a.siteTitle:hover{
-  color: #eee!important;
+a.siteTitle
+{
+  color:#FFFAFA;
+  font-size:17px;
+  font-weight:700;
+  margin-top:1px;
 }
 
-
-.header-icon{
-  margin-top: -2px!important;float: left;margin-right: 5px;
+a.siteTitle:hover
+{
+  color:#eee!important;
 }
 
-
-.header.dictionary{
-  transition: all .3s;
-  padding-top: 15px;
-  position: relative;
-  margin-top: 10px;
-  margin-bottom: -37px;
+.header-icon
+{
+  float:left;
+  margin-right:5px;
+  margin-top:-2px!important;
 }
 
-.header.dictionary.home{
-  padding-top: 20px;
-  margin-bottom: -37px;
+.header.dictionary
+{
+  margin-bottom:-37px;
+  margin-top:30px;
+  padding-top:15px;
+  transition:all .1s;
 }
 
-
-.header.dictionary.home a.st-back{
-  display: none!important;
-  margin: 0;
-  padding-right: 0px!important;
+.header.dictionary.home
+{
+  margin-bottom:-10px;
+  margin:0;
+  padding-bottom:5%!important;
+  padding-top:5%!important;
 }
 
-.btCard .header.dictionary{
-  margin; 0;
-  padding: 0;
+.header.dictionary.home a.st-back
+{
+  display:none!important;
+  margin:0;
+  padding-right:0!important;
 }
 
-.header.dictionary.pentry{
-  display: none;
+.btCard .header.dictionary
+{
+  padding:0;
 }
 
-
-
-.header.dictionary.home-search{
-  width: 100%;
+.header.dictionary.pentry
+{
+  display:none;
 }
 
-.header.dictionary.pentry div.card-tabs-bar{
-  display: none!important;
-}
-
-
-.header.dictionary.pentry input#wordsearch{
-  padding: 4px;
-}
-
-
-.header.dictionary.home .hSearch{
-  padding: 30px;
-  padding-left: 0px;
-  padding-left: 0px;
-  padding-bottom: 0px!important;
-}
-
-.header.dictionary.home .hSearch input#wordsearch{
-  padding: 20px;
-}
-
-.hSearch{
-  padding: 0px;
+.header.dictionary.home-search
+{
+  width:100%;
+  margin-bottom: -40px;
 }
 
 
-.header.dictionary.home .hSearch input#wordsearch{
-  font-size: 24px;
+.header.dictionary.pentry div.card-tabs-bar
+{
+  display:none!important;
+}
+
+.header.dictionary.pentry input#wordsearch
+{
+  padding:4px;
 }
 
 
-.header.dictionary.home .hSearch a.button{
-  margin-top: 10px;
+.header.dictionary.home .hSearch input#wordsearch
+{
+  font-size:24px;
+  padding:20px;
 }
 
-
-.hSearch .button.search{
-  width: 8%;
-  min-width: 100px;
-  margin-top: 0px;
-  padding: 9px;
-  padding-top: 8px;
-  float: right!important;
+.hSearch
+{
+  color:#969696;
+  font-size:15px;
+  padding:0!important;
+  text-decoration:none;
 }
 
-.hSearch .dictionary-selector{
-  width: 7%;
+.header.dictionary.home .hSearch a.button
+{
+  margin-top:10px;
 }
 
-.hSearch .dd-container{
-  float: left;
-  margin-top: 3px;
+.hSearch .button.search
+{
+  float:right!important;
+  margin-top:0;
+  min-width:100px;
+  padding:8px 9px 9px;
+  width:8%;
 }
 
-.hSearch .dd-container a{
-  font-size: 12px;
+.hSearch .dictionary-selector
+{
+  width:7%;
 }
 
-
-input#wordsearch::placeholder{
-  color: #bbb;
+.hSearch .dd-container
+{
+  float:left;
+  margin-top:3px;
 }
 
-input#wordsearch:focus, input#filter:focus {
-  color: #333;
+.hSearch .dd-container a
+{
+  font-size:12px;
 }
 
-
-
-
-a.button.search{
-  display: inline-block;
-  float: right;
-  color: #889DB7;
-  border-radius: 5px;
-  text-align: center;
-  padding: 11PX;
-  margin-top: 1px;
-  margin-left: 2px;
-  width: 29%;
-  transition: background .3s, color .1s;
+input#wordsearch::placeholder
+{
+  color:#bbb;
 }
 
-a.button.search:hover{
-  background: #E6ECF2;
+input#wordsearch:focus,input#filter:focus
+{
+  color:#333;
 }
 
-div.hSearchResults-inner{
-    box-shadow: 0px 2px 5px 0px rgba(0,0,0,0.1)!important;
-    padding: 20px;
+a.button.search
+{
+  border-radius:5px;
+  color:#889DB7;
+  display:inline-block;
+  float:right;
+  margin-left:2px;
+  margin-top:1px;
+  padding:11px;
+  text-align:center;
+  transition:background .3s, color .1s;
+  width:29%;
 }
 
-div.hSearchResults-inner.padding-5{
-   padding: 3px;
-   margin-top: 10px;
-   padding-top: 20px;
-   padding-bottom: 20px;
-   clear: both;
+a.button.search:hover
+{
+  background:#E6ECF2;
 }
 
-
-div.hSearchResult{
+div.hSearchResults-inner.padding-5
+{
+  clear:both;
+  margin-top:10px;
+  padding:20px 3px;
 }
 
-div.hSearch .load-hide{
-  margin-top: 15px;
-  margin-right: 20px;
-  display: none;
-  float: right;
-  position: relative;
+div.hSearch .load-hide
+{
+  display:none;
+  float:right;
+  margin-right:20px;
+  margin-top:15px;
 }
 
-
-.hWrap{
-  padding-bottom: 10px;
+.hWrap
+{
+  padding-bottom:10px;
 }
 
-.hSearch{
-  font-size: 15px;
-  text-decoration: none;
-  padding: 0px!important;
-  color: rgb(150, 150, 150);
-  
+.hSearch input#wordsearch
+{
+  background:#F9f9f9;
+  border:rgba(150,150,150,0.2) 1px solid;
+  border-radius:4px;
+  display:inline-block;
+  float:left;
+  font-family:Noto Sans;
+  font-size:18px;
+  margin:0;
+  padding:18px;
+  transition:all .1s;
+  width:100%;
 }
 
-.hSearch input#wordsearch{
-  border: none;
-
-    box-shadow: 0px 2px 10px 0px rgba(62,69,94,0.02);
-  border-radius: 4px;
-    transition: all .3s;
-  display: inline-block;
-  margin-top: 1px;
-  padding: 18px;
-  background: white;
-  margin: 0px;
-  width: 100%;
-  margin-top: 0px;
-  float: left;
-  font-family: Noto Sans;
-  background: #F9f9f9;
-  font-size: 18px;
-  border: rgba(150, 150, 150, 0.2) 1px solid;
+.header.dictionary div.card-tabs-bar
+{
+  border:none;
+  margin-top:-8px;
 }
 
-
-
-
-
-
-
-.header.dictionary div.card-tabs-bar{
-  margin-top: -8px;
-  border: none;
+.header.dictionary div.card-tabs-bar a
+{
+  font-size:15px!important;
+  padding:4px 15px 1px;
 }
 
-
-.header.dictionary div.card-tabs-bar a{
-  font-size: 15px!important;
-  padding: 15px;
-  padding-bottom: 2px;
-  padding-top: 4px;
-  padding-bottom:1px;
+div.header.dictionary.home div.card-tabs-bar a.disabled
+{
+  color:#FFF!important;
+  opacity:1;
 }
 
-
-.header.dictionary div.card-tabs-bar a.em, .header.dictionary div.card-tabs-bar a.emS{
-  padding: 9px;
-  padding-top: 4px;
+div.header.dictionary.home div.card-tabs-bar a
+{
+  color:#FFF;
+  opacity:1;
 }
 
-.header.dictionary div.card-tabs-bar a.em:hover, .header.dictionary div.card-tabs-bar a.emS:hover{
-  padding: 8px;
-  padding-top: 3px;
+div.header.dictionary.home div.card-tabs-bar a.active
+{
+  opacity:1;
 }
 
+.header.dictionary div.card-tabs-bar a.em,.header.dictionary div.card-tabs-bar a.emS
+{
+  padding:4px 9px 9px;
+}
 
-.header.dictionary div.card-tabs-bar.selectorTabs-h a.active{
-  color: black;
-  background: #f9f9f9;
-  border: rgba(150, 150, 150, 0.2) 1px solid;
-    border-bottom: none;
+.header.dictionary div.card-tabs-bar a.em:hover,.header.dictionary div.card-tabs-bar a.emS:hover
+{
+  padding:3px 8px 8px;
+}
+
+.header.dictionary div.card-tabs-bar.selectorTabs-h a.active
+{
+  background:#f9f9f9;
+  border:rgba(150,150,150,0.2) 1px solid;
+  border-bottom:none;
+  color:#000;
 }
 
 .header.dictionary.home-search div.card-tabs-bar.selectorTabs-h a.active
 {
-  background: white;
+  background:#FFF;
 }
 
-.header.dictionary.home-search #wordsearch{
-  background: white;
+.header.dictionary.home-search #wordsearch
+{
+  background:#FFF;
 }
 
-.hSearch div.card-tabs-bar.selectorTabs-h{
-  border-top: none;
+.hSearch div.card-tabs-bar.selectorTabs-h
+{
+  border-top:none;
 }
+
+div.landing-about
+{
+  background:#FFF;
+  border:rgba(150,150,150,0.2) 1px solid;
+  border-top:none;
+  padding-bottom:30px;
+  padding-top:30px;
+  margin-bottom: -50px;
+  transition: all .3s;
+}
+
+div.header.dictionary.home #wordsearch
+{
+  box-shadow:0 2px 10px 0 rgba(62,69,94,0.35);
+}
+
+div.landing-p .card-tabs-bar a.active
+{
+  text-shadow:0 2px 10px 0 rgba(62,69,94,0.35);
+}
+
+
+
+
+.header.dictionary span.arrow
+{
+  display:none;
+}
+
+.header.dictionary.home span.arrow
+{
+  animation:bounce 15s infinite;
+  color:#FFF!important;
+  cursor:pointer;
+  display:block;
+  font-size:50px;
+  margin:2.5% auto;
+  margin-bottom: -110px;
+  opacity:.4;
+  width:50px;
+  z-index:1000;
+}
+
+.header.dictionary.home span.arrow:hover
+{
+  animation:bounce 2s infinite;
+}
+@keyframes bounce {
+ 0%, 20%, 50%, 80%, 100% {transform: translateY(0);}
+ 40% {transform: translateY(10px);}
+ 60% {transform: translateY(15px);}
+}
+ 
+
