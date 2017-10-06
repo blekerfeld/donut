@@ -32,8 +32,10 @@ class pSimpleStructure extends pStructure{
 			
 		// Call the render function of the simple view
 
-		//if(isset($this->_dispatchStructure['view_function']))
-			//return $this->_view->($this->_dispatchStructure['view_function'])();
+		if(isset($this->_dispatchStructure['view_function'])){
+			$funcName = $this->_dispatchStructure['view_function'];
+			return $this->_view->$funcName();
+		}
 
 		return $this->_view->renderAll();
 			

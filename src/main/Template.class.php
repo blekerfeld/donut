@@ -238,7 +238,7 @@ class pTemplate{
     </div>
     <div class='absolute_footer'>
       
-      <img src='<?php echo p::Url('library/staticimages/logobw.png'); ?>' />
+      <a href='<?php echo p::Url('?about'); ?>'><img src='<?php echo p::Url('library/staticimages/logo.png'); ?>' /></a>
       <span class='mobilehide'> 
         <span class='float-left'>
          
