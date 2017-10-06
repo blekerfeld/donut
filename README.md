@@ -1,9 +1,7 @@
-<img src="https://github.com/blekerfeld/donut/blob/master/library/images/static/logo.png" width="400">
+<img src="https://github.com/blekerfeld/donut/blob/master/library/staticimages/logo.png?raw=true" width="400">
 
 #### Under Construction
 #### Planned release: before January 2018
-
-
 
 Donut is a dictionary and grammar toolkit that makes it easy to create and mantain an online dictionary and grammar for any language. It has purposes within descriptive linguistics and language construction.
 
@@ -20,7 +18,7 @@ Donut is licensed under MIT.
 ### Installation
 
 * Clone the git repository to a web server (alternativly just download its contents)
-* Run `composer install` in the donut directory, or download a ready-to-go release of donut (coming soong).
+* Run `composer install` in the donut directory.
 * Edit config.php to fit your configuaration (database usernames etc.)
 * Import `db.sql` to the database
 * It should work now.
