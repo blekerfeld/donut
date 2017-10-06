@@ -36,7 +36,7 @@ class pDataField{
 
 	
 		if($this->type == 'flag')
-			$output = "<img class='$this->class flagimage' src='".(trim($value) == '' ? p::Url('pol://library/images/flags/undef.png') : p::Url('pol://library/images/flags/'.$value))."' />";
+			$output = "<img class='$this->class flagimage' src='".(trim($value) == '' ? p::Url('pol://library/flags/undef.png') : p::Url('pol://library/flags/'.$value))."' />";
 		
 		elseif($this->type == 'color')
 			$output = "<span style='width: 100px;height:20px;background-color: ".$value."' class='$this->class colorfield'></span>";

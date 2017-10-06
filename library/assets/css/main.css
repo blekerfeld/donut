@@ -267,13 +267,17 @@ span.tab, div.tab {
   width: 49%;
 }
 
+
+
 .row-left{ float: left; width: 33%; padding: 1px;}
 .row-right{ float: right; width: 33%; padding: 1px;}
 .row-center{ display: inline-block; width: 33%; padding: 1px;}
-
+.text-center{text-align: center;}
 #cl {
   clear: both;
 }
+
+
 
 
 .no-border{
@@ -2557,4 +2561,10 @@ p.dots{
   display: block;
   width: 100px;
   height: 20px;
+}
+
+div.pLicense{
+  opacity: .7;
+  text-align: left;
+  font-size: 10px;
 }

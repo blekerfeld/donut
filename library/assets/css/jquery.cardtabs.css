@@ -151,7 +151,6 @@ div.card-tabs-bar.reverse a.active{
 div.card-tabs-bar a.active{
 	border: 1px solid #eaeaea;
 	border-bottom: none;
-	
 	color: black;
 	font-weight: bold;
 	border-radius: 5px 5px 0px 0px;
