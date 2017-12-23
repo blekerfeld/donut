@@ -5,6 +5,7 @@
     # Tell PHP that the mod_rewrite module is ENABLED.
     SetEnv HTTP_MOD_REWRITE On
 
+    # Turn the mod_rewrite module on
     RewriteEngine On
 
 	# Run everything else but real files through index.php

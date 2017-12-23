@@ -1,9 +1,6 @@
 <?php
-// Donut: open source dictionary toolkit
-// version    0.11-dev
-// author     Thomas de Roo
-// license    MIT
-// file:      connection.class.php
+// Donut 0.11-dev - Thomas de Roo - Licensed under MIT
+// file: connection.class.php
 
 class pConnection extends PDO{
 
@@ -36,7 +33,7 @@ class pConnection extends PDO{
 		$trace = debug_backtrace();
 		$functions = array();
 		foreach($trace as $traceIns)
-			$functions[] = $traceIns['class'].'::'.$traceIns['function'].': -'.$traceIns['file'].':'.$traceIns['line'];
+			@$functions[] = $traceIns['class'].'::'.$traceIns['function'].': -'.$traceIns['file'].':'.$traceIns['line'];
 
 		$this->_internLog[] = array($functions, $sql);
 		$this->_queryCount++;

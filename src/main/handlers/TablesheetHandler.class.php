@@ -1,9 +1,6 @@
 <?php
-// Donut: open source dictionary toolkit
-// version    0.11-dev
-// author     Thomas de Roo
-// license    MIT
-// file:      TablesheetHandler.class.php
+// Donut 0.11-dev - Thomas de Roo - Licensed under MIT
+// file: TablesheetHandler.class.php
 
 //$structure, $icon, $surface, $table, $itemsperpage, $dfs, $actions, $actionbar, $paginated, $section, $app = 'dictionary-admin')
 

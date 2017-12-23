@@ -1,10 +1,7 @@
 <?php
-// Donut: open source dictionary toolkit
-// version    0.11-dev
-// author     Thomas de Roo
-// license    MIT
-// file:      rulesheet.struct.php
-	// The structure of the rulesheet
+// Donut 0.11-dev - Thomas de Roo - Licensed under MIT
+// file: rulesheet.struct.php
+	// The structure of the rule file system
 
 
 $saveStrings = array(null, SAVE, SAVING, SAVED_EMPTY, SAVED_ERROR, SAVED, SAVE_LINKBACK);
@@ -14,38 +11,6 @@ return array(
 			'title' => DA_TITLE,
 			'icon' => 'fa-book',
 			'default_permission' => -3,
-		),
-		'tablesheet' => array(
-			'section_key' => 'tablesheet',
-			'type' => 'pTablesheetHandler',
-			'view' => 'pTablesheetView',
-			'table' => 'types',
-			'icon' => 'fa-font',
-			'surface' => "Inflection",
-			'condition' => false,
-			'items_per_page' => 20,
-			'disable_pagination' => false,
-			'actions_item' => array(
-			),
-			'actions_bar' => array(
-			),
-			'save_strings' => $saveStrings,
-		),
-		'preview' => array(
-			'section_key' => 'preview',
-			'type' => 'pTablesheetHandler',
-			'view' => 'pTablesheetView',
-			'table' => 'types',
-			'icon' => 'fa-font',
-			'surface' => "Inflection",
-			'condition' => false,
-			'items_per_page' => 20,
-			'disable_pagination' => false,
-			'actions_item' => array(
-			),
-			'actions_bar' => array(
-			),
-			'save_strings' => $saveStrings,
 		),
 		'browser' => array(
 			'section_key' => 'browser',
@@ -85,5 +50,5 @@ return array(
 			),
 			'save_strings' => $saveStrings,
 		),
-	
+			
 	);

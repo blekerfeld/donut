@@ -1,24 +1,22 @@
 .absolute_header
 {
-  background:#111b21;
-  color:#FFFAFA;
+  background: #fff;
+        border-top: 4px solid #2F335E!important;
   padding:20px 3px 13px 10px;
   text-decoration:none;
-  padding-top: 10px;
+  padding-top: 2.1em!important;
 }
 
-.absolute_header.entry{
-   box-shadow:0;
-}
+
 
 .absolute_header a
 {
-  color:#FFFAFA;
+  color: #010101;
 }
 
 .absolute_header a.text
 {
-  color:#FFFAFA;
+
 }
 
 .absolute_header .user
@@ -30,16 +28,13 @@
 
 a.siteTitle
 {
-  color:#FFFAFA;
+
   font-size:17px;
   font-weight:700;
   margin-top:1px;
+  color: #282C51;
 }
 
-a.siteTitle:hover
-{
-  color:#eee!important;
-}
 
 .header-icon
 {
@@ -58,10 +53,10 @@ a.siteTitle:hover
 
 .header.dictionary.home
 {
-  margin-bottom:-10px;
-  margin:0;
-  padding-bottom:5%!important;
-  padding-top:5%!important;
+    margin:0;
+  margin-bottom:14px;
+  padding-top: 45px!important;
+  padding-bottom: 5px!important;
 }
 
 .header.dictionary.home a.st-back
@@ -194,9 +189,8 @@ div.hSearch .load-hide
 
 .hSearch input#wordsearch
 {
-  background:#F9f9f9;
+  background:#fff;
   border:rgba(150,150,150,0.2) 1px solid;
-  border-radius:4px;
   display:inline-block;
   float:left;
   font-family:Noto Sans;
@@ -205,6 +199,7 @@ div.hSearch .load-hide
   padding:18px;
   transition:all .1s;
   width:100%;
+  border-radius: 5px!important;
 }
 
 .header.dictionary div.card-tabs-bar
@@ -219,22 +214,6 @@ div.hSearch .load-hide
   padding:4px 15px 1px;
 }
 
-div.header.dictionary.home div.card-tabs-bar a.disabled
-{
-  color:#FFF!important;
-  opacity:1;
-}
-
-div.header.dictionary.home div.card-tabs-bar a
-{
-  color:#FFF;
-  opacity:1;
-}
-
-div.header.dictionary.home div.card-tabs-bar a.active
-{
-  opacity:1;
-}
 
 .header.dictionary div.card-tabs-bar a.em,.header.dictionary div.card-tabs-bar a.emS
 {
@@ -248,7 +227,7 @@ div.header.dictionary.home div.card-tabs-bar a.active
 
 .header.dictionary div.card-tabs-bar.selectorTabs-h a.active
 {
-  background:#f9f9f9;
+  background:#ffff;
   border:rgba(150,150,150,0.2) 1px solid;
   border-bottom:none;
   color:#000;
@@ -272,23 +251,23 @@ div.header.dictionary.home div.card-tabs-bar a.active
 div.landing-about
 {
   background:#FFF;
-  border:rgba(150,150,150,0.2) 1px solid;
   border-top:none;
   padding-bottom:30px;
   padding-top:30px;
   margin-bottom: -50px;
   transition: all .3s;
+  border-radius: 5px!important;
+}
+
+div.landing-content{
+  border-radius: 5px!important;
 }
 
 div.header.dictionary.home #wordsearch
 {
-  box-shadow:0 2px 10px 0 rgba(62,69,94,0.35);
+
 }
 
-div.landing-p .card-tabs-bar a.active
-{
-  text-shadow:0 2px 10px 0 rgba(62,69,94,0.35);
-}
 
 
 
@@ -322,4 +301,60 @@ div.landing-p .card-tabs-bar a.active
  60% {transform: translateY(15px);}
 }
  
+
+/* Navigation*/
+
+div.nav {
+  display: inline-block;
+  color: #000;
+  transition: all .3s;
+  padding-left: 10px;
+  margin-left: 30px;
+  margin-top: -16px;
+  margin-bottom: -13px;
+}
+
+div.nav a:first-child{
+  margin-left: -20px;
+}
+
+div.nav a {
+  padding: 10px;
+  padding-top: 5px;
+  padding-bottom: 5px;
+  font-size: 13px;
+  text-decoration: none;
+  letter-spacing: .15em;
+  white-space: normal;
+  font-weight: 500;
+  display: inline-block;
+  border-bottom: 3px transparent solid;
+  margin-left: 7px;
+}
+
+div.nav a:hover, div.nav a.admin:hover {
+  border-bottom: 1px solid #D9DDD9;
+  color: #607193!important;
+}
+
+div.nav a.active{
+
+}
+
+div.nav a.admin{
+  margin-right: 5px;
+  font-size:12px;
+  margin-top: 4px;
+  border-bottom: 2px solid rgba(142,39,47,0.6);
+  border-radius: 7px 7px 0px 0px;
+  padding-left: 6px;
+  padding-right: 6px;
+  letter-spacing: normal;
+}
+
+div.nav a.admin.active{
+  border-bottom: 3px solid #607193;
+  font-weight: bolder;
+  color: #607193;
+}
 

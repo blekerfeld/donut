@@ -1,9 +1,6 @@
 <?php
-// Donut: open source dictionary toolkit
-// version    0.11-dev
-// author     Thomas de Roo
-// license    MIT
-// file:      LinkTableObject.class.php
+// Donut 0.11-dev - Thomas de Roo - Licensed under MIT
+// file: LinkTableObject.class.php
 
 class pLinkTableHandler extends pHandler{
 

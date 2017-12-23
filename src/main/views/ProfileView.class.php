@@ -1,10 +1,7 @@
 
 <?php
-// Donut: open source dictionary toolkit
-// version    0.11-dev
-// author     Thomas de Roo
-// license    MIT
-// file:      HomeView.class.php
+// Donut 0.11-dev - Thomas de Roo - Licensed under MIT
+// file: HomeView.class.php
 
 class pProfileView extends pSimpleView{
 

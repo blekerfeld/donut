@@ -1,9 +1,6 @@
 <?php
-// Donut: open source dictionary toolkit
-// version    0.11-dev
-// author     Thomas de Roo
-// license    MIT
-// file:      dispatcher.class.php
+// Donut 0.11-dev - Thomas de Roo - Licensed under MIT
+// file: dispatcher.class.php
 
 
 // This class takes the url-querystring, reads and understands it (with help of dispatch.struct.php in the structure-folder) and creates all the parsers and objects needed in order to route to the desired place.

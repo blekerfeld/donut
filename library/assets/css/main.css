@@ -47,7 +47,7 @@ html, body {
   margin: 0;
   box-sizing: border-box;
   height:100%;
-  background: #EDF0F1;
+  background: #EDEDED;
   padding: 0;
   font-family: Noto Sans, Calibri, Sans;
   font-size: 16px;
@@ -98,7 +98,7 @@ p{
 }
 
 textarea:focus, input:focus {   
-  border-color: rgba(17,39,175, 0.3)!important;
+  border-color: rgba(79, 86, 158, 0.3)!important;
 }
 
 
@@ -206,7 +206,13 @@ textarea:focus, input:focus {
 }
 
 .hide-partly{
-  opacity: .7;
+  opacity: .3;
+  cursor: pointer;
+  transition: opacity .2s;
+}
+
+.hide-partly:hover{
+  opacity: 1;
 }
 
 .small-caps.title {
@@ -288,14 +294,16 @@ span.tab, div.tab {
 /* Basic layout elements*/
 
 
+div.holder{
+}
+
 div.outerwrap {
   margin-top: 45px;
   min-height: 500px;
-  border: rgba(150, 150, 150, 0.2) 1px solid;
   background: white;
   margin-bottom: 0px;
   padding-top: 10px;
-  border-radius: 4px;
+  border-radius: 5px!important;
 }
 
 div.outerwrap.no-border{
@@ -317,6 +325,7 @@ div.outerwrap.no-border{
   background-position: 10% 10%;
   height: auto;
   padding-bottom: 20px;
+
 }
 
 .page.min{
@@ -334,7 +343,7 @@ div.outerwrap.no-border{
 .home-margin{
   width: 98%;
   margin: 0 auto;
-  padding-top: 10px;
+  padding-top: 35px;
   padding-bottom: 0px;
 }
 
@@ -365,63 +374,6 @@ div.pEntry-inner{
 }
 
 
-/* Navigation*/
-
-div.nav {
-  color: #fff;
-  display: inline-block;
-  color: #000;
-  transition: all .3s;
-  padding-left: 10px;
-  margin-left: 30px;
-  margin-top: -16px;
-  margin-bottom: -13px;
-}
-
-div.nav a:first-child{
-  margin-left: -20px;
-}
-
-div.nav a {
-  padding: 10px;
-  padding-top: 16px;
-  padding-bottom: 13px;
-  font-size: 13px;
-  color: #D9DDD9;
-  text-decoration: none;
-  letter-spacing: .15em;
-  white-space: normal;
-  font-weight: 500;
-  display: inline-block;
-  border-bottom: 3px transparent solid;
-  margin-left: 7px;
-}
-
-div.nav a:hover, div.nav a.admin:hover {
-  border-bottom: 3px solid #D9DDD9;
-  color: snow!important;
-}
-
-div.nav a.active{
-  color: white;
-}
-
-div.nav a.admin{
-  margin-right: 5px;
-  font-size:12px;
-  margin-top: 4px;
-  border-bottom: 2px solid rgba(142,39,47,0.6);
-  border-radius: 7px 7px 0px 0px;
-  padding-left: 6px;
-  padding-right: 6px;
-  letter-spacing: normal;
-}
-
-div.nav a.admin.active{
-  border-bottom: 3px solid #607193;
-  font-weight: bolder;
-  color: #607193;
-}
 
 a.button, a.buttona {
   padding: 9px;
@@ -1067,7 +1019,8 @@ input.nWord, textarea.nWord {
   display: inline-block;
   margin: 0 auto;
   padding: 18px!important;
-  border: #ddd 1px solid;
+  border: rgba(150, 150, 150, 0.1) 1px solid ;
+  border-bottom: 1px solid #DDDDDD;
 }
 
 
@@ -1153,7 +1106,7 @@ img.pImage {
 
 
 strong.pWord a {
-  color: #000!important;
+  color: ##111b21!important;
   display: inline-block;
   transition: color .4s;
   padding-bottom: 0px;
@@ -1167,8 +1120,8 @@ strong.pWord a:hover {
 
 span.pIpa{
   color: #555;
-  font-size: 24px;
-  font-family: Gentium;
+  font-size: 21px;
+  font-weight: normal;
   opacity: .45;
   cursor: pointer;
   transition: all .3s;
@@ -1703,11 +1656,10 @@ div.btCard.link-table{
 div.pages{
   font-size: 11px;
   padding: 4px;
-  margin-left: 10px!important;
-  margin-right: 2.5%;
-  float: right;
+  display: inline-block;
   opacity: .95;
   transition: opacity .3s;
+  float: right;
 }
 
 div.pages:hover{
@@ -1717,6 +1669,7 @@ div.pages:hover{
 div.pages a.arrow{
   border-bottom: 1px solid transparent;
   padding: 3px;
+  display: inline-block;
 }
 
 div.pages a.arrow:hover{
@@ -1733,21 +1686,15 @@ div.pages span.sep{
 }
 
 div.pages a.num{
-  padding: 3px;
-  border-bottom: 1px solid #3B66D6;
-  font-size: 14px;
   display: inline-block;
+  padding: 5px;
 }
 
 div.pages div.holder{
-  margin-left: 10px;
-  display: inline-block;
-  margin-right: 10px;
 }
 
 div.pages a.num.active{
-  color: white;
-  background: #3B66D6;
+  border-bottom: 2px solid #3B66D6;
 }
 
 
@@ -2032,7 +1979,6 @@ a.btAction.redbt {
   background-color: #E8735E;
   border-radius: 5px;
   padding: 7px;
-  opacity: .5;
   font-size: 12px;
   color: snow!important;
 }
@@ -2065,6 +2011,14 @@ a.btAction.blue.disabled:hover{
 div.rulesheet{
   display: flex;
   margin-right: -15px;
+}
+
+div.rulesheet.border{
+  border: 1px solid #EAEAEA;
+  border-top: 0px;
+  border-radius: 0px 0px 5px 5px;
+  margin-right: 1px;
+  padding: 10px;
 }
 
 div.rulesheet{
@@ -2105,10 +2059,11 @@ div.rulesheet div.card-tabs-bar.vertical{
 
 div.rulesheet div.tablesheet{
   width: 85%;
-  align-items: stretch!important;
+  background: #F7F7F7;
   padding-left: 30px;
   border: 1px solid #eaecef;
-  border-left: none;
+  border-radius: 5px;
+  z-index: 0;
 }
 
 div.rulesheet.no-padding .left, div.rulesheet.no-padding .right{
@@ -2338,7 +2293,7 @@ div.tablePreview{
 table.inflections.preview{
   width: 100%;
   border: rgba(150, 150, 150, 0.2) 1px dashed;
-
+  background: white;
 
 
 }
@@ -2356,7 +2311,7 @@ table.inflections td{
 table.inflections tr.heading td{
   font-size: 17px;
   font-weight: bold;
-  border-bottom: 1px dashed #D3C9D3;
+  border-bottom: 1px solid #D3C9D3;
   opacity: 1;
 }
 
@@ -2535,7 +2490,7 @@ table.rules span.dType{
 }
 
 p.dots{
-  font-size: 10px;
+  font-size: 4px!important;
   text-align: center;
   width: 100%;  
 }
@@ -2545,7 +2500,6 @@ p.dots{
     animation-duration: 3s;
     animation-iteration-count: infinite;
     animation-fill-mode: both;
-
 }
 
 .dots span:nth-child(2) {

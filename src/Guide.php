@@ -1,9 +1,6 @@
 <?php
-// Donut: open source dictionary toolkit
-// version    0.11-dev
-// author     Thomas de Roo
-// license    MIT
-// file:      Guide.php
+// Donut 0.11-dev - Thomas de Roo - Licensed under MIT
+// file: Guide.php
 	// The structure of donut's routing
 
 return [
@@ -69,17 +66,6 @@ return [
 		'menu' => 'home',
 	],
 	
-	'landing' => [
-		'page_title' => CONFIG_SITE_TITLE,
-		'default_section' => 'landing',
-		'arguments' => [
-		],
-		'override_structure_type' => 'pSimpleStructure',
-		'permission' => 999,
-		'view' => 'pLandingView',
-		'metadata' => [],
-		'menu' => 'home',
-	],
 
 	'dictionary-admin' => [
 		'page_title' => 'Admin panel',
@@ -130,6 +116,7 @@ return [
 		],
 		'menu' => 'home',
 	],		
+	
 	'search' => [
 		'page_title' => 'Search',
 		'default_section' => 'search',

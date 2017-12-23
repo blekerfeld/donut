@@ -6,7 +6,7 @@
 //	++	File:Main.class.php
 
 
-class Donut{
+class pMain{
 
 	public static $Out = array(), $Header = array(), $db, $assets, $locales;
 
@@ -289,6 +289,6 @@ class Donut{
 }
 
 // Alias
-class p extends Donut{
+class p extends pMain{
 
 }

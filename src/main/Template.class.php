@@ -1,9 +1,6 @@
 <?php
-// Donut: open source dictionary toolkit
-// version    0.11-dev
-// author     Thomas de Roo
-// license    MIT
-// file:      Template.class.php
+// Donut 0.11-dev - Thomas de Roo - Licensed under MIT
+// file: Template.class.php
 
 class pTemplate{
 
@@ -34,14 +31,20 @@ class pTemplate{
       .absolute_header{
         padding-right: calc(".CONFIG_PAGE_MARGIN."% + 20px);
         padding-left: calc(".CONFIG_PAGE_MARGIN."% + 20px);
-        border-top: 5px solid ".CONFIG_ACCENT_COLOR_1."!important;
+
+        border: 4px ".CONFIG_ACCENT_COLOR_1." solid!important;
       }
+
+      .absolute_footer{
+           border-top: #cacaca dotted 1px!important;
+      }
+
+       .absolute_header{
+       }
 
       .absolute_header a:hover{
         color: ".CONFIG_ACCENT_COLOR_1."!important;
       }
-
-
 
       div.landing-content{
        padding-right: calc(".CONFIG_PAGE_MARGIN."% + 20px);
@@ -49,10 +52,8 @@ class pTemplate{
        padding:-top: 50px; 
       }
 
-
       div.landing-about{
-          padding-left: calc(".CONFIG_PAGE_MARGIN."%);
-          padding-right: calc(".CONFIG_PAGE_MARGIN."%);
+          padding: 60px;
           border-radius: 0px 0px 4px 4px;
       }
 
@@ -65,9 +66,9 @@ class pTemplate{
         padding-right: calc(".CONFIG_PAGE_MARGIN."% + 20px);
         padding-left: calc(".CONFIG_PAGE_MARGIN."% + 20px);
       }
-      .outerwrap{
-        margin-left: calc(".CONFIG_PAGE_MARGIN."% + 20px);
-        margin-right: calc(".CONFIG_PAGE_MARGIN."% + 20px);
+      .holder{
+        padding-left: calc(".CONFIG_PAGE_MARGIN."% + 20px);
+        padding-right: calc(".CONFIG_PAGE_MARGIN."% + 20px);
       }
       .absolute_footer{
         margin-right: calc(".CONFIG_PAGE_MARGIN."% + 20px);
@@ -77,12 +78,10 @@ class pTemplate{
 
       div.header.dictionary.home{
         padding: calc(".CONFIG_PAGE_MARGIN."% + 1%);
-        border-bottom: 2px solid ".CONFIG_ACCENT_COLOR_1."!important;
-        ".CONFIG_HEADER_CSS_BACKGROUND.";
       }
 
       div.nav a.active{
-          border-bottom: 3px solid ".CONFIG_ACCENT_COLOR_1.";
+          border-bottom: 1px dotted ".CONFIG_ACCENT_COLOR_1.";
       }
 
       .header.dictionary.home .hSearch{
@@ -94,7 +93,8 @@ class pTemplate{
   }
 
   public static function loadDots($class = 'center'){
-    return "<div class='$class'><p class='dots'><span>.</span><span>.</span><span>.</span></p></div>";
+    $dot = ".";
+    return "<div class='$class'><p class='dots'><span>".$dot."</span><span>".$dot."</span><span>".$dot."</span></p></div>";
   }
 
 	protected function loadJavascript($url){
@@ -131,7 +131,7 @@ class pTemplate{
   
 
   public static function toggleSearchBox(){
-    self::$_searchBoxShown = true;
+     self::$_searchBoxShown = !self::$_searchBoxShown;
   }
 
   public static function NoticeBox($icon, $message, $type='notice', $id=''){
@@ -166,7 +166,7 @@ class pTemplate{
     if(isset(pRegister::arg()['ajaxLoad']))
       echo "<script type='text/javascript'>document.title = '".self::$title."';</script>";
 		if(isset(pRegister::arg()['ajax']) OR isset(pRegister::arg()['ajaxLoad']))
-			return die(new Donut);
+			return die(new pMain);
 		?>
 <!DOCTYPE html>
 <html>
@@ -220,6 +220,7 @@ class pTemplate{
       <div class='outside'>
         <?php echo self::$outside; ?>
       </div>
+      <div class='holder'>
       <div class=<?php echo "'".(self::$no_border ? 'no-border no-border-h' : '')." outerwrap'"; ?>> 
           <div class="ulWrap">
             <noscript>
@@ -228,12 +229,13 @@ class pTemplate{
 
           	<div class='page'>
             		<div class='inner-page'>
-              			<?php echo new Donut; ?>
+              			<?php echo new pMain; ?>
             		</div>
          		</div>
 
           </div>
     	</div>
+    </div>
     </div>
     </div>
     <div class='absolute_footer'>
@@ -250,5 +252,11 @@ class pTemplate{
     </div>
   </body>
  </html><?php
-	}
+	 return $this;
+  }
+
+  public function die($input = null){
+    // To make it possible to die on a chained instance of the template...
+    return die($input);
+  }
 }

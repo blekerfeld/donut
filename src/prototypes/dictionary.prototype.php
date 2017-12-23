@@ -1,9 +1,6 @@
 <?php
-// Donut: open source dictionary toolkit
-// version    0.11-dev
-// author     Thomas de Roo
-// license    MIT
-// file:      dictionary.admin.struct.php
+// Donut 0.11-dev - Thomas de Roo - Licensed under MIT
+// file: dictionary.admin.struct.php
 	// The structure of the dictionary admin panel
 
 $saveStrings = array(null, SAVE, SAVING, SAVED_EMPTY, SAVED_ERROR, SAVED, SAVE_LINKBACK);

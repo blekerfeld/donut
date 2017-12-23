@@ -1,9 +1,6 @@
 <?php
-// Donut: open source dictionary toolkit
-// version    0.11-dev
-// author     Thomas de Roo
-// license    MIT
-// file:      admin.structure.class.php
+// Donut 0.11-dev - Thomas de Roo - Licensed under MIT
+// file: admin.structure.class.php
 
 class pEntryStructure extends pStructure{
 
@@ -50,7 +47,8 @@ class pEntryStructure extends pStructure{
 			p::Out("<div class='pEntry ".(($this->_error != '' OR $this->_error != null) ? 'hasErrors' : '')."'><div class='home-margin'>");
 
 
-		$this->_tabs = (new pTabBar(MMENU_DICTIONARY, 'fa-book', true, 'titles pEntry-fix-56'))->addSearch()->addHome();
+		// Let's create a tab bar for this app
+		$this->_tabs = (new pTabBar(MMENU_DICTIONARY, 'fa-book', true, 'titles pEntry-fix-56'))->addSearch();
 
 		// If logged, show tabs
 		if(pUser::noGuest() AND isset($this->_prototype[$this->_section]['edit_url'], pRegister::arg()['id']) AND !in_array($this->_section, $specialEntries) AND p::NoAjax())

@@ -1,9 +1,6 @@
 <?php
-// Donut: open source dictionary toolkit
-// version    0.11-dev
-// author     Thomas de Roo
-// license    MIT
-// file:      config.php
+// Donut 0.11-dev - Thomas de Roo - Licensed under MIT
+// file: Configuration.php
 
 define('CONFIG_DB_HOST', 'localhost');
 define('CONFIG_DB_USER', 'root');
@@ -18,13 +15,16 @@ define('CONFIG_FOLDER', 'donut');
 define('CONFIG_ABSOLUTE_PATH', "http://".$_SERVER['SERVER_NAME']."/".CONFIG_FOLDER);
 define('CONFIG_REQUIRED_PHP_VERSION', '5.6.0');
 
+// Check whether we actually meet that version requirment.
 if (version_compare(phpversion(), CONFIG_REQUIRED_PHP_VERSION, '<'))
-	die('Donut requires PHP version '.CONFIG_REQUIRED_PHP_VERSION." in order to work.");
+	die('We are sorry, but Donut requires PHP version '.CONFIG_REQUIRED_PHP_VERSION." in order to work.");
 
-// We might be dealing with the most crazy symbols evâh, so UTF-8 is needed, like a lot
+// ...add a bit of utf-8 to the mix, doesn't hurt, especially when we're in a Windows enviroment
 mb_internal_encoding("UTF-8");
 mb_regex_encoding("UTF-8");
 
-// Passing on the responsibilty to the main class
-
+// The Main class is very important
 require CONFIG_ROOT_PATH . '/src/main/Main.class.php';
+
+// Now let's initialize the Donut, and give it back to index.php
+return pMain::initialize();

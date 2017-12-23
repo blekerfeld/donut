@@ -1,9 +1,6 @@
 <?php
-// Donut: open source dictionary toolkit
-// version    0.11-dev
-// author     Thomas de Roo
-// license    MIT
-// file:      Register.class.php
+// Donut 0.11-dev - Thomas de Roo - Licensed under MIT
+// file: Register.class.php
 
 // For jQuery style fetching of the url information! :)
 // like this: pRegister::arg()['id'];
