@@ -39,9 +39,9 @@ CREATE TABLE `classifications` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 INSERT INTO `classifications` (`id`, `name`, `short_name`) VALUES
-(1,	'common gender',	'cg.'),
-(2,	'neuter',	'nt.'),
-(3,	'regular',	'rg.');
+(1, 'common gender',  'cg.'),
+(2, 'neuter', 'nt.'),
+(3, 'regular',  'rg.');
 
 DROP TABLE IF EXISTS `cognates`;
 CREATE TABLE `cognates` (
@@ -68,9 +68,9 @@ CREATE TABLE `columns` (
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 INSERT INTO `columns` (`id`, `name`, `short_name`, `hidden_native_entry`, `hidden_native_entry_short`) VALUES
-(3,	'positive',	'pos.',	'0',	0),
-(4,	'comparative',	'comp.',	'0',	0),
-(5,	'superlative',	'sl.',	'0',	0);
+(3, 'positive', 'pos.', '0',  0),
+(4, 'comparative',  'comp.',  '0',  0),
+(5, 'superlative',  'sl.',  '0',  0);
 
 SET NAMES utf8mb4;
 
@@ -87,9 +87,9 @@ CREATE TABLE `column_apply` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 INSERT INTO `column_apply` (`id`, `column_id`, `mode_id`) VALUES
-(3,	3,	26),
-(4,	4,	26),
-(6,	5,	26);
+(3, 3,  26),
+(4, 4,  26),
+(6, 5,  26);
 
 DROP TABLE IF EXISTS `config`;
 CREATE TABLE `config` (
@@ -100,28 +100,28 @@ CREATE TABLE `config` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 INSERT INTO `config` (`id`, `SETTING_NAME`, `SETTING_VALUE`) VALUES
-(1,	'ENABLE_QUERY_CACHING',	'0'),
-(2,	'QC_TIME',	'100000'),
-(3,	'SITE_TITLE',	'Donut'),
-(4,	'LOGO_TITLE',	'Example Dictionary'),
-(5,	'HOMEPAGE',	'home'),
-(12,	'SITE_DESC',	''),
-(13,	'ACTIVE_LOCALE',	'English'),
-(14,	'ENABLE_REGISTER',	'1'),
-(15,	'REGISTER_DEFAULT_ROLE',	'3'),
-(16,	'ENABLE_DEFINITIONS',	'1'),
-(17,	'LOGO_SYMBOL',	'dots-horizontal-circle'),
-(18,	'MAIL_FROM',	'noreply@localhost'),
-(19,	'ENABLE_ACTIVATION_MAIL',	'1'),
-(20,	'ENABLE_TOS',	'1'),
-(21,	'MAIL_FROM_NAME',	'Donut dictionary'),
-(22,	'REGISTER_ADMIN_ACTIVATION',	'0'),
-(23,	'PAGE_MARGIN',	'8.5'),
-(24,	'ALWAYS_SHOW_LAST_UPDATE',	'0'),
-(25,	'PERMISSION_CREATE_LEMMAS',	'-3'),
-(27,	'HEADER_CSS_BACKGROUND',	'background-color: #111b21;\r\nbackground-image: linear-gradient(#111b21, #222c32);'),
-(28,	'HEADER_CSS_HSEARCH',	''),
-(29,	'ACCENT_COLOR_1',	'#3B66D6');
+(1, 'ENABLE_QUERY_CACHING', '0'),
+(2, 'QC_TIME',  '100000'),
+(3, 'SITE_TITLE', 'Donut'),
+(4, 'LOGO_TITLE', 'Example Dictionary'),
+(5, 'HOMEPAGE', 'home'),
+(12,  'SITE_DESC',  ''),
+(13,  'ACTIVE_LOCALE',  'English'),
+(14,  'ENABLE_REGISTER',  '1'),
+(15,  'REGISTER_DEFAULT_ROLE',  '3'),
+(16,  'ENABLE_DEFINITIONS', '1'),
+(17,  'LOGO_SYMBOL',  'fa-book'),
+(18,  'MAIL_FROM',  'noreply@localhost'),
+(19,  'ENABLE_ACTIVATION_MAIL', '1'),
+(20,  'ENABLE_TOS', '1'),
+(21,  'MAIL_FROM_NAME', 'Donut dictionary'),
+(22,  'REGISTER_ADMIN_ACTIVATION',  '0'),
+(23,  'PAGE_MARGIN',  '12'),
+(24,  'ALWAYS_SHOW_LAST_UPDATE',  '0'),
+(25,  'PERMISSION_CREATE_LEMMAS', '-3'),
+(27,  'HEADER_CSS_BACKGROUND',  'background-color: #121D23;'),
+(28,  'HEADER_CSS_HSEARCH', ''),
+(29,  'ACCENT_COLOR_1', '#282C51;');
 
 DROP TABLE IF EXISTS `derivation`;
 CREATE TABLE `derivation` (
@@ -196,7 +196,7 @@ CREATE TABLE `etymology` (
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 INSERT INTO `etymology` (`id`, `word_id`, `desc`, `first_attestation`) VALUES
-(35,	1337,	'From Old Dutch *katta*',	'1120');
+(35,  1337, 'From Old Dutch *katta*', '1120');
 
 DROP TABLE IF EXISTS `graphemes`;
 CREATE TABLE `graphemes` (
@@ -212,32 +212,32 @@ CREATE TABLE `graphemes` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 INSERT INTO `graphemes` (`id`, `grapheme`, `uppercase`, `in_alphabet`, `ipa`, `quality`, `sorter`) VALUES
-(41,	'a',	'A',	1,	'',	'',	0),
-(42,	'b',	'B',	1,	'',	'',	0),
-(43,	'c',	'C',	1,	'',	'',	0),
-(44,	'd',	'D',	1,	'',	'',	0),
-(45,	'e',	'E',	1,	'',	'',	0),
-(46,	'f',	'F',	1,	'',	'',	0),
-(47,	'g',	'G',	1,	'',	'',	0),
-(48,	'h',	'H',	1,	'',	'',	0),
-(49,	'i',	'I',	1,	'',	'',	0),
-(50,	'j',	'J',	1,	'',	'',	0),
-(51,	'k',	'K',	1,	'',	'',	0),
-(52,	'l',	'L',	1,	'',	'',	0),
-(53,	'm',	'M',	1,	'',	'',	0),
-(54,	'n',	'N',	1,	'',	'',	0),
-(55,	'o',	'O',	1,	'',	'',	0),
-(56,	'p',	'P',	1,	'',	'',	0),
-(57,	'q',	'Q',	1,	'',	'',	0),
-(58,	'r',	'R',	1,	'',	'',	0),
-(59,	's',	'S',	1,	'',	'',	0),
-(60,	't',	'T',	1,	'',	'',	0),
-(61,	'u',	'U',	1,	'',	'',	0),
-(62,	'v',	'V',	1,	'',	'',	0),
-(63,	'w',	'W',	1,	'',	'',	0),
-(64,	'x',	'X',	1,	'',	'',	0),
-(65,	'y',	'Y',	1,	'',	'',	0),
-(66,	'z',	'Z',	1,	'',	'',	0);
+(41,  'a',  'A',  1,  '', '', 0),
+(42,  'b',  'B',  1,  '', '', 0),
+(43,  'c',  'C',  1,  '', '', 0),
+(44,  'd',  'D',  1,  '', '', 0),
+(45,  'e',  'E',  1,  '', '', 0),
+(46,  'f',  'F',  1,  '', '', 0),
+(47,  'g',  'G',  1,  '', '', 0),
+(48,  'h',  'H',  1,  '', '', 0),
+(49,  'i',  'I',  1,  '', '', 0),
+(50,  'j',  'J',  1,  '', '', 0),
+(51,  'k',  'K',  1,  '', '', 0),
+(52,  'l',  'L',  1,  '', '', 0),
+(53,  'm',  'M',  1,  '', '', 0),
+(54,  'n',  'N',  1,  '', '', 0),
+(55,  'o',  'O',  1,  '', '', 0),
+(56,  'p',  'P',  1,  '', '', 0),
+(57,  'q',  'Q',  1,  '', '', 0),
+(58,  'r',  'R',  1,  '', '', 0),
+(59,  's',  'S',  1,  '', '', 0),
+(60,  't',  'T',  1,  '', '', 0),
+(61,  'u',  'U',  1,  '', '', 0),
+(62,  'v',  'V',  1,  '', '', 0),
+(63,  'w',  'W',  1,  '', '', 0),
+(64,  'x',  'X',  1,  '', '', 0),
+(65,  'y',  'Y',  1,  '', '', 0),
+(66,  'z',  'Z',  1,  '', '', 0);
 
 DELIMITER ;;
 
@@ -267,32 +267,32 @@ CREATE TABLE `graphemes_groups` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 INSERT INTO `graphemes_groups` (`id`, `grapheme`, `groupstring`) VALUES
-(79,	'a',	'VOW'),
-(80,	'b',	'CON'),
-(81,	'c',	'CON'),
-(82,	'd',	'CON'),
-(83,	'e',	'VOW'),
-(84,	'f',	'CON'),
-(85,	'g',	'CON'),
-(86,	'h',	'CON'),
-(87,	'i',	'VOW'),
-(88,	'j',	'CON'),
-(89,	'k',	'CON'),
-(90,	'l',	'CON'),
-(91,	'm',	'CON'),
-(92,	'n',	'CON'),
-(93,	'o',	'VOW'),
-(94,	'p',	'CON'),
-(95,	'q',	'CON'),
-(96,	'r',	'CON'),
-(97,	's',	'CON'),
-(98,	't',	'CON'),
-(99,	'u',	'VOW'),
-(100,	'v',	'CON'),
-(101,	'w',	'CON'),
-(102,	'x',	'CON'),
-(103,	'y',	'VOW'),
-(104,	'z',	'CON');
+(79,  'a',  'VOW'),
+(80,  'b',  'CON'),
+(81,  'c',  'CON'),
+(82,  'd',  'CON'),
+(83,  'e',  'VOW'),
+(84,  'f',  'CON'),
+(85,  'g',  'CON'),
+(86,  'h',  'CON'),
+(87,  'i',  'VOW'),
+(88,  'j',  'CON'),
+(89,  'k',  'CON'),
+(90,  'l',  'CON'),
+(91,  'm',  'CON'),
+(92,  'n',  'CON'),
+(93,  'o',  'VOW'),
+(94,  'p',  'CON'),
+(95,  'q',  'CON'),
+(96,  'r',  'CON'),
+(97,  's',  'CON'),
+(98,  't',  'CON'),
+(99,  'u',  'VOW'),
+(100, 'v',  'CON'),
+(101, 'w',  'CON'),
+(102, 'x',  'CON'),
+(103, 'y',  'VOW'),
+(104, 'z',  'CON');
 
 DROP TABLE IF EXISTS `homophones`;
 CREATE TABLE `homophones` (
@@ -321,18 +321,18 @@ CREATE TABLE `idioms` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 INSERT INTO `idioms` (`id`, `idiom`, `user_id`, `created_on`) VALUES
-(1,	'man en vrouw',	1,	'2017-04-17 10:12:53'),
-(2,	'Als kat en hond leven',	1,	'2017-04-17 10:12:53'),
-(3,	'De kat uit de boom kijken',	1,	'2017-04-17 10:12:53'),
-(4,	'Een kat in de zak kopen.',	1,	'2017-04-17 10:12:53'),
-(5,	'Ik heb daar wel een mannetje voor.',	0,	'2017-05-15 12:54:49'),
-(6,	'de boot afhouden',	0,	'2017-05-31 18:26:42'),
-(7,	'de boot is aan',	0,	'2017-05-31 18:26:50'),
-(8,	'uit de boot vallen',	0,	'2017-05-31 18:26:59'),
-(9,	'We varen in het weekend met onze boot.',	0,	'2017-05-31 18:27:25'),
-(10,	'Het mannatje bouwt een nest.',	0,	'2017-06-07 14:33:33'),
-(11,	'Man, man, man, wat een weer',	0,	'2017-06-09 01:07:14'),
-(12,	'Maak dat de kat wijs',	0,	'2017-08-07 13:13:44');
+(1, 'man en vrouw', 1,  '2017-04-17 10:12:53'),
+(2, 'Als kat en hond leven',  1,  '2017-04-17 10:12:53'),
+(3, 'De kat uit de boom kijken',  1,  '2017-04-17 10:12:53'),
+(4, 'Een kat in de zak kopen.', 1,  '2017-04-17 10:12:53'),
+(5, 'Ik heb daar wel een mannetje voor.', 0,  '2017-05-15 12:54:49'),
+(6, 'de boot afhouden', 0,  '2017-05-31 18:26:42'),
+(7, 'de boot is aan', 0,  '2017-05-31 18:26:50'),
+(8, 'uit de boot vallen', 0,  '2017-05-31 18:26:59'),
+(9, 'We varen in het weekend met onze boot.', 0,  '2017-05-31 18:27:25'),
+(10,  'Het mannatje bouwt een nest.', 0,  '2017-06-07 14:33:33'),
+(11,  'Man, man, man, wat een weer',  0,  '2017-06-09 01:07:14'),
+(12,  'Maak dat de kat wijs', 0,  '2017-08-07 13:13:44');
 
 DROP TABLE IF EXISTS `idiom_translations`;
 CREATE TABLE `idiom_translations` (
@@ -351,10 +351,10 @@ CREATE TABLE `idiom_translations` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 INSERT INTO `idiom_translations` (`id`, `idiom_id`, `language_id`, `translation`, `specification`) VALUES
-(1,	1,	1,	'husband and wife',	''),
-(3,	3,	1,	'See which way the wind blows',	''),
-(4,	2,	1,	'To live like cat and dog / fight a lot',	''),
-(5,	4,	1,	'buying a pig in a poke',	'');
+(1, 1,  1,  'husband and wife', ''),
+(3, 3,  1,  'See which way the wind blows', ''),
+(4, 2,  1,  'To live like cat and dog / fight a lot', ''),
+(5, 4,  1,  'buying a pig in a poke', '');
 
 DROP TABLE IF EXISTS `idiom_words`;
 CREATE TABLE `idiom_words` (
@@ -370,10 +370,11 @@ CREATE TABLE `idiom_words` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 INSERT INTO `idiom_words` (`id`, `idiom_id`, `word_id`, `keyword`) VALUES
-(1,	4,	1337,	'kat'),
-(2,	12,	1337,	'kat'),
-(3,	3,	1337,	'kat'),
-(4,	2,	1337,	'kat');
+(1, 4,  1337, 'kat'),
+(2, 12, 1337, 'kat'),
+(3, 3,  1337, 'kat'),
+(4, 2,  1337, 'kat'),
+(5, 9,  1343, 'boot');
 
 DROP TABLE IF EXISTS `languages`;
 CREATE TABLE `languages` (
@@ -389,9 +390,9 @@ CREATE TABLE `languages` (
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 INSERT INTO `languages` (`id`, `name`, `showname`, `hidden_native_entry`, `flag`, `activated`, `locale`, `color`) VALUES
-(0,	'Dutch',	'Dutch',	0,	'nl.png',	1,	'NL',	'#3B66D6'),
-(1,	'English',	'English',	0,	'gb.png',	1,	'EN',	'#D33B3B'),
-(15,	'Swedish',	'Swedish',	0,	'se.png',	1,	'SE',	'#E5C839');
+(0, 'Dutch',  'Dutch',  0,  'nl.png', 1,  'NL', '#3B66D6'),
+(1, 'English',  'English',  0,  'gb.png', 1,  'EN', '#D33B3B'),
+(15,  'Swedish',  'Swedish',  0,  'se.png', 1,  'SE', '#E5C839');
 
 DROP TABLE IF EXISTS `lemmatization`;
 CREATE TABLE `lemmatization` (
@@ -405,10 +406,20 @@ CREATE TABLE `lemmatization` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 INSERT INTO `lemmatization` (`id`, `inflected_form`, `hash`, `lemma_id`) VALUES
-(673,	'katten',	'3_1_1',	1337),
-(675,	'katten',	'3_2_1',	1337),
-(676,	'boommen',	'3_1_1',	1338),
-(677,	'boommen',	'3_2_1',	1338);
+(678, 'katen',  '3_1_1',  1337),
+(679, 'katen',  '3_2_1',  1337),
+(680, 'boomen', '3_1_1',  1338),
+(681, 'boomen', '3_2_1',  1338),
+(682, 'boeken', '3_1_1',  1340),
+(683, 'boeken', '3_2_1',  1340),
+(684, 'tomaaten', '3_1_1',  1341),
+(685, 'tomaaten', '3_2_1',  1341),
+(688, 'booten', '3_1_1',  1343),
+(689, 'booten', '3_2_1',  1343),
+(700, 'manetje',  '1_1_1',  1342),
+(702, 'manetje',  '1_2_1',  1342),
+(704, 'manetjeen',  '3_1_1',  1342),
+(705, 'manetjeen',  '3_2_1',  1342);
 
 DROP TABLE IF EXISTS `log`;
 CREATE TABLE `log` (
@@ -423,28 +434,35 @@ CREATE TABLE `log` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 INSERT INTO `log` (`id`, `identifier`, `record`, `user_id`, `timestamp`) VALUES
-(2,	'new_lemma',	67,	1,	'2017-09-02 19:21:49'),
-(3,	'edit_lemma',	17,	1,	'2017-09-17 09:24:50'),
-(4,	'edit_lemma',	65,	1,	'2017-09-17 09:37:45'),
-(5,	'new_lemma',	0,	1,	'2017-09-17 13:54:42'),
-(6,	'new_lemma',	68,	1,	'2017-09-17 21:23:49'),
-(7,	'edit_lemma',	1,	1,	'2017-09-17 22:37:24'),
-(8,	'new_lemma',	69,	1,	'2017-09-17 22:44:25'),
-(9,	'edit_lemma',	42,	1,	'2017-09-20 22:17:04'),
-(10,	'edit_lemma',	42,	1,	'2017-09-20 22:18:46'),
-(11,	'edit_lemma',	18,	1,	'2017-09-21 07:45:14'),
-(12,	'edit_lemma',	42,	1,	'2017-09-21 08:24:27'),
-(13,	'edit_lemma',	38,	1,	'2017-09-21 08:25:15'),
-(14,	'edit_lemma',	2,	3,	'2017-09-22 00:37:44'),
-(15,	'new_lemma',	0,	1,	'2017-09-28 09:59:45'),
-(16,	'edit_lemma',	42,	1,	'2017-09-29 08:13:31'),
-(17,	'new_lemma',	1337,	1,	'2017-10-02 22:12:37'),
-(18,	'edit_lemma',	1337,	1,	'2017-10-02 22:23:39'),
-(19,	'new_lemma',	1338,	1,	'2017-10-02 22:29:30'),
-(20,	'edit_lemma',	1337,	3,	'2017-10-04 11:28:59'),
-(21,	'edit_lemma',	1337,	3,	'2017-10-04 11:35:45'),
-(22,	'edit_lemma',	1337,	3,	'2017-10-04 11:37:29'),
-(23,	'edit_lemma',	1338,	3,	'2017-10-04 23:46:05');
+(2, 'new_lemma',  67, 1,  '2017-09-02 19:21:49'),
+(3, 'edit_lemma', 17, 1,  '2017-09-17 09:24:50'),
+(4, 'edit_lemma', 65, 1,  '2017-09-17 09:37:45'),
+(5, 'new_lemma',  0,  1,  '2017-09-17 13:54:42'),
+(6, 'new_lemma',  68, 1,  '2017-09-17 21:23:49'),
+(7, 'edit_lemma', 1,  1,  '2017-09-17 22:37:24'),
+(8, 'new_lemma',  69, 1,  '2017-09-17 22:44:25'),
+(9, 'edit_lemma', 42, 1,  '2017-09-20 22:17:04'),
+(10,  'edit_lemma', 42, 1,  '2017-09-20 22:18:46'),
+(11,  'edit_lemma', 18, 1,  '2017-09-21 07:45:14'),
+(12,  'edit_lemma', 42, 1,  '2017-09-21 08:24:27'),
+(13,  'edit_lemma', 38, 1,  '2017-09-21 08:25:15'),
+(14,  'edit_lemma', 2,  3,  '2017-09-22 00:37:44'),
+(15,  'new_lemma',  0,  1,  '2017-09-28 09:59:45'),
+(16,  'edit_lemma', 42, 1,  '2017-09-29 08:13:31'),
+(17,  'new_lemma',  1337, 1,  '2017-10-02 22:12:37'),
+(18,  'edit_lemma', 1337, 1,  '2017-10-02 22:23:39'),
+(19,  'new_lemma',  1338, 1,  '2017-10-02 22:29:30'),
+(20,  'edit_lemma', 1337, 3,  '2017-10-04 11:28:59'),
+(21,  'edit_lemma', 1337, 3,  '2017-10-04 11:35:45'),
+(22,  'edit_lemma', 1337, 3,  '2017-10-04 11:37:29'),
+(23,  'edit_lemma', 1338, 3,  '2017-10-04 23:46:05'),
+(24,  'new_lemma',  1339, 3,  '2017-10-17 23:45:49'),
+(25,  'new_lemma',  1340, 1,  '2017-11-18 22:34:23'),
+(26,  'edit_lemma', 1340, 1,  '2017-11-18 22:34:51'),
+(27,  'new_lemma',  1341, 1,  '2017-11-18 23:06:05'),
+(28,  'new_lemma',  1342, 1,  '2017-11-18 23:56:00'),
+(29,  'new_lemma',  1343, 3,  '2017-12-05 15:16:29'),
+(30,  'new_lemma',  1344, 3,  '2017-12-08 10:23:44');
 
 DROP TABLE IF EXISTS `modes`;
 CREATE TABLE `modes` (
@@ -458,15 +476,15 @@ CREATE TABLE `modes` (
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 INSERT INTO `modes` (`id`, `name`, `short_name`, `hidden_native_entry`, `type_id`) VALUES
-(1,	'normal form',	'nom',	0,	1),
-(7,	'present simple',	'ps.',	0,	2),
-(8,	'Past simple',	'pts.',	0,	2),
-(21,	'Present perfect',	'pre per',	0,	2),
-(22,	'Past perfect',	'pas per',	0,	2),
-(23,	'diminutive',	'dim',	0,	1),
-(24,	'Singular',	'sg',	0,	3),
-(25,	'Plural',	'pl.',	0,	3),
-(26,	'normal form',	'n',	0,	5);
+(1, 'normal form',  'nom',  0,  1),
+(7, 'present simple', 'ps.',  0,  2),
+(8, 'Past simple',  'pts.', 0,  2),
+(21,  'Present perfect',  'pre per',  0,  2),
+(22,  'Past perfect', 'pas per',  0,  2),
+(23,  'diminutive', 'dim',  0,  1),
+(24,  'Singular', 'sg', 0,  3),
+(25,  'Plural', 'pl.',  0,  3),
+(26,  'normal form',  'n',  0,  5);
 
 DROP TABLE IF EXISTS `morphology`;
 CREATE TABLE `morphology` (
@@ -482,19 +500,22 @@ CREATE TABLE `morphology` (
   `is_stem` tinyint(4) NOT NULL,
   `irregular_form` tinytext CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL,
   `lemma_id` tinyint(4) NOT NULL,
+  `sorter` tinyint(4) NOT NULL,
   PRIMARY KEY (`id`),
   KEY `ruleset` (`ruleset`),
   CONSTRAINT `morphology_ibfk_1` FOREIGN KEY (`ruleset`) REFERENCES `rulesets` (`id`) ON DELETE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
-INSERT INTO `morphology` (`id`, `name`, `rule`, `ruleset`, `in_set`, `is_irregular`, `is_aux`, `aux_placement`, `aux_mode_id`, `is_stem`, `irregular_form`, `lemma_id`) VALUES
-(56,	'Plural',	'[]&EN;',	3,	1,	0,	0,	0,	0,	0,	'',	0),
-(57,	'',	'',	0,	0,	1,	0,	0,	0,	0,	'een boom',	127),
-(58,	'',	'',	0,	0,	1,	0,	0,	0,	0,	'bomen',	127),
-(59,	'',	'',	0,	0,	1,	0,	0,	0,	0,	'de boom',	127),
-(60,	'',	'',	0,	0,	1,	0,	0,	0,	0,	'de bomen',	127),
-(61,	'',	'',	0,	0,	1,	0,	0,	0,	0,	'een boompje',	127),
-(62,	'',	'',	0,	0,	1,	0,	0,	0,	0,	'boompjes',	127);
+INSERT INTO `morphology` (`id`, `name`, `rule`, `ruleset`, `in_set`, `is_irregular`, `is_aux`, `aux_placement`, `aux_mode_id`, `is_stem`, `irregular_form`, `lemma_id`, `sorter`) VALUES
+(56,  'Plural', '[]&EN;', 3,  1,  0,  0,  0,  0,  0,  '', 0,  0),
+(57,  '', '', 0,  0,  1,  0,  0,  0,  0,  'een boom', 127,  0),
+(58,  '', '', 0,  0,  1,  0,  0,  0,  0,  'bomen',  127,  0),
+(59,  '', '', 0,  0,  1,  0,  0,  0,  0,  'de boom',  127,  0),
+(60,  '', '', 0,  0,  1,  0,  0,  0,  0,  'de bomen', 127,  0),
+(61,  '', '', 0,  0,  1,  0,  0,  0,  0,  'een boompje',  127,  0),
+(62,  '', '', 0,  0,  1,  0,  0,  0,  0,  'boompjes', 127,  0),
+(63,  't third person', '[-en]&T',  17, 1,  0,  0,  0,  0,  0,  '', 0,  0),
+(64,  'Dim. rule',  '[]&ETJE?$m;&ETJE?$ng:;nkje?$ng;etje?$an;tje?!$m?!$n?!$an?$uin;tje?$VOW;je?&ELSE',  4,  1,  0,  0,  0,  0,  0,  '', 0,  -1);
 
 DROP TABLE IF EXISTS `morphology_columns`;
 CREATE TABLE `morphology_columns` (
@@ -535,7 +556,9 @@ CREATE TABLE `morphology_lexcat` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 INSERT INTO `morphology_lexcat` (`id`, `morphology_id`, `lexcat_id`) VALUES
-(21,	56,	1);
+(21,  56, 1),
+(22,  63, 2),
+(23,  64, 1);
 
 DROP TABLE IF EXISTS `morphology_modes`;
 CREATE TABLE `morphology_modes` (
@@ -550,13 +573,15 @@ CREATE TABLE `morphology_modes` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 INSERT INTO `morphology_modes` (`id`, `morphology_id`, `mode_id`) VALUES
-(41,	56,	1),
-(42,	57,	1),
-(43,	58,	1),
-(44,	59,	1),
-(45,	60,	1),
-(46,	61,	23),
-(47,	62,	23);
+(41,  56, 1),
+(42,  57, 1),
+(43,  58, 1),
+(44,  59, 1),
+(45,  60, 1),
+(46,  61, 23),
+(47,  62, 23),
+(48,  63, 7),
+(49,  64, 1);
 
 DROP TABLE IF EXISTS `morphology_numbers`;
 CREATE TABLE `morphology_numbers` (
@@ -571,13 +596,16 @@ CREATE TABLE `morphology_numbers` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 INSERT INTO `morphology_numbers` (`id`, `morphology_id`, `number_id`) VALUES
-(44,	56,	3),
-(45,	57,	1),
-(46,	58,	3),
-(47,	59,	1),
-(48,	60,	3),
-(49,	61,	1),
-(50,	62,	3);
+(44,  56, 3),
+(45,  57, 1),
+(46,  58, 3),
+(47,  59, 1),
+(48,  60, 3),
+(49,  61, 1),
+(50,  62, 3),
+(51,  63, 1),
+(52,  64, 1),
+(53,  64, 3);
 
 DROP TABLE IF EXISTS `morphology_submodes`;
 CREATE TABLE `morphology_submodes` (
@@ -592,14 +620,18 @@ CREATE TABLE `morphology_submodes` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 INSERT INTO `morphology_submodes` (`id`, `morphology_id`, `submode_id`) VALUES
-(25,	56,	1),
-(26,	56,	2),
-(27,	57,	1),
-(28,	58,	1),
-(29,	59,	2),
-(30,	60,	2),
-(31,	61,	1),
-(32,	62,	1);
+(25,  56, 1),
+(26,  56, 2),
+(27,  57, 1),
+(28,  58, 1),
+(29,  59, 2),
+(30,  60, 2),
+(31,  61, 1),
+(32,  62, 1),
+(33,  63, 6),
+(34,  63, 7),
+(35,  64, 1),
+(36,  64, 2);
 
 DROP TABLE IF EXISTS `morphology_tags`;
 CREATE TABLE `morphology_tags` (
@@ -624,14 +656,14 @@ CREATE TABLE `numbers` (
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 INSERT INTO `numbers` (`id`, `name`, `short_name`, `hidden_native_entry`, `hidden_native_entry_short`) VALUES
-(1,	'singular',	'sg.',	'0',	0),
-(3,	'plural',	'pl',	'0',	0),
-(8,	'positive',	'bf.',	'0',	0),
-(9,	'comperative',	'comp.',	'0',	0),
-(10,	'superlative',	'0',	'0',	0),
-(11,	'first person',	'1',	'0',	0),
-(12,	'second person',	'2',	'0',	0),
-(13,	'third person',	'3',	'0',	0);
+(1, 'singular', 'sg.',  '0',  0),
+(3, 'plural', 'pl', '0',  0),
+(8, 'positive', 'bf.',  '0',  0),
+(9, 'comperative',  'comp.',  '0',  0),
+(10,  'superlative',  '0',  '0',  0),
+(11,  'first person', '1',  '0',  0),
+(12,  'second person',  '2',  '0',  0),
+(13,  'third person', '3',  '0',  0);
 
 DROP TABLE IF EXISTS `number_apply`;
 CREATE TABLE `number_apply` (
@@ -646,12 +678,12 @@ CREATE TABLE `number_apply` (
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 INSERT INTO `number_apply` (`id`, `number_id`, `mode_id`) VALUES
-(39,	1,	1),
-(40,	3,	1),
-(41,	1,	23),
-(42,	3,	23),
-(43,	1,	26),
-(44,	3,	26);
+(39,  1,  1),
+(40,  3,  1),
+(41,  1,  23),
+(42,  3,  23),
+(43,  1,  26),
+(44,  3,  26);
 
 DROP TABLE IF EXISTS `phonology_contexts`;
 CREATE TABLE `phonology_contexts` (
@@ -665,40 +697,6 @@ CREATE TABLE `phonology_contexts` (
   CONSTRAINT `phonology_contexts_ibfk_1` FOREIGN KEY (`ruleset`) REFERENCES `rulesets` (`id`) ON DELETE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
-INSERT INTO `phonology_contexts` (`id`, `name`, `rule`, `ruleset`, `in_set`) VALUES
-(3,	'vowel lengthening before endings',	'CON_[aeou]_CON.+.&T,D=>%%',	0,	1),
-(4,	'variable vowel lengthening',	'CON_&A,E,O,U_CON.+.&T,D=>%%',	0,	1),
-(5,	'variable &D => kofschip dental suffix t',	'[x,k,f,s,c,h,p].+_&D_=>t',	14,	1),
-(6,	'z to s before endings',	'_z_+=>s',	0,	1),
-(7,	'VOW.v to f',	'VOW_v_+=>f',	0,	1),
-(8,	'no z at word end',	'_z_:>=>s',	0,	1),
-(9,	'no v at word end',	'_v_:>=>f',	0,	1),
-(10,	'no double b (hebbt -> hebt)',	'CON.VOW._b.b_+.&D,T=>b',	13,	1),
-(11,	'no double b (hebbt -> hebt) 2',	'CON.VOW_b.b_+.t=>b',	0,	1),
-(12,	'vowel lengthening at word end',	'*.CON_VOW_CON.:>=>%%',	0,	1),
-(13,	'variable EE to e before z',	'CON_&EE_z=>e',	0,	1),
-(14,	'vowel lengthening 3',	'<:CON._VOW.VOW__CON.+=>$1',	0,	1),
-(15,	'trema e',	'VOW.+_e_=>ë',	0,	1),
-(16,	's+en → z+en',	'[^r,n]_s_+.e.n=>z',	16,	1),
-(19,	'lens => lenzen',	'_l.e.n.s_+.e.n=>lenz',	16,	1),
-(20,	'plural, just n with -eerde',	'[e].[e].[r].[d].[e].+_&EN_=>n',	16,	1),
-(21,	'dimunitves plural',	'je.+_&EN_=>s',	16,	1),
-(22,	'plural open vowel',	'[aioyu].+_&EN_=>\\\'s',	16,	1),
-(23,	'plural mute e',	'e.+_&EN_=>s',	0,	1),
-(24,	'double consonant before plural ending',	'_CON_+.&EN=>%%',	0,	1),
-(26,	'endes => enden',	'CON.ende.+_s_=>n',	0,	1),
-(27,	'dim ng => nk',	'_ng_+.nkje=>',	0,	1),
-(29,	'etje => pje if long vowel 1',	'(VOW)_(1)_CON.+.&ETJE=>#%#',	0,	1),
-(30,	'double consonant before endings 2',	'CON.VOW_CON_+.&E=>%%',	0,	1),
-(31,	'fototje => fotootje',	'CON_VOW_+.tje=>%%',	0,	1),
-(33,	'double consonant before endings',	'^VOW.VOW_CON_+.^CON=>%%',	0,	1),
-(34,	'etje => pje if long vowel 2',	'#.VOW.#.CON.+_&ETJE_=>pje',	0,	1),
-(35,	'kofschip dental suffix t ',	'[x,k,f,s,c,h,p].+_&2DD_=>tt',	0,	1),
-(36,	'kofschip dental suffix d',	'[^x,k,f,s,c,h,p].+_&2DD_=>dd',	0,	1),
-(37,	'heid -> heden',	'h_e.i.d_d.+.&EN=>e',	16,	1),
-(38,	'No double consonants before verb ending',	'(CON)_%_+=>%',	17,	1),
-(39,	'&r vowel correction',	'(VOW)_%_CON.+.&r=>%',	19,	1),
-(42,	'&er vowel correction',	'(VOW)_%_CON.+.&er.=>0',	19,	1);
 
 DROP TABLE IF EXISTS `phonology_ipa_generation`;
 CREATE TABLE `phonology_ipa_generation` (
@@ -712,9 +710,6 @@ CREATE TABLE `phonology_ipa_generation` (
   CONSTRAINT `phonology_ipa_generation_ibfk_1` FOREIGN KEY (`ruleset`) REFERENCES `rulesets` (`id`) ON DELETE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
-INSERT INTO `phonology_ipa_generation` (`id`, `name`, `rule`, `ruleset`, `in_set`) VALUES
-(1,	'long o',	'_oo_=>oː',	5,	1),
-(2,	'Long a',	'_aa_=>aː',	5,	1);
 
 DROP TABLE IF EXISTS `row_native`;
 CREATE TABLE `row_native` (
@@ -742,19 +737,19 @@ CREATE TABLE `rulesets` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 INSERT INTO `rulesets` (`id`, `name`, `parent`) VALUES
-(0,	'/rules',	-1),
-(3,	'/rules/nouns',	0),
-(4,	'/rules/nouns/dimunitives',	3),
-(5,	'/rules/IPA-rules',	0),
-(13,	'/rules/verbs',	0),
-(14,	'/rules/verbs/regular',	13),
-(16,	'/rules/nouns/plural_contexts',	3),
-(17,	'/rules/verbs/regular/present_simple',	14),
-(18,	'/rules/adjectives',	0),
-(19,	'/rules/adjectives/corrections',	18),
-(20,	'/rules/new_folder',	0),
-(21,	'/rules/new_folder/hh',	20),
-(22,	'/rules/new_folder/hh/tst',	21);
+(0, '/rules', -1),
+(3, '/rules/nouns', 0),
+(4, '/rules/nouns/dimunitives', 3),
+(5, '/rules/IPA-rules', 0),
+(13,  '/rules/verbs', 0),
+(14,  '/rules/verbs/regular', 13),
+(16,  '/rules/nouns/plural_contexts', 3),
+(17,  '/rules/verbs/regular/present_simple',  14),
+(18,  '/rules/adjectives',  0),
+(19,  '/rules/adjectives/corrections',  18),
+(22,  '/rules/new_folder/hh/tst', 21),
+(23,  '/rules/ortography',  0),
+(24,  '/rules/no_rules_at_all', 0);
 
 DROP TABLE IF EXISTS `search_hits`;
 CREATE TABLE `search_hits` (
@@ -770,12 +765,42 @@ CREATE TABLE `search_hits` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 INSERT INTO `search_hits` (`id`, `word_id`, `user_id`, `hit_timestamp`) VALUES
-(3906,	1337,	1,	'2017-10-03 00:12:43'),
-(3907,	1338,	1,	'2017-10-03 00:29:35'),
-(3908,	1338,	3,	'2017-10-05 01:45:25'),
-(3909,	1337,	3,	'2017-10-05 13:02:33'),
-(3910,	1337,	3,	'2017-10-06 00:33:38'),
-(3911,	1337,	3,	'2017-10-06 01:33:49');
+(3906,  1337, 1,  '2017-10-03 00:12:43'),
+(3907,  1338, 1,  '2017-10-03 00:29:35'),
+(3908,  1338, 3,  '2017-10-05 01:45:25'),
+(3909,  1337, 3,  '2017-10-05 13:02:33'),
+(3910,  1337, 3,  '2017-10-06 00:33:38'),
+(3911,  1337, 3,  '2017-10-06 01:33:49'),
+(3912,  1337, 1,  '2017-10-18 00:26:03'),
+(3913,  1337, 3,  '2017-10-18 01:26:53'),
+(3914,  1339, 3,  '2017-10-18 01:45:55'),
+(3915,  1337, 3,  '2017-11-12 19:36:36'),
+(3916,  1337, 3,  '2017-11-12 20:07:33'),
+(3917,  1339, 1,  '2017-11-18 21:42:08'),
+(3918,  1337, 1,  '2017-11-18 21:42:55'),
+(3919,  1337, 1,  '2017-11-18 22:51:15'),
+(3920,  1340, 1,  '2017-11-18 23:34:38'),
+(3921,  1341, 1,  '2017-11-19 00:06:16'),
+(3922,  1337, 1,  '2017-11-19 00:08:54'),
+(3923,  1342, 1,  '2017-11-19 00:57:37'),
+(3924,  1342, 1,  '2017-11-19 01:00:04'),
+(3925,  1342, 1,  '2017-11-19 10:45:39'),
+(3926,  1341, 0,  '2017-12-03 17:39:09'),
+(3927,  1342, 0,  '2017-12-05 00:17:37'),
+(3928,  1338, 1,  '2017-12-05 00:25:38'),
+(3929,  1342, 1,  '2017-12-05 00:33:01'),
+(3930,  1342, 0,  '2017-12-05 01:18:02'),
+(3931,  1341, 1,  '2017-12-05 15:57:54'),
+(3932,  1341, 1,  '2017-12-05 16:00:09'),
+(3933,  1343, 3,  '2017-12-05 16:16:42'),
+(3934,  1338, 3,  '2017-12-06 01:45:03'),
+(3935,  1342, 3,  '2017-12-08 00:53:09'),
+(3936,  1344, 3,  '2017-12-08 11:23:53'),
+(3937,  1339, 3,  '2017-12-21 13:54:57'),
+(3938,  1342, 3,  '2017-12-21 13:55:38'),
+(3939,  1337, 0,  '2017-12-23 22:03:51'),
+(3940,  1342, 1,  '2017-12-23 23:54:33'),
+(3941,  1342, 1,  '2017-12-24 00:03:00');
 
 DROP TABLE IF EXISTS `subclassifications`;
 CREATE TABLE `subclassifications` (
@@ -786,8 +811,8 @@ CREATE TABLE `subclassifications` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 INSERT INTO `subclassifications` (`id`, `name`, `short_name`) VALUES
-(1,	'countable',	'cnt.'),
-(2,	'non-countable',	'n.c.');
+(1, 'countable',  'cnt.'),
+(2, 'non-countable',  'n.c.');
 
 DROP TABLE IF EXISTS `submodes`;
 CREATE TABLE `submodes` (
@@ -799,18 +824,18 @@ CREATE TABLE `submodes` (
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 INSERT INTO `submodes` (`id`, `name`, `short_name`, `hidden_native_entry`) VALUES
-(1,	'indefinite',	'indef',	'0'),
-(2,	'definite',	'def',	'0'),
-(3,	'strong',	'str.',	'0'),
-(4,	'weak',	'wk.',	'0'),
-(5,	'First person',	'',	'DV'),
-(6,	'Second person',	'',	'0'),
-(7,	'Third Person',	'',	'0'),
-(8,	'conjugation',	'sg conj p',	' '),
-(9,	'conjugation',	'sg pn',	'0'),
-(10,	'singular',	'sg.',	'0'),
-(11,	'plural',	'pl',	'0'),
-(12,	'nom.',	'n.',	'0');
+(1, 'indefinite', 'indef',  '0'),
+(2, 'definite', 'def',  '0'),
+(3, 'strong', 'str.', '0'),
+(4, 'weak', 'wk.',  '0'),
+(5, 'First person', '', 'DV'),
+(6, 'Second person',  '', '0'),
+(7, 'Third Person', '', '0'),
+(8, 'conjugation',  'sg conj p',  ' '),
+(9, 'conjugation',  'sg pn',  '0'),
+(10,  'singular', 'sg.',  '0'),
+(11,  'plural', 'pl', '0'),
+(12,  'nom.', 'n.', '0');
 
 DROP TABLE IF EXISTS `submode_apply`;
 CREATE TABLE `submode_apply` (
@@ -825,9 +850,9 @@ CREATE TABLE `submode_apply` (
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 INSERT INTO `submode_apply` (`id`, `submode_id`, `mode_id`) VALUES
-(42,	1,	1),
-(43,	2,	1),
-(44,	1,	23);
+(42,  1,  1),
+(43,  2,  1),
+(44,  1,  23);
 
 DROP TABLE IF EXISTS `synonyms`;
 CREATE TABLE `synonyms` (
@@ -860,11 +885,12 @@ CREATE TABLE `threads` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 INSERT INTO `threads` (`id`, `linked_to`, `section`, `thread_id`, `title`, `content`, `user_id`, `post_date`, `update_date`) VALUES
-(8,	17,	'lemma',	7,	'hjh',	'dsss',	1,	'0000-00-00 00:00:00',	'0000-00-00 00:00:00'),
-(10,	30,	'lemma',	9,	'fd',	'Wat vind jij er van?',	1,	'0000-00-00 00:00:00',	'0000-00-00 00:00:00'),
-(11,	30,	'lemma',	10,	'f',	'Ik weet het niet zo goed?',	1,	'0000-00-00 00:00:00',	'0000-00-00 00:00:00'),
-(13,	26,	'lemma',	12,	'aaaaa',	'aaa',	1,	'2017-08-30 17:27:59',	'2017-08-30 15:27:59'),
-(15,	1,	'lemma',	14,	'RE:',	'echt niet',	1,	'2017-09-17 23:03:16',	'2017-09-17 21:03:16');
+(8, 17, 'lemma',  7,  'hjh',  'dsss', 1,  '0000-00-00 00:00:00',  '0000-00-00 00:00:00'),
+(10,  30, 'lemma',  9,  'fd', 'Wat vind jij er van?', 1,  '0000-00-00 00:00:00',  '0000-00-00 00:00:00'),
+(11,  30, 'lemma',  10, 'f',  'Ik weet het niet zo goed?',  1,  '0000-00-00 00:00:00',  '0000-00-00 00:00:00'),
+(13,  26, 'lemma',  12, 'aaaaa',  'aaa',  1,  '2017-08-30 17:27:59',  '2017-08-30 15:27:59'),
+(15,  1,  'lemma',  14, 'RE:',  'echt niet',  1,  '2017-09-17 23:03:16',  '2017-09-17 21:03:16'),
+(17,  1337, 'lemma',  16, 'asdfds', 'adfdsfs',  3,  '2017-10-18 00:22:52',  '2017-10-17 22:22:52');
 
 DROP TABLE IF EXISTS `translations`;
 CREATE TABLE `translations` (
@@ -882,10 +908,19 @@ CREATE TABLE `translations` (
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 INSERT INTO `translations` (`id`, `language_id`, `translation`, `description`, `created_on`, `user_id`) VALUES
-(2054,	1,	'cat',	'',	'2017-10-02 22:12:37',	1),
-(2055,	15,	'katt',	'',	'2017-10-02 22:12:37',	1),
-(2056,	1,	'tree',	'',	'2017-10-02 22:29:30',	1),
-(2057,	15,	'träd',	'',	'2017-10-02 22:29:30',	1);
+(2054,  1,  'cat',  '', '2017-10-02 22:12:37',  1),
+(2055,  15, 'katt', '', '2017-10-02 22:12:37',  1),
+(2056,  1,  'tree', '', '2017-10-02 22:29:30',  1),
+(2057,  15, 'träd', '', '2017-10-02 22:29:30',  1),
+(2058,  1,  'bear', '', '2017-10-17 23:45:49',  3),
+(2059,  15, 'bära', '', '2017-10-17 23:45:49',  3),
+(2060,  1,  'book', '', '2017-11-18 22:34:51',  1),
+(2061,  15, 'bok',  '', '2017-11-18 22:34:51',  1),
+(2062,  15, 'tomat',  '', '2017-11-18 23:07:20',  1),
+(2063,  0,  'man',  '', '2017-11-18 23:56:00',  1),
+(2064,  1,  'man',  '', '2017-11-18 23:56:00',  1),
+(2065,  15, 'man',  '', '2017-12-05 14:52:48',  1),
+(2066,  1,  'tomato', '', '2017-12-05 14:53:00',  1);
 
 DROP TABLE IF EXISTS `translation_alternatives`;
 CREATE TABLE `translation_alternatives` (
@@ -928,10 +963,19 @@ CREATE TABLE `translation_words` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 INSERT INTO `translation_words` (`id`, `word_id`, `translation_id`, `specification`) VALUES
-(291,	1337,	2054,	''),
-(292,	1337,	2055,	''),
-(293,	1338,	2056,	''),
-(294,	1338,	2057,	'');
+(291, 1337, 2054, ''),
+(292, 1337, 2055, ''),
+(293, 1338, 2056, ''),
+(294, 1338, 2057, ''),
+(295, 1339, 2058, ''),
+(296, 1339, 2059, ''),
+(297, 1340, 2060, ''),
+(298, 1340, 2061, ''),
+(299, 1341, 2062, ''),
+(300, 1342, 2063, ''),
+(301, 1342, 2064, ''),
+(302, 1342, 2065, ''),
+(303, 1341, 2066, '');
 
 DROP TABLE IF EXISTS `types`;
 CREATE TABLE `types` (
@@ -943,9 +987,10 @@ CREATE TABLE `types` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 INSERT INTO `types` (`id`, `name`, `short_name`, `inflect`) VALUES
-(1,	'noun',	'n.',	1),
-(2,	'verb',	'v.',	1),
-(3,	'adjective',	'adj.',	0);
+(1, 'noun', 'n.', 1),
+(2, 'verb', 'v.', 1),
+(3, 'adjective',  'adj.', 1),
+(4, 'adverb', 'av.',  0);
 
 DROP TABLE IF EXISTS `usage_notes`;
 CREATE TABLE `usage_notes` (
@@ -981,10 +1026,10 @@ CREATE TABLE `users` (
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 INSERT INTO `users` (`id`, `longname`, `username`, `password`, `reg_date`, `role`, `avatar`, `activated`, `might_be_banned`, `email`, `disable_notifications`, `about`) VALUES
-(-1,	'system',	'SYSTEM',	'root',	'2017-09-23 21:10:42',	0,	'',	1,	0,	'root@SYSTEM',	1,	''),
-(0,	'Guest',	'guest',	'',	'2017-08-24 12:04:51',	4,	'',	1,	0,	'niet@veel.com',	0,	''),
-(1,	'Thomas de Roo',	'blekerfeld',	'70674e943bcd2ce395ff619cff93c980f1cec914445cd69a30d612c7988e9966',	'2017-08-24 16:09:43',	0,	'https://avatars3.githubusercontent.com/u/13293128?v=3&s=460',	1,	0,	'thomas@localhost',	0,	''),
-(3,	'Mr. Donut',	'donut',	'e69fd784f93f82eb6bf5148f0a0e3f5282df5ac10427ab3d6704799adca95a07',	'2017-08-24 12:04:51',	0,	'',	1,	0,	'niet@veel.com',	0,	'');
+(-1,  'system', 'SYSTEM', 'root', '2017-09-23 21:10:42',  0,  '', 1,  0,  'root@SYSTEM',  1,  ''),
+(0, 'Guest',  'guest',  '', '2017-08-24 12:04:51',  4,  '', 1,  0,  'niet@veel.com',  0,  ''),
+(1, 'Thomas de Roo',  'blekerfeld', '70674e943bcd2ce395ff619cff93c980f1cec914445cd69a30d612c7988e9966', '2017-08-24 16:09:43',  0,  'https://avatars3.githubusercontent.com/u/13293128?v=3&s=460',  1,  0,  'thomas@localhost', 0,  ''),
+(3, 'Mr. Donut',  'donut',  'e69fd784f93f82eb6bf5148f0a0e3f5282df5ac10427ab3d6704799adca95a07', '2017-08-24 12:04:51',  0,  '', 1,  0,  'niet@veel.com',  0,  '');
 
 DROP TABLE IF EXISTS `user_activation`;
 CREATE TABLE `user_activation` (
@@ -999,17 +1044,18 @@ CREATE TABLE `user_activation` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 INSERT INTO `user_activation` (`id`, `user_id`, `untill`, `token`, `ipadress`) VALUES
-(14,	0,	'2017-08-27 11:35:57',	'823739yP:0',	'::1'),
-(15,	0,	'2017-08-27 11:35:57',	'823739yP:0',	'::1'),
-(16,	0,	'2017-08-27 11:36:00',	'823738yP:0',	'::1'),
-(17,	0,	'2017-08-27 11:36:29',	'8237bcyP:0',	'::1'),
-(18,	0,	'2017-08-27 11:36:33',	'82377eyP:0',	'::1'),
-(19,	1,	'2017-08-27 11:37:47',	'87426bkA:1',	'::1'),
-(20,	0,	'2017-08-27 12:25:32',	'b658a2yP:0',	'::1'),
-(21,	0,	'2017-08-27 12:27:04',	'b658b7yP:0',	'::1'),
-(22,	0,	'2017-09-05 20:56:45',	'18fed2yP:0',	'::1'),
-(23,	0,	'2017-09-24 08:37:25',	'18fec1yP:0',	'::1'),
-(24,	0,	'2017-09-24 08:38:15',	'18fe1ayP:0',	'::1');
+(14,  0,  '2017-08-27 11:35:57',  '823739yP:0', '::1'),
+(15,  0,  '2017-08-27 11:35:57',  '823739yP:0', '::1'),
+(16,  0,  '2017-08-27 11:36:00',  '823738yP:0', '::1'),
+(17,  0,  '2017-08-27 11:36:29',  '8237bcyP:0', '::1'),
+(18,  0,  '2017-08-27 11:36:33',  '82377eyP:0', '::1'),
+(19,  1,  '2017-08-27 11:37:47',  '87426bkA:1', '::1'),
+(20,  0,  '2017-08-27 12:25:32',  'b658a2yP:0', '::1'),
+(21,  0,  '2017-08-27 12:27:04',  'b658b7yP:0', '::1'),
+(22,  0,  '2017-09-05 20:56:45',  '18fed2yP:0', '::1'),
+(23,  0,  '2017-09-24 08:37:25',  '18fec1yP:0', '::1'),
+(24,  0,  '2017-09-24 08:38:15',  '18fe1ayP:0', '::1'),
+(25,  0,  '2017-10-20 22:32:19',  '18fe95mN:0', '::1');
 
 DROP TABLE IF EXISTS `words`;
 CREATE TABLE `words` (
@@ -1042,7 +1088,13 @@ CREATE TABLE `words` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 INSERT INTO `words` (`id`, `native`, `lexical_form`, `ipa`, `hidden`, `type_id`, `classification_id`, `subclassification_id`, `created`, `updated`, `created_by`, `image`, `derivation`, `derived_from`) VALUES
-(1337,	'kat',	'',	'kɑt',	0,	1,	1,	0,	'2017-10-04 11:37:29',	'2017-10-04 11:37:29',	3,	NULL,	NULL,	NULL),
-(1338,	'boom',	'',	'bo:m',	0,	1,	1,	0,	'2017-10-04 23:46:05',	'2017-10-04 23:46:05',	3,	NULL,	NULL,	NULL);
+(1337,  'kat',  '', 'kɑt',  0,  1,  1,  0,  '2017-10-04 11:37:29',  '2017-10-04 11:37:29',  3,  NULL, NULL, NULL),
+(1338,  'boom', '', 'bo:m', 0,  1,  1,  0,  '2017-10-04 23:46:05',  '2017-10-04 23:46:05',  3,  NULL, NULL, NULL),
+(1339,  'dragen', '', 'dra:x.ən', 0,  2,  3,  0,  '0000-00-00 00:00:00',  '2017-10-17 23:45:49',  3,  NULL, NULL, NULL),
+(1340,  'boek', '', 'buk',  0,  1,  2,  0,  '2017-11-18 22:34:51',  '2017-11-18 22:34:51',  1,  NULL, NULL, NULL),
+(1341,  'tomaat', '', 'tɔma:t', 0,  1,  1,  0,  '0000-00-00 00:00:00',  '2017-11-18 23:06:05',  1,  NULL, NULL, NULL),
+(1342,  'man',  '', 'mɑn',  0,  1,  1,  0,  '0000-00-00 00:00:00',  '2017-11-18 23:55:59',  1,  NULL, NULL, NULL),
+(1343,  'boot', '', 'bo:t', 0,  1,  1,  0,  '0000-00-00 00:00:00',  '2017-12-05 15:16:29',  3,  NULL, NULL, NULL),
+(1344,  'maken',  '', 'ma:k.ən',  0,  2,  3,  0,  '0000-00-00 00:00:00',  '2017-12-08 10:23:44',  3,  NULL, NULL, NULL);
 
--- 2017-10-06 00:11:13
+-- 2017-12-23 23:54:56

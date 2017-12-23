@@ -298,12 +298,12 @@ class pParadigm{
 			$rules[] = 'id = -1';
 
 		if($irregular)
-			return $this->dataModel->complexQuery("SELECT * FROM morphology WHERE (".implode(" OR ", $rules).") AND is_irregular = 1 AND lemma_id = ".$lemma->read('id')." ORDER BY sorter DESC;")->fetchAll();
+			return $this->dataModel->complexQuery("SELECT * FROM morphology WHERE (".implode(" OR ", $rules).") AND is_irregular = 1 AND lemma_id = ".$lemma->read('id')." ORDER BY sorter ASC;")->fetchAll();
 			
 		elseif($isAux)
-			return $this->dataModel->complexQuery("SELECT * FROM morphology WHERE (".implode(" OR ", $rules).") AND is_aux = 1  ORDER BY sorter DESC;");
+			return $this->dataModel->complexQuery("SELECT * FROM morphology WHERE (".implode(" OR ", $rules).") AND is_aux = 1  ORDER BY sorter ASC;");
 		else
-			return $this->dataModel->complexQuery("SELECT * FROM morphology WHERE (".implode(" OR ", $rules).") AND is_irregular = 0  ORDER BY sorter DESC;")->fetchAll();			
+			return $this->dataModel->complexQuery("SELECT * FROM morphology WHERE (".implode(" OR ", $rules).") AND is_irregular = 0  ORDER BY sorter ASC;")->fetchAll();			
 
 	}
 
