@@ -1,9 +1,6 @@
 <?php
-// Donut: open source dictionary toolkit
-// version    0.11-dev
-// author     Thomas de Roo
-// license    MIT
-// file:      example.class.php
+// Donut 0.11-dev - Thomas de Roo - Licensed under MIT
+// file: example.class.php
 
 
 // This represents an example, please note that the input of this class can only come from a lemma data object

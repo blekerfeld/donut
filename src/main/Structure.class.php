@@ -1,9 +1,6 @@
 <?php
-// Donut: open source dictionary toolkit
-// version    0.11-dev
-// author     Thomas de Roo
-// license    MIT
-// file:      structure.class.php
+// Donut 0.11-dev - Thomas de Roo - Licensed under MIT
+// file: structure.class.php
  
 
 class pStructure{
@@ -77,13 +74,13 @@ class pStructure{
 			// Loading the sturcture
 
 			if($this->_type != '')
-				if(file_exists(p::FromRoot("src/prototypes/".$this->_name.".".$this->_type.".pt.php")))
-					$this->_prototype = require_once p::FromRoot("src/prototypes/".$this->_name.".".$this->_type.".pt.php");
+				if(file_exists(p::FromRoot("src/prototypes/".$this->_name.".".$this->_type.".prototype.php")))
+					$this->_prototype = require_once p::FromRoot("src/prototypes/".$this->_name.".".$this->_type.".prototype.php");
 				else
 					$this->_prototype = $this->_dispatchStructure;
 			else
-				if(file_exists(p::FromRoot("src/prototypes/".$this->_name.".pt.php")))
-					$this->_prototype = require_once p::FromRoot("src/prototypes/".$this->_name.".pt.php");
+				if(file_exists(p::FromRoot("src/prototypes/".$this->_name.".prototype.php")))
+					$this->_prototype = require_once p::FromRoot("src/prototypes/".$this->_name.".prototype.php");
 				else
 					$this->_prototype = $this->_dispatchStructure;
 

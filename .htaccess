@@ -1,4 +1,5 @@
 
+    # Turn the mod_rewrite module on
     RewriteEngine On
 
 	# Run everything else but real files through index.php

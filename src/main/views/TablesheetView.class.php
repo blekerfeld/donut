@@ -1,9 +1,6 @@
 <?php
-// Donut: open source dictionary toolkit
-// version    0.11-dev
-// author     Thomas de Roo
-// license    MIT
-// file:      TablesheetView.class.php
+// Donut 0.11-dev - Thomas de Roo - Licensed under MIT
+// file: TablesheetView.class.php
 
 
 class pTablesheetView extends pView{
@@ -17,15 +14,20 @@ class pTablesheetView extends pView{
 		if($edit)
 			$mode = $paradigm->_data;
 
+
+
 		p::Out("<br /><div class='card-tabs-bar titles'>");
 		foreach($this->_data->_types as $typeFetch)
 			p::Out("<a class='".($typeFetch['id'] == $type['id'] ? 'active' : '')."' href='".p::Url('?grammar/tablesheet/new/'.$typeFetch['id'])."'>".ucfirst($typeFetch['name'])."</a>");
 		p::Out("</div>");
 
+			p::Out("<div class='saving hide'>".pTemplate::loadDots()."</div>");
+			p::Out("<div class='ajaxSave rulesheet-margin'></div>");
+
 		// p::Out("<div class='rulesheet-header'>".p::Markdown("## ".ucfirst($type['name'])." - inflection tables")."</div><br />");
 
-		p::Out("<br />
-			<div class='rulesheet'>
+		p::Out("
+			<div class='rulesheet border'>
 			<div class='card-tabs-bar vertical'>
 			<a href='".p::Url('?grammar/tablesheet/new/'.$this->_data->id)."' class='dotted ".(!$edit ? 'active' : '')."'>".(new pIcon('asterisk'))." New table... </a>
 			");
@@ -99,6 +101,11 @@ class pTablesheetView extends pView{
 				updatePreview();
 			},
 		});
+		$('.submit-form').click(function(){
+			$('.saving').slideDown();
+			$('.ajaxSave').load();
+			$('.saving').slideUp();
+		})
 $('.tags.rows').tagsInput({
 	'delimiter': '//',
 	'placeholder':'➥ ".TS_ROWS_ADD."',

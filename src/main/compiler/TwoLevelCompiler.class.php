@@ -1,9 +1,6 @@
 <?php
-// Donut: open source dictionary toolkit
-// version    0.11-dev
-// author     Thomas de Roo
-// license    MIT
-// file:      TwoLevelCompiler.class.php
+// Donut 0.11-dev - Thomas de Roo - Licensed under MIT
+// file: TwoLevelCompiler.class.php
 
 // the Two Level Compiler
 
@@ -17,21 +14,14 @@ class pTwolc{
 
 	public function feed($string){
 
-		// Let's create a string object
+		// Let's create a string object for the Twolc to use
 		$string = new pTwolcString($string);
 
-		// The changes have to be run twice, to give variables a chance!
-		// TODO; FOR NO ONLY RUN ONCE
-		for ($i=0; $i < 1; $i++) { 
-			// First time, to replace variables
-			if($this->_pending != null)
-				foreach($this->_pending as $change)
-					$string->change($change['pattern'], $change['replace'], $change['middle']);
-		}
-
+		if($this->_pending != null)
+			foreach($this->_pending as $change)
+				$string->change($change['pattern'], $change['replace'], $change['middle']);
 
 		return $string;
-
 	}
 
 	public function compile(){
@@ -39,22 +29,22 @@ class pTwolc{
 		foreach($this->_rules as $rule)
 			$this->parseRule($rule);
 
-		foreach($this->_parsedRules as $rule)
-			$this->pendChange($rule);
+		if(sizeof($this->_parsedRules) > 0)
+			foreach($this->_parsedRules as $rule)
+				$this->pendChange($rule);
 
 		return $this;
 	}
 
-
-	// Rule looks like this: a_CON_b=>^^ (^ = hitter)
 	protected function parseRule($rule){
-		// First we need to split the two contexts from eachother
-		$splitRule1 = explode('=>', $rule);
+		// First we need to split the two contexts from each other
+		$splitRule1 = explode('=', $rule);
 		$replace = $splitRule1[1];
-		$splitRule = explode('_', $splitRule1[0]);
-		$leftPart = $splitRule[0];		// Left context
-		$middlePart = $splitRule[1];	// Search context
-		$rightPart = $splitRule[2];		// Right context
+		$splitRule2 = explode('<', $splitRule1[0]);
+		$splitRule3 = explode('>', $splitRule2[1]);
+		$leftPart = $splitRule2[0];		// Left context
+		$middlePart = $splitRule3[0];	// Search context
+		$rightPart = $splitRule3[1];		// Right context
 		$parsedRule = array(
 			'left' => $this->parseContext($leftPart),
 			'middle' => "(".$this->parseContext($middlePart, false, true).")",
@@ -62,12 +52,14 @@ class pTwolc{
 			'replace' => $replace,
 			'original_middle' => $middlePart,
 		);
+		//var_dump($splitRule2);
 		return $this->_parsedRules[] = $parsedRule;
 	}
 
 	protected function parseReplace($replacePattern){
 		// Might be changed a little
 		$replaced = $replacePattern;
+		$replaced = str_replace(array(' ', '//-'), array('', ' '), $replaced);
 		return $replaced;
 	} 	
 
@@ -89,14 +81,25 @@ class pTwolc{
 
 		$this->_pending[] = array('pattern' => $regex, 'replace' => $this->parseReplace($rule['replace']), 'middle' => $rule['original_middle']);
 		
+		//var_dump($regex);
+
 	}
 
 
-	public function parseContext($context, $right = false, $middle = false){
+	public function parseContext($context, $right = false, $middle = false, $switchRecursive = false){
 		$parsedContext = array();
-		$splitContext = explode('.', $context);
+		$splitContext = explode(' ', $context);
 		// CON.CON.CON (three consonants)
-		// -3.-2.-1.X
+		// -3.-2.-1
+
+		if(!$switchRecursive AND $middle){
+			$separateContexts = explode('OR', $context);
+			if(count($separateContexts) == 1 OR count($separateContexts) == 0)
+				return $this->parseContext($context, false, true, true);
+			foreach ($separateContexts as $contextPlus)
+				$parsedContext[] = $this->parseContext($contextPlus, false, true, true);
+			return implode('|', $parsedContext);
+		}
 
 		if($middle)
 			$count = 0;
@@ -105,22 +108,38 @@ class pTwolc{
 		else
 			$count = count($splitContext);
 
-
 		$captureCount = 1;
 
 		foreach($splitContext as $char){
-			//echo $char."<br />";
-			if($char == '<:'){
+			// Escaping
+			if($char == '//-')
+				$parsedContext[$count] = '[\040]{1}';
+			elseif($char == '///')
+				$parsedContext[$count] = '[/]{1}';
+			elseif($char == '//>')
+				$parsedContext[$count] = '[>]{1}';
+			elseif($char == '//<')
+				$parsedContext[$count] = '[<]{1}';
+			elseif($char == '//:')
+				$parsedContext[$count] = '[:]{1}';
+			elseif($char == '//:')
+				$parsedContext[$count] = '[:]{1}';
+
+			// String / word boundaries
+			elseif($char == '/:'){
 				$parsedContext[$count] = '\A'; 
-				continue;
-			}elseif($char == ':>'){
+			}elseif($char == ':/'){
 				$parsedContext[$count] = '\z'; 
-				continue;
+			}elseif($char == '::'){
+				$parsedContext[$count] = '\b'; 
 			}
-			elseif(p::StartsWith($char, '(') AND p::EndsWith($char, ')') AND is_numeric(substr($char, 1, -1))){
+
+			elseif(p::StartsWith($char, '|') AND p::EndsWith($char, '|') AND is_numeric(substr($char, 1, -1))){
 				$parsedContext[$count] = '\\'.substr($char, 1, -1);
+				$count++;
 				continue;
 			}
+			
 			// Only works in (cap)_%_
 			elseif($char == '%'){
 				$parsedContext[$count] = '\\'.$captureCount;
@@ -145,18 +164,21 @@ class pTwolc{
 				$char = substr($char, 1, -1);
 				$parsedContext[$count] = "[".$char."]{1}";
 			}
-			// one of follolwing [a,b,c]
+			// one of following [a,b,c]
 			elseif(p::StartsWith($char, '[') AND p::EndsWith($char, ']')){
 				$char = substr($char, 1, -1);
 				$parsedContext[$count] = "[".implode('', explode(',', $char))."]{1}";
 			}
+			// not one of the following
 			elseif(p::StartsWith($char, '[^') AND p::EndsWith($char, ']')){
 				$char = substr($char, 1, -1);
 				$parsedContext[$count] = "[^".implode('', explode(',', $char))."]{1}";
 			}
+			// Not con, vow 
 			elseif(strlen($char) == 4 AND p::StartsWith($char, '^') AND mb_strtoupper(substr($char, 1), 'utf-8') == substr($char, 1) ){
 				$parsedContext[$count] = "[^".pAlphabet::getGroupsAsString(substr($char, 1))."]{1}";
 			}
+			// Con or vow
 			elseif(strlen($char) == 3 AND mb_strtoupper($char, 'utf-8') == $char)
 				if(pAlphabet::getGroupsAsString($char) != '')
 					$parsedContext[$count] = "[".pAlphabet::getGroupsAsString($char)."]{1}";
@@ -185,7 +207,7 @@ class pTwolc{
 		if($middle)
 			return implode('', $parsedContext);
 
-		
+		//var_dump($parsedContext);
 		return $parsedContext;
 	}
 

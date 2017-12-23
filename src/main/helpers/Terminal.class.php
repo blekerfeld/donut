@@ -1,9 +1,6 @@
 <?php
-// Donut: open source dictionary toolkit
-// version    0.11-dev
-// author     Thomas de Roo
-// license    MIT
-// file:      File: terminal.class.php
+// Donut 0.11-dev - Thomas de Roo - Licensed under MIT
+// file: File: terminal.class.php
 	// Some handy commands for debuging and such
 
 class pTerminal{
@@ -95,12 +92,12 @@ class pTerminal{
 		else
 			return false;
 
-		$arguments = explode(' ', $line);
-		$command = $arguments[0];
-		unset($arguments[0]);
+		preg_match_all('/"(?:\\\\.|[^\\\\"])*"|\S+/', $line, $arguments);
+		$command = $arguments[0][0];
+		unset($arguments[0][0]);
 
 		if(method_exists($this, $command) and !(in_array($command, array('__construct', 'ajax', 'nextLine', 'initialState', 'requireArg')))){
-			$this->$command($arguments, $line);
+			$this->$command($arguments[0], $line);
 		}
 		else{
 			echo "command '$command' does not exist. <br />";
@@ -127,14 +124,14 @@ class pTerminal{
 			return false;
 		}
 		if(isset($explode[2]))
-			$twolc = new pTwolc(array($explode[1]));
+			$twolc = new pTwolc(array((substr($explode[1], 1, -1))));
 		else
 			$twolc = new pTwolc((new pTwolcRules('phonology_contexts'))->toArray());
 		$twolc->compile();
 		if(isset($explode[2]))
-			echo @$twolc->feed($explode[2])->toDebug()."<br />";
+			echo @$twolc->feed(substr($explode[2], 1, -1))->toDebug()."<br />";
 		else
-			echo @$twolc->feed($explode[1])->toDebug()."<br />";
+			echo @$twolc->feed(substr($explode[1], 1, -1))->toDebug()."<br />";
 		echo $this->nextLine($line);
 	}
 

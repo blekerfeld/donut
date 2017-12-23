@@ -1,9 +1,6 @@
 <?php
-// Donut: open source dictionary toolkit
-// version    0.11-dev
-// author     Thomas de Roo
-// license    MIT
-// file:      TableObject.class.php
+// Donut 0.11-dev - Thomas de Roo - Licensed under MIT
+// file: TableObject.class.php
 
 class pTableHandler extends pHandler{
 	// Used as last
@@ -14,7 +11,7 @@ class pTableHandler extends pHandler{
 		$this->_actionbar->generate();
 
 		if($this->_paginated)
-			$pages = "<div class='pages'>".$this->pagePrevious()."<div class='holder'>".$this->pageSelect()."</div>".$this->pageNext()."</div>";
+			$pages = "<div class='pages'>".$this->pagePrevious().$this->pageSelect().$this->pageNext()."</div>";
 		else
 			$pages = '';
 

@@ -1,9 +1,6 @@
 <?php
-// Donut: open source dictionary toolkit
-// version    0.11-dev
-// author     Thomas de Roo
-// license    MIT
-// file:      AssistantStructure.class.php
+// Donut 0.11-dev - Thomas de Roo - Licensed under MIT
+// file: AssistantStructure.class.php
 
 class pAssistantStructure extends pStructure{
 	
@@ -17,13 +14,11 @@ class pAssistantStructure extends pStructure{
 		if(isset(pRegister::arg()['is:result'], pRegister::freshSession()['searchQuery']))
 			$searchBox->setValue(pRegister::freshSession()['searchQuery']);
 	
-		pMainview::throwOutsidePage($searchBox);
+		pTemplate::throwOutsidePage($searchBox);
 
 		p::Out("<div class='pEntry'>");
 
-		if(p::NoAjax())
-			p::Out('<div class="btCard no-padding bt upperCard">'.((new pTabBar(BATCH_TITLE,'assistant', true, 'titles pEntry-fix-20'))->addHome()->addSearch()).'</div>');
-	
+
 		$this->_parser->runData();
 
 		// Let's handle the action by the object

@@ -1,9 +1,6 @@
 <?php
-// Donut: open source dictionary toolkit
-// version    0.11-dev
-// author     Thomas de Roo
-// license    MIT
-// file:      rulesheet.struct.php
+// Donut 0.11-dev - Thomas de Roo - Licensed under MIT
+// file: rulesheet.struct.php
 	// The structure of the rulesheet
 
 

@@ -1,9 +1,6 @@
 <?php
-// Donut: open source dictionary toolkit
-// version    0.11-dev
-// author     Thomas de Roo
-// license    MIT
-// file:      CachedQuery.class.php
+// Donut 0.11-dev - Thomas de Roo - Licensed under MIT
+// file: CachedQuery.class.php
 
 class pCachedQuery implements Iterator{
 

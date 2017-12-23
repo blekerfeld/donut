@@ -1,5 +1,3 @@
-[:kat:]
-
 # About donut
 
 ## Meow all night long

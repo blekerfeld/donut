@@ -1,9 +1,6 @@
 <?php
-// Donut: open source dictionary toolkit
-// version    0.11-dev
-// author     Thomas de Roo
-// license    MIT
-// file:      Paradigm.class.php
+// Donut 0.11-dev - Thomas de Roo - Licensed under MIT
+// file: Paradigm.class.php
 
 // Paradigm: represents an inflectional system
 
@@ -301,12 +298,12 @@ class pParadigm{
 			$rules[] = 'id = -1';
 
 		if($irregular)
-			return $this->dataModel->complexQuery("SELECT * FROM morphology WHERE (".implode(" OR ", $rules).") AND is_irregular = 1 AND lemma_id = ".$lemma->read('id').";")->fetchAll();
+			return $this->dataModel->complexQuery("SELECT * FROM morphology WHERE (".implode(" OR ", $rules).") AND is_irregular = 1 AND lemma_id = ".$lemma->read('id')." ORDER BY sorter DESC;")->fetchAll();
 			
 		elseif($isAux)
-			return $this->dataModel->complexQuery("SELECT * FROM morphology WHERE (".implode(" OR ", $rules).") AND is_aux = 1;");
+			return $this->dataModel->complexQuery("SELECT * FROM morphology WHERE (".implode(" OR ", $rules).") AND is_aux = 1  ORDER BY sorter DESC;");
 		else
-			return $this->dataModel->complexQuery("SELECT * FROM morphology WHERE (".implode(" OR ", $rules).") AND is_irregular = 0;")->fetchAll();			
+			return $this->dataModel->complexQuery("SELECT * FROM morphology WHERE (".implode(" OR ", $rules).") AND is_irregular = 0  ORDER BY sorter DESC;")->fetchAll();			
 
 	}
 
