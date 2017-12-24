@@ -1,10 +1,8 @@
 .absolute_header
 {
-  background: #fff;
-        border-top: 4px solid #2F335E!important;
-  padding:20px 3px 13px 10px;
+  padding: 0px 3px 13px 10px;
   text-decoration:none;
-  padding-top: 2.1em!important;
+  padding-top: 1.5em!important;
 }
 
 
@@ -32,7 +30,7 @@ a.siteTitle
   font-size:17px;
   font-weight:700;
   margin-top:1px;
-  color: #282C51;
+  color: #000;
 }
 
 
@@ -54,7 +52,7 @@ a.siteTitle
 .header.dictionary.home
 {
     margin:0;
-  margin-bottom:14px;
+  margin-bottom:0px;
   padding-top: 45px!important;
   padding-bottom: 5px!important;
 }
@@ -190,7 +188,7 @@ div.hSearch .load-hide
 .hSearch input#wordsearch
 {
   background:#fff;
-  border:rgba(150,150,150,0.2) 1px solid;
+  border:white   1px solid;
   display:inline-block;
   float:left;
   font-family:Noto Sans;
@@ -252,8 +250,7 @@ div.landing-about
 {
   background:#FFF;
   border-top:none;
-  padding-bottom:30px;
-  padding-top:30px;
+  padding: 30px;
   margin-bottom: -50px;
   transition: all .3s;
   border-radius: 5px!important;

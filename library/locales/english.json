@@ -148,7 +148,7 @@
          "DICT_TITLE":"Dictionary",
          "DICT_READMORE":"Go to lemma",
          "DICT_SEARCH":"Search",
-         "DICT_KEYWORD":"Find entries...",
+         "DICT_KEYWORD":"Look up a word...",
          "DICT_EXACT_MATCH":"exact match",
          "DICT_MATCH":"Your query yielded %s result.",
          "DICT_SEARCH_RESULTS":"Search results",

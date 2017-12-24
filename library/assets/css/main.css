@@ -47,7 +47,7 @@ html, body {
   margin: 0;
   box-sizing: border-box;
   height:100%;
-  background: #EDEDED;
+  background: #f5f5f5;
   padding: 0;
   font-family: Noto Sans, Calibri, Sans;
   font-size: 16px;
@@ -353,15 +353,12 @@ div.pEntry-inner{
 }
 
 .absolute_footer {
-  padding-top: 5px;
-  margin-top: 10px;
   margin-bottom: 45px;
-  border-top: 1px solid #d2d4d7;
-  text-shadow: 1px 2px 3px #fff, 0 0 0 #000, 1px 4px 6px #fff;
   line-height: 1.8em;
-  font-size: 10px;
+  font-size: 9px;
+  text-transform: lowercase;
   color: #333;
-  opacity: 1;
+  opacity: .8;
   text-decoration: none;
   letter-spacing: .1em;
   font-family: Libre Franklin;

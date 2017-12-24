@@ -13,15 +13,4 @@ class pHomeView extends pSimpleView{
 			".p::Markdown(file_get_contents(p::FromRoot("static/md/home.md")), true)."</div></div>");
 	}
 
-	public static function landingTable(){
-		// For now
-		return  '';	
-		return "<table class='landing-table'>
-			<tr>
-				<td>aaa</td>
-				<td>aaa</td>
-			</tr>
-		</table>";
-	}
-
 }

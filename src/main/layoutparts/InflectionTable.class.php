@@ -1,8 +1,6 @@
 <?php
-// 	Donut: dictionary toolkit 
-// 	version 0.1
-// 	Thomas de Roo - MIT License
-	//	++		File: inflectionTable.class.php
+// Donut 0.11-dev - Thomas de Roo - Licensed under MIT
+// file: File: inflectionTable.class.php
 
 // Used to build an inflection table
 
