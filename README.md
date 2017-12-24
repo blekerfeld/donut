@@ -1,7 +1,7 @@
 <img src="https://github.com/blekerfeld/donut/blob/master/library/staticimages/logo.png?raw=true" width="400">
 
 #### Under Construction
-#### Planned release: January 2018
+#### Planned release: March 2018
 
 Donut is a dictionary and grammar toolkit that makes it easy to create and mantain an online dictionary and grammar for any language. It has purposes within descriptive linguistics and language construction.
 
