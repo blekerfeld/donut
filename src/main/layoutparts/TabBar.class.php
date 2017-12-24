@@ -1,8 +1,6 @@
 <?php
-// 	Donut: dictionary toolkit 
-// 	version 0.1
-// 	Thomas de Roo - MIT License
-	//	++		File: TabBar.class.php
+// Donut 0.11-dev - Thomas de Roo - Licensed under MIT
+// file: TabBar.class.php
 
 // Used to build an CardTabs-style card bar
 

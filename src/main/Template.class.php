@@ -32,15 +32,9 @@ class pTemplate{
         padding-right: calc(".CONFIG_PAGE_MARGIN."% + 20px);
         padding-left: calc(".CONFIG_PAGE_MARGIN."% + 20px);
 
-        border: 4px ".CONFIG_ACCENT_COLOR_1." solid!important;
       }
 
-      .absolute_footer{
-           border-top: #cacaca dotted 1px!important;
-      }
-
-       .absolute_header{
-       }
+     
 
       .absolute_header a:hover{
         color: ".CONFIG_ACCENT_COLOR_1."!important;
@@ -50,11 +44,6 @@ class pTemplate{
        padding-right: calc(".CONFIG_PAGE_MARGIN."% + 20px);
        padding-left: calc(".CONFIG_PAGE_MARGIN."% + 20px);
        padding:-top: 50px; 
-      }
-
-      div.landing-about{
-          padding: 60px;
-          border-radius: 0px 0px 4px 4px;
       }
 
       .header.dictionary.home-search{
@@ -239,15 +228,13 @@ class pTemplate{
     </div>
     </div>
     <div class='absolute_footer'>
-      
-      <a href='<?php echo p::Url('?about'); ?>'><img src='<?php echo p::Url('library/staticimages/logo.png'); ?>' /></a>
+
       <span class='mobilehide'> 
         <span class='float-left'>
-         
          <?php 
           $head = file_get_contents(sprintf('.git/refs/heads/%s', 'master'));
-          echo "<a href='https://github.com/blekerfeld/donut/commit/$head' class='tooltip'><i class='fa fa-github fa-10'></i> /donut</a> 0.11-dev"; 
-        ?><br />&copy; 2017 Thomas de Roo</span><span class='float-right'>
+          echo "<a href='https://github.com/blekerfeld/donut/commit/$head' class='tooltip'><i class='fa fa-github fa-10'></i> /donut</a> 0.11-dev</a>"; 
+        ?> / Thomas de Roo</span><span class='float-right'>
          </span></span><br />
     </div>
   </body>
