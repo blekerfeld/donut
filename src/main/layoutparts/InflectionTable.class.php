@@ -1,6 +1,6 @@
 <?php
 // Donut 0.11-dev - Thomas de Roo - Licensed under MIT
-// file: File: inflectionTable.class.php
+// file: inflectionTable.class.php
 
 // Used to build an inflection table
 

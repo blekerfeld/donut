@@ -1,21 +1,21 @@
+.ultimate_header{
+  padding-top: 10px;
+  padding-bottom: 5px;
+}
+
+
 .absolute_header
 {
   padding: 0px 3px 13px 10px;
   text-decoration:none;
-  padding-top: 1.5em!important;
+  padding-top: 10px!important;
 }
 
 
-
-.absolute_header a
-{
+.absolute_header a{
   color: #010101;
 }
 
-.absolute_header a.text
-{
-
-}
 
 .absolute_header .user
 {
@@ -26,11 +26,11 @@
 
 a.siteTitle
 {
-
-  font-size:17px;
+  font-size:20px;
   font-weight:700;
   margin-top:1px;
-  color: #000;
+  font-family: Verdana;
+  padding: 5px;
 }
 
 
@@ -43,9 +43,8 @@ a.siteTitle
 
 .header.dictionary
 {
-  margin-bottom:-37px;
-  margin-top:30px;
-  padding-top:15px;
+  margin-bottom:40px;
+  padding-top: 15px!important;
   transition:all .1s;
 }
 
@@ -53,7 +52,6 @@ a.siteTitle
 {
     margin:0;
   margin-bottom:0px;
-  padding-top: 45px!important;
   padding-bottom: 5px!important;
 }
 
@@ -77,7 +75,7 @@ a.siteTitle
 .header.dictionary.home-search
 {
   width:100%;
-  margin-bottom: -40px;
+  margin-bottom: -10px;
 }
 
 
@@ -165,10 +163,9 @@ a.button.search:hover
   background:#E6ECF2;
 }
 
-div.hSearchResults-inner.padding-5
+
+div.hSearchResults-inner
 {
-  clear:both;
-  margin-top:10px;
   padding:20px 3px;
 }
 
@@ -254,6 +251,7 @@ div.landing-about
   margin-bottom: -50px;
   transition: all .3s;
   border-radius: 5px!important;
+
 }
 
 div.landing-content{
@@ -312,7 +310,7 @@ div.nav {
 }
 
 div.nav a:first-child{
-  margin-left: -20px;
+  margin-left: -40px;
 }
 
 div.nav a {
@@ -321,7 +319,7 @@ div.nav a {
   padding-bottom: 5px;
   font-size: 13px;
   text-decoration: none;
-  letter-spacing: .15em;
+  letter-spacing: .05em;
   white-space: normal;
   font-weight: 500;
   display: inline-block;
@@ -330,7 +328,6 @@ div.nav a {
 }
 
 div.nav a:hover, div.nav a.admin:hover {
-  border-bottom: 1px solid #D9DDD9;
   color: #607193!important;
 }
 

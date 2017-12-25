@@ -37,7 +37,7 @@ class pSearchBox extends pLayoutPart{
 		$output = '<div class="hMobile id_'.$this->_idS.'"><div class="header dictionary '.($this->_enableAlphabetBar ? 'pentry ' : '').($this->_home ? 'home' : '').'">';
 
 		$output .= '<div class="hWrap"><div class="hSearch">
-				'.pLanguage::dictionarySelector('dictionary-selector').'
+				
 				<input  type="text" id="wordsearch" class="big word-search '.(((isset(pRegister::session()['searchLanguage']) AND p::StartsWith(pRegister::session()['searchLanguage'], $lang_zero->read('locale'))) OR (!isset(pRegister::session()['searchLanguage']) AND CONFIG_ENABLE_DEFINITIONS == 1)) ? 'native' : '').'" placeholder="'.DICT_KEYWORD.'" value="'.$this->_value.'"/>
 			<br id="cl" />
 			</div></div>
@@ -47,9 +47,7 @@ class pSearchBox extends pLayoutPart{
 
 		// To have this in the page then
 		p::Out('<div class="hSearchResults">
-			'."<div class='hSearchtitle hide'><div class='card-tabs-bar titles pEntry-fix'>
-			
-			</div><br />".'</div>
+			'."<div class='hSearchtitle hide'>".pLanguage::dictionarySelector('dictionary-selector').'</div>
 				<div class="searchLoad"></div>
 								<div class="load-hide hide" style="text-align: center">'.pTemplate::loadDots().'</div>
 			</div>');

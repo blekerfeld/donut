@@ -97,23 +97,8 @@ class pAssistantView extends pView{
 		$lang1 = new pLanguage(pRegister::session()['btChooser-translate']);
 		$data['id'] = $data['word_id'];
 		$lemma = new pLemma($data, 'words');
-		// Building the guideline words
-		$guideLines = $this->_data->getGuideLineWords($data['word_id']);
-		$guideLinesStr = '';
-		foreach($guideLines as $key => $languageK){
-			$language = new pLanguage($key);
-			$guideLinesStr .= '<strong>'.(new pDataField(null, null, null, 'flag'))->parse($language->read('flag'));
-			$items = array();
-			foreach($languageK as $item)
-				$items[] = $item['translation'];
-			$guideLinesStr .= " ".implode(', ', $items)."<br />";
-		}
-
-		if($guideLinesStr != '')
-			p::Out("<div class='btCardHelper' style='display: none'>
-				<span class='btBlue'>".BATCH_OTHER_LANGUAGES."</span><br />
-				".$guideLinesStr."
-			</div>");
+		
+	
 		p::Out("
 			<div class='btCard transCard proper bt'>
 				<div class='btTitle'>

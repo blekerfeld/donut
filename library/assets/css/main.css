@@ -47,7 +47,7 @@ html, body {
   margin: 0;
   box-sizing: border-box;
   height:100%;
-  background: #f5f5f5;
+  background: #f5f6f7 repeat;
   padding: 0;
   font-family: Noto Sans, Calibri, Sans;
   font-size: 16px;
@@ -298,7 +298,7 @@ div.holder{
 }
 
 div.outerwrap {
-  margin-top: 45px;
+  margin-top: 15px;
   min-height: 500px;
   background: white;
   margin-bottom: 0px;
@@ -306,11 +306,12 @@ div.outerwrap {
   border-radius: 5px!important;
 }
 
+div.outerwrap.tabbed{
+  margin-top: 35px;
+}
+
 div.outerwrap.no-border{
-  border: none!important;
-  background: none!important;
-  padding: 0!important;
-  box-shadow: none!important;
+ 
 }
 
 .ulWrap {
@@ -1579,17 +1580,6 @@ span.ipa:hover {
 .count:hover {}
 
 /* BATCH TRANSLATION */
-
-div.btCardHelper{
-  float: left;
-  display: none;   padding: 5px;
-   width: 14%;
-  opacity: .4;
-  margin-left: -50px;
-  margin-top: 27px;
-  transition: opacity .3s;
-  cursor: pointer;
-}
 
 div.btCardHelper:hover{
   opacity: 1;

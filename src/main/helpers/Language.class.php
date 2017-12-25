@@ -64,12 +64,12 @@ class pLanguage{
 
 	    
 	  	return $select . '</select>'."\n".'<script>$(".'.$class.'").selectorTabs({"class":"selectorTabs-h wordsearch", 
-	  		"back": true,
+	  		"back": false,
 	  		"goback": function(){
 	  			$(".word-search").val("");callBack(false, true);
 	  		},
 	  		"backIcon": "'.(str_replace('"', '\'', new pIcon('arrow-left'))).'",
-	  		"title": "'.(str_replace('"', '\'', new pIcon('magnify'))).' '.DICT_SEARCH.'",
+	  		"title": "",
 	  		"afterclick": function(){
 	  			doSearch(false);
 	  			var act = $(".'.$class.' option:selected").attr("data-native");

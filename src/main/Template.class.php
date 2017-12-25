@@ -6,7 +6,7 @@ class pTemplate{
 
 	protected $_stylesheets, $_scripts;
 
-	public static $title = CONFIG_SITE_TITLE, $orgTitle = CONFIG_SITE_TITLE, $_searchBoxShown = false, $outside, $no_border = false;
+	public static $title = CONFIG_SITE_TITLE, $orgTitle = CONFIG_SITE_TITLE, $_searchBoxShown = false, $outside, $no_border = false, $has_tabs = false;
 
 	public static function setTitle($title){
 		self::$title = $title . ' - ' . CONFIG_SITE_TITLE;
@@ -14,6 +14,10 @@ class pTemplate{
 
   public static function setNoBorder(){
     self::$no_border = true;
+  }
+
+  public static function setTabbed(){
+    self::$has_tabs = true;
   }
 
   public static function throwOutsidePage($content){
@@ -28,49 +32,23 @@ class pTemplate{
     $hashKey = sha1(spl_object_hash($this));
     // Throwing this object's script into a session
     pRegister::session($hashKey, "
-      .absolute_header{
-        padding-right: calc(".CONFIG_PAGE_MARGIN."% + 20px);
-        padding-left: calc(".CONFIG_PAGE_MARGIN."% + 20px);
-
-      }
-
-     
-
-      .absolute_header a:hover{
-        color: ".CONFIG_ACCENT_COLOR_1."!important;
-      }
-
-      div.landing-content{
-       padding-right: calc(".CONFIG_PAGE_MARGIN."% + 20px);
-       padding-left: calc(".CONFIG_PAGE_MARGIN."% + 20px);
-       padding:-top: 50px; 
-      }
-
-      .header.dictionary.home-search{
-        margin-right: calc(".CONFIG_PAGE_MARGIN."% + 25px);
-      }
-
-
-      .header{
+      .absolute_header, div.landing-content, div.ultimate_header, .holder, .header, .absolute_footer{
         padding-right: calc(".CONFIG_PAGE_MARGIN."% + 20px);
         padding-left: calc(".CONFIG_PAGE_MARGIN."% + 20px);
       }
-      .holder{
-        padding-left: calc(".CONFIG_PAGE_MARGIN."% + 20px);
-        padding-right: calc(".CONFIG_PAGE_MARGIN."% + 20px);
-      }
-      .absolute_footer{
-        margin-right: calc(".CONFIG_PAGE_MARGIN."% + 20px);
-        margin-left: calc(".CONFIG_PAGE_MARGIN."% + 20px);
-      }
-
 
       div.header.dictionary.home{
         padding: calc(".CONFIG_PAGE_MARGIN."% + 1%);
       }
 
+      a.siteTitle{
+        color: ".CONFIG_ACCENT_COLOR_1.";
+      }
+
       div.nav a.active{
-          border-bottom: 1px dotted ".CONFIG_ACCENT_COLOR_1.";
+          background: ".CONFIG_ACCENT_COLOR_1.";
+          color: white;
+          border-radius: 5px;
       }
 
       .header.dictionary.home .hSearch{
@@ -194,15 +172,18 @@ class pTemplate{
     <div class='contents' id='main'>
       <div class='hStripe'></div>
       <div class="top_area">
+        <div class='ultimate_header'>
+          <a class='siteTitle ssignore noselect'  href="<?php echo p::Url("?home"); ?>">
+             <?php echo (new pIcon(CONFIG_LOGO_SYMBOL, '64')); ?>
+              <?php echo CONFIG_LOGO_TITLE; ?></a> 
+        </div>
         <div class="absolute_header <?php  echo "app_".pRegister::app(); ?>">
             <div class='user'>
               <?php echo '<a href="'.p::Url('?entry/random').'" class="small ssignore text">'.(new pIcon('fa-random'))." ".RANDOM.'</a> | '; ?>
               <?php echo $this->userBox(); ?> 
               <?php if(!pUser::noGuest()){ echo $this->login(); } ?>
             </div>
-            <a class='float-left siteTitle ssignore noselect'  href="<?php echo p::Url("?home"); ?>">
-              <span style='font-family: koliko;font-size: 15px;'><?php echo (new pIcon(CONFIG_LOGO_SYMBOL)); ?></span>  
-              <?php echo CONFIG_LOGO_TITLE; ?></a> 
+            
            <?php echo (new pMenuView); ?><br id="cl" />  
        </div>
      </div>
@@ -210,7 +191,7 @@ class pTemplate{
         <?php echo self::$outside; ?>
       </div>
       <div class='holder'>
-      <div class=<?php echo "'".(self::$no_border ? 'no-border no-border-h' : '')." outerwrap'"; ?>> 
+      <div class=<?php echo "'".(self::$no_border ? 'no-border no-border-h' : '')." ".(self::$has_tabs ? 'tabbed' : '')." "."outerwrap'"; ?>> 
           <div class="ulWrap">
             <noscript>
               <div class='notice danger-notice'><i class='fa fa-warning fa-12'></i> This site needs javascript to function, with javascript turned off, most of the functionality won't work!</div>
