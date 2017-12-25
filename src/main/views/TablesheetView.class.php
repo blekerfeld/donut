@@ -16,7 +16,7 @@ class pTablesheetView extends pView{
 
 
 
-		p::Out("<br /><div class='card-tabs-bar titles'>");
+		p::Out("<br /><div class='card-tabs-bar titles border'>");
 		foreach($this->_data->_types as $typeFetch)
 			p::Out("<a class='".($typeFetch['id'] == $type['id'] ? 'active' : '')."' href='".p::Url('?grammar/tablesheet/new/'.$typeFetch['id'])."'>".ucfirst($typeFetch['name'])."</a>");
 		p::Out("</div>");

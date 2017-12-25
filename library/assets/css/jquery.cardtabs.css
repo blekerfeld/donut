@@ -175,6 +175,15 @@ div.card-tabs-bar a.titles{
 	font-size: 15px!important;
 }
 
+div.card-tabs-bar.titles a.active{
+	border: none;
+}
+
+div.card-tabs-bar.titles.border a.active{
+		border: 1px solid #eaecef!important;
+		border-bottom: none!important;
+}
+
 div.card-tabs-bar a.titles.no-margin{
 	margin: 0!important;
 }
@@ -204,7 +213,7 @@ div.card-tabs-bar.pEntry{
 
 
 div.card-tabs-bar.pEntry-fix, div.card-tabs-bar.above{
-	margin-top: -40px;
+	margin-top: -39px;
 	margin-left: calc(-20px);
 	border-bottom: none;
 }
@@ -224,13 +233,13 @@ div.card-tabs-bar.pEntry-fix-20{
 }
 
 div.card-tabs-bar.pEntry-fix-50{
-	margin-top: -75px;
+	margin-top: -74px;
 	margin-bottom: 15px;
 	border-bottom: none;
 }
 
 div.card-tabs-bar.pEntry-fix-56{
-	margin-top: -80px;
+	margin-top: -79px;
 	border-bottom: none;
 	margin-bottom: 15px;
 }

@@ -24,6 +24,9 @@ class pEditorStructure extends pStructure{
 				$section = pRegister::arg()['section'];
 			else
 				$section = 'lemma';
+
+			pTemplate::setTabbed();
+
 			p::Out((new pTabBar('Editor', 'lead-pencil', true, 'titles pEntry-fix-50 x'))->addSearch()
 				->addLink('view', LEMMA_VIEW_SHORT, p::Url("?entry/".$this->_prototype[$this->_section]['section_key'].'/'.pRegister::arg()['id'].(isset(pRegister::arg()['is:result']) ? '/is:result' : '')), false)
 				->addLink('edit', LEMMA_EDIT_SHORT, p::Url('?editor/'.$this->_section.'/edit/'.(is_numeric(pRegister::arg()['id']) ?  pRegister::arg()['id'] : p::HashId(pRegister::arg()['id'], true)[0]).(isset(pRegister::arg()['is:result']) ? '/is:result' : '')), true)

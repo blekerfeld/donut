@@ -46,6 +46,7 @@ class pEntryStructure extends pStructure{
 		if(p::NoAjax())
 			p::Out("<div class='pEntry ".(($this->_error != '' OR $this->_error != null) ? 'hasErrors' : '')."'><div class='home-margin'>");
 
+		pTemplate::setTabbed();
 
 		// Let's create a tab bar for this app
 		$this->_tabs = (new pTabBar(MMENU_DICTIONARY, 'fa-book', true, 'titles pEntry-fix-56'))->addSearch();

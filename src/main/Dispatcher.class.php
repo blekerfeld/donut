@@ -147,8 +147,7 @@ class pDispatcher {
 	}
 
 	protected function do404($extra = ''){
-		pTemplate::setNoBorder();
-		p::Out("<div class='danger-notice'><strong>".(new pIcon('fa-warning'))." ".ERROR_404_TITLE."</strong><br /><br />".
+		p::Out("<div class='danger-notice'>".(new pIcon('fa-warning'))." ".
 				ERROR_404_MESSAGE."</div>");
 	}
 

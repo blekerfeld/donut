@@ -50,6 +50,8 @@ class pStructure{
 
 	public function doTabs(){
 
+		pTemplate::setTabbed();
+
 		foreach($this->_prototype as $key => $app){
 			if(isset($app['tab_sub_items']))
 				foreach($app['tab_sub_items'] as $keySI => $item)

@@ -56,16 +56,6 @@ class pAssistantHandler extends pHandler{
 		return false;
 	}
 
-	public function getGuideLineWords($lemma_id){
-		$output = array();
-		$data = (new pDataModel('words'))->complexQuery("SELECT translations.translation, translations.language_id, translation_words.* FROM translations JOIN translation_words WHERE translations.id = translation_words.translation_id AND translation_words.word_id = $lemma_id;"); 
-		foreach ($data->fetchAll() as $result) 
-			$output[$result['language_id']][] = $result; 
-		return $output;
-	}
-
-
-
 	public function countData($language = null){
 
 		if($this->_section == 'translate' AND ((isset(pRegister::session()['btChooser-translate']) AND $language == null) OR ($language != null))){

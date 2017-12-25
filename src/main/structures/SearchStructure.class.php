@@ -6,7 +6,7 @@ class pSearchStructure extends pStructure{
 
 	public function render(){
 
-		p::Out("<div class='home-margin hSearchResults-inner'>");
+		p::Out("<div class='hSearchResults-inner'>");
 		// If there is an offset, we need to define that
 		if(isset(pRegister::arg()['offset']))
 			$this->_parser->setOffset(pRegister::arg()['offset']);

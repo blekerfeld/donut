@@ -17,6 +17,9 @@ class pEditorView extends pView{
 
 
 	public function lemmasheetForm($section, $edit = false){
+		
+		pTemplate::setTabbed();
+
 		if($edit)
 			$data = $this->_data->data()->fetchAll()[0];
 		
