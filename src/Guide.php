@@ -8,7 +8,7 @@ return [
 		'default_permission' => 0,
 		'items' => [
 			'home' => [
-				'name' => (new pIcon('fa-book', 12))." ".MMENU_DICTIONARY,
+				'name' => (new pIcon('fa-home', 12))." ".MMENU_DICTIONARY,
 				'app' => 'home',
 				'class' => 'ssignore',
 			],
@@ -19,7 +19,7 @@ return [
 				'subitems' => [
 					'editor' => [
 						'name' => 'New lemma entry',
-						'icon' => 'fa-pencil',
+						'icon' => 'fa-edit',
 						'app' => 'editor/new',
 						'permission' => -3,
 					],
@@ -44,7 +44,7 @@ return [
 					'dictionary-admin' => [
 						'name' => 'Management panel',
 						'icon' => 'tune',
-						'app' => 'dictionary-admin',
+						'app' => 'manage/config',
 						'permission' => -4,
 					],
 				],
@@ -67,9 +67,10 @@ return [
 	],
 	
 
-	'dictionary-admin' => [
+	'manage' => [
 		'page_title' => 'Admin panel',
-		'default_section' => 'lexcat',
+		'default_section' => 'config',
+		'override_structure_type' => 'pAdminStructure',
 		'arguments' => [
 			0 => 'section',
 			1 => 'action',

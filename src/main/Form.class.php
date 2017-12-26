@@ -31,6 +31,7 @@ class pMagicField{
 
 		if($this->_field->type != 'hidden')
 			p::Out("<div class='btSource'><span class='btLanguage'>".$this->_field->surface."</span>");
+
 		// If required show an asterisk
 		if($this->_field->required == true AND $this->_field->type != 'hidden')
 			p::Out("<span class='xsmall' style='color: darkred;opacity: .3;'>*</span>");
@@ -44,6 +45,10 @@ class pMagicField{
 
 			case 'boolean':
 				p::Out("<select name='".$this->name."' class='field_".$this->name." ".$this->_field->class."'><option value='1' ".($this->value() == 1 ? 'selected' : '').">".DL_ENABLED."</option><option value='0' ".($this->value() == 0 ? 'selected' : '').">".DL_DISABLED."</option></select><script>$('.field_".$this->name."').selectorTabs();</script>");
+				break;
+
+			case 'hidden-show':
+				p::Out("<input type='hidden' name='".$this->_field->name."' class='btInput nWord small normal-font field_".$this->name." ".$this->_class."' value='".(($this->_value != NULL OR $this->_value != '') ? $this->_value : $this->_field->selectionValues)."' />".$this->value());
 				break;
 
 			case 'hidden':

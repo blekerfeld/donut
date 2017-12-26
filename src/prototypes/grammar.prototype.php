@@ -6,7 +6,7 @@
 
 $saveStrings = [null, SAVE, SAVING, SAVED_EMPTY, SAVED_ERROR, SAVED, SAVE_LINKBACK];
 $action_remove = ['remove', DA_DELETE, 'fa-trash', 'ttip-sub', null, null];
-$action_edit = ['edit', DA_EDIT, 'fa-pencil', 'ttip-sub', null, null];
+$action_edit = ['edit', DA_EDIT, 'fa-edit', 'ttip-sub', null, null];
 
 return [
 		'MAGIC_META' => [

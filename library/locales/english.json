@@ -316,7 +316,10 @@
          "DA_WORDS_NEW_EXTERN":"New word",
          "DA_TRANSLATIONS":"Translations",
          "DA_TRANSLATION":"Translation",
-         "DA_HEADINGS":"Sections"
+         "DA_HEADINGS":"Sections",
+         "DA_CONFIG_SURFACE":"Settings",
+         "DA_CONFIG_NAME":"Setting name",
+         "DA_CONFIG_VALUE":"Setting value"
       },
       "stats":{
          "STATS_MOSTSEARCH":"The top %s most-searched words",
