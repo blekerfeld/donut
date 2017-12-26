@@ -27,6 +27,9 @@ class pAdminStructure extends pStructure{
 
 	public function renderMenu(){
 
+		// To fix some things
+		pTemplate::setTabbed();
+
 		// Starting the menu
 		$output = "<div class='card-tabs-bar d_admin_menu titles above'>
 				<div class='stack'><a class='ssignore disabled no-select' href='javascript:void(0);'>".(new pIcon('tune', 14))." Management panel</a>";

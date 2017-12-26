@@ -214,7 +214,7 @@ class pTemplate{
         <span class='float-left'>
          <?php 
           $head = file_get_contents(sprintf('.git/refs/heads/%s', 'master'));
-          echo "<a href='https://github.com/blekerfeld/donut/commit/$head' class='tooltip'><i class='fa fa-github fa-10'></i> /donut</a> 0.11-dev</a>"; 
+          echo "<a href='https://github.com/blekerfeld/donut/commit/$head' class='tooltip'><i class='fab fa-github fa-10'></i> /donut</a> 0.11-dev</a>"; 
         ?> / Thomas de Roo</span><span class='float-right'>
          </span></span><br />
     </div>
