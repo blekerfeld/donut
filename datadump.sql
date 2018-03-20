@@ -19,6 +19,44 @@ CREATE TABLE `antonyms` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 
+SET NAMES utf8mb4;
+
+DROP TABLE IF EXISTS `articles`;
+CREATE TABLE `articles` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `name` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `url` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `url` (`url`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
+INSERT INTO `articles` (`id`, `name`, `url`) VALUES
+(0, 'Homepage', 'home');
+
+DROP TABLE IF EXISTS `article_revisions`;
+CREATE TABLE `article_revisions` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `article_id` int(11) NOT NULL,
+  `user_id` int(11) NOT NULL,
+  `language_locale` varchar(8) COLLATE utf8_unicode_ci NOT NULL,
+  `revision_date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  `name` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
+  `content` longtext COLLATE utf8_unicode_ci NOT NULL,
+  `revision_note` longtext COLLATE utf8_unicode_ci NOT NULL,
+  `is_undone` tinyint(4) NOT NULL DEFAULT '0',
+  PRIMARY KEY (`id`),
+  KEY `article_id` (`article_id`),
+  KEY `user_id` (`user_id`),
+  KEY `language_locale` (`language_locale`),
+  KEY `revision_date` (`revision_date`),
+  CONSTRAINT `article_revisions_ibfk_1` FOREIGN KEY (`article_id`) REFERENCES `articles` (`id`) ON DELETE CASCADE,
+  CONSTRAINT `article_revisions_ibfk_2` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`) ON DELETE CASCADE,
+  CONSTRAINT `article_revisions_ibfk_3` FOREIGN KEY (`language_locale`) REFERENCES `languages` (`locale`) ON DELETE CASCADE ON UPDATE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
+INSERT INTO `article_revisions` (`id`, `article_id`, `user_id`, `language_locale`, `revision_date`, `name`, `content`, `revision_note`, `is_undone`) VALUES
+(30,  0,  -1, 'EN', '2018-03-19 23:45:09',  '', 'This is the default English wiki home page of **Donut** *the dictionary toolkit*, change the contents to anything you like.',  'System created home page', 0);
+
 DROP TABLE IF EXISTS `bans`;
 CREATE TABLE `bans` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
@@ -72,8 +110,6 @@ INSERT INTO `columns` (`id`, `name`, `short_name`, `hidden_native_entry`, `hidde
 (4, 'comparative',  'comp.',  '0',  0),
 (5, 'superlative',  'sl.',  '0',  0);
 
-SET NAMES utf8mb4;
-
 DROP TABLE IF EXISTS `column_apply`;
 CREATE TABLE `column_apply` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
@@ -96,32 +132,39 @@ CREATE TABLE `config` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `SETTING_NAME` text COLLATE utf8mb4_unicode_ci NOT NULL,
   `SETTING_VALUE` text CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL,
+  `SETTING_INPUT` text CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
-INSERT INTO `config` (`id`, `SETTING_NAME`, `SETTING_VALUE`) VALUES
-(1, 'ENABLE_QUERY_CACHING', '0'),
-(2, 'QC_TIME',  '100000'),
-(3, 'SITE_TITLE', 'Donut'),
-(4, 'LOGO_TITLE', 'Example Dictionary'),
-(5, 'HOMEPAGE', 'home'),
-(12,  'SITE_DESC',  ''),
-(13,  'ACTIVE_LOCALE',  'English'),
-(14,  'ENABLE_REGISTER',  '1'),
-(15,  'REGISTER_DEFAULT_ROLE',  '3'),
-(16,  'ENABLE_DEFINITIONS', '1'),
-(17,  'LOGO_SYMBOL',  'fa-book'),
-(18,  'MAIL_FROM',  'noreply@localhost'),
-(19,  'ENABLE_ACTIVATION_MAIL', '1'),
-(20,  'ENABLE_TOS', '1'),
-(21,  'MAIL_FROM_NAME', 'Donut dictionary'),
-(22,  'REGISTER_ADMIN_ACTIVATION',  '0'),
-(23,  'PAGE_MARGIN',  '12'),
-(24,  'ALWAYS_SHOW_LAST_UPDATE',  '0'),
-(25,  'PERMISSION_CREATE_LEMMAS', '-3'),
-(27,  'HEADER_CSS_BACKGROUND',  'background-color: #121D23;'),
-(28,  'HEADER_CSS_HSEARCH', ''),
-(29,  'ACCENT_COLOR_1', '#282C51;');
+INSERT INTO `config` (`id`, `SETTING_NAME`, `SETTING_VALUE`, `SETTING_INPUT`) VALUES
+(1, 'ENABLE_QUERY_CACHING', '0',  'input'),
+(2, 'QC_TIME',  '100000', 'input'),
+(3, 'SITE_TITLE', 'Example Dictionary', 'input'),
+(4, 'LOGO_TITLE', 'Example Dictionary', 'input'),
+(5, 'HOMEPAGE', 'home', 'input'),
+(12,  'SITE_DESC',  '', 'input'),
+(13,  'ACTIVE_LOCALE',  'English',  'input'),
+(14,  'ENABLE_REGISTER',  '1',  'input'),
+(15,  'REGISTER_DEFAULT_ROLE',  '3',  'input'),
+(16,  'ENABLE_DEFINITIONS', '1',  'input'),
+(17,  'LOGO_SYMBOL',  'fa-book',  'input'),
+(18,  'MAIL_FROM',  'noreply@localhost',  'input'),
+(19,  'ENABLE_ACTIVATION_MAIL', '1',  'input'),
+(20,  'ENABLE_TOS', '1',  'input'),
+(21,  'MAIL_FROM_NAME', 'Donut dictionary', 'input'),
+(22,  'REGISTER_ADMIN_ACTIVATION',  '0',  'input'),
+(23,  'PAGE_MARGIN',  '6%', 'input'),
+(24,  'ALWAYS_SHOW_LAST_UPDATE',  '0',  'input'),
+(25,  'PERMISSION_CREATE_LEMMAS', '-3', 'input'),
+(27,  'HEADER_CSS_BACKGROUND',  'background-color: #121D23;', 'input'),
+(28,  'HEADER_CSS_HSEARCH', '', 'input'),
+(29,  'ACCENT_COLOR_1', '#3454d1;', 'input'),
+(30,  'ACCENT_COLOR_2', '#C62B4A;', 'input'),
+(31,  'MENU_BREAK', '1',  ''),
+(32,  'WIKI_LOCALE',  'EN', 'input'),
+(33,  'TEST', '\\\'hoi\\',  'input'),
+(34,  'NUMBER_OF_DOORS_IN_THIS_HOUSE',  '\\\'3\\',  'input'),
+(35,  'ACCENT_COLOR_3', '#256BD7;', 'input');
 
 DROP TABLE IF EXISTS `derivation`;
 CREATE TABLE `derivation` (
@@ -196,7 +239,8 @@ CREATE TABLE `etymology` (
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 INSERT INTO `etymology` (`id`, `word_id`, `desc`, `first_attestation`) VALUES
-(35,  1337, 'From Old Dutch *katta*', '1120');
+(35,  1337, 'From Old Dutch *katta*', '1120'),
+(36,  1345, '', '21st of January, 2009');
 
 DROP TABLE IF EXISTS `graphemes`;
 CREATE TABLE `graphemes` (
@@ -386,13 +430,44 @@ CREATE TABLE `languages` (
   `activated` int(11) NOT NULL,
   `locale` varchar(8) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL,
   `color` varchar(255) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL,
-  PRIMARY KEY (`id`)
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `locale` (`locale`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 INSERT INTO `languages` (`id`, `name`, `showname`, `hidden_native_entry`, `flag`, `activated`, `locale`, `color`) VALUES
 (0, 'Dutch',  'Dutch',  0,  'nl.png', 1,  'NL', '#3B66D6'),
 (1, 'English',  'English',  0,  'gb.png', 1,  'EN', '#D33B3B'),
-(15,  'Swedish',  'Swedish',  0,  'se.png', 1,  'SE', '#E5C839');
+(15,  'Swedish',  'Swedish',  0,  'se.png', 0,  'SV', '#E5C839');
+
+DROP TABLE IF EXISTS `lemmalists`;
+CREATE TABLE `lemmalists` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `name` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
+  `parent` int(11) NOT NULL,
+  PRIMARY KEY (`id`),
+  KEY `parent` (`parent`),
+  CONSTRAINT `lemmalists_ibfk_2` FOREIGN KEY (`parent`) REFERENCES `lemmalists` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
+INSERT INTO `lemmalists` (`id`, `name`, `parent`) VALUES
+(-1,  '/',  -1),
+(1, '/lemmalists',  -1);
+
+DROP TABLE IF EXISTS `lemmalist_lemma`;
+CREATE TABLE `lemmalist_lemma` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `lemma` int(11) NOT NULL,
+  `lemmalist` int(11) NOT NULL,
+  `in_set` int(11) NOT NULL DEFAULT '1',
+  PRIMARY KEY (`id`),
+  KEY `lemma` (`lemma`),
+  KEY `lemmalist` (`lemmalist`),
+  CONSTRAINT `lemmalist_lemma_ibfk_1` FOREIGN KEY (`lemma`) REFERENCES `words` (`id`) ON DELETE CASCADE,
+  CONSTRAINT `lemmalist_lemma_ibfk_2` FOREIGN KEY (`lemmalist`) REFERENCES `lemmalists` (`id`) ON DELETE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
+INSERT INTO `lemmalist_lemma` (`id`, `lemma`, `lemmalist`, `in_set`) VALUES
+(1, 1354, 1,  1);
 
 DROP TABLE IF EXISTS `lemmatization`;
 CREATE TABLE `lemmatization` (
@@ -406,20 +481,62 @@ CREATE TABLE `lemmatization` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 INSERT INTO `lemmatization` (`id`, `inflected_form`, `hash`, `lemma_id`) VALUES
-(678, 'katen',  '3_1_1',  1337),
-(679, 'katen',  '3_2_1',  1337),
-(680, 'boomen', '3_1_1',  1338),
-(681, 'boomen', '3_2_1',  1338),
-(682, 'boeken', '3_1_1',  1340),
-(683, 'boeken', '3_2_1',  1340),
-(684, 'tomaaten', '3_1_1',  1341),
-(685, 'tomaaten', '3_2_1',  1341),
-(688, 'booten', '3_1_1',  1343),
-(689, 'booten', '3_2_1',  1343),
 (700, 'manetje',  '1_1_1',  1342),
 (702, 'manetje',  '1_2_1',  1342),
 (704, 'manetjeen',  '3_1_1',  1342),
-(705, 'manetjeen',  '3_2_1',  1342);
+(705, 'manetjeen',  '3_2_1',  1342),
+(706, 'tomaatje', '1_1_1',  1341),
+(707, 'tomaatjeen', '3_1_1',  1341),
+(708, 'tomaatje', '1_2_1',  1341),
+(709, 'tomaatjeen', '3_2_1',  1341),
+(710, 'bootje', '1_1_1',  1343),
+(711, 'bootjeen', '3_1_1',  1343),
+(712, 'bootje', '1_2_1',  1343),
+(713, 'bootjeen', '3_2_1',  1343),
+(714, 'boekje', '1_1_1',  1340),
+(715, 'boekjeen', '3_1_1',  1340),
+(716, 'boekje', '1_2_1',  1340),
+(717, 'boekjeen', '3_2_1',  1340),
+(718, 'boometje', '1_1_1',  1338),
+(719, 'boometjeen', '3_1_1',  1338),
+(720, 'boometje', '1_2_1',  1338),
+(721, 'boometjeen', '3_2_1',  1338),
+(722, 'katje',  '1_1_1',  1337),
+(723, 'katjeen',  '3_1_1',  1337),
+(724, 'katje',  '1_2_1',  1337),
+(725, 'katjeen',  '3_2_1',  1337),
+(726, 'selfietje',  '1_1_1',  1345),
+(727, 'selfietjeen',  '3_1_1',  1345),
+(728, 'selfietje',  '1_2_1',  1345),
+(729, 'selfietjeen',  '3_2_1',  1345),
+(730, 'wijzetje', '1_1_1',  1346),
+(731, 'wijzetjeen', '3_1_1',  1346),
+(732, 'wijzetje', '1_2_1',  1346),
+(733, 'wijzetjeen', '3_2_1',  1346),
+(734, 'walnootje',  '1_1_1',  1347),
+(735, 'walnootjeen',  '3_1_1',  1347),
+(736, 'walnootje',  '1_2_1',  1347),
+(737, 'walnootjeen',  '3_2_1',  1347),
+(738, 'opmerkingnkje',  '1_1_1',  1353),
+(739, 'opmerkingnkjeen',  '3_1_1',  1353),
+(740, 'opmerkingnkje',  '1_2_1',  1353),
+(741, 'opmerkingnkjeen',  '3_2_1',  1353),
+(742, 'grenenhoutje', '1_1_1',  1354),
+(743, 'grenenhoutjeen', '3_1_1',  1354),
+(744, 'grenenhoutje', '1_2_1',  1354),
+(745, 'grenenhoutjeen', '3_2_1',  1354),
+(754, 'ordje',  '1_1_1',  1355),
+(755, 'ordjeen',  '3_1_1',  1355),
+(756, 'ordje',  '1_2_1',  1355),
+(757, 'ordjeen',  '3_2_1',  1355),
+(758, 'huisje', '1_1_1',  1356),
+(759, 'huisjeen', '3_1_1',  1356),
+(760, 'huisje', '1_2_1',  1356),
+(761, 'huisjeen', '3_2_1',  1356),
+(762, 'steenje',  '1_1_1',  1357),
+(763, 'steenjeen',  '3_1_1',  1357),
+(764, 'steenje',  '1_2_1',  1357),
+(765, 'steenjeen',  '3_2_1',  1357);
 
 DROP TABLE IF EXISTS `log`;
 CREATE TABLE `log` (
@@ -462,7 +579,39 @@ INSERT INTO `log` (`id`, `identifier`, `record`, `user_id`, `timestamp`) VALUES
 (27,  'new_lemma',  1341, 1,  '2017-11-18 23:06:05'),
 (28,  'new_lemma',  1342, 1,  '2017-11-18 23:56:00'),
 (29,  'new_lemma',  1343, 3,  '2017-12-05 15:16:29'),
-(30,  'new_lemma',  1344, 3,  '2017-12-08 10:23:44');
+(30,  'new_lemma',  1344, 3,  '2017-12-08 10:23:44'),
+(31,  'edit_lemma', 1338, 3,  '2017-12-29 07:18:54'),
+(32,  'new_lemma',  1345, 1,  '2018-02-19 12:05:59'),
+(33,  'edit_lemma', 1342, 3,  '2018-03-01 23:53:55'),
+(34,  'new_lemma',  1346, 3,  '2018-03-03 00:25:06'),
+(35,  'new_lemma',  1347, 1,  '2018-03-10 02:10:17'),
+(36,  'new_lemma',  0,  1,  '2018-03-10 02:10:31'),
+(37,  'new_lemma',  0,  1,  '2018-03-12 21:38:25'),
+(38,  'new_lemma',  1351, 1,  '2018-03-12 21:40:38'),
+(39,  'new_lemma',  1352, 1,  '2018-03-12 21:42:11'),
+(40,  'new_lemma',  1353, 1,  '2018-03-12 23:04:03'),
+(41,  'new_lemma',  1354, 1,  '2018-03-12 23:26:14'),
+(42,  'edit_lemma', 1354, 1,  '2018-03-12 23:26:44'),
+(43,  'edit_lemma', 1354, 1,  '2018-03-12 23:27:39'),
+(44,  'new_lemma',  1355, 1,  '2018-03-12 23:38:12'),
+(45,  'edit_lemma', 1355, 1,  '2018-03-12 23:45:02'),
+(46,  'edit_lemma', 1355, 1,  '2018-03-12 23:47:34'),
+(47,  'edit_lemma', 1355, 1,  '2018-03-12 23:48:01'),
+(48,  'edit_lemma', 1355, 1,  '2018-03-12 23:49:01'),
+(49,  'edit_lemma', 1337, 3,  '2018-03-13 11:13:30'),
+(50,  'edit_lemma', 1354, 3,  '2018-03-13 14:37:00'),
+(51,  'edit_lemma', 1351, 3,  '2018-03-13 14:37:30'),
+(52,  'edit_lemma', 1351, 3,  '2018-03-13 14:37:52'),
+(53,  'new_lemma',  1356, 3,  '2018-03-13 14:40:05'),
+(54,  'edit_lemma', 1356, 3,  '2018-03-13 14:41:28'),
+(55,  'edit_lemma', 1347, 3,  '2018-03-13 14:43:32'),
+(56,  'new_lemma',  1357, 3,  '2018-03-13 14:44:14'),
+(57,  'edit_lemma', 1357, 3,  '2018-03-13 14:44:33'),
+(58,  'edit_lemma', 1357, 3,  '2018-03-13 14:47:17'),
+(59,  'edit_lemma', 1357, 3,  '2018-03-13 14:47:34'),
+(60,  'edit_lemma', 1356, 3,  '2018-03-13 15:01:40'),
+(61,  'edit_lemma', 1356, 3,  '2018-03-13 15:11:49'),
+(62,  'edit_lemma', 1356, 3,  '2018-03-13 15:12:04');
 
 DROP TABLE IF EXISTS `modes`;
 CREATE TABLE `modes` (
@@ -508,12 +657,6 @@ CREATE TABLE `morphology` (
 
 INSERT INTO `morphology` (`id`, `name`, `rule`, `ruleset`, `in_set`, `is_irregular`, `is_aux`, `aux_placement`, `aux_mode_id`, `is_stem`, `irregular_form`, `lemma_id`, `sorter`) VALUES
 (56,  'Plural', '[]&EN;', 3,  1,  0,  0,  0,  0,  0,  '', 0,  0),
-(57,  '', '', 0,  0,  1,  0,  0,  0,  0,  'een boom', 127,  0),
-(58,  '', '', 0,  0,  1,  0,  0,  0,  0,  'bomen',  127,  0),
-(59,  '', '', 0,  0,  1,  0,  0,  0,  0,  'de boom',  127,  0),
-(60,  '', '', 0,  0,  1,  0,  0,  0,  0,  'de bomen', 127,  0),
-(61,  '', '', 0,  0,  1,  0,  0,  0,  0,  'een boompje',  127,  0),
-(62,  '', '', 0,  0,  1,  0,  0,  0,  0,  'boompjes', 127,  0),
 (63,  't third person', '[-en]&T',  17, 1,  0,  0,  0,  0,  0,  '', 0,  0),
 (64,  'Dim. rule',  '[]&ETJE?$m;&ETJE?$ng:;nkje?$ng;etje?$an;tje?!$m?!$n?!$an?$uin;tje?$VOW;je?&ELSE',  4,  1,  0,  0,  0,  0,  0,  '', 0,  -1);
 
@@ -574,12 +717,6 @@ CREATE TABLE `morphology_modes` (
 
 INSERT INTO `morphology_modes` (`id`, `morphology_id`, `mode_id`) VALUES
 (41,  56, 1),
-(42,  57, 1),
-(43,  58, 1),
-(44,  59, 1),
-(45,  60, 1),
-(46,  61, 23),
-(47,  62, 23),
 (48,  63, 7),
 (49,  64, 1);
 
@@ -597,12 +734,6 @@ CREATE TABLE `morphology_numbers` (
 
 INSERT INTO `morphology_numbers` (`id`, `morphology_id`, `number_id`) VALUES
 (44,  56, 3),
-(45,  57, 1),
-(46,  58, 3),
-(47,  59, 1),
-(48,  60, 3),
-(49,  61, 1),
-(50,  62, 3),
 (51,  63, 1),
 (52,  64, 1),
 (53,  64, 3);
@@ -622,12 +753,6 @@ CREATE TABLE `morphology_submodes` (
 INSERT INTO `morphology_submodes` (`id`, `morphology_id`, `submode_id`) VALUES
 (25,  56, 1),
 (26,  56, 2),
-(27,  57, 1),
-(28,  58, 1),
-(29,  59, 2),
-(30,  60, 2),
-(31,  61, 1),
-(32,  62, 1),
 (33,  63, 6),
 (34,  63, 7),
 (35,  64, 1),
@@ -697,6 +822,9 @@ CREATE TABLE `phonology_contexts` (
   CONSTRAINT `phonology_contexts_ibfk_1` FOREIGN KEY (`ruleset`) REFERENCES `rulesets` (`id`) ON DELETE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
+INSERT INTO `phonology_contexts` (`id`, `name`, `rule`, `ruleset`, `in_set`) VALUES
+(1, '&EN s',  't.j.e < &EN; > = s', 0,  1),
+(2, '&EN ssst.j.e < &EN > = s', 't.j.e < &EN > = s',  0,  1);
 
 DROP TABLE IF EXISTS `phonology_ipa_generation`;
 CREATE TABLE `phonology_ipa_generation` (
@@ -710,6 +838,8 @@ CREATE TABLE `phonology_ipa_generation` (
   CONSTRAINT `phonology_ipa_generation_ibfk_1` FOREIGN KEY (`ruleset`) REFERENCES `rulesets` (`id`) ON DELETE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
+INSERT INTO `phonology_ipa_generation` (`id`, `name`, `rule`, `ruleset`, `in_set`) VALUES
+(1, 'UI diphtongue',  '< ui > = œʏ̯', 5,  1);
 
 DROP TABLE IF EXISTS `row_native`;
 CREATE TABLE `row_native` (
@@ -733,10 +863,13 @@ CREATE TABLE `rulesets` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `name` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
   `parent` int(11) NOT NULL,
-  PRIMARY KEY (`id`)
+  PRIMARY KEY (`id`),
+  KEY `parent` (`parent`),
+  CONSTRAINT `rulesets_ibfk_1` FOREIGN KEY (`parent`) REFERENCES `rulesets` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 INSERT INTO `rulesets` (`id`, `name`, `parent`) VALUES
+(-1,  '/',  -1),
 (0, '/rules', -1),
 (3, '/rules/nouns', 0),
 (4, '/rules/nouns/dimunitives', 3),
@@ -747,7 +880,6 @@ INSERT INTO `rulesets` (`id`, `name`, `parent`) VALUES
 (17,  '/rules/verbs/regular/present_simple',  14),
 (18,  '/rules/adjectives',  0),
 (19,  '/rules/adjectives/corrections',  18),
-(22,  '/rules/new_folder/hh/tst', 21),
 (23,  '/rules/ortography',  0),
 (24,  '/rules/no_rules_at_all', 0);
 
@@ -800,7 +932,139 @@ INSERT INTO `search_hits` (`id`, `word_id`, `user_id`, `hit_timestamp`) VALUES
 (3938,  1342, 3,  '2017-12-21 13:55:38'),
 (3939,  1337, 0,  '2017-12-23 22:03:51'),
 (3940,  1342, 1,  '2017-12-23 23:54:33'),
-(3941,  1342, 1,  '2017-12-24 00:03:00');
+(3941,  1342, 1,  '2017-12-24 00:03:00'),
+(3942,  1342, 0,  '2017-12-24 01:23:12'),
+(3943,  1341, 3,  '2017-12-25 00:50:51'),
+(3944,  1342, 3,  '2017-12-25 00:52:02'),
+(3945,  1342, 3,  '2017-12-25 12:48:33'),
+(3946,  1339, 1,  '2017-12-25 18:12:29'),
+(3947,  1342, 1,  '2017-12-26 23:59:32'),
+(3948,  1337, 1,  '2017-12-27 00:15:27'),
+(3949,  1342, 1,  '2017-12-27 00:16:37'),
+(3950,  1337, 1,  '2017-12-27 00:19:41'),
+(3951,  1342, 1,  '2017-12-27 00:23:47'),
+(3952,  1337, 1,  '2017-12-27 00:26:49'),
+(3953,  1342, 1,  '2017-12-27 11:27:47'),
+(3954,  1342, 1,  '2017-12-28 00:27:57'),
+(3955,  1342, 0,  '2017-12-29 08:10:17'),
+(3956,  1340, 0,  '2017-12-29 08:14:00'),
+(3957,  1344, 0,  '2017-12-29 08:15:27'),
+(3958,  1341, 3,  '2017-12-29 08:26:02'),
+(3959,  1337, 3,  '2018-01-27 17:14:38'),
+(3960,  1342, 1,  '2018-01-29 21:40:15'),
+(3961,  1342, 1,  '2018-02-04 21:33:29'),
+(3962,  1345, 1,  '2018-02-19 13:06:02'),
+(3963,  1342, 1,  '2018-02-21 00:23:00'),
+(3964,  1342, 3,  '2018-03-03 01:23:22'),
+(3965,  1342, 0,  '2018-03-04 00:41:37'),
+(3966,  1346, 0,  '2018-03-04 00:41:52'),
+(3967,  1342, 0,  '2018-03-04 00:42:40'),
+(3968,  1346, 0,  '2018-03-04 00:52:46'),
+(3969,  1342, 0,  '2018-03-04 00:52:50'),
+(3970,  1346, 0,  '2018-03-04 00:53:01'),
+(3971,  1342, 0,  '2018-03-04 00:53:03'),
+(3972,  1346, 0,  '2018-03-04 00:53:41'),
+(3973,  1342, 0,  '2018-03-04 00:55:20'),
+(3974,  1346, 0,  '2018-03-04 00:55:24'),
+(3975,  1342, 0,  '2018-03-04 12:35:11'),
+(3976,  1346, 0,  '2018-03-04 12:35:29'),
+(3977,  1342, 0,  '2018-03-04 14:45:08'),
+(3978,  1346, 0,  '2018-03-04 14:45:12'),
+(3979,  1342, 0,  '2018-03-04 14:45:13'),
+(3980,  1341, 0,  '2018-03-04 14:47:49'),
+(3981,  1341, 1,  '2018-03-04 19:34:47'),
+(3982,  1342, 1,  '2018-03-04 19:34:49'),
+(3983,  1341, 1,  '2018-03-04 19:34:50'),
+(3984,  1342, 1,  '2018-03-04 19:34:52'),
+(3985,  1342, 0,  '2018-03-05 00:46:45'),
+(3986,  1342, 1,  '2018-03-09 01:31:24'),
+(3987,  1342, 1,  '2018-03-09 22:40:32'),
+(3988,  1346, 1,  '2018-03-09 22:40:34'),
+(3989,  1342, 1,  '2018-03-09 22:41:24'),
+(3990,  1342, 1,  '2018-03-09 23:33:54'),
+(3991,  1341, 1,  '2018-03-09 23:37:29'),
+(3992,  1346, 1,  '2018-03-09 23:37:31'),
+(3993,  1342, 1,  '2018-03-09 23:47:55'),
+(3994,  1342, 1,  '2018-03-10 00:03:41'),
+(3995,  1346, 1,  '2018-03-10 00:04:06'),
+(3996,  1342, 1,  '2018-03-10 00:04:30'),
+(3997,  1346, 1,  '2018-03-10 00:37:11'),
+(3998,  1342, 1,  '2018-03-10 00:37:58'),
+(3999,  1346, 1,  '2018-03-10 00:38:46'),
+(4000,  1342, 1,  '2018-03-10 00:39:03'),
+(4001,  1341, 1,  '2018-03-10 00:47:43'),
+(4002,  1342, 1,  '2018-03-10 00:47:45'),
+(4003,  1344, 1,  '2018-03-10 00:47:46'),
+(4004,  1341, 1,  '2018-03-10 00:47:50'),
+(4005,  1342, 1,  '2018-03-10 00:47:51'),
+(4006,  1342, 1,  '2018-03-10 01:01:00'),
+(4007,  1346, 1,  '2018-03-10 01:01:06'),
+(4008,  1342, 1,  '2018-03-10 01:06:41'),
+(4009,  1344, 1,  '2018-03-10 01:57:10'),
+(4010,  1341, 1,  '2018-03-10 01:58:53'),
+(4011,  1345, 1,  '2018-03-10 02:16:43'),
+(4012,  1342, 0,  '2018-03-10 02:19:15'),
+(4013,  1342, 1,  '2018-03-10 03:04:02'),
+(4014,  1347, 1,  '2018-03-10 03:10:52'),
+(4015,  1342, 1,  '2018-03-10 03:12:36'),
+(4016,  1347, 1,  '2018-03-10 06:24:15'),
+(4017,  1342, 1,  '2018-03-10 07:01:09'),
+(4018,  1342, 1,  '2018-03-10 13:52:42'),
+(4019,  1341, 1,  '2018-03-10 13:57:48'),
+(4020,  1342, 1,  '2018-03-10 13:57:55'),
+(4021,  1337, 1,  '2018-03-10 14:27:21'),
+(4022,  1342, 1,  '2018-03-10 15:07:33'),
+(4023,  1346, 1,  '2018-03-10 15:11:35'),
+(4024,  1342, 1,  '2018-03-10 15:11:37'),
+(4025,  1342, 1,  '2018-03-11 00:18:39'),
+(4026,  1342, 1,  '2018-03-11 01:06:52'),
+(4027,  1346, 1,  '2018-03-11 01:07:01'),
+(4028,  1342, 1,  '2018-03-11 01:11:40'),
+(4029,  1337, 1,  '2018-03-11 01:14:51'),
+(4030,  1346, 1,  '2018-03-11 01:16:22'),
+(4031,  1337, 1,  '2018-03-11 01:16:31'),
+(4032,  1342, 1,  '2018-03-11 15:51:20'),
+(4033,  1346, 1,  '2018-03-11 16:06:10'),
+(4034,  1342, 1,  '2018-03-11 17:29:18'),
+(4035,  1346, 1,  '2018-03-11 17:29:20'),
+(4036,  1342, 1,  '2018-03-11 17:30:18'),
+(4037,  1342, 1,  '2018-03-12 01:12:31'),
+(4038,  1342, 1,  '2018-03-12 10:23:07'),
+(4039,  1342, 1,  '2018-03-12 20:42:27'),
+(4040,  1342, 1,  '2018-03-12 21:00:28'),
+(4041,  1346, 1,  '2018-03-12 22:35:25'),
+(4042,  1351, 1,  '2018-03-12 22:41:09'),
+(4043,  1352, 1,  '2018-03-12 22:42:27'),
+(4044,  1352, 1,  '2018-03-12 23:05:33'),
+(4045,  1342, 1,  '2018-03-12 23:31:44'),
+(4046,  1351, 1,  '2018-03-12 23:32:18'),
+(4047,  1352, 1,  '2018-03-12 23:36:19'),
+(4048,  1342, 1,  '2018-03-12 23:45:30'),
+(4049,  1346, 1,  '2018-03-12 23:53:06'),
+(4050,  1342, 1,  '2018-03-13 00:00:28'),
+(4051,  1353, 1,  '2018-03-13 00:04:10'),
+(4052,  1354, 1,  '2018-03-13 00:26:31'),
+(4053,  1352, 1,  '2018-03-13 00:27:58'),
+(4054,  1354, 1,  '2018-03-13 00:31:16'),
+(4055,  1342, 1,  '2018-03-13 00:36:27'),
+(4056,  1355, 1,  '2018-03-13 00:44:20'),
+(4057,  1346, 1,  '2018-03-13 00:50:09'),
+(4058,  1351, 1,  '2018-03-13 00:52:35'),
+(4059,  1342, 1,  '2018-03-13 00:56:50'),
+(4060,  1342, 1,  '2018-03-13 01:13:08'),
+(4061,  1351, 3,  '2018-03-13 01:45:12'),
+(4062,  1342, 3,  '2018-03-13 01:46:19'),
+(4063,  1351, 3,  '2018-03-13 01:47:31'),
+(4064,  1342, 3,  '2018-03-13 01:51:31'),
+(4065,  1337, 3,  '2018-03-13 12:13:02'),
+(4066,  1342, 3,  '2018-03-13 14:11:25'),
+(4067,  1351, 3,  '2018-03-13 15:37:20'),
+(4068,  1356, 3,  '2018-03-13 15:41:21'),
+(4069,  1347, 3,  '2018-03-13 15:43:24'),
+(4070,  1357, 3,  '2018-03-13 15:44:27'),
+(4071,  1356, 3,  '2018-03-13 16:01:33'),
+(4072,  1351, 3,  '2018-03-20 01:01:06'),
+(4073,  1342, 3,  '2018-03-20 01:02:58');
 
 DROP TABLE IF EXISTS `subclassifications`;
 CREATE TABLE `subclassifications` (
@@ -890,7 +1154,9 @@ INSERT INTO `threads` (`id`, `linked_to`, `section`, `thread_id`, `title`, `cont
 (11,  30, 'lemma',  10, 'f',  'Ik weet het niet zo goed?',  1,  '0000-00-00 00:00:00',  '0000-00-00 00:00:00'),
 (13,  26, 'lemma',  12, 'aaaaa',  'aaa',  1,  '2017-08-30 17:27:59',  '2017-08-30 15:27:59'),
 (15,  1,  'lemma',  14, 'RE:',  'echt niet',  1,  '2017-09-17 23:03:16',  '2017-09-17 21:03:16'),
-(17,  1337, 'lemma',  16, 'asdfds', 'adfdsfs',  3,  '2017-10-18 00:22:52',  '2017-10-17 22:22:52');
+(17,  1337, 'lemma',  16, 'asdfds', 'adfdsfs',  3,  '2017-10-18 00:22:52',  '2017-10-17 22:22:52'),
+(19,  1338, 'lemma',  18, 'Yes',  'Yes',  3,  '2017-12-29 08:22:20',  '2017-12-29 07:22:20'),
+(20,  1338, 'lemma',  19, 'alright',  'That', 3,  '2017-12-29 08:22:30',  '2017-12-29 07:22:30');
 
 DROP TABLE IF EXISTS `translations`;
 CREATE TABLE `translations` (
@@ -909,7 +1175,6 @@ CREATE TABLE `translations` (
 
 INSERT INTO `translations` (`id`, `language_id`, `translation`, `description`, `created_on`, `user_id`) VALUES
 (2054,  1,  'cat',  '', '2017-10-02 22:12:37',  1),
-(2055,  15, 'katt', '', '2017-10-02 22:12:37',  1),
 (2056,  1,  'tree', '', '2017-10-02 22:29:30',  1),
 (2057,  15, 'träd', '', '2017-10-02 22:29:30',  1),
 (2058,  1,  'bear', '', '2017-10-17 23:45:49',  3),
@@ -920,7 +1185,32 @@ INSERT INTO `translations` (`id`, `language_id`, `translation`, `description`, `
 (2063,  0,  'man',  '', '2017-11-18 23:56:00',  1),
 (2064,  1,  'man',  '', '2017-11-18 23:56:00',  1),
 (2065,  15, 'man',  '', '2017-12-05 14:52:48',  1),
-(2066,  1,  'tomato', '', '2017-12-05 14:53:00',  1);
+(2066,  1,  'tomato', '', '2017-12-05 14:53:00',  1),
+(2067,  1,  'boat', '', '2017-12-25 12:28:02',  1),
+(2068,  15, 'båt',  '', '2018-02-02 21:33:40',  1),
+(2069,  15, 'skep', '', '2018-02-02 21:33:40',  1),
+(2070,  0,  'göra', '', '2018-02-02 21:39:45',  1),
+(2071,  0,  'selfie', '', '2018-02-19 12:05:59',  1),
+(2072,  1,  'selfie', '', '2018-02-19 12:05:59',  1),
+(2073,  15, 'selfie', '', '2018-02-19 12:05:59',  1),
+(2074,  1,  'sage', '', '2018-03-03 00:25:06',  3),
+(2075,  1,  'wise man', '', '2018-03-03 00:25:06',  3),
+(2076,  1,  'make', '', '2018-03-10 00:56:32',  1),
+(2077,  15, 'laga', '', '2018-03-10 00:56:46',  1),
+(2078,  15, 'göra', '', '2018-03-10 00:56:46',  1),
+(2079,  1,  'walnut', '', '2018-03-10 02:10:17',  1),
+(2080,  1,  'remark', '', '2018-03-12 23:04:03',  1),
+(2081,  1,  'observation',  '', '2018-03-12 23:04:03',  1),
+(2082,  1,  'comment',  '', '2018-03-12 23:04:03',  1),
+(2083,  1,  'pine wood',  '', '2018-03-12 23:26:14',  1),
+(2084,  1,  'awful',  '', '2018-03-13 00:44:29',  3),
+(2085,  1,  'nice', '', '2018-03-13 00:44:47',  3),
+(2086,  1,  'pleasant', '', '2018-03-13 00:44:47',  3),
+(2087,  1,  'bad ass',  '', '2018-03-13 00:44:47',  3),
+(2088,  1,  'det här',  '', '2018-03-13 00:44:55',  3),
+(2089,  1,  'house',  '', '2018-03-13 14:40:04',  3),
+(2090,  1,  'dwelling', '', '2018-03-13 14:40:05',  3),
+(2091,  1,  'stone',  '', '2018-03-13 14:44:14',  3);
 
 DROP TABLE IF EXISTS `translation_alternatives`;
 CREATE TABLE `translation_alternatives` (
@@ -948,6 +1238,9 @@ CREATE TABLE `translation_exceptions` (
   CONSTRAINT `translation_exceptions_ibfk_5` FOREIGN KEY (`language_id`) REFERENCES `languages` (`id`) ON DELETE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
+INSERT INTO `translation_exceptions` (`id`, `word_id`, `language_id`, `user_id`) VALUES
+(1, 1343, 15, 3),
+(2, 1344, 15, 3);
 
 DROP TABLE IF EXISTS `translation_words`;
 CREATE TABLE `translation_words` (
@@ -964,7 +1257,6 @@ CREATE TABLE `translation_words` (
 
 INSERT INTO `translation_words` (`id`, `word_id`, `translation_id`, `specification`) VALUES
 (291, 1337, 2054, ''),
-(292, 1337, 2055, ''),
 (293, 1338, 2056, ''),
 (294, 1338, 2057, ''),
 (295, 1339, 2058, ''),
@@ -975,7 +1267,32 @@ INSERT INTO `translation_words` (`id`, `word_id`, `translation_id`, `specificati
 (300, 1342, 2063, ''),
 (301, 1342, 2064, ''),
 (302, 1342, 2065, ''),
-(303, 1341, 2066, '');
+(303, 1341, 2066, ''),
+(304, 1343, 2067, ''),
+(305, 1343, 2068, ''),
+(306, 1343, 2069, ''),
+(307, 1344, 2070, ''),
+(308, 1345, 2071, ''),
+(309, 1345, 2072, ''),
+(310, 1345, 2073, ''),
+(311, 1346, 2074, ''),
+(312, 1346, 2075, ''),
+(313, 1344, 2076, ''),
+(314, 1344, 2077, ''),
+(315, 1344, 2078, ''),
+(316, 1347, 2079, ''),
+(317, 1353, 2080, ''),
+(318, 1353, 2081, ''),
+(319, 1353, 2082, ''),
+(320, 1354, 2083, ''),
+(321, 1351, 2084, ''),
+(322, 1352, 2085, ''),
+(323, 1352, 2086, ''),
+(324, 1352, 2087, ''),
+(325, 1355, 2088, ''),
+(326, 1356, 2089, ''),
+(327, 1356, 2090, ''),
+(328, 1357, 2091, '');
 
 DROP TABLE IF EXISTS `types`;
 CREATE TABLE `types` (
@@ -1055,7 +1372,9 @@ INSERT INTO `user_activation` (`id`, `user_id`, `untill`, `token`, `ipadress`) V
 (22,  0,  '2017-09-05 20:56:45',  '18fed2yP:0', '::1'),
 (23,  0,  '2017-09-24 08:37:25',  '18fec1yP:0', '::1'),
 (24,  0,  '2017-09-24 08:38:15',  '18fe1ayP:0', '::1'),
-(25,  0,  '2017-10-20 22:32:19',  '18fe95mN:0', '::1');
+(25,  0,  '2017-10-20 22:32:19',  '18fe95mN:0', '::1'),
+(26,  0,  '2018-01-30 16:40:49',  '18fefemN:0', '::1'),
+(27,  0,  '2018-03-11 01:25:05',  '18fee6mN:0', '::1');
 
 DROP TABLE IF EXISTS `words`;
 CREATE TABLE `words` (
@@ -1083,18 +1402,27 @@ CREATE TABLE `words` (
   CONSTRAINT `words_ibfk_4` FOREIGN KEY (`created_by`) REFERENCES `users` (`id`) ON DELETE SET NULL,
   CONSTRAINT `words_ibfk_6` FOREIGN KEY (`derivation`) REFERENCES `derivation` (`id`) ON DELETE CASCADE,
   CONSTRAINT `words_ibfk_7` FOREIGN KEY (`type_id`) REFERENCES `types` (`id`) ON DELETE CASCADE,
-  CONSTRAINT `words_ibfk_8` FOREIGN KEY (`type_id`) REFERENCES `types` (`id`) ON DELETE CASCADE,
-  CONSTRAINT `words_ibfk_9` FOREIGN KEY (`classification_id`) REFERENCES `classifications` (`id`) ON DELETE CASCADE
+  CONSTRAINT `words_ibfk_8` FOREIGN KEY (`type_id`) REFERENCES `types` (`id`) ON DELETE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 INSERT INTO `words` (`id`, `native`, `lexical_form`, `ipa`, `hidden`, `type_id`, `classification_id`, `subclassification_id`, `created`, `updated`, `created_by`, `image`, `derivation`, `derived_from`) VALUES
-(1337,  'kat',  '', 'kɑt',  0,  1,  1,  0,  '2017-10-04 11:37:29',  '2017-10-04 11:37:29',  3,  NULL, NULL, NULL),
-(1338,  'boom', '', 'bo:m', 0,  1,  1,  0,  '2017-10-04 23:46:05',  '2017-10-04 23:46:05',  3,  NULL, NULL, NULL),
+(1337,  'kat',  '', 'kɑt',  0,  1,  1,  0,  '2018-03-13 11:13:30',  '2018-03-13 11:13:30',  3,  NULL, NULL, NULL),
+(1338,  'boom', '', 'bo:m', 0,  1,  1,  0,  '2017-12-29 07:18:54',  '2017-12-29 07:18:54',  3,  NULL, NULL, NULL),
 (1339,  'dragen', '', 'dra:x.ən', 0,  2,  3,  0,  '0000-00-00 00:00:00',  '2017-10-17 23:45:49',  3,  NULL, NULL, NULL),
 (1340,  'boek', '', 'buk',  0,  1,  2,  0,  '2017-11-18 22:34:51',  '2017-11-18 22:34:51',  1,  NULL, NULL, NULL),
 (1341,  'tomaat', '', 'tɔma:t', 0,  1,  1,  0,  '0000-00-00 00:00:00',  '2017-11-18 23:06:05',  1,  NULL, NULL, NULL),
-(1342,  'man',  '', 'mɑn',  0,  1,  1,  0,  '0000-00-00 00:00:00',  '2017-11-18 23:55:59',  1,  NULL, NULL, NULL),
+(1342,  'man',  '', 'mɑn',  0,  1,  1,  0,  '2018-03-01 23:53:55',  '2018-03-01 23:53:55',  3,  NULL, NULL, NULL),
 (1343,  'boot', '', 'bo:t', 0,  1,  1,  0,  '0000-00-00 00:00:00',  '2017-12-05 15:16:29',  3,  NULL, NULL, NULL),
-(1344,  'maken',  '', 'ma:k.ən',  0,  2,  3,  0,  '0000-00-00 00:00:00',  '2017-12-08 10:23:44',  3,  NULL, NULL, NULL);
+(1344,  'maken',  '', 'ma:k.ən',  0,  2,  3,  0,  '0000-00-00 00:00:00',  '2017-12-08 10:23:44',  3,  NULL, NULL, NULL),
+(1345,  'selfie', '', 'self.i', 0,  1,  1,  0,  '0000-00-00 00:00:00',  '2018-02-19 12:05:58',  1,  NULL, NULL, NULL),
+(1346,  'wijze',  '', 'vɛɪzə',  0,  1,  1,  0,  '0000-00-00 00:00:00',  '2018-03-03 00:25:06',  3,  NULL, NULL, NULL),
+(1347,  'walnoot',  '', 'vɑl.no:t', 0,  1,  1,  0,  '2018-03-13 14:43:32',  '2018-03-13 14:43:32',  3,  NULL, NULL, NULL),
+(1351,  'verschrikkelijk',  '', 'ver.sxrɪ.kə.lək',  0,  3,  0,  0,  '2018-03-13 14:37:52',  '2018-03-13 14:37:52',  3,  NULL, NULL, NULL),
+(1352,  'leuk', '', 'løk',  0,  3,  0,  0,  '0000-00-00 00:00:00',  '2018-03-12 21:42:11',  1,  NULL, NULL, NULL),
+(1353,  'opmerking',  '', 'ɔpmɛrkɪŋ', 0,  1,  1,  0,  '0000-00-00 00:00:00',  '2018-03-12 23:04:03',  1,  NULL, NULL, NULL),
+(1354,  'grenenhout', '', 'xre:nen.hɑut', 0,  1,  2,  0,  '2018-03-13 14:37:00',  '2018-03-13 14:37:00',  3,  NULL, NULL, NULL),
+(1355,  'this', '', 'ðis',  0,  1,  0,  0,  '2018-03-12 23:49:01',  '2018-03-12 23:49:01',  1,  NULL, NULL, NULL),
+(1356,  'huis', '', 'hœʏs', 0,  1,  2,  0,  '2018-03-13 15:12:04',  '2018-03-13 15:12:04',  3,  NULL, NULL, NULL),
+(1357,  'steen',  '', 'ste:j.n',  0,  1,  1,  0,  '2018-03-13 14:47:34',  '2018-03-13 14:47:34',  3,  NULL, NULL, NULL);
 
--- 2017-12-23 23:54:56
+-- 2018-03-20 00:28:04
