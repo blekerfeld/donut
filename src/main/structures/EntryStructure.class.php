@@ -33,26 +33,30 @@ class pEntryStructure extends pStructure{
 
 		$specialEntries = array('stats', 'random', 'year');
 		$searchBox = new pSearchBox;
-		$searchBox->enablePentry();
 		$searchBox->toggleNoBackSpace(true);
+
+		if(isset(pRegister::arg()['is:preview'], pRegister::arg()['action']) && pRegister::arg()['action'] == 'proper')
+			p::Out('<div class="float-right"><a class="preview-close hide tooltip">'.(new pIcon('fa-times-circle', 12)).'</a><br id="cl" /></div>');
+
 
 		if(isset(pRegister::arg()['is:result'], pRegister::freshSession()['searchQuery']))
 			$searchBox->setValue(pRegister::freshSession()['searchQuery']);
 	
-		pTemplate::throwOutsidePage($searchBox);
+		if(!isset(pRegister::arg()['ajax'], pRegister::arg()['ajaxLoad']))
+			pTemplate::throwOutsidePage($searchBox);
 
 		// Starting with the wrapper
 
 		if(p::NoAjax())
-			p::Out("<div class='pEntry ".(($this->_error != '' OR $this->_error != null) ? 'hasErrors' : '')."'><div class='home-margin'>");
+			p::Out("<div class='pEntry ".(($this->_error != '' OR $this->_error != null) ? 'hasErrors' : '')."'>");
 
 		pTemplate::setTabbed();
 
 		// Let's create a tab bar for this app
-		$this->_tabs = (new pTabBar(MMENU_DICTIONARY, 'fa-book', true, 'titles pEntry-fix-56'))->addSearch();
+		$this->_tabs = (new pTabBar(MMENU_DICTIONARY, 'fa-book', true, 'titles pEntry-fix-50 x'));
 
 		// If logged, show tabs
-		if(pUser::noGuest() AND isset($this->_prototype[$this->_section]['edit_url'], pRegister::arg()['id']) AND !in_array($this->_section, $specialEntries) AND p::NoAjax())
+		if(pUser::noGuest() AND isset($this->_prototype[$this->_section]['edit_url'], pRegister::arg()['id']) AND !in_array($this->_section, $specialEntries))
 
 			$this->_tabs
 				->addLink('view', LEMMA_VIEW_SHORT, p::Url("?entry/".$this->_prototype[$this->_section]['section_key'].'/'.pRegister::arg()['id'].(isset(pRegister::arg()['is:result']) ? '/is:result' : '')), (!isset(pRegister::arg()['action'])))
@@ -71,10 +75,6 @@ class pEntryStructure extends pStructure{
 		// If there is an offset, we need to define that
 		if(isset(pRegister::arg()['offset']))
 			$this->_parser->setOffset(pRegister::arg()['offset']);
-
-
-		if((p::NoAjax()))
-			p::Out("<div class='pEntry-inner'>");
 
 		ajaxSkipOutput:
 
@@ -96,15 +96,12 @@ class pEntryStructure extends pStructure{
 		elseif(in_array($this->_section, $specialEntries))
 			$this->_parser->render();
 
-		
-		if(p::NoAjax())
-			p::Out("</div>");
 
 		SkipError:
 
 		// Ending content
 		if(p::NoAjax())
-			p::Out("</div></div>");
+			p::Out("</div>");
 
 		// Tooltipster time!
 		p::Out("<script type='text/javascript'>

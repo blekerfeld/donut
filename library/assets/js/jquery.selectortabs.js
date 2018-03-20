@@ -39,7 +39,7 @@ jQuery.fn.selectorTabs = function(options){
 		}));
 	}
 
-	stack.append($('<a />').addClass('ssignore disabled titles no-margin-left').attr('href', 'javascript:void();').append(settings.title));
+	//stack.append($('<a />').addClass('ssignore disabled titles no-margin-left').attr('href', 'javascript:void();').append(settings.title));
 	
 
 	$(selector).children('option').each(function(){

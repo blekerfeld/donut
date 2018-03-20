@@ -135,6 +135,45 @@ class pTerminal{
 		echo $this->nextLine($line);
 	}
 
+
+	public function set($explode, $line){
+		if(!$this->requireArg($explode, 2, 'set')){
+			echo $this->nextLine($line);
+			return false;
+		}
+		if((new pDataModel('config'))->complexQuery("UPDATE config SET SETTING_VALUE = ".p::Quote(substr($explode[2], 1, -1))." WHERE SETTING_NAME = ".p::Quote($explode[1]).""))
+			echo "Succes! Setting ".$explode[1]." was changed to '".substr($explode[2], 1, -1)."'<br />";
+		else
+			echo "setting ".$explode[1]." was not found, use the command makeset to make a new setting<br />";
+		echo $this->nextLine($line);
+	}
+
+	public function makeset($explode, $line){
+		if(!$this->requireArg($explode, 1, 'makeset')){
+			echo $this->nextLine($line);
+			return false;
+		}
+		if(!isset($explode[2]))
+			$explode[2] = '';
+		if((new pDataModel('config'))->complexQuery("INSERT INTO config VALUES (NULL, ".p::Quote($explode[1]).", " . p::Quote($explode[2]) . ", 'input');"))
+			echo "Succes! Setting ".$explode[1]." was made with value '".substr($explode[2], 1, -1)."'<br />";
+		else
+			echo "setting ".$explode[1]." could not be made.";
+		echo $this->nextLine($line);
+	}
+
+	public function readset($explode, $line){
+		if(!$this->requireArg($explode, 1, 'readset')){
+			echo $this->nextLine($line);
+			return false;
+		}
+		if(@$val = constant("CONFIG_".$explode[1]))
+			echo "Setting name: ".$explode[1]."<br/>Setting value: ".$val."<br />";
+		else
+			echo "Setting does not exist.<br />";
+		echo $this->nextLine($line);
+	}
+
 	public function inftest($explode, $line){
 		$explode = explode(' ', $line);
 		$twolc = new pTwolc((new pTwolcRules('phonology_contexts'))->toArray());

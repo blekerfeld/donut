@@ -9,14 +9,13 @@ class pLemmaView extends pEntryView{
 
 	public function renderInfo(){
 		if(pUser::noGuest() OR CONFIG_ALWAYS_SHOW_LAST_UPDATE == 1)
-			return "<span class='small hide-partly float-right'>« <em> ".sprintf(LEMMA_WORD_ADDED, "<a href='".p::Url('?auth/profile/'.$this->_data['created_by'])."'>".(new pUser($this->_data['created_by']))->read('username')."</a>", p::Date($this->_data['created']))."</em> »</span>";
+			return "<span class='small pDate'>«  ".sprintf(LEMMA_WORD_ADDED, "<a href='".p::Url('?auth/profile/'.$this->_data['created_by'])."'>".(new pUser($this->_data['created_by']))->read('username')."</a>", p::Date($this->_data['created']))." »</span><br />";
 	}
 
 
 	public function parseTranslations($translations, $justList = false){
 		$overAllContent = "";
 		// Going through the languages
-
 
 		if(empty($translations))
 			return false;
@@ -29,7 +28,7 @@ class pLemmaView extends pEntryView{
 				$title = (new pDataField(null, null, null, 'flag'))->parse($language->read('flag')) . " " . sprintf(LEMMA_TRANSLATIONS_INTO, $language->parse());
 			$content = "<ol>";
 			foreach($languageArray as $translation)
-				$content .= $translation->parseListItem().$translation->parseDescription();
+				$content .= $translation->parseListItemPreview().$translation->parseDescription();
 			$content .= "</ol>";
 			$overAllContent .= new pEntrySection($title, $content, '', true, true, true);
 		}
@@ -39,7 +38,7 @@ class pLemmaView extends pEntryView{
 		if($justList)
 				return $content;
 
-		return new pEntrySection($showAll.(new pIcon('fa-language', 12))." ".LEMMA_TRANSLATIONS, $overAllContent);
+		return new pEntrySection($showAll.(new pIcon('fa-inbox', 12))." ".LEMMA_TRANSLATIONS, $overAllContent);
 	}
 
 
@@ -68,7 +67,10 @@ class pLemmaView extends pEntryView{
 		//"<a class='' href='javascript:void();'' onclick='window.history.back();'' >".(new pIcon('fa-arrow-left', 12))."</a><strong class='pWord'><span class='native'><a>"
 
 		// Sorry sorry sorry about the long code
-		$realTitle = ' <a class="lemma-code float-right big print" href="#">'.(new pIcon('fa-share-alt',12)).'</a><a target="_blank" class="lemma-code float-right big print" href="'.p::Url('?entry/'.p::HashId($this->_data['id'])."/proper/print").'">'.(new pIcon('fa-print', 12)).'</a><a class="lemma-code big float-right ttip" href="'.p::Url('?entry/'.p::HashId($this->_data['id'])).'" title="'.$this->_data['id'].'">'.(new pIcon('fa-bookmark-o', 12)).' '.p::HashId($this->_data['id']).'</a>'.p::Markdown("# <span class='native'><strong class='pWord'><a class='native'>".$this->_data['native']."</a></strong></span>".($this->_data['ipa'] != '' ? " <span class='pIpa'>/".$this->_data['ipa']."/</span>" : '').($this->_data['hidden'] == 1 ? "<span class='pExtraInfo'>".(new pIcon('fa-eye-slash', 12))." ".LEMMA_HIDDEN."</span>" : '')." ", true);
+		$realTitle = ' <a class="lemma-code float-right big print" href="#">'.(new pIcon('fa-share-alt',12)).'</a><a target="_blank" class="lemma-code float-right big print" href="'.p::Url('?entry/'.p::HashId($this->_data['id'])."/proper/print").'">'.(new pIcon('fa-print', 12)).'</a><a class="lemma-code big float-right ttip" href="'.p::Url('?entry/'.p::HashId($this->_data['id'])).'" title="'.$this->_data['id'].'">'.(new pIcon('fa-thumbtack', 12)).' '.p::HashId($this->_data['id']).'</a>'.p::Markdown("# <span class='native'><strong class='pWord'><a class='native'>".$this->_data['native']."</a></strong></span>".$this->renderIPA().($this->_data['hidden'] == 1 ? "<span class='pExtraInfo'>".(new pIcon('fa-eye-slash', 12))." ".LEMMA_HIDDEN."</span>" : '')." ", true);
+
+		// Edit button
+
 
 		$titleSection = new pEntrySection("", '', null, false, true);
 
@@ -117,20 +119,33 @@ class pLemmaView extends pEntryView{
 		return new pEntrySection(($section == 'antonym' ? LEMMA_ANTONYMS : ($section == 'synonym' ? LEMMA_SYNONYMS : LEMMA_HOMOPHONES)), $output, $icon);
 	}
 
-	public function renderSearchResult($searchlang = 0, $noTransStatus = false){
+	public function renderSearchResult($searchlang = 0, $noTransStatus = false, $noPreview){
 		if(!($this->_data->_hitTranslation == null))
 			$hitTranslation = '<em class="dHitTranslation">'.p::Highlight($this->_data->_query, $this->_data->_hitTranslation, '<strong class="dQueryHighlight">', '</strong>').'</em> '.(new pIcon('arrow-right').' ');
 		else
 			$hitTranslation = '';
 
-		if($searchlang == 0)
+		if($searchlang == 0 && $noPreview == false)
+			$linkToWord = p::Highlight($this->_data->_query, $this->_data->renderPreviewLink(true), '<strong class="dQueryHighlight">','</strong>');
+		elseif($noPreview == false)
+			$linkToWord = $this->_data->renderPreviewLink(true);
+		elseif($noPreview == true && $searchlang == 0)
 			$linkToWord = "<a href='".$this->_data->renderSimpleHref(true)."'>".p::Highlight($this->_data->_query, $this->_data->_entry['native'], '<strong class="dQueryHighlight">','</strong>')."</a>";
 		else
 			$linkToWord = $this->_data->renderSimpleLink(true);
 
 
-		p::Out('<div class="dWordWrapper">'.$hitTranslation.'<strong class="dWord"><span class="native">'.$linkToWord."</span>".($this->_data->_entry['ipa'] != '' ? "<span class='dType'> · </span><span class='pIpa small'>/".$this->_data->_entry['ipa']."/</span>" : '')."</strong><span class='dType'> · ".$this->_data->generateInfoString()."</span> ".($this->_data->_entry['hidden'] == 1 ? "<span class='pExtraInfo'>".(new pIcon('fa-eye-slash', 12))." ".LEMMA_HIDDEN."</span>" : '')."
-			".((count($this->_data->_translations) == 0 AND (pUser::checkPermission(-2)) AND $noTransStatus == false) ? "<span class='pExtraInfo'>".(new pIcon('fa-warning', 12))." ".LEMMA_NEED_TRANSLATIONS."</span>" : '')." <br />".$this->parseTranslations($this->_data->_translations, true)."</div>");
+		p::Out('<div class="dWordWrapper">'.$hitTranslation.'<strong class="dWord"><span class="native">'.$linkToWord."</span>".$this->renderIPA('small')."</strong><span class='dType'> · ".$this->_data->generateInfoString()."</span> ".($this->_data->_entry['hidden'] == 1 ? "<span class='pExtraInfo'>".(new pIcon('fa-eye-slash', 12))." ".LEMMA_HIDDEN."</span>" : '')."
+			".((count($this->_data->_translations) == 0 AND (pUser::checkPermission(-2)) AND $noTransStatus == false) ? "<span class='pExtraInfo'>".(new pIcon('fa-exclamation-triangle', 12))." ".LEMMA_NEED_TRANSLATIONS."</span>" : '')." <br />".$this->parseTranslations($this->_data->_translations, true)."</div>");
+	}
+
+	private function renderIPA($class = ''){
+		if(isset($this->_data->_entry['ipa']))
+			$ipa = $this->_data->_entry['ipa'];
+		else
+			$ipa = $this->_data['ipa'];
+
+		return ($ipa != '' ? "<br /><span class='pIpa ".$class."' onClick='processIPA(\"".$ipa."\");'>/".$ipa."/ <span class='hide-partly'>".(new pIcon('fa-volume-up'))."</span></span>" : '');
 	}
 
 	public function parseListItem($entry){

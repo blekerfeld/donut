@@ -28,7 +28,8 @@ class pTranslationView extends pEntryView{
 	}
 
 	public function renderInfo(){
-		return "<span class='small hide-partly'>".sprintf(LEMMA_TRANSLATION_ADDED, "<a href='".p::Url('?auth/profile/'.$this->_data['user_id'])."'>".(new pUser($this->_data['user_id']))->read('username')."</a>", p::Date($this->_data['created_on']))."</span>";
+		if(pUser::noGuest() OR CONFIG_ALWAYS_SHOW_LAST_UPDATE == 1)
+			return "<span class='small pDate'>«  ".sprintf(LEMMA_WORD_ADDED, "<a href='".p::Url('?auth/profile/'.$this->_data['user_id'])."'>".(new pUser($this->_data['user_id']))->read('username')."</a>", p::Date($this->_data['created_on']))." »</span><br />";
 	}
 
 	public function renderDesc($desc){

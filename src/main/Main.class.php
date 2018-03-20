@@ -98,6 +98,8 @@ class pMain{
 			$url = CONFIG_ABSOLUTE_PATH . '/' . $file.$url;
 		elseif(self::StartsWith($url, 'pol://') && $exploded = explode('pol://', $url))
 			$url = self::Url($exploded[1]);
+		elseif(self::StartsWith($url, 'donut://') && $exploded = explode('donut://', $url))
+			$url = self::Url($exploded[1]);
 		elseif(self::StartsWith($url, 'http://') or self::StartsWith($url, 'ftp://') or self::StartsWith($url, 'https://') or self::StartsWith($url, 'mailto://'))
 			$url = $url;
 		else
@@ -182,8 +184,13 @@ class pMain{
 		return trim(self::$db->quote($value), "'");
 	}
 
-	function Quote($value){
+	public function Quote($value){
 		return self::$db->quote(self::Escape($value));
+	}
+
+
+	public function QuoteOnly($value){
+		return self::$db->quote($value);
 	}
 
 	public function MarkDown($text, $block = true, $examples = true, $num = false){
@@ -290,5 +297,23 @@ class pMain{
 
 // Alias
 class p extends pMain{
+
+	public function Tooltipster(){
+		return p::Out("<script type='text/javascript'>
+
+			$('.ttip').tooltipster({animation: 'grow', animationDuration: 100,  distance: 0, contentAsHTML: true, interactive: true, side:'bottom'});
+
+			$('.ttip_actions').tooltipster({animation: 'grow', animationDuration: 150,  distance: 0, contentAsHTML: true, interactive: true, side: 'bottom', trigger: 'click'});
+
+			$('div.d_admin_header_dropdown span').click(function(){
+				$('div.d_admin_header_dropdown').toggleClass('clicked');
+			});
+
+			$('.ttip_header').tooltipster({ animation: 'grow', animationDuration: 100, distance: 0, contentAsHTML: true, interactive: true, side: 'bottom', trigger: 'click', functionAfter: function(){
+					$('div.d_admin_header_dropdown').removeClass('clicked');
+			}});
+
+			</script>");
+	}
 
 }

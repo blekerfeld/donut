@@ -43,7 +43,7 @@ class pSetHandler extends pHandler{
 			$this->dataModel->getObjects();
 
 		$this->_ID = $id;
-		$this->_properData = (new pDataModel('rulesets'))->setCondition(" WHERE id =  ".$this->_ID)->getObjects()->fetchAll()[0];
+		$this->_properData = (new pDataModel($this->_activeSection['table']))->setCondition(" WHERE id =  ".$this->_ID)->getObjects()->fetchAll()[0];
 
 		$this->_view = new pSetView($this);
 
@@ -142,7 +142,7 @@ class pSetHandler extends pHandler{
 			
 			$explodeName = explode('/', pRegister::post()['admin_form_name']);
 			if(trim($explodeName[max(array_keys($explodeName))]) == ''){
-				echo pTemplate::NoticeBox('fa-warning fa-12', 'Folder name cannot be empty.', 'warning-notice ajaxMessage');
+				echo pTemplate::NoticeBox('fa-exclamation-triangle fa-12', 'Folder name cannot be empty.', 'warning-notice ajaxMessage');
 				echo "<script type='text/javascript'>
 				$('.saving').slideUp(function(){
 					$('.ajaxMessage').slideDown();

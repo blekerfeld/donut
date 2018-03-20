@@ -31,8 +31,8 @@ class pAdminStructure extends pStructure{
 		pTemplate::setTabbed();
 
 		// Starting the menu
-		$output = "<div class='card-tabs-bar d_admin_menu titles above'>
-				<div class='stack'><a class='ssignore disabled no-select' href='javascript:void(0);'>".(new pIcon('tune', 14))." Management panel</a>";
+		$output = "<div class='card-tabs-bar wordsearch nomargin above'>
+				<div class='stack'><a class='ssignore disabled no-select' href='javascript:void(0);'>".(new pIcon('tune', 14))." ".DA_TITLE."</a>";
 
 		$items = 0;
 
@@ -118,21 +118,7 @@ class pAdminStructure extends pStructure{
 
 
 		// Tooltipster time!
-		p::Out("<script type='text/javascript'>
-
-			$('.ttip').tooltipster({animation: 'grow', animationDuration: 100,  distance: 0, contentAsHTML: true, interactive: true, side:'bottom'});
-
-			$('.ttip_actions').tooltipster({animation: 'grow', animationDuration: 150,  distance: 0, contentAsHTML: true, interactive: true, side: 'bottom', trigger: 'click'});
-
-			$('div.d_admin_header_dropdown span').click(function(){
-				$('div.d_admin_header_dropdown').toggleClass('clicked');
-			});
-
-			$('.ttip_header').tooltipster({ animation: 'grow', animationDuration: 100, distance: 0, contentAsHTML: true, interactive: true, side: 'bottom', trigger: 'click', functionAfter: function(){
-					$('div.d_admin_header_dropdown').removeClass('clicked');
-			}});
-
-			</script>");
+		p::Tooltipster();
 
 	}
 

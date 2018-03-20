@@ -129,14 +129,24 @@ class pDataModel {
 				die("FATAL ERROR from within pDataModel->prepareForInsert(\$data). \$data does not match the field count of the object!");
 		$valueString = array('NULL');
 		$key = 0;
+
+		$realData = array();
+
+		foreach($data as $value)
+			if(is_array($value))
+				$realData[] = $value;
+			else
+				$realData[] = array($value, true);
+
 		if($this->_fields != null)
 			foreach($this->_fields->get() as $field){
 				$valueString[] = ($data[$key] != 'NOW()' ? p::Quote($data[$key]) : 'NOW()');;
 				$key++;
 			}
 		else
-			foreach($data as $value)
-				$valueString[] = ($value != 'NOW()' ? p::Quote($value) : 'NOW()');
+			foreach($realData as $value)
+				$valueString[] = ($value[0] != 'NOW()' ? ($value[1] ? p::Quote($value[0]) : $value[0]) : 'NOW()');
+		
 		$this->_valuestring = implode(', ', $valueString);
 
 		return $this;

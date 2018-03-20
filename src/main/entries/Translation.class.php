@@ -26,6 +26,7 @@ class pTranslation extends pEntry{
 	// This function is called to render the translation as an entry
 	public function renderEntry(){
 
+
 		// Setting the page title
 		pTemplate::setTitle($this->_entry['translation']);
 
@@ -40,6 +41,8 @@ class pTranslation extends pEntry{
 
 		p::Out($this->_view->title((new pDataField(null, null, null, 'flag'))->parse($this->_language->read('flag')), $backHref));
 
+		p::Out("<span class='xsmall'>".$this->_view->renderInfo()."</span>");
+
 		// Let's render all the lemma's
 		$this->bindLemma();
 
@@ -48,7 +51,6 @@ class pTranslation extends pEntry{
 
 		$this->_view->renderLemmas($this->_lemmas->get());
 		
-		p::Out("<span class='xsmall'>".$this->_view->renderInfo()."</span>");
 
 	}
 
@@ -76,6 +78,12 @@ class pTranslation extends pEntry{
 
 	public function parseListItem(){
 		return "<li><span>".($this->_specification != '' ? "<em class='dSpec'>(".$this->_specification.")</em> " : '')."<span href='javascript:void(0);' class='translation trans_".$this->_entry['id']." ".($this->_entry['language_id'] == 0 ? 'native' : '')." tooltip'><strong class='dWordTranslation'><a href='".p::Url('?entry/translation/'.$this->_entry['real_id'].'/return/:'.p::HashId($this->_lemma))."'>".$this->translation."</a></strong></span>  ".(new pIcon('chevron-right', 13, 'opacity-6'))."</span></li>";
+	}
+
+	public function parseListItemPreview(){
+		return "<li><span>".($this->_specification != '' ? "<em class='dSpec'>(".$this->_specification.")</em> " : '')."<span href='javascript:void(0);' class='translation trans_".$this->_entry['id']." ".($this->_entry['language_id'] == 0 ? 'native' : '')." tooltip'><strong class='dWordTranslation'><a href='javascript:void(0)' onClick='$(\".preview-load\").load(\"".p::Url('?entry/translation/'.$this->_entry['real_id'].'/return/:'.p::HashId($this->_lemma))."ajaxLoad/ajax\");'>".$this->translation."</a></strong></span>  ".(new pIcon('chevron-right', 13, 'opacity-6'))."</span></li>";
+
+		return "<a class='".$class." 'href='javascript:void(0)' onClick='$(\".preview-load\").load(\"".$this->renderSimpleHref($result)."/ajaxLoad/ajax\");'>".$this->_entry['native']."</a> ";
 	}
 
 	public function parseDescription(){

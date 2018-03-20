@@ -8,6 +8,7 @@ class pGrammarStructure extends pStructure{
 
 	public function render(){
 
+		pTemplate::setNoBorder();
 		$this->doTabs();
 
 		// If there is an offset, we need to define that
@@ -36,27 +37,9 @@ class pGrammarStructure extends pStructure{
 			$this->_parser->render();
 		}
 
-
-
 		// Tooltipster time!
-		p::Out("<script type='text/javascript'>
-
-			$('.ttip').tooltipster({animation: 'grow', animationDuration: 100,  distance: 0, contentAsHTML: true, interactive: true, side:'bottom'});
-
-			$('.ttip_actions').tooltipster({animation: 'grow', animationDuration: 150,  distance: 0, contentAsHTML: true, interactive: true, side: 'bottom', trigger: 'click'});
-
-			$('div.d_admin_header_dropdown span').click(function(){
-				$('div.d_admin_header_dropdown').toggleClass('clicked');
-			});
-
-			$('.ttip_header').tooltipster({ animation: 'grow', animationDuration: 100, distance: 0, contentAsHTML: true, interactive: true, side: 'bottom', trigger: 'click', functionAfter: function(){
-					$('div.d_admin_header_dropdown').removeClass('clicked');
-			}});
-
-			</script>");
-
-
-
+		p::Tooltipster();
+		
 	}
 
 }

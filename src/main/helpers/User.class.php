@@ -17,7 +17,7 @@ class pUser{
 
 		// Overwrite the loaded user
 		if(isset($id)){
-			self::$dataModel->getSingleObject($id);
+			self::$dataModel->complexQuery("SELECT * FROM users WHERE id = '".$id."'");
 			if(array_key_exists(0, self::$dataModel->data()->fetchAll()))
 				return self::load(self::$dataModel->data()->fetchAll()[0]);
 			else
@@ -26,6 +26,10 @@ class pUser{
 			self::restore();
 		}
 		
+	}
+
+	public function linkOOP(){
+		return "<a href='".p::Url('?auth/profile/').self::$id."'>".(self::read('longname') != '' ? self::read('longname') : self::read('username'))."</a>";
 	}
 
 	public static function link(){

@@ -22,14 +22,14 @@ class pTabBar extends pLayoutPart {
 		return $this;
 	}
 
-	public function addLink($id, $link, $href = 'javascript:void(0);', $active = false, $subitems = null){
-		$this->_links[$id] = array($link, ($href == null ? 'javascript:void(0);' : $href), ($active ? 'active' : ''), $subitems);
+	public function addLink($id, $link, $href = 'javascript:void(0);', $active = false, $subitems = null, $class = ''){
+		$this->_links[$id] = array($link, ($href == null ? 'javascript:void(0);' : $href), ($active ? 'active '.$class : $class), $subitems);
 		return $this;
 	}
 
 	public function addSearch(){
 		$this->_search = "<a class='ssignore gray em' href='javascript:void(0);' onClick='$(\".pEntry\").slideUp();
-        	$(\".searchLoad\").slideDown();$(\".word-search\").val(\"\").focus();reloadOnlyFirstTime(\"".(isset(pRegister::session()['searchQuery']) ? pRegister::session()['searchQuery'] : '.')."\");callBack(true);".(!isset(pRegister::session()['searchQuery']) ? "$(\".word-search\").val(\"\");$(\".searchLoad\").slide();" : '')."'>".(new pIcon('magnify'))."</a>";
+        	$(\".searchLoad\").slideDown();$(\".word-search\").val(\"\").focus();reloadOnlyFirstTime(\"".(isset(pRegister::session()['searchQuery']) ? pRegister::session()['searchQuery'] : '.')."\");callBack(true);".(!isset(pRegister::session()['searchQuery']) ? "$(\".word-search\").val(\"\");$(\".searchLoad\").slide();" : '')."'>".(new pIcon('fa-search'))."</a>";
         return $this;
 	}
 
@@ -63,7 +63,7 @@ class pTabBar extends pLayoutPart {
 	}
 
 	public function __toString(){
-		$this->write('<div class="card-tabs-bar '.($this->_above ? 'above' : '').' '.$this->_extraClass.'">'."<a class='ssignore disabled no-select ttip' href='javascript:void(0);'>".(new pIcon($this->_icon, 14))." ".$this->_titlePart."</a>".$this->_search.$this->_home);
+		$this->write('<div class="card-tabs-bar wordsearch '.($this->_above ? 'above' : '').' '.$this->_extraClass.'">'.($this->_titlePart != '' ? "<a class='ssignore disabled no-select ttip hide' href='javascript:void(0);'>".(new pIcon($this->_icon, 14))." ".$this->_titlePart."</a>" : '').$this->_search.$this->_home);
 		foreach($this->_links as $link){
 			$output = "<a href='".($link[3] == NULL ? $link[1] : 'javascript:void(0)')."' ";
 				if($link[3] != NULL){

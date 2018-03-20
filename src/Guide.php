@@ -8,14 +8,25 @@ return [
 		'default_permission' => 0,
 		'items' => [
 			'home' => [
-				'name' => (new pIcon('fa-home', 12))." ".MMENU_DICTIONARY,
+				'name' => (new pIcon('fa-book', 12))." ".MMENU_DICTIONARY,
 				'app' => 'home',
 				'class' => 'ssignore',
 			],
-			'dictionary-admin' => [
-				'name' => MMENU_EDITORMENU." ".(new pIcon('chevron-down')),
-				'permission' => -4,
+			'wiki' => [
+				'name' => (new pIcon('library'))." ".WIKI_TITLE_MENU,
 				'class' => '',	
+				'subitems' => [
+					'home' => [
+						'name' => 'Home',
+						'icon' => 'fa-home',
+						'app' => 'wiki/article/home'
+					],
+				],
+			],
+			'dictionary-admin' => [
+				'name' => (new pIcon('fa-bars'))." ".MMENU_EDITORMENU,
+				'permission' => -4,
+				'class' => 'admin',	
 				'subitems' => [
 					'editor' => [
 						'name' => 'New lemma entry',
@@ -24,7 +35,7 @@ return [
 						'permission' => -3,
 					],
 					'grammar' => [
-						'name' => 'Grammar',
+						'name' => GRAMMAR_TITLE,
 						'icon' => 'dna',
 						'app' => 'grammar',
 						'permission' => -3,
@@ -42,13 +53,14 @@ return [
 						'permission' => -4,
 					],
 					'dictionary-admin' => [
-						'name' => 'Management panel',
+						'name' => DA_TITLE,
 						'icon' => 'tune',
 						'app' => 'manage/config',
 						'permission' => -4,
 					],
 				],
 			],
+
 		],
 		'simple_links' => [
 
@@ -78,6 +90,19 @@ return [
 			3 => 'linked',
 		],
 		'menu' => 'dictionary-admin',
+	],
+
+
+	'wiki' => [
+		'page_title' => WIKI_TITLE_MENU,
+		'default_section' => 'article',
+		'arguments' => [
+			0 => 'url',
+			1 => 'language',
+			2 => 'revision',
+			3 => 'action'
+		],
+		'menu' => 'wiki',
 	],
 
 
@@ -210,7 +235,10 @@ return [
 	],
 
 	'MAGIC_MARKDOWN' => [
-		'DIS' => 'docs',
+		'DIS' => [
+			'app' => 'docs',
+			'url' => 'DIS'
+		],
 	],
 
 	'MAGIC_MARKDOWN_TITLES' => [

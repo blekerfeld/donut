@@ -111,7 +111,7 @@ class pEditorHandler extends pHandler{
 		}
 		
 		if($edit == false)
-			echo pTemplate::NoticeBox('fa-warning', SAVED_ERROR, 'hide warning-notice errorSave');
+			echo pTemplate::NoticeBox('fa-exclamation-triangle', SAVED_ERROR, 'hide warning-notice errorSave');
 		else
 			echo pTemplate::NoticeBox('fa-check', SAVED, 'hide succes-notice successSave');
 
