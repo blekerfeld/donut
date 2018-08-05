@@ -1,5 +1,5 @@
 <?php
-// Donut 0.11-dev - Thomas de Roo - Licensed under MIT
+// Donut 0.12-dev - Thomas de Roo - Licensed under MIT
 // file: TerminalView.class.php
 
 class pTerminalView extends pSimpleView{
@@ -13,9 +13,7 @@ class pTerminalView extends pSimpleView{
 			die((new pTerminal)->ajax());
 
 		p::Out('
-		<div class="pentry fake-browser-ui">
-		    <div class="frame">
-		    </div>');
+		<div class="pentry fake-browser-ui">');
 		(new pTerminal)->initialState();
 		p::Out('</div>');
 	}

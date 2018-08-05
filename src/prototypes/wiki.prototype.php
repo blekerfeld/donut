@@ -1,6 +1,6 @@
 <?php
 // Donut: open source dictionary toolkit
-// version    0.11-dev
+// version    0.12-dev
 // author     Thomas de Roo
 // license    MIT
 // file:      dictionary.admin.struct.php

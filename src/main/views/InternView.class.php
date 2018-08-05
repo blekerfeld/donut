@@ -1,5 +1,5 @@
 <?php
-// Donut 0.11-dev - Thomas de Roo - Licensed under MIT
+// Donut 0.12-dev - Thomas de Roo - Licensed under MIT
 // file: HomeView.class.php
 
 class pInternView extends pSimpleView{
@@ -19,7 +19,7 @@ class pInternView extends pSimpleView{
 		// Change this to your likings, but please leave the part about donut.
 		return p::Out("
 				".p::Markdown($aboutUs, true)."<div class='notice-subtle'>
-				".(new pIcon('fa-info-circle'))." This website is powered by donut 0.11-dev, &copy; Thomas de Roo</div>");
+				".(new pIcon('fa-info-circle'))." This website is powered by donut 0.12-dev, &copy; Thomas de Roo</div>");
 	}
 
 	public function about(){
@@ -32,7 +32,7 @@ class pInternView extends pSimpleView{
 			<br />
 			<img src='".p::Url('library/staticimages/logo.png')."' style='height: auto;width:200px;'/><br /><br />
 			<strong>donut.</strong> – the dictionary toolkit<br />
-			version 0.11-dev <br /><br />
+			version 0.12-dev <br /><br />
 			<div class='notice-subtle'>
 				".(new pIcon('fa-info-circle'))." The end user cannot see this page, you can change what the end user sees (by default they will be redirected home) to your own about page by changing the contents of ".p::Markdown("`static\md\aboutus.md` to your likings.", false).".
 			</div><br />
