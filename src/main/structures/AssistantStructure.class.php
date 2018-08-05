@@ -7,18 +7,9 @@ class pAssistantStructure extends pStructure{
 	public function render(){
 
 
-		$searchBox = new pSearchBox;
-		$searchBox->enablePentry();
-
-
-		if(isset(pRegister::arg()['is:result'], pRegister::freshSession()['searchQuery']))
-			$searchBox->setValue(pRegister::freshSession()['searchQuery']);
-	
-		pTemplate::throwOutsidePage($searchBox);
-
 		p::Out("<div class='pEntry'>");
-
-
+		pTemplate::setNoBorder();
+		pTemplate::disableSearch();
 		$this->_parser->runData();
 
 		// Let's handle the action by the object

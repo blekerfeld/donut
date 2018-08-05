@@ -26,8 +26,8 @@ class pInternView extends pSimpleView{
 		// Redirect the end-user
 		if(!pUser::checkPermission(-3))
 			return $this->aboutEndUser();
-
-		p::Out((new pTabBar('donut.','dots-horizontal-circle'))->addLink('about', 'About', null, true));
+		pTemplate::setTabbed();
+		p::Out((new pTabBar('donut.','dots-horizontal-circle', true, 'wordsearch above titles nomargin'))->addLink('about', 'About', null, true));
 		p::Out("<div class='home-margin'>
 			<br />
 			<img src='".p::Url('library/staticimages/logo.png')."' style='height: auto;width:200px;'/><br /><br />

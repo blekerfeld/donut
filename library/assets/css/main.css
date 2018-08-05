@@ -310,19 +310,19 @@ span.tab, div.tab {
 
 
 div.holder{
+  background: #f2f2f2;
 }
 
 div.outerwrap {
   margin-top: 15px;
-  min-height: 500px;
-  background: white;
-   border-radius: 5px;
-  margin-bottom: 0px;
+
+
   padding-top: 10px;
+  padding-bottom: 10px;
 }
 
 div.outerwrap.tabbed{
-  margin-top: 45px;
+  margin-top: 35px;
 }
 
 div.outerwrap.no-border{
@@ -334,12 +334,18 @@ div.outerwrap.no-border{
 
 }
 
+.outerwrap.no-border .page{
+  background: transparent; 
+}
 
 .page {
   padding: 0px;
-  padding-top: 15px;
+  padding-top: 20px;
+  background: white;
   background-position: 10% 10%;
   height: auto;
+  min-height: 500px;
+  border-radius: 5px;
   padding-bottom: 20px;
 
 }
@@ -2076,7 +2082,7 @@ div.rulesheet.inner{
 }
 
 div.rulesheet-margin{
-
+  margin-top: 10px; 
 }
 
 div.rulesheet-header{

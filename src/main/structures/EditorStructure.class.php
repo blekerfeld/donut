@@ -6,15 +6,9 @@ class pEditorStructure extends pStructure{
 		
 	public function render(){
 
-		$searchBox = new pSearchBox;
-		$searchBox->toggleNoBackSpace(true);
-
-
 		if(isset(pRegister::arg()['is:result'], pRegister::freshSession()['searchQuery']))
 			$searchBox->setValue(pRegister::freshSession()['searchQuery']);
 	
-		if(!isset(pRegister::arg()['ajax'], pRegister::arg()['ajaxLoad']))
-			pTemplate::throwOutsidePage($searchBox);
 
 		if(!isset(pRegister::arg()['ajax']))
 			p::Out("<div class='pEntry'>");
@@ -27,7 +21,7 @@ class pEditorStructure extends pStructure{
 
 			pTemplate::setTabbed();
 
-			p::Out((new pTabBar('Editor', 'lead-pencil', false, 'titles pEntry-fix-50 x'))
+			p::Out((new pTabBar('Editor', 'lead-pencil', false, 'titles wordsearch nomargin above'))
 				->addLink('view', LEMMA_VIEW_SHORT, p::Url("?entry/".$this->_prototype[$this->_section]['section_key'].'/'.pRegister::arg()['id'].(isset(pRegister::arg()['is:result']) ? '/is:result' : '')), false)
 				->addLink('edit', LEMMA_EDIT_SHORT, p::Url('?editor/'.$this->_section.'/edit/'.(is_numeric(pRegister::arg()['id']) ?  pRegister::arg()['id'] : p::HashId(pRegister::arg()['id'], true)[0]).(isset(pRegister::arg()['is:result']) ? '/is:result' : '')), true)
 				->addLink('discuss', LEMMA_DISCUSS_SHORT, p::Url('?entry/'.$this->_prototype[$this->_section]['section_key'].'/'.(is_numeric(pRegister::arg()['id']) ?  pRegister::arg()['id'] : p::HashId(pRegister::arg()['id'], true)[0]).'/discuss'.(isset(pRegister::arg()['is:result']) ? '/is:result' : '')), false)
@@ -37,7 +31,7 @@ class pEditorStructure extends pStructure{
 			// Tab bar for new
 			
 			if((isset(pRegister::arg()['action']) && pRegister::arg()['action'] == 'new'))
-				p::Out((new pTabBar('Editor', 'lead-pencil', true, 'titles pEntry-fix-50'))->addLink('n', 'New Lemma', null, true)."<br />");
+				p::Out((new pTabBar('Editor', 'lead-pencil', true, 'titles wordsearch nomargin above'))->addLink('n', 'New Lemma', null, true)."<br />");
 		}
 
 

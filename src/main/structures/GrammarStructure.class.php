@@ -8,7 +8,7 @@ class pGrammarStructure extends pStructure{
 
 	public function render(){
 
-		pTemplate::setNoBorder();
+
 		$this->doTabs();
 
 		// If there is an offset, we need to define that

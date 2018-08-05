@@ -10,13 +10,10 @@ class pWikiStructure extends pStructure{
 
 		p::Out("<div class='pEntry'>");
 
-		$searchBox = new pSearchBox;
-		$searchBox->toggleNoBackSpace(true);
-		$searchBox->setFloatRight(true);
-		if(!isset(pRegister::arg()['ajax'], pRegister::arg()['ajaxLoad']))
-			pTemplate::throwOutsidePage($searchBox);
-			
 
+		// Disable the word search in favor of an upcoming wiki search! 
+		pTemplate::disableSearch();
+		pTemplate::setTabbed();
 		$this->doTabs();
 		
 		// If there is an offset, we need to define that

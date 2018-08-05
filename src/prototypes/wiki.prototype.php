@@ -15,7 +15,7 @@ return [
 			'permission' => [
 				'article' => 0,
 			],
-			'tabs' => new pTabBar('','', false, 'wordsearch nomargin'),
+			'tabs' => new pTabBar('','', false, 'titles above wordsearch nomargin'),
 			'tab_search' => true,
 			'tab_home' => true,
 		],

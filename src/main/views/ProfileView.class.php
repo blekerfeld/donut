@@ -1,4 +1,3 @@
-
 <?php
 // Donut 0.11-dev - Thomas de Roo - Licensed under MIT
 // file: HomeView.class.php
