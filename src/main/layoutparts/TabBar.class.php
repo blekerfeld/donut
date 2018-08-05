@@ -1,5 +1,5 @@
 <?php
-// Donut 0.11-dev - Thomas de Roo - Licensed under MIT
+// Donut 0.12-dev - Thomas de Roo - Licensed under MIT
 // file: TabBar.class.php
 
 // Used to build an CardTabs-style card bar

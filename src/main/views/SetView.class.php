@@ -1,5 +1,5 @@
 <?php
-// Donut 0.11-dev - Thomas de Roo - Licensed under MIT
+// Donut 0.12-dev - Thomas de Roo - Licensed under MIT
 // file: SetView.class.php
 
 //$structure, $icon, $surface, $table, $itemsperpage, $dfs, $actions, $actionbar, $paginated, $section, $app = 'dictionary-admin')

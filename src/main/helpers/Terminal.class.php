@@ -1,5 +1,5 @@
 <?php
-// Donut 0.11-dev - Thomas de Roo - Licensed under MIT
+// Donut 0.12-dev - Thomas de Roo - Licensed under MIT
 // file: File: terminal.class.php
 	// Some handy commands for debuging and such
 
@@ -13,7 +13,7 @@ class pTerminal{
 	public function initialState(){
 
 		p::Out("<div class='debugConsole'>");
-		p::Out("[/] donut 0.11-dev // terminal ~".pUser::read('username').":".$_SERVER['REMOTE_ADDR']." <br />Logged in as: ".constant("LOGIN_USERG_".pUser::read('role'))."<br /><br />");
+		p::Out("[ donut ]  ver. 0.12-dev ~".pUser::read('username').":".$_SERVER['REMOTE_ADDR']." <br />user rights: ".strtolower(constant("LOGIN_USERG_".pUser::read('role')))."<br /><br />");
 		p::Out("> <input class='debug init' /><div class='debugLoad-init'></div>");
 		p::Out("</div>");
 		p::Out("<script type='text/javascript'>
@@ -46,7 +46,7 @@ class pTerminal{
 
 	public function ver($arg, $line){
 		$head = file_get_contents(sprintf('.git/refs/heads/%s', 'master'));
-		echo "<strong>donut version 0.11-dev </strong><br />";
+		echo "<strong>donut version 0.12-dev </strong><br />";
 		echo "<em>build ".substr($head, 0, 7)."</em><br />";
 		echo $this->nextLine($line);
 	}

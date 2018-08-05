@@ -1,5 +1,5 @@
 <?php
-// Donut 0.11-dev - Thomas de Roo - Licensed under MIT
+// Donut 0.12-dev - Thomas de Roo - Licensed under MIT
 // file: Template.class.php
 
 class pTemplate{
@@ -257,8 +257,8 @@ class pTemplate{
         <span class='float-left'>
          <?php 
           $head = file_get_contents(sprintf('.git/refs/heads/%s', 'master'));
-          echo "<a href='https://github.com/blekerfeld/donut/commit/$head' class='tooltip'><i class='fab fa-github fa-10'></i> /donut</a> 0.11-dev</a>"; 
-        ?> / Emma de Roo</span><span class='float-right'>
+          echo "<a href='https://github.com/blekerfeld/donut/commit/$head' class='tooltip'><i class='fab fa-github fa-10'></i> /donut</a> 0.12-dev</a>"; 
+        ?> / Thomas de Roo</span><span class='float-right'>
          </span></span><br />
     </div>
   </body>

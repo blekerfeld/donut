@@ -2234,16 +2234,17 @@ div.debugConsole input{
   border: none;
   background: transparent;
   font-family: Consolas;
-  color: white;
+  color: #f2f2f2;
   width: 97%;
   font-size: 15px;
 }
 
 div.debugConsole{
-  color: #fff;
+  color:  #f2f2f2;
   padding: 40px;
+  border-radius: 5px;
   height: 500px;
-  overflow: scroll;
+  overflow-y: auto;
   padding-top: 5px;
   padding-bottom: 5px;
   background: #111;
@@ -2351,7 +2352,6 @@ table.inflections tr.title td{
 
 
 .fake-browser-ui{
-  background: #fff;
   padding-bottom: 3px;
 }
 
