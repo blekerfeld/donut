@@ -47,13 +47,13 @@ class pMain{
 			if(file_exists($filename))
 				require_once $filename;
 			else
-				die("Donut could not load required file - ".$filename);
+				die("Serviz could not load required file - ".$filename);
 
 		// Trying the connection to the almighty database, our lord and saviour.
 		try {
 			self::$db = new pConnection('mysql:host='.CONFIG_DB_HOST.';dbname='.CONFIG_DB_DATABASE, CONFIG_DB_USER, CONFIG_DB_PASSWORD);
 		} catch (Exception $e) {
-			die("Donut could not connect to the database - ".$e->getMessage());
+			die("Serviz could not connect to the database - ".$e->getMessage());
 		}
 
 		// Loading our locale
@@ -98,6 +98,8 @@ class pMain{
 			$url = CONFIG_ABSOLUTE_PATH . '/' . $file.$url;
 		elseif(self::StartsWith($url, 'pol://') && $exploded = explode('pol://', $url))
 			$url = self::Url($exploded[1]);
+		elseif(self::StartsWith($url, 'serviz://') && $exploded = explode('serviz://', $url))
+			$url = self::Url($exploded[1]);
 		elseif(self::StartsWith($url, 'http://') or self::StartsWith($url, 'ftp://') or self::StartsWith($url, 'https://') or self::StartsWith($url, 'mailto://'))
 			$url = $url;
 		else
@@ -136,14 +138,14 @@ class pMain{
 			$return = $hashid->decode($hash);
 			
 			if(isset($return[0]))
-				$return[0] = $return[0] / 2;
+				$return[0] = ($return[0] / 22) - 2000;
 			else
 				$return[0] = 0;
 
 
 			return $return;
 		}
-		return $hashid->encode($hash * 2); 
+		return $hashid->encode(($hash + 2000) * 22); 
 	}
 
 	public static function FromRoot($path){
@@ -160,7 +162,7 @@ class pMain{
 			return false;
 
 		// Let's create a variable to make things a little more readable
-		$languagePath = self::FromRoot('library/locales/' . strtolower($language) . '.json');
+		$languagePath = self::FromRoot('library/locales/' . $language . '.json');
 
 		// Does this language exist?
 		if(!file_exists($languagePath))
@@ -169,7 +171,7 @@ class pMain{
 		// Let's load the locale
 		self::$locales = json_decode(file_get_contents($languagePath), true); 
 
-		// Now it's time to define the constants, with a certaint callback!
+		// Now it's time to define the constants, with a certain callback!
 		foreach (self::$locales['strings'] as $stringholder)
 			foreach($stringholder as $key => $value)
 				define($key, $value);
@@ -290,5 +292,33 @@ class pMain{
 
 // Alias
 class p extends pMain{
+
+	public function Tooltipster(){
+		return p::Out("<script type='text/javascript'>
+
+			$('.ttip').tooltipster({animation: 'grow', animationDuration: 100,  distance: 0, contentAsHTML: true, interactive: true, side:'bottom'});
+
+			$('.ttip_actions').tooltipster({animation: 'grow', animationDuration: 150,  distance: 0, contentAsHTML: true, interactive: true, side: 'bottom', trigger: 'click'});
+
+			$('div.d_admin_header_dropdown span').click(function(){
+				$('div.d_admin_header_dropdown').toggleClass('clicked');
+			});
+
+			$('.ttip_header').tooltipster({ animation: 'grow', animationDuration: 100, distance: 0, contentAsHTML: true, interactive: true, side: 'bottom', trigger: 'click', functionAfter: function(){
+					$('div.d_admin_header_dropdown').removeClass('clicked');
+			}});
+
+			</script>");
+	}
+
+	public function EscapedImplode($sep, $arr, $escape = '\\') {
+		if (!is_array($arr)) {
+			return false;
+		}
+		foreach ($arr as $k => $v) {
+			$arr[$k] = str_replace($sep, $escape . $sep, $v);
+		}
+		return implode($sep, $arr);
+}
 
 }

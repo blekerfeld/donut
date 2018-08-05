@@ -30,26 +30,17 @@ class pEntryStructure extends pStructure{
 
 
 	public function render(){
-
+		pTemplate::setTabbed();
 		$specialEntries = array('stats', 'random', 'year');
-		$searchBox = new pSearchBox;
-		$searchBox->enablePentry();
-		$searchBox->toggleNoBackSpace(true);
-
-		if(isset(pRegister::arg()['is:result'], pRegister::freshSession()['searchQuery']))
-			$searchBox->setValue(pRegister::freshSession()['searchQuery']);
-	
-		pTemplate::throwOutsidePage($searchBox);
 
 		// Starting with the wrapper
 
 		if(p::NoAjax())
 			p::Out("<div class='pEntry ".(($this->_error != '' OR $this->_error != null) ? 'hasErrors' : '')."'><div class='home-margin'>");
 
-		pTemplate::setTabbed();
 
 		// Let's create a tab bar for this app
-		$this->_tabs = (new pTabBar(MMENU_DICTIONARY, 'fa-book', true, 'titles pEntry-fix-56'))->addSearch();
+		$this->_tabs = (new pTabBar(MMENU_DICTIONARY, 'fa-book', true, 'titles wordsearch nomargin above'));
 
 		// If logged, show tabs
 		if(pUser::noGuest() AND isset($this->_prototype[$this->_section]['edit_url'], pRegister::arg()['id']) AND !in_array($this->_section, $specialEntries) AND p::NoAjax())

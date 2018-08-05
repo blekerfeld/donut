@@ -354,3 +354,53 @@ div.card-tabs-stack.wiki div[data-tab]{
 	padding: 10px;
 	border: 1px solid #A7D7F9;
 }
+
+div.card-tabs-bar.wordsearch{
+	margin: 0;
+	padding: 0;
+	padding-top: 0px;
+	margin-top: -56px;
+	border-bottom: 0px;
+	margin-left:25%;
+}
+
+
+
+
+div.card-tabs-bar.wordsearch.hSearch{
+	margin: 0;
+	padding: 0;
+	padding-top: 10px;
+}
+
+div.card-tabs-bar.fix-search{
+	margin-left: 17%;
+}
+
+div.card-tabs-bar.wordsearch a{
+	margin-bottom: 10px;
+	margin: 0;
+	border-radius: 0;
+	padding: 6px;
+	background: #eee;
+	margin-right: 3px;
+	border-radius: 5px;
+	display: inline-block;
+}
+
+div.card-tabs-bar.wordsearch a.active{
+	background: #ddd;
+}
+
+div.card-tabs-bar.wordsearch.nomargin{
+	margin-left: -15px;
+}
+
+div.card-tabs-bar.wordsearch.nomargin-left{
+	margin-left: 0px;
+}
+
+div.card-tabs-bar.wordsearch.nomargin-preview{
+	margin-top: -5px;
+	margin-left: 0px;
+}

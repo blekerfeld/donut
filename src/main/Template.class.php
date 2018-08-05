@@ -6,7 +6,7 @@ class pTemplate{
 
 	protected $_stylesheets, $_scripts;
 
-	public static $title = CONFIG_SITE_TITLE, $orgTitle = CONFIG_SITE_TITLE, $_searchBoxShown = false, $outside, $no_border = false, $has_tabs = false;
+	public static $title = CONFIG_SITE_TITLE, $orgTitle = CONFIG_SITE_TITLE, $_searchBoxShown = false, $outside, $no_border = false, $has_tabs = false, $_search = true;
 
 	public static function setTitle($title){
 		self::$title = $title . ' - ' . CONFIG_SITE_TITLE;
@@ -18,6 +18,10 @@ class pTemplate{
 
   public static function setTabbed(){
     self::$has_tabs = true;
+  }
+
+  public static function disableSearch(){
+    self::$_search = false;
   }
 
   public static function throwOutsidePage($content){
@@ -41,8 +45,23 @@ class pTemplate{
         padding: calc(".CONFIG_PAGE_MARGIN."% + 1%);
       }
 
-      a.siteTitle{
-        color: ".CONFIG_ACCENT_COLOR_1.";
+      .holder{
+        padding-right:calc(".CONFIG_PAGE_MARGIN." + 20px);
+        padding-left: calc(".CONFIG_PAGE_MARGIN." + 20px);
+      }
+
+      div.header.dictionary{
+        padding: calc(".CONFIG_PAGE_MARGIN." +  20px);
+        margin-top: 40px;
+      }
+
+      div.hStripe {
+         border-top: 0px solid ".CONFIG_ACCENT_COLOR_1."
+         border-bottom: 3px solid #e6e6e6;
+      }
+
+      a{
+          color: ".CONFIG_ACCENT_COLOR_1."
       }
 
       div.nav a.active{
@@ -170,7 +189,6 @@ class pTemplate{
   </head>
 	<body class='dashboard'>
     <div class='contents' id='main'>
-      <div class='hStripe'></div>
       <div class="top_area">
         <div class='ultimate_header'>
           <a class='siteTitle ssignore noselect'  href="<?php echo p::Url("?home"); ?>">
@@ -178,16 +196,41 @@ class pTemplate{
               <?php echo CONFIG_LOGO_TITLE; ?></a> 
         </div>
         <div class="absolute_header <?php  echo "app_".pRegister::app(); ?>">
+  
+            <div class='inner'>
             <div class='user'>
               <?php echo '<a href="'.p::Url('?entry/random').'" class="small ssignore text">'.(new pIcon('fa-random'))." ".RANDOM.'</a> | '; ?>
-              <?php echo $this->userBox(); ?> 
+              <?php echo $this->userBox(); 	 ?> 
               <?php if(!pUser::noGuest()){ echo $this->login(); } ?>
             </div>
-            
-           <?php echo (new pMenuView); ?><br id="cl" />  
+            <div class='siteTitle'><a class='siteTitle ssignore noselect'  href="<?php echo p::Url("?home"); ?>">
+              <span><?php echo (new pIcon(CONFIG_LOGO_SYMBOL))." ".htmlspecialchars(CONFIG_LOGO_TITLE); ?></span></a></div>
+              
+           <?php echo ((CONFIG_MENU_BREAK == 1) ? '<br /><br />' : '').(new pMenuView); ?>
+           </div>
        </div>
      </div>
       <div class='outside'>
+      <?php 
+          if(self::$_search != false){
+            // The home search box! Only if needed!
+            $searchBox = new pSearchBox(true);
+            $searchBox->toggleNoBackSpace(true);
+        
+            if(isset(pRegister::arg()['is:preview'], pRegister::arg()['action']) && pRegister::arg()['action'] == 'proper')
+              p::Out('<div class="float-right"><a class="preview-close hide tooltip">'.(new pIcon('fa-times-circle', 12)).'</a><br id="cl" /></div>');
+        
+            if(isset(pRegister::arg()['is:result'], pRegister::freshSession()['searchQuery']))
+              $searchBox->setValue(pRegister::freshSession()['searchQuery']);
+
+            if(isset(pRegister::arg()['is:result'], pRegister::freshSession()['searchQuery']))
+              $searchBox->setValue(pRegister::freshSession()['searchQuery']);
+
+            if(!isset(pRegister::arg()['ajax'], pRegister::arg()['ajaxLoad']))
+              echo $searchBox."<br/>";
+          }
+                
+        ?>
         <?php echo self::$outside; ?>
       </div>
       <div class='holder'>
@@ -215,7 +258,7 @@ class pTemplate{
          <?php 
           $head = file_get_contents(sprintf('.git/refs/heads/%s', 'master'));
           echo "<a href='https://github.com/blekerfeld/donut/commit/$head' class='tooltip'><i class='fab fa-github fa-10'></i> /donut</a> 0.11-dev</a>"; 
-        ?> / Thomas de Roo</span><span class='float-right'>
+        ?> / Emma de Roo</span><span class='float-right'>
          </span></span><br />
     </div>
   </body>

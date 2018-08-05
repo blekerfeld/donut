@@ -72,19 +72,19 @@ class pAdminStructure extends pStructure{
 
 	public function render(){
 
+		p::Out("<div class='pEntry'>");
+
 		// The asynchronous j.a.x. gets to skip a bit 
 		if(isset(pRegister::arg()['ajax']))
 			goto ajaxSkipOutput;
 
 		// Preparing the menu
 		$this->prepareMenu();
-
 		$this->renderMenu();
-
 
 		// Showing an error if there is one set.
 		if($this->_error != null)
-			p::Out("<div class='btCard minimal admin'>".$this->_error."</div>");
+			p::Out("<div class='btCard minimal admin pEntry'>".$this->_error."</div>");
 
 		// If there is an offset, we need to define that
 		if(isset(pRegister::arg()['offset']))
@@ -112,11 +112,6 @@ class pAdminStructure extends pStructure{
 				return true;
 		}
 
-
-		// Time for the menu
-		
-
-
 		// Tooltipster time!
 		p::Out("<script type='text/javascript'>
 
@@ -133,6 +128,8 @@ class pAdminStructure extends pStructure{
 			}});
 
 			</script>");
+
+		p::Out("</div>");
 
 	}
 

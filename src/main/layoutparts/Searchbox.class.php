@@ -34,12 +34,10 @@ class pSearchBox extends pLayoutPart{
 
 		$this->_idS = date('s');
 
-		$output = '<div class="hMobile id_'.$this->_idS.'"><div class="header dictionary '.($this->_enableAlphabetBar ? 'pentry ' : '').($this->_home ? 'home' : '').'">';
+		$output = '<div class="hMobile id_'.$this->_idS.'"><div class="header dictionary home'.$this->_floatRight.'">';
 
-		$output .= '<div class="hWrap"><div class="hSearch">
-				
-				<input  type="text" id="wordsearch" class="big word-search '.(((isset(pRegister::session()['searchLanguage']) AND p::StartsWith(pRegister::session()['searchLanguage'], $lang_zero->read('locale'))) OR (!isset(pRegister::session()['searchLanguage']) AND CONFIG_ENABLE_DEFINITIONS == 1)) ? 'native' : '').'" placeholder="'.DICT_KEYWORD.'" value="'.$this->_value.'"/>
-			<br id="cl" />
+		$output .= '<div class="hWrap"><div class="hSearch"><input type="text" id="wordsearch" class="big word-search '.(((isset(pRegister::session()['searchLanguage']) AND p::StartsWith(pRegister::session()['searchLanguage'], $lang_zero->read('locale'))) OR (!isset(pRegister::session()['searchLanguage']) AND CONFIG_ENABLE_DEFINITIONS == 1)) ? 'native' : '').'" placeholder="'.DICT_KEYWORD.'" value="'.$this->_value.'"/>
+
 			</div></div>
 			</div>
 			</div>
@@ -108,7 +106,8 @@ class pSearchBox extends pLayoutPart{
 				$output .= "$('.pEntry').load('".p::Url('?home/ajax/nosearch')."', {}, function(){
 					window.history.pushState('string', '', '".p::Url("?home")."');
 
-					$('.header.dictionary').addClass('home').removeClass('home-search');	
+					
+					$('.hSearchResults').hide();
 				});
 
 				$('.pEntry').show();
@@ -206,7 +205,8 @@ class pSearchBox extends pLayoutPart{
 				if(bypass === true || $('.word-search').val().length > 0){
 					$('.page').addClass('min');
 					$('.landing').removeClass('.landing-p').addClass('.landing-h');
-					$('.header.dictionary').removeClass('home').addClass('home-search');
+					
+					$('.hSearchResults').show();
 	      			$('.searchLoad').load('".p::Url('?search/')."' + $('.dictionary-selector').val() + '/ajax/', {'query': $('.word-search').val(), 'exactMatch': $('.checkbox-wholeword').is(':checked')}, function(e){
 	      					$('.searchLoad').show();
 	      					$('.hSearchtitle').show();

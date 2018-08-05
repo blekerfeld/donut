@@ -12,8 +12,8 @@ class pTerminalView extends pSimpleView{
 		if(isset(pRegister::arg()['ajax']))
 			die((new pTerminal)->ajax());
 
-		p::Out("<br />".((new pTabBar('Terminal','console', true, 'titles reverse'))->addLink('t', 'Command line', 'javascript:void(0);', true)).'
-		<div class="fake-browser-ui">
+		p::Out('
+		<div class="pentry fake-browser-ui">
 		    <div class="frame">
 		    </div>');
 		(new pTerminal)->initialState();

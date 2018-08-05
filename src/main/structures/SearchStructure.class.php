@@ -14,6 +14,12 @@ class pSearchStructure extends pStructure{
 		p::Out("</div><br />");
 
 		p::Out("<script type='text/javascript'>
+		Split(['#split-1', '#split-2'], {
+			sizes: [25, 75], minSize: [350, 200] });
+			$(document).ready(function(){
+				Split(['#split-1', '#split-2'], {
+					sizes: [25, 75], minSize: [350, 200] });
+			}
 
 			$('.tooltip').tooltipster({animation: 'grow', animationDuration: 150,  distance: 0, contentAsHTML: true, interactive: true, side: 'bottom'});
 			</script>");

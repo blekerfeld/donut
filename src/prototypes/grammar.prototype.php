@@ -13,7 +13,7 @@ return [
 			'title' => DA_TITLE,
 			'icon' => 'dna',
 			'default_permission' => -3,
-			'tabs' => new pTabBar('Grammar','dna'),
+			'tabs' => new pTabBar(GRAMMAR_TITLE,'dna', true, 'wordsearch nomargin above'),
 			'tab_search' => true,
 			'tab_home' => true,
 		],

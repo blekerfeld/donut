@@ -50,9 +50,10 @@ a.siteTitle
 
 .header.dictionary.home
 {
-    margin:0;
-  margin-bottom:0px;
-  padding-bottom: 5px!important;
+  padding-bottom: 0px!important;
+  padding-top: 10px!important;
+  margin-top: 40px;
+  width: 100%;
 }
 
 .header.dictionary.home a.st-back

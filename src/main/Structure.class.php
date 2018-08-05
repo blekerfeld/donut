@@ -128,7 +128,6 @@ class pStructure{
 			
 		// Let's handle the action by the object
 		if(isset(pRegister::arg()['action'])){
-			
 			if(isset(pRegister::arg()['id']))
 				$this->_parser->runData(pRegister::arg()['id']);
 			$this->_parser->passOnAction(pRegister::arg()['action']);

@@ -46,21 +46,11 @@ class pThreadStructure extends pStructure{
 
 		if(isset(pRegister::arg()['action'])){
 
-			$searchBox = new pSearchBox;
-
-
-			if(isset(pRegister::arg()['is:result'], pRegister::session()['searchQuery']))
-				$searchBox->setValue(pRegister::session()['searchQuery']);
-		
-			$searchBox->enablePentry();
-
 			if(p::NoAjax())
-				p::Out((new pTabBar(MMENU_DICTIONARY, 'fa-book', true, 'titles y'))->addSearch()
+				p::Out((new pTabBar(MMENU_DICTIONARY, 'fa-book', true, 'titles y wordsearch nomargin'))
 					->addLink('view', LEMMA_VIEW_SHORT, p::Url("?entry/".$this->_section.'/'.pRegister::arg()['id'].(isset(pRegister::arg()['is:result']) ? '/is:result' : '')), false)
 					->addLink('edit', LEMMA_EDIT_SHORT, p::Url('?editor/'.$this->_section.'/edit/'.(is_numeric(pRegister::arg()['id']) ?  pRegister::arg()['id'] : p::HashId(pRegister::arg()['id'], true)[0]).(isset(pRegister::arg()['is:result']) ? '/is:result' : '')), false)
 					->addLink('discuss', LEMMA_DISCUSS_SHORT, p::Url('?entry/'.$this->_section.'/'.(is_numeric(pRegister::arg()['id']) ?  pRegister::arg()['id'] : p::HashId(pRegister::arg()['id'], true)[0]).'/discuss'.(isset(pRegister::arg()['is:result']) ? '/is:result' : '')), true));
-
-			pTemplate::throwOutsidePage($searchBox);
 
 			if(!isset(pRegister::arg()['ajax']))
 				p::Out("<div class='home-margin pEntry'>");

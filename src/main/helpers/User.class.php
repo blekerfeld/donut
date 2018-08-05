@@ -1,5 +1,5 @@
 <?php
-// Donut 0.11-dev - Thomas de Roo - Licensed under MIT
+// Serviz 1.0.1 - Thomas de Roo - Licensed under MIT
 // file: user.class.php
 
 class pUser{
@@ -17,12 +17,14 @@ class pUser{
 
 		// Overwrite the loaded user
 		if(isset($id)){
-			self::$dataModel->getSingleObject($id);
+			self::$dataModel->setCondition(" WHERE id = '".$id."'")->getObjects();
+
 			if(array_key_exists(0, self::$dataModel->data()->fetchAll()))
 				return self::load(self::$dataModel->data()->fetchAll()[0]);
 			else
 				throw new Exception("Error: user could not be loaded", 1);
 		}else{
+			self::$dataModel->setCondition("");
 			self::restore();
 		}
 		
@@ -33,6 +35,8 @@ class pUser{
 	}
 
 	public function __destruct(){
+		
+			self::$dataModel->setCondition("");
 		self::restore();
 	}
 
@@ -47,7 +51,7 @@ class pUser{
 		if(isset(self::$user))
 			return (self::$user['role'] == (4 + $minus) OR self::$user['role']< (4 + $minus));
 		else
-			return ((4 + $minus) == 4 OR (4 + $minus) < 4);
+			return ((4 + $minus) == 4);
 	}
 
 	// This function assumes the user in question exists, it returns false only if the user is banned.
@@ -93,7 +97,10 @@ class pUser{
 		if(!isset($_COOKIE['pKeepLogged']))
 			if(isset($_SESSION['pUser'])){
 				self::$dataModel->getSingleObject($_SESSION['pUser']);
-				return self::load(self::$dataModel->data()->fetchAll()[0]);
+				if(isset(self::$dataModel->data()->fetchAll()[0]))
+					return self::load(self::$dataModel->data()->fetchAll()[0]);
+				else
+					return self::load(self::$dataModel->getSingleObject(0)->fetchAll()[0]);
 			}
 
 		if(isset($_COOKIE['pKeepLogged']))
