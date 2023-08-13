@@ -1,5 +1,5 @@
 <?php
-// Donut 0.12-dev - Thomas de Roo - Licensed under MIT
+// Donut 0.12-dev - Emma de Roo - Licensed under MIT
 // file: ExampleView.class.php
 
 //$structure, $icon, $surface, $table, $itemsperpage, $dfs, $actions, $actionbar, $paginated, $section, $app = 'dictionary-admin')
@@ -15,7 +15,7 @@ class pThreadView extends pView{
 		else
 			p::Out(pTemplate::NoticeBox('fa-info-circle', WD_NO_THREADS, 'warning-notice'));
 		p::Out("<br />");
-		if(pUser::checkPermission(-1))
+		if((new pUser)->checkPermission(-1))
 			p::Out("");
 		p::Out("</div>");
 		p::Out("<a href='".p::Url("?thread/".pRegister::arg()['section'].'/new/'.pRegister::arg()['id'])."' class='btAction green no-float'>".(new pIcon('shape-square-plus', 14)).' '.WD_NEW_THREAD."</a><div class='ajax$id-loader'></div>");

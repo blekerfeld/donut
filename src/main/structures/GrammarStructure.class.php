@@ -1,5 +1,5 @@
 <?php
-// Donut 0.12-dev - Thomas de Roo - Licensed under MIT
+// Donut 0.12-dev - Emma de Roo - Licensed under MIT
 // file: structure.class.php
 
 class pGrammarStructure extends pStructure{
@@ -39,24 +39,8 @@ class pGrammarStructure extends pStructure{
 
 
 		// Tooltipster time!
-		p::Out("<script type='text/javascript'>
-
-			$('.ttip').tooltipster({animation: 'grow', animationDuration: 100,  distance: 0, contentAsHTML: true, interactive: true, side:'bottom'});
-
-			$('.ttip_actions').tooltipster({animation: 'grow', animationDuration: 150,  distance: 0, contentAsHTML: true, interactive: true, side: 'bottom', trigger: 'click'});
-
-			$('div.d_admin_header_dropdown span').click(function(){
-				$('div.d_admin_header_dropdown').toggleClass('clicked');
-			});
-
-			$('.ttip_header').tooltipster({ animation: 'grow', animationDuration: 100, distance: 0, contentAsHTML: true, interactive: true, side: 'bottom', trigger: 'click', functionAfter: function(){
-					$('div.d_admin_header_dropdown').removeClass('clicked');
-			}});
-
-			</script>");
-
-
-
+		(new p)->Tooltipster();
+		
 	}
 
 }

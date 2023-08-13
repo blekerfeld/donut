@@ -1,5 +1,5 @@
 <?php
-// Serviz 1.0.1 - Thomas de Roo - Licensed under MIT
+// Serviz 1.0.1 - Emma de Roo - Licensed under MIT
 // file: user.class.php
 
 class pUser{
@@ -143,7 +143,7 @@ class pUser{
 
 
 	// This will read out the given field
-	public function read($key){
+	public static function read($key){
 		if(array_key_exists($key, self::$user))
 			return self::$user[$key];
 		return false;

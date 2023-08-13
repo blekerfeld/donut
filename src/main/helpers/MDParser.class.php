@@ -1,5 +1,5 @@
 <?php
-// Donut 0.12-dev - Thomas de Roo - Licensed under MIT
+// Donut 0.12-dev - Emma de Roo - Licensed under MIT
 // file: MDParser.class.php
 
 class pMDParser extends ParsedownExtra
@@ -66,20 +66,20 @@ class pMDParser extends ParsedownExtra
     	if(empty($collapsed[1])){
     		@$lemma = (new pDataModel("words"))->setCondition(" WHERE native = ".p::Quote($collapsed[0]))->getObjects()->fetchAll()[0];
     		if($lemma == null)
-    			return "<em><a class='tooltip red-ne ssignore' ".((pUser::noGuest() AND pUser::checkPermission((int)CONFIG_PERMISSION_CREATE_LEMMAS)) ? "href='".p::Url('?editor/new/pre-filled/'.urlencode($collapsed[0]))."'" : '').">".$input."</a></em>";
+    			return "<em><a class='tooltip red-ne ssignore' ".(((new pUser)->noGuest() AND (new pUser)->checkPermission((int)CONFIG_PERMISSION_CREATE_LEMMAS)) ? "href='".p::Url('?editor/new/pre-filled/'.urlencode($collapsed[0]))."'" : '').">".$input."</a></em>";
     		return "<a href='".p::Url('?entry/'.p::HashId($lemma['id']))."' class='native lemmaLink'>".$lemma['native']."</a>".(new pIcon('chevron-right', 13, 'opacity-6'));
     	}else{
     		if(p::StartsWith($collapsed[1], ':')){
     			$id = substr($collapsed[1], 1);
     			@$lemma = (new pDataModel("words"))->setCondition(" WHERE id = ".p::Quote(is_numeric($id) ? $input : p::HashId($id, true)[0]))->getObjects()->fetchAll()[0];
     			if($lemma == null)
-    				return "<em><a class='tooltip red-ne ssignore' ".((pUser::noGuest() AND pUser::checkPermission((int)CONFIG_PERMISSION_CREATE_LEMMAS)) ? "href='".p::Url('?editor/new/pre-filled'.urlencode($collapsed[0]))."'" : '').">".$collapsed[0]."</a></em>";
+    				return "<em><a class='tooltip red-ne ssignore' ".(((new pUser)->noGuest() AND (new pUser)->checkPermission((int)CONFIG_PERMISSION_CREATE_LEMMAS)) ? "href='".p::Url('?editor/new/pre-filled'.urlencode($collapsed[0]))."'" : '').">".$collapsed[0]."</a></em>";
     			return "<a href='".p::Url('?entry/'.p::HashId($lemma['id']))."' class='native lemmaLink'>".$collapsed[0]."</a>".(new pIcon('chevron-right', 13, 'opacity-6'));
     		}
     		else{
     			@$lemma = (new pDataModel("words"))->setCondition(" WHERE native = ".p::Quote($collapsed[1]))->getObjects()->fetchAll()[0];
     			if($lemma == null)
-    				return "<em><a class='tooltip red-ne ssignore' ".((pUser::noGuest() AND pUser::checkPermission((int)CONFIG_PERMISSION_CREATE_LEMMAS)) ? "href='".p::Url('?editor/new/pre-filled/'.urlencode($collapsed[1]))."'" : '').">".$collapsed[0]."</a></em>";
+    				return "<em><a class='tooltip red-ne ssignore' ".(((new pUser)->noGuest() AND (new pUser)->checkPermission((int)CONFIG_PERMISSION_CREATE_LEMMAS)) ? "href='".p::Url('?editor/new/pre-filled/'.urlencode($collapsed[1]))."'" : '').">".$collapsed[0]."</a></em>";
     			return "<a href='".p::Url('?entry/'.p::HashId($lemma['id']))."' class='native lemmaLink'>".$collapsed[0]."</a>".(new pIcon('chevron-right', 13, 'opacity-6'));
     		}
     	}

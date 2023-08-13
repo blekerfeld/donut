@@ -1,11 +1,11 @@
 <?php
-// Donut 0.12-dev - Thomas de Roo - Licensed under MIT
+// Donut 0.12-dev - Emma de Roo - Licensed under MIT
 // file: Configuration.php
 
 define('CONFIG_DB_HOST', 'localhost');
 define('CONFIG_DB_USER', 'root');
-define('CONFIG_DB_PASSWORD', '');
-define('CONFIG_DB_DATABASE', 'donut');
+define('CONFIG_DB_PASSWORD', 'root');
+define('CONFIG_DB_DATABASE', 'donutDat');
 define('CONFIG_REWRITE', true);
 define('CONFIG_FILE', 'index.php');
 define('CONFIG_HASHID_SALT', "ThereIsYeastInDonutsDidYouKnowThat?");

@@ -1,5 +1,5 @@
 <?php
-	// Donut 0.12-dev - Thomas de Roo - Licensed under MIT
+	// Donut 0.12-dev - Emma de Roo - Licensed under MIT
 // file: language.class.php
 
 class pAlphabet{
@@ -23,7 +23,7 @@ class pAlphabet{
 	}
 
 	// This makes that the alphabet can be called like this: pAlphabet::init()->sort(array);
-	public function init(){
+	public static function init(){
 		// If the alphabet is already initialized we do not need to do it again
 		if(self::$_init == true)
 			return new self;
@@ -181,7 +181,7 @@ class pAlphabet{
 	}
 
 
-	public function getGroups($groupstring){
+	public static function getGroups($groupstring){
 
 		if(isset(self::$_groups[$groupstring]))
 			return self::$_groups[$groupstring];
@@ -202,7 +202,7 @@ class pAlphabet{
 		return $output;
 	}
 
-	public function getGroupsAsString($groupstring){
+	public static function getGroupsAsString($groupstring){
 
 		// The alphabet needs to be loaded first
 		if(!self::$_init)

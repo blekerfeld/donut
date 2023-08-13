@@ -1,5 +1,5 @@
 <?php
-// Donut 0.12-dev - Thomas de Roo - Licensed under MIT
+// Donut 0.12-dev - Emma de Roo - Licensed under MIT
 // file: EntryObject.class.php
 
 //$structure, $icon, $surface, $table, $itemsperpage, $dfs, $actions, $actionbar, $paginated, $section, $app = 'dictionary-admin')
@@ -74,7 +74,7 @@ class pSearchHandler extends pHandler{
 			if(count($fetchSearch) == 0 AND $query != '' AND $query != '.'){
 				unset($_SESSION['searchQuery']);
 				p::Out("<div class='medium warning-notice'><strong>".(new pIcon('fa-info-circle', 12))." ".DICT_NO_HITS_T."</strong><br /> ".sprintf(DICT_NO_HITS, "<strong>".$query."</strong>")."</div>");
-				if(pUser::noGuest() AND pUser::checkPermission((int)CONFIG_PERMISSION_CREATE_LEMMAS))
+				if((new pUser)->noGuest() AND (new pUser)->checkPermission((int)CONFIG_PERMISSION_CREATE_LEMMAS))
 					p::Out(pTemplate::NoticeBox('fa-info-circle', DICT_SEARCH_HINT_1."<a class='ssignore' href='".p::Url('?editor/new/pre-filled/'.urlencode($query))."'>".DICT_SEARCH_HINT_2."</a>", 'hint-notice medium'));
 			}
 			

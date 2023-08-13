@@ -1,5 +1,5 @@
 <?php
-// Donut 0.12-dev - Thomas de Roo - Licensed under MIT
+// Donut 0.12-dev - Emma de Roo - Licensed under MIT
 // file: SetHandler.class.php
 
 //$structure, $icon, $surface, $table, $itemsperpage, $dfs, $actions, $actionbar, $paginated, $section, $app = 'dictionary-admin')
@@ -43,7 +43,7 @@ class pSetHandler extends pHandler{
 			$this->dataModel->getObjects();
 
 		$this->_ID = $id;
-		$this->_properData = (new pDataModel('rulesets'))->setCondition(" WHERE id =  ".$this->_ID)->getObjects()->fetchAll()[0];
+		@$this->_properData = (new pDataModel($this->_activeSection['table']))->setCondition(" WHERE id =  ".$this->_ID)->getObjects()->fetchAll()[0];
 
 		$this->_view = new pSetView($this);
 

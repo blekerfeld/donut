@@ -1,5 +1,5 @@
 <?php
-// Donut 0.12-dev - Thomas de Roo - Licensed under MIT
+// Donut 0.12-dev - Emma de Roo - Licensed under MIT
 // file: admin.structure.class.php
 
 class pThreadStructure extends pStructure{
@@ -33,7 +33,7 @@ class pThreadStructure extends pStructure{
 
 	protected function delete($id){
 		// checkdate(month, day, year)
-		if(pUser::checkPermission(-4) OR pUser::read('id') == $this->_threadsByID[$id]['user_id'])
+		if((new pUser)->checkPermission(-4) OR (new pUser)->read('id') == $this->_threadsByID[$id]['user_id'])
 			$this->dataModel->complexQuery("DELETE FROM threads WHERE section = '".$this->_section."' AND ((id = $id) OR (thread_id = $id));");
 	}
 
@@ -41,7 +41,7 @@ class pThreadStructure extends pStructure{
 	public function render(){
 
 		// Since no parser is used, the permission check needs to be done here
-		if(!pUser::checkPermission($this->_meta['permission'][$this->_section]))
+		if(!(new pUser)->checkPermission($this->_meta['permission'][$this->_section]))
 			return p::Out("<div class='btCard minimal admin'>".pTemplate::NoticeBox('fa-info-circle fa-12', DA_PERMISSION_ERROR, 'danger-notice')."</div>");
 
 		if(isset(pRegister::arg()['action'])){
@@ -66,7 +66,7 @@ class pThreadStructure extends pStructure{
 			$dfs->add(new pDataField('thread_id', "Thread ID", '1%', 'hidden', true, true, true, '', false, (isset(pRegister::arg()['thread_id']) ? pRegister::arg()['thread_id'] : 0)));
 			$dfs->add(new pDataField('title', "Title", '67%', 'input', true, true, true, '', false));		
 			$dfs->add(new pDataField('content', "Content", '67%', 'markdown', true, true, true, '', false));		
-			$dfs->add(new pDataField('user_id', "", '', 'hidden', true, true, true, '', false, pUser::read('id')));
+			$dfs->add(new pDataField('user_id', "", '', 'hidden', true, true, true, '', false, (new pUser)->read('id')));
 			$dfs->add(new pDataField('post_date', "", '', 'hidden', true, true, true, '', false, "NOW()"));
 			$dfs->add(new pDataField('update_date', "", '', 'hidden', true, true, true, '', false, "NOW()"));
 	

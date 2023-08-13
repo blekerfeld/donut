@@ -1,5 +1,5 @@
 <?php
-// Donut 0.12-dev - Thomas de Roo - Licensed under MIT
+// Donut 0.12-dev - Emma de Roo - Licensed under MIT
 // file: structure.class.php
  
 
@@ -55,16 +55,17 @@ class pStructure{
 		foreach($this->_prototype as $key => $app){
 			if(isset($app['tab_sub_items']))
 				foreach($app['tab_sub_items'] as $keySI => $item)
-					if(!pUser::checkPermission($this->itemPermission($item['section'])))
+					if(!(new pUser)->checkPermission($this->itemPermission($item['section'])))
 						unset($this->_prototype[$key]['tab_sub_items'][$keySI]);
 		}
 
 		if(isset($this->_meta['tabs']) AND p::NoAjax()){
 			foreach($this->_prototype as $app)
 				if(isset($app['show_tab']) AND $app['show_tab'] == true)
-					if(pUser::checkPermission($this->itemPermission($app['section_key'])) OR isset($app['tab_sub_items'])){
-						$this->_tabs->addLink($this->_app . '_' . $app['section_key'], (isset($app['tab_name']) ? $app['tab_name'] : $app['surface']), p::Url('?'.$this->_app.'/'.$app['section_key']) , ($this->_section == $app['section_key'] OR (isset($app['tab_sections']) AND in_array($this->_section, $app['tab_sections']))), (isset($app['tab_sub_items']) ? $app['tab_sub_items'] : NULL));
+					if((new pUser)->checkPermission($this->itemPermission($app['section_key'])) OR isset($app['tab_sub_items'])){
+						$this->_tabs->addLink($this->_app . '_' . $app['section_key'], (isset($app['tab_name']) ? $app['tab_name'] : $app['surface']), ((isset($app['tab_link']) ? $app['tab_link'] : p::Url('?'.$this->_app.'/'.$app['section_key'])) . $addArgs) , ($this->_section == $app['section_key'] OR (isset($app['tab_sections']) AND in_array($this->_section, $app['tab_sections']))), (isset($app['tab_sub_items']) ? $app['tab_sub_items'] : NULL), (isset($app['tab_class']) ? $app['tab_class'] : ''));
 					}
+			}
 			p::Out($this->_tabs);
 		}
 	}

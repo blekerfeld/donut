@@ -1,5 +1,5 @@
 <?php
-// Donut 0.12-dev - Thomas de Roo - Licensed under MIT
+// Donut 0.12-dev - Emma de Roo - Licensed under MIT
 // file: actions.class.php
 
 
@@ -39,7 +39,7 @@ class pAction{
 
 	public function render($id = -1, $linked = null){
 
-		if(!pUser::checkPermission($this->_permission))
+		if(!(new pUser)->checkPermission($this->_permission))
 			return false;
 
 		// Remove-actions need to be done a little different

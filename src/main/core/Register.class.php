@@ -1,5 +1,5 @@
 <?php
-// Donut 0.12-dev - Thomas de Roo - Licensed under MIT
+// Donut 0.12-dev - Emma de Roo - Licensed under MIT
 // file: Register.class.php
 
 // For jQuery style fetching of the url information! :)
@@ -22,7 +22,7 @@ class pRegister{
 		return self::$objectcache[$section];
 	}
 
-	public function cacheCallBack($section, $id, $function, $arg = array()){
+	public static function cacheCallBack($section, $id, $function, $arg = array()){
 		if(!isset(self::$objectcache[$section][$id]))
 			self::$objectcache[$section][$id] = call_user_func_array($function, $arg);
 		return self::$objectcache[$section][$id];
