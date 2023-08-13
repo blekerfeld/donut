@@ -1,5 +1,5 @@
 <?php
-// Donut 0.12-dev - Thomas de Roo - Licensed under MIT
+// Donut 0.12-dev - Emma de Roo - Licensed under MIT
 // file: admin.structure.class.php
 
 class pSimpleStructure extends pStructure{
@@ -24,7 +24,7 @@ class pSimpleStructure extends pStructure{
 	public function render(){
 
 		// Since no parser is used, the permission check needs to be done here
-		if(!pUser::checkPermission($this->_dispatchStructure['permission']))
+		if(!(new pUser)->checkPermission($this->_dispatchStructure['permission']))
 			return p::Out("<div class='btCard minimal admin'>".pTemplate::NoticeBox('fa-info-circle fa-12', DA_PERMISSION_ERROR, 'danger-notice')."</div>");
 			
 		// Call the render function of the simple view

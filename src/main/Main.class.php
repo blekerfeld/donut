@@ -2,7 +2,7 @@
 
 // 	Donut: dictionary toolkit 
 // 	version 0.1
-// 	Thomas de Roo - MIT License
+// 	Emma de Roo - MIT License
 //	++	File:Main.class.php
 
 
@@ -179,12 +179,12 @@ class pMain{
 		return true;
 	}
 
-	public function Escape($value){
+	public static function Escape($value){
 		// Return a proper escaped version of our value
 		return trim(self::$db->quote($value), "'");
 	}
 
-	public function Quote($value){
+	public static function Quote($value){
 		return self::$db->quote(self::Escape($value));
 	}
 
@@ -193,7 +193,7 @@ class pMain{
 		return self::$db->quote($value);
 	}
 
-	public function MarkDown($text, $block = true, $examples = true, $num = false){
+	public static function MarkDown($text, $block = true, $examples = true, $num = false){
 	
 		// Parsing (@) to numbred examples:
 		if($examples){

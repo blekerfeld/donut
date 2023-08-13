@@ -1345,7 +1345,7 @@ CREATE TABLE `users` (
 INSERT INTO `users` (`id`, `longname`, `username`, `password`, `reg_date`, `role`, `avatar`, `activated`, `might_be_banned`, `email`, `disable_notifications`, `about`) VALUES
 (-1,  'system', 'SYSTEM', 'root', '2017-09-23 21:10:42',  0,  '', 1,  0,  'root@SYSTEM',  1,  ''),
 (0, 'Guest',  'guest',  '', '2017-08-24 12:04:51',  4,  '', 1,  0,  'niet@veel.com',  0,  ''),
-(1, 'Thomas de Roo',  'blekerfeld', '70674e943bcd2ce395ff619cff93c980f1cec914445cd69a30d612c7988e9966', '2017-08-24 16:09:43',  0,  'https://avatars3.githubusercontent.com/u/13293128?v=3&s=460',  1,  0,  'thomas@localhost', 0,  ''),
+(1, 'Emma de Roo',  'blekerfeld', '70674e943bcd2ce395ff619cff93c980f1cec914445cd69a30d612c7988e9966', '2017-08-24 16:09:43',  0,  'https://avatars3.githubusercontent.com/u/13293128?v=3&s=460',  1,  0,  'thomas@localhost', 0,  ''),
 (3, 'Mr. Donut',  'donut',  'e69fd784f93f82eb6bf5148f0a0e3f5282df5ac10427ab3d6704799adca95a07', '2017-08-24 12:04:51',  0,  '', 1,  0,  'niet@veel.com',  0,  '');
 
 DROP TABLE IF EXISTS `user_activation`;

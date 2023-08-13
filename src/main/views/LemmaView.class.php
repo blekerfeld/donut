@@ -1,5 +1,5 @@
 <?php
-// Donut 0.12-dev - Thomas de Roo - Licensed under MIT
+// Donut 0.12-dev - Emma de Roo - Licensed under MIT
 // file: Entry.class.php
 
 //$structure, $icon, $surface, $table, $itemsperpage, $dfs, $actions, $actionbar, $paginated, $section, $app = 'dictionary-admin')
@@ -8,7 +8,7 @@ class pLemmaView extends pEntryView{
 
 
 	public function renderInfo(){
-		if(pUser::noGuest() OR CONFIG_ALWAYS_SHOW_LAST_UPDATE == 1)
+		if((new pUser)->noGuest() OR CONFIG_ALWAYS_SHOW_LAST_UPDATE == 1)
 			return "<span class='small pDate'>«  ".sprintf(LEMMA_WORD_ADDED, "<a href='".p::Url('?auth/profile/'.$this->_data['created_by'])."'>".(new pUser($this->_data['created_by']))->read('username')."</a>", p::Date($this->_data['created']))." »</span><br />";
 	}
 
@@ -136,7 +136,7 @@ class pLemmaView extends pEntryView{
 
 
 		p::Out('<div class="dWordWrapper">'.$hitTranslation.'<strong class="dWord"><span class="native">'.$linkToWord."</span>".$this->renderIPA('small')."</strong><span class='dType'> · ".$this->_data->generateInfoString()."</span> ".($this->_data->_entry['hidden'] == 1 ? "<span class='pExtraInfo'>".(new pIcon('fa-eye-slash', 12))." ".LEMMA_HIDDEN."</span>" : '')."
-			".((count($this->_data->_translations) == 0 AND (pUser::checkPermission(-2)) AND $noTransStatus == false) ? "<span class='pExtraInfo'>".(new pIcon('fa-exclamation-triangle', 12))." ".LEMMA_NEED_TRANSLATIONS."</span>" : '')." <br />".$this->parseTranslations($this->_data->_translations, true)."</div>");
+			".((count($this->_data->_translations) == 0 AND ((new pUser)->checkPermission(-2)) AND $noTransStatus == false) ? "<span class='pExtraInfo'>".(new pIcon('fa-exclamation-triangle', 12))." ".LEMMA_NEED_TRANSLATIONS."</span>" : '')." <br />".$this->parseTranslations($this->_data->_translations, true)."</div>");
 	}
 
 	private function renderIPA($class = ''){

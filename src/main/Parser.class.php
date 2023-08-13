@@ -1,5 +1,5 @@
 <?php
-// Donut 0.12-dev - Thomas de Roo - Licensed under MIT
+// Donut 0.12-dev - Emma de Roo - Licensed under MIT
 // file: parser.class.php
 
 
@@ -113,7 +113,7 @@ class pParser{
 	public function render(){
 
 		// We can only render if we are allowed to 
-		if(pUser::checkPermission($this->_permission))
+		if((new pUser)->checkPermission($this->_permission))
 			return $this->_handler->render();
 		else{
 			return p::Out("<div class='btCard minimal admin'>".pTemplate::NoticeBox('fa-info-circle fa-12', DA_PERMISSION_ERROR, 'danger-notice')."</div>");
@@ -123,7 +123,7 @@ class pParser{
 	// Passes on the action to the object
 	public function passOnAction($action){
 
-		if(pUser::checkPermission($this->_permission))
+		if((new pUser)->checkPermission($this->_permission))
 			return $this->_handler->catchAction($action, $this->_data['view']);
 		else{
 			return p::Out("<br />".pTemplate::NoticeBox('fa-info-circle fa-12', DA_PERMISSION_ERROR_ACTION, 'danger-notice'));
@@ -139,7 +139,7 @@ class pParser{
 	public function action($name, $ajax, $linked){
 
 		// Permission check again
-		if(!pUser::checkPermission($this->_permission))
+		if(!(new pUser)->checkPermission($this->_permission))
 			return p::Out("<div class='btCard minimal admin'>".pTemplate::NoticeBox('fa-info-circle fa-12', DA_PERMISSION_ERROR, 'danger-notice')."</div>");
 
 		// There are six magic actions that are coordinated by this function:

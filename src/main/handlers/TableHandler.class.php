@@ -1,5 +1,5 @@
 <?php
-// Donut 0.12-dev - Thomas de Roo - Licensed under MIT
+// Donut 0.12-dev - Emma de Roo - Licensed under MIT
 // file: TableObject.class.php
 
 class pTableHandler extends pHandler{
@@ -75,7 +75,7 @@ class pTableHandler extends pHandler{
 			if($this->_linked != null){
 				p::Out("<td>");
 				foreach($this->_linked as $key => $link){
-					if(pUser::checkPermission($this->itemPermission(((isset($link->structure[$this->_section]['outgoing_links'][$key]['double_parent'])) ? $this->_section : $key), pStructure::$permission))){
+					if((new pUser)->checkPermission($this->itemPermission(((isset($link->structure[$this->_section]['outgoing_links'][$key]['double_parent'])) ? $this->_section : $key), pStructure::$permission))){
 						$action = new pAction('link-table', "&#x205F; ".$link->structure[$this->_section]['outgoing_links'][$key]['surface'], $link->structure[$this->_section]['outgoing_links'][$key]['icon'], 'small table-link', null, null, ((isset($link->structure[$this->_section]['outgoing_links'][$key]['double_parent'])) ? $this->_section : $key), $link->_app);
 
 						// Counting the links

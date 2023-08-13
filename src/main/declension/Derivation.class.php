@@ -1,7 +1,7 @@
 <?php
 // 	Donut: dictionary toolkit 
 // 	version 0.1
-// 	Thomas de Roo - MIT License
+// 	Emma de Roo - MIT License
 //	++		File: derivation.class.php
 // 	Represents a derivation
 

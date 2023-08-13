@@ -1,5 +1,5 @@
 <?php 	
-// Donut 0.12-dev - Thomas de Roo - Licensed under MIT
+// Donut 0.12-dev - Emma de Roo - Licensed under MIT
 // file: index.php
 
 // Doing our thing and kill the page afterwards...

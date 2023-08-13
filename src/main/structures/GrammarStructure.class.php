@@ -1,5 +1,5 @@
 <?php
-// Donut 0.12-dev - Thomas de Roo - Licensed under MIT
+// Donut 0.12-dev - Emma de Roo - Licensed under MIT
 // file: structure.class.php
 
 class pGrammarStructure extends pStructure{
@@ -38,7 +38,7 @@ class pGrammarStructure extends pStructure{
 		}
 
 		// Tooltipster time!
-		p::Tooltipster();
+		(new p)->Tooltipster();
 		
 	}
 

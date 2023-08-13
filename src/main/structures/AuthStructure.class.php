@@ -1,5 +1,5 @@
 <?php
-// Donut 0.12-dev - Thomas de Roo - Licensed under MIT
+// Donut 0.12-dev - Emma de Roo - Licensed under MIT
 // file: admin.structure.class.php
 
 class pAuthStructure extends pStructure{
@@ -34,11 +34,11 @@ class pAuthStructure extends pStructure{
 			p::Out($this->_view->warningPassword2());
 			$error = true;
 		}
-		if(!pUser::mailUnique(pRegister::post()['email'])){
+		if(!(new pUser)->mailUnique(pRegister::post()['email'])){
 			p::Out($this->_view->warningMail());
 			$error = true;
 		}
-		if(!pUser::usernameUnique(pRegister::post()['username'])){
+		if(!(new pUser)->usernameUnique(pRegister::post()['username'])){
 			p::Out($this->_view->warningUsername());
 			$error = true;
 		}
@@ -53,7 +53,7 @@ class pAuthStructure extends pStructure{
 				if($CONFIG_REGISTER_ADMIN_ACTIVATION)
 					p::Out($this->_view->succesActivate());
 				else{
-					pUser::instantActivate($userID);
+					(new pUser)->instantActivate($userID);
 					p::Out($this->_view->succesActivated());
 				}
 			}
@@ -71,7 +71,7 @@ class pAuthStructure extends pStructure{
 		if(isset(pRegister::post()['username'], pRegister::post()['password']) AND empty(pRegister::post()['username']) OR empty(pRegister::post()['password']))
 			return p::Out($this->_view->warning());
 		// Show some succes feedback, plus a redirect
-		$doUserCheck = pUser::checkCre(pRegister::post()['username'], pRegister::post()['password']);
+		$doUserCheck = (new pUser)->checkCre(pRegister::post()['username'], pRegister::post()['password']);
 		if($doUserCheck->rowCount() == 1){
 			if($doUserCheck->fetchAll()[0]['activated'] != 0){
 				if(!((new pUser)->logIn(pRegister::post()['username'])))
@@ -100,7 +100,7 @@ class pAuthStructure extends pStructure{
 	public function render(){
 
 		// Since no parser is used, the permission check needs to be done here
-		if(!pUser::checkPermission($this->_permission))
+		if(!(new pUser)->checkPermission($this->_permission))
 			return p::Out("<div class='btCard minimal admin'>".pTemplate::NoticeBox('fa-info-circle fa-12', DA_PERMISSION_ERROR, 'danger-notice')."</div>");
 
 		if($this->_section == 'profile'){
@@ -116,7 +116,7 @@ class pAuthStructure extends pStructure{
 		}
 
 		if($this->_section == 'activate' and isset(pRegister::arg()['token'])){
-			if(pUser::activate(pRegister::arg()['token'], $_SERVER['REMOTE_ADDR']) != false)
+			if((new pUser)->activate(pRegister::arg()['token'], $_SERVER['REMOTE_ADDR']) != false)
 				p::Out(pTemplate::NoticeBox('fa-check', AUTH_ACTIVATE_SUCCES, 'succes-notice'));
 			else	
 				p::Out(pTemplate::NoticeBox('fa-warning', AUTH_ACTIVATE_ERROR, 'danger-notice'));	
@@ -130,7 +130,7 @@ class pAuthStructure extends pStructure{
 			if(CONFIG_ENABLE_REGISTER == 0)
 				return p::Url('?home', true);
 
-			if(pUser::noGuest())
+			if((new pUser)->noGuest())
 				return p::Url('?home', true);
 
 			if(isset(pRegister::arg()['ajax']))
@@ -152,7 +152,7 @@ class pAuthStructure extends pStructure{
 		if(isset(pRegister::arg()['ajax']))
 			return $this->logInAjax();
 
-		if(pUser::noGuest())
+		if((new pUser)->noGuest())
 			return p::Url('?home', true);
 
 		p::Out($this->_view->loginForm());

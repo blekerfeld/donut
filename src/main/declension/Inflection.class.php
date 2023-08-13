@@ -1,5 +1,5 @@
 <?php
-// Donut 0.12-dev - Thomas de Roo - Licensed under MIT
+// Donut 0.12-dev - Emma de Roo - Licensed under MIT
 // file: inflection.class.php
 
 // an inflection
@@ -98,7 +98,7 @@ class pInflection{
 
 		$regex_inner = '';
 
-		$contexts = pTwolc::parseContext($negOver, (!$start));
+		$contexts = (new pTwolc)->parseContext($negOver, (!$start));
 		$regex_inner .= implode('', $contexts);
 
 		if($regex_inner == '')

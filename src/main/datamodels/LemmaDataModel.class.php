@@ -1,5 +1,5 @@
 <?php
-// Donut 0.12-dev - Thomas de Roo - Licensed under MIT
+// Donut 0.12-dev - Emma de Roo - Licensed under MIT
 // file: lemmaDataModel.class.php
 
 
@@ -26,7 +26,7 @@ class pLemmaDataModel extends pDataModel{
 			// Creating the lemma
 			$lemmaResult = new pLemma($lemma, 'words');
 			// Double check for hidden lemma's
-			if((!pUser::noGuest() OR !pUser::checkPermission(-2)) AND $lemmaResult->read('hidden') == '1')
+			if((!(new pUser)->noGuest() OR !(new pUser)->checkPermission(-2)) AND $lemmaResult->read('hidden') == '1')
 				break;
 			if($function != null)
 				$lemmaResult = $function($lemmaResult);
@@ -55,7 +55,7 @@ class pLemmaDataModel extends pDataModel{
 		$extra = '';
 
 		// If we don't have permission, we cannot find hidden lemmas
-		if(!pUser::noGuest() OR !pUser::checkPermission(-2))
+		if(!(new pUser)->noGuest() OR !(new pUser)->checkPermission(-2))
 			$extra = " (words.hidden = 0) AND ";
 
 		// The search query for lang-0: monolingual, searching both lemmata and translations
@@ -119,7 +119,7 @@ class pLemmaDataModel extends pDataModel{
 				// Creating the lemma
 				$lemmaResult = new pLemma($fetched->word_id, 'words');
 				// Double check for hidden lemma's
-				if((!pUser::noGuest() OR !pUser::checkPermission(-2)) AND $lemmaResult->read('hidden') == '1')
+				if((!(new pUser)->noGuest() OR !(new pUser)->checkPermission(-2)) AND $lemmaResult->read('hidden') == '1')
 					break;
 
 				if(isset($fetched->translation))

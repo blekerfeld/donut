@@ -1,5 +1,5 @@
 <?php
-// Donut 0.12-dev - Thomas de Roo - Licensed under MIT
+// Donut 0.12-dev - Emma de Roo - Licensed under MIT
 // file: TwoLevelCompiler.class.php
 
 // the Two Level Compiler
@@ -8,7 +8,7 @@ class pTwolc{
 
 	protected $_rules, $_parsedRules, $_leftContexts, $_rightContexts, $_pending;
 
-	public function __construct($rules){
+	public function __construct($rules = []){
 		$this->_rules = $rules;
 	}
 

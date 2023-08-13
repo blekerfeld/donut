@@ -1,5 +1,5 @@
 <?php
-// Donut 0.12-dev - Thomas de Roo - Licensed under MIT
+// Donut 0.12-dev - Emma de Roo - Licensed under MIT
 // file: admin.structure.class.php
 
 class pAdminStructure extends pStructure{
@@ -7,7 +7,7 @@ class pAdminStructure extends pStructure{
 	public function prepareMenu(){
 		// We don't accept double items
 		foreach($this->_prototype as $item)
-			if(isset($item['menu']) && pUser::checkPermission($this->itemPermission($item['section_key'])))
+			if(isset($item['menu']) && (new pUser)->checkPermission($this->itemPermission($item['section_key'])))
 				$this->_menu[$item['menu']]['items'][] = $item;
 	}
 
@@ -38,7 +38,7 @@ class pAdminStructure extends pStructure{
 
 		foreach($this->_menu as $key => $main){
 			// Permission check
-			if(pUser::checkPermission($this->itemPermission($main['section'])) OR isset($main['items'])){
+			if((new pUser)->checkPermission($this->itemPermission($main['section'])) OR isset($main['items'])){
 				$output .= "<a href='".(isset($main['section']) ? p::Url("?".$this->_app."/".$main['section']) : '')."' class='".(($this->checkActiveMain($key) OR (isset(pRegister::arg()['section'], $main['section']) AND pRegister::arg()['section'] == $main['section'])) ? 'active' : '')." ttip' title='
 					<strong>".htmlspecialchars($main['surface'])."</strong>";
 
@@ -113,7 +113,7 @@ class pAdminStructure extends pStructure{
 		}
 
 		// Tooltipster time!
-		p::Tooltipster();
+		(new p)->Tooltipster();
 
 		p::Out("</div>");
 
