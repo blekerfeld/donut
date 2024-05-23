@@ -142,7 +142,7 @@ class pSetHandler extends pHandler{
 			
 			$explodeName = explode('/', pRegister::post()['admin_form_name']);
 			if(trim($explodeName[max(array_keys($explodeName))]) == ''){
-				echo pTemplate::NoticeBox('fa-warning fa-12', 'Folder name cannot be empty.', 'warning-notice ajaxMessage');
+				echo pTemplate::NoticeBox('fa-exclamation-triangle fa-12', 'Folder name cannot be empty.', 'warning-notice ajaxMessage');
 				echo "<script type='text/javascript'>
 				$('.saving').slideUp(function(){
 					$('.ajaxMessage').slideDown();

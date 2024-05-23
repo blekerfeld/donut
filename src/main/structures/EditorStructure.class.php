@@ -11,7 +11,7 @@ class pEditorStructure extends pStructure{
 	
 
 		if(!isset(pRegister::arg()['ajax']))
-			p::Out("<div class='home-margin pEntry'>");
+			p::Out("<div class='pEntry'>");
 
 		if(!isset(pRegister::arg()['ajax']) && (isset(pRegister::arg()['action']) && pRegister::arg()['action'] == 'edit')){
 			if(isset(pRegister::arg()['section']))

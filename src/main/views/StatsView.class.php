@@ -12,10 +12,7 @@ class pStatsView extends pSimpleView{
 
 	public function renderSearch(){
 		p::Out("<div class='home-margin hSearchResults-inner'>");
-		p::Out("<div class='card-tabs-bar titles'>
-			<a class='ssignore'>Hoi</a>
-		</div><br />");
-		p::Out("<span class='markdown-body'><h3>".(new pIcon('fa-search'))." ".sprintf(STATS_MOSTSEARCH, 50)."</h3></span><br /><div class='statsHolder'>");
+		p::Out("<span class='markdown-body'><h3>".(new pIcon('fa-search'))." ".sprintf(STATS_MOSTSEARCH, 10)."</h3></span><br /><div class='statsHolder'>");
 
 		$userCollect = array();
 

@@ -52,12 +52,12 @@ class pMenuView extends pLayoutPart{
 					$output .= "<a href='".(isset($this->_meta[$key]['app']) ? p::Url("?".$this->_meta[$key]['app']) : 'javascript:void(0);')."' class=' ".(isset($this->_meta[$key]['class']) ? $this->_meta[$key]['class'] : '')." ".($this->checkActiveMain($key) ? 'active' : '')." ttip_menu'";
 
 					if(isset($this->_meta[$key]['subitems']) AND $this->checkSubItemPermission($this->_meta[$key]['subitems'])){
-						$output .= " title='";
+						$output .= " title='<div class=\"tooltipster-inner-menu\">";
 						foreach($this->_meta[$key]['subitems'] as $item){
 							if((new pUser)->checkPermission($this->itemPermission($key)))
 								$output .= "<a href=\"".p::Url("?".$item['app'])."\" class=\"ttip-sub nav ".($this->checkActiveSub($item['app']) ? 'active' : '')."\">".(new pIcon($item['icon'], 12))." ". htmlspecialchars($item['name'])."</a>";
 						}
-						$output .= "'";	
+						$output .= "</div>'";	
 					}
 					$items++;
 					$output .= ">".(isset($this->_meta[$key]['icon']) ? (new pIcon($this->_meta[$key]['icon'], 12))."" : '').$this->_meta[$key]['name']."</a>";

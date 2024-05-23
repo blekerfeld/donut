@@ -1,20 +1,41 @@
 /* Responsive theming */
 @media only screen and (max-width: 700px) {
 
+  .holder{
+    margin: 0!important;
+    padding: 0!important;
+  }
+
    .hSearch a.button.search{
     display: none;
    }
 
     .header.dictionary{
-      padding: 5px!important;
-      margin-bottom: 40px;
-      margin-left: 2px;
-      margin-right: 2px;
+      padding: 0!important;
+      margin: 0!important;
+      margin-bottom: 0px!important;
+      padding-bottom: 30px!important;
     }
 
+    #wordsearch{
+      float: none!important;
+      margin-bottom: 10px;
+    }
+
+    .absolute_header{
+      
+      padding: 0!important;
+      margin: 0!important;
+      margin-bottom: 10px!important;
+    }
+
+    .absolute_header .inner{
+      padding:0;
+      margin:0;
+    }
 
     .header.dictionary.home{
-      padding: 10px!important;
+      
       margin-bottom: 10px;
     }
 
@@ -143,34 +164,9 @@
     opacity: 1;
    }
 
-   .absolute_header{
-      margin-left: 0px;
-      text-align: center;
-      margin-right: 0px;
-      padding: 5px!important;
-   }
 
-   .outerwrap{
-    margin: 5px!important;
-    padding-top: 0px;
-   }
 
-     div.logotop{
-      background: #3B3C53;
-      text-align: center;
-      margin-bottom: 10px;
-      color: snow;
-      float: none;
-      display: block;
-      margin: 0 auto;
-      margin-top: -20px;
-      margin-left: -18px;
-      width: calc(100vw + 2px);
-      padding: 5px;
-      margin-bottom: 10px;
-      clear: both;
-     }
-
+   
      div.nav{
   
      }

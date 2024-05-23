@@ -6,7 +6,7 @@
 class pTablesheetView extends pView{
 
 	public function tablesheetForm($edit, pParadigm $paradigm = null){
-		
+		p::Out("<div class='saving hide'>".pTemplate::loadDots()."</div>");
 		// The lexical category
 
 		$type = $this->_data->dataModel->data()->fetchAll()[0];
@@ -14,14 +14,12 @@ class pTablesheetView extends pView{
 		if($edit)
 			$mode = $paradigm->_data;
 
-
-
 		p::Out("<br /><div class='card-tabs-bar titles border'>");
 		foreach($this->_data->_types as $typeFetch)
 			p::Out("<a class='".($typeFetch['id'] == $type['id'] ? 'active' : '')."' href='".p::Url('?grammar/tablesheet/new/'.$typeFetch['id'])."'>".ucfirst($typeFetch['name'])."</a>");
 		p::Out("</div>");
 
-			p::Out("<div class='saving hide'>".pTemplate::loadDots()."</div>");
+			
 			p::Out("<div class='ajaxSave rulesheet-margin'></div>");
 
 		// p::Out("<div class='rulesheet-header'>".p::Markdown("## ".ucfirst($type['name'])." - inflection tables")."</div><br />");

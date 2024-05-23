@@ -8,6 +8,7 @@ class pGrammarStructure extends pStructure{
 
 	public function render(){
 
+
 		$this->doTabs();
 
 		// If there is an offset, we need to define that
@@ -35,8 +36,6 @@ class pGrammarStructure extends pStructure{
 				$this->_parser->runData();
 			$this->_parser->render();
 		}
-
-
 
 		// Tooltipster time!
 		(new p)->Tooltipster();

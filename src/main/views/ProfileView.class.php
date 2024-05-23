@@ -17,7 +17,7 @@ class pProfileView extends pSimpleView{
 			$this->_user = new pUser(pRegister::arg()['id']);
 		} catch (Exception $e) {
 			pTemplate::setTitle(LOGIN_USERNOTFOUND);
-			p::Out(pTemplate::NoticeBox('fa-warning', LOGIN_USERNOTFOUND, 'danger-notice'));
+			p::Out(pTemplate::NoticeBox('fa-exclamation-triangle', LOGIN_USERNOTFOUND, 'danger-notice'));
 			return false;
 		}
 

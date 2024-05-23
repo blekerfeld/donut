@@ -30,6 +30,10 @@ class pUser{
 		
 	}
 
+	public function linkOOP(){
+		return "<a href='".p::Url('?auth/profile/').self::$id."'>".(self::read('longname') != '' ? self::read('longname') : self::read('username'))."</a>";
+	}
+
 	public static function link(){
 		return "<a href='".p::Url('?auth/profile/').self::$id."'>".(self::read('longname') != '' ? self::read('longname') : self::read('username'))."</a>";
 	}

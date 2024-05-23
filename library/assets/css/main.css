@@ -47,7 +47,7 @@ html, body {
   margin: 0;
   box-sizing: border-box;
   height:100%;
-  background: #f5f6f7 repeat;
+  background: #F6F6F6 url(bg.png) repeat;
   padding: 0;
   font-family: Noto Sans, Calibri, Sans;
   font-size: 16px;
@@ -215,6 +215,14 @@ textarea:focus, input:focus {
   opacity: 1;
 }
 
+span span.hideTillHover{
+  display: none;
+}
+
+span:hover span.hideTillHover{
+  display: inline-block;
+}
+
 .small-caps.title {
   font-size: 17px;
   font-weight: bolder;
@@ -253,6 +261,14 @@ span.tab, div.tab {
   margin: 0!important;
 }
 
+.no-margin-top{
+  margin-top: 0!important;
+}
+
+.no-padding-top{
+  margin-top: 0!important;
+}
+
 .margin-bottom-10{
   margin-bottom: 10px!important;
 }
@@ -285,7 +301,6 @@ span.tab, div.tab {
 
 
 
-
 .no-border{
   border: none!important;
 }
@@ -300,13 +315,9 @@ div.holder{
 
 div.outerwrap {
   margin-top: 15px;
-  min-height: 500px;
-  background: white;
-  margin-bottom: 0px;
 
 
   padding-top: 10px;
-  border-radius: 5px!important;
   padding-bottom: 10px;
 }
 
@@ -315,7 +326,7 @@ div.outerwrap.tabbed{
 }
 
 div.outerwrap.no-border{
- 
+ background: transparent;
 }
 
 .ulWrap {
@@ -358,6 +369,15 @@ div.outerwrap.no-border{
   padding-bottom: 0px;
 }
 
+.wiki.home-margin{
+  padding-top: 10px!important;
+}
+
+div.pEntry.proper{
+  padding: 12px;
+  padding-top: 5px;
+}
+
 div.pEntry-inner{
   padding: 12px;
   padding-top: 5px;
@@ -372,7 +392,7 @@ div.pEntry-inner{
   opacity: .8;
   text-decoration: none;
   letter-spacing: .1em;
-  font-family: Libre Franklin;
+  font-family: Libre Franklin, Noto Sans, Calibri;
   padding-bottom: 20px;
 }
 
@@ -647,7 +667,7 @@ img.dFlag:hover {
 strong.dWord {
   font-size: 22px;
   cursor: pointer;
-  font-family: Merriweather;
+  font-family: Merriweather, Gentium, Noto Sans;
   font-weight: bolder;
 }
 
@@ -655,7 +675,7 @@ strong.dWordTranslation a{
   font-size: 16px;
   font-weight: normal;
   color: black!important;
-  font-family: Merriweather;
+  font-family: Merriweather, Gentium, Noto Sans;
 }
 
 strong.dWordTranslation a:hover{
@@ -674,7 +694,7 @@ strong.dWord a {
 }
 
 .dHitTranslation{
-  font-family: Libre Franklin;
+  font-family: Libre Franklin, Noto Sans, Calibri;
   font-style: normal;
   font-size: 13px;
   color: #a0a0a0;
@@ -683,6 +703,7 @@ strong.dWord a {
 .dQueryHighlight{
   border-bottom: 4px solid #333;
   color: black;
+  background: #FAF1C7;
 }
 
 .flaghome {
@@ -1022,13 +1043,12 @@ a.gramcat.active {
 input.nWord, textarea.nWord {
   font-size: 21px;
   color: #000!important;
-  font-family: Merriweather;
+  font-family: Merriweather, Gentium, Noto Sans;
   font-weight: bolder;
   display: inline-block;
   margin: 0 auto;
-  padding: 18px!important;
+  padding: 10px!important;
   border: rgba(150, 150, 150, 0.1) 1px solid ;
-  border-bottom: 1px solid #DDDDDD;
 }
 
 
@@ -1061,7 +1081,12 @@ strong.pWord {
   font-size: 30px;
   cursor: pointer;
   font-weight: bolder;
-  font-family: Merriweather;
+  font-family: Merriweather, Gentium, Noto Sans;
+}
+
+span.pDate{
+  color: #999;
+  opacity: .7;
 }
 
 strong.pWord.example{
@@ -1075,7 +1100,7 @@ span.pDerivationTitle {
 span.pDerivationTitle span.native a {
   font-weight: bold;
   color: #3a484e!important;
-  font-family: Merriweather;
+  font-family: Merriweather, Gentium, Noto Sans;
   font-size: 12px;
 }
 
@@ -1089,7 +1114,7 @@ strong.pDerivationName {
 }
 
 strong.pDerivation a {
-  font-family: Merriweather;
+  font-family: Merriweather, Gentium, Noto Sans;
   font-size: 12px;
   color: #68777d;
   font-weight: normal;
@@ -1131,6 +1156,7 @@ span.pIpa{
   font-size: 21px;
   font-weight: normal;
   opacity: .45;
+  font-family: sans-serif;
   cursor: pointer;
   transition: all .3s;
 }
@@ -1301,7 +1327,7 @@ span.pSectionTitle.first {
 
 span.pSectionTitle em.info {
   font-size: 16px;
-  font-family: Merriweather;
+  font-family: Merriweather, Gentium, Noto Sans;
   font-style: normal;
 }
 
@@ -1310,13 +1336,12 @@ span.pSectionTitle.extra {
   line-height: normal;
   font-weight: bolder;
   font-size: 16px;
-  font-family: Libre Franklin;
+  font-family: Libre Franklin, Noto Sans, Calibri;
   color: black;
   display: inline-block;
   padding: 7.5px;
   transition: opacity 0.1s ease;  
   border-bottom: 1px solid #eaecef;
-  background: #fff;
 }
 
 a.red-link{
@@ -1468,7 +1493,7 @@ img.dFlag:hover {
   text-align: center;
   border-bottom: 1px solid dotted;
   font-size: 16.5px;
-  font-family: Merriweather;
+  font-family: Merriweather, Gentium, Noto Sans;
 }
 
 .pSectionWrapper a.synonym.score-25 {
@@ -1810,7 +1835,13 @@ div.btChooser div.btOption:hover, div.btChooser div.btOptionDefault:hover{
 
 .tooltipster-inner{
   min-width: 180px;
+  min-height: 200px;
     z-index: -100;
+}
+
+.tooltipster-inner-menu
+{
+  min-width: 100px;
 }
 
 .tooltipster-content div.miniForm{
@@ -1853,6 +1884,16 @@ div.btTopField{
 div.btSource {
   margin-bottom: 5px;
   display: block;
+  padding: 5px;
+  border-radius: 5px;
+}
+
+div.btSource.accent{
+  background: #fafafa;
+  padding-top: 10px;
+  padding-bottom: 10px;
+  margin-top: 10px;
+  border: 1px #ddd dashed;
 }
 
 .tooltipster-content div.btSource{
@@ -2009,11 +2050,20 @@ div.rulesheet{
   margin-right: -15px;
 }
 
+div.card-tabs-border{
+  border: 1px solid #EAEAEA;
+  border-top: 0px;
+  border-radius: 0px 0px 5px 5px;
+  padding: 10px;
+  min-height: 460px;
+}
+
 div.rulesheet.border{
   border: 1px solid #EAEAEA;
   border-top: 0px;
   border-radius: 0px 0px 5px 5px;
   margin-right: 1px;
+  background: white;
   padding: 10px;
 }
 
@@ -2301,7 +2351,7 @@ table.inflections tr td:last-child{
 table.inflections td{
   padding: 4px;
   background: white;
-  font-family: Libre Franklin, sans-serif;
+  font-family: Libre Franklin, Noto Sans, Calibri, sans-serif;
 }
 
 table.inflections tr.heading td{
@@ -2377,8 +2427,8 @@ table.inflections tr.title td{
 
 textarea.gtEditor, textarea.minEditor{
   width: 100%;
-   border: rgba(150, 150, 150, 0.1) 1px solid;
-  padding: 20px;
+   border: #f6f6f6 1px solid;
+  padding: 10px;
   font-size: 15px;
   font-family: Noto Sans;
   min-height: 350px;
@@ -2517,3 +2567,66 @@ div.pLicense{
   text-align: left;
   font-size: 10px;
 }
+
+
+div.wiki{
+  margin: 20px;
+}
+
+div.btCard.wiki{
+  margin: 0;
+  padding: 0;
+}
+
+div.wiki div.main{
+  margin-top: -10px;
+  padding: 10px;
+}
+
+div.wiki div.side{
+  float: right;
+  padding: 10px;
+}
+
+div.wiki span.wMutation{
+
+}
+
+span.wMutation.green{
+  color:green;
+}
+
+span.wMutation.red{
+  color:darkred;
+}
+
+div.wiki span.wNote{
+  text-style: italic;
+}
+
+div.wiki div.side a.wSideButton{
+  display: block;
+  
+  text-align: center;
+  color: black;
+  font-weight: bold;
+  padding: 4px;
+  border: 1px #eee solid;
+
+}
+
+.gutter {
+    background-color: #eee;
+    margin-top: -42px;
+    background-repeat: no-repeat;
+    background-position: 50%;
+  }
+
+  .gutter:hover{
+    background-color: #ddd;
+  }
+
+  .gutter.gutter-horizontal {
+    background-image: url('vertical.png');
+    cursor: ew-resize;
+  }

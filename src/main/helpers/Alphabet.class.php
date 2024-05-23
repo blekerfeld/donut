@@ -55,7 +55,7 @@ class pAlphabet{
 		return $output;
 	}
 
-	public function getFilter($letter){
+	public static function getFilter($letter){
 		$alphabet_filter = self::getByStart($letter);
 		$output = array();
 		foreach($alphabet_filter as $alphabet_filter_instance) {
@@ -72,7 +72,7 @@ class pAlphabet{
 		return self::$dataModel->data()->fetchAll();
 	}
 
-	private function letterToNum($data) {
+	private static function letterToNum($data) {
 	    if($data == '' or $data == NULL)
 	        return false;
 
@@ -98,7 +98,7 @@ class pAlphabet{
 
 
 	// Accepts an array of lemma's or translation's
-	public function sort($lemmas){
+	public static function sort($lemmas){
 
 		// The alphabet needs to be loaded first
 		if(!self::$_init)

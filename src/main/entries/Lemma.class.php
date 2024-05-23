@@ -67,6 +67,11 @@ class pLemma extends pEntry{
 		return "<a class='".$class." 'href='".$this->renderSimpleHref($result)."'>".$this->_entry['native']."</a> ";
 	}
 
+	// This function renders a simple link to the entry page for the preview field
+	public function renderPreviewLink($result = false, $extra = '', $class = ''){
+		return "<a class='".$class." 'href='javascript:void(0)' onClick='$(\".preview-load\").load(\"".$this->renderSimpleHref($result)."/ajaxLoad/is:preview/ajax\");'>".$this->_entry['native']."</a> ";
+	}
+
 	// This function renders a simple link to the entry page
 	public function renderSimpleHref($result = false){
 		return p::Url('?entry/'.p::HashId($this->_entry['id']).($result ? '/is:result' : ''));
@@ -81,10 +86,6 @@ class pLemma extends pEntry{
 	// This function is called to render the lemma as an entry
 	public function renderEntry(){
 		
-		global $donut;
-
-
-
 		// Setting the page title
 		pTemplate::setTitle($this->_entry['native']);
 
@@ -129,8 +130,8 @@ class pLemma extends pEntry{
 	}
 
 	// This function is called by the search object onto the found lemmas, to print a pretty preview :)
-	public function renderSearchResult($searchlang = 0, $noTransStatus = false){
-		return $this->_view->renderSearchResult($searchlang, $noTransStatus);
+	public function renderSearchResult($searchlang = 0, $noTransStatus = false, $noPreview = false){
+		return $this->_view->renderSearchResult($searchlang, $noTransStatus, $noPreview);
 	}
 
 	public function renderDictionaryEntry(){

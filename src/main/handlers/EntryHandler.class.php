@@ -37,8 +37,10 @@ class pEntryHandler extends pHandler{
 			// Setting the page title
 			pTemplate::setTitle(sprintf(LEMMA_DISCUSS_TITLE, "*".(isset($this->_data[0]['native']) ? $this->_data[0]['native'] : (isset($this->_data[0]['translation']) ? $this->_data[0]['translation'] : ''))."*"));
 			// Title
+			p::Out("<div class='home-margin'>");
 			$this->_view->discussTitle();
 			p::Out(new pAjaxLoader(p::Url('?thread/'.$this->_section.'/view/'.pRegister::arg()['id'])));
+			p::Out("</div>");
 		}
 
 		if($action == 'proper'){
@@ -47,7 +49,7 @@ class pEntryHandler extends pHandler{
 
 	}
 
-	public function statsData($subsection = null, $extra = 50){
+	public function statsData($subsection = null, $extra = 10){
 		if($subsection == 'search'){
 			$dM = new pDataModel('search_hits');
 			$dM->complexQuery("SELECT count(word_id) AS num_word, word_id, user_id, hit_timestamp FROM search_hits GROUP BY word_id ORDER BY num_word DESC LIMIT $extra");
@@ -86,7 +88,7 @@ class pEntryHandler extends pHandler{
 		p::Out($pages);
 
 		foreach($entries as $lemma)
-			p::Out($lemma->renderSearchResult(0, true));
+			p::Out($lemma->renderSearchResult(0, true, true));
 
 	} 
 
@@ -94,7 +96,6 @@ class pEntryHandler extends pHandler{
 	protected function doRandomEntry(){
 		$dM = new pDataModel('words');
 		$random = $dM->complexQuery("SELECT id FROM words ORDER BY RAND() LIMIT 1")->fetchAll()[0];
-		echo "hoi!";
 		return p::Url('?entry/'.p::HashId($random['id']), true);
 	}
 
@@ -139,11 +140,18 @@ class pEntryHandler extends pHandler{
 			
 			$object->passActionBar($this->_actionbar);
 
-			if($proper)
+			p::Out("<div class='pEntry-inner'>");
+
+			if($proper){
+				if(isset(pRegister::arg()['is:preview']))
+					p::Out(pRegister::tabs()->changeClass('nomargin-preview titles float-right')->changeTitlePart('','')->removeLink('view'));
 				return $object->renderEntry();
-			else{
-				return p::Out(new pAjaxLoader(p::Url('?entry/'.$this->_section.'/'.pRegister::arg()['id'].'/proper/ajaxLoad')));
 			}
+			else{
+				return p::Out(new pAjaxLoader(p::Url('?entry/'.$this->_section.'/'.pRegister::arg()['id'].'/proper/ajaxLoad'.(isset(pRegister::arg()['is:preview']) ? '/is:preview' : ''))));
+			}
+
+			p::Out("</div>");
 
 		}
 	}

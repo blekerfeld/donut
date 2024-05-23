@@ -7,14 +7,9 @@
 	// The structure of the dictionary admin panel
 
 $saveStrings = array(null, SAVE, SAVING, SAVED_EMPTY, SAVED_ERROR, SAVED, SAVE_LINKBACK);
-
 $action_remove = array('remove', DA_DELETE, 'fa-trash', 'ttip-sub', null, null);
-
 $action_edit = array('edit', DA_EDIT, 'fa-edit', 'ttip-sub', null, null);
 
-
-// Datafields: __construct($name, $surface = '', $width= '20%', $type = '', $showTable = true, $showForm = true, $required = false, $class = '', $disableOnNull = false, $selection_values = null)
-// Action array: array('name', 'surface', 'icon', 'class', 'follow-up-tables', 'follow-up-field(s)')
 return array(
 		'MAGIC_META' => array(
 			'title' => DA_TITLE,
@@ -63,7 +58,7 @@ return array(
 			'type' => 'pTableHandler',
 			'surface' => DA_CONFIG_SURFACE,
 			'condition' => false,
-			'items_per_page' => 10,
+			'items_per_page' => 16,
 			'disable_pagination' => false,
 			'table' => 'config',
 			'datafields' => array(
@@ -75,7 +70,7 @@ return array(
 				'remove' => $action_remove,
 			),
 			'actions_bar' => array(
-				'new' => array('new', DA_LANG_NEW, 'fa-plus-circle', 'btAction no-float small', null, null),
+			
 			),
 			'save_strings' => $saveStrings,
 			'outgoing_links' => array(),

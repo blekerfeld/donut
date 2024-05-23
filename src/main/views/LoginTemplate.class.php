@@ -53,11 +53,11 @@ class pLoginView extends pView{
 	}
 
 	public function errorMessage(){
-		return pTemplate::NoticeBox('fa-warning fa-12', LOGIN_ERROR, 'danger-notice ajaxMessage')."<script type='text/javascript'>$('.saving').delay(1000).slideUp();$('.ajaxMessage').delay(2000).slideDown();</script>";
+		return pTemplate::NoticeBox('fa-exclamation-triangle fa-12', LOGIN_ERROR, 'danger-notice ajaxMessage')."<script type='text/javascript'>$('.saving').delay(1000).slideUp();$('.ajaxMessage').delay(2000).slideDown();</script>";
 	}
 
 	public function errorMessageNotActivated(){
-		return pTemplate::NoticeBox('fa-warning fa-12', LOGIN_ERROR_ACTIVATED, 'danger-notice ajaxMessage')."<script type='text/javascript'>$('.saving').delay(1000).slideUp();$('.ajaxMessage').delay(2000).slideDown();</script>";
+		return pTemplate::NoticeBox('fa-exclamation-triangle fa-12', LOGIN_ERROR_ACTIVATED, 'danger-notice ajaxMessage')."<script type='text/javascript'>$('.saving').delay(1000).slideUp();$('.ajaxMessage').delay(2000).slideDown();</script>";
 	}
 
 

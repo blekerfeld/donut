@@ -119,7 +119,7 @@ class pLemmaView extends pEntryView{
 		return new pEntrySection(($section == 'antonym' ? LEMMA_ANTONYMS : ($section == 'synonym' ? LEMMA_SYNONYMS : LEMMA_HOMOPHONES)), $output, $icon);
 	}
 
-	public function renderSearchResult($searchlang = 0, $noTransStatus = false, $noPreview){
+	public function renderSearchResult($searchlang = 0, $noTransStatus = false, $noPreview = true){
 		if(!($this->_data->_hitTranslation == null))
 			$hitTranslation = '<em class="dHitTranslation">'.p::Highlight($this->_data->_query, $this->_data->_hitTranslation, '<strong class="dQueryHighlight">', '</strong>').'</em> '.(new pIcon('arrow-right').' ');
 		else

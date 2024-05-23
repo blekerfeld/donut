@@ -78,7 +78,10 @@ div.card-tabs-bar.vertical a.active, div.card-tabs-bar.vertical a.dotted.active{
 }
 
 
-
+div.card-tabs-bar.selectorTabs-h{
+	margin-left: 0%;
+	margin-top: -35px;
+}
 
 div.card-tabs-bar.selectorTabs a.active, div.card-tabs-bar.selectorTabs-h a.active{
 	transition: border-color .3s ease;
@@ -105,6 +108,16 @@ div.card-tabs-bar a.disabled, div.card-tabs-bar a.gray{
 div.card-tabs-bar a.disabled i.fa, div.card-tabs-bar a.gray i.fa{
 	opacity: .6;
 	font-size: .9em!important;
+}
+
+div.card-tabs-bar a.em{
+	border: 1px solid transparant!important;
+	border-bottom: 0!important;
+	padding: 8px!important;
+	padding-bottom: 0px!important;
+	opacity: 1;
+	padding-top: 3px!important;
+	cursor: pointer;
 }
 
 div.card-tabs-bar a.em:hover{
@@ -179,6 +192,14 @@ div.card-tabs-bar.titles a.active{
 	border: none;
 }
 
+div.card-tabs-bar.bordernone{
+	border: none;
+}
+
+div.card-tabs-bar.bordernone a.active{
+	border: none;
+}
+
 div.card-tabs-bar.titles.border a.active{
 		border: 1px solid #eaecef!important;
 		border-bottom: none!important;
@@ -200,6 +221,20 @@ div.card-tabs-bar.titles{
 div.card-tabs-bar.titles.italic a.active{
 	font-size: 17px;
 	margin: 0!important;
+	border: 1px solid #EAECEF;
+	border-bottom: 0;
+	background: #f8f9f9;
+}
+
+div.card-tabs-stack.italic div[data-tab]{
+	border: 1px solid #EAECEF!important;
+	border-top: 0;
+	background: #f8f9f9;
+	border-radius: 0px 0px 5px 5px;
+}
+
+div.card-tabs-bar.italic{
+	border: none;
 }
 
 
@@ -234,12 +269,14 @@ div.card-tabs-bar.pEntry-fix-20{
 
 div.card-tabs-bar.pEntry-fix-50{
 	margin-top: -74px;
+	margin-left: 17%;
 	margin-bottom: 15px;
 	border-bottom: none;
 }
 
 div.card-tabs-bar.pEntry-fix-56{
 	margin-top: -79px;
+	margin-left: 17%;
 	border-bottom: none;
 	margin-bottom: 15px;
 }

@@ -28,9 +28,7 @@ class pEditorView extends pView{
 		// That is where the ajax magic happens:
 		p::Out("<div class='ajaxSave'></div>");
 
-		
-
-		p::Out("<div class='pEntry'>
+		p::Out("<div class='pEntry home-margin'>
 			<form id='LemmaSheetForm'>
 			".($edit ? "<span class='native markdown-body'><h2><strong class='pWord xxmedium'>".$data['native'].'</strong></h2></span><br />' : '')."
 			<div class='mainTabs'>
@@ -168,7 +166,7 @@ class pEditorView extends pView{
 
 		".pTemplate::allowTabs()."
 
-		$('.mainTabs').cardTabs({'class': 'italic'});
+		$('.mainTabs').cardTabs({'class': 'italic', 'theme':'italic'});
 		$('.select2').select2({});
 
 		$('.select2m').select2({allowClear: true, placeholder: '➥ Add lemmas'});

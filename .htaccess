@@ -1,3 +1,9 @@
+# Donut a.1 .htacces-file
+
+<IfModule mod_rewrite.c>
+
+    # Tell PHP that the mod_rewrite module is ENABLED.
+    SetEnv HTTP_MOD_REWRITE On
 
     # Turn the mod_rewrite module on
     RewriteEngine On

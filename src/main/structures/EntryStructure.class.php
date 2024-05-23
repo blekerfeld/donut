@@ -33,17 +33,18 @@ class pEntryStructure extends pStructure{
 		pTemplate::setTabbed();
 		$specialEntries = array('stats', 'random', 'year');
 
+
 		// Starting with the wrapper
 
 		if(p::NoAjax())
-			p::Out("<div class='pEntry ".(($this->_error != '' OR $this->_error != null) ? 'hasErrors' : '')."'><div class='home-margin'>");
+			p::Out("<div class='pEntry ".(($this->_error != '' OR $this->_error != null) ? 'hasErrors' : '')."'>");
 
 
 		// Let's create a tab bar for this app
 		$this->_tabs = (new pTabBar(MMENU_DICTIONARY, 'fa-book', true, 'titles wordsearch nomargin above'));
 
 		// If logged, show tabs
-		if(pUser::noGuest() AND isset($this->_prototype[$this->_section]['edit_url'], pRegister::arg()['id']) AND !in_array($this->_section, $specialEntries) AND p::NoAjax())
+		if(pUser::noGuest() AND isset($this->_prototype[$this->_section]['edit_url'], pRegister::arg()['id']) AND !in_array($this->_section, $specialEntries))
 
 			$this->_tabs
 				->addLink('view', LEMMA_VIEW_SHORT, p::Url("?entry/".$this->_prototype[$this->_section]['section_key'].'/'.pRegister::arg()['id'].(isset(pRegister::arg()['is:result']) ? '/is:result' : '')), (!isset(pRegister::arg()['action'])))
@@ -62,10 +63,6 @@ class pEntryStructure extends pStructure{
 		// If there is an offset, we need to define that
 		if(isset(pRegister::arg()['offset']))
 			$this->_parser->setOffset(pRegister::arg()['offset']);
-
-
-		if((p::NoAjax()))
-			p::Out("<div class='pEntry-inner'>");
 
 		ajaxSkipOutput:
 
@@ -87,15 +84,12 @@ class pEntryStructure extends pStructure{
 		elseif(in_array($this->_section, $specialEntries))
 			$this->_parser->render();
 
-		
-		if(p::NoAjax())
-			p::Out("</div>");
 
 		SkipError:
 
 		// Ending content
 		if(p::NoAjax())
-			p::Out("</div></div>");
+			p::Out("</div>");
 
 		// Tooltipster time!
 		p::Out("<script type='text/javascript'>

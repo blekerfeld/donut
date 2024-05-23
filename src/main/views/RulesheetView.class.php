@@ -58,7 +58,7 @@ class pRulesheetView extends pView{
 			$data = $this->_data->data()->fetchAll()[0];
 			
 
-		p::Out("<br /><br />");
+		pTemplate::setBorder();
 
 		p::Out("<div class='saving hide'>".pTemplate::loadDots()."</div>");
 

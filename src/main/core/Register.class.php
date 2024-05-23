@@ -74,4 +74,9 @@ class pRegister{
 		return self::$queryString;
 	}
 
+	public static function addArgPostMortem($arg, $val){
+		return self::$arguments[$arg] = $val;	
+	}
+
 }
+

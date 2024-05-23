@@ -58,16 +58,16 @@ class pRegisterView extends pSimpleView{
 		return pTemplate::NoticeBox('fa-info-circle fa-12', AUTH_REGISTER_EMPTY, 'warning-notice ajaxMessage hide')."<script type='text/javascript'>$('.saving').slideUp();$('.ajaxMessage').slideDown();</script>";
 	}
 	public function warningPassword(){
-		return pTemplate::NoticeBox('fa-warning fa-12', AUTH_REGISTER_PASSWORD, 'danger-notice ajaxMessage hide')."<script type='text/javascript'>$('.saving').slideUp();$('.ajaxMessage').slideDown();</script>";
+		return pTemplate::NoticeBox('fa-exclamation-triangle fa-12', AUTH_REGISTER_PASSWORD, 'danger-notice ajaxMessage hide')."<script type='text/javascript'>$('.saving').slideUp();$('.ajaxMessage').slideDown();</script>";
 	}
 	public function warningUsername(){
-		return pTemplate::NoticeBox('fa-warning fa-12', AUTH_REGISTER_USERNAME, 'danger-notice ajaxMessage hide')."<script type='text/javascript'>$('.saving').slideUp();$('.ajaxMessage').slideDown();</script>";
+		return pTemplate::NoticeBox('fa-exclamation-triangle fa-12', AUTH_REGISTER_USERNAME, 'danger-notice ajaxMessage hide')."<script type='text/javascript'>$('.saving').slideUp();$('.ajaxMessage').slideDown();</script>";
 	}
 	public function warningPassword2(){
-		return pTemplate::NoticeBox('fa-warning fa-12', AUTH_REGISTER_PASSWORD2, 'danger-notice ajaxMessage hide')."<script type='text/javascript'>$('.saving').slideUp();$('.ajaxMessage').slideDown();</script>";
+		return pTemplate::NoticeBox('fa-exclamation-triangle fa-12', AUTH_REGISTER_PASSWORD2, 'danger-notice ajaxMessage hide')."<script type='text/javascript'>$('.saving').slideUp();$('.ajaxMessage').slideDown();</script>";
 	}
 	public function warningMail(){
-		return pTemplate::NoticeBox('fa-warning fa-12', AUTH_REGISTER_MAIL, 'danger-notice ajaxMessage hide')."<script type='text/javascript'>$('.saving').slideUp();$('.ajaxMessage').slideDown();</script>";
+		return pTemplate::NoticeBox('fa-exclamation-triangle fa-12', AUTH_REGISTER_MAIL, 'danger-notice ajaxMessage hide')."<script type='text/javascript'>$('.saving').slideUp();$('.ajaxMessage').slideDown();</script>";
 	}
 
 }

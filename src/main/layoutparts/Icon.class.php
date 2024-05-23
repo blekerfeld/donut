@@ -18,7 +18,11 @@ class pIcon extends pLayoutPart{
 
 	public function __toString(){
 		if(p::StartsWith($this->_icon, 'fa-'))
-			$icon = "<i class=\"fa ".$this->_icon." ".$this->_classes." fa-".$this->_size."\"></i>";
+			$icon = "<i class=\"fa ".$this->_icon." ".$this->_classes." fa-".$this->_size."//\"></i>";
+		elseif(p::StartsWith($this->_icon, 'far '))
+			$icon = "<i class=\"far ".$this->_icon." ".$this->_classes." fa-".$this->_size."//\"></i>";
+		elseif(p::StartsWith($this->_icon, 'fab '))
+			$icon = "<i class=\"fab ".$this->_icon." ".$this->_classes." fa-".$this->_size."//\"></i>";
 		else
 			$icon = "<i class=\"mdi mdi-".$this->_icon." ".$this->_classes."\" style=\"font-size: ".$this->_sizePX."\"></i>";
 

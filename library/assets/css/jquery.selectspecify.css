@@ -8,6 +8,7 @@ div.select-specify div.items-outer{
 	border-radius: 5px 5px 0px 0px;
 	border-bottom: none;
 	min-height: 55px;
+		background: #fff;
 }
 
 div.select-specify div.items-outer h3{
@@ -21,6 +22,7 @@ div.select-specify div.items-outer h3{
 div.select-specify div.items{
 	border-bottom: 1px dotted #eee;
 	padding-bottom: 10px;
+	background: #fff;
 }
 
 div.select-specify div.items span.placeholder{

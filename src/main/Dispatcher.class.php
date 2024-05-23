@@ -7,7 +7,7 @@
 
 class pDispatcher {
 
-	private $_dispatchData, $_magicArguments = array(array('is:result', 'ajax', 'ajaxLoad', 'ajaxLoader', 'showtabs', 'nosearch', 'print'), array('offset', 'return', 'position', 'language', 'token', 'pre-filled'), array(array('search', 'dictionary', 'query'))), $_urlArguments, $_arguments, $_markdownNames;
+	private $_dispatchData, $_magicArguments = array(array('is:result', 'ajax', 'ajaxLoad', 'ajaxLoader', 'showtabs', 'nosearch', 'print', 'is:preview'), array('offset', 'return', 'position', 'language', 'token', 'pre-filled', 'preview'), array(array('search', 'dictionary', 'query'))), $_urlArguments, $_arguments, $_markdownNames;
 
 	public $query, $structureObject;
 
@@ -23,7 +23,9 @@ class pDispatcher {
 		pRegister::session($_SESSION);
 		pRegister::post($_POST);
 		$this->_dispatchData = require_once p::FromRoot("src/Guide.php");
-		$this->_markdownNames = $this->_dispatchData['MAGIC_MARKDOWN'];
+		$this->_markdown = $this->_dispatchData['MAGIC_MARKDOWN'];
+		$this->_markdownNames = $this->_dispatchData['MAGIC_MARKDOWN_TITLES'];
+		$this->_markdownApps = $this->_dispatchData['MAGIC_MARKDOWN_APPS'];
 		self::$structure = $this->_dispatchData;
 		unset($this->_dispatchData['MAGIC_MENU']);
 		unset($this->_dispatchData['MAGIC_MARKDOWN']);
@@ -66,11 +68,15 @@ class pDispatcher {
 				$searchBox->enablePentry();
 				if(isset(pRegister::arg()['is:result'], pRegister::freshSession()['searchQuery']))
 					$searchBox->setValue(pRegister::freshSession()['searchQuery']);
+				pTemplate::setTabbed();
 				pTemplate::throwOutsidePage($searchBox);
-				p::Out("<div class='home-margin pEntry'>");
 
-				if(isset($this->_markdownNames[$this->_urlArguments[0]]['name'], $this->_markdownNames[$this->_urlArguments[0]]['icon']))
-					p::Out((new pTabBar($this->_markdownNames[$this->_urlArguments[0]]['name'],$this->_markdownNames[$this->_urlArguments[0]]['icon'], true, 'titles pEntry-fix-50'))->addHome()->addSearch());
+				if(isset($this->_markdownNames[$this->_urlArguments[0]], $this->_markdown[$this->_urlArguments[0]]['app'], $this->_markdownApps[$this->_markdown[$this->_urlArguments[0]]['app']]['icon'], $this->_markdownApps[$this->_markdown[$this->_urlArguments[0]]['app']]['name']))
+					p::Out((new pTabBar($this->_markdownApps[$this->_markdown[$this->_urlArguments[0]]['app']]['name'],$this->_markdownApps[$this->_markdown[$this->_urlArguments[0]]['app']]['icon'], true, 'nomargin'))->addHome()->addSearch());
+
+				pTemplate::setTitle($this->_markdownNames[$this->_urlArguments[0]]);
+
+				p::Out("<div class='pEntry home-margin'>");
 
 				p::Out(p::Markdown(file_get_contents(p::FromRoot("static/md/".$this->_urlArguments[0].".md")), true, true, true)."</div>");
 			}
@@ -88,6 +94,8 @@ class pDispatcher {
 			$structureType = "p".ucwords($structureName[1])."Structure";
 		else
 			$structureType = "p".ucwords($structureName[0])."Structure";
+
+		
 
 		// Struture Type can be overriden
 		if(isset($this->_dispatchData[$this->_urlArguments[0]]['override_structure_type']))

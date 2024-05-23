@@ -4,8 +4,8 @@
 
 define('CONFIG_DB_HOST', 'localhost');
 define('CONFIG_DB_USER', 'root');
-define('CONFIG_DB_PASSWORD', '');
-define('CONFIG_DB_DATABASE', 'donut');
+define('CONFIG_DB_PASSWORD', 'root');
+define('CONFIG_DB_DATABASE', 'donutDat');
 define('CONFIG_REWRITE', true);
 define('CONFIG_FILE', 'index.php');
 define('CONFIG_HASHID_SALT', "ThereIsYeastInDonutsDidYouKnowThat?");

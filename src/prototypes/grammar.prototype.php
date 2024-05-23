@@ -10,7 +10,7 @@ $action_edit = ['edit', DA_EDIT, 'fa-edit', 'ttip-sub', null, null];
 
 return [
 		'MAGIC_META' => [
-			'title' => DA_TITLE,
+			'title' => GRAMMAR_TITLE,
 			'icon' => 'dna',
 			'default_permission' => -3,
 			'tabs' => new pTabBar(GRAMMAR_TITLE,'dna', true, 'wordsearch nomargin above'),
@@ -81,9 +81,9 @@ return [
 			'hitOn' => 'ruleset',
 			'tab_sections' => ['context', 'inflection', 'ipageneration'],
 			'sets' => [
-				'inflection' => ['morphology', 'inflection', 'cards-variant'],
-				'context' => ['phonology_contexts', 'context', 'altimeter'],
-				'ipageneration' => ['phonology_ipa_generation', 'ipageneration', 'voice'],
+				'inflection' => ['morphology', 'inflection', 'cards-variant', '/inflection/','id'],
+				'context' => ['phonology_contexts', 'context', 'altimeter', '/context/','id'],
+				'ipageneration' => ['phonology_ipa_generation', 'ipageneration', 'voice', '/ipageneration/', 'id'],
 			],
 			'sets_strings' => [
 				'inflection' => 'Inflective Rule',
@@ -96,6 +96,37 @@ return [
 				'ipageneration' => 'name',
 			],
 			'sets_fields' => 'id, rule, name, ruleset',
+			'actions_item' => [
+				'edit' => ['edit', 'edit', 'fa-pencil', 'lemma-code discussion float-right', null, null, 'words', 'dictionary-admin', null, -3],
+			],
+			'actions_bar' => [
+			],
+			'save_strings' => $saveStrings,
+			'show_tab' => true,
+		],
+		'lemmalists' => [
+			'section_key' => 'lemmalists',
+			'icon' => 'fa-book',
+			'type' => 'pSetHandler',
+			'view' => 'pView',
+			'table' => 'lemmalists',
+			'surface' => "Browse Rules",
+			'condition' => false,
+			'disable_enter' => true,
+			'items_per_page' => 20,
+			'disable_pagination' => false,
+			'editor' => 'editor',
+			'hitOn' => 'lemmalist',
+			'sets' => [
+				'lemma' => ['lemmalist_lemma', 'lemma', 'cards-variant', '/', 'lemma'],
+			],
+			'sets_strings' => [
+				'lemma' => 'Inflective Rule',
+			],
+			'sets_name' => [
+				'lemma' => 'lemma',
+			],
+			'sets_fields' => 'id, lemma',
 			'actions_item' => [
 				'edit' => ['edit', 'edit', 'fa-pencil', 'lemma-code discussion float-right', null, null, 'words', 'dictionary-admin', null, -3],
 			],

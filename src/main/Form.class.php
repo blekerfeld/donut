@@ -256,7 +256,7 @@ class pMagicActionForm{
 				$empty_error++;
 
 		if($empty_error != 0){
-			p::Out(pTemplate::NoticeBox('fa-warning fa-12', $this->_strings[3], 'danger-notice ajaxMessage'));
+			p::Out(pTemplate::NoticeBox('fa-exclamation-triangle fa-12', $this->_strings[3], 'danger-notice ajaxMessage'));
 		}
 		else{
 
@@ -288,7 +288,7 @@ class pMagicActionForm{
 				</script>");
 
 			} catch (Exception $e) {
-				p::Out(pTemplate::NoticeBox('fa-warning fa-12', $this->_strings[4], 'danger-notice ajaxMessage'));
+				p::Out(pTemplate::NoticeBox('fa-exclamation-triangle fa-12', $this->_strings[4], 'danger-notice ajaxMessage'));
 				$exception = true;
 			}
 
@@ -437,7 +437,7 @@ class pMagicActionForm{
 			}
 		}
 		else
-			p::Out(pTemplate::NoticeBox('fa-warning fa-12', $this->_strings[3], 'danger-notice ajaxMessage'));
+			p::Out(pTemplate::NoticeBox('fa-exclamation-triangle fa-12', $this->_strings[3], 'danger-notice ajaxMessage'));
 
 		p::Out("<script type='text/javascript'>
 				$('.saving').slideUp(function(){

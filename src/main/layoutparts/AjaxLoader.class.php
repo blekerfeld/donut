@@ -39,7 +39,9 @@ class pAjaxLoader extends pLayoutPart{
 			});
 				" : "")."
 
-			$('#$id').load('".$this->_querystring.(($this->_forceNoAjaxLink == false) ? '/ajax' : '' )."');
+			$('#$id').delay(1000, function(){
+				$('#$id').load('".$this->_querystring.(($this->_forceNoAjaxLink == false) ? '/ajax' : '' )."');
+			});
 			$('.click$id').click(function(){
 				$('#$id').slideDown();
 			})"

@@ -172,7 +172,8 @@ class pSetView extends pView{
 			<a href=\"javascript:void(0);\" class=\"delete-item ttip-sub nav\" data-id=\"".$rule['id']."\" data-url=\"".p::Url("?".$this->_data->_activeSection['editor'].'/'.$rule['set_type'].'/remove/'.$rule['id'].'/ajax')."\">".(new pIcon('fa-times', 12))."  ".DA_DELETE."</a><div class=\"deleteFolderLoad-".$rule['id']."\"></div></div>'><span class='dType'>".(new pIcon('menu'))."".(new pIcon('menu-down', 20))."</span></a></span>";
 
 			$output .= "<tr><td><input name='selecteditems[]' value='".$rule['id']."' class='setselect' type='checkbox' /></td><td style='width: 15px;'>".(new pIcon($this->_data->_activeSection['sets'][$rule['set_type']][2], 12))."</td>
-						<td style='width:40%'><a href='".p::Url('?'.$this->_data->_activeSection['editor'].'/'.$rule['set_type'].'/edit/'.$rule['id'])."'>".$rule[$this->_data->_activeSection['sets_name'][$rule['set_type']]]."</a></td>
+						<td style='width:40%'><a href='".p::Url('?'.$this->_data->_activeSection['editor'].
+				$this->_data->_activeSection['sets'][$rule['set_type']][3].'edit/'.$rule[$this->_data->_activeSection['sets'][$rule['set_type']][4]])."'>".$rule[$this->_data->_activeSection['sets_name'][$rule['set_type']]]."</a></td>
 			<td>".$editLink."<span class='dType'>".$this->_data->_activeSection['sets_strings'][$rule['set_type']]."</span></td><td></tr>";
 		}
 
