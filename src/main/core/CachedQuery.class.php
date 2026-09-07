@@ -2,96 +2,107 @@
 // Donut 0.13-dev - Emma de Roo - Licensed under MIT
 // file: CachedQuery.class.php
 
-class pCachedQuery implements Iterator{
+declare(strict_types=1);
 
+class pCachedQuery implements Iterator, Countable
+{
+    private int $_row_count = 0;
+    private array $_db_objects = [];
+    private int $position = 0;
+    private int $fetchPosition = 0;
+    private string $_query = '';
 
-	// The few variables this class needs
-	private $_row_count = 0;
-	private $_array_count = 0;
-	private $_db_objects = null;
-	private $position = -1;
-	private $_query = null;
-
-
-   function __construct($db_objects = array(), $row_count = 0, $query = '') {
-       $this->_row_count = $row_count;
-       $this->_db_objects = $db_objects;
-       $this->_db_objects = new ArrayObject($db_objects);
-       $this->_query = $query;
-   }
-
-   // Returns the fixed row count of the original query
-   function rowCount(){
-   		return $this->_row_count;
-   }
-
-   function fetchAll(){
-   		$array = array();
-   		foreach ($this->_db_objects as $object) {
-   			$array[] = (array)$object;
-   		}
-   		return $array;
-   }
-
-   // Return the next object, as the original query would
-   function fetchObject(){
-
-   		return $this->current(true);
-   }
-
-   // Rewind up to -1, so that the object can be used again.
-    function rewind() {
-        $this->position = -1;
+    public function __construct(iterable $db_objects = [], int $row_count = 0, string $query = '')
+    {
+        $this->_row_count = $row_count;
+        $this->_db_objects = is_array($db_objects) ? $db_objects : iterator_to_array($db_objects);
+        $this->_query = $query;
     }
 
-    function current($object = false) {
-    	$this->next();
-    	if($object)
-        	return @$this->_db_objects[$this->position];
-        else
-        	return @get_object_vars($this->_db_objects[$this->position]);
+    public function rowCount(): int
+    {
+        return $this->_row_count;
     }
 
-    function key() {
+    public function count(): int
+    {
+        return $this->_row_count;
+    }
+
+    public function fetchAll(): array
+    {
+        $array = [];
+        foreach ($this->_db_objects as $object) {
+            $array[] = (array) $object;
+        }
+        return $array;
+    }
+
+    public function fetchObject(): mixed
+    {
+        if (!isset($this->_db_objects[$this->fetchPosition])) {
+            return false;
+        }
+        
+        $object = $this->_db_objects[$this->fetchPosition];
+        $this->fetchPosition++;
+        return $object;
+    }
+
+    public function rewind(): void
+    {
+        $this->position = 0;
+        $this->fetchPosition = 0;
+    }
+
+    public function current(): mixed
+    {
+        return $this->_db_objects[$this->position] ?? false;
+    }
+
+    public function key(): mixed
+    {
         return $this->position;
     }
 
-    function next() {
+    public function next(): void
+    {
         ++$this->position;
     }
 
-    function valid() {
+    public function valid(): bool
+    {
         return isset($this->_db_objects[$this->position]);
     }
-
 }
 
+class pSet
+{
+    private array $_fields = [];
 
+    public function __construct()
+    {
+        $this->_fields = [];
+    }
 
+    public function add(mixed $field): void
+    {
+        if (isset($field->name)) {
+            $this->_fields[$field->name] = $field;
+        } else {
+            $this->_fields[] = $field;
+        }
+    }
 
-// This class is used to have a collection of classes somewhere inside another class.
-class pSet{
+    public function remove(mixed $field): void
+    {
+        if (isset($field->name) && isset($this->_fields[$field->name])) {
+            unset($this->_fields[$field->name]);
+        }
+    }
 
-	private $_fields;
-
-	public function __construct(){
-		$this->_fields = array();
-	}
-
-	public function add($field){
-		if(isset($field->name))
-			$this->_fields[$field->name] = $field;
-		else
-			$this->_fields[] = $field;
-	}
-
-	public function remove($field){
-		unset($this->_fields[$field->name]);
-	}
-
-	public function get(){
-		return $this->_fields;
-	}
-
+    public function get(): array
+    {
+        return $this->_fields;
+    }
 }
-

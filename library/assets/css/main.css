@@ -1,8 +1,43 @@
+/* hello world */
 @import url(https://fonts.googleapis.com/css?family=Libre+Franklin|Merriweather|Lato|Open+Sans|Raleway);
 @font-face{font-family:Gentium;src:url(vendors/fonts/GenBasR.ttf)}@font-face{font-family:Gentium;src:url(vendors/fonts/GenBasB.ttf);font-weight:700}@font-face{font-family:Gentium;src:url(vendors/fonts/GenBasI.ttf);font-style:italic}
 @font-face{font-family:Kollektif;src:url(vendors/fonts/kollektif.ttf)}
 @font-face{font-family:Koliko;src:url(vendors/fonts/koliko.ttf)}
 @font-face{font-family:'Noto Sans UI';src:url(vendors/fonts/NotoSansUI-Italic.woff) format('woff'),url(vendors/fonts/NotoSansUI-Italic.ttf) format('truetype');font-weight:400;font-style:italic}@font-face{font-family:'Noto Sans UI';src:url(vendors/fonts/NotoSansUI-Bold.woff) format('woff'),url(vendors/fonts/NotoSansUI-Bold.ttf) format('truetype');font-weight:700;font-style:normal}@font-face{font-family:'Noto Sans';src:url(vendors/fonts/NotoSans.woff) format('woff'),url(vendors/fonts/NotoSans.ttf) format('truetype');font-weight:400;font-style:normal}@font-face{font-family:'Noto Sans';src:url(vendors/fonts/NotoSans-Italic.woff) format('woff'),url(vendors/fonts/NotoSans-Italic.ttf) format('truetype');font-weight:400;font-style:italic}@font-face{font-family:'Noto Sans UI';src:url(vendors/fonts/NotoSansUI.woff) format('woff'),url(vendors/fonts/NotoSansUI.ttf) format('truetype');font-weight:400;font-style:normal}@font-face{font-family:'Noto Sans UI';src:url(vendors/fonts/NotoSansUI-BoldItalic.woff) format('woff'),url(vendors/fonts/NotoSansUI-BoldItalic.ttf) format('truetype');font-weight:700;font-style:italic}@font-face{font-family:'Noto Sans';src:url(vendors/fonts/NotoSans-Bold.woff) format('woff'),url(vendors/fonts/NotoSans-Bold.ttf) format('truetype');font-weight:700;font-style:normal}@font-face{font-family:'Noto Sans';src:url(vendors/fonts/NotoSans-BoldItalic.woff) format('woff'),url(vendors/fonts/NotoSans-BoldItalic.ttf) format('truetype');font-weight:700;font-style:italic}
+
+@font-face {
+  font-family: 'Noto Sans';
+  src: local('Noto Sans'), url('vendors/fonts/NotoSans.woff') format('woff'), url('vendors/fonts/NotoSans.ttf') format('truetype');
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Noto Sans';
+  src: local('Noto Sans'), url('vendors/fonts/NotoSans-Bold.woff') format('woff'), url('vendors/fonts/NotoSans-Bold.ttf') format('truetype');
+  font-weight: 700;
+  font-style: normal;
+  font-display: swap;
+}
+
+html,
+body,
+input,
+textarea,
+button,
+select {
+  font-family: 'Noto Sans', Calibri, sans-serif;
+}
+
+:root {
+  --radius-sm: 8px;
+  --radius-md: 12px;
+  --radius-lg: 16px;
+  --glass-border: rgba(255, 255, 255, 0.72);
+  --glass-surface: rgba(255, 255, 255, 0.68);
+  --glass-shadow: 0 12px 32px rgba(35, 48, 70, 0.08);
+}
 
 /* Basic elements */
 
@@ -47,10 +82,97 @@ html, body {
   margin: 0;
   box-sizing: border-box;
   height:100%;
-  background: #F6F6F6 url(bg.png) repeat;
+  background: #eef2f7 url(bg.png) repeat;
   padding: 0;
   font-family: Noto Sans, Calibri, Sans;
   font-size: 16px;
+}
+
+/* Shared surfaces keep the desktop layout and its overlays visually related. */
+.absolute_header .inner,
+.page,
+div.btCard,
+div.landing-about,
+div.landing-content,
+div.hSearchResults-preview {
+  background: rgba(255, 255, 255, 0.68);
+  border: 1px solid rgba(255, 255, 255, 0.72);
+  border-radius: 12px !important;
+  box-shadow: 0 12px 32px rgba(35, 48, 70, 0.08);
+  -webkit-backdrop-filter: blur(18px) saturate(125%);
+  backdrop-filter: blur(18px) saturate(125%);
+}
+
+.absolute_header .inner {
+  overflow: hidden;
+  padding-bottom: 0;
+}
+
+div.holder {
+  background: transparent;
+}
+
+div.outerwrap {
+  padding-top: 16px;
+  padding-bottom: 16px;
+}
+
+.page {
+  min-height: 500px;
+}
+
+div.nav {
+  background: rgba(226, 231, 239, 0.72);
+  border-top: 1px solid rgba(255, 255, 255, 0.55);
+  border-radius: 0 0 12px 12px;
+}
+
+div.nav a {
+  border-radius: 8px 8px 0 0;
+}
+
+input#wordsearch {
+  background: rgba(255, 255, 255, 0.7);
+  border: 1px solid rgba(255, 255, 255, 0.72);
+  border-radius: 8px;
+  box-shadow: 0 6px 18px rgba(35, 48, 70, 0.05);
+}
+
+div.card-tabs-bar a.active,
+div.card-tabs-bar.selectorTabs a.active,
+div.card-tabs-bar.selectorTabs-h a.active {
+  border-radius: 8px 8px 0 0;
+}
+
+div.btCard.proper,
+div.btCard.bt,
+div.btCard.full,
+div.btCard.admin,
+div.btCard.link-table {
+  border-radius: 12px !important;
+}
+
+div.btCard input,
+input.btInput,
+textarea.btInput,
+select {
+  border-radius: 8px !important;
+}
+
+a.btAction,
+a.button,
+a.buttona,
+.actionbutton {
+  border-radius: 8px !important;
+}
+
+.tooltipster-base .tooltipster-box {
+  background: rgba(255, 255, 255, 0.82) !important;
+  border: 1px solid rgba(255, 255, 255, 0.72) !important;
+  border-radius: 12px !important;
+  box-shadow: 0 12px 32px rgba(35, 48, 70, 0.08) !important;
+  -webkit-backdrop-filter: blur(18px) saturate(125%);
+  backdrop-filter: blur(18px) saturate(125%);
 }
 
 body{
@@ -2514,6 +2636,133 @@ table.rules span.dType{
   width: 85%;
 }
 
+/* Reserve one predictable gap whether the optional search block is rendered or not. */
+.outside {
+  margin-bottom: 16px;
+}
+
+.holder .outerwrap,
+.holder .outerwrap.tabbed {
+  margin-top: 0;
+}
+
+.outside > .hMobile {
+  margin-top: 0 !important;
+  margin-bottom: 0;
+}
+
+.top_area,
+.absolute_header,
+.absolute_header .inner,
+.hMobile,
+.hMobile .header,
+.hMobile .hWrap,
+.hSearch,
+.holder,
+.outerwrap,
+div.nav,
+.card-tabs-bar,
+.select2-dropdown,
+div.select-specify div.items-outer,
+div.select-specify div.items,
+div.select-specify div.input-bar {
+  background: rgba(255, 255, 255, 0.48);
+  border: 1px solid rgba(255, 255, 255, 0.72);
+  border-radius: 12px;
+  box-shadow: 0 12px 32px rgba(35, 48, 70, 0.08);
+  -webkit-backdrop-filter: blur(20px) saturate(135%);
+  backdrop-filter: blur(20px) saturate(135%);
+}
+
+.absolute_header,
+.hMobile,
+.holder,
+.outerwrap {
+  border-color: transparent;
+  box-shadow: none;
+}
+
+.absolute_header .inner {
+  border-radius: 12px;
+}
+
+.hMobile .header,
+.hMobile .hWrap,
+.hSearch,
+.holder,
+.outerwrap {
+  background: transparent;
+}
+
+div.nav {
+  overflow: hidden;
+  border-radius: 0 0 12px 12px;
+}
+
+div.nav a,
+div.card-tabs-bar a,
+.ts-option {
+  border-radius: 8px;
+  transition: background-color .2s, color .2s, box-shadow .2s;
+}
+
+div.nav a:hover,
+div.card-tabs-bar a:hover,
+.ts-option:hover {
+  background: rgba(255, 255, 255, 0.58);
+  box-shadow: 0 4px 12px rgba(35, 48, 70, 0.08);
+}
+
+.ts-option.active,
+div.nav a.active {
+  background: rgba(59, 102, 214, 0.82);
+  border-color: rgba(255, 255, 255, 0.5);
+  color: #fff !important;
+  box-shadow: 0 5px 14px rgba(59, 102, 214, 0.22);
+}
+
+input#wordsearch,
+input#filter {
+  background: rgba(255, 255, 255, 0.34) !important;
+  border: 1px solid rgba(255, 255, 255, 0.72) !important;
+  border-radius: 12px !important;
+  box-shadow: 0 8px 22px rgba(35, 48, 70, 0.08);
+  -webkit-backdrop-filter: blur(16px) saturate(130%);
+  backdrop-filter: blur(16px) saturate(130%);
+}
+
+.header.dictionary input#wordsearch,
+.header.dictionary input#wordsearch.native {
+  background: rgba(255, 255, 255, 0.28) !important;
+  border: 1px solid rgba(255, 255, 255, 0.72) !important;
+  color: #1f2937 !important;
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.48),
+    0 8px 22px rgba(35, 48, 70, 0.08);
+}
+
+.header.dictionary input#wordsearch::placeholder {
+  color: rgba(31, 41, 55, 0.62);
+}
+
+.header.dictionary input#wordsearch:focus {
+  background: rgba(255, 255, 255, 0.48) !important;
+  border-color: rgba(59, 102, 214, 0.45) !important;
+}
+
+.select2-dropdown {
+  overflow: hidden;
+}
+
+.select2-results__option {
+  border-radius: 8px;
+  margin: 3px;
+}
+
+.select2-results__option--highlighted[aria-selected] {
+  background: rgba(59, 102, 214, 0.82) !important;
+}
+
 
 
 @keyframes blink {
@@ -2576,6 +2825,40 @@ div.wiki{
 div.btCard.wiki{
   margin: 0;
   padding: 0;
+}
+
+/* Keep the shared treatment last so component-specific legacy rules cannot undo it. */
+.absolute_header .inner,
+.page,
+div.btCard,
+div.landing-about,
+div.landing-content,
+div.hSearchResults-preview {
+  background: rgba(255, 255, 255, 0.68);
+  border: 1px solid rgba(255, 255, 255, 0.72);
+  border-radius: 12px !important;
+  box-shadow: 0 12px 32px rgba(35, 48, 70, 0.08);
+  -webkit-backdrop-filter: blur(18px) saturate(125%);
+  backdrop-filter: blur(18px) saturate(125%);
+}
+
+div.btCard.proper,
+div.btCard.bt,
+div.btCard.full,
+div.btCard.admin,
+div.btCard.link-table {
+  border-radius: 12px !important;
+}
+
+.notice,
+.danger-notice,
+.succes-notice,
+.warning-notice,
+.hint-notice,
+.notice-subtle,
+.pSectionWrapper,
+.count {
+  border-radius: 8px;
 }
 
 div.wiki div.main{

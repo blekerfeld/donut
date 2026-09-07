@@ -13,7 +13,8 @@ class pEntry{
 		if(is_a($dataModel, "pDataModel") OR is_subclass_of($dataModel, "pDataModel")){
 			$this->dataModel = $dataModel;
 			$this->_id = $this->dataModel->_singleId;
-			$this->_entry = $this->dataModel->data()->fetchAll()[0];
+			$result = $this->dataModel->data()->fetchAll();
+			$this->_entry = !empty($result) ? $result[0] : array();
 		}
 		elseif(is_array($dataModel) ANd $table != ''){
 			$this->_id = $dataModel['id'];

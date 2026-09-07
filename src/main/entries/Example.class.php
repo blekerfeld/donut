@@ -7,11 +7,12 @@
 
 class pIdiom extends pEntry{
 
-	private $_lemma, $_translations, $_keyword;
+	private $_lemma, $_translations, $_keyword, $_lemmas;
+	public $text;
 
 	public function __construct(){
 		// First we are calling the parent's constructor (pEntry)
-		call_user_func_array('parent::__construct', func_get_args());
+		parent::__construct(...func_get_args());
 		$this->text = $this->_entry['idiom'];
 	}
 

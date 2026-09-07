@@ -10,7 +10,7 @@ class pSearchHandler extends pHandler{
 
 	public function __construct(){
 		// First we are calling the parent's constructor (pHandler)
-		call_user_func_array('parent::__construct', func_get_args());
+		parent::__construct(...func_get_args());
 	}
 
 	private function parseSearchResults($query, $results, $searchlang){

@@ -6,17 +6,23 @@
 
 class pInflection{
 
-	protected $_addBefore, $_addAfter, $_stem = null, $_checksB = array(), $_checksA = array(), $_deniedLeft = 0, $_deniedRight = 0, $_maxCountLeft, $_maxCountRight;
+	protected $_addBefore, $_addAfter, $_stem = null, $_checksB = array(), $_checksA = array(), $_deniedLeft = 0, $_deniedRight = 0, $_maxCountLeft, $_maxCountRight, $_formStem;
 
 
 	public function __construct($pattern){
 
 		// Splitting up the the prefix, stem and suffix statements
 		$pattern = explode('[', $pattern);
-		$pattern2 = @explode(']', $pattern[1]);
-		$this->_addBefore = @explode(';', $pattern[0]);
-		$this->_formStem = @explode(';', $pattern2[0]);
-		$this->_addAfter = @explode(';', $pattern2[1]);
+		if(isset($pattern[1])) {
+			$pattern2 = explode(']', $pattern[1]);
+			$this->_addBefore = isset($pattern[0]) ? explode(';', $pattern[0]) : array();
+			$this->_formStem = isset($pattern2[0]) ? explode(';', $pattern2[0]) : array();
+			$this->_addAfter = isset($pattern2[1]) ? explode(';', $pattern2[1]) : array();
+		} else {
+			$this->_addBefore = array();
+			$this->_formStem = array();
+			$this->_addAfter = array();
+		}
 		// Calculating the maximal count for the &ELSE operator
 		$this->_maxCountRight = count($this->_addAfter) - 1;
 		$this->_maxCountLeft = count($this->_addBefore) - 1;

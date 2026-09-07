@@ -11,7 +11,7 @@ class pEditorHandler extends pHandler{
 	// Constructor needs to set up the view as well
 	public function __construct(){
 		// First we are calling the parent's constructor (pHandler)
-		call_user_func_array('parent::__construct', func_get_args());
+		parent::__construct(...func_get_args());
 		// Override the datamodel
 
 
@@ -99,7 +99,7 @@ class pEditorHandler extends pHandler{
 				// Prepare the irregular forms 
 				$forms = array();
 				foreach(array('irregular') as $keyReg){
-				$forms[$keyReg] = pRegister::post()[$keyReg];
+				$forms[$keyReg] = isset(pRegister::post()[$keyReg]) && is_array(pRegister::post()[$keyReg]) ? pRegister::post()[$keyReg] : array();
 					foreach($forms[$keyReg] as $key => $form)
 					if($form['value'] == '')
 						unset($forms[$keyReg][$key]);

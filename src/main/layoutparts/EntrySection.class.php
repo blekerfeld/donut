@@ -4,7 +4,7 @@
 
 class pEntrySection extends pLayoutPart{
 
-	private $_title, $_content, $_forceNoContent, $_informationElements = array(), $_icon, $_closable, $_iconsize;
+	private $_title, $_content, $_forceNoContent, $_informationElements = array(), $_icon, $_closable, $_iconsize, $_extraClass;
 
 	public function __construct($title, $content, $icon = null, $extra = true,  $forceNoContent = false, $sub = false, $closable = false, $_iconsize = 10){
 		$this->_title = $title;

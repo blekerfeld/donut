@@ -107,22 +107,22 @@ class pRulesheetView extends pView{
 						<div class='left'>
 							".p::Markdown("##### ".RS_PRIMARY_SELECTOR." ")."<br />
 							<div class='btSource'><span class='btLanguage'>".DA_LEXCAT_DESC."</span><br />
-							<span class='btNative'><select class='full-width select-lexcat select2' multiple='multiple'>".(new pSelector('types', $this->_data->_links['lexcat'], 'name', true, 'rules', true))->render()."</select></span></div>
+							<span class='btNative'><select class='full-width select-lexcat select2' multiple='multiple'>".(new pSelector('types', isset($this->_data->_links['lexcat']) ? $this->_data->_links['lexcat'] : array(), 'name', true, 'rules', true))->render()."</select></span></div>
 							<div class='btSource'><span class='btLanguage'>".DA_GRAMCAT_TITLE."</span><br />
-							<span class='btNative'><select class='full-width select-gramcat select2' multiple='multiple'>".(new pSelector('classifications', $this->_data->_links['gramcat'], 'name', true, 'rules', true))->render()."</select></span></div>
+							<span class='btNative'><select class='full-width select-gramcat select2' multiple='multiple'>".(new pSelector('classifications', isset($this->_data->_links['gramcat']) ? $this->_data->_links['gramcat'] : array(), 'name', true, 'rules', true))->render()."</select></span></div>
 							<div class='btSource'><span class='btLanguage'>".DA_GRAMTAGS_TITLE."</span><br />
-							<span class='btNative'><select class='full-width select-tags select2' multiple='multiple'>".(new pSelector('subclassifications', $this->_data->_links['tag'], 'name', true, 'rules', true))->render()."</select></span><br /><div class='notice-subtle'>".(new pIcon('fa-question-circle', 10))." ".RS_PRIMARY_SELECTORS_DESC."</div></div>
+							<span class='btNative'><select class='full-width select-tags select2' multiple='multiple'>".(new pSelector('subclassifications', isset($this->_data->_links['tag']) ? $this->_data->_links['tag'] : array(), 'name', true, 'rules', true))->render()."</select></span><br /><div class='notice-subtle'>".(new pIcon('fa-question-circle', 10))." ".RS_PRIMARY_SELECTORS_DESC."</div></div>
 						</div>
 						<div class='right'>
 							".p::Markdown("##### Secondary selectors ")."<br />
 							<div class='btSource'><span class='btLanguage'>Inflection tables</span><br />
-							<span class='btNative'><select class='full-width select-tables select2' multiple='multiple'>".(new pSelector('modes', $this->_data->_links['modes'], 'name', true, 'rules', true))->render()."</select></span></div>
+							<span class='btNative'><select class='full-width select-tables select2' multiple='multiple'>".(new pSelector('modes', isset($this->_data->_links['modes']) ? $this->_data->_links['modes'] : array(), 'name', true, 'rules', true))->render()."</select></span></div>
 							<div class='btSource'><span class='btLanguage'>Table headings</span><br />
-							<span class='btNative'><select class='full-width select-headings select2' multiple='multiple'>".(new pSelector('submodes', $this->_data->_links['submodes'], 'name', true, 'rules', true))->render()."</select></span></div>
+							<span class='btNative'><select class='full-width select-headings select2' multiple='multiple'>".(new pSelector('submodes', isset($this->_data->_links['submodes']) ? $this->_data->_links['submodes'] : array(), 'name', true, 'rules', true))->render()."</select></span></div>
 							<div class='btSource'><span class='btLanguage'>Table rows</span><br />
-							<span class='btNative'><select class='full-width select-rows select2' multiple='multiple'>".(new pSelector('numbers', $this->_data->_links['numbers'], 'name', true, 'rules', true))->render()."</select></span></div>
+							<span class='btNative'><select class='full-width select-rows select2' multiple='multiple'>".(new pSelector('numbers', isset($this->_data->_links['numbers']) ? $this->_data->_links['numbers'] : array(), 'name', true, 'rules', true))->render()."</select></span></div>
 							<div class='btSource'><span class='btLanguage'>Table columns (<em>suborindate to rows</em>)</span><br />
-							<span class='btNative'><select class='full-width select-columns select2' multiple='multiple'>".(new pSelector('columns', $this->_data->_links['columns'], 'name', true, 'rules', true))->render()."</select></span></div>
+							<span class='btNative'><select class='full-width select-columns select2' multiple='multiple'>".(new pSelector('columns', isset($this->_data->_links['columns']) ? $this->_data->_links['columns'] : array(), 'name', true, 'rules', true))->render()."</select></span></div>
 						</div>
 
 				</div>");

@@ -4,7 +4,7 @@
 
 class pThreadStructure extends pStructure{
 	
-	public $_section, $_view, $_threads, $_threadsByID;
+	public $_section, $_view, $_threads, $_threadsByID, $dataModel;
 
 	public function compile(){
 
@@ -44,7 +44,7 @@ class pThreadStructure extends pStructure{
 		pTemplate::setTabbed();
 
 		// Since no parser is used, the permission check needs to be done here
-		if(!(new pUser)->checkPermission($this->_meta['permission'][$this->_section]))
+		if(!(new pUser)->checkPermission(isset($this->_meta['permission'][$this->_section]) ? $this->_meta['permission'][$this->_section] : 0))
 			return p::Out("<div class='btCard minimal admin'>".pTemplate::NoticeBox('fa-info-circle fa-12', DA_PERMISSION_ERROR, 'danger-notice')."</div>");
 
 		if(isset(pRegister::arg()['action'])){

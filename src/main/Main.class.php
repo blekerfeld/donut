@@ -123,6 +123,7 @@ class pMain{
 	}
 	
 	public static function StartsWith($haystack, $needle){
+		$haystack = (string)$haystack;
     	return (substr($haystack, 0, strlen($needle)) === $needle);
 	}
 
@@ -180,16 +181,25 @@ class pMain{
 	}
 
 	public static function Escape($value){
+		if($value === null)
+			return '';
+
 		// Return a proper escaped version of our value
 		return trim(self::$db->quote($value), "'");
 	}
 
 	public static function Quote($value){
+		if($value === null)
+			return 'NULL';
+
 		return self::$db->quote(self::Escape($value));
 	}
 
 
 	public function QuoteOnly($value){
+		if($value === null)
+			return 'NULL';
+
 		return self::$db->quote($value);
 	}
 

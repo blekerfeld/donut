@@ -6,7 +6,7 @@
 
 class pRuleDataModel extends pDataModel{
 
-	public $_links, $_RuleID;
+	public $_links, $_RuleID, $_rule;
 
 	public function __construct($table, $id = 0){
 		parent::__construct($table);
@@ -19,7 +19,8 @@ class pRuleDataModel extends pDataModel{
 		if($id != 0){
 			$this->_RuleID = $id;
 			$this->getSingleObject($id);
-			$this->_rule = $this->data()->fetchAll()[0];
+			$result = $this->data()->fetchAll();
+			$this->_rule = !empty($result) ? $result[0] : array();
 			// We need to get all links if we are dealing with a morphological rule, that is
 			if($this->_table == 'morphology'){
 				$this->_links['gramcat'] = $this->resultToSingleArray("SELECT gramcat_id FROM morphology_gramcat WHERE morphology_id = '".$id."';", 'gramcat_id');
@@ -86,4 +87,3 @@ class pRuleDataModel extends pDataModel{
 		}
 	}
 }
-

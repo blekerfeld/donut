@@ -209,7 +209,7 @@ class pSelector{
 
 class pMagicActionForm{
 
-	private $_action, $_fields, $_adminobject, $_data, $_name, $_edit, $_magicfields, $_table, $_strings, $_section, $_app, $_extra_fields, $_linked, $dataModel;
+	private $_action, $_fields, $_adminobject, $_data, $_name, $_edit, $_magicfields, $_table, $_strings, $_section, $_app, $_extra_fields, $_linked, $_handler, $dataModel;
 
 	public function __construct($name, $table, $fields, $strings, $app, $section, $object){
 		$this->_name = $name;

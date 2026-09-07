@@ -15,7 +15,8 @@ class pParadigm{
 		$this->_id = $mode['id'];
 		$this->dataModel = new pDataModel('modes');
 		if(is_numeric($mode)){
-			$this->_data = $this->dataModel->getSingleObject($mode)->fetchAll()[0];
+			$result = $this->dataModel->getSingleObject($mode)->fetchAll();
+			$this->_data = !empty($result) ? $result[0] : array();
 			$this->_id = $mode;
 		}
 

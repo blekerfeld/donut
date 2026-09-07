@@ -4,7 +4,8 @@
 
 class pAuthStructure extends pStructure{
 	
-	private $_ajax, $_section, $_view;
+	private $_ajax, $_view;
+	public $_section;
 
 	public function compile(){
 

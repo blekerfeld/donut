@@ -9,6 +9,8 @@ class pDispatcher {
 
 	private $_dispatchData, $_magicArguments = array(array('is:result', 'ajax', 'ajaxLoad', 'ajaxLoader', 'showtabs', 'nosearch', 'print', 'is:preview'), array('offset', 'return', 'position', 'language', 'token', 'pre-filled', 'preview'), array(array('search', 'dictionary', 'query'))), $_urlArguments, $_arguments, $_markdownNames;
 
+	private $_markdown, $_markdownApps;
+
 	public $query, $structureObject;
 
 	public static $active, $structure;
@@ -63,18 +65,14 @@ class pDispatcher {
 
 		if(!isset($this->_dispatchData[$this->_urlArguments[0]])){
 			if(file_exists(p::FromRoot("static/md/".$this->_urlArguments[0].".md"))){
+				$markdownKey = strtoupper($this->_urlArguments[0]);
 				pRegister::arg($this->_arguments);
-				$searchBox = new pSearchBox;
-				$searchBox->enablePentry();
-				if(isset(pRegister::arg()['is:result'], pRegister::freshSession()['searchQuery']))
-					$searchBox->setValue(pRegister::freshSession()['searchQuery']);
 				pTemplate::setTabbed();
-				pTemplate::throwOutsidePage($searchBox);
 
-				if(isset($this->_markdownNames[$this->_urlArguments[0]], $this->_markdown[$this->_urlArguments[0]]['app'], $this->_markdownApps[$this->_markdown[$this->_urlArguments[0]]['app']]['icon'], $this->_markdownApps[$this->_markdown[$this->_urlArguments[0]]['app']]['name']))
-					p::Out((new pTabBar($this->_markdownApps[$this->_markdown[$this->_urlArguments[0]]['app']]['name'],$this->_markdownApps[$this->_markdown[$this->_urlArguments[0]]['app']]['icon'], true, 'nomargin'))->addHome()->addSearch());
+				if(isset($this->_markdownNames[$markdownKey], $this->_markdown[$markdownKey]['app'], $this->_markdownApps[$this->_markdown[$markdownKey]['app']]['icon'], $this->_markdownApps[$this->_markdown[$markdownKey]['app']]['name']))
+					p::Out((new pTabBar($this->_markdownApps[$this->_markdown[$markdownKey]['app']]['name'],$this->_markdownApps[$this->_markdown[$markdownKey]['app']]['icon'], true, 'nomargin'))->addHome()->addSearch());
 
-				pTemplate::setTitle($this->_markdownNames[$this->_urlArguments[0]]);
+				pTemplate::setTitle(isset($this->_markdownNames[$markdownKey]) ? $this->_markdownNames[$markdownKey] : $markdownKey);
 
 				p::Out("<div class='pEntry home-margin'>");
 

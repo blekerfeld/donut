@@ -5,14 +5,15 @@
 define('CONFIG_DB_HOST', 'localhost');
 define('CONFIG_DB_USER', 'root');
 define('CONFIG_DB_PASSWORD', 'root');
-define('CONFIG_DB_DATABASE', 'donutDat');
+define('CONFIG_DB_DATABASE', 'donut');
 define('CONFIG_REWRITE', true);
 define('CONFIG_FILE', 'index.php');
 define('CONFIG_HASHID_SALT', "ThereIsYeastInDonutsDidYouKnowThat?");
 define('CONFIG_ISBETA', true);
 define('CONFIG_ROOT_PATH', dirname(__FILE__));
 define('CONFIG_FOLDER', 'donut');
-define('CONFIG_ABSOLUTE_PATH', "http://".$_SERVER['SERVER_NAME']."/".CONFIG_FOLDER);
+define('CONFIG_PORT', '8888');
+define('CONFIG_ABSOLUTE_PATH', "http://".$_SERVER['SERVER_NAME'].":".CONFIG_PORT."/".CONFIG_FOLDER);
 define('CONFIG_REQUIRED_PHP_VERSION', '5.6.0');
 
 // Check whether we actually meet that version requirment.

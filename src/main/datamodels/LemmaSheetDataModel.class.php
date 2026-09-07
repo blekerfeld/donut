@@ -6,7 +6,7 @@
 
 class pLemmaSheetDataModel extends pDataModel{
 
-	public $_links, $_LemmaID, $_translations, $_translationsinput, $_transIDLookUp, $_inflector;
+	public $_links, $_LemmaID, $_translations, $_translationsinput, $_transIDLookUp, $_inflector, $_lemma;
 
 	public function __construct($table, $id = 0){
 		parent::__construct($table);
@@ -27,8 +27,9 @@ class pLemmaSheetDataModel extends pDataModel{
 			// Loading the lemma
 			$this->_LemmaID = $id;
 			$this->getSingleObject($id);
-			if($this->data()->fetchAll())
-				$this->_lemma = $this->data()->fetchAll()[0];
+			$lemmaData = $this->data()->fetchAll();
+			if(!empty($lemmaData))
+				$this->_lemma = $lemmaData[0];
 			else
 				return false;
 			// Loading the translations
@@ -141,8 +142,8 @@ class pLemmaSheetDataModel extends pDataModel{
 		if(empty($dictForm) OR empty($lexcat))
 			return false;
 
-		if(empty($gramcat))
-			$gramcat = 0;
+		$gramcat = $this->normalizeOptionalSelector($gramcat);
+		$tags = $this->normalizeOptionalSelector($tags);
 
 		if($update){
 			$this->prepareForUpdate(array($dictForm, $lexForm, $ipa, $hidden, $lexcat, $gramcat, $tags, date('Y-m-d H:i:s'), date('Y-m-d H:i:s'), pUser::read('id')), -1, $this->_fields->get());
@@ -156,7 +157,14 @@ class pLemmaSheetDataModel extends pDataModel{
 		}
 	}
 
+	protected function normalizeOptionalSelector($value){
+		return ($value === null OR $value === '' OR $value === 'none') ? 0 : $value;
+	}
+
 	public function updateForms($forms){
+		if(empty($forms))
+			return true;
+
 		// Some predefined configuration
 
 		$config = array(
@@ -181,7 +189,7 @@ class pLemmaSheetDataModel extends pDataModel{
 					// Let's check if the form is the same or not
 					if($form['value'] != $row['stems'][0][0])
 					// Let's update this shit
-						$this->complexQuery("UPDATE morphology SET irregular_form = ".p::Quote($form['value'])." WHERE lemma_id = '".$this->_lemma['id']."' AND id = ".$row['stems'][0][3]." AND ".$config[$type]['condition']);
+						$this->complexQuery("UPDATE morphology SET irregular_form = ".p::Quote($form['value'])." WHERE lemma_id = '".$this->_singleId."' AND id = ".$row['stems'][0][3]." AND ".$config[$type]['condition']);
 				}
 				elseif(isset($row['stems'][0][2]) AND $row['stems'][0][2] == false){
 					
@@ -191,7 +199,7 @@ class pLemmaSheetDataModel extends pDataModel{
 					$dfs->add(new pDataField('lemma_id'));
 					$dfs->add(new pDataField($config[$type]['field_1']));
 					$dM->setFields($dfs);
-					$dM->prepareForInsert(array($form['value'], $this->_lemma['id'], 1));
+					$dM->prepareForInsert(array($form['value'], $this->_singleId, 1));
 					$idMorph = $dM->insert();
 					$this->complexQuery("INSERT INTO morphology_modes VALUES(NULL, $idMorph, $selector[0]);");
 					$this->complexQuery("INSERT INTO morphology_submodes VALUES(NULL, $idMorph, $selector[1]);");
@@ -272,6 +280,9 @@ class pLemmaSheetDataModel extends pDataModel{
 		if($input == '' OR empty($input))
 			return false;
 		foreach($input as $id){
+			if(!is_array($id) OR !isset($id['value']) OR $id['value'] === null OR $id['value'] === '')
+				continue;
+
 			// If the link is already there, nothing needs to be done
 			if(!isset($this->_links[$table][$id['value']])){
 				$dM = new pDataModel($table);
@@ -350,7 +361,8 @@ class pLemmaSheetDataModel extends pDataModel{
 
 	public function updateEtymology($year, $desc){
 		// Deleting the older ones
-		if(($desc == $this->_links['etymology']['desc'] AND $year == $this->_links['etymology']['first_attestation']) OR ($desc == '' AND $year == '' AND $this->_links['etymology'] == false))
+		$etymology = $this->_links['etymology'];
+		if(($etymology === false AND $desc == '' AND $year == '') OR (is_array($etymology) AND $desc == $etymology['desc'] AND $year == $etymology['first_attestation']))
 			return true;
 		else
 			$this->complexQuery("DELETE FROM etymology WHERE word_id = ".$this->_lemma['id']);
@@ -363,4 +375,3 @@ class pLemmaSheetDataModel extends pDataModel{
 
 
 }
-

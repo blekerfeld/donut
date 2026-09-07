@@ -47,9 +47,9 @@ class pEditorView extends pView{
 							<div class='btSource'><span class='btLanguage'>".DA_LEXCAT_DESC."</span><br />
 								<span class='btNative'><select class='full-width select-lexcat select2'>".(new pSelector('types', @$data['type_id'], 'name', true, 'rules', true))->render()."</select></span></div>
 								<div class='btSource'><span class='btLanguage'>".DA_GRAMCAT."</span><br />
-								<span class='btNative'><select class='full-width select-gramcat select2'><option>none</option>".(new pSelector('classifications', @$data['classification_id'], 'name', true, 'rules', true))->render()."</select></span></div>
+								<span class='btNative'><select class='full-width select-gramcat select2'><option value='0'>none</option>".(new pSelector('classifications', @$data['classification_id'], 'name', true, 'rules', true))->render()."</select></span></div>
 								<div class='btSource'><span class='btLanguage'>".DA_GRAMTAG."</span><br />
-								<span class='btNative'><select class='full-width select-tags select2'><option>none</option>".(new pSelector('subclassifications', @$data['subclassification_id'], 'name', true, 'rules', false))->render()."</select></span><br /><br />
+								<span class='btNative'><select class='full-width select-tags select2'><option value='0'>none</option>".(new pSelector('subclassifications', @$data['subclassification_id'], 'name', true, 'rules', false))->render()."</select></span><br /><br />
 								
 								<div class='btSource'>
 									<span class='btLanguage'>Status</span><br />
@@ -106,8 +106,8 @@ class pEditorView extends pView{
 
 		p::Out("<div data-tab='Etymology'>
 					<div class='btSource'><span class='btLanguage'>First attestation </span></span><br />
-							<span class='btNative'><input placeholder='➥ Add date...' class='btInput nWord small normal-font ety-year' value='".($edit ? $this->_data->_links['etymology']['first_attestation'] : "")."'/></span></div>
-					<div style=''><textarea style='min-height: 200px;' placeholder='➥ Add description...' class='gtEditor ety-desc elastic allowtabs'>".($edit ? $this->_data->_links['etymology']['desc'] : '')."</textarea></div>
+							<span class='btNative'><input placeholder='➥ Add date...' class='btInput nWord small normal-font ety-year' value='".($edit && isset($this->_data->_links['etymology']['first_attestation']) ? $this->_data->_links['etymology']['first_attestation'] : "")."'/></span></div>
+					<div style=''><textarea style='min-height: 200px;' placeholder='➥ Add description...' class='gtEditor ety-desc elastic allowtabs'>".($edit && isset($this->_data->_links['etymology']['desc']) ? $this->_data->_links['etymology']['desc'] : '')."</textarea></div>
 				</div>
 				<div data-tab='Relationships'>
 

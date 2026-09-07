@@ -11,7 +11,7 @@ class pRulesheetHandler extends pHandler{
 	// Constructor needs to set up the view as well
 	public function __construct(){
 		// First we are calling the parent's constructor (pHandler)
-		call_user_func_array('parent::__construct', func_get_args());
+		parent::__construct(...func_get_args());
 		// Override the datamodel
 
 		if($this->_section == 'inflections')
@@ -124,7 +124,7 @@ class pRulesheetHandler extends pHandler{
 		else
 			echo pTemplate::NoticeBox('fa-check', SAVED, 'hide succes-notice successSave');
 		die('<script>$(".errorSave").slideUp();$(".successSave").slideDown().delay(1500).slideUp();
-			window.location = "'.p::Url('?rulesheet/'.$this->_section.'/edit/'.$id).'";</script>');
+			window.location = "'.p::Url('?grammar/'.$this->_section.'/edit/'.$id).'";</script>');
 	}
 
 }

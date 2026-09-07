@@ -11,7 +11,7 @@ class pTablesheetHandler extends pHandler{
 	// Constructor needs to set up the view as well
 	public function __construct(){
 		// First we are calling the parent's constructor (pHandler)
-		call_user_func_array('parent::__construct', func_get_args());
+		parent::__construct(...func_get_args());
 
 		// Getting ALL the types
 			$this->_types = (new pDataModel('types'))->setCondition(" WHERE inflect = 1 ")->getObjects()->fetchAll();	

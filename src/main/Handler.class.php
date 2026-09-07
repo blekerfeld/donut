@@ -7,7 +7,7 @@
 // ↓ Object
 class pHandler{
 
-	public $_icon, $_surface, $_data, $_dfs, $dataModel, $_section, $_app, $_actions, $_actionbar, $_paginated, $_offset, $_itemsperpage, $_condition = '', $_total, $_number_of_pages, $_linked = null, $_prototype, $_order = '1', $id, $_activeSection, $_tabs;
+	public $_icon, $_surface, $_data, $_dfs, $dataModel, $_section, $_app, $_actions, $_actionbar, $_paginated, $_offset, $_itemsperpage, $_condition = '', $_total, $_number_of_pages, $_linked = null, $_prototype, $_order = '1', $id, $_activeSection, $_tabs, $_parent;
 
 	public function __construct($parent){
 		$this->_parent = $parent;

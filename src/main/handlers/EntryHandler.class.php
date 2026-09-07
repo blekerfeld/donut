@@ -10,7 +10,7 @@ class pEntryHandler extends pHandler{
 
 	public function __construct(){
 		// First we are calling the parent's constructor (pHandler)
-		call_user_func_array('parent::__construct', func_get_args());
+		parent::__construct(...func_get_args());
 
 		// Now we need to know if there is a 
 		if(!isset($this->_activeSection['entry_meta']))
@@ -95,7 +95,9 @@ class pEntryHandler extends pHandler{
 
 	protected function doRandomEntry(){
 		$dM = new pDataModel('words');
-		$random = $dM->complexQuery("SELECT id FROM words ORDER BY RAND() LIMIT 1")->fetchAll()[0];
+		$result = $dM->complexQuery("SELECT id FROM words ORDER BY RAND() LIMIT 1")->fetchAll();
+		if(empty($result)) return false;
+		$random = $result[0];
 		return p::Url('?entry/'.p::HashId($random['id']), true);
 	}
 

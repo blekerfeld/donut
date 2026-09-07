@@ -7,12 +7,12 @@
 
 class pTranslation extends pEntry{
 
-	private  $_lemma, $_language;
+	private  $_lemma, $_language, $_lemmas;
 	public $language, $translation, $_specification;
 
 	public function __construct(){
 		// First we are calling the parent's constructor (pObject)
-		call_user_func_array('parent::__construct', func_get_args());
+		parent::__construct(...func_get_args());
 		$this->language = $this->_entry['language_id'];
 		$this->translation = $this->_entry['translation'];
 

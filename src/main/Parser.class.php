@@ -5,7 +5,7 @@
 
 class pParser{
 
-	public $_section, $_app, $_data, $_paginated = true, $_condition, $_offset, $_handler, $structure, $_permission, $_parent;
+	public $_section, $_app, $_data, $_paginated = true, $_condition, $_offset, $_handler, $structure, $_permission, $_parent, $_tabs, $_fields, $_actions, $_actionbar;
 
 	static public $stApp, $stSection;
 

@@ -214,6 +214,7 @@
       },
       "rules":{
          "RS_BROWSER":"Browse rules",
+         "RS_BROWSER_LL":"Browse lemmalists",
          "RS_RULE_DETAILS":"Rule details",
          "RS_BY_TABLE":"Rules by table",
          "RS_DELETE_CONFIRM":"Are you sure you want to delete this rule folder, all of its sub-folders and any rules they might contain?",

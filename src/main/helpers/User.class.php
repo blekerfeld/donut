@@ -19,8 +19,9 @@ class pUser{
 		if(isset($id)){
 			self::$dataModel->setCondition(" WHERE id = '".$id."'")->getObjects();
 
-			if(array_key_exists(0, self::$dataModel->data()->fetchAll()))
-				return self::load(self::$dataModel->data()->fetchAll()[0]);
+			$result = self::$dataModel->data()->fetchAll();
+			if(array_key_exists(0, $result))
+				return self::load($result[0]);
 			else
 				throw new Exception("Error: user could not be loaded", 1);
 		}else{

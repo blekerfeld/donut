@@ -6,7 +6,7 @@
 // This represents a word
 class pLemma extends pEntry{
 
-	public $_translations, $_examples, $__lemmaDataObject, $_type, $_class, $_subclass, $_isInflection, $_hitTranslation = null, $_query, $_inflector;
+	public $_translations, $_examples, $_lemmaDataObject, $_type, $_class, $_subclass, $_isInflection, $_hitTranslation = null, $_query, $_inflector;
 
 	public $word;
 
@@ -102,7 +102,7 @@ class pLemma extends pEntry{
 		if($this->_translations != null) 
 			p::Out($this->_view->parseTranslations($this->_translations));
 
-		if($this->_type['inflect'] == 1){
+		if(is_array($this->_type) AND $this->_type['inflect'] == 1){
 			$this->bindInflector();
 			p::Out($this->_view->parseInflections($this->_inflector));
 		}
@@ -118,8 +118,12 @@ class pLemma extends pEntry{
 
 	// This function will generate an infostring
 	public function generateInfoString(){
-		$output = "<a href='javascript:void(0);' class='tooltip ttip' title='".$this->_type['name']."'>".$this->_type['short_name']."</a> <a href='javascript:void(0);' class='ttip tooltip' title='".$this->_class['name']."'>".$this->_class['short_name']."</a>";
-		if($this->_subclass != null)
+		$output = '';
+		if(is_array($this->_type))
+			$output .= "<a href='javascript:void(0);' class='tooltip ttip' title='".$this->_type['name']."'>".$this->_type['short_name']."</a>";
+		if(is_array($this->_class))
+			$output .= ($output != '' ? ' ' : '')."<a href='javascript:void(0);' class='ttip tooltip' title='".$this->_class['name']."'>".$this->_class['short_name']."</a>";
+		if(is_array($this->_subclass))
 			$output .= "<a href='javascript:void(0);' class='tooltip ttip' title='".$this->_subclass['name']."'>".$this->_subclass['short_name']."</a>";
 		return $output;
 	}

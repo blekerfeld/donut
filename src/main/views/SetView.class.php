@@ -10,7 +10,7 @@ class pSetView extends pView{
 
 	public function renderTable(){
 
-		$data = $this->_data->_properData;
+		$data = is_array($this->_data->_properData) ? $this->_data->_properData : array('id' => 0, 'name' => '', 'parent' => -1);
 
 		$newLink = "<a href='javascript:void();' class='btAction small blue no-float action-button ttip_file' title='<div class=\"tooltipster-inner\">
 		<a href=\"javascript:newFolder();\" class=\"new-folder ttip-sub nav\">".(new pIcon('fa-folder', 12))." Folder</a><div class=\"hide loadNewFolder\">".LOADING."</div>";
@@ -139,6 +139,7 @@ class pSetView extends pView{
 	}
 
 	public static function breakDownName($name, $app, $last = false){
+		$name = (string)$name;
 		$output = "";
 		$count = 0;
 		// No slash at start then

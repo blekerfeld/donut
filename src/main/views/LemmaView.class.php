@@ -75,9 +75,11 @@ class pLemmaView extends pEntryView{
 		$titleSection = new pEntrySection("", '', null, false, true);
 
 		// Adding information elements to the title
-		$titleSection->addInformationElement($type['name']);
-		$titleSection->addInformationElement($class['name']);
-		if($subclass != null)
+		if(is_array($type))
+			$titleSection->addInformationElement($type['name']);
+		if(is_array($class))
+			$titleSection->addInformationElement($class['name']);
+		if(is_array($subclass))
 			$titleSection->addInformationElement($subclass['name']);
 
 		return $realTitle.$titleSection;
@@ -136,7 +138,7 @@ class pLemmaView extends pEntryView{
 
 
 		p::Out('<div class="dWordWrapper">'.$hitTranslation.'<strong class="dWord"><span class="native">'.$linkToWord."</span>".$this->renderIPA('small')."</strong><span class='dType'> · ".$this->_data->generateInfoString()."</span> ".($this->_data->_entry['hidden'] == 1 ? "<span class='pExtraInfo'>".(new pIcon('fa-eye-slash', 12))." ".LEMMA_HIDDEN."</span>" : '')."
-			".((count($this->_data->_translations) == 0 AND ((new pUser)->checkPermission(-2)) AND $noTransStatus == false) ? "<span class='pExtraInfo'>".(new pIcon('fa-exclamation-triangle', 12))." ".LEMMA_NEED_TRANSLATIONS."</span>" : '')." <br />".$this->parseTranslations($this->_data->_translations, true)."</div>");
+			".((count($this->_data->_translations ?? []) == 0 AND ((new pUser)->checkPermission(-2)) AND $noTransStatus == false) ? "<span class='pExtraInfo'>".(new pIcon('fa-exclamation-triangle', 12))." ".LEMMA_NEED_TRANSLATIONS."</span>" : '')." <br />".$this->parseTranslations($this->_data->_translations, true)."</div>");
 	}
 
 	private function renderIPA($class = ''){

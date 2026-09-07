@@ -6,12 +6,12 @@
 
 class pAssistantHandler extends pHandler{
 
-	public $_view, $_rulesheetModel;
+	public $_view, $_rulesheetModel, $_dataModel;
 
 	// Constructor needs to set up the view as well
 	public function __construct(){
 		// First we are calling the parent's constructor (pHandler)
-		call_user_func_array('parent::__construct', func_get_args());
+		parent::__construct(...func_get_args());
 		// Override the datamodel
 		$this->_dataModel = null;
 		//View
@@ -43,13 +43,19 @@ class pAssistantHandler extends pHandler{
 		if($this->_section == 'translate' AND isset(pRegister::session()['btChooser-translate'])){
 			$this->_dataModel = new pDataModel('words');
 	
+			$skipClause = "";
+			if(isset($_SESSION['btSkip-translate']) && is_array($_SESSION['btSkip-translate']) && !empty($_SESSION['btSkip-translate'])) {
+				$skipList = "'" . implode("', '", $_SESSION['btSkip-translate']) . "'";
+				$skipClause = " AND words.id NOT IN ( " . $skipList . " )";
+			}
+	
 			$this->_data = $this->_dataModel->complexQuery("SELECT DISTINCT words.id AS word_id, words.native, words.classification_id, words.type_id, words.subclassification_id, words.hidden
 			FROM words
 			JOIN translation_words 
 			JOIN translations ON translations.id = translation_words.translation_id
 			WHERE (translation_words.id IS NULL 
 			OR (translation_words.id IS NOT NULL AND NOT EXISTS (SELECT * FROM translation_words JOIN translations ON translations.id = translation_words.translation_id WHERE translation_words.word_id = words.id AND translations.language_id = ".$_SESSION['btChooser-translate'].")  
-			) AND NOT EXISTS (SELECT * FROM translation_exceptions WHERE word_id = words.id AND language_id = ".$_SESSION['btChooser-translate']." AND user_id = ".pUser::read('id').")) AND  words.id AND  words.id NOT IN ( '" . @implode($_SESSION['btSkip-translate'], "', '") . "' ) LIMIT 1;")->fetchAll();
+			) AND NOT EXISTS (SELECT * FROM translation_exceptions WHERE word_id = words.id AND language_id = ".$_SESSION['btChooser-translate']." AND user_id = ".pUser::read('id').")) AND  words.id" . $skipClause . " LIMIT 1;")->fetchAll();
 		}
 		
 
@@ -64,6 +70,11 @@ class pAssistantHandler extends pHandler{
 
 			$dM = new pDataModel('words');
 
+			$skipClause = "";
+			if(isset($_SESSION['btSkip-translate']) && is_array($_SESSION['btSkip-translate']) && !empty($_SESSION['btSkip-translate'])) {
+				$skipList = "'" . implode("', '", $_SESSION['btSkip-translate']) . "'";
+				$skipClause = " AND words.id NOT IN ( " . $skipList . " )";
+			}
 
 			$left = $dM->complexQuery("SELECT COUNT(DISTINCT words.id) AS cnt 
 			FROM words
@@ -71,7 +82,7 @@ class pAssistantHandler extends pHandler{
 			JOIN translations ON translations.id = translation_words.translation_id
 			WHERE (translation_words.id IS NULL 
 			OR (translation_words.id IS NOT NULL AND NOT EXISTS (SELECT * FROM translation_words JOIN translations ON translations.id = translation_words.translation_id WHERE translation_words.word_id = words.id AND translations.language_id = ".($language == null ? $_SESSION['btChooser-translate'] : $language).")  
-			) AND NOT EXISTS (SELECT * FROM translation_exceptions WHERE word_id = words.id AND language_id = ".($language == null ? $_SESSION['btChooser-translate'] : $language)." AND user_id = ".pUser::read('id').")) AND  words.id AND  words.id NOT IN ( '" . @implode($_SESSION['btSkip-translate'], "', '") . "' );")->fetchAll()[0];
+			) AND NOT EXISTS (SELECT * FROM translation_exceptions WHERE word_id = words.id AND language_id = ".($language == null ? $_SESSION['btChooser-translate'] : $language)." AND user_id = ".pUser::read('id').")) AND  words.id" . $skipClause . ";")->fetchAll()[0];
 
 			$total = $dM->complexQuery("SELECT COUNT(DISTINCT words.id) AS cnt 
 			FROM words")->fetchAll()[0];

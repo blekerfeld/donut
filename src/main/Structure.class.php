@@ -5,7 +5,7 @@
 
 class pStructure{
 
-	public $_name, $_meta, $_type, $_prototype, $_menu, $_menu_content, $_default_section, $_page_title, $_app, $_permission, $_dispatchStructure, $_tabs, $_error;
+	public $_name, $_meta, $_type, $_prototype, $_menu, $_menu_content, $_default_section, $_page_title, $_app, $_permission, $_dispatchStructure, $_tabs, $_error, $_section, $_parser;
 
 	public static $permission;
 

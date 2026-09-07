@@ -12,7 +12,7 @@ class pArticleHandler extends pHandler{
 	public function __construct(){
 
 		// First we are calling the parent's constructor (pHandler)
-		call_user_func_array('parent::__construct', func_get_args());
+		parent::__construct(...func_get_args());
 		// Override the datamodel
 
 		// Get the article's meta data
@@ -87,8 +87,10 @@ class pArticleHandler extends pHandler{
 	private function undoRevision(){
 		// Retrieving target
 		
-		if(!($target = (new pDataModel('article_revisions'))->setOrder('revision_date DESC')->setLimit(1)->setCondition("WHERE language_locale = '".$this->_activeLocale."' AND article_id = '".$this->_articleMeta['id']."' AND id < ".$this->_activeRevision)->getObjects()->fetchAll()[0]))
+		$result = (new pDataModel('article_revisions'))->setOrder('revision_date DESC')->setLimit(1)->setCondition("WHERE language_locale = '".$this->_activeLocale."' AND article_id = '".$this->_articleMeta['id']."' AND id < ".$this->_activeRevision)->getObjects()->fetchAll();
+		if(!$result || empty($result))
 			return false;
+		$target = $result[0];
 
 		return (new pDataModel('article_revisions'))->prepareForInsert(array($this->_articleMeta['id'], pUser::read('id'), $this->_activeLocale, 'NOW()', $target['name'], array(p::QuoteOnly($target['content']), false), sprintf(WIKI_UNDO_REVISION_STRING, (new pUser($target['user_id']))->read('username'), $target['revision_date']), 1))->insert();
 	}

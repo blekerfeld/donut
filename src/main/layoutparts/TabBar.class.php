@@ -6,7 +6,7 @@
 
 class pTabBar extends pLayoutPart {
 
-	private $_titlePart = '', $_search = '', $_home = '', $icon = '', $_extraClass = '', $_above = false, $_links = array(), $_str = '';
+	private $_titlePart = '', $_search = '', $_home = '', $icon = '', $_icon = '', $_extraClass = '', $_above = false, $_links = array(), $_str = '';
 
 	public function __construct($title, $icon, $above = true, $extraClass = 'titles'){
 		$this->_titlePart = $title;

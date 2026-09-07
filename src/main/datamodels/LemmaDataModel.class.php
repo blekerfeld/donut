@@ -12,7 +12,8 @@ class pLemmaDataModel extends pDataModel{
 		parent::__construct('words');
 		if($id != 0 AND is_numeric($id)){
 			$this->getSingleObject($id);
-			$this->_lemma = $this->data()->fetchAll()[0];
+			$result = $this->data()->fetchAll();
+			$this->_lemma = !empty($result) ? $result[0] : array();
 		}
 		elseif(!is_numeric($id)){
 			$this->_lemma = $id;
@@ -60,48 +61,48 @@ class pLemmaDataModel extends pDataModel{
 
 		// The search query for lang-0: monolingual, searching both lemmata and translations
 		if($searchlang == 0 AND $returnlang == 0)
-			$q = "SELECT * FROM (SELECT DISTINCT id AS word_id, 0 AS is_inflection, 0 as inflection FROM words WHERE $extra native ".$ww." OR native = '".p::Escape($search)."'  
-				ORDER BY CASE
+			$q = "SELECT word_id, is_inflection, inflection FROM (SELECT DISTINCT id AS word_id, 0 AS is_inflection, 0 as inflection, CASE
     						WHEN words.native = '".p::Escape(trim($search))."' THEN 1
     						WHEN words.native LIKE '".p::Escape(trim($search))."%' THEN 2
     						WHEN words.native LIKE '%".p::Escape(trim($search))."' THEN 3
     						ELSE 4
-						END DESC) AS a 
+						END AS sort_order FROM words WHERE $extra native ".$ww." OR native = '".p::Escape($search)."'  
+				ORDER BY sort_order DESC) AS a 
 				UNION ALL
-            SELECT * FROM (SELECT DISTINCT translation_words.word_id as word_id, 0 as is_inflection, 0 as inflection FROM translation_words JOIN translations WHERE translations.translation ".$ww." AND translations.language_id = 0 AND translation_words.translation_id = translations.id ORDER BY CASE
+            SELECT word_id, is_inflection, inflection FROM (SELECT DISTINCT translation_words.word_id as word_id, 0 as is_inflection, 0 as inflection, CASE
     						WHEN translations.translation = '".p::Escape(trim($search))."' THEN 1
     						WHEN translations.translation LIKE '".p::Escape(trim($search))."%' THEN 2
     						WHEN translations.translation LIKE '%".p::Escape(trim($search))."' THEN 3
     						ELSE 4
-						END DESC) as b;
+						END AS sort_order FROM translation_words JOIN translations WHERE translations.translation ".$ww." AND translations.language_id = 0 AND translation_words.translation_id = translations.id ORDER BY sort_order DESC) as b;
 			";
 
 		// Searching lemmata and inflected forms
 		elseif($searchlang == 0)
-			$q = "SELECT * FROM (SELECT DISTINCT id AS word_id, 0 AS is_inflection, 0 as inflection FROM words WHERE $extra native ".$ww." OR native = '".p::Escape($search)."'  
-				ORDER BY CASE
+			$q = "SELECT word_id, is_inflection, inflection FROM (SELECT DISTINCT id AS word_id, 0 AS is_inflection, 0 as inflection, CASE
     						WHEN words.native = '".p::Escape(trim($search))."' THEN 1
     						WHEN words.native LIKE '".p::Escape(trim($search))."%' THEN 2
     						WHEN words.native LIKE '%".p::Escape(trim($search))."' THEN 3
     						ELSE 4
-						END DESC) AS a 
-				UNION ALL SELECT * FROM (SELECT DISTINCT lemma_id AS word_id, 1 AS is_inflection, inflected_form FROM lemmatization WHERE inflected_form ".$ww." OR inflected_form LIKE '".p::Escape($search)."' ORDER BY INSTR('".p::Escape(trim($search))."', inflected_form) DESC) as b 
+						END AS sort_order FROM words WHERE $extra native ".$ww." OR native = '".p::Escape($search)."'  
+				ORDER BY sort_order DESC) AS a 
+				UNION ALL SELECT word_id, is_inflection, inflection FROM (SELECT DISTINCT lemma_id AS word_id, 1 AS is_inflection, inflected_form AS inflection FROM lemmatization WHERE inflected_form ".$ww." OR inflected_form LIKE '".p::Escape($search)."' ORDER BY INSTR('".p::Escape(trim($search))."', inflected_form) DESC) as b 
 				
-				UNION ALL SELECT * FROM (SELECT DISTINCT lemma_id AS word_id, 1 AS is_inflection, irregular_form AS inflection FROM morphology WHERE irregular_form ".$ww." ORDER BY INSTR('".p::Escape(trim($search))."', irregular_form) DESC) AS c ".$limit;	
+				UNION ALL SELECT word_id, is_inflection, inflection FROM (SELECT DISTINCT lemma_id AS word_id, 1 AS is_inflection, irregular_form AS inflection FROM morphology WHERE irregular_form ".$ww." ORDER BY INSTR('".p::Escape(trim($search))."', irregular_form) DESC) AS c ".$limit;	
 		// The search query for reverse: only searching translations and their alternatives
 		else
-			$q = "SELECT * FROM (SELECT DISTINCT translation_words.word_id, 0 AS is_inflection, 0 AS is_alternative, 0 AS inflection, translations.id AS trans_id, translations.translation AS translation
+			$q = "SELECT word_id, is_inflection, is_alternative, inflection, trans_id, translation FROM (SELECT DISTINCT translation_words.word_id AS word_id, 0 AS is_inflection, 0 AS is_alternative, 0 AS inflection, translations.id AS trans_id, translations.translation AS translation
 					FROM words 
 					INNER JOIN translation_words ON translation_words.word_id=words.id 
 					INNER JOIN translations ON translations.id=translation_words.translation_id
 					WHERE $extra translations.translation ".$ww." AND translations.language_id = '".$searchlang."' ORDER BY INSTR('".p::Escape(trim($search))."', translations.translation) DESC) AS a UNION ALL
-					SELECT * FROM (SELECT DISTINCT word_id, 0 AS is_inflection, 1 AS is_alternative, alternative, translation_alternatives.translation_id AS trans_id, translations.translation AS translation FROM translation_words INNER JOIN translations ON translations.id = translation_words.translation_id INNER JOIN translation_alternatives WHERE  translation_alternatives.alternative ".$ww." AND translation_words.translation_id = translation_alternatives.translation_id AND translations.language_id = '".$searchlang."' ORDER BY 
-						CASE
+					SELECT word_id, is_inflection, is_alternative, alternative AS inflection, translation_id AS trans_id, translation FROM (SELECT DISTINCT word_id, 0 AS is_inflection, 1 AS is_alternative, alternative, translation_alternatives.translation_id AS translation_id, translations.translation AS translation, CASE
     						WHEN translations.translation LIKE '".p::Escape(trim($search))."' THEN 1
     						WHEN translations.translation LIKE '".p::Escape(trim($search))."%' THEN 2
     						WHEN translations.translation LIKE '%".p::Escape(trim($search))."' THEN 3
     						ELSE 4
-						END DESC, INSTR('".p::Escape(trim($search))."', translations.translation) DESC) AS b ".$limit; 
+						END AS sort_order FROM translation_words INNER JOIN translations ON translations.id = translation_words.translation_id INNER JOIN translation_alternatives WHERE  translation_alternatives.alternative ".$ww." AND translation_words.translation_id = translation_alternatives.translation_id AND translations.language_id = '".$searchlang."' ORDER BY 
+						sort_order DESC, INSTR('".p::Escape(trim($search))."', translations.translation) DESC) AS b ".$limit; 
 
 		// Running the query
         $fetch = p::$db->cacheQuery($q);
